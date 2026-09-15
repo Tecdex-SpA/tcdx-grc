@@ -1,9 +1,13 @@
 # TCDX GRC — Modelo físico PostgreSQL 16
 
-Estado del artefacto: `DRAFT_CANDIDATE_FOR_HUMAN_REVIEW`  
-Baseline: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.4_2026-09-15`  
-Fase: `PHYSICAL_MODEL_DESIGN`  
-Motor objetivo: PostgreSQL 16, base `tcdx-grc`  
+Estado del artefacto: `DRAFT_CANDIDATE_FOR_HUMAN_REVIEW`
+
+Baseline: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.4_2026-09-15`
+
+Fase: `PHYSICAL_MODEL_DESIGN`
+
+Motor objetivo: PostgreSQL 16, base `tcdx-grc`
+
 Gate humano pendiente: `PHYSICAL_DATA_MODEL_REVIEW`
 
 ## Alcance y autoridad
@@ -49,9 +53,14 @@ Los otros documentos separan relaciones, invariantes, índices, aislamiento tena
 
 ## Estado de fase
 
-`RECTOR_GATE=PASS`  
-`PHYSICAL_MODEL_DESIGN=AUTHORIZED`  
-`PHYSICAL_DATA_MODEL_REVIEW=PENDING`  
-`EXECUTABLE_CONTRACTS=PENDING`  
-`MIGRATIONS=BLOCKED`  
+`RECTOR_GATE=PASS`
+
+`PHYSICAL_MODEL_DESIGN=AUTHORIZED`
+
+`PHYSICAL_DATA_MODEL_REVIEW=PENDING`
+
+`EXECUTABLE_CONTRACTS=PENDING`
+
+`MIGRATIONS=BLOCKED`
+
 `FUNCTIONAL_DEVELOPMENT=BLOCKED`
