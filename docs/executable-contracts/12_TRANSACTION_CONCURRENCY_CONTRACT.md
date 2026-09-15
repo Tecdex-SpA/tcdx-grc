@@ -4,7 +4,7 @@
 |---|---|
 | Contract owner | Backend Owner |
 | Approving human roles | Architecture Owner, Data Model Owner, Backend Owner |
-| Status | `CONTRACT_DEFINED_PENDING_HUMAN_APPROVAL` |
+| Status | `CONTRACT_DEFINED` |
 
 ## Boundaries
 
@@ -33,3 +33,5 @@ Use deterministic lock ordering per aggregate contract. Database serialization/d
 ## Object storage sequence
 
 Upload uses pre-authorized quarantine. Object-store success alone does not commit Evidence. Finalization verifies metadata/checksum/scan and commits PostgreSQL authority; orphan quarantine cleanup is an observable idempotent job, never evidence creation.
+
+`TRANSACTION_CONCURRENCY_CONTRACT=PASS` as a Phase 2 contract candidate.

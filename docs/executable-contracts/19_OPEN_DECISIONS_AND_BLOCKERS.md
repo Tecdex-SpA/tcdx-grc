@@ -3,44 +3,29 @@
 | Campo | Valor |
 |---|---|
 | Contract owner | Architecture Owner |
-| Approving human roles | role listed per blocker |
+| Approving human roles | listed per decision |
 | Status | `BLOCKED` |
 
-No blocker is resolved by this document. Alternatives are compatibility inventories, not recommendations or selections.
+## Resolved continuation blockers
 
-| blocker_id | decision absent | affected artifacts | compatible alternatives / objective impact | human owner | blocked gate |
-|---|---|---|---|---|---|
-| B-001 | package manager + exact version | 01, all implementation | npm/pnpm/yarn or compatible; changes workspaces, lockfile, CI and supply chain | Architecture + Security | EXECUTABLE_CONTRACTS |
-| B-002 | repository layout | 01, generation/testing | compatible modular-monolith/workspace layouts; changes boundaries/imports/CI | Architecture | EXECUTABLE_CONTRACTS |
-| B-003 | typed SQL library/version | 01,11,12 | compatible typed-SQL alternatives; must not own/generate divergent schema | Data Model + Backend | EXECUTABLE_CONTRACTS |
-| B-004 | migration runner, naming, ledger/checksum canonicalization and lock | 01,11 | compatible ordered SQL runners/conventions; changes promotion/recovery/reproducibility | Data Model | EXECUTABLE_CONTRACTS |
-| B-005 | backend test framework/version | 01,10 | compatible Node/TS frameworks; changes integration/fault/concurrency harness | Backend + QA/Release | EXECUTABLE_CONTRACTS |
-| B-006 | frontend/component test framework/version | 01,10 | compatible React 19 tools; changes accessibility/component evidence | Frontend + QA/Release | EXECUTABLE_CONTRACTS |
-| B-007 | E2E framework/version | 01,10 | compatible browser frameworks; changes browser coverage/artifacts/flakiness | QA/Release | EXECUTABLE_CONTRACTS |
-| B-008 | exact dependency/runtime patch versions | 01 | compatible set inside rector majors; supply-chain/reproducibility impact | Architecture + Security | EXECUTABLE_CONTRACTS |
-| B-009 | OpenAPI/type/client generation convention | 01–03 | schema-first generation/manual verified/unidirectional hybrid; drift/ownership impact | Architecture + Backend + Frontend | EXECUTABLE_CONTRACTS |
-| B-010 | UUIDv7 implementation | 01,11 | approved library/internal verified generator; security/order/test impact | Backend + Security | EXECUTABLE_CONTRACTS |
-| B-011 | authentication mechanism and IdP/trust profile | 02,13 | OIDC/OAuth bearer, gateway-validated identity and separate machine profiles may be compatible; choice determines trust root, issuer/audience/claims/lifetimes and machine flow | Security + Architecture | OPENAPI/AUTH |
-| B-012 | concrete API operation/command catalog | 02,03 | resource and command representations consistent with lifecycles; changes public API and transactions | Product/CPO + Architecture + domain owners | OPENAPI/G7/G8/G11/G14 |
-| B-013 | event types/versions/payloads/consumers | 04,15 | event boundaries consistent with domain ownership; changes coupling/retry/ordering | Architecture + Backend + domain owners | EVENT_CATALOG/G11/G14 |
-| B-014 | atomic capabilities, permissions, scopes and base-role grants | 05,09,13 | explicit subset of potential actions; changes commercial/RBAC access | Product/CPO + Security + domain owners | PERMISSION_CATALOG/G8/G14 |
-| B-015 | stable error codes and HTTP mapping | 02,06 | proposed vocabulary or another approved stable vocabulary with identical rector semantics | Architecture + Backend + Security | ERROR_MODEL/G11 |
-| B-016 | exact audit event codes/mappings | 08 | one-to-one command audit catalog; changes accountability/query contracts | Security + domain owners | AUDIT_EVENT_CATALOG/G11 |
-| B-017 | published lifecycle transition registry | 03,05,08,09,10 | exact edges already semantically bounded but permission/policies/events/commands unresolved | Architecture + domain owners + Security | G7/G8/G11/G14 |
-| B-018 | exact seed rows/versions for permissions, grants, lifecycle, configs and methodology registry | 09 | rows depend on B-014/B-017 and owner approvals | Data Model + corresponding owners | SEED_MANIFESTS |
-| B-019 | per-operation idempotency class/fingerprint/replay/retention | 03,07 | classes fixed; assignment depends on B-012 | Backend + Data Model | IDEMPOTENCY_CONTRACT/G11 |
-| B-020 | AI purposes, provider security/DPA/model policy/request contract | 17 | compatible governed profiles against `ia2.tcdx.int`; privacy/availability impact | AI Governance + Security + Backend | AI_INTEGRATION/INTELLIGENCE_RUNTIME |
-| B-021 | API base wire conventions | 02,03,06,07,13 | tenant/correlation/request/idempotency header names, problem media type, cursor versus offset and generic filter/sort syntax have compatible alternatives with client/cache/security impact | Architecture + Backend + Frontend | OPENAPI/G11/G14 |
+`B-001..B-011` and `B-020` are resolved in direction by the human continuation Decision Record. Controlled derivation closes B-013 event catalog, B-015 errors, B-016 audit mapping, B-019 idempotency and B-021 wire conventions. B-012/B-014/B-017/B-018 are closed for all publishable rows and retain only the decisions below.
+
+## Remaining human decisions
+
+| decision_id | exact decision required | evidence / alternatives | affected artifacts | human owner |
+|---|---|---|---|---|
+| H-001 | approve or replace exact toolchain version set IDM-P01 | registry compatibility supports the exact proposed set; any replacement must preserve rector majors and lockfile reproducibility | 01/10 | Architecture Owner + Security + applicable owners |
+| H-002 | approve or replace `pg 8.23.0` as exact Kysely PostgreSQL driver | Kysely needs a PostgreSQL driver; alternatives change pool/TLS/type parsing surface | 01 | Data Model Owner + Backend Owner + Security |
+| H-003 | add/authorize canonical Permission resource/actions/grants for ConfigurationDefinition/Override publication | rector requires config operations; rector 22 has no `configuration` resource. Alternatives: extend `platform` or `data`, or add a rector-approved resource; semantics differ | 02/03/05/09 | Product Owner/CPO + Architecture Owner + Security |
+| H-004 | add/authorize Permission resource/actions/grants for retention, erasure and legal hold | physical privacy objects exist but rector 22 has no matching permission resource. Mapping to existing privacy/operations/platform changes authority | 02/03/05/09 | Privacy Manager + Legal Reviewer + Security |
+| H-005 | add/authorize Permission resource/actions/grants for LifecycleTransitionDefinition administration | physical registry is PLATFORM_CONTROL but rector 22 has no lifecycle-transition resource. Mapping to permission/administer or a new resource changes governance | 02/03/05/09 | Architecture Owner + Security + domain owners |
+| H-006 | define exact allowed source state(s) for `Issue.dismissed` | rector 21 permits dismissed with command/reason but does not name source states; allowing open only vs multiple active states changes workflow | 05/08/09 | Product Owner/CPO + Architecture Owner + remediation owner + Security |
 
 ## Counts
 
 ```text
-OPEN_HUMAN_DECISIONS=21
-OPEN_BLOCKERS=21
+OPEN_HUMAN_DECISIONS=6
+OPEN_BLOCKERS=6
 ```
 
-The first ten are the implementation/toolchain decisions listed in artifact 01. B-011..021 are executable product/security contract decisions. None may be approved by Codex.
-
-## Non-blocking external gates
-
-Licensed regulatory content and provider-specific connector field contracts remain gated independently. They do not block generic contract representation, but they block affected pack/provider implementation and official use.
+Provider/model/DPA, concrete IdP values, alert routing, signed-URL TTL and licensed regulatory contents are explicit later runtime/security/content gates. They do not alter the generic Phase 2 contract and are not counted as Phase 2 blockers.

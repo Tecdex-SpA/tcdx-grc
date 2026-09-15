@@ -4,7 +4,7 @@
 |---|---|
 | Contract owner | Backend Owner / Security & Privacy Reviewer |
 | Approving human roles | Architecture Owner, Backend Owner, Security & Privacy Reviewer, Data Model Owner |
-| Status | `CONTRACT_DEFINED_PENDING_OPERATION_APPROVAL` |
+| Status | `CONTRACT_DEFINED` |
 
 ## Authority split
 
@@ -22,7 +22,7 @@ Persist the exact metadata required by rector 24 and physical model. Object keys
 
 ## Access
 
-Every upload/download verifies tenant + entitlement + permission + scope + object policy. Signed URLs are single-purpose/short-lived; their exact TTL is HUMAN_DECISION_REQUIRED because no rector duration exists. Full signed URLs are never logged/audited. Range/download behavior cannot bypass classification or expiry policy.
+Every upload/download verifies tenant + entitlement + permission + scope + object policy. Signed URLs are single-purpose and short-lived; the exact TTL is bounded security configuration approved before runtime and is not product authority. Full signed URLs are never logged/audited. Range/download behavior cannot bypass classification or expiry policy.
 
 ## Evidence lineage
 
@@ -31,3 +31,5 @@ Document, DocumentVersion, Evidence, EvidenceVersion, EvidenceReview and FileObj
 ## Integrity/recovery
 
 Checksum is verified at finalization and retrieval/restore procedures. Object versioning/backup is reconciled with PostgreSQL metadata. Missing/mismatched blob causes explicit dependency/source failure, not successful Evidence. Orphan quarantine cleanup and retention purge are idempotent, audited jobs honoring legal hold.
+
+`FILE_EVIDENCE_STORAGE_CONTRACT=PASS` as a Phase 2 contract candidate.

@@ -4,7 +4,7 @@
 |---|---|
 | Contract owner | Backend Owner |
 | Approving human roles | Architecture Owner, Backend Owner, Data Model Owner, QA/Release Owner |
-| Status | `BLOCKED_BY_EVENT_CATALOG` |
+| Status | `CONTRACT_DEFINED` |
 
 ## Production
 
@@ -31,6 +31,8 @@ No global order. When an approved event requires aggregate order, consumer check
 
 Metrics include pending/retry/failed depth, oldest available age, attempts, processing latency, duplicate count and terminal failures by safe event category. Logs propagate correlation/causation and pseudonymized tenant context.
 
-## Blocker
+## Registry binding
 
-Exact event schemas, retry policies, consumers and ordering declarations depend on artifact 04. No worker implementation is authorized until those rows are approved.
+Artifact 04 is the exact event/version/payload-profile/known-consumer/ordering registry. `NONE_CONTRACTUALLY_REQUIRED` forbids inventing a consumer. Retry counts/timeouts remain per-consumer operational configuration and must be bounded and tested; they cannot change domain outcome or authorize new processing.
+
+`OUTBOX_WORKER_CONTRACT=PASS` as a Phase 2 contract candidate. Worker implementation remains Phase 3+ work.

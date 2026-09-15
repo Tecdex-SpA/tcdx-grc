@@ -4,7 +4,7 @@
 |---|---|
 | Contract owner | Architecture Owner / QA/Release Owner |
 | Approving human roles | Architecture Owner, Security & Privacy Reviewer, QA/Release Owner |
-| Status | `CONTRACT_DEFINED_PENDING_HUMAN_APPROVAL` |
+| Status | `CONTRACT_DEFINED` |
 
 ## Stack and propagation
 
@@ -34,3 +34,5 @@ Critical flows produce distributed traces with authorization and payload values 
 ## SLO/DR evidence
 
 Production target is 99.9% monthly excluding announced maintenance; RPO 15m, RTO 4h; simple read p95 <500ms and simple mutation p95 <1s in representative QA; dashboard initial <2.5s with precomputed results. Exact alert thresholds/runbooks require human operational approval and may not redefine these targets.
+
+`OBSERVABILITY_CONTRACT=PASS` as a Phase 2 contract candidate; environment alert routing remains a later operational gate.

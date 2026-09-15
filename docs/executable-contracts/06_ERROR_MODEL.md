@@ -4,7 +4,7 @@
 |---|---|
 | Contract owner | Backend Owner |
 | Approving human roles | Architecture Owner, Backend Owner, Security & Privacy Reviewer |
-| Status | `PROPOSED_FOR_HUMAN_APPROVAL` |
+| Status | `CONTRACT_DEFINED` |
 
 ## Envelope
 
@@ -21,26 +21,27 @@ details?: allowlisted object
 
 Workers persist/emit the same `code`, `correlation_id` and retryability, but never a client-facing HTTP assumption. SQL, stack traces, secret refs/values, full signed URLs, credentials, raw protected content and cross-tenant object existence are forbidden.
 
-## Proposed stable classes
+## Stable machine codes and HTTP mapping
 
-The semantics are rector-required; the exact codes and HTTP mapping are proposed and require human approval before publication.
+Codes are namespaced `TCDX.<CLASS>.<SPECIFIC>`, uppercase ASCII and immutable once published. New codes may refine a class without changing the HTTP or disclosure contract.
 
-| class | proposed code | API status | retryable default | contractual semantics |
+| class | stable code | API status | retryable default | contractual semantics |
 |---|---|---:|---:|---|
-| validation | `VALIDATION_FAILED` | 400 | false | shape/type/range/field validation; field_errors allowlisted |
-| authentication | `AUTHENTICATION_REQUIRED` / `AUTHENTICATION_INVALID` | 401 | false | no authenticated principal |
-| authorization | `AUTHORIZATION_DENIED` | 403 | false | entitlement/permission/scope/object policy/SoD denied; do not reveal cross-tenant existence |
-| not found | `RESOURCE_NOT_FOUND` | 404 | false | only when caller is authorized to know the resource class; otherwise use safe denial/not-found policy consistently |
-| conflict | `RESOURCE_CONFLICT` | 409 | false | uniqueness or current-state conflict |
-| concurrency | `CONCURRENCY_CONFLICT` | 409 | true | stale ETag/row_version; caller must refetch/reconcile |
-| idempotency | `IDEMPOTENCY_KEY_CONFLICT` | 409 | false | same bound key, different fingerprint; no mutation |
-| insufficient data | `RESULT_INSUFFICIENT_DATA` | 422 | false | requested official result cannot be valid; preserve exact `result_status` in details |
-| lifecycle | `LIFECYCLE_TRANSITION_NOT_ALLOWED` | 409 | false | no published edge or failed precondition; no generic status update |
-| invariant | `DOMAIN_INVARIANT_VIOLATION` | 422 | false | valid syntax but contract invariant rejected |
-| rate/limit | `RATE_LIMIT_EXCEEDED` / `USAGE_LIMIT_EXCEEDED` | 429 / 409 | conditional | only where an approved provider/plan/automation policy defines a limit; optional retry-after only when known |
-| dependency | `DEPENDENCY_UNAVAILABLE` | 503 | true | required internal/external dependency unavailable; never return empty valid dataset |
-| connector/provider | `CONNECTOR_PROVIDER_ERROR` | 502 | conditional | provider-specific detail redacted; provider contract determines retry |
-| internal | `INTERNAL_FAILURE` | 500 | conditional | opaque safe message; full diagnostic only in protected telemetry |
+| VALIDATION | `TCDX.VALIDATION.FAILED` | 400 | false | shape/type/range/field validation; allowlisted field errors |
+| AUTHENTICATION | `TCDX.AUTHENTICATION.REQUIRED`, `TCDX.AUTHENTICATION.INVALID` | 401 | false | missing or invalid JWT/trust validation; `WWW-Authenticate: Bearer` |
+| AUTHORIZATION | `TCDX.AUTHORIZATION.DENIED` | 403 | false | authenticated and resource is within a context whose existence caller may know, but entitlement/permission/SoD denies action |
+| NOT_FOUND | `TCDX.RESOURCE.NOT_FOUND` | 404 | false | missing object or concealed cross-tenant/out-of-scope object; identical safe message prevents IDOR disclosure |
+| CONFLICT | `TCDX.CONFLICT.RESOURCE` | 409 | false | uniqueness/current-state conflict not covered by concurrency/idempotency |
+| CONCURRENCY_CONFLICT | `TCDX.CONFLICT.CONCURRENCY` | 409 | true | stale `If-Match`/row_version; refetch and reconcile |
+| IDEMPOTENCY_CONFLICT | `TCDX.CONFLICT.IDEMPOTENCY` | 409 | false | same bound key with a different canonical request fingerprint; no mutation |
+| INSUFFICIENT_DATA | `TCDX.RESULT.INSUFFICIENT_DATA` | 422 | false | an operation demanding an official result cannot meet rector sufficiency; exact `result_status` is allowlisted in details |
+| INVALID_STATE_TRANSITION | `TCDX.LIFECYCLE.TRANSITION_DENIED` | 409 | false | edge absent, source state mismatch or published precondition failed |
+| INVARIANT_VIOLATION | `TCDX.INVARIANT.VIOLATION` | 422 | false | syntactically valid command violates domain/physical invariant |
+| RATE_LIMIT | `TCDX.LIMIT.RATE_EXCEEDED` | 429 | conditional | only from approved provider/AutomationPolicy; `Retry-After` only when known |
+| USAGE_LIMIT | `TCDX.LIMIT.USAGE_EXCEEDED` | 409 | false | versioned PlanVersion/UsageLimit prevents command; not authorization |
+| DEPENDENCY_UNAVAILABLE | `TCDX.DEPENDENCY.UNAVAILABLE` | 503 | true | required internal/object-store/AI dependency unavailable; never valid empty data |
+| PROVIDER_ERROR | `TCDX.PROVIDER.FAILURE` | 502 | conditional | approved connector/provider failure; detail redacted and retry policy provider-contractual |
+| INTERNAL_ERROR | `TCDX.INTERNAL.FAILURE` | 500 | conditional | opaque safe failure; diagnostic only in protected telemetry |
 
 `result_status` values are not transport errors by default. A valid query may return an envelope with `no_data`, `conflicting_sources`, `source_error`, etc.; an operation demanding publication may reject with the matching stable domain error without coercing a status to zero or empty data.
 
@@ -51,6 +52,8 @@ The semantics are rector-required; the exact codes and HTTP mapping are proposed
 - exhausted retry does not fabricate completion;
 - partial bulk/import failure has per-row code/outcome and aggregate status; no opaque all-or-nothing claim.
 
-## Approval blocker
+## Disclosure rule
 
-Rector 25 freezes envelope fields but not the exact machine-code vocabulary or HTTP mapping. Until the proposal is approved, `ERROR_MODEL=BLOCKED` for implementation even though all required semantic classes are represented.
+For a guessed foreign-tenant or out-of-scope identifier, return `TCDX.RESOURCE.NOT_FOUND` regardless of whether the UUID exists. Use `TCDX.AUTHORIZATION.DENIED` only when revealing the resource/context is already authorized. Timing, field errors and details must not distinguish the hidden cases.
+
+`ERROR_MODEL=PASS` as a Fase 2 contract candidate; human gate approval remains external.

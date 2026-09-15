@@ -9,23 +9,23 @@
 ```text
 BASELINE_INTEGRITY=PASS
 PHYSICAL_MODEL_INTEGRITY=PASS
-EXECUTABLE_REQUIREMENTS_COVERAGE=20/32
+EXECUTABLE_REQUIREMENTS_COVERAGE=27/32
 OPENAPI_CONTRACT=BLOCKED
-EVENT_CATALOG=BLOCKED
+EVENT_CATALOG=PASS
 PERMISSION_CATALOG=BLOCKED
-ERROR_MODEL=BLOCKED
-IDEMPOTENCY_CONTRACT=BLOCKED
-AUDIT_EVENT_CATALOG=BLOCKED
+ERROR_MODEL=PASS
+IDEMPOTENCY_CONTRACT=PASS
+AUDIT_EVENT_CATALOG=PASS
 SEED_MANIFESTS=BLOCKED
 TEST_CONTRACTS=PASS
-MIGRATION_PLAN=BLOCKED
+MIGRATION_PLAN=PASS
 IMPLEMENTATION_DECISION_MANIFEST=BLOCKED
 TENANT_ISOLATION_GAPS=0
 UNSOURCED_CONTRACTS=0
 CROSS_CONTRACT_CONFLICTS=0
 SEMANTIC_INFERENCES=0
-OPEN_HUMAN_DECISIONS=21
-OPEN_BLOCKERS=21
+OPEN_HUMAN_DECISIONS=6
+OPEN_BLOCKERS=6
 ```
 
 `EXECUTABLE_CONTRACTS_DESIGN=BLOCKED`
@@ -34,14 +34,15 @@ This report never declares `EXECUTABLE_CONTRACTS=PASS`.
 
 ## Internal audits
 
-| Audit | Result | Evidence |
+| audit | result | evidence |
 |---|---|---|
-| A — Rector → Contracts | BLOCKED with complete accounting | 32 requirement groups in artifact 18; 20 closed, 12 materially dependent on human decisions |
-| B — Physical → Contracts | PASS documentary | all contract families consume approved physical profiles/tables/invariants; no schema contradiction or change |
-| C — Contracts → Rector | PASS documentary | `UNSOURCED_CONTRACTS=0`; proposed names are marked non-executable and not counted as published |
-| D — Cross-contract consistency | PASS for current draft | empty OpenAPI paths agree with zero operation/event/permission/audit catalogs; dependent artifacts explicitly block rather than invent mappings |
-| E — Tenant isolation | PASS documentary | ownership conditionality, same-tenant relationships, authorization chain, negative tests, worker/export/file/AI isolation are explicit; gaps 0 |
-| F — Freeze readiness | BLOCKED | Fase 3 would still have to select toolchain and public command/event/permission/audit/lifecycle contracts |
+| A — Rector -> Contracts | BLOCKED with exact accounting | 27/32 groups closed; five groups map only to H-001..H-006 |
+| B — Physical -> Contracts | PASS documentary | all 175 canonical physical entities remain consumed without model change; 65 operations and 93 lifecycle edges name physical authority |
+| C — Contracts -> Rector | PASS documentary | all published operations/events/permissions/audits/seeds/tests have rector source; unsourced=0 |
+| D — API <-> Permission <-> Audit <-> Event <-> Idempotency | PASS for published catalog | 65 operations; 100 permissions; 61 mutating mappings; 47 events; 154 audit codes; all POSTs keyed |
+| E — Lifecycle <-> Permission <-> Audit <-> Seeds | BLOCKED only at named edge | 93 edges close the chain; `Issue.dismissed` remains unpublished pending H-006 |
+| F — Tenant isolation | PASS documentary | no header authority, cross-tenant concealment, same-tenant FKs/scopes, tenant-bound idempotency/events/cache and negative tests; gaps=0 |
+| G — Freeze readiness | BLOCKED | exact versions, three permission resources and dismissed-source semantics still require humans |
 
 ## Integrity and prohibited-action confirmation
 
@@ -56,10 +57,6 @@ BACKEND_IMPLEMENTED=0
 FRONTEND_IMPLEMENTED=0
 DEPLOYMENT_PERFORMED=0
 CODEX_VARIATION_BUDGET=ZERO
-ASSUMPTIONS_INTRODUCED=NONE
-FILES_OUTSIDE_AUTHORIZED_SCOPE_MODIFIED=NONE
 ```
 
-## Review conclusion
-
-The draft captures every required contract family and isolates each missing decision with owner, alternatives and affected gates. It is not freeze-ready because resolving those decisions is precisely the human work required by rector documents 43 and 45. After approved decisions are incorporated, the catalogs must be cross-validated again before a human can set `EXECUTABLE_CONTRACTS=PASS`.
+The independent contract families are freeze-complete. The design is not a human-review candidate yet because the six remaining decisions are material and Codex cannot approve them.

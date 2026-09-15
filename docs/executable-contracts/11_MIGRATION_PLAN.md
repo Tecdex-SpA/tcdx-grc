@@ -4,57 +4,53 @@
 |---|---|
 | Contract owner | Data Model Owner |
 | Approving human roles | Data Model Owner, Architecture Owner, Security & Privacy Reviewer, QA/Release Owner |
-| Status | `BLOCKED` |
+| Status | `CONTRACT_DEFINED` |
+| Human authority | Decision Record: Fase 2 continuation authorization, DR-F2-004 |
 
-This plan specifies Fase 3 behavior but creates and executes no migration.
+This plan freezes Phase 3 runner behavior. It creates no SQL, migration, ledger or database object in Phase 2.
 
-## Immutable principles
+## Project-owned runner
 
-- PostgreSQL 16; one definitive model; no provisional, legacy, compatibility or plan/provider/tenant schemas.
-- Versioned SQL migrations are ordered, immutable after application and transaction-wrapped whenever PostgreSQL permits.
-- Ledger stores migration identity, content SHA-256, applied timestamp, duration, tool/runner version and outcome. Applied checksum mismatch fails closed.
-- One advisory lock/serialization mechanism prevents concurrent migrators; exact lock key is part of the runner decision.
-- No ad-hoc production DDL. Every change travels through reviewed migration + pre/postconditions + promotion evidence.
+The Phase 3 runner is a minimal project-owned Node.js/TypeScript command over versioned SQL. It does not infer schema, generate DDL, auto-sync models or own the physical model. Kysely is not used as migration/schema authority. PostgreSQL 16 remains authoritative.
 
-## Required sequence
+## Identity and file grammar
 
-1. Secret-safe identity/precondition check: environment, database `tcdx-grc`, PostgreSQL major 16, role/capability, backup/PITR readiness.
-2. Required schemas and approved extensions only.
-3. Base tables/types/registries in dependency order.
-4. PK/UQ/CHECK/FK constraints, with tenant composite FKs and prohibited-cascade scan.
-5. Integrity and required operational indexes.
-6. Immutable global/reference seed manifests.
-7. Plans/capabilities, permission/role, lifecycle and methodology seeds only after their catalogs are approved.
-8. Tenant bootstrap remains an application command, not a hardcoded migration tenant.
-9. Postconditions: catalog checksum/invariant probes, negative grants/tenant checks, ledger state and backup evidence.
+- Migration ID: 14-digit UTC timestamp `YYYYMMDDHHMMSS`, strictly increasing in repository order.
+- Filename: `YYYYMMDDHHMMSS_<lower_snake_case_slug>.sql`.
+- IDs and filenames are immutable after application; duplicate IDs, invalid grammar and ordering regression fail preflight.
+- Manifest records ID, filename, SHA-256 of exact reviewed bytes, transactional mode and required pre/postconditions.
+- Default is `transactional=true`. A non-transactional migration requires an explicit manifest flag, PostgreSQL reason, reviewed recovery/resume procedure and human promotion approval.
 
-## Naming/versioning blocker
+## PostgreSQL ledger and lock
 
-Migration filename/identity, runner implementation and exact ledger schema are not uniquely selected by the baseline. Compatible alternatives include monotonically ordered numeric IDs, UTC timestamp IDs or another collision-safe ordered scheme. Human approval must freeze:
+Phase 3 creates the technical ledger `platform.schema_migrations` as part of the approved foundations sequence. Its contract fields are migration ID, filename, content SHA-256, transactional mode, runner version, started/applied UTC timestamps, duration and outcome. Only a successful completed migration is authoritative as applied. Failed attempts may be recorded separately but can never satisfy the applied unique identity.
 
-- filename grammar and identifier length;
-- transaction opt-out syntax for PostgreSQL operations that cannot run transactionally;
-- advisory lock identity;
-- ledger object/name and checksum canonicalization;
-- runner/package/version and execution command.
+The runner acquires a transaction/session advisory lock whose deterministic signed 64-bit key is derived from UTF-8 `tcdx-grc:platform.schema_migrations:v1` by SHA-256 first eight bytes in network order. It releases on session end and rejects concurrent runners. This lock is coordination only; the ledger is authority.
 
-Codex does not select one.
+Checksum canonicalization is the SHA-256 of repository file bytes with no line-ending or whitespace normalization. An applied ID with different filename or checksum fails closed before executing SQL.
 
-## Failure and rollback
+## Bootstrap order
 
-- Precondition failure: no mutation and explicit non-zero result.
-- Transactional failure: rollback entire migration; ledger must not claim applied.
-- Non-transactional step: only if PostgreSQL requires it and a reviewed resume/restore contract exists before promotion.
-- Applied migrations are never edited or down-migrated destructively. Correction is a new forward migration.
-- Rollback of release prefers application rollback only when schema compatibility was explicitly approved; otherwise restore/PITR under incident/change control.
-- Destructive/schema-contract changes require backup, impact analysis, explicit human gate and tested restore. No generic `down` promises data reversibility.
+1. Secret-safe target identity: environment, database exactly `tcdx-grc`, PostgreSQL major 16, execution principal, backup/PITR readiness and expected current ledger.
+2. Approved schemas and extensions from the frozen physical model.
+3. Ledger/runner foundations, then base types/tables in physical dependency order.
+4. PK/UQ/CHECK/FK constraints, tenant composite references and prohibited-cascade checks.
+5. Required integrity/operational indexes.
+6. Immutable global/reference seeds.
+7. Plans/capabilities, permission/role, lifecycle and methodology seeds from approved manifests.
+8. Regulatory pack headers only; protected content only after its independent gate.
+9. Postconditions: schema checksum/invariants, grants, negative tenant probes, ledger state and evidence capture.
 
-## Rebuild and promotion
+Tenant bootstrap is an application command, never a hardcoded migration tenant.
 
-Rebuild means empty PostgreSQL 16 → all migrations → global seeds → exact catalog/invariant comparison. Promotion is dev/isolated → QA → production using identical reviewed bytes/checksums. QA proves rebuild, upgrade, reapply, checksum rejection, failure recovery, tenant isolation and restore. Production apply requires separate operational authorization and backup evidence.
+## Failure, rebuild and rollback
 
-## Evidence
+Precondition failure performs no mutation. Transactional failure rolls back the whole migration and does not mark applied. Non-transactional work is allowed only under its pre-approved restore/resume contract. Applied migrations are never edited or destructively down-migrated; correction is forward-only.
 
-Per environment: revision, migration manifest/checksums, preflight, identity, backup ref, ledger before/after, duration, postconditions, schema diff, grant scan, failure/retry result and approver/change record. Secret values are never captured.
+Rebuild proof is empty PostgreSQL 16 -> every migration in order -> approved seeds -> exact schema/catalog/invariant comparison. Reapply proves no-op, checksum mismatch proves fail-closed, and concurrency proves a single lock holder. Rollback prefers compatible application rollback; otherwise restore/PITR under incident/change control. Destructive changes require backup, impact review, restore rehearsal and explicit promotion approval.
 
-`MIGRATION_PLAN=BLOCKED` until IDM-013 and the naming/ledger decisions above are human-approved.
+## Promotion and evidence
+
+Identical reviewed bytes/checksums promote isolated development -> QA -> production. Production DDL outside the runner is prohibited. Evidence per environment includes revision, manifest/checksums, target identity, preflight, backup reference, ledger before/after, lock result, duration, postconditions, schema/grant diff, negative tenant checks, failure/retry result and approval/change record. Secrets are never captured.
+
+`MIGRATION_PLAN=PASS` as a Phase 2 contract candidate. Implementation and execution remain blocked for Phase 3/human gates.

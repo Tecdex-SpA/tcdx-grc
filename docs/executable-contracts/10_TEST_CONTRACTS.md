@@ -4,7 +4,8 @@
 |---|---|
 | Contract owner | QA/Release Owner |
 | Approving human roles | QA/Release Owner, Architecture Owner, Security & Privacy Reviewer, Data Model/Backend/Frontend owners by layer |
-| Status | `CONTRACT_DEFINED_PENDING_HUMAN_APPROVAL` |
+| Status | `CONTRACT_DEFINED` |
+| Human authority | Decision Record: DR-F2-005, DR-F2-006, DR-F2-007, DR-F2-010 |
 
 Mocks may support unit tests but never close integration, E2E, runtime, recovery or release gates. Evidence records exact revision, environment, fixture manifest, command/tool version, timestamps, outcome and retained artifact; secrets are redacted.
 
@@ -40,5 +41,9 @@ Mocks may support unit tests but never close integration, E2E, runtime, recovery
 | TC-AI-001 | authorized context/human oversight | A/B tenant data; policies A0–A2 | request/review/accept AI recommendation | no cross-tenant context; provenance; no direct official mutation; failure leaves deterministic calc intact | request context hashes/audit | INTELLIGENCE_RUNTIME | 26,36 |
 | TC-REG-001 | pack publication | authorized licensed import manifest | validate publication | 100% independent populations, hierarchy, approvals, checksum; no premature ISO 9001:2026 use | coverage/gate artifact | per-pack gate | 41,44 |
 | TC-UI-001 | accessibility/result states | approved UI contract and API fixtures | test keyboard/screen reader/contrast/states | WCAG 2.2 AA; zero/no-data/errors/permission-limited distinct | automated + human evidence | slice/release | 27,43 |
+| TC-UUID-001 | application UUIDv7 generation | pinned maintained RFC 9562 library; Node.js 22 | generate sequential and highly concurrent samples | canonical UUID format; version bits=7; variant valid; no collision; timestamp-order behavior documented without treating order as uniqueness/security authority | deterministic parser output + statistical/concurrency run | FOUNDATIONS_RUNTIME | 39 §13; DR-F2-010 |
+| TC-TOOL-001 | approved test stack | exact approved manifests+lockfile | run backend unit/contract/integration/concurrency/fault suites with Vitest; component/accessibility suites with Vitest+Testing Library; E2E with Playwright | suites run under Node.js 22; real PostgreSQL tests do not use mocks as gate evidence; E2E exercises real authorization/tenant/upload workflows | tool versions, lock checksum, reports | FOUNDATIONS/slice/runtime | DR-F2-005..008 |
 
-Framework/package selection remains IDM-014..016; these contracts are tool-independent.
+Vitest, Testing Library for React and Playwright are `HUMAN_APPROVED` by the continuation Decision Record. Their exact proposed versions remain subject to the two version-approval decisions in artifact 01; this does not alter the test requirements.
+
+`TEST_CONTRACTS=PASS` as a Phase 2 contract candidate.
