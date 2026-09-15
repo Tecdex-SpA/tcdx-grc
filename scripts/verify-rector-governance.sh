@@ -60,7 +60,11 @@ awk '{f=$2; sub(/^\.\//,"",f); if (f != "") print f}' "$BASELINE_DIR/SHA256SUMS.
 echo "SHA256SUMS.txt" >> "$expected"
 LC_ALL=C sort -o "$expected" "$expected"
 
-find "$BASELINE_DIR" -mindepth 1 -maxdepth 1 -type f -printf '%f\n' | LC_ALL=C sort > "$actual"
+# Portable on GNU/Linux and macOS/BSD find: strip the directory prefix with sed
+# instead of relying on GNU find -printf.
+find "$BASELINE_DIR" -mindepth 1 -maxdepth 1 -type f -print \
+  | sed "s#^$BASELINE_DIR/##" \
+  | LC_ALL=C sort > "$actual"
 
 if ! cmp -s "$expected" "$actual"; then
   echo "--- expected baseline inventory ---"
