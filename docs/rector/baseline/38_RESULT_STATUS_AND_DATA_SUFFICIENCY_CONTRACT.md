@@ -109,4 +109,4 @@ Un resultado con `result_status != valid` no se presenta como resultado oficial 
 
 ## 9. Comparabilidad
 
-Resultados sólo son comparables si metric/formula/methodology versions, población, escala, horizonte temporal y semántica de subject son compatibles. Cambios incompatibles producen break-in-series explícito.
+Resultados sólo son comparables si metric/formula/methodology versions, población, escala, horizonte temporal y semántica de subject son compatibles. Cambios incompatibles producen `break_in_series` explícito en metadata; no se fuerzan comparaciones.
