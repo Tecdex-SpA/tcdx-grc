@@ -4,7 +4,7 @@
 |---|---|
 | Contract owner | Data Model Owner |
 | Approving human roles | Product Owner/CPO, Architecture Owner, Data Model Owner, Security & Privacy Reviewer, Regulatory Content Owner |
-| Status | `BLOCKED_BY_EXPLICIT_PERMISSION_AND_TRANSITION_DECISIONS` |
+| Status | `CONTRACT_DEFINED` |
 
 These are declarative manifests for Phase 3, not scripts or DDL. Every manifest uses canonical content serialization + SHA-256; same stable key/version/checksum converges, and a different checksum for an applied immutable version fails closed.
 
@@ -16,13 +16,13 @@ These are declarative manifests for Phase 3, not scripts or DDL. Every manifest 
 | `SEED-002` plans | Product Owner/CPO; 42 | `plan:<code>:v1` | `ISO`, `ISO_RIESGO_OPERATIVO`, `GRC` | new PlanVersion; never mutate contracted version; all |
 | `SEED-003` capabilities/entitlements | Product Owner/CPO; 42 | `capability:<code>:v1`; `entitlement:<plan>:<capability>:v1` | one atomic capability per exact group; ISO first 7, ISO_RIESGO_OPERATIVO first 9, GRC all 20 | group immutable; commercial change=new PlanVersion; all; SEED-002 |
 | `SEED-004` roles | Security & Privacy Reviewer; 22,42 | `role:<normalized-name>:v1` | exact 2 platform + 22 tenant roles | base roles immutable; custom roles are tenant data; all |
-| `SEED-005` permissions | Security & Privacy Reviewer; 22 + artifact 05 | `permission:<domain.resource.action>:v1` | every published row in 05; excludes the three unresolved resource families | additive published registry revision; never endpoint-derived; all; SEED-003 |
+| `SEED-005` permissions | Security & Privacy Reviewer; 22 + artifact 05 + H-003..H-005 | `permission:<domain.resource.action>:v1` | all 134 published rows in 05, including configuration, privacy and platform lifecycle-transition resources | additive published registry revision; never endpoint-derived; all; SEED-003 |
 | `SEED-006` base-role grants | Security & Privacy Reviewer + domain owner; 22,42 + artifact 05 | `grant:<role>:<permission>:<scope>:v1` | exactly the base-role/scopes in 05; no wildcard/all-domain grant | revocation/new revision; default DENY; all; SEED-004/005 |
-| `SEED-007` lifecycles | Architecture + domain owners; 21 | `transition:<entity>:<from>:<command>:v1` | 93 unambiguous edges below | published rows immutable; new registry version; all; permissions/events/audit |
+| `SEED-007` lifecycles | Architecture + domain owners; 21 + H-006 | `transition:<entity>:<from>:<command>:v1` | 95 exact edges below; Issue dismissal has exactly two source rows | published rows immutable; new registry version; all; permissions/events/audit |
 | `SEED-008` scales/methodologies | Risk/Data owners; 17,19,38,39 | `methodology:<code>:v1`; normalized levels/bands | impact 1..5; likelihood 1..5/12m; inherent/residual bands/formulas; partial=0.50; min coverage=80%; Data Trust weights 35/25/20/20 | new version only; all; physical methodology entities |
 | `SEED-009` regulatory pack headers | Regulatory Content Owner; 41 | `regulatory_pack:<pack_code>:v1` | five exact header rows below, no protected body | edition/version/supersession; all; independent pack gates |
 | `SEED-010` tenant bootstrap | Tenant Admin process + Security reviewer; 22,42 | `tenant_bootstrap:<tenant_id>:v1` | exact 22 tenant base roles and grants from approved manifests; no hardcoded tenant | idempotent per tenant/version; runtime only after operation approval; SEED-004/006 |
-| `SEED-011` configuration defaults | Product/Architecture/domain owners; 29,39 | no rows published | physical definitions require a permission resource absent from 22 | `HUMAN_DECISION_REQUIRED`; no invented keys/defaults |
+| `SEED-011` configuration defaults | Product/Architecture/domain owners; 29,39; H-003 | no initial product-value rows | H-003 authorizes the registry/workflow but specifies no configuration values; an empty manifest is intentional and creates no inferred default | closed empty manifest; future definitions require governed operation + approved content, stable key/version/checksum |
 | `SEED-012` regulatory contents | applicable licensed owner; 41 | pack/version/source checksum | deliberately empty until licensed/official import and pack gate | immutable published import; applicable environments only after gate |
 
 Atomic capability keys: `CORE_PLATFORM`, `ISO_COMPLIANCE`, `CONTROLS_ASSURANCE`, `EVIDENCE_DOCUMENTS`, `ISSUES_ACTIONS`, `AUDIT`, `ISO_REPORTING`, `OPERATIONAL_RISK`, `INCIDENTS_LOSS`, `INTEGRATION_HUB`, `DATA_TRUST`, `RULES_IMPACT`, `THIRD_PARTIES`, `RESILIENCE`, `PRIVACY`, `SURVEYS`, `REPORT_STUDIO`, `REGULATORY_INTELLIGENCE`, `AI_ASSISTANCE`, `GOVERNED_AUTOMATION`.
@@ -83,6 +83,8 @@ Every row has ownership inherited from the aggregate; allowed scopes are those o
 | `Issue` | `remediation_in_progress` | `pending_verification` | `issue.request_verification` | `remediation.issue.transition` | current state+row_version; object policy; required reason for terminal/negative commands; SoD on review/approval/verify | `audit.lifecycle.issue.request_verification.v1` | `NONE_CONTRACTUALLY_REQUIRED` | KEY; PG record+outbox same TX | 21 §6 |
 | `Issue` | `pending_verification` | `verified_closed` | `issue.verify_close` | `remediation.issue.transition` | current state+row_version; object policy; required reason for terminal/negative commands; SoD on review/approval/verify | `audit.lifecycle.issue.verify_close.v1` | `NONE_CONTRACTUALLY_REQUIRED` | KEY; PG record+outbox same TX | 21 §6 |
 | `Issue` | `verified_closed` | `reopened` | `issue.reopen` | `remediation.issue.transition` | current state+row_version; object policy; required reason for terminal/negative commands; SoD on review/approval/verify | `audit.lifecycle.issue.reopen.v1` | `NONE_CONTRACTUALLY_REQUIRED` | KEY; PG record+outbox same TX | 21 §6 |
+| `Issue` | `open` | `dismissed` | `issue.dismiss` | `remediation.issue.transition` | current state+row_version; object policy; `reason=REQUIRED`; audit mandatory; dismissed terminal | `audit.lifecycle.issue.dismiss_open.v1` | `NONE_CONTRACTUALLY_REQUIRED` | KEY; PG idempotency+audit same TX | 21 §6; H-006 |
+| `Issue` | `triaged` | `dismissed` | `issue.dismiss` | `remediation.issue.transition` | current state+row_version; object policy; `reason=REQUIRED`; audit mandatory; dismissed terminal | `audit.lifecycle.issue.dismiss_triaged.v1` | `NONE_CONTRACTUALLY_REQUIRED` | KEY; PG idempotency+audit same TX | 21 §6; H-006 |
 | `Action` | `pending` | `in_progress` | `action.start` | `remediation.action.transition` | current state+row_version; object policy; required reason for terminal/negative commands; SoD on review/approval/verify | `audit.lifecycle.action.start.v1` | `NONE_CONTRACTUALLY_REQUIRED` | KEY; PG record+outbox same TX | 21 §7 |
 | `Action` | `in_progress` | `in_review` | `action.submit_review` | `remediation.action.transition` | current state+row_version; object policy; required reason for terminal/negative commands; SoD on review/approval/verify | `audit.lifecycle.action.submit_review.v1` | `NONE_CONTRACTUALLY_REQUIRED` | KEY; PG record+outbox same TX | 21 §7 |
 | `Action` | `in_review` | `completed` | `action.complete` | `remediation.action.transition` | current state+row_version; object policy; required reason for terminal/negative commands; SoD on review/approval/verify | `audit.lifecycle.action.complete.v1` | `remediation.action.completed.v1` | KEY; PG record+outbox same TX | 21 §7 |
@@ -141,14 +143,14 @@ Every row has ownership inherited from the aggregate; allowed scopes are those o
 | `Report` | `approved` | `published` | `report.publish` | `reporting.report.publish` | current state+row_version; object policy; required reason for terminal/negative commands; SoD on review/approval/verify | `audit.lifecycle.report.publish.v1` | `reporting.report.published.v1` | KEY; PG record+outbox same TX | 21 §14 |
 | `Report` | `published` | `superseded` | `report.supersede` | `reporting.report.archive` | current state+row_version; object policy; required reason for terminal/negative commands; SoD on review/approval/verify | `audit.lifecycle.report.supersede.v1` | `NONE_CONTRACTUALLY_REQUIRED` | KEY; PG record+outbox same TX | 21 §14 |
 
-## Explicit unresolved lifecycle edge
+## Issue dismissal closure
 
-Rector 21 permits `Issue.dismissed` only through a reasoned authorized command but does not define the allowed source state(s). Publishing one or many sources changes workflow semantics. `Issue.* -> dismissed` is therefore `HUMAN_DECISION_REQUIRED`; it is not included in the 93 published edges.
+H-006 freezes exactly two rows: `open -> dismissed` and `triaged -> dismissed`. Both use explicit command `issue.dismiss`, `reason=REQUIRED`, permission `remediation.issue.transition`, mandatory audit and PostgreSQL idempotency. `dismissed` is terminal in this contract. There is no edge from `remediation_in_progress`, `pending_verification`, `verified_closed` or `reopened`, and no edge out of `dismissed`; absence is DENY.
 
-## Blockers
+## Final seed reconciliation
 
-1. Permission resources for configuration, retention/erasure and lifecycle-registry administration are absent from rector 22 §10.
-2. Allowed source states for `Issue.dismissed` require human approval.
-3. Configuration-default rows remain empty until blocker 1 is resolved.
+1. H-003..H-005 add Permission definitions and only their approved base-role grants; no wildcard grant or capability is created.
+2. H-006 adds exactly two lifecycle rows and no inferred exit from `dismissed`.
+3. SEED-011 is an intentional empty value manifest because H-003 authorizes governance but supplies no configuration value/default to seed.
 
-`SEED_MANIFESTS=BLOCKED`; all independent plan/capability/role/permission/grant/methodology/regulatory-header and 93 lifecycle-edge contracts above are frozen.
+`PUBLISHED_LIFECYCLE_EDGES=95`; `ISSUE_DISMISSED_EDGES=2`; `ISSUE_DISMISSED_SOURCES=open,triaged`. `SEED_MANIFESTS=PASS` as a Phase 2 contract candidate. These are manifests only, never scripts, SQL, DDL or migrations.

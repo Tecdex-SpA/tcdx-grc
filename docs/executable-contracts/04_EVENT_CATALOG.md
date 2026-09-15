@@ -73,7 +73,15 @@ Payload profiles:
 | `reporting.report.published.v1` | Reporting / reportPublish | ReportArtifact; TENANT_OWNED | PUBLISHED | notification/download projection | confidential | 21,27 |
 | `ai.recommendation.requested.v1` | AI / aiRecommendationRequest | AIJob; TENANT_OWNED | JOB_REQUESTED + purpose/context hash | governed `ia2.tcdx.int` adapter worker | restricted | 26,36 |
 | `ai.recommendation.reviewed.v1` | AI / aiRecommendationReview | AIRecommendation; TENANT_OWNED | DECISION + accepted domain command ref if any | NONE_CONTRACTUALLY_REQUIRED; target command is separately invoked/authorized | restricted | 36 |
+| `configuration.configuration_definition.published.v1` | Configuration / configurationDefinitionPublish | ConfigurationDefinition; PLATFORM_CONTROL | PUBLISHED + validation/scope hash | NONE_CONTRACTUALLY_REQUIRED | confidential | 29,39; H-003 |
+| `configuration.configuration_override.created.v1` | Configuration / configurationOverrideCreate | ConfigurationOverride; TENANT_OWNED | CREATED + definition/version/scope refs; value minimized | effective-resolution invalidation only through approved policy | confidential | 29,39; H-003 |
+| `privacy.retention_policy.published.v1` | Privacy / retentionPolicyPublish | RetentionPolicy; TENANT_OWNED | PUBLISHED + precedence/source/version refs | retention resolution; no automatic purge | restricted | 23,39; H-004 |
+| `privacy.data_subject_request.created.v1` | Privacy / dataSubjectRequestCreate | DataSubjectRequest; TENANT_OWNED | CREATED; pseudonymous requester ref omitted from payload | NONE_CONTRACTUALLY_REQUIRED | restricted | 33,39; H-004 |
+| `privacy.data_subject_request.approved.v1` | Privacy / dataSubjectRequestApprove | DataSubjectRequest; TENANT_OWNED | DECISION + policy/legal-basis references | erasure execution remains separately authorized | restricted | 22,23,39; H-004 |
+| `privacy.erasure_execution.executed.v1` | Privacy / erasureExecutionExecute | ErasureExecutionRecord; TENANT_OWNED | DECISION + policy/version, outcome and affected-class counts; no erased personal data | review workflow | restricted | 23,39; H-004 |
+| `privacy.erasure_execution.reviewed.v1` | Privacy / erasureExecutionReview | ErasureExecutionRecord; TENANT_OWNED | DECISION + reviewer/outcome and exception refs | NONE_CONTRACTUALLY_REQUIRED | restricted | 22,23,39; H-004 |
+| `platform.lifecycle_transition.published.v1` | Platform Governance / lifecycleTransitionPublish | LifecycleTransitionDefinition; PLATFORM_CONTROL | PUBLISHED + edge/permission/policy/event hash; no arbitrary rule body | registry cache invalidator only; cache non-authoritative | confidential | 21,33; H-005 |
 
-`PUBLISHED_EVENT_TYPES=47`. No future consumer is invented. A consumer addition changes this catalog and tests; it does not acquire write authority over the producer aggregate.
+`PUBLISHED_EVENT_TYPES=55`. No future consumer is invented. A consumer addition changes this catalog and tests; it does not acquire write authority over the producer aggregate.
 
 `EVENT_CATALOG=PASS` as a Fase 2 contract candidate.

@@ -6,7 +6,7 @@
 | Approving human roles | Architecture Owner, Security & Privacy Reviewer, QA/Release Owner, domain owners |
 | Status | `CONTRACT_DEFINED` |
 
-Audit events record accountability/outcome and never act as the domain event bus. The exact `audit_event_code` for each of the 61 mutating API operations is the `audit.*.v1` code in artifact 03. The 93 unambiguous lifecycle edges use the exact `audit.lifecycle.<entity>.<command>.v1` code published row-by-row in artifact 09. Four GET operations produce no material audit by default, while protected-content access/export may add an access audit only through an approved policy.
+Audit events record accountability/outcome and never act as the domain event bus. The exact `audit_event_code` for each of the 69 mutating API operations is the `audit.*.v1` code in artifact 03. The 95 lifecycle edges use the exact `audit.lifecycle.<entity>.<command>.v1` code published row-by-row in artifact 09. Five GET operations produce no material audit by default, while protected-content access/export may add an access audit only through an approved policy.
 
 ## Code convention
 
@@ -38,6 +38,8 @@ No secret, blob, full signed URL, JWT/JWKS material, protected normative body, r
 | FILE_EVIDENCE | upload/finalize/request/evidence operations | metadata/checksum/scan/review outcome; never binary/signed URL | approval/access yes |
 | DATA_EXECUTION | sync/calculation/source resolution/rule/report/AI jobs | definition/version/job IDs, status, input/context hash and result ref | source resolution/publication/AI acceptance yes |
 | RISK_PRIVACY | risk assessment/treatment/acceptance and future erasure | values/status/policy refs; rationale minimized | acceptance/erasure yes |
+| CONFIGURATION_GOVERNANCE | configuration definition publication, tenant override creation and lifecycle registry publication | definition/registry/version/scope/policy hashes and approvals; override value minimized | yes |
+| PRIVACY_EXECUTION | retention publication, data-subject request decisions and erasure execute/review | policy/legal-basis/hold refs, per-class action/outcome and SoD refs; never erased personal data | yes |
 
 ## Denial and IDOR
 
@@ -46,14 +48,14 @@ Authentication failures are security telemetry; authorization/SoD denial for a k
 ## Coverage
 
 ```text
-MUTATING_OPERATIONS=61
-MUTATING_OPERATIONS_WITH_AUDIT=61
-PUBLISHED_LIFECYCLE_EDGES=93
-PUBLISHED_LIFECYCLE_AUDIT_CODES=93
-PUBLISHED_AUDIT_EVENT_CODES=154
+MUTATING_OPERATIONS=69
+MUTATING_OPERATIONS_WITH_AUDIT=69
+PUBLISHED_LIFECYCLE_EDGES=95
+PUBLISHED_LIFECYCLE_AUDIT_CODES=95
+PUBLISHED_AUDIT_EVENT_CODES=164
 AUDIT_MAPPING_GAPS=0
 ```
 
-The three blocked operation families OP-B01..03 and the unresolved `Issue.* -> dismissed` edge have no invented audit codes. Their codes are published only after the corresponding human decision.
+H-003..H-005 publish eight reinforced operation audit codes through artifact 03. H-006 publishes exactly `audit.lifecycle.issue.dismiss.v1` for each of the two source-state-specific registry rows; the code is stable while the registry row preserves the exact `from_state`. Erasure audit stores policy/version, action by object class, exclusions/hold and outcome without reintroducing erased personal data. Configuration and lifecycle publication retain author/reviewer/approver/publisher evidence and do not fabricate tenant context for PLATFORM_CONTROL.
 
 `AUDIT_EVENT_CATALOG=PASS` as a Fase 2 contract candidate.

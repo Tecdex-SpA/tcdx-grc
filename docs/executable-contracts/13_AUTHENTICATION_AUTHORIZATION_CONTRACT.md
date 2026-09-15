@@ -32,6 +32,8 @@ Tenant operations require `X-TCDX-Tenant-Id`. The header selects a candidate con
 
 Every missing or indeterminate input is `DENY`. A capability is not a permission; a role is not a scope; an entitlement is not ownership. Lists, exports, signed-file access, jobs, outbox consumers and AI context apply the same effective predicate at query/command construction.
 
+H-003..H-005 do not weaken this chain. Configuration overrides and all privacy operations resolve a real tenant from persisted ownership; Platform Admin has no automatic right to tenant personal content. LifecycleTransitionDefinition is PLATFORM_CONTROL and only Platform Admin has its base grants, while administering/publishing that registry never authorizes execution of a domain transition. Configuration, privacy and lifecycle publication/execute/review actions remain default DENY, SoD-checked and reinforced-audited.
+
 ## Confidentiality and cache
 
 Foreign-tenant identifiers produce the same `TCDX.RESOURCE.NOT_FOUND` contract as absence when disclosure would reveal existence. Timing, pagination totals, ETags, audit details and signed URLs cannot disclose the foreign object. Cache keys bind all authorization-relevant dimensions and cache is never authorization authority.

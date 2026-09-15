@@ -4,31 +4,31 @@
 |---|---|
 | Contract owner | Architecture Owner |
 | Approving human roles | Product Owner/CPO, Architecture Owner, Data Model Owner, Backend Owner, Frontend Owner, Security & Privacy Reviewer, QA/Release Owner, Regulatory Content Owner as applicable |
-| Status | `BLOCKED` |
+| Status | `CANDIDATE_READY_FOR_HUMAN_REVIEW` |
 
 ```text
 BASELINE_INTEGRITY=PASS
 PHYSICAL_MODEL_INTEGRITY=PASS
-EXECUTABLE_REQUIREMENTS_COVERAGE=27/32
-OPENAPI_CONTRACT=BLOCKED
+EXECUTABLE_REQUIREMENTS_COVERAGE=32/32
+OPENAPI_CONTRACT=PASS
 EVENT_CATALOG=PASS
-PERMISSION_CATALOG=BLOCKED
+PERMISSION_CATALOG=PASS
 ERROR_MODEL=PASS
 IDEMPOTENCY_CONTRACT=PASS
 AUDIT_EVENT_CATALOG=PASS
-SEED_MANIFESTS=BLOCKED
+SEED_MANIFESTS=PASS
 TEST_CONTRACTS=PASS
 MIGRATION_PLAN=PASS
-IMPLEMENTATION_DECISION_MANIFEST=BLOCKED
+IMPLEMENTATION_DECISION_MANIFEST=PASS
 TENANT_ISOLATION_GAPS=0
 UNSOURCED_CONTRACTS=0
 CROSS_CONTRACT_CONFLICTS=0
 SEMANTIC_INFERENCES=0
-OPEN_HUMAN_DECISIONS=6
-OPEN_BLOCKERS=6
+OPEN_HUMAN_DECISIONS=0
+OPEN_BLOCKERS=0
 ```
 
-`EXECUTABLE_CONTRACTS_DESIGN=BLOCKED`
+`EXECUTABLE_CONTRACTS_DESIGN=CANDIDATE_READY_FOR_HUMAN_REVIEW`
 
 This report never declares `EXECUTABLE_CONTRACTS=PASS`.
 
@@ -36,19 +36,20 @@ This report never declares `EXECUTABLE_CONTRACTS=PASS`.
 
 | audit | result | evidence |
 |---|---|---|
-| A — Rector -> Contracts | BLOCKED with exact accounting | 27/32 groups closed; five groups map only to H-001..H-006 |
-| B — Physical -> Contracts | PASS documentary | all 175 canonical physical entities remain consumed without model change; 65 operations and 93 lifecycle edges name physical authority |
+| A — Rector -> Contracts | PASS documentary | 32/32 groups closed; final rows cite H-001..H-006 and higher rector/physical authority |
+| B — Physical -> Contracts | PASS documentary | all 175 canonical physical entities remain consumed without model change; 74 operations and 95 lifecycle edges name physical authority |
 | C — Contracts -> Rector | PASS documentary | all published operations/events/permissions/audits/seeds/tests have rector source; unsourced=0 |
-| D — API <-> Permission <-> Audit <-> Event <-> Idempotency | PASS for published catalog | 65 operations; 100 permissions; 61 mutating mappings; 47 events; 154 audit codes; all POSTs keyed |
-| E — Lifecycle <-> Permission <-> Audit <-> Seeds | BLOCKED only at named edge | 93 edges close the chain; `Issue.dismissed` remains unpublished pending H-006 |
+| D — API <-> Permission <-> Audit <-> Event <-> Idempotency | PASS for published catalog | 74 operations; 134 permissions; 69 mutating mappings; 55 events; 164 audit codes; all POSTs keyed |
+| E — Lifecycle <-> Permission <-> Audit <-> Seeds | PASS documentary | 95 edges close the chain; Issue dismissal is exactly open/triaged -> dismissed with reason, permission and audit |
 | F — Tenant isolation | PASS documentary | no header authority, cross-tenant concealment, same-tenant FKs/scopes, tenant-bound idempotency/events/cache and negative tests; gaps=0 |
-| G — Freeze readiness | BLOCKED | exact versions, three permission resources and dismissed-source semantics still require humans |
+| G — Freeze readiness | PASS documentary candidate | Phase 3 foundations can consume exact pins, permissions/grants, operations, seed manifests and lifecycle rows without taking a material Phase 2 decision; `EXECUTABLE_CONTRACTS` human gate remains required |
 
 ## Integrity and prohibited-action confirmation
 
 ```text
 RECTOR_FILES_MODIFIED=0
 PHYSICAL_MODEL_FILES_MODIFIED=0
+MASTER_EXECUTION_STATUS_MODIFIED=0
 DDL_EXECUTED=0
 MIGRATIONS_CREATED=0
 DATABASE_CHANGED=0
@@ -59,4 +60,4 @@ DEPLOYMENT_PERFORMED=0
 CODEX_VARIATION_BUDGET=ZERO
 ```
 
-The independent contract families are freeze-complete. The design is not a human-review candidate yet because the six remaining decisions are material and Codex cannot approve them.
+The contract families are freeze-complete as a documentary candidate. This report does not declare `EXECUTABLE_CONTRACTS=PASS`; only the separate human gate may do so.

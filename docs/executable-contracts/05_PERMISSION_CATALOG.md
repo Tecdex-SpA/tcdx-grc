@@ -4,7 +4,7 @@
 |---|---|
 | Contract owner | Security & Privacy Reviewer |
 | Approving human roles | Product Owner/CPO, Architecture Owner, Security & Privacy Reviewer, domain owners |
-| Status | `BLOCKED_BY_THREE_PERMISSION_RESOURCE_DECISIONS` |
+| Status | `CONTRACT_DEFINED` |
 
 Authorization is always `identity → active membership → entitlement/capability → permission → scope → object policy → SoD → ALLOW`, otherwise DENY. Plan, capability, entitlement, role, permission, scope and ownership remain separate.
 
@@ -128,11 +128,50 @@ These rows are exact actions permitted by rector 22 §10 and required by the una
 | `risk.treatment.transition` | OPERATIONAL_RISK | transition treatment | tenant, assigned_object | same tenant; global definitions remain immutable | Risk Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
 | `risk.treatment.verify` | OPERATIONAL_RISK | verify treatment | tenant | same tenant; global definitions remain immutable | GRC Manager, Risk Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
 
-`PUBLISHED_PERMISSION_ROWS=100`; 61 operation-catalog permissions plus 39 additional lifecycle-registry permissions are published. Each is used by an operation or lifecycle edge; absence remains DENY.
+`PUBLISHED_PERMISSION_ROWS_BEFORE_FINAL_DECISIONS=100`; 61 operation-catalog permissions plus 39 additional lifecycle-registry permissions were already published.
 
-## Unresolved permission resources
+## Human-approved final permission resources
 
-Rector 29/33/39 require Configuration, Retention/Erasure and LifecycleTransitionDefinition operations, but rector 22 §10 omits matching permission resources. Creating `platform.configuration.*`, `operations.erasure.*` or `platform.lifecycle_transition.*` would expand the normative Permission Registry. These three resource families remain `HUMAN_DECISION_REQUIRED`; operations OP-B01..03 and their seed grants remain blocked.
+H-003..H-005 authorize these Permission rows over existing entities and capabilities. They add no entitlement/capability or physical entity. `NONE` means the Permission is published without a base-role grant; custom roles still require an explicit governed grant.
+
+| permission_code | capability | action/resource | allowed scopes | tenant boundary | base roles containing it | entitlement / SoD / sensitive / audit | source |
+|---|---|---|---|---|---|---|---|
+| `configuration.configuration_definition.read` | CORE_PLATFORM | read configuration definition | platform | global/platform definitions only | Platform Admin | no tenant content authority; audit by access policy | 29,33,39; H-003 |
+| `configuration.configuration_definition.create` | CORE_PLATFORM | create configuration definition | platform | global/platform definitions only | Platform Admin | author/reviewer/approver/publisher SoD; reinforced audit | 22,29,39; H-003 |
+| `configuration.configuration_definition.update` | CORE_PLATFORM | update draft configuration definition | platform | published definition immutable | Platform Admin | author/reviewer/approver/publisher SoD; reinforced audit | 22,29,39; H-003 |
+| `configuration.configuration_definition.review` | CORE_PLATFORM | review configuration definition | platform | global/platform definitions only | Platform Admin | reviewer distinct where SoD requires; reinforced audit | 22,29,39; H-003 |
+| `configuration.configuration_definition.approve` | CORE_PLATFORM | approve configuration definition | platform | global/platform definitions only | Platform Admin | approver distinct where SoD requires; reinforced audit | 22,29,39; H-003 |
+| `configuration.configuration_definition.publish` | CORE_PLATFORM | publish configuration definition | platform | published version immutable | Platform Admin | author/review/approve/publish SoD; reinforced audit | 22,29,39; H-003 |
+| `configuration.configuration_definition.archive` | CORE_PLATFORM | archive configuration definition | platform | no destructive delete or history rewrite | Platform Admin | reason and reinforced audit | 23,29,39; H-003 |
+| `configuration.configuration_override.read` | CORE_PLATFORM | read configuration override | tenant, organizational_unit, process, service, assigned_object, owned_object | always tenant-scoped; definition must allow override | GRC Manager, Tenant Admin, Data Admin | CORE_PLATFORM; object policy; audit by access policy | 29,39,42; H-003 |
+| `configuration.configuration_override.create` | CORE_PLATFORM | create configuration override | tenant, organizational_unit, process, service, assigned_object, owned_object | always tenant-scoped; never mutates global definition | GRC Manager, Tenant Admin | definition flags/type/scope enforced; audit | 29,39,42; H-003 |
+| `configuration.configuration_override.update` | CORE_PLATFORM | update draft configuration override | tenant, organizational_unit, process, service, assigned_object, owned_object | same tenant and definition | GRC Manager, Tenant Admin | row version; audit | 22,29,39; H-003 |
+| `configuration.configuration_override.review` | CORE_PLATFORM | review configuration override | tenant, organizational_unit, process, service | same tenant | GRC Manager | author/reviewer SoD; reinforced audit | 22,29,39; H-003 |
+| `configuration.configuration_override.approve` | CORE_PLATFORM | approve configuration override | tenant | same tenant | NONE | Permission exists without base grant; SoD; reinforced audit | 22,29,39; H-003 |
+| `configuration.configuration_override.archive` | CORE_PLATFORM | archive configuration override | tenant | same tenant; preserves history | NONE | Permission exists without base grant; reason; audit | 23,29,39; H-003 |
+| `configuration.effective_configuration.read` | CORE_PLATFORM | read resolved EffectiveConfiguration | tenant, organizational_unit, process, service, assigned_object, owned_object | TENANT_DERIVED; inputs same tenant | Data Admin | resolution is read-only; conflicts explicit; no direct write | 29,33,39; H-003 |
+| `privacy.retention_policy.read` | PRIVACY | read retention policy | tenant | tenant policy/content only; global policy visibility does not grant mutation | Privacy Manager, Legal Reviewer, GRC Manager | PRIVACY entitlement; minimized access | 23,39,42; H-004 |
+| `privacy.retention_policy.create` | PRIVACY | create retention policy | tenant | tenant-owned policy only | Privacy Manager | legal/regulatory precedence preserved; audit | 23,39,42; H-004 |
+| `privacy.retention_policy.update` | PRIVACY | update draft retention policy | tenant | tenant-owned draft only | Privacy Manager | published immutable; audit | 23,39; H-004 |
+| `privacy.retention_policy.review` | PRIVACY | review retention policy | tenant | same tenant | Privacy Manager, Legal Reviewer | author/reviewer SoD; legal exception/hold review; reinforced audit | 22,23,39; H-004 |
+| `privacy.retention_policy.approve` | PRIVACY | approve retention policy | tenant | same tenant | Legal Reviewer | legal decision; author/approver SoD; reinforced audit | 22,23,42; H-004 |
+| `privacy.retention_policy.publish` | PRIVACY | publish retention policy | tenant | same tenant; cannot weaken mandatory/contractual policy | Privacy Manager | approval required; reinforced audit | 22,23,39; H-004 |
+| `privacy.retention_policy.archive` | PRIVACY | archive retention policy | tenant | same tenant; history retained | Privacy Manager | no purge authorization by itself; reason; audit | 23,39; H-004 |
+| `privacy.data_subject_request.read` | PRIVACY | read data-subject request | tenant | same tenant; personal content minimized | Privacy Manager, Legal Reviewer, GRC Manager | restricted; reinforced access audit by policy | 26,39,42; H-004 |
+| `privacy.data_subject_request.create` | PRIVACY | create data-subject request | tenant | same tenant | Privacy Manager | request identity minimized; audit | 33,39,42; H-004 |
+| `privacy.data_subject_request.update` | PRIVACY | update data-subject request | tenant, assigned_object | same tenant | Privacy Manager | lifecycle/object policy; audit | 22,39; H-004 |
+| `privacy.data_subject_request.review` | PRIVACY | review data-subject request | tenant, assigned_object | same tenant | Privacy Manager, Legal Reviewer | legal decision/exception review; SoD; reinforced audit | 22,39,42; H-004 |
+| `privacy.data_subject_request.approve` | PRIVACY | approve data-subject request decision | tenant | same tenant | Legal Reviewer | author/approver SoD; reinforced audit | 22,39,42; H-004 |
+| `privacy.data_subject_request.transition` | PRIVACY | execute an explicitly published request transition | tenant, assigned_object | same tenant; no generic status write | Privacy Manager | only registry edge; reason where required; audit | 21,22,39; H-004 |
+| `privacy.data_subject_request.archive` | PRIVACY | archive data-subject request | tenant | same tenant; protected history retained | Privacy Manager | no destructive delete; reason; audit | 23,39; H-004 |
+| `privacy.erasure_execution.read` | PRIVACY | read erasure execution | tenant | same tenant; record must not reintroduce erased data | Privacy Manager, Legal Reviewer, GRC Manager | restricted; retention/legal hold enforced | 23,39,42; H-004 |
+| `privacy.erasure_execution.execute` | PRIVACY | execute controlled erasure | tenant, assigned_object | same tenant; per-object policy/action | Privacy Manager | approved workflow; retention/legal hold; executor/reviewer SoD; reinforced audit | 22,23,39; H-004 |
+| `privacy.erasure_execution.review` | PRIVACY | review erasure execution | tenant | same tenant | Privacy Manager, Legal Reviewer | reviewer distinct from executor; legal exceptions/hold; reinforced audit | 22,23,39,42; H-004 |
+| `platform.lifecycle_transition.read` | CORE_PLATFORM | read LifecycleTransitionDefinition registry | platform | PLATFORM_CONTROL; no tenant registry | Platform Admin | read registry only; administering is separate | 21,33; H-005 |
+| `platform.lifecycle_transition.administer` | CORE_PLATFORM | administer draft registry definition | platform | PLATFORM_CONTROL; no tenant variant entity | Platform Admin | versioned; no arbitrary executable rules; reinforced audit | 21,22,33; H-005 |
+| `platform.lifecycle_transition.publish` | CORE_PLATFORM | publish registry definition | platform | PLATFORM_CONTROL; published immutable | Platform Admin | review/publish SoD; reinforced audit; not domain transition execution | 21,22,33; H-005 |
+
+`PUBLISHED_PERMISSION_ROWS=134`. A Permission may exist without a base grant. Every authorization remains default DENY and entitlement/scope/object-policy/SoD constrained.
 
 ## Grant rules
 
@@ -141,3 +180,5 @@ Rector 29/33/39 require Configuration, Retention/Erasure and LifecycleTransition
 - Pack-specific coapproval is enforced by object policy/SoD in addition to Permission.
 - Custom roles may compose only published Permission rows and are tenant-owned; baseline roles are immutable.
 - Exports require the resource `export` permission when later published and inherit read scope; no export operation is published in this iteration.
+
+`PERMISSION_CATALOG=PASS` as a Phase 2 contract candidate.

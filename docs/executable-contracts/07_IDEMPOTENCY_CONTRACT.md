@@ -41,13 +41,13 @@ The first successful logical command stores mutation, AuditEvent, OutboxEvent an
 
 ## Per-operation assignment
 
-Artifact 03 is authoritative for the assignment. The four GET operations are `NATURALLY_IDEMPOTENT`:
+Artifact 03 is authoritative for the assignment. The five GET operations are `NATURALLY_IDEMPOTENT`:
 
-`accessGet, normativeUnitList, requirementList, snapshotGet`.
+`accessGet, normativeUnitList, requirementList, snapshotGet, effectiveConfigurationGet`.
 
-All 61 published POST operations are `IDEMPOTENCY_KEY_REQUIRED`. This includes upload finalization and async job requests: a durable PostgreSQL command/job record is created before any object-store/provider/worker side effect. No published operation is `NON_RETRYABLE_WITHOUT_RECONCILIATION`; that class is reserved for a future approved operation whose external effect cannot be placed behind a durable keyed command. Such an operation cannot be added silently.
+All 69 published POST operations are `IDEMPOTENCY_KEY_REQUIRED`. This includes upload finalization, async job requests, configuration/registry publication and controlled erasure: a durable PostgreSQL command/job record is created before any object-store/provider/worker/per-object erasure effect. No published operation is `NON_RETRYABLE_WITHOUT_RECONCILIATION`; that class is reserved for a future approved operation whose external effect cannot be placed behind a durable keyed command. Such an operation cannot be added silently.
 
-All 93 internal lifecycle command edges published in SEED-007 are also `IDEMPOTENCY_KEY_REQUIRED`, tenant/actor/command/aggregate bound, fingerprinted with current row_version and persisted atomically with audit and any required outbox event.
+All 95 internal lifecycle command edges published in SEED-007 are also `IDEMPOTENCY_KEY_REQUIRED`, tenant/actor/command/aggregate bound, fingerprinted with current row_version and persisted atomically with audit and any required outbox event. The two `Issue -> dismissed` rows bind the source state in the fingerprint and cannot replay across `open` and `triaged`.
 
 ## Canonical fingerprint profiles
 

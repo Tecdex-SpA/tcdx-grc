@@ -4,10 +4,10 @@
 |---|---|
 | Contract owner | Architecture Owner |
 | Approving human roles | Architecture Owner; Data Model Owner; Backend Owner; Frontend Owner; QA/Release Owner; Security & Privacy Reviewer |
-| Status | `BLOCKED_BY_EXACT_VERSION_APPROVAL` |
-| Human Decision Record | `Fase 2 continuation authorization` |
+| Status | `HUMAN_APPROVED_DECISIONS_RECORDED` |
+| Human Decision Record | `Fase 2 continuation authorization`; final closure H-001 and H-002 |
 
-`HUMAN_APPROVED` se usa sólo para decisiones contenidas explícitamente en el Decision Record de esta continuación. `PROPOSED_FOR_HUMAN_APPROVAL` no autoriza instalación ni implementación.
+`HUMAN_APPROVED` se usa sólo para decisiones contenidas explícitamente en los Decision Records humanos de continuación y cierre final. Ninguna aprobación de versión autoriza por sí misma instalación ni implementación.
 
 | decision_id | subject | status | selected_value | allowed alternatives considered | compatibility with rector / physical model | operational, security and maintenance impact | reason | human owner | human approval |
 |---|---|---|---|---|---|---|---|---|---|
@@ -30,8 +30,8 @@
 | IDM-019 | UUIDv7 | `HUMAN_APPROVED` | generación en aplicación mediante librería mantenida conforme RFC vigente; no generador propio salvo imposibilidad aprobada | generador propio rechazado por defecto | exacta con physical profiles | formato/version bits/uniqueness/order/concurrency probados | DR-F2-010 | Backend + Security | Decision Record: Fase 2 continuation authorization |
 | IDM-020 | Authentication/trust | `HUMAN_APPROVED` | OIDC/OAuth 2.x Bearer JWT; issuer/audience/JWKS configurados; identidades human y M2M separadas; backend autoriza | proveedor/IdP concreto no seleccionado | exacta con IAM / neutral | autenticación verificable sin confiar en frontend | DR-F2-011 | Security + Architecture | Decision Record: Fase 2 continuation authorization |
 | IDM-021 | IA integration policy | `HUMAN_APPROVED` | sólo backend→`ia2.tcdx.int`; contexto autorizado/minimizado, provenance, correlation, audit, human oversight; no authority/RBAC bypass/secrets | provider/model/DPA quedan gate futuro | exacta con `ai.*` | proveedor/config no inventados | DR-F2-020 | AI Governance + Security | Decision Record: Fase 2 continuation authorization |
-| IDM-P01 | Exact toolchain version set | `PROPOSED_FOR_HUMAN_APPROVAL` | Node `22.23.2`; pnpm `12.4.2`; TypeScript `7.0.2`; Fastify `5.12.4`; React/React DOM `19.3.0`; Vite `8.3.0`; Kysely `0.29.5`; Vitest `5.0.1`; Testing Library React `16.3.3`; Testing Library DOM `10.4.2`; Playwright `1.63.0`; uuid `14.0.2` | otras versiones estables compatibles | majors rectoras respetadas; Kysely requires Node >=22; Vitest/Vite require Node >=22.12; React TL supports React 19 | exact pins change supply-chain baseline | registry compatibility inspection 2026-09-15; DR §16 requires proposal, not Codex approval | Architecture + Security + applicable owners | pending |
-| IDM-P02 | PostgreSQL JS driver | `PROPOSED_FOR_HUMAN_APPROVAL` | `pg` `8.23.0`, exact pin, used only as Kysely PostgreSQL driver | another Kysely-compatible driver | no schema authority; Node >=16 and compatible with Node 22 | pool/TLS/type parsing surface | Kysely PostgreSQL runtime requires an approved driver; not explicitly named by DR | Data Model + Backend + Security | pending |
+| IDM-P01 | Exact toolchain version set | `HUMAN_APPROVED` | Node.js `22.23.2`; pnpm `12.4.1`; TypeScript `7.0.2`; Fastify `5.12.4`; React `19.3.0`; React DOM `19.3.0`; Vite `8.3.0`; Kysely `0.29.5`; Vitest `5.0.1`; Testing Library React `16.3.3`; Testing Library DOM `10.4.2`; Playwright `1.63.0`; uuid `14.0.2` | ninguna tras H-001 | majors rectoras respetadas; exact pins no alteran modelo físico | supply-chain baseline reproducible; no instalación en Fase 2 | H-001 | Architecture + Security + applicable owners | final closure Decision Record H-001, 2026-09-15 |
+| IDM-P02 | PostgreSQL JS driver | `HUMAN_APPROVED` | `pg` `8.23.0`, exact pin, exclusivamente driver PostgreSQL de Kysely | ninguna tras H-002 | PostgreSQL/modelo físico siguen siendo autoridad; sin schema generation, migration authority ni auto-sync | pool/TLS/type parsing surface; no autoridad de schema | H-002 | Data Model + Backend + Security | final closure Decision Record H-002, 2026-09-15 |
 
 ## Tooling consequences
 
@@ -40,4 +40,4 @@
 - An OpenAPI generator package is not required to close the schema-first contract; selection is deferred until generation is implemented and must receive an exact-version approval without changing direction of authority.
 - Provider/model/DPA details for IA are runtime/security dependencies, not gaps in the generic executable contract.
 
-`OPEN_HUMAN_DECISIONS=2`: IDM-P01 and IDM-P02. Therefore `IMPLEMENTATION_DECISION_MANIFEST=BLOCKED` until exact versions/driver receive human approval; all contracts independent of package bytes may proceed.
+`OPEN_HUMAN_DECISIONS=0`. `IMPLEMENTATION_DECISION_MANIFEST=PASS` as a Phase 2 contract candidate. H-001 and H-002 freeze the exact versions but do not authorize package installation, runtime manifests, lockfiles or Phase 3 implementation.

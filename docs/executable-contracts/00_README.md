@@ -1,34 +1,34 @@
-# Fase 2 — executable contracts continuation
+# Fase 2 — executable contracts final closure candidate
 
 | Campo | Valor |
 |---|---|
 | Master regent | `TCDX_GRC_MASTER_REGENT_BASELINE_v1.4_2026-09-15` |
-| Phase | `EXECUTABLE_CONTRACTS_CONTINUATION` |
+| Phase | `EXECUTABLE_CONTRACTS_FINAL_CLOSURE` |
 | Contract owner | Architecture Owner |
 | Approving human roles | Product Owner/CPO, Architecture Owner, Data Model Owner, Backend Owner, Frontend Owner, Security & Privacy Reviewer, QA/Release Owner, Regulatory Content Owner as applicable |
-| Status | `BLOCKED_BY_SIX_HUMAN_DECISIONS` |
+| Status | `CANDIDATE_READY_FOR_HUMAN_REVIEW` |
 | Physical authority | approved commit `a822bb92d0d585edd84adc8a1c65ec280923cc8e` |
 | Continuity base | draft commit `bee2c20` |
 
 This directory freezes Phase 2 declarative contracts only. It contains no executable DDL, migrations, seed scripts, backend, frontend, worker, package manifest, lockfile or deployment action. It does not approve `EXECUTABLE_CONTRACTS=PASS`.
 
-## Continuation result
+## Final closure result
 
-The human continuation Decision Record closes package-manager direction, repository layout, typed SQL, project migration runner, test stacks, OpenAPI authority/generation, UUIDv7 library direction, authentication trust profile and AI boundary. Controlled derivation publishes:
+The continuation Decision Record and final human decisions H-001..H-006 close package-manager direction, exact toolchain/driver pins, repository layout, typed SQL, project migration runner, test stacks, OpenAPI authority/generation, UUIDv7 library direction, authentication trust profile, AI boundary, the three missing permission families and the exact `Issue.dismissed` source states. Controlled derivation publishes:
 
-- 65 public API operations in OpenAPI and the operation matrix;
-- 47 domain/integration event types;
-- 100 permissions and explicit base-role/scope grants;
+- 74 public API operations in OpenAPI and the operation matrix;
+- 55 domain/integration event types;
+- 134 permissions and explicit base-role/scope grants;
 - one stable problem error vocabulary;
-- 61 mutating API idempotency/audit mappings;
-- 93 unambiguous lifecycle edges with permission, audit, event and idempotency contracts;
+- 69 mutating API idempotency/audit mappings;
+- 95 lifecycle edges with permission, audit, event and idempotency contracts, including exactly `open -> dismissed` and `triaged -> dismissed` for Issue;
 - exact plan/capability/role/methodology/regulatory-header seed manifests;
 - migration, authentication, storage, outbox, observability, AI and test contracts.
 
-Six human decisions remain: two exact version approvals, three missing permission resource families, and the source-state set for `Issue.dismissed`. Therefore:
+No Phase 2 human decision or documentary blocker remains. This is a candidate for the separate human gate and does not self-approve it:
 
 ```text
-EXECUTABLE_CONTRACTS_DESIGN=BLOCKED
+EXECUTABLE_CONTRACTS_DESIGN=CANDIDATE_READY_FOR_HUMAN_REVIEW
 HUMAN_GATE_REQUIRED=EXECUTABLE_CONTRACTS
 ```
 
