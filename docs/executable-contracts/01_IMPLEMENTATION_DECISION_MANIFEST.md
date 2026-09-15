@@ -1,0 +1,33 @@
+# Implementation Decision Manifest
+
+| Campo | Valor |
+|---|---|
+| Contract owner | Architecture Owner |
+| Approving human roles | Architecture Owner; Data Model Owner para SQL/migrations; Backend Owner; Frontend Owner; QA/Release Owner; Security & Privacy Reviewer |
+| Status | `BLOCKED` |
+
+`APPROVED` sólo puede ser registrado por un humano autorizado. Las filas `RECTOR_FIXED` citan decisiones superiores y no representan autoaprobación de este manifiesto.
+
+| decision_id | subject | status | selected_value | allowed alternatives considered | compatibility with rector / physical model | operational, security and maintenance impact | reason | human owner | human approval |
+|---|---|---|---|---|---|---|---|---|---|
+| IDM-001 | Motor y base | `RECTOR_FIXED` | PostgreSQL 16, `tcdx-grc`, `192.168.2.40` | ninguna dentro del baseline | exacta / exacta | system of record; RPO/RTO y backup obligatorios | 43 §2–3, 46 §4 | Architecture Owner + Data Model Owner | registrada en baseline/modelo físico |
+| IDM-002 | Backend stack mayor | `RECTOR_FIXED` | Node.js 22 LTS, TypeScript strict, Fastify, REST, OpenAPI 3.1 | ninguna | exacta / neutral | modular monolith; auth y contratos backend-authoritative | 43 §2 | Architecture Owner + Backend Owner | registrada en baseline |
+| IDM-003 | Frontend stack mayor | `RECTOR_FIXED` | React 19, TypeScript strict, Vite, design system propio, WCAG 2.2 AA | ninguna | exacta / neutral | accesibilidad y separación frontend/backend | 43 §2–3 | Architecture Owner + Frontend Owner | registrada en baseline |
+| IDM-004 | Async/cache | `RECTOR_FIXED` | PostgreSQL outbox; workers idempotentes; Redis 7 sólo cache/coordinación no autoritativa | ninguna | exacta / tablas `ops_audit.*` | at-least-once; no autoridad en Redis | 25, 34, 43 | Architecture Owner + Backend Owner | registrada en baseline |
+| IDM-005 | Archivos y secretos | `RECTOR_FIXED` | S3-compatible/MinIO; metadata/permissions en PostgreSQL; Docker secrets QA; Vault producción | ninguna | exacta / `evidence.file_objects` y credential refs | aislamiento, rotación, no secretos en BD/logs/frontend | 24, 26, 43 | Security & Privacy Reviewer | registrada en baseline |
+| IDM-006 | Observabilidad | `RECTOR_FIXED` | OpenTelemetry, Prometheus, Grafana, Loki; correlation IDs end-to-end | ninguna | exacta / `ops_audit.*` | trazas/métricas/logs sin secretos | 26, 43 | Architecture Owner + QA/Release Owner | registrada en baseline |
+| IDM-007 | IA | `RECTOR_FIXED` | backend consume `ia2.tcdx.int`; no `ia-grc` | ninguna | exacta / `ai.*` | contexto autorizado, provenance, asistencia no autoritativa | 36, 43, 46 | Security & Privacy Reviewer + AI Governance Manager | registrada en baseline |
+| IDM-010 | Package manager y versión exacta | `HUMAN_DECISION_REQUIRED` | no seleccionado | npm; pnpm; yarn; otra alternativa que no amplíe stack | todas pueden ser compatibles; ninguna afecta modelo físico | lockfile, supply chain, CI, workspaces y reproducibilidad | 43 exige congelarlo y 45 prohíbe elegirlo | Architecture Owner | pendiente |
+| IDM-011 | Layout exacto del repositorio | `HUMAN_DECISION_REQUIRED` | no seleccionado | monorepo con workspaces; paquetes backend/frontend compartidos; layout modular equivalente | debe preservar modular monolith y bounded contexts; neutral al modelo físico | boundaries, imports, CI, ownership y generación | 43 exige congelarlo; baseline no selecciona forma | Architecture Owner | pendiente |
+| IDM-012 | Librería de acceso SQL tipado y versión | `HUMAN_DECISION_REQUIRED` | no seleccionado | alternativas compatibles con SQL explícito, PostgreSQL 16 y transacciones; ORM que redefina modelo no es compatible | debe consumir literalmente el modelo físico; no generar schema ni autoridad paralela | typing, transacciones, performance, migrations y supply chain | 43 exige selección; ninguna fuente elige paquete | Data Model Owner + Backend Owner | pendiente |
+| IDM-013 | Runner de migraciones y checksum | `HUMAN_DECISION_REQUIRED` | no seleccionado | runner propio contractual; herramienta compatible con SQL versionado/transaccional/checksum | debe implementar `11_MIGRATION_PLAN.md` sin DDL ad-hoc | locks, promotion, rebuild, checksum y recovery | stack fija SQL versionado, no la herramienta | Data Model Owner | pendiente |
+| IDM-014 | Framework de pruebas backend y versión | `HUMAN_DECISION_REQUIRED` | no seleccionado | frameworks Node/TS compatibles | debe soportar unit, contract, integration, PostgreSQL real y concurrency | determinismo, isolation, CI y mantenimiento | 43 exige congelarlo; baseline no lo nombra | Backend Owner + QA/Release Owner | pendiente |
+| IDM-015 | Framework de pruebas frontend/componentes y versión | `HUMAN_DECISION_REQUIRED` | no seleccionado | frameworks React 19 compatibles | debe soportar WCAG, estados y autorización visible sin sustituir E2E | accesibilidad, browser emulation y mantenimiento | 43 exige congelarlo | Frontend Owner + QA/Release Owner | pendiente |
+| IDM-016 | Framework E2E/browser y versión | `HUMAN_DECISION_REQUIRED` | no seleccionado | frameworks browser compatibles | debe probar tenants, roles, uploads, workflows y runtime; mocks no cierran gate | browsers, artifacts, CI time y flakiness | 43 exige framework(s) de pruebas exactos | QA/Release Owner | pendiente |
+| IDM-017 | Versiones exactas de todos los paquetes y runtime patch | `HUMAN_DECISION_REQUIRED` | no seleccionado | set compatible con majors rectoras y librerías humanas seleccionadas | no puede cambiar stack ni modelo | supply chain, patches, lockfile y reproducibilidad | 43 exige versiones exactas | Architecture Owner + Security & Privacy Reviewer | pendiente |
+| IDM-018 | Convención de generación OpenAPI/types/client | `HUMAN_DECISION_REQUIRED` | no seleccionado | schema-first con generación; tipos manuales verificados; combinación unidireccional | OpenAPI debe ser autoridad, no derivado divergente; neutral al modelo | drift, CI, ergonomía y ownership | 43 exige convenciones de generación | Architecture Owner + Backend Owner + Frontend Owner | pendiente |
+| IDM-019 | Generador UUIDv7 de plataforma | `HUMAN_DECISION_REQUIRED` | no seleccionado | librería aprobada o utilidad interna verificada | debe generar UUIDv7 fuera de PostgreSQL como exige modelo físico | unicidad, monotonicidad, seguridad y testabilidad | modelo físico fija comportamiento, no paquete | Backend Owner + Security & Privacy Reviewer | pendiente |
+
+## Consecuencia de gate
+
+`OPEN_HUMAN_DECISIONS=10`. Las decisiones IDM-010..019 afectan foundations o reproducibilidad y bloquean `IMPLEMENTATION_DECISION_MANIFEST=PASS` y `EXECUTABLE_CONTRACTS_DESIGN=CANDIDATE_READY_FOR_HUMAN_REVIEW`.

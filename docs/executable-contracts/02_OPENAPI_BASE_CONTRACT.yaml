@@ -1,0 +1,224 @@
+openapi: 3.1.0
+info:
+  title: TCDX GRC API Base Contract
+  version: 0.0.0-draft-blocked
+  description: >-
+    Contrato transversal de Fase 2. No contiene operaciones porque el baseline
+    determina recursos y workflows pero no selecciona inequívocamente paths,
+    methods, operationIds ni command shapes concretos. Esos elementos requieren
+    aprobación humana y se registran en 03 y 19; paths vacíos evita inventarlos.
+  x-contract-owner: Architecture Owner
+  x-approving-human-roles:
+    - Architecture Owner
+    - Backend Owner
+    - Security & Privacy Reviewer
+  x-status: BLOCKED
+  x-wire-conventions-status: PROPOSED_FOR_HUMAN_APPROVAL
+  x-master-regent: TCDX_GRC_MASTER_REGENT_BASELINE_v1.4_2026-09-15
+servers:
+  - url: /api/v1
+    description: Major v1 tenant/business API base path; deployment host is environment configuration.
+paths: {}
+tags: []
+components:
+  parameters:
+    TenantContext:
+      name: X-TCDX-Tenant-ID
+      in: header
+      required: true
+      description: UUIDv7 tenant context for tenant business operations; forbidden for platform/global operations unless their approved operation contract explicitly requires a target tenant.
+      schema:
+        $ref: '#/components/schemas/UuidV7'
+    CorrelationId:
+      name: X-Correlation-ID
+      in: header
+      required: false
+      description: Client-provided UUID accepted only when valid; server always returns the effective ID.
+      schema:
+        type: string
+        format: uuid
+    RequestId:
+      name: X-Request-ID
+      in: header
+      required: false
+      description: Optional request attempt identifier; it is not an idempotency key.
+      schema:
+        type: string
+        format: uuid
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      description: Required only for operations classified IDEMPOTENCY_KEY_REQUIRED. Bound to ownership, tenant when applicable, actor/client, operation and request fingerprint.
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 255
+    IfMatch:
+      name: If-Match
+      in: header
+      required: true
+      description: Strong ETag representing current row_version for mutable critical resources.
+      schema:
+        type: string
+        pattern: '^"[1-9][0-9]*"$'
+    Cursor:
+      name: page[cursor]
+      in: query
+      required: false
+      schema: { type: string, minLength: 1 }
+    PageSize:
+      name: page[size]
+      in: query
+      required: false
+      schema: { type: integer, minimum: 1 }
+      description: Maximum and default require human approval per resource/volumetry; clients must not assume them.
+    Sort:
+      name: sort
+      in: query
+      required: false
+      description: Comma-separated allowlisted fields; prefix '-' means descending. No arbitrary SQL expressions.
+      schema: { type: string }
+    Filter:
+      name: filter
+      in: query
+      required: false
+      description: Resource-specific allowlisted filter object; generic operators are not authorized by this base contract.
+      schema: { type: string }
+  headers:
+    CorrelationId:
+      description: Effective end-to-end correlation UUID.
+      schema: { type: string, format: uuid }
+    RequestId:
+      description: Server request attempt UUID.
+      schema: { type: string, format: uuid }
+    ETag:
+      description: Strong row_version ETag for mutable resources.
+      schema: { type: string }
+    IdempotencyReplayed:
+      description: 'true when response is the persisted replay for the same fingerprint.'
+      schema: { type: boolean }
+  schemas:
+    UuidV7:
+      type: string
+      format: uuid
+      description: Opaque platform-generated UUIDv7; consumers must not derive semantics from it.
+    UtcTimestamp:
+      type: string
+      format: date-time
+      description: RFC 3339 timestamp with UTC offset Z at the API boundary.
+    OwnershipClass:
+      type: string
+      enum: [GLOBAL_REFERENCE, PLATFORM_CONTROL, TENANT_OWNED, TENANT_DERIVED]
+    CalculationStatus:
+      type: string
+      enum: [pending, running, succeeded, failed, cancelled]
+    ResultStatus:
+      type: string
+      enum: [valid, no_data, insufficient_data, insufficient_coverage, stale_source, conflicting_sources, dependency_pending, invalid_input, source_error, calculation_error, not_applicable, superseded]
+    ResultEnvelope:
+      type: object
+      additionalProperties: false
+      required: [result_status, period, lineage]
+      properties:
+        value: {}
+        unit: { type: [string, 'null'] }
+        result_status: { $ref: '#/components/schemas/ResultStatus' }
+        domain_conclusion: { type: [string, 'null'] }
+        period:
+          type: object
+          additionalProperties: false
+          properties:
+            start: { type: [string, 'null'], format: date-time }
+            end: { type: [string, 'null'], format: date-time }
+        coverage_percent: { type: [number, 'null'], minimum: 0, maximum: 100 }
+        freshness_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        data_trust:
+          type: [object, 'null']
+          description: DataQualityAssessment reference/status; never silently alters value.
+        versions: { type: object }
+        lineage: { type: object }
+        preview: { type: boolean, default: false }
+      description: value is official only when result_status=valid; non-valid candidate values require preview=true and methodology authority.
+    ErrorEnvelope:
+      type: object
+      additionalProperties: false
+      required: [code, message, correlation_id, retryable]
+      properties:
+        code: { type: string, pattern: '^[A-Z][A-Z0-9_\.]*$' }
+        message: { type: string }
+        correlation_id: { type: string, format: uuid }
+        retryable: { type: boolean }
+        field_errors:
+          type: array
+          items: { $ref: '#/components/schemas/FieldError' }
+        details:
+          type: object
+          description: Allowlisted, non-secret details only; never SQL, stack traces, cross-tenant identifiers or signed URLs.
+    FieldError:
+      type: object
+      additionalProperties: false
+      required: [field, code, message]
+      properties:
+        field: { type: string }
+        code: { type: string }
+        message: { type: string }
+    PageMeta:
+      type: object
+      additionalProperties: false
+      required: [has_more]
+      properties:
+        next_cursor: { type: [string, 'null'] }
+        has_more: { type: boolean }
+    AsyncOperation:
+      type: object
+      additionalProperties: false
+      required: [job_id, calculation_status, submitted_at]
+      properties:
+        job_id: { $ref: '#/components/schemas/UuidV7' }
+        calculation_status: { $ref: '#/components/schemas/CalculationStatus' }
+        submitted_at: { $ref: '#/components/schemas/UtcTimestamp' }
+        status_url: { type: string, format: uri-reference }
+    UploadIntent:
+      type: object
+      additionalProperties: false
+      required: [file_object_id, upload_state]
+      properties:
+        file_object_id: { $ref: '#/components/schemas/UuidV7' }
+        upload_state: { type: string, enum: [quarantine_pending] }
+        signed_upload_url: { type: string, format: uri }
+        expires_at: { $ref: '#/components/schemas/UtcTimestamp' }
+      description: Signed URL is short-lived and never logged; FileObject is unusable as Evidence until scan PASS and governed version/review flow.
+  responses:
+    ValidationError:
+      description: Request validation failed without domain mutation.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+    AuthenticationError:
+      description: Authentication missing or invalid; no tenant/object existence disclosure.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+    AuthorizationError:
+      description: Effective authorization denied; response must not reveal cross-tenant existence.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+    ConflictError:
+      description: State, concurrency or idempotency conflict.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+  x-api-conventions:
+    authentication: HUMAN_DECISION_REQUIRED; no OpenAPI security scheme is published until the human-approved identity profile exists.
+    publication-note: Header names, media type, pagination mechanism and generic filter/sort wire syntax in this draft are proposals, not executable contracts, until B-021 is human-approved.
+    versioning: Breaking changes require a new major base path.
+    pagination: Proposed opaque cursor with stable allowlisted sort and unique UUID tie-breaker; offset versus cursor is HUMAN_DECISION_REQUIRED.
+    tenant-context: Resolved and checked against active membership; never trusted as authorization solely because supplied by client.
+    filtering: Resource-specific allowlists; no arbitrary field/operator language.
+    optimistic-concurrency: Strong ETag/If-Match from row_version on editable critical entities; stale write is 409.
+    idempotency: PostgreSQL IdempotencyRecord is authoritative; Redis may not decide replay/conflict.
+    files: Quarantine, type/size validation, malware scan, checksum and classification precede Evidence eligibility.
+    async: Heavy reports/imports/bulk are jobs with row-level outcomes and explicit partial failure.
+    provenance: Official results expose version, coverage, freshness, Data Trust and lineage subject to RBAC.
