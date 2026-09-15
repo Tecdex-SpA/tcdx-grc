@@ -1,0 +1,22 @@
+name: Rector Governance Gate
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  rector-governance:
+    name: rector-governance
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify rector governance
+        shell: bash
+        run: bash ./scripts/verify-rector-governance.sh
