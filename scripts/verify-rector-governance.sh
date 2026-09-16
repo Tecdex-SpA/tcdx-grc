@@ -10,8 +10,9 @@ fail() {
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$root"
 
-MASTER_ID="TCDX_GRC_MASTER_REGENT_BASELINE_v1.4_2026-09-15"
+MASTER_ID="TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16"
 BASELINE_DIR="docs/rector/baseline"
+HISTORICAL_V1_4_DIR="docs/rector/history/TCDX_GRC_MASTER_REGENT_BASELINE_v1.4_2026-09-15"
 MASTER_STATUS="docs/governance/MASTER_EXECUTION_STATUS.md"
 
 required=(
@@ -46,10 +47,18 @@ baseline_id="$(tr -d '\r\n' < docs/rector/BASELINE_ID)"
 [[ -f "$BASELINE_DIR/SHA256SUMS.txt" ]] || fail "missing baseline SHA256SUMS.txt"
 [[ -f "$BASELINE_DIR/46_REGENTE_MAESTRO_DEL_DESARROLLO.md" ]] || fail "missing master regent entry point"
 [[ -f "$BASELINE_DIR/47_APROBACION_Y_ACTIVACION_BASELINE.md" ]] || fail "missing human activation contract"
+[[ -f "$BASELINE_DIR/48_CONTRATO_AUDITORIA_INTEGRADA_ISO_19011.md" ]] || fail "missing integrated Audit contract"
 [[ -f "$BASELINE_DIR/PRE_IMPLEMENTATION_GATE_REPORT.md" ]] || fail "missing pre-implementation gate report"
+
+[[ -d "$HISTORICAL_V1_4_DIR" ]] || fail "missing immutable historical v1.4 baseline"
+[[ -f "$HISTORICAL_V1_4_DIR/SHA256SUMS.txt" ]] || fail "missing historical v1.4 SHA256SUMS.txt"
 
 if find "$BASELINE_DIR" -type l -print -quit | grep -q .; then
   fail "symlinks are forbidden inside the immutable rector baseline"
+fi
+
+if find "$HISTORICAL_V1_4_DIR" -type l -print -quit | grep -q .; then
+  fail "symlinks are forbidden inside the immutable historical v1.4 baseline"
 fi
 
 expected="$(mktemp)"
@@ -84,6 +93,20 @@ elif command -v shasum >/dev/null 2>&1; then
     actual_hash="$(shasum -a 256 "$BASELINE_DIR/$file" | awk '{print $1}')"
     [[ "$actual_hash" == "$hash" ]] || fail "hash mismatch: $BASELINE_DIR/$file"
   done < "$BASELINE_DIR/SHA256SUMS.txt"
+else
+  fail "no SHA-256 verification tool available"
+fi
+
+if command -v sha256sum >/dev/null 2>&1; then
+  (cd "$HISTORICAL_V1_4_DIR" && sha256sum -c SHA256SUMS.txt) \
+    || fail "historical v1.4 baseline SHA-256 validation failed"
+elif command -v shasum >/dev/null 2>&1; then
+  while read -r hash file; do
+    [[ -n "$hash" && -n "$file" ]] || continue
+    file="${file#./}"
+    actual_hash="$(shasum -a 256 "$HISTORICAL_V1_4_DIR/$file" | awk '{print $1}')"
+    [[ "$actual_hash" == "$hash" ]] || fail "hash mismatch: $HISTORICAL_V1_4_DIR/$file"
+  done < "$HISTORICAL_V1_4_DIR/SHA256SUMS.txt"
 else
   fail "no SHA-256 verification tool available"
 fi
@@ -133,6 +156,7 @@ echo "RECTOR_GATE=PASS"
 echo "BASELINE_STATUS=ACTIVE"
 echo "BASELINE_ID=$baseline_id"
 echo "RECTOR_BASELINE_INTEGRITY=PASS"
+echo "PROTECTED_V1_4_INTEGRITY=PASS"
 echo "CODEX_VARIATION_BUDGET=ZERO"
 echo "EXECUTION_STATUS_SOURCE=$MASTER_STATUS"
 printf '%s\n' "$current_phase_status"

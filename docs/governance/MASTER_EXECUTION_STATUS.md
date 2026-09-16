@@ -1,6 +1,6 @@
 # TCDX GRC — Master Execution Status
 
-`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.4_2026-09-15`
+`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16`
 `BASELINE_STATUS=ACTIVE`
 `RECTOR_BASELINE=PASS`
 `RECTOR_DOCUMENT_CONSISTENCY=PASS`
@@ -8,6 +8,16 @@
 `UNRESOLVED_ARCHITECTURAL_FINDINGS=0`
 `SCOPE_EXPANSIONS=0`
 `CODEX_VARIATION_BUDGET=ZERO`
+
+## Human approval — PRE-F4 integrated Audit amendment
+
+`AUDIT_MODEL_AMENDMENT_APPROVED_COMMIT=6a31034ae1ecc1f9ee551431fb2a504a25fb52ce`
+`AUDIT_MODEL_AMENDMENT_REVIEW=PASS`
+`AUDIT_MODEL_MIGRATION_EXECUTION=AUTHORIZED_NOW`
+`RECTOR_BASELINE_V1_5=ACTIVE`
+`AUDIT_MODEL_AMENDMENT_HUMAN_APPROVAL_DATE=2026-09-16`
+
+The human project authority approved activation of rector baseline v1.5 and immediate governed materialization of the approved Audit model amendment from 214 to 229 tables. This approval does not start Phase 4 or authorize functional Audit implementation.
 
 ## CI rector
 
@@ -54,6 +64,8 @@ The human project authority explicitly approved the Phase 3 foundations runtime 
 
 `PHASE_3=COMPLETE`
 `FOUNDATIONS_RUNTIME=PASS`
+`AUDIT_MODEL_MIGRATION_RUNTIME=BLOCKED_PENDING_MATERIALIZATION`
+`PHASE_4=BLOCKED_PENDING_AUDIT_MODEL_MIGRATION_RUNTIME`
 `FUNCTIONAL_PRODUCT_SLICES=BLOCKED_PENDING_NEXT_PHASE_GATE`
 
 Phase 3 is closed. The definitive PostgreSQL foundation, canonical migrations and seeds, backend foundations and frontend foundations are approved. No product-domain functional slice may begin except through the subsequent master-plan phase and its corresponding gates.
