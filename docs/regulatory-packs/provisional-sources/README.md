@@ -17,6 +17,7 @@ Current provisional references:
 
 - `ISO_9001_2015` — public ISO metadata for ISO 9001:2015 and Amd 1:2024; both are now withdrawn/superseded by ISO 9001:2026.
 - `ISO_9001_2026` — definitive edition 6 publication confirmed by ISO on 2026-09-16; licensed full text still required.
+- `ISO_IEC_27001_2022` — public ISO metadata for ISO/IEC 27001:2022 plus Amd 1:2024; licensed full text still required for runtime import even though a working/source copy may exist outside this governed branch.
 - `ISO_IEC_42001_2023` — edition 1 public ISO metadata; licensed full text still required.
 
 Machine-readable metadata is in `provisional-public-reference-packs.json`.
