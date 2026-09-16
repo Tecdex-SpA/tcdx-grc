@@ -31,9 +31,21 @@
       "dev_demo_execution_state": "NOT_READY",
       "test_pack_path": "docs/regulatory-packs/test-packs/non-authoritative-iso-test-packs.json#ISO_9001_2015",
       "blocker": "The DEV/DEMO guard is implemented, but registered public sources do not contain atomic requirements; no ISO normative text was synthesized.",
-      "normative_units": { "expected": null, "imported": 0, "reviewed": 0 },
-      "requirements": { "expected": null, "imported": 0, "reviewed": 0 },
-      "reference_controls": { "expected": 0, "imported": 0, "reviewed": 0 },
+      "normative_units": {
+        "expected": null,
+        "imported": 0,
+        "reviewed": 0
+      },
+      "requirements": {
+        "expected": null,
+        "imported": 0,
+        "reviewed": 0
+      },
+      "reference_controls": {
+        "expected": 0,
+        "imported": 0,
+        "reviewed": 0
+      },
       "human_approval": "NOT_APPLICABLE_SOURCE_BLOCKED"
     },
     {
@@ -45,9 +57,21 @@
       "dev_demo_execution_state": "NOT_READY",
       "test_pack_path": "docs/regulatory-packs/test-packs/non-authoritative-iso-test-packs.json#ISO_9001_2026",
       "blocker": "Definitive publication metadata exists, but registered public sources do not contain atomic requirements; no ISO normative text was synthesized.",
-      "normative_units": { "expected": null, "imported": 0, "reviewed": 0 },
-      "requirements": { "expected": null, "imported": 0, "reviewed": 0 },
-      "reference_controls": { "expected": 0, "imported": 0, "reviewed": 0 },
+      "normative_units": {
+        "expected": null,
+        "imported": 0,
+        "reviewed": 0
+      },
+      "requirements": {
+        "expected": null,
+        "imported": 0,
+        "reviewed": 0
+      },
+      "reference_controls": {
+        "expected": 0,
+        "imported": 0,
+        "reviewed": 0
+      },
       "human_approval": "NOT_APPLICABLE_SOURCE_BLOCKED"
     },
     {
@@ -60,9 +84,21 @@
       "test_pack_path": "docs/regulatory-packs/test-packs/non-authoritative-iso-test-packs.json#ISO_IEC_27001_2022",
       "supporting_source_state": "ISO27001Toolkit.zip_NOT_MOUNTED",
       "blocker": "Atomic normative requirements are unavailable and ISO27001Toolkit.zip is not mounted; no ISO or toolkit content was synthesized or copied.",
-      "normative_units": { "expected": null, "imported": 0, "reviewed": 0 },
-      "requirements": { "expected": null, "imported": 0, "reviewed": 0 },
-      "reference_controls": { "expected": null, "imported": 0, "reviewed": 0 },
+      "normative_units": {
+        "expected": null,
+        "imported": 0,
+        "reviewed": 0
+      },
+      "requirements": {
+        "expected": null,
+        "imported": 0,
+        "reviewed": 0
+      },
+      "reference_controls": {
+        "expected": null,
+        "imported": 0,
+        "reviewed": 0
+      },
       "human_approval": "NOT_APPLICABLE_SOURCE_BLOCKED"
     },
     {
@@ -74,27 +110,53 @@
       "dev_demo_execution_state": "NOT_READY",
       "test_pack_path": "docs/regulatory-packs/test-packs/non-authoritative-iso-test-packs.json#ISO_IEC_42001_2023",
       "blocker": "Registered public sources do not contain atomic requirements or Annex A controls; no ISO normative text was synthesized.",
-      "normative_units": { "expected": null, "imported": 0, "reviewed": 0 },
-      "requirements": { "expected": null, "imported": 0, "reviewed": 0 },
-      "reference_controls": { "expected": null, "imported": 0, "reviewed": 0 },
+      "normative_units": {
+        "expected": null,
+        "imported": 0,
+        "reviewed": 0
+      },
+      "requirements": {
+        "expected": null,
+        "imported": 0,
+        "reviewed": 0
+      },
+      "reference_controls": {
+        "expected": null,
+        "imported": 0,
+        "reviewed": 0
+      },
       "human_approval": "NOT_APPLICABLE_SOURCE_BLOCKED"
     },
     {
       "pack_code": "CL_LEY_21719",
       "authority_class": "OFFICIAL_NORMATIVE_SOURCE",
       "authorized_normative_source": true,
-      "commercial_publication_state": "BLOCKED_SOURCE_ARTIFACT_NOT_MOUNTED",
+      "commercial_publication_state": "BLOCKED_CONTRACT_DECISION",
       "dev_demo_execution_eligible": true,
       "dev_demo_execution_state": "NOT_READY",
       "official_source_origin": "official_source",
       "official_source_publisher": "Biblioteca del Congreso Nacional de Chile",
       "official_source_path": "docs/regulatory-packs/official-sources/CL_LEY_21719/source-manifest.json",
-      "structured_import_state": "BLOCKED_SOURCE_ARTIFACT_NOT_MOUNTED",
-      "blocker": "The official BCN source and current metadata are verified, but the declared official PDF/text artifact is not mounted in the repository filesystem for deterministic extraction and hashing.",
-      "normative_units": { "expected": null, "imported": 0, "reviewed": 0 },
-      "requirements": { "expected": null, "imported": 0, "reviewed": 0 },
-      "reference_controls": { "expected": 0, "imported": 0, "reviewed": 0 },
-      "human_approval": "PENDING_AFTER_STRUCTURED_IMPORT"
+      "structured_import_state": "PENDING_STRUCTURED_IMPORT",
+      "blocker": "Official BCN/LeyChile artifact is mounted and governed. Structured NormativeUnit/Requirement import, coverage calculation and human review have not yet been executed.",
+      "normative_units": {
+        "expected": null,
+        "imported": 0,
+        "reviewed": 0
+      },
+      "requirements": {
+        "expected": null,
+        "imported": 0,
+        "reviewed": 0
+      },
+      "reference_controls": {
+        "expected": 0,
+        "imported": 0,
+        "reviewed": 0
+      },
+      "human_approval": "PENDING_AFTER_STRUCTURED_IMPORT",
+      "official_source_artifact_mounted": true,
+      "official_source_artifact_path": "docs/regulatory-packs/official-sources/CL_LEY_21719/source/Ley-21719_13-DIC-2024.pdf"
     }
   ],
   "summary": {
@@ -103,11 +165,12 @@
     "test_packs_not_ready": 4,
     "packs_blocked_by_license": 4,
     "official_public_sources_registered": 1,
-    "official_source_artifacts_not_mounted": 1,
+    "official_source_artifacts_not_mounted": 0,
     "unlicensed_iso_content_created": 0,
     "synthesized_iso_normative_text": 0,
     "production_license_bypass": 0,
     "hard_coded_tenant_ids": 0,
-    "semantic_inferences": 0
+    "semantic_inferences": 0,
+    "official_source_artifacts_mounted": 1
   }
 }
