@@ -273,7 +273,7 @@ function createTablesSql(rows, schemas) {
     lines.push(`  CONSTRAINT ${constraint(`pk_${row.table}`)} PRIMARY KEY (${quoteIdent(row.pk)})`);
     out.push(`CREATE TABLE ${fq(row.name)} (\n${lines.join(",\n")}\n);`, "");
   }
-  return `${out.join("\n")}\n`;
+  return `${out.join("\n").trimEnd()}\n`;
 }
 
 function constraintsSql(rows) {
