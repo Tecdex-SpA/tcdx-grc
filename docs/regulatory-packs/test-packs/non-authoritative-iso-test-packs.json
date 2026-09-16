@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-16T21:25:13Z",
+  "active_master_regent": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16",
+  "purpose": "governed_dev_qa_demo_test_pack_registry",
+  "runtime_contract": {
+    "authority_class": "NON_AUTHORITATIVE_TEST_PACK",
+    "persisted_license_classification": "non_authoritative_test_pack",
+    "allowed_runtime_environments": ["development", "test", "qa"],
+    "allowed_tenant_account_classifications": ["demo", "test"],
+    "tenant_classification_authority": "EffectiveConfiguration",
+    "production_allowed": false,
+    "commercial_publication_eligible": false,
+    "certification_assertion_eligible": false,
+    "authorized_normative_source": false,
+    "coverage_interpretation": "Coverage applies only to an explicitly declared test payload and never to the real ISO standard.",
+    "single_pipeline": true,
+    "database_contract_changed": false
+  },
+  "packs": [
+    {
+      "pack_code": "ISO_9001_2015",
+      "based_on_framework": "ISO 9001:2015 + Amd 1:2024",
+      "authority_class": "NON_AUTHORITATIVE_TEST_PACK",
+      "source_roles": ["official_metadata", "provisional_supporting_reference"],
+      "dev_demo_execution_eligible": true,
+      "dev_demo_execution_state": "NOT_READY",
+      "commercial_publication_eligible": false,
+      "certification_assertion_eligible": false,
+      "provenance": ["docs/regulatory-packs/provisional-sources/provisional-public-reference-packs.json#ISO_9001_2015"],
+      "content_scope": "Registered public ISO metadata and public high-level clause identifiers only; no normative statements or ISO controls.",
+      "coverage_scope": "No executable payload exists. Future test coverage may describe only the declared test payload, never ISO 9001:2015 coverage.",
+      "readiness_blocker": "Registered sources do not contain atomic obligations; creating them would synthesize protected ISO normative content."
+    },
+    {
+      "pack_code": "ISO_9001_2026",
+      "based_on_framework": "ISO 9001:2026",
+      "authority_class": "NON_AUTHORITATIVE_TEST_PACK",
+      "source_roles": ["official_metadata", "provisional_supporting_reference"],
+      "dev_demo_execution_eligible": true,
+      "dev_demo_execution_state": "NOT_READY",
+      "commercial_publication_eligible": false,
+      "certification_assertion_eligible": false,
+      "provenance": ["docs/regulatory-packs/provisional-sources/provisional-public-reference-packs.json#ISO_9001_2026"],
+      "content_scope": "Registered public ISO metadata only; no normative structure or statements are materialized as executable content.",
+      "coverage_scope": "No executable payload exists. Future test coverage may describe only the declared test payload, never ISO 9001:2026 coverage.",
+      "readiness_blocker": "Registered sources do not contain atomic obligations; creating them would synthesize protected ISO normative content."
+    },
+    {
+      "pack_code": "ISO_IEC_27001_2022",
+      "based_on_framework": "ISO/IEC 27001:2022 + Amd 1:2024",
+      "authority_class": "NON_AUTHORITATIVE_TEST_PACK",
+      "source_roles": ["official_metadata", "provisional_supporting_reference", "supporting_reference"],
+      "dev_demo_execution_eligible": true,
+      "dev_demo_execution_state": "NOT_READY",
+      "commercial_publication_eligible": false,
+      "certification_assertion_eligible": false,
+      "provenance": [
+        "docs/regulatory-packs/provisional-sources/provisional-public-reference-packs.json#ISO_IEC_27001_2022",
+        "ISO27001Toolkit.zip#NOT_MOUNTED"
+      ],
+      "content_scope": "Registered public ISO metadata and high-level structure only. ISO27001Toolkit.zip is not mounted and no toolkit material was copied.",
+      "coverage_scope": "No executable payload exists. Future toolkit-derived test artifacts must retain toolkit provenance and cannot count as ISO normative coverage.",
+      "readiness_blocker": "Atomic normative obligations are unavailable and the supporting toolkit is not mounted in the visible filesystem."
+    },
+    {
+      "pack_code": "ISO_IEC_42001_2023",
+      "based_on_framework": "ISO/IEC 42001:2023",
+      "authority_class": "NON_AUTHORITATIVE_TEST_PACK",
+      "source_roles": ["official_metadata", "provisional_supporting_reference"],
+      "dev_demo_execution_eligible": true,
+      "dev_demo_execution_state": "NOT_READY",
+      "commercial_publication_eligible": false,
+      "certification_assertion_eligible": false,
+      "provenance": ["docs/regulatory-packs/provisional-sources/provisional-public-reference-packs.json#ISO_IEC_42001_2023"],
+      "content_scope": "Registered public ISO metadata and high-level structure only; no normative statements or Annex A control content.",
+      "coverage_scope": "No executable payload exists. Future test coverage may describe only the declared test payload, never ISO/IEC 42001 coverage.",
+      "readiness_blocker": "Registered sources do not contain atomic obligations or Annex A content; creating them would synthesize protected ISO normative content."
+    }
+  ]
+}
