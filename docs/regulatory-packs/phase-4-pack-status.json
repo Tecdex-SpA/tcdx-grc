@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-16T20:36:00Z",
+  "generated_at": "2026-09-16T20:42:00Z",
   "active_master_regent": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16",
   "base_commit": "b0af45565d6a039d2ba374f9ffbf309ebd155012",
   "branch": "implementation/phase-4-regulatory-packs-provisional-sources",
@@ -12,6 +12,9 @@
     "schema_changes": false
   },
   "provisional_public_reference_manifest": "docs/regulatory-packs/provisional-sources/provisional-public-reference-packs.json",
+  "official_source_manifests": {
+    "CL_LEY_21719": "docs/regulatory-packs/official-sources/CL_LEY_21719/source-manifest.json"
+  },
   "packs": [
     {
       "pack_code": "ISO_9001_2015",
@@ -40,8 +43,10 @@
     {
       "pack_code": "ISO_IEC_27001_2022",
       "authorized_source_available": false,
+      "provisional_public_reference_available": true,
+      "provisional_public_reference_path": "docs/regulatory-packs/provisional-sources/provisional-public-reference-packs.json",
       "state": "BLOCKED_LICENSE",
-      "blocker": "No Tecdex-licensed ISO/IEC 27001:2022 source artifact is registered in the repository runtime input contract yet.",
+      "blocker": "Public ISO metadata for ISO/IEC 27001:2022 plus Amd 1:2024 is staged, but no Tecdex-licensed full-text source artifact is registered in the runtime import contract yet.",
       "normative_units": { "expected": null, "imported": 0, "reviewed": 0 },
       "requirements": { "expected": null, "imported": 0, "reviewed": 0 },
       "reference_controls": { "expected": null, "imported": 0, "reviewed": 0 },
@@ -61,22 +66,27 @@
     },
     {
       "pack_code": "CL_LEY_21719",
-      "authorized_source_available": false,
-      "state": "BLOCKED_SOURCE_UNAVAILABLE",
-      "blocker": "No official consolidated Biblioteca del Congreso Nacional source artifact for Ley 21.719 and applicable Ley 19.628 text is registered in the repository runtime input contract yet.",
+      "authorized_source_available": true,
+      "official_source_available": true,
+      "official_source_origin": "official_source",
+      "official_source_publisher": "Biblioteca del Congreso Nacional de Chile",
+      "official_source_path": "docs/regulatory-packs/official-sources/CL_LEY_21719/source-manifest.json",
+      "state": "BLOCKED_CONTRACT_DECISION",
+      "blocker": "The official BCN/LeyChile source is registered and authorized. Structured NormativeUnit/Requirement import, complete coverage calculation and human review have not yet been executed.",
       "normative_units": { "expected": null, "imported": 0, "reviewed": 0 },
       "requirements": { "expected": null, "imported": 0, "reviewed": 0 },
       "reference_controls": { "expected": 0, "imported": 0, "reviewed": 0 },
-      "human_approval": "NOT_APPLICABLE_SOURCE_BLOCKED"
+      "human_approval": "PENDING_AFTER_STRUCTURED_IMPORT"
     }
   ],
   "summary": {
     "packs_ready_for_human_review": 0,
-    "packs_blocked_by_source": 1,
+    "packs_blocked_by_source": 0,
     "packs_blocked_by_license": 4,
     "packs_blocked_by_publication": 0,
     "packs_blocked_by_human_review": 0,
-    "packs_blocked_by_contract_decision": 0,
+    "packs_blocked_by_contract_decision": 1,
+    "official_public_sources_registered": 1,
     "unlicensed_iso_content_created": 0,
     "semantic_inferences": 0
   }
