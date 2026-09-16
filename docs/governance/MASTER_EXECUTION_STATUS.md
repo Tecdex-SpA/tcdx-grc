@@ -68,8 +68,8 @@ The human project authority explicitly approved the Phase 3 foundations runtime 
 `DATABASE_TABLES=229`
 `PHASE_4=AUTHORIZED`
 `FUNCTIONAL_PRODUCT_SLICES=BLOCKED_PENDING_PHASE_4_SCOPE`
-`PHASE_4_STARTED=0`
+`PHASE_4_STARTED=1`
 
-Phase 3 remains closed and the approved PRE-F4 integrated Audit model amendment is materially present in QA. Phase 4 is authorized but has not started. Functional product slices remain blocked until an approved Phase 4 scope and its applicable task packet and gates are in force.
+Phase 3 remains closed and the approved PRE-F4 integrated Audit model amendment is materially present in QA. Phase 4 regulatory-pack infrastructure work has started under its approved scope. Functional product slices remain blocked; no pack is PASS without its independent source, coverage, review and human gate.
 
 This file is mutable execution state. It is not part of the immutable rector baseline and cannot override it.
