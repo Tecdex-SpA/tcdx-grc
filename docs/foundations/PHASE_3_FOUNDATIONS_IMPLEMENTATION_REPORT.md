@@ -137,12 +137,89 @@ vitest.config.ts
 
 ## Non-actions
 
-`QA_DATABASE_MUTATED=0`
+`QA_DATABASE_MUTATED=1`
 
-`DEPLOYMENT_PERFORMED=0`
+`DEPLOYMENT_PERFORMED=1`
 
-`PUSH_PERFORMED=0`
+`PUSH_PERFORMED=1`
 
 `PR_CREATED=0`
 
 `MERGE_PERFORMED=0`
+
+
+## QA runtime materialization evidence
+
+Phase 3 was subsequently materialized and validated in the designated QA infrastructure without modifying the approved physical model or executable contracts.
+
+### PostgreSQL QA
+
+- Host: `db-v4` / `192.168.2.40`.
+- PostgreSQL: `16.15`.
+- Database: `tcdx-grc`.
+- Database initialized cleanly from an empty database.
+- Pre-foundations custom-format `pg_dump` created and validated before migrations.
+- Nine governed migrations applied through the approved migration runner.
+- Migration status: `9/9 applied`.
+- Physical tables: `214/214`.
+- Expected columns: `3,192`.
+- Expected derived constraints: `2,199`.
+- Expected required indexes: `1,401`.
+- Forbidden DELETE CASCADE: `0`.
+- Schema mismatches: `0`.
+- Canonical seeds: `PASS`.
+- Seed reapply: `PASS`.
+- Tenant isolation: `PASS`, `0` gaps.
+- Runtime application role: `tcdx_grc_app`.
+- Runtime role is non-superuser, cannot create databases or roles, cannot bypass RLS and has no schema CREATE permission.
+- PostgreSQL HBA restricts backend access to `192.168.2.45/32`, database `tcdx-grc`, user `tcdx_grc_app`, using `scram-sha-256`.
+
+### Backend QA runtime
+
+- Host/FQDN: `grc-bk.tcdx.int`.
+- IP: `192.168.2.45`.
+- Deployment foundation commit: `f7842ba`.
+- Container: `tcdx-grc-backend`.
+- Container health: `healthy`.
+- `GET /health/live`: HTTP `200`, state `up`.
+- `GET /health/ready`: HTTP `200`, database dependency `up`.
+- PostgreSQL target: `192.168.2.40/tcdx-grc`.
+- Backend uses dedicated least-privilege PostgreSQL runtime identity.
+- AI authority remains `https://ia2.tcdx.int`.
+- No functional product slices were enabled.
+
+### Frontend QA runtime
+
+- Host/FQDN: `grc-www.tcdx.int`.
+- IP: `192.168.2.46`.
+- Deployment foundation commit: `6e76373`.
+- Container: `tcdx-grc-frontend`.
+- Container health: `healthy`.
+- Foundation shell reachable locally and remotely with HTTP `200`.
+- React/Vite foundation build: `PASS`.
+- No functional product screens or workflows were introduced.
+- HTTPS-only API-origin contract outside local development remains unchanged.
+
+### Consolidated QA runtime result
+
+DATABASE_QA_INITIALIZATION=PASS
+QA_MIGRATIONS=PASS
+QA_SCHEMA_CONFORMANCE=PASS
+QA_SEEDS=PASS
+QA_SEED_REAPPLY=PASS
+QA_TENANT_ISOLATION=PASS
+
+BACKEND_FOUNDATION_DEPLOYMENT=PASS
+BACKEND_LIVENESS=PASS
+BACKEND_READINESS=PASS
+BACKEND_DATABASE_CONNECTIVITY=PASS
+
+FRONTEND_FOUNDATION_BUILD=PASS
+FRONTEND_FOUNDATION_DEPLOYMENT=PASS
+FRONTEND_FOUNDATION_RUNTIME=PASS
+
+FOUNDATIONS_IMPLEMENTATION=COMPLETE
+FOUNDATIONS_RUNTIME=CANDIDATE_READY_FOR_HUMAN_REVIEW
+OPEN_FOUNDATION_BLOCKERS=0
+
+This evidence does not self-approve the human gate `FOUNDATIONS_RUNTIME=PASS`.
