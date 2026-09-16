@@ -1,0 +1,65 @@
+# PRE-F4 Audit model closure report
+
+```text
+RECTOR_GATE=PASS
+TASK=PRE_F4_AUDIT_MODEL_CLOSURE
+ACTIVE_MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.4_2026-09-15
+BASELINE_V1_4_INTEGRITY=PASS
+CURRENT_DB_TABLES=214
+
+ISO19011_AUDIT_MODEL_COVERAGE_BEFORE=PARTIAL
+AUDIT_OBJECTIVES_GAP=0
+AUDIT_CRITERIA_GAP=0
+AUDIT_TYPED_SCOPE_GAP=0
+AUDIT_AGENDA_GAP=0
+AUDIT_TEAM_GAP=0
+AUDITOR_COMPETENCY_GAP=0
+AUDIT_TEST_REQUIREMENT_NM_GAP=0
+AUDIT_TEST_CONTROL_GAP=0
+AUDIT_TEST_REQUIREMENT_ASSESSMENT_LINEAGE_GAP=0
+
+RECTOR_V1_5_CANDIDATE=READY
+RECTOR_V1_5_CANDIDATE_STATUS=PENDING_HUMAN_APPROVAL
+PHYSICAL_MODEL_AMENDMENT=READY
+PHYSICAL_MODEL_AMENDMENT_STATUS=PENDING_HUMAN_APPROVAL
+EXECUTABLE_CONTRACT_AMENDMENT=READY
+EXECUTABLE_CONTRACT_AMENDMENT_STATUS=PENDING_HUMAN_APPROVAL
+PROPOSED_ADDITIONAL_TABLES=15
+PROPOSED_ALTERED_TABLES=1
+PROPOSED_FINAL_TABLES=229
+LEGACY_COMPATIBILITY=0
+GENERIC_POLYMORPHIC_REFERENCES=0
+JSONB_SEMANTIC_SHORTCUTS=0
+SCOPE_EXPANSION=0
+SEMANTIC_INFERENCES=0
+
+DDL_EXECUTED=0
+MIGRATION_CREATED=0
+QA_DATABASE_MUTATED=0
+FUNCTIONAL_DEVELOPMENT=0
+DEPLOYMENT_PERFORMED=0
+PUSH_PERFORMED=0
+PR_CREATED=0
+MERGE_PERFORMED=0
+
+TASK_PACKET_STATUS=COMPLETE
+CODEX_VARIATION_BUDGET=ZERO
+ASSUMPTIONS_INTRODUCED=NONE
+FILES_OUTSIDE_SCOPE_MODIFIED=NONE
+HUMAN_GATE_REQUIRED=AUDIT_MODEL_AMENDMENT_REVIEW
+```
+
+## Review boundary
+
+`READY` means internally consistent candidate ready for human review. It does not mean the rector, physical model, executable contracts or migration are approved or active. Fase 4 was not started.
+
+## Evidence summary
+
+- active v1.4 hashes pass the repository governance verifier;
+- main and origin/main matched at task start;
+- expected-schema declares 214 tables and seven current Audit tables;
+- handoff claims were checked only against targeted authoritative rows and matched;
+- v1.5 candidate is a separate checksummed overlay;
+- physical amendment proposes 15 exact tables and one exact altered table;
+- executable amendment closes API/RBAC/audit/idempotency/test impacts without new capability;
+- migration plan is incremental, transactional and fail-closed on unreconciled existing Audit data.
