@@ -1,0 +1,2365 @@
+openapi: 3.1.0
+info:
+  title: TCDX GRC API Base Contract
+  version: 1.0.0-contract-candidate
+  description: >-
+    Contrato schema-first de Fase 2. Publica sólo las 74 operaciones que cierran
+    trazabilidad rector-capability-permission-audit-idempotency-modelo físico.
+    H-003..H-005 autorizan las operaciones mínimas de Configuration,
+    privacy retention/erasure y lifecycle-registry sobre entidades existentes.
+  x-contract-owner: Architecture Owner
+  x-approving-human-roles:
+    - Architecture Owner
+    - Backend Owner
+    - Security & Privacy Reviewer
+  x-status: CANDIDATE_READY_FOR_HUMAN_REVIEW
+  x-wire-conventions-status: CONTRACT_DEFINED
+  x-master-regent: TCDX_GRC_MASTER_REGENT_BASELINE_v1.4_2026-09-15
+servers:
+  - url: /api/v1
+    description: Major v1 tenant/business API base path; deployment host is environment configuration.
+paths:
+  "/access/me":
+    get:
+      operationId: accessGet
+      tags: ["platform"]
+      summary: "CORE_PLATFORM: accessGet"
+      description: "Derived from 09,22,42. Actor: authenticated human/M2M. Tenant semantics: resolves, never trusts claims for grants. Contract shape: AccessQuery → EffectiveAccess."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "authenticated context"
+      x-tcdx-scope: "tenant/platform as requested"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`iam.*`, `platform.entitlements`"
+      x-tcdx-rector-source: "09,22,42"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }]
+      responses:
+        '200': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/platform/tenants":
+    post:
+      operationId: tenantCreate
+      tags: ["platform"]
+      summary: "CORE_PLATFORM: tenantCreate"
+      description: "Derived from 22,25,42. Actor: Platform Admin. Tenant semantics: no tenant header; target tenant created atomically. Contract shape: TenantCreate → Tenant."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.tenant.create`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "`audit.platform.tenant.create.v1`"
+      x-tcdx-domain-events: "`platform.tenant.provisioned.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`platform.tenants`, outbox/audit/idempotency"
+      x-tcdx-rector-source: "22,25,42"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/platform/tenants/{tenant_id}:archive":
+    post:
+      operationId: tenantArchive
+      tags: ["platform"]
+      summary: "CORE_PLATFORM: tenantArchive"
+      description: "Derived from 22,23,39. Actor: Platform Admin. Tenant semantics: explicit target; no impersonated tenant authority. Contract shape: Reason+ETag → Tenant."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.tenant.archive`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "`audit.platform.tenant.archive.v1`"
+      x-tcdx-domain-events: "`platform.tenant.archived.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`platform.tenants`"
+      x-tcdx-rector-source: "22,23,39"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: tenant_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/memberships":
+    post:
+      operationId: membershipCreate
+      tags: ["iam"]
+      summary: "CORE_PLATFORM: membershipCreate"
+      description: "Derived from 22,42. Actor: Tenant Admin. Tenant semantics: identity linked only to selected tenant. Contract shape: MembershipCreate → Membership."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.membership.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.platform.membership.create.v1`"
+      x-tcdx-domain-events: "`iam.membership.created.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`iam.tenant_memberships`"
+      x-tcdx-rector-source: "22,42"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/memberships/{membership_id}/role-assignments":
+    post:
+      operationId: membershipRoleAssign
+      tags: ["iam"]
+      summary: "CORE_PLATFORM: membershipRoleAssign"
+      description: "Derived from 22,42. Actor: Tenant Admin. Tenant semantics: membership/role/scope same tenant. Contract shape: RoleAssignmentCreate → RoleAssignment."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.role.assign`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.platform.role.assign.v1`"
+      x-tcdx-domain-events: "`iam.role.assigned.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`iam.membership_roles`"
+      x-tcdx-rector-source: "22,42"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: membership_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/role-assignments/{assignment_id}:revoke":
+    post:
+      operationId: membershipRoleRevoke
+      tags: ["iam"]
+      summary: "CORE_PLATFORM: membershipRoleRevoke"
+      description: "Derived from 22,23. Actor: Tenant Admin. Tenant semantics: ends validity; never deletes history. Contract shape: Reason+ETag → RoleAssignment."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.role.assign`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.platform.role.revoke.v1`"
+      x-tcdx-domain-events: "`iam.role.revoked.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`iam.membership_roles`"
+      x-tcdx-rector-source: "22,23"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: assignment_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/platform/impersonation-sessions":
+    post:
+      operationId: impersonationStart
+      tags: ["iam"]
+      summary: "CORE_PLATFORM: impersonationStart"
+      description: "Derived from 22 §8/12. Actor: Platform Admin. Tenant semantics: target membership/tenant explicit; reason+expiry required. Contract shape: ImpersonationStart → Session."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.impersonation_session.impersonate`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "`audit.platform.impersonation.start.v1`"
+      x-tcdx-domain-events: "`iam.impersonation.started.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`iam.impersonation_sessions`"
+      x-tcdx-rector-source: "22 §8/12"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/platform/impersonation-sessions/{session_id}:end":
+    post:
+      operationId: impersonationEnd
+      tags: ["iam"]
+      summary: "CORE_PLATFORM: impersonationEnd"
+      description: "Derived from 22 §8. Actor: initiating/authorized Platform Admin. Tenant semantics: cannot extend or change target. Contract shape: Reason+ETag → Session."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.impersonation_session.impersonate`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "`audit.platform.impersonation.end.v1`"
+      x-tcdx-domain-events: "`iam.impersonation.ended.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`iam.impersonation_sessions`"
+      x-tcdx-rector-source: "22 §8"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: session_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/framework-versions/{framework_version_id}/normative-units":
+    get:
+      operationId: normativeUnitList
+      tags: ["compliance"]
+      summary: "ISO_COMPLIANCE: normativeUnitList"
+      description: "Derived from 37,41,44. Actor: entitled viewer. Tenant semantics: global/tenant content access checked; cursor tree order. Contract shape: filters/cursor → NormativeUnitPage."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISO_COMPLIANCE"
+      x-tcdx-permission: "`compliance.normative_unit.read`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`regulatory.normative_units`"
+      x-tcdx-rector-source: "37,41,44"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { name: framework_version_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/framework-versions/{framework_version_id}/requirements":
+    get:
+      operationId: requirementList
+      tags: ["compliance"]
+      summary: "ISO_COMPLIANCE: requirementList"
+      description: "Derived from 37,41,44. Actor: entitled viewer. Tenant semantics: pack/content visibility enforced. Contract shape: filters/cursor → RequirementPage."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISO_COMPLIANCE"
+      x-tcdx-permission: "`compliance.requirement.read`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`regulatory.requirements`"
+      x-tcdx-rector-source: "37,41,44"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { name: framework_version_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/requirement-applicabilities":
+    post:
+      operationId: applicabilityCreate
+      tags: ["compliance"]
+      summary: "ISO_COMPLIANCE: applicabilityCreate"
+      description: "Derived from 22,30,44. Actor: Compliance Manager. Tenant semantics: Requirement accessible; optional Subject same tenant. Contract shape: ApplicabilityCreate → Applicability."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISO_COMPLIANCE"
+      x-tcdx-permission: "`compliance.applicability.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.compliance.applicability.create.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`regulatory.requirement_applicabilities`"
+      x-tcdx-rector-source: "22,30,44"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/requirement-applicabilities/{id}:submit":
+    post:
+      operationId: applicabilitySubmit
+      tags: ["compliance"]
+      summary: "ISO_COMPLIANCE: applicabilitySubmit"
+      description: "Derived from 21,22,44. Actor: author. Tenant semantics: exact version and rationale required. Contract shape: Command+ETag → Applicability."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISO_COMPLIANCE"
+      x-tcdx-permission: "`compliance.applicability.submit`"
+      x-tcdx-scope: "tenant/owned"
+      x-tcdx-audit-event: "`audit.compliance.applicability.submit.v1`"
+      x-tcdx-domain-events: "`compliance.applicability.submitted.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "applicability"
+      x-tcdx-rector-source: "21,22,44"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/requirement-applicabilities/{id}:approve":
+    post:
+      operationId: applicabilityApprove
+      tags: ["compliance"]
+      summary: "ISO_COMPLIANCE: applicabilityApprove"
+      description: "Derived from 22,44. Actor: authorized reviewer. Tenant semantics: SoD; same tenant; global Requirement unchanged. Contract shape: Decision+ETag → Applicability."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISO_COMPLIANCE"
+      x-tcdx-permission: "`compliance.applicability.approve`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.compliance.applicability.approve.v1`"
+      x-tcdx-domain-events: "`compliance.applicability.approved.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "applicability"
+      x-tcdx-rector-source: "22,44"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/requirement-assessments":
+    post:
+      operationId: requirementAssessmentCreate
+      tags: ["compliance"]
+      summary: "ISO_COMPLIANCE: requirementAssessmentCreate"
+      description: "Derived from 21,44. Actor: Compliance Manager. Tenant semantics: applicability same tenant; no NormativeUnit assessment. Contract shape: AssessmentCreate → Assessment."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISO_COMPLIANCE"
+      x-tcdx-permission: "`compliance.requirement_assessment.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.compliance.requirement_assessment.create.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`regulatory.requirement_assessments`"
+      x-tcdx-rector-source: "21,44"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/requirement-assessments/{id}:start":
+    post:
+      operationId: requirementAssessmentStart
+      tags: ["compliance"]
+      summary: "ISO_COMPLIANCE: requirementAssessmentStart"
+      description: "Derived from 21. Actor: assessor. Tenant semantics: `not_assessed→in_progress`. Contract shape: Command+ETag → Assessment."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISO_COMPLIANCE"
+      x-tcdx-permission: "`compliance.requirement_assessment.update`"
+      x-tcdx-scope: "assigned/tenant"
+      x-tcdx-audit-event: "`audit.compliance.requirement_assessment.start.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "assessment"
+      x-tcdx-rector-source: "21"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/requirement-assessments/{id}:submit":
+    post:
+      operationId: requirementAssessmentSubmit
+      tags: ["compliance"]
+      summary: "ISO_COMPLIANCE: requirementAssessmentSubmit"
+      description: "Derived from 21,38. Actor: assessor. Tenant semantics: `in_progress→assessed`; result fields separate. Contract shape: AssessmentSubmit+ETag → Assessment."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISO_COMPLIANCE"
+      x-tcdx-permission: "`compliance.requirement_assessment.submit`"
+      x-tcdx-scope: "assigned/tenant"
+      x-tcdx-audit-event: "`audit.compliance.requirement_assessment.submit.v1`"
+      x-tcdx-domain-events: "`compliance.requirement_assessment.assessed.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "assessment"
+      x-tcdx-rector-source: "21,38"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/requirement-assessments/{id}:approve":
+    post:
+      operationId: requirementAssessmentApprove
+      tags: ["compliance"]
+      summary: "ISO_COMPLIANCE: requirementAssessmentApprove"
+      description: "Derived from 21,22. Actor: reviewer. Tenant semantics: SoD; `assessed→approved`. Contract shape: Decision+ETag → Assessment."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISO_COMPLIANCE"
+      x-tcdx-permission: "`compliance.requirement_assessment.approve`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.compliance.requirement_assessment.approve.v1`"
+      x-tcdx-domain-events: "`compliance.requirement_assessment.approved.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "assessment"
+      x-tcdx-rector-source: "21,22"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/statements-of-applicability/{id}:publish":
+    post:
+      operationId: soaPublish
+      tags: ["compliance"]
+      summary: "ISO_COMPLIANCE: soaPublish"
+      description: "Derived from 22,41,44. Actor: GRC/Compliance Manager. Tenant semantics: version complete; controls accessible; immutable after publish. Contract shape: Reason+ETag → SoA."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISO_COMPLIANCE"
+      x-tcdx-permission: "`compliance.soa.publish`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.compliance.soa.publish.v1`"
+      x-tcdx-domain-events: "`compliance.soa.published.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "SoA/items"
+      x-tcdx-rector-source: "22,41,44"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/platform/regulatory-pack-versions/{id}:publish":
+    post:
+      operationId: regulatoryPackPublish
+      tags: ["knowledge"]
+      summary: "REGULATORY_INTELLIGENCE: regulatoryPackPublish"
+      description: "Derived from 37,41,44. Actor: GRC Manager after required coapprovals. Tenant semantics: no tenant; coverage=100 and licensed provenance. Contract shape: Reason+ETag → PackVersion."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "REGULATORY_INTELLIGENCE"
+      x-tcdx-permission: "`knowledge.regulatory_pack.publish`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "`audit.knowledge.regulatory_pack.publish.v1`"
+      x-tcdx-domain-events: "`knowledge.regulatory_pack.published.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "pack/version/manifests"
+      x-tcdx-rector-source: "37,41,44"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/controls:instantiate":
+    post:
+      operationId: controlInstantiate
+      tags: ["controls"]
+      summary: "CONTROLS_ASSURANCE: controlInstantiate"
+      description: "Derived from 41,44. Actor: Control/GRC Manager. Tenant semantics: based_on global accessible; creates tenant Control. Contract shape: ControlInstantiate → Control."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CONTROLS_ASSURANCE"
+      x-tcdx-permission: "`controls.control.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.controls.control.instantiate.v1`"
+      x-tcdx-domain-events: "`controls.control.instantiated.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`controls.controls/control_versions`"
+      x-tcdx-rector-source: "41,44"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/control-assessments":
+    post:
+      operationId: controlAssessmentCreate
+      tags: ["controls"]
+      summary: "CONTROLS_ASSURANCE: controlAssessmentCreate"
+      description: "Derived from 21,39. Actor: Control Owner. Tenant semantics: tenant Control and methodology compatible. Contract shape: AssessmentCreate → ControlAssessment."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CONTROLS_ASSURANCE"
+      x-tcdx-permission: "`controls.control_assessment.create`"
+      x-tcdx-scope: "tenant/owned"
+      x-tcdx-audit-event: "`audit.controls.control_assessment.create.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`controls.control_assessments`"
+      x-tcdx-rector-source: "21,39"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/control-assessments/{id}:complete":
+    post:
+      operationId: controlAssessmentSubmit
+      tags: ["controls"]
+      summary: "CONTROLS_ASSURANCE: controlAssessmentSubmit"
+      description: "Derived from 21,38,39. Actor: assessor. Tenant semantics: `in_progress→completed`; coverage/status explicit. Contract shape: AssessmentSubmit+ETag → ControlAssessment."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CONTROLS_ASSURANCE"
+      x-tcdx-permission: "`controls.control_assessment.submit`"
+      x-tcdx-scope: "assigned"
+      x-tcdx-audit-event: "`audit.controls.control_assessment.complete.v1`"
+      x-tcdx-domain-events: "`controls.control_assessment.completed.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "assessment"
+      x-tcdx-rector-source: "21,38,39"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/control-assessments/{id}:review":
+    post:
+      operationId: controlAssessmentReview
+      tags: ["controls"]
+      summary: "CONTROLS_ASSURANCE: controlAssessmentReview"
+      description: "Derived from 21,22. Actor: reviewer. Tenant semantics: `completed→reviewed`; independence policy. Contract shape: Decision+ETag → ControlAssessment."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CONTROLS_ASSURANCE"
+      x-tcdx-permission: "`controls.control_assessment.review`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.controls.control_assessment.review.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "assessment"
+      x-tcdx-rector-source: "21,22"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/control-assessments/{id}:approve":
+    post:
+      operationId: controlAssessmentApprove
+      tags: ["controls"]
+      summary: "CONTROLS_ASSURANCE: controlAssessmentApprove"
+      description: "Derived from 21,22. Actor: approver. Tenant semantics: `reviewed→approved`; SoD. Contract shape: Decision+ETag → ControlAssessment."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CONTROLS_ASSURANCE"
+      x-tcdx-permission: "`controls.control_assessment.approve`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.controls.control_assessment.approve.v1`"
+      x-tcdx-domain-events: "`controls.control_assessment.approved.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "assessment"
+      x-tcdx-rector-source: "21,22"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/assurance-tests/{id}:execute":
+    post:
+      operationId: assuranceTestExecute
+      tags: ["controls"]
+      summary: "CONTROLS_ASSURANCE: assuranceTestExecute"
+      description: "Derived from 21,22. Actor: assigned tester. Tenant semantics: evidence/samples same tenant; no autoapproval. Contract shape: TestExecution+ETag → AssuranceTest."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CONTROLS_ASSURANCE"
+      x-tcdx-permission: "`controls.assurance_test.execute`"
+      x-tcdx-scope: "assigned"
+      x-tcdx-audit-event: "`audit.controls.assurance_test.execute.v1`"
+      x-tcdx-domain-events: "`controls.assurance_test.completed.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "assurance tests/samples"
+      x-tcdx-rector-source: "21,22"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/files:request-upload":
+    post:
+      operationId: uploadIntentCreate
+      tags: ["evidence"]
+      summary: "EVIDENCE_DOCUMENTS: uploadIntentCreate"
+      description: "Derived from 24. Actor: Evidence Owner. Tenant semantics: opaque key/quarantine; authorization before URL. Contract shape: UploadIntentRequest → UploadIntent."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "EVIDENCE_DOCUMENTS"
+      x-tcdx-permission: "`evidence.document.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.evidence.file.upload_requested.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`evidence.file_objects`"
+      x-tcdx-rector-source: "24"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/files/{file_object_id}:finalize":
+    post:
+      operationId: uploadFinalize
+      tags: ["evidence"]
+      summary: "EVIDENCE_DOCUMENTS: uploadFinalize"
+      description: "Derived from 24. Actor: uploader/service. Tenant semantics: verifies size/MIME/checksum; remains unusable until scan PASS. Contract shape: UploadFinalize+ETag → FileObject."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "EVIDENCE_DOCUMENTS"
+      x-tcdx-permission: "`evidence.document.update`"
+      x-tcdx-scope: "tenant/owned"
+      x-tcdx-audit-event: "`audit.evidence.file.finalize.v1`"
+      x-tcdx-domain-events: "`evidence.file.quarantined.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "file object"
+      x-tcdx-rector-source: "24"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: file_object_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/evidence-requests":
+    post:
+      operationId: evidenceRequestCreate
+      tags: ["evidence"]
+      summary: "EVIDENCE_DOCUMENTS: evidenceRequestCreate"
+      description: "Derived from 24,44. Actor: authorized domain owner. Tenant semantics: exactly one typed target, same tenant/global accessible. Contract shape: EvidenceRequestCreate → EvidenceRequest."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "EVIDENCE_DOCUMENTS"
+      x-tcdx-permission: "`evidence.evidence_request.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.evidence.request.create.v1`"
+      x-tcdx-domain-events: "`evidence.request.opened.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "request"
+      x-tcdx-rector-source: "24,44"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/evidence-requests/{id}:fulfill":
+    post:
+      operationId: evidenceRequestFulfill
+      tags: ["evidence"]
+      summary: "EVIDENCE_DOCUMENTS: evidenceRequestFulfill"
+      description: "Derived from 21,24. Actor: Evidence Owner. Tenant semantics: EvidenceVersion eligible and same tenant. Contract shape: Fulfillment+ETag → EvidenceRequest."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "EVIDENCE_DOCUMENTS"
+      x-tcdx-permission: "`evidence.evidence_request.submit`"
+      x-tcdx-scope: "assigned/tenant"
+      x-tcdx-audit-event: "`audit.evidence.request.fulfill.v1`"
+      x-tcdx-domain-events: "`evidence.request.fulfilled.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "request/fulfillments"
+      x-tcdx-rector-source: "21,24"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/evidence-versions/{id}:submit":
+    post:
+      operationId: evidenceSubmit
+      tags: ["evidence"]
+      summary: "EVIDENCE_DOCUMENTS: evidenceSubmit"
+      description: "Derived from 21,24. Actor: Evidence Owner. Tenant semantics: scan PASS; typed links; `draft→submitted`. Contract shape: Command+ETag → EvidenceVersion."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "EVIDENCE_DOCUMENTS"
+      x-tcdx-permission: "`evidence.evidence.submit`"
+      x-tcdx-scope: "owned/assigned"
+      x-tcdx-audit-event: "`audit.evidence.evidence.submit.v1`"
+      x-tcdx-domain-events: "`evidence.evidence.submitted.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "evidence/version/links"
+      x-tcdx-rector-source: "21,24"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/evidence-versions/{id}:start-review":
+    post:
+      operationId: evidenceReviewStart
+      tags: ["evidence"]
+      summary: "EVIDENCE_DOCUMENTS: evidenceReviewStart"
+      description: "Derived from 21,22. Actor: reviewer. Tenant semantics: reviewer eligible; `submitted→under_review`. Contract shape: Command+ETag → EvidenceVersion."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "EVIDENCE_DOCUMENTS"
+      x-tcdx-permission: "`evidence.evidence.review`"
+      x-tcdx-scope: "assigned/tenant"
+      x-tcdx-audit-event: "`audit.evidence.evidence.start_review.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "evidence/version/review"
+      x-tcdx-rector-source: "21,22"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/evidence-versions/{id}:approve":
+    post:
+      operationId: evidenceApprove
+      tags: ["evidence"]
+      summary: "EVIDENCE_DOCUMENTS: evidenceApprove"
+      description: "Derived from 21,22,24. Actor: reviewer. Tenant semantics: SoD; relevance/sufficiency; `under_review→approved`. Contract shape: ReviewDecision+ETag → EvidenceVersion."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "EVIDENCE_DOCUMENTS"
+      x-tcdx-permission: "`evidence.evidence.approve`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.evidence.evidence.approve.v1`"
+      x-tcdx-domain-events: "`evidence.evidence.approved.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "version/review"
+      x-tcdx-rector-source: "21,22,24"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/evidence-versions/{id}:reject":
+    post:
+      operationId: evidenceReject
+      tags: ["evidence"]
+      summary: "EVIDENCE_DOCUMENTS: evidenceReject"
+      description: "Derived from 21,24. Actor: reviewer. Tenant semantics: reason required; `under_review→rejected`. Contract shape: ReviewDecision+ETag → EvidenceVersion."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "EVIDENCE_DOCUMENTS"
+      x-tcdx-permission: "`evidence.evidence.reject`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.evidence.evidence.reject.v1`"
+      x-tcdx-domain-events: "`evidence.evidence.rejected.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "version/review"
+      x-tcdx-rector-source: "21,24"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/issues":
+    post:
+      operationId: issueCreate
+      tags: ["remediation"]
+      summary: "ISSUES_ACTIONS: issueCreate"
+      description: "Derived from 21,44. Actor: authorized domain actor. Tenant semantics: typed origin only; same tenant. Contract shape: IssueCreate → Issue."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISSUES_ACTIONS"
+      x-tcdx-permission: "`remediation.issue.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.remediation.issue.create.v1`"
+      x-tcdx-domain-events: "`remediation.issue.opened.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "issues/origins"
+      x-tcdx-rector-source: "21,44"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/issues/{id}:triage":
+    post:
+      operationId: issueTriage
+      tags: ["remediation"]
+      summary: "ISSUES_ACTIONS: issueTriage"
+      description: "Derived from 21. Actor: GRC/domain manager. Tenant semantics: `open→triaged`; severity != lifecycle. Contract shape: Triage+ETag → Issue."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISSUES_ACTIONS"
+      x-tcdx-permission: "`remediation.issue.transition`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.remediation.issue.triage.v1`"
+      x-tcdx-domain-events: "`remediation.issue.triaged.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "issue"
+      x-tcdx-rector-source: "21"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/issues/{issue_id}/actions":
+    post:
+      operationId: actionCreate
+      tags: ["remediation"]
+      summary: "ISSUES_ACTIONS: actionCreate"
+      description: "Derived from 21,42. Actor: GRC/domain manager. Tenant semantics: issue same tenant; owner scope resolved. Contract shape: ActionCreate → Action."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISSUES_ACTIONS"
+      x-tcdx-permission: "`remediation.action.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.remediation.action.create.v1`"
+      x-tcdx-domain-events: "`remediation.action.created.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "actions"
+      x-tcdx-rector-source: "21,42"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: issue_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/actions/{id}:start":
+    post:
+      operationId: actionStart
+      tags: ["remediation"]
+      summary: "ISSUES_ACTIONS: actionStart"
+      description: "Derived from 21. Actor: Action Owner. Tenant semantics: `pending→in_progress`. Contract shape: Command+ETag → Action."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISSUES_ACTIONS"
+      x-tcdx-permission: "`remediation.action.transition`"
+      x-tcdx-scope: "assigned/owned"
+      x-tcdx-audit-event: "`audit.remediation.action.start.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "action"
+      x-tcdx-rector-source: "21"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/actions/{id}:complete":
+    post:
+      operationId: actionComplete
+      tags: ["remediation"]
+      summary: "ISSUES_ACTIONS: actionComplete"
+      description: "Derived from 21,22. Actor: Action Owner. Tenant semantics: closure evidence; `in_review→completed`. Contract shape: Completion+ETag → Action."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISSUES_ACTIONS"
+      x-tcdx-permission: "`remediation.action.transition`"
+      x-tcdx-scope: "assigned/owned"
+      x-tcdx-audit-event: "`audit.remediation.action.complete.v1`"
+      x-tcdx-domain-events: "`remediation.action.completed.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "action/evidence links"
+      x-tcdx-rector-source: "21,22"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/actions/{id}:verify":
+    post:
+      operationId: actionVerify
+      tags: ["remediation"]
+      summary: "ISSUES_ACTIONS: actionVerify"
+      description: "Derived from 21,22. Actor: independent verifier. Tenant semantics: completer≠verifier under policy; `completed→verified`. Contract shape: Verification+ETag → Action."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISSUES_ACTIONS"
+      x-tcdx-permission: "`remediation.action.verify`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.remediation.action.verify.v1`"
+      x-tcdx-domain-events: "`remediation.action.verified.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "action/verifications"
+      x-tcdx-rector-source: "21,22"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/risks":
+    post:
+      operationId: riskCreate
+      tags: ["risk"]
+      summary: "OPERATIONAL_RISK: riskCreate"
+      description: "Derived from 19,39. Actor: Risk Manager. Tenant semantics: subjects/methodology same tenant or accessible. Contract shape: RiskCreate → Risk."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "OPERATIONAL_RISK"
+      x-tcdx-permission: "`risk.risk.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.risk.risk.create.v1`"
+      x-tcdx-domain-events: "`risk.risk.identified.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "risks/scopes"
+      x-tcdx-rector-source: "19,39"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/risk-assessments":
+    post:
+      operationId: riskAssessmentCreate
+      tags: ["risk"]
+      summary: "OPERATIONAL_RISK: riskAssessmentCreate"
+      description: "Derived from 19,39. Actor: Risk Manager. Tenant semantics: methodology/scales/config versions explicit. Contract shape: RiskAssessmentCreate → RiskAssessment."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "OPERATIONAL_RISK"
+      x-tcdx-permission: "`risk.risk_assessment.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.risk.assessment.create.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "assessments"
+      x-tcdx-rector-source: "19,39"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/risk-assessments/{id}:submit":
+    post:
+      operationId: riskAssessmentSubmit
+      tags: ["risk"]
+      summary: "OPERATIONAL_RISK: riskAssessmentSubmit"
+      description: "Derived from 38,39. Actor: assessor. Tenant semantics: value/status/lineage separate; residual zero valid. Contract shape: AssessmentSubmit+ETag → RiskAssessment."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "OPERATIONAL_RISK"
+      x-tcdx-permission: "`risk.risk_assessment.submit`"
+      x-tcdx-scope: "assigned/tenant"
+      x-tcdx-audit-event: "`audit.risk.assessment.submit.v1`"
+      x-tcdx-domain-events: "`risk.assessment.submitted.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "assessment/lineage"
+      x-tcdx-rector-source: "38,39"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/risks/{risk_id}/treatments":
+    post:
+      operationId: riskTreatmentCreate
+      tags: ["risk"]
+      summary: "OPERATIONAL_RISK: riskTreatmentCreate"
+      description: "Derived from 21. Actor: Risk Manager. Tenant semantics: disposition closed vocabulary. Contract shape: TreatmentCreate → Treatment."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "OPERATIONAL_RISK"
+      x-tcdx-permission: "`risk.treatment.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.risk.treatment.create.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "treatments"
+      x-tcdx-rector-source: "21"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: risk_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/risk-treatments/{id}:approve":
+    post:
+      operationId: riskTreatmentApprove
+      tags: ["risk"]
+      summary: "OPERATIONAL_RISK: riskTreatmentApprove"
+      description: "Derived from 21,22. Actor: authorized approver. Tenant semantics: `proposed→approved`; SoD. Contract shape: Decision+ETag → Treatment."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "OPERATIONAL_RISK"
+      x-tcdx-permission: "`risk.treatment.approve`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.risk.treatment.approve.v1`"
+      x-tcdx-domain-events: "`risk.treatment.approved.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "treatment"
+      x-tcdx-rector-source: "21,22"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/risks/{risk_id}/acceptance-requests":
+    post:
+      operationId: riskAcceptanceRequest
+      tags: ["risk"]
+      summary: "OPERATIONAL_RISK: riskAcceptanceRequest"
+      description: "Derived from 21,39. Actor: Risk Manager. Tenant semantics: rationale/expiry/review mandatory; score unchanged. Contract shape: AcceptanceRequest → Acceptance."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "OPERATIONAL_RISK"
+      x-tcdx-permission: "`risk.acceptance.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.risk.acceptance.request.v1`"
+      x-tcdx-domain-events: "`risk.acceptance.requested.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "acceptances"
+      x-tcdx-rector-source: "21,39"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: risk_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/risk-acceptances/{id}:approve":
+    post:
+      operationId: riskAcceptanceApprove
+      tags: ["risk"]
+      summary: "OPERATIONAL_RISK: riskAcceptanceApprove"
+      description: "Derived from 22,39. Actor: authorized approver. Tenant semantics: requester≠approver; policy checked. Contract shape: Decision+ETag → Acceptance."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "OPERATIONAL_RISK"
+      x-tcdx-permission: "`risk.acceptance.approve`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.risk.acceptance.approve.v1`"
+      x-tcdx-domain-events: "`risk.acceptance.approved.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "acceptance"
+      x-tcdx-rector-source: "22,39"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/incidents":
+    post:
+      operationId: incidentCreate
+      tags: ["operations"]
+      summary: "INCIDENTS_LOSS: incidentCreate"
+      description: "Derived from 21. Actor: authorized reporter. Tenant semantics: subject links same tenant. Contract shape: IncidentCreate → Incident."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "INCIDENTS_LOSS"
+      x-tcdx-permission: "`operations.incident.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.operations.incident.create.v1`"
+      x-tcdx-domain-events: "`operations.incident.reported.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "incidents/links"
+      x-tcdx-rector-source: "21"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/supplier-assessments":
+    post:
+      operationId: supplierAssessmentCreate
+      tags: ["third-party"]
+      summary: "THIRD_PARTIES: supplierAssessmentCreate"
+      description: "Derived from 07,21,42. Actor: Supplier Manager. Tenant semantics: Supplier authority remains Third Parties. Contract shape: AssessmentCreate → SupplierAssessment."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "THIRD_PARTIES"
+      x-tcdx-permission: "`operations.supplier_assessment.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.operations.supplier_assessment.create.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "supplier assessments"
+      x-tcdx-rector-source: "07,21,42"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/continuity-plans":
+    post:
+      operationId: continuityPlanCreate
+      tags: ["resilience"]
+      summary: "RESILIENCE: continuityPlanCreate"
+      description: "Derived from 21,42. Actor: Continuity Manager. Tenant semantics: BIA/subjects same tenant. Contract shape: ContinuityPlanCreate → ContinuityPlan."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "RESILIENCE"
+      x-tcdx-permission: "`operations.continuity_plan.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.operations.continuity_plan.create.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "continuity plans/versions"
+      x-tcdx-rector-source: "21,42"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/survey-campaigns":
+    post:
+      operationId: surveyCampaignCreate
+      tags: ["surveys"]
+      summary: "SURVEYS: surveyCampaignCreate"
+      description: "Derived from 21. Actor: authorized manager. Tenant semantics: published SurveyVersion accessible. Contract shape: CampaignCreate → Campaign."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "SURVEYS"
+      x-tcdx-permission: "`operations.survey.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.operations.survey_campaign.create.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "campaigns"
+      x-tcdx-rector-source: "21"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/survey-responses/{id}:submit":
+    post:
+      operationId: surveyResponseSubmit
+      tags: ["surveys"]
+      summary: "SURVEYS: surveyResponseSubmit"
+      description: "Derived from 21. Actor: respondent. Tenant semantics: required answers/evidence validated. Contract shape: ResponseSubmit+ETag → Response."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "SURVEYS"
+      x-tcdx-permission: "`operations.survey.submit`"
+      x-tcdx-scope: "assigned"
+      x-tcdx-audit-event: "`audit.operations.survey_response.submit.v1`"
+      x-tcdx-domain-events: "`operations.survey_response.submitted.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "responses/answers"
+      x-tcdx-rector-source: "21"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/audits":
+    post:
+      operationId: auditCreate
+      tags: ["audit"]
+      summary: "AUDIT: auditCreate"
+      description: "Derived from 21,42. Actor: Auditor Lead. Tenant semantics: program/scope/team same tenant. Contract shape: AuditCreate → Audit."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "AUDIT"
+      x-tcdx-permission: "`audit.audit.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.audit.audit.create.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "audits"
+      x-tcdx-rector-source: "21,42"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/audits/{id}:approve":
+    post:
+      operationId: auditApprove
+      tags: ["audit"]
+      summary: "AUDIT: auditApprove"
+      description: "Derived from 21,22. Actor: Auditor Lead/approver. Tenant semantics: `planned→approved`; independence. Contract shape: Decision+ETag → Audit."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "AUDIT"
+      x-tcdx-permission: "`audit.audit.approve`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.audit.audit.approve.v1`"
+      x-tcdx-domain-events: "`audit.audit.approved.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "audit"
+      x-tcdx-rector-source: "21,22"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/audit-tests/{id}:execute":
+    post:
+      operationId: auditTestExecute
+      tags: ["audit"]
+      summary: "AUDIT: auditTestExecute"
+      description: "Derived from 07,21,22. Actor: assigned Auditor. Tenant semantics: target reads retain original scope; evidence typed. Contract shape: TestExecution+ETag → AuditTest."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "AUDIT"
+      x-tcdx-permission: "`audit.audit_test.execute`"
+      x-tcdx-scope: "audit_engagement"
+      x-tcdx-audit-event: "`audit.audit.audit_test.execute.v1`"
+      x-tcdx-domain-events: "`audit.audit_test.completed.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "tests/samples/evidence links"
+      x-tcdx-rector-source: "07,21,22"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/integrations":
+    post:
+      operationId: integrationConfigure
+      tags: ["integration"]
+      summary: "INTEGRATION_HUB: integrationConfigure"
+      description: "Derived from 20,22,26. Actor: Data Admin. Tenant semantics: ConnectorVersion published; credential ref only. Contract shape: IntegrationConfigure → Integration."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "INTEGRATION_HUB"
+      x-tcdx-permission: "`integration.integration.configure`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.integration.integration.configure.v1`"
+      x-tcdx-domain-events: "`integration.integration.configured.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "integrations/credential refs"
+      x-tcdx-rector-source: "20,22,26"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/integrations/{id}/sync-runs":
+    post:
+      operationId: syncRunStart
+      tags: ["integration"]
+      summary: "INTEGRATION_HUB: syncRunStart"
+      description: "Derived from 14,20,25. Actor: Data Admin/service principal. Tenant semantics: provider contract gate PASS; checkpoint explicit. Contract shape: SyncRunStart → AsyncOperation."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "INTEGRATION_HUB"
+      x-tcdx-permission: "`integration.sync_run.execute`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.integration.sync_run.start.v1`"
+      x-tcdx-domain-events: "`integration.sync.requested.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "sync runs/jobs/outbox"
+      x-tcdx-rector-source: "14,20,25"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/calculations":
+    post:
+      operationId: calculationRunStart
+      tags: ["data"]
+      summary: "DATA_TRUST: calculationRunStart"
+      description: "Derived from 14,17,35,38. Actor: Data Admin/service principal. Tenant semantics: definition/config/source policy versions fixed. Contract shape: CalculationStart → AsyncOperation."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "DATA_TRUST"
+      x-tcdx-permission: "`data.measurement.execute`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.data.calculation.start.v1`"
+      x-tcdx-domain-events: "`data.calculation.requested.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "calculation runs/jobs"
+      x-tcdx-rector-source: "14,17,35,38"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/source-resolutions":
+    post:
+      operationId: sourceResolutionCreate
+      tags: ["data"]
+      summary: "DATA_TRUST: sourceResolutionCreate"
+      description: "Derived from 35. Actor: Data Admin. Tenant semantics: candidates/selected subset; policy/version mandatory. Contract shape: SourceResolutionCreate → SourceResolution."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "DATA_TRUST"
+      x-tcdx-permission: "`data.lineage.review`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.data.source_resolution.create.v1`"
+      x-tcdx-domain-events: "`data.source_resolution.created.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "resolutions/observation links"
+      x-tcdx-rector-source: "35"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/rule-evaluations":
+    post:
+      operationId: ruleEvaluationStart
+      tags: ["rules"]
+      summary: "RULES_IMPACT: ruleEvaluationStart"
+      description: "Derived from 18,36. Actor: Data Admin/service principal. Tenant semantics: inputs eligible; no direct cross-domain write. Contract shape: RuleEvaluationStart → AsyncOperation."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "RULES_IMPACT"
+      x-tcdx-permission: "`data.rule.execute`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.data.rule.execute.v1`"
+      x-tcdx-domain-events: "`rules.evaluation.requested.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "rule evaluations/jobs"
+      x-tcdx-rector-source: "18,36"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/snapshots/{id}":
+    get:
+      operationId: snapshotGet
+      tags: ["data/reporting"]
+      summary: "DATA_TRUST: snapshotGet"
+      description: "Derived from 23,27,38. Actor: entitled viewer. Tenant semantics: exact snapshot and authorized drilldown only. Contract shape: ID → SnapshotEnvelope."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "DATA_TRUST"
+      x-tcdx-permission: "`data.snapshot.read`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "snapshots/items"
+      x-tcdx-rector-source: "23,27,38"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/report-runs":
+    post:
+      operationId: reportRunStart
+      tags: ["reporting"]
+      summary: "REPORT_STUDIO or ISO_REPORTING: reportRunStart"
+      description: "Derived from 23,27. Actor: authorized report operator. Tenant semantics: definition capability enabled; snapshots concrete. Contract shape: ReportRunStart → AsyncOperation."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "REPORT_STUDIO or ISO_REPORTING"
+      x-tcdx-permission: "`reporting.report_run.execute`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.reporting.report_run.start.v1`"
+      x-tcdx-domain-events: "`reporting.report.requested.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "report runs/jobs"
+      x-tcdx-rector-source: "23,27"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/reports/{id}:approve":
+    post:
+      operationId: reportApprove
+      tags: ["reporting"]
+      summary: "REPORT_STUDIO or ISO_REPORTING: reportApprove"
+      description: "Derived from 21,27. Actor: reviewer. Tenant semantics: artifact immutable and snapshot-bound. Contract shape: Decision+ETag → ReportArtifact."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "REPORT_STUDIO or ISO_REPORTING"
+      x-tcdx-permission: "`reporting.report.approve`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.reporting.report.approve.v1`"
+      x-tcdx-domain-events: "`reporting.report.approved.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "artifacts"
+      x-tcdx-rector-source: "21,27"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/reports/{id}:publish":
+    post:
+      operationId: reportPublish
+      tags: ["reporting"]
+      summary: "REPORT_STUDIO or ISO_REPORTING: reportPublish"
+      description: "Derived from 21,22,27. Actor: authorized publisher. Tenant semantics: `approved→published`; classification/access fixed. Contract shape: Reason+ETag → ReportArtifact."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "REPORT_STUDIO or ISO_REPORTING"
+      x-tcdx-permission: "`reporting.report.publish`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.reporting.report.publish.v1`"
+      x-tcdx-domain-events: "`reporting.report.published.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "artifacts"
+      x-tcdx-rector-source: "21,22,27"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/ai/recommendations":
+    post:
+      operationId: aiRecommendationRequest
+      tags: ["ai"]
+      summary: "AI_ASSISTANCE: aiRecommendationRequest"
+      description: "Derived from 26,36. Actor: authorized human. Tenant semantics: purpose authorized; minimized readable context only. Contract shape: AIRecommendationRequest → AsyncOperation."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "AI_ASSISTANCE"
+      x-tcdx-permission: "`ai.ai_recommendation.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.ai.recommendation.request.v1`"
+      x-tcdx-domain-events: "`ai.recommendation.requested.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "AI jobs/outbox"
+      x-tcdx-rector-source: "26,36"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/ai/recommendations/{id}:review":
+    post:
+      operationId: aiRecommendationReview
+      tags: ["ai"]
+      summary: "AI_ASSISTANCE: aiRecommendationReview"
+      description: "Derived from 36. Actor: authorized reviewer. Tenant semantics: accept/reject recorded; acceptance does not execute domain mutation. Contract shape: ReviewDecision+ETag → AIRecommendation."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "AI_ASSISTANCE"
+      x-tcdx-permission: "`ai.ai_recommendation.review`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.ai.recommendation.review.v1`"
+      x-tcdx-domain-events: "`ai.recommendation.reviewed.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "recommendations"
+      x-tcdx-rector-source: "36"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/platform/configuration-definitions/{id}:publish":
+    post:
+      operationId: configurationDefinitionPublish
+      tags: ["configuration"]
+      summary: "CORE_PLATFORM: configurationDefinitionPublish"
+      description: "H-003. Publishes an approved global ConfigurationDefinition; author/review/approve/publish SoD applies and tenant definitions are not invented."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`configuration.configuration_definition.publish`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "`audit.configuration.configuration_definition.publish.v1`"
+      x-tcdx-domain-events: "`configuration.configuration_definition.published.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`config.configuration_definitions`, validations/scopes, outbox/audit/idempotency"
+      x-tcdx-rector-source: "22,29,33,39; H-003"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/DomainCommandRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/configuration-overrides":
+    post:
+      operationId: configurationOverrideCreate
+      tags: ["configuration"]
+      summary: "CORE_PLATFORM: configurationOverrideCreate"
+      description: "H-003. Creates a tenant-scoped override only when the published definition permits its type and scope; it never mutates the global definition."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`configuration.configuration_override.create`"
+      x-tcdx-scope: "tenant/scoped object"
+      x-tcdx-audit-event: "`audit.configuration.configuration_override.create.v1`"
+      x-tcdx-domain-events: "`configuration.configuration_override.created.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`config.configuration_overrides`, typed values"
+      x-tcdx-rector-source: "29,33,39,42; H-003"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/DomainCommandRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/effective-configurations/{id}":
+    get:
+      operationId: effectiveConfigurationGet
+      tags: ["configuration"]
+      summary: "CORE_PLATFORM: effectiveConfigurationGet"
+      description: "H-003. Reads a reproducible tenant-derived resolution. EffectiveConfiguration has no direct-write operation and conflicts remain explicit."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`configuration.effective_configuration.read`"
+      x-tcdx-scope: "tenant/scoped object"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`config.effective_configurations`, resolution layers"
+      x-tcdx-rector-source: "29,33,39; H-003"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/retention-policies/{id}:publish":
+    post:
+      operationId: retentionPolicyPublish
+      tags: ["privacy"]
+      summary: "PRIVACY: retentionPolicyPublish"
+      description: "H-004. Publishes an approved tenant policy without weakening mandatory regulatory or contractual retention."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.publish`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.retention_policy.publish.v1`"
+      x-tcdx-domain-events: "`privacy.retention_policy.published.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.retention_policies`, outbox/audit/idempotency"
+      x-tcdx-rector-source: "22,23,33,39; H-004"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/DomainCommandRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/data-subject-requests":
+    post:
+      operationId: dataSubjectRequestCreate
+      tags: ["privacy"]
+      summary: "PRIVACY: dataSubjectRequestCreate"
+      description: "H-004. Creates a tenant request with a pseudonymous/minimized requester reference."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.data_subject_request.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.data_subject_request.create.v1`"
+      x-tcdx-domain-events: "`privacy.data_subject_request.created.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.data_subject_requests`"
+      x-tcdx-rector-source: "33,39,42; H-004"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/DomainCommandRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/data-subject-requests/{id}:approve":
+    post:
+      operationId: dataSubjectRequestApprove
+      tags: ["privacy"]
+      summary: "PRIVACY: dataSubjectRequestApprove"
+      description: "H-004. Records the legally reviewed tenant decision with author/approver SoD and retention/legal-hold evaluation."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.data_subject_request.approve`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.data_subject_request.approve.v1`"
+      x-tcdx-domain-events: "`privacy.data_subject_request.approved.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.data_subject_requests`, policy/legal-basis refs"
+      x-tcdx-rector-source: "22,23,39,42; H-004"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/DomainCommandRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/data-subject-requests/{id}/erasure-executions":
+    post:
+      operationId: erasureExecutionExecute
+      tags: ["privacy"]
+      summary: "PRIVACY: erasureExecutionExecute"
+      description: "H-004. Executes controlled per-object erasure/anonymization under approved workflow and retention precedence; never a generic hard-delete."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.erasure_execution.execute`"
+      x-tcdx-scope: "tenant/assigned object"
+      x-tcdx-audit-event: "`audit.privacy.erasure_execution.execute.v1`"
+      x-tcdx-domain-events: "`privacy.erasure_execution.executed.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.erasure_execution_records/items`, retention/legal-basis refs, audit/idempotency/outbox"
+      x-tcdx-rector-source: "23,33,39; H-004"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/DomainCommandRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/erasure-executions/{id}:review":
+    post:
+      operationId: erasureExecutionReview
+      tags: ["privacy"]
+      summary: "PRIVACY: erasureExecutionReview"
+      description: "H-004. Reviews a tenant erasure execution with executor/reviewer SoD; protected audit, snapshots and retained history remain immutable."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.erasure_execution.review`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.erasure_execution.review.v1`"
+      x-tcdx-domain-events: "`privacy.erasure_execution.reviewed.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.erasure_execution_records/items`, audit/idempotency/outbox"
+      x-tcdx-rector-source: "22,23,39; H-004"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/DomainCommandRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/platform/lifecycle-transition-definitions/{id}:publish":
+    post:
+      operationId: lifecycleTransitionPublish
+      tags: ["platform-governance"]
+      summary: "CORE_PLATFORM: lifecycleTransitionPublish"
+      description: "H-005. Publishes a reviewed PLATFORM_CONTROL registry version. Administration never executes a domain transition and cannot embed arbitrary executable rules."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.lifecycle_transition.publish`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "`audit.platform.lifecycle_transition.publish.v1`"
+      x-tcdx-domain-events: "`platform.lifecycle_transition.published.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`ops_audit.lifecycle_transition_definitions/scopes/side_effects`, outbox/audit/idempotency"
+      x-tcdx-rector-source: "21,22,33; H-005"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/DomainCommandRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+tags: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OIDC/OAuth 2.x access token. Backend validates configured issuer, audience, signature/JWKS, time claims and principal class before GRC authorization.
+  parameters:
+    TenantContext:
+      name: X-TCDX-Tenant-Id
+      in: header
+      required: true
+      description: UUIDv7 tenant context for tenant business operations; forbidden for platform/global operations unless their approved operation contract explicitly requires a target tenant.
+      schema:
+        $ref: '#/components/schemas/UuidV7'
+    CorrelationId:
+      name: X-Correlation-Id
+      in: header
+      required: false
+      description: Client-provided UUID accepted only when valid; server always returns the effective ID.
+      schema:
+        type: string
+        format: uuid
+    RequestId:
+      name: X-Request-Id
+      in: header
+      required: false
+      description: Optional request attempt identifier; it is not an idempotency key.
+      schema:
+        type: string
+        format: uuid
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      description: Required only for operations classified IDEMPOTENCY_KEY_REQUIRED. Bound to ownership, tenant when applicable, actor/client, operation and request fingerprint.
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 255
+    IfMatch:
+      name: If-Match
+      in: header
+      required: true
+      description: Strong ETag representing current row_version for mutable critical resources.
+      schema:
+        type: string
+        pattern: '^"[1-9][0-9]*"$'
+    Cursor:
+      name: page[cursor]
+      in: query
+      required: false
+      schema: { type: string, minLength: 1 }
+    PageSize:
+      name: page[size]
+      in: query
+      required: false
+      schema: { type: integer, minimum: 1 }
+      description: Maximum and default require human approval per resource/volumetry; clients must not assume them.
+    Sort:
+      name: sort
+      in: query
+      required: false
+      description: Comma-separated allowlisted fields; prefix '-' means descending. No arbitrary SQL expressions.
+      schema: { type: string }
+    Filter:
+      name: filter
+      in: query
+      required: false
+      description: Resource-specific allowlisted filter object; generic operators are not authorized by this base contract.
+      schema: { type: string }
+  headers:
+    CorrelationId:
+      description: Effective end-to-end correlation UUID.
+      schema: { type: string, format: uuid }
+    RequestId:
+      description: Server request attempt UUID.
+      schema: { type: string, format: uuid }
+    ETag:
+      description: Strong row_version ETag for mutable resources.
+      schema: { type: string }
+    IdempotencyReplayed:
+      description: 'true when response is the persisted replay for the same fingerprint.'
+      schema: { type: boolean }
+  schemas:
+    UuidV7:
+      type: string
+      format: uuid
+      description: Opaque platform-generated UUIDv7; consumers must not derive semantics from it.
+    UtcTimestamp:
+      type: string
+      format: date-time
+      description: RFC 3339 timestamp with UTC offset Z at the API boundary.
+    OwnershipClass:
+      type: string
+      enum: [GLOBAL_REFERENCE, PLATFORM_CONTROL, TENANT_OWNED, TENANT_DERIVED]
+    CalculationStatus:
+      type: string
+      enum: [pending, running, succeeded, failed, cancelled]
+    ResultStatus:
+      type: string
+      enum: [valid, no_data, insufficient_data, insufficient_coverage, stale_source, conflicting_sources, dependency_pending, invalid_input, source_error, calculation_error, not_applicable, superseded]
+    ResultEnvelope:
+      type: object
+      additionalProperties: false
+      required: [result_status, period, lineage]
+      properties:
+        value: {}
+        unit: { type: [string, 'null'] }
+        result_status: { $ref: '#/components/schemas/ResultStatus' }
+        domain_conclusion: { type: [string, 'null'] }
+        period:
+          type: object
+          additionalProperties: false
+          properties:
+            start: { type: [string, 'null'], format: date-time }
+            end: { type: [string, 'null'], format: date-time }
+        coverage_percent: { type: [number, 'null'], minimum: 0, maximum: 100 }
+        freshness_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        data_trust:
+          type: [object, 'null']
+          description: DataQualityAssessment reference/status; never silently alters value.
+        versions: { type: object }
+        lineage: { type: object }
+        preview: { type: boolean, default: false }
+      description: value is official only when result_status=valid; non-valid candidate values require preview=true and methodology authority.
+    ErrorEnvelope:
+      type: object
+      additionalProperties: false
+      required: [code, message, correlation_id, retryable]
+      properties:
+        code: { type: string, pattern: '^[A-Z][A-Z0-9_\.]*$' }
+        message: { type: string }
+        correlation_id: { type: string, format: uuid }
+        retryable: { type: boolean }
+        field_errors:
+          type: array
+          items: { $ref: '#/components/schemas/FieldError' }
+        details:
+          type: object
+          description: Allowlisted, non-secret details only; never SQL, stack traces, cross-tenant identifiers or signed URLs.
+    FieldError:
+      type: object
+      additionalProperties: false
+      required: [field, code, message]
+      properties:
+        field: { type: string }
+        code: { type: string }
+        message: { type: string }
+    PageMeta:
+      type: object
+      additionalProperties: false
+      required: [has_more]
+      properties:
+        next_cursor: { type: [string, 'null'] }
+        has_more: { type: boolean }
+    AsyncOperation:
+      type: object
+      additionalProperties: false
+      required: [job_id, calculation_status, submitted_at]
+      properties:
+        job_id: { $ref: '#/components/schemas/UuidV7' }
+        calculation_status: { $ref: '#/components/schemas/CalculationStatus' }
+        submitted_at: { $ref: '#/components/schemas/UtcTimestamp' }
+        status_url: { type: string, format: uri-reference }
+    UploadIntent:
+      type: object
+      additionalProperties: false
+      required: [file_object_id, upload_state]
+      properties:
+        file_object_id: { $ref: '#/components/schemas/UuidV7' }
+        upload_state: { type: string, enum: [quarantine_pending] }
+        signed_upload_url: { type: string, format: uri }
+        expires_at: { $ref: '#/components/schemas/UtcTimestamp' }
+      description: Signed URL is short-lived and never logged; FileObject is unusable as Evidence until scan PASS and governed version/review flow.
+    DomainCommandRequest:
+      type: object
+      description: Operation-specific schema placeholder constrained by the named request contract in artifact 03; implementations must refine it without adding fields or semantics not traced to that contract.
+      additionalProperties: true
+    OperationResult:
+      type: object
+      additionalProperties: false
+      required: [operation_id, status, correlation_id]
+      properties:
+        operation_id: { type: string }
+        status: { type: string, enum: [accepted, completed] }
+        correlation_id: { type: string, format: uuid }
+        resource_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        result: { type: [object, 'null'] }
+  responses:
+    OperationSuccess:
+      description: Command accepted/completed or query completed under the operation-specific response contract.
+      headers:
+        X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }
+        X-Request-Id: { $ref: '#/components/headers/RequestId' }
+        Idempotency-Replayed: { $ref: '#/components/headers/IdempotencyReplayed' }
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/OperationResult' }
+    ValidationError:
+      description: Request validation failed without domain mutation.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+    AuthenticationError:
+      description: Authentication missing or invalid; no tenant/object existence disclosure.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+    AuthorizationError:
+      description: Effective authorization denied; response must not reveal cross-tenant existence.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+    NotFoundError:
+      description: Resource absent or deliberately concealed because it belongs to another tenant; details are indistinguishable.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+    ConflictError:
+      description: State, concurrency or idempotency conflict.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+  x-api-conventions:
+    authentication: OIDC/OAuth 2.x Bearer JWT; configured issuer, audience and JWKS/keys are validated by backend; human and machine principals remain distinct.
+    request-media-type: application/json
+    response-media-type: application/json; errors use application/problem+json
+    headers: Authorization, Content-Type, Accept, X-Correlation-Id and Idempotency-Key use exactly these spellings; X-TCDX-Tenant-Id is required only on tenant-context operations and never grants access.
+    versioning: Breaking changes require a new major base path.
+    pagination: Opaque cursor with stable operation-allowlisted sort and UUIDv7 tie-breaker; command/single-resource operations do not paginate.
+    tenant-context: Resolved and checked against active membership; never trusted as authorization solely because supplied by client.
+    filtering: Resource-specific allowlists; no arbitrary field/operator language.
+    optimistic-concurrency: Strong ETag/If-Match from row_version on editable critical entities; stale write is 409.
+    idempotency: PostgreSQL IdempotencyRecord is authoritative; Redis may not decide replay/conflict.
+    files: Quarantine, type/size validation, malware scan, checksum and classification precede Evidence eligibility.
+    async: Heavy reports/imports/bulk are jobs with row-level outcomes and explicit partial failure.
+    provenance: Official results expose version, coverage, freshness, Data Trust and lineage subject to RBAC.
