@@ -1,0 +1,126 @@
+{
+  "manifestVersion": 1,
+  "runnerVersion": "1.0.0",
+  "databaseName": "tcdx-grc",
+  "postgresMajor": 16,
+  "advisoryLockSource": "tcdx-grc:platform.schema_migrations:v1",
+  "migrations": [
+    {
+      "id": "20260916000100",
+      "filename": "20260916000100_bootstrap_schemas_and_ledger.sql",
+      "sha256": "4f29910baacf82526fb06226c237024b7315038a4868baa7bbda56ced4779437",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied"
+      ]
+    },
+    {
+      "id": "20260916000200",
+      "filename": "20260916000200_platform_iam_organization.sql",
+      "sha256": "24129b40e70e149bb722c4d8770698ff8dba35aec477c375dc4f678e170fbe3e",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied"
+      ]
+    },
+    {
+      "id": "20260916000300",
+      "filename": "20260916000300_normative_control_evidence.sql",
+      "sha256": "eea2a1328ea45a6bd4871781b135263cf1725130dd3bfb50d04370f6ffe639fb",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied"
+      ]
+    },
+    {
+      "id": "20260916000400",
+      "filename": "20260916000400_risk_operations_privacy.sql",
+      "sha256": "6e0e0e397cf446486d1f985c90994d30a6e80a0f5b3328eec404a3b29d9626df",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied"
+      ]
+    },
+    {
+      "id": "20260916000500",
+      "filename": "20260916000500_data_integration_reporting_ai.sql",
+      "sha256": "bf57c892a361103b26a349244948ef53146606d6449d7ca143695d1f70996702",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied"
+      ]
+    },
+    {
+      "id": "20260916000600",
+      "filename": "20260916000600_constraints_and_uniqueness.sql",
+      "sha256": "7d079aa1234050b6dde06d9fb3cad939144fcbccdf287cc31bbe863c68899bf5",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied"
+      ]
+    },
+    {
+      "id": "20260916000700",
+      "filename": "20260916000700_foreign_keys.sql",
+      "sha256": "d2112e4b402e8789312d5473969b615e6d7ab344a58a2211f790c4423dd4361f",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied"
+      ]
+    },
+    {
+      "id": "20260916000800",
+      "filename": "20260916000800_required_indexes.sql",
+      "sha256": "d3502b9de76209b54b40497e6b9fdf94d463335d1f5441fb0fb924786648336e",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied"
+      ]
+    },
+    {
+      "id": "20260916000900",
+      "filename": "20260916000900_canonical_seeds.sql",
+      "sha256": "94547ff1fa6a9accf56ff6f28be93afeb91b8c290ca9bb224667862c64c8c2e7",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied"
+      ]
+    }
+  ]
+}
