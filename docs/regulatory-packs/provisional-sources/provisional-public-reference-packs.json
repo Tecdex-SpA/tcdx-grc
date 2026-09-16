@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-16T20:36:00Z",
+  "purpose": "public_reference_metadata_only",
+  "runtime_import_eligible": false,
+  "active_master_regent": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16",
+  "phase_4_pipeline_contract": {
+    "iso_runtime_source_origin_required": "licensed_file",
+    "provisional_manifest_is_authoritative_source": false,
+    "schema_change_required": false
+  },
+  "packs": [
+    {
+      "pack_code": "ISO_9001_2015",
+      "pack_name": "ISO 9001:2015 + Amd 1:2024",
+      "framework_code": "ISO_9001",
+      "edition": "2015+Amd1:2024",
+      "source_role": "public_reference_metadata",
+      "runtime_import_eligible": false,
+      "required_runtime_source_origin": "licensed_file",
+      "current_lifecycle_status": "withdrawn_superseded",
+      "superseded_by": "ISO_9001_2026",
+      "public_metadata": {
+        "standard_reference": "ISO 9001:2015",
+        "standard_title": "Quality management systems — Requirements",
+        "standard_publication_date": "2015-09-22",
+        "amendment_reference": "ISO 9001:2015/Amd 1:2024",
+        "amendment_title": "Quality management systems — Requirements — Amendment 1: Climate action changes",
+        "amendment_publication_date": "2024-02-23",
+        "amendment_pages": 1,
+        "withdrawal_date": "2026-09-16"
+      },
+      "official_sources": [
+        {
+          "publisher": "International Organization for Standardization",
+          "uri": "https://www.iso.org/standard/62085.html",
+          "role": "official_metadata"
+        },
+        {
+          "publisher": "International Organization for Standardization",
+          "uri": "https://www.iso.org/standard/88431.html",
+          "role": "official_amendment_metadata_and_preview"
+        }
+      ],
+      "public_structure_only": {
+        "high_level_management_system_clauses": ["4", "5", "6", "7", "8", "9", "10"]
+      },
+      "normative_units": [],
+      "requirements": [],
+      "controls": [],
+      "coverage_expected": null,
+      "blocker": "Licensed ISO 9001:2015 source artifact is still required before runtime import. Public metadata and the public amendment reference must not be converted into reconstructed normative text.",
+      "next_action": "Acquire licensed ISO 9001:2015 source artifact; preserve this version as superseded/historical for customers in transition; import through the existing Phase 4 pipeline."
+    },
+    {
+      "pack_code": "ISO_9001_2026",
+      "pack_name": "ISO 9001:2026",
+      "framework_code": "ISO_9001",
+      "edition": "2026",
+      "source_role": "public_reference_metadata",
+      "runtime_import_eligible": false,
+      "required_runtime_source_origin": "licensed_file",
+      "current_lifecycle_status": "published_current",
+      "public_metadata": {
+        "reference": "ISO 9001:2026",
+        "title": "Quality management systems — Requirements",
+        "edition_number": 6,
+        "publication_month": "2026-09",
+        "publication_confirmation_date": "2026-09-16",
+        "stage": "60.60",
+        "pages": 36,
+        "technical_committee": "ISO/TC 176/SC 2",
+        "ics": ["03.100.70", "03.120.10"]
+      },
+      "official_sources": [
+        {
+          "publisher": "International Organization for Standardization",
+          "uri": "https://committee.iso.org/standard/9001",
+          "role": "official_standard_metadata_and_preview"
+        },
+        {
+          "publisher": "International Organization for Standardization",
+          "uri": "https://www.iso.org/news/2026/09/ISO9001-2026",
+          "role": "official_release_announcement"
+        }
+      ],
+      "normative_units": [],
+      "requirements": [],
+      "controls": [],
+      "coverage_expected": null,
+      "blocker": "Definitive publication is now confirmed, but a Tecdex-licensed full-text source artifact is not yet available for runtime import.",
+      "next_action": "Acquire licensed ISO 9001:2026 edition 6 PDF/ePub and generate the governed RegulatoryPackImportInput from that artifact."
+    },
+    {
+      "pack_code": "ISO_IEC_27001_2022",
+      "pack_name": "ISO/IEC 27001:2022 + Amd 1:2024",
+      "framework_code": "ISO_IEC_27001",
+      "edition": "2022+Amd1:2024",
+      "source_role": "public_reference_metadata",
+      "runtime_import_eligible": false,
+      "required_runtime_source_origin": "licensed_file",
+      "current_lifecycle_status": "published_current",
+      "public_metadata": {
+        "standard_reference": "ISO/IEC 27001:2022",
+        "standard_title": "Information security, cybersecurity and privacy protection — Information security management systems — Requirements",
+        "edition_number": 3,
+        "publication_month": "2022-10",
+        "amendment_reference": "ISO/IEC 27001:2022/Amd 1:2024",
+        "amendment_title": "Climate action changes",
+        "amendment_publication_year": 2024
+      },
+      "official_sources": [
+        {
+          "publisher": "International Organization for Standardization",
+          "uri": "https://www.iso.org/standard/27001",
+          "role": "official_standard_metadata_and_preview"
+        }
+      ],
+      "public_structure_only": {
+        "high_level_management_system_clauses": ["4", "5", "6", "7", "8", "9", "10"],
+        "annex_presence": ["A"]
+      },
+      "normative_units": [],
+      "requirements": [],
+      "controls": [],
+      "coverage_expected": null,
+      "blocker": "A licensed ISO/IEC 27001:2022 source artifact plus Amendment 1:2024 is required before governed runtime import. Public metadata must not be converted into reconstructed normative text or Annex A control content.",
+      "next_action": "When the licensed ISO/IEC 27001:2022 and Amd 1:2024 artifacts are available, checksum them and generate the governed RegulatoryPackImportInput including the complete NormativeUnit hierarchy, Requirements, Annex A regulatory_reference controls, mappings and provenance."
+    },
+    {
+      "pack_code": "ISO_IEC_42001_2023",
+      "pack_name": "ISO/IEC 42001:2023",
+      "framework_code": "ISO_IEC_42001",
+      "edition": "2023",
+      "source_role": "public_reference_metadata",
+      "runtime_import_eligible": false,
+      "required_runtime_source_origin": "licensed_file",
+      "current_lifecycle_status": "published_current",
+      "public_metadata": {
+        "reference": "ISO/IEC 42001:2023",
+        "title": "Information technology — Artificial intelligence — Management system",
+        "edition_number": 1,
+        "publication_month": "2023-12"
+      },
+      "official_sources": [
+        {
+          "publisher": "International Organization for Standardization",
+          "uri": "https://www.iso.org/standard/42001",
+          "role": "official_standard_metadata_and_preview"
+        }
+      ],
+      "public_structure_only": {
+        "high_level_management_system_clauses": ["4", "5", "6", "7", "8", "9", "10"],
+        "annex_presence": ["A", "B", "C", "D"]
+      },
+      "normative_units": [],
+      "requirements": [],
+      "controls": [],
+      "coverage_expected": null,
+      "blocker": "Only public metadata/preview material is available. The complete licensed ISO/IEC 42001:2023 source is required before Annex A reference controls, Requirements and full NormativeUnit hierarchy can be imported.",
+      "next_action": "Acquire licensed ISO/IEC 42001:2023 PDF/ePub, checksum the artifact and import through the existing Phase 4 pipeline."
+    }
+  ]
+}
