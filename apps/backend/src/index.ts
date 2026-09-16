@@ -1,0 +1,16 @@
+export { buildApp } from "./app.js";
+export { loadConfig } from "./config.js";
+export { createDatabase, databaseReady } from "./database.js";
+export { inTransaction } from "./transaction.js";
+export { authorize } from "./security/authorization.js";
+export { BlockedIdentityVerifier } from "./security/authentication.js";
+export { resolveTenantContext } from "./security/tenant-context.js";
+export { assertCompatibleReference } from "./security/ownership.js";
+export { resolveConfiguration } from "./configuration/resolver.js";
+export { claimIdempotency, completeIdempotency, persistAuditEvent, persistOutboxEvent } from "./persistence/foundation-records.js";
+export { claimOutboxEvents, completeOutboxEvent } from "./persistence/outbox-worker.js";
+export { UnavailableFileStoragePort } from "./ports/file-storage.js";
+export type { FileStoragePort } from "./ports/file-storage.js";
+export { UnavailableAIServicePort } from "./ports/ai-service.js";
+export type { AIServicePort } from "./ports/ai-service.js";
+export type { ObservabilityPort } from "./ports/observability.js";

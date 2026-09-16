@@ -1,0 +1,44 @@
+{
+  "name": "tcdx-grc",
+  "version": "0.0.0-phase3",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.4.1",
+  "engines": {
+    "node": "22.23.2",
+    "pnpm": "12.4.1"
+  },
+  "scripts": {
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    "test": "vitest run --config vitest.config.ts",
+    "test:integration": "vitest run --config vitest.integration.config.ts",
+    "test:e2e": "playwright test",
+    "db:migrate": "node --experimental-strip-types scripts/foundations/migrate.ts apply",
+    "db:status": "node --experimental-strip-types scripts/foundations/migrate.ts status",
+    "db:verify": "node --experimental-strip-types scripts/foundations/verify-schema.ts",
+    "db:migration-gates": "node --experimental-strip-types scripts/foundations/verify-migration-gates.ts",
+    "db:tenant-isolation": "node --experimental-strip-types scripts/foundations/verify-tenant-isolation.ts",
+    "outbox:verify": "node --experimental-strip-types scripts/foundations/verify-outbox-worker.ts",
+    "foundation-records:verify": "node --experimental-strip-types scripts/foundations/verify-foundation-records.ts",
+    "uuid:verify": "node --experimental-strip-types scripts/foundations/verify-uuidv7.ts",
+    "db:rebuild-test": "node --experimental-strip-types scripts/foundations/rebuild-test.ts",
+    "db:restore-test": "node --experimental-strip-types scripts/foundations/verify-restore.ts",
+    "seed:verify": "node --experimental-strip-types scripts/foundations/verify-seeds.ts",
+    "seed:reapply": "node --experimental-strip-types scripts/foundations/verify-seed-reapply.ts",
+    "contracts:generate": "node scripts/foundations/generate-contract-assets.mjs",
+    "contracts:verify": "node scripts/foundations/generate-contract-assets.mjs --check",
+    "secrets:scan": "node scripts/foundations/secret-scan.mjs"
+  },
+  "dependencies": {
+    "pg": "8.23.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@testing-library/dom": "10.4.2",
+    "@testing-library/react": "16.3.3",
+    "typescript": "7.0.2",
+    "vitest": "5.0.1"
+  }
+}
