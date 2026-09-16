@@ -30,12 +30,23 @@ The rector workflow is operational and the repository ruleset enforces pull requ
 
 The human project authority approved the PostgreSQL 16 physical model corresponding to commit `a822bb92d0d585edd84adc8a1c65ec280923cc8e` after independent architectural review.
 
+## Human approval — Phase 2
+
+`EXECUTABLE_CONTRACTS_APPROVED_COMMIT=16deeafc0237f219d08d44f5d5a27c62ae4cc909`
+`EXECUTABLE_CONTRACTS=PASS`
+`EXECUTABLE_CONTRACTS_DESIGN=COMPLETE`
+`EXECUTABLE_CONTRACTS_HUMAN_APPROVAL_DATE=2026-09-15`
+
+The human project authority explicitly approved H-001 through H-006 and the executable contracts corresponding to commit `16deeafc0237f219d08d44f5d5a27c62ae4cc909` after independent review.
+
 ## Current authorized phase
 
-`EXECUTABLE_CONTRACTS=AUTHORIZED`
-`MIGRATIONS=BLOCKED`
-`FUNCTIONAL_DEVELOPMENT=BLOCKED`
+`FOUNDATIONS_IMPLEMENTATION=AUTHORIZED`
+`DATABASE_INITIALIZATION=AUTHORIZED_WITHIN_PHASE_3_CONTRACT`
+`MIGRATIONS=AUTHORIZED_WITHIN_PHASE_3_CONTRACT`
+`FOUNDATIONS_RUNTIME=PENDING`
+`FUNCTIONAL_PRODUCT_SLICES=BLOCKED`
 
-Phase 1 is closed. Phase 2 may design and review executable contracts only. No DDL execution, migrations, backend, frontend or functional implementation is authorized until their subsequent human-approved gates pass.
+Phase 2 is closed. Phase 3 may create the definitive PostgreSQL database objects, execute the approved initial migration set and canonical seeds, and implement only the foundations defined by the master plan and executable contracts. Product-domain functional slices beyond foundations remain blocked until `FOUNDATIONS_RUNTIME=PASS` and their subsequent gates authorize them.
 
 This file is mutable execution state. It is not part of the immutable rector baseline and cannot override it.
