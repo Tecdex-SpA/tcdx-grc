@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-16T00:00:00.000Z",
+  "generated_at": "2026-09-16T20:36:00Z",
   "active_master_regent": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16",
   "base_commit": "b0af45565d6a039d2ba374f9ffbf309ebd155012",
-  "branch": "implementation/phase-4-regulatory-packs",
+  "branch": "implementation/phase-4-regulatory-packs-provisional-sources",
   "database_tables": 229,
   "pipeline": {
     "implementation": "PASS",
@@ -11,12 +11,15 @@
     "single_generic_pipeline": true,
     "schema_changes": false
   },
+  "provisional_public_reference_manifest": "docs/regulatory-packs/provisional-sources/provisional-public-reference-packs.json",
   "packs": [
     {
       "pack_code": "ISO_9001_2015",
       "authorized_source_available": false,
+      "provisional_public_reference_available": true,
+      "provisional_public_reference_path": "docs/regulatory-packs/provisional-sources/provisional-public-reference-packs.json",
       "state": "BLOCKED_LICENSE",
-      "blocker": "No Tecdex-licensed ISO 9001:2015 plus Amendment 1:2024 source artifact is available to this process.",
+      "blocker": "Public ISO metadata is staged, but no Tecdex-licensed ISO 9001:2015 full-text source artifact is available for runtime import.",
       "normative_units": { "expected": null, "imported": 0, "reviewed": 0 },
       "requirements": { "expected": null, "imported": 0, "reviewed": 0 },
       "reference_controls": { "expected": 0, "imported": 0, "reviewed": 0 },
@@ -25,18 +28,20 @@
     {
       "pack_code": "ISO_9001_2026",
       "authorized_source_available": false,
-      "state": "BLOCKED_PUBLICATION_UNAVAILABLE",
-      "blocker": "No definitive published ISO 9001:2026 edition 6 source artifact is available; DIS or FDIS content is not accepted.",
+      "provisional_public_reference_available": true,
+      "provisional_public_reference_path": "docs/regulatory-packs/provisional-sources/provisional-public-reference-packs.json",
+      "state": "BLOCKED_LICENSE",
+      "blocker": "ISO confirms definitive edition 6 publication on 2026-09-16, but no Tecdex-licensed ISO 9001:2026 full-text source artifact is available for runtime import.",
       "normative_units": { "expected": null, "imported": 0, "reviewed": 0 },
       "requirements": { "expected": null, "imported": 0, "reviewed": 0 },
       "reference_controls": { "expected": 0, "imported": 0, "reviewed": 0 },
-      "human_approval": "NOT_APPLICABLE_PUBLICATION_BLOCKED"
+      "human_approval": "NOT_APPLICABLE_SOURCE_BLOCKED"
     },
     {
       "pack_code": "ISO_IEC_27001_2022",
       "authorized_source_available": false,
       "state": "BLOCKED_LICENSE",
-      "blocker": "No Tecdex-licensed ISO/IEC 27001:2022 source artifact is available to this process.",
+      "blocker": "No Tecdex-licensed ISO/IEC 27001:2022 source artifact is registered in the repository runtime input contract yet.",
       "normative_units": { "expected": null, "imported": 0, "reviewed": 0 },
       "requirements": { "expected": null, "imported": 0, "reviewed": 0 },
       "reference_controls": { "expected": null, "imported": 0, "reviewed": 0 },
@@ -45,8 +50,10 @@
     {
       "pack_code": "ISO_IEC_42001_2023",
       "authorized_source_available": false,
+      "provisional_public_reference_available": true,
+      "provisional_public_reference_path": "docs/regulatory-packs/provisional-sources/provisional-public-reference-packs.json",
       "state": "BLOCKED_LICENSE",
-      "blocker": "No Tecdex-licensed ISO/IEC 42001:2023 source artifact is available to this process.",
+      "blocker": "Public ISO metadata/preview references are staged, but no Tecdex-licensed ISO/IEC 42001:2023 full-text source artifact is available for runtime import.",
       "normative_units": { "expected": null, "imported": 0, "reviewed": 0 },
       "requirements": { "expected": null, "imported": 0, "reviewed": 0 },
       "reference_controls": { "expected": null, "imported": 0, "reviewed": 0 },
@@ -56,7 +63,7 @@
       "pack_code": "CL_LEY_21719",
       "authorized_source_available": false,
       "state": "BLOCKED_SOURCE_UNAVAILABLE",
-      "blocker": "No official consolidated Biblioteca del Congreso Nacional source artifact for Ley 21.719 and applicable Ley 19.628 text is available to this process.",
+      "blocker": "No official consolidated Biblioteca del Congreso Nacional source artifact for Ley 21.719 and applicable Ley 19.628 text is registered in the repository runtime input contract yet.",
       "normative_units": { "expected": null, "imported": 0, "reviewed": 0 },
       "requirements": { "expected": null, "imported": 0, "reviewed": 0 },
       "reference_controls": { "expected": 0, "imported": 0, "reviewed": 0 },
@@ -66,8 +73,8 @@
   "summary": {
     "packs_ready_for_human_review": 0,
     "packs_blocked_by_source": 1,
-    "packs_blocked_by_license": 3,
-    "packs_blocked_by_publication": 1,
+    "packs_blocked_by_license": 4,
+    "packs_blocked_by_publication": 0,
     "packs_blocked_by_human_review": 0,
     "packs_blocked_by_contract_decision": 0,
     "unlicensed_iso_content_created": 0,
