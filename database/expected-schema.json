@@ -1,7 +1,8 @@
 {
-  "contract": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.4_2026-09-15",
+  "contract": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16",
   "physicalModelCommit": "a822bb92d0d585edd84adc8a1c65ec280923cc8e",
-  "tableCount": 214,
+  "physicalModelAmendmentCommit": "6a31034ae1ecc1f9ee551431fb2a504a25fb52ce",
+  "tableCount": 229,
   "tables": [
     {
       "name": "platform.tenants",
@@ -10475,18 +10476,6 @@
         {
           "name": "lifecycle_state",
           "type": "varchar(32)",
-          "nullable": false,
-          "default": null
-        },
-        {
-          "name": "scope_text",
-          "type": "text",
-          "nullable": false,
-          "default": null
-        },
-        {
-          "name": "lead_membership_id",
-          "type": "uuid",
           "nullable": false,
           "default": null
         },
@@ -24052,6 +24041,1414 @@
         [
           "lifecycle_transition_definition_id",
           "ordinal"
+        ]
+      ]
+    },
+    {
+      "name": "audit.audit_objectives",
+      "profile": "TM",
+      "primaryKey": [
+        "audit_objective_id"
+      ],
+      "columns": [
+        {
+          "name": "audit_objective_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "row_version",
+          "type": "bigint",
+          "nullable": false,
+          "default": "1"
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "audit_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "objective_code",
+          "type": "varchar(96)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "statement",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "ordinal",
+          "type": "integer",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "checks": [
+        "row_version_positive",
+        "created_actor_one",
+        "updated_actor_one",
+        "ordinal_nonnegative",
+        "statement_nonempty"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "audit_objective_id"
+        ],
+        [
+          "audit_id",
+          "objective_code"
+        ],
+        [
+          "audit_id",
+          "ordinal"
+        ]
+      ]
+    },
+    {
+      "name": "audit.audit_criteria",
+      "profile": "TM",
+      "primaryKey": [
+        "audit__criterion_id"
+      ],
+      "columns": [
+        {
+          "name": "audit__criterion_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "row_version",
+          "type": "bigint",
+          "nullable": false,
+          "default": "1"
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "audit_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "criterion_kind",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "framework_version_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "requirement_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "rationale",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "ordinal",
+          "type": "integer",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "checks": [
+        "row_version_positive",
+        "created_actor_one",
+        "updated_actor_one",
+        "criterion_target",
+        "ordinal_nonnegative",
+        "rationale_nonempty"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "audit__criterion_id"
+        ],
+        [
+          "audit_id",
+          "ordinal"
+        ]
+      ]
+    },
+    {
+      "name": "audit.audit_scopes",
+      "profile": "TM",
+      "primaryKey": [
+        "audit_scope_id"
+      ],
+      "columns": [
+        {
+          "name": "audit_scope_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "row_version",
+          "type": "bigint",
+          "nullable": false,
+          "default": "1"
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "audit_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "framework_version_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "subject_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "scope_code",
+          "type": "varchar(96)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "checks": [
+        "row_version_positive",
+        "created_actor_one",
+        "updated_actor_one",
+        "scope_code_nonempty"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "audit_scope_id"
+        ],
+        [
+          "audit_id",
+          "framework_version_id",
+          "subject_id"
+        ],
+        [
+          "audit_id",
+          "scope_code"
+        ]
+      ]
+    },
+    {
+      "name": "audit.audit_team_assignments",
+      "profile": "TM",
+      "primaryKey": [
+        "audit_team_assignment_id"
+      ],
+      "columns": [
+        {
+          "name": "audit_team_assignment_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "row_version",
+          "type": "bigint",
+          "nullable": false,
+          "default": "1"
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "audit_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "membership_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "team_role",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "assigned_from",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "assigned_to",
+          "type": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "checks": [
+        "row_version_positive",
+        "created_actor_one",
+        "updated_actor_one",
+        "team_role",
+        "assigned_interval"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "audit_team_assignment_id"
+        ],
+        [
+          "audit_id",
+          "membership_id",
+          "team_role",
+          "assigned_from"
+        ]
+      ]
+    },
+    {
+      "name": "audit.audit_competencies",
+      "profile": "I",
+      "primaryKey": [
+        "audit_competency_id"
+      ],
+      "columns": [
+        {
+          "name": "audit_competency_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "competency_code",
+          "type": "varchar(128)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "version_number",
+          "type": "bigint",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "effective_from",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "effective_to",
+          "type": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "published_at",
+          "type": "timestamptz",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "checks": [
+        "created_actor_one",
+        "effective_from_effective_to",
+        "version_positive",
+        "competency_code_nonempty"
+      ],
+      "uniqueConstraints": [
+        [
+          "competency_code",
+          "version_number"
+        ]
+      ]
+    },
+    {
+      "name": "audit.auditor_competency_assertions",
+      "profile": "TI",
+      "primaryKey": [
+        "auditor_competency_assertion_id"
+      ],
+      "columns": [
+        {
+          "name": "auditor_competency_assertion_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "membership_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "audit_competency_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "evidence_version_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "valid_from",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "valid_to",
+          "type": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "assertion_status",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "verified_by_membership_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "verified_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "superseded_by_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "checks": [
+        "created_actor_one",
+        "valid_from_valid_to",
+        "assertion_status",
+        "independent_verifier"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "auditor_competency_assertion_id"
+        ],
+        [
+          "membership_id",
+          "audit_competency_id",
+          "valid_from"
+        ]
+      ]
+    },
+    {
+      "name": "audit.audit_competency_requirements",
+      "profile": "TI",
+      "primaryKey": [
+        "audit_competency_requirement_id"
+      ],
+      "columns": [
+        {
+          "name": "audit_competency_requirement_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "audit_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "framework_version_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "audit_competency_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "team_role",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "rationale",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "checks": [
+        "created_actor_one",
+        "team_role",
+        "rationale_nonempty"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "audit_competency_requirement_id"
+        ],
+        [
+          "audit_id",
+          "framework_version_id",
+          "audit_competency_id",
+          "team_role"
+        ]
+      ]
+    },
+    {
+      "name": "audit.audit_competency_validations",
+      "profile": "TI",
+      "primaryKey": [
+        "audit_competency_validation_id"
+      ],
+      "columns": [
+        {
+          "name": "audit_competency_validation_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "audit_competency_requirement_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "audit_team_assignment_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "auditor_competency_assertion_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "validation_outcome",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "validated_by_membership_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "validated_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "rationale",
+          "type": "text",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "checks": [
+        "created_actor_one",
+        "validation_outcome",
+        "covered_assertion"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "audit_competency_validation_id"
+        ],
+        [
+          "audit_competency_requirement_id",
+          "audit_team_assignment_id",
+          "validated_at"
+        ]
+      ]
+    },
+    {
+      "name": "audit.audit_agenda_items",
+      "profile": "TM",
+      "primaryKey": [
+        "audit_agenda_item_id"
+      ],
+      "columns": [
+        {
+          "name": "audit_agenda_item_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "row_version",
+          "type": "bigint",
+          "nullable": false,
+          "default": "1"
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "audit_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "agenda_code",
+          "type": "varchar(96)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "starts_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "ends_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "ordinal",
+          "type": "integer",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "checks": [
+        "row_version_positive",
+        "created_actor_one",
+        "updated_actor_one",
+        "starts_at_ends_at",
+        "ordinal_nonnegative",
+        "title_nonempty"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "audit_agenda_item_id"
+        ],
+        [
+          "audit_id",
+          "agenda_code"
+        ],
+        [
+          "audit_id",
+          "ordinal"
+        ]
+      ]
+    },
+    {
+      "name": "audit.audit_agenda_item_tests",
+      "profile": "TI",
+      "primaryKey": [
+        "audit_agenda_item_test_id"
+      ],
+      "columns": [
+        {
+          "name": "audit_agenda_item_test_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "audit_agenda_item_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "audit_test_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "checks": [
+        "created_actor_one"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "audit_agenda_item_test_id"
+        ],
+        [
+          "audit_agenda_item_id",
+          "audit_test_id"
+        ]
+      ]
+    },
+    {
+      "name": "audit.audit_agenda_item_scopes",
+      "profile": "TI",
+      "primaryKey": [
+        "audit_agenda_item_scope_id"
+      ],
+      "columns": [
+        {
+          "name": "audit_agenda_item_scope_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "audit_agenda_item_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "audit_scope_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "checks": [
+        "created_actor_one"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "audit_agenda_item_scope_id"
+        ],
+        [
+          "audit_agenda_item_id",
+          "audit_scope_id"
+        ]
+      ]
+    },
+    {
+      "name": "audit.audit_agenda_item_team_assignments",
+      "profile": "TI",
+      "primaryKey": [
+        "audit_agenda_item_team_assignment_id"
+      ],
+      "columns": [
+        {
+          "name": "audit_agenda_item_team_assignment_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "audit_agenda_item_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "audit_team_assignment_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "checks": [
+        "created_actor_one"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "audit_agenda_item_team_assignment_id"
+        ],
+        [
+          "audit_agenda_item_id",
+          "audit_team_assignment_id"
+        ]
+      ]
+    },
+    {
+      "name": "audit.audit_test_requirement_links",
+      "profile": "TI",
+      "primaryKey": [
+        "audit_test_requirement_link_id"
+      ],
+      "columns": [
+        {
+          "name": "audit_test_requirement_link_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "audit_test_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "requirement_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "is_anchor",
+          "type": "boolean",
+          "nullable": false,
+          "default": "false"
+        },
+        {
+          "name": "requirement_crosswalk_mapping_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "link_rationale",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "checks": [
+        "created_actor_one",
+        "anchor_crosswalk",
+        "link_rationale_nonempty"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "audit_test_requirement_link_id"
+        ],
+        [
+          "audit_test_id",
+          "requirement_id"
+        ]
+      ]
+    },
+    {
+      "name": "audit.audit_test_control_links",
+      "profile": "TI",
+      "primaryKey": [
+        "audit_test_control_link_id"
+      ],
+      "columns": [
+        {
+          "name": "audit_test_control_link_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "audit_test_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "control_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "control_assessment_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "link_role",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "checks": [
+        "created_actor_one",
+        "typed_target"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "audit_test_control_link_id"
+        ]
+      ]
+    },
+    {
+      "name": "audit.audit_test_requirement_assessment_links",
+      "profile": "TI",
+      "primaryKey": [
+        "audit_test_requirement_assessment_link_id"
+      ],
+      "columns": [
+        {
+          "name": "audit_test_requirement_assessment_link_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "audit_test_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "audit_test_requirement_link_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "requirement_assessment_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "lineage_role",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "checks": [
+        "created_actor_one"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "audit_test_requirement_assessment_link_id"
+        ],
+        [
+          "audit_test_id",
+          "requirement_assessment_id",
+          "lineage_role"
         ]
       ]
     }

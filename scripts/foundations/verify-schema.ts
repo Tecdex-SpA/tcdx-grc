@@ -34,9 +34,15 @@ function expectedNames(pattern: RegExp, relativePath: string): Set<string> {
 
 const expectedConstraints = new Set([
   ...expectedNames(/ADD CONSTRAINT "([^"]+)" (?:CHECK|UNIQUE|FOREIGN KEY)/g, "database/migrations/20260916000600_constraints_and_uniqueness.sql"),
-  ...expectedNames(/ADD CONSTRAINT "([^"]+)" (?:CHECK|UNIQUE|FOREIGN KEY)/g, "database/migrations/20260916000700_foreign_keys.sql")
+  ...expectedNames(/ADD CONSTRAINT "([^"]+)" (?:CHECK|UNIQUE|FOREIGN KEY)/g, "database/migrations/20260916000700_foreign_keys.sql"),
+  ...expectedNames(/ADD CONSTRAINT "([^"]+)" (?:CHECK|UNIQUE|FOREIGN KEY)/g, "database/migrations/20260916001000_pre_f4_integrated_audit_model.sql")
 ]);
-const expectedIndexes = expectedNames(/CREATE (?:UNIQUE )?INDEX "([^"]+)"/g, "database/migrations/20260916000800_required_indexes.sql");
+expectedConstraints.delete("fk_audits__lead_membership_id");
+const expectedIndexes = new Set([
+  ...expectedNames(/CREATE (?:UNIQUE )?INDEX "([^"]+)"/g, "database/migrations/20260916000800_required_indexes.sql"),
+  ...expectedNames(/CREATE (?:UNIQUE )?INDEX "([^"]+)"/g, "database/migrations/20260916001000_pre_f4_integrated_audit_model.sql")
+]);
+expectedIndexes.delete("ix_audits__lead_membership_id");
 
 const client = createClient();
 await client.connect();

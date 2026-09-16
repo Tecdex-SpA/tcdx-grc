@@ -68,7 +68,7 @@ try {
   rmSync(temporaryDirectory, { recursive: true, force: true });
 }
 
-const pass = schema.schemaMismatches === 0 && seeds.seedMismatches === 0 && ledgerCount === 9;
+const pass = schema.schemaMismatches === 0 && seeds.seedMismatches === 0 && ledgerCount === 10;
 process.stdout.write(`${JSON.stringify({
   restoreTest: pass ? "PASS" : "BLOCKED",
   source: "127.0.0.1:55432/tcdx-grc",

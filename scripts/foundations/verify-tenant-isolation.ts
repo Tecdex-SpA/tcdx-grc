@@ -36,6 +36,7 @@ try {
   const roleB = id();
   const subjectB = id();
   const configurationDefinition = id();
+  const auditA = id();
 
   await client.query("INSERT INTO platform.tenants (tenant_id,tenant_code,legal_name,display_name,default_timezone,lifecycle_state,data_classification) VALUES ($1,'PHASE3_A','Phase 3 A','Phase 3 A','UTC','active','internal'),($2,'PHASE3_B','Phase 3 B','Phase 3 B','UTC','active','internal')", [tenantA, tenantB]);
   await client.query("INSERT INTO iam.user_identities (user_identity_id,identity_key,display_name,lifecycle_state) VALUES ($1,'phase3-user-a','A','active'),($2,'phase3-user-b','B','active')", [userA, userB]);
@@ -43,6 +44,7 @@ try {
   await client.query("INSERT INTO iam.roles (role_id,ownership_class,tenant_id,role_code,name,is_baseline,lifecycle_state) VALUES ($1,'TENANT_OWNED',$2,'CUSTOM_A','Custom A',false,'published'),($3,'TENANT_OWNED',$4,'CUSTOM_B','Custom B',false,'published')", [roleA, tenantA, roleB, tenantB]);
   await client.query("INSERT INTO org.subjects (subject_id,tenant_id,subject_type,canonical_key,display_name,lifecycle_state,effective_from,metadata) VALUES ($1,$2,'process','subject-b','Subject B','active',CURRENT_TIMESTAMP,'{}'::jsonb)", [subjectB, tenantB]);
   await client.query("INSERT INTO config.configuration_definitions (configuration_definition_id,ownership_class,tenant_id,configuration_code,version_number,value_type,tenant_overridable,object_overridable,owner_domain,lifecycle_state,effective_from,effective_to,published_at) VALUES ($1,'PLATFORM_CONTROL',NULL,'PHASE3_TEST',1,'text',true,true,'platform','published',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP + interval '1 year',CURRENT_TIMESTAMP)", [configurationDefinition]);
+  await client.query("INSERT INTO audit.audits (audit_id,tenant_id,audit_code,title,lifecycle_state) VALUES ($1,$2,'AUDIT-TENANT-A','Audit tenant A','draft')", [auditA, tenantA]);
 
   await expectDatabaseRejection(
     "cross_tenant_fk",
@@ -61,6 +63,18 @@ try {
     "INSERT INTO config.configuration_overrides (configuration_override_id,ownership_class,tenant_id,configuration_definition_id,override_version,scope_level,scope_subject_id,lifecycle_state,effective_from,effective_to,text_value) VALUES ($1,'TENANT_OWNED',$2,$3,1,'scoped_object',$4,'published',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP + interval '1 year','value')",
     [id(), tenantA, configurationDefinition, subjectB],
     ["23503"]
+  );
+  await expectDatabaseRejection(
+    "audit_objective_cross_tenant_parent",
+    "INSERT INTO audit.audit_objectives (audit_objective_id,tenant_id,audit_id,objective_code,statement,ordinal,lifecycle_state) VALUES ($1,$2,$3,'OBJ-1','Cross tenant probe',0,'draft')",
+    [id(), tenantB, auditA],
+    ["23503"]
+  );
+  await expectDatabaseRejection(
+    "audit_team_cross_tenant_membership",
+    "INSERT INTO audit.audit_team_assignments (audit_team_assignment_id,tenant_id,audit_id,membership_id,team_role,assigned_from,lifecycle_state) VALUES ($1,$2,$3,$4,'auditor',CURRENT_TIMESTAMP,'active')",
+    [id(), tenantA, auditA, membershipB],
+    ["23503", "P0001"]
   );
 
   try {

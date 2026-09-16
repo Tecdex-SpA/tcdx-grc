@@ -24,6 +24,7 @@
     "foundation-records:verify": "node --experimental-strip-types scripts/foundations/verify-foundation-records.ts",
     "uuid:verify": "node --experimental-strip-types scripts/foundations/verify-uuidv7.ts",
     "db:rebuild-test": "node --experimental-strip-types scripts/foundations/rebuild-test.ts",
+    "db:audit-upgrade-test": "node --experimental-strip-types scripts/foundations/verify-audit-upgrade.ts",
     "db:restore-test": "node --experimental-strip-types scripts/foundations/verify-restore.ts",
     "seed:verify": "node --experimental-strip-types scripts/foundations/verify-seeds.ts",
     "seed:reapply": "node --experimental-strip-types scripts/foundations/verify-seed-reapply.ts",

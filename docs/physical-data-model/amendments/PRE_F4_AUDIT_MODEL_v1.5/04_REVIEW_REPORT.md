@@ -19,8 +19,8 @@ AUTHORITY_DUPLICATION=0
 LEGACY_COMPATIBILITY=0
 GENERIC_POLYMORPHIC_REFERENCES=0
 JSONB_SEMANTIC_SHORTCUTS=0
-STATUS=PENDING_HUMAN_APPROVAL
-HUMAN_GATE_REQUIRED=AUDIT_MODEL_AMENDMENT_REVIEW
+STATUS=APPROVED_AND_MATERIALIZED
+AUDIT_MODEL_AMENDMENT_REVIEW=PASS
 ```
 
-Approving this report requires Data Model Owner, Architecture Owner and Security & Privacy Reviewer. Codex does not set `PHYSICAL_DATA_MODEL_REVIEW=PASS` for this amendment.
+The human project authority approved this report for the Data Model Owner, Architecture Owner and Security & Privacy Reviewer gates on candidate commit `6a31034ae1ecc1f9ee551431fb2a504a25fb52ce`.
