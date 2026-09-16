@@ -1,4 +1,4 @@
-# Audit physical model amendment — 15-table candidate
+# Audit physical model amendment — 15 approved tables
 
 ## Profiles
 
@@ -8,7 +8,7 @@
 
 No table uses JSONB for objectives, criteria, scope, team, competencies, agenda or lineage.
 
-## Proposed tables
+## Approved tables
 
 | # | physical table — canonical concept | profile | domain columns | constraints / authority | temporal, audit, retention |
 |---:|---|---|---|---|---|
@@ -36,13 +36,13 @@ No table uses JSONB for objectives, criteria, scope, team, competencies, agenda 
 
 No other existing table is altered. `audit.audit_tests.executor_membership_id` and `reviewer_membership_id` remain execution/review attribution, not team eligibility authority.
 
-## Candidate physical decisions requiring the amendment gate
+## Approved physical decisions
 
-| decision_id | candidate decision | reason / alternatives excluded by candidate | owner |
+| decision_id | approved decision | reason / alternatives excluded by the approved model | owner |
 |---|---|---|---|
 | PDM-AUD-001 | AuditCompetency registry is versioned PLATFORM_CONTROL; assertions/requirements/validations are tenant-owned | avoids tenant-specific duplicate registry while preserving tenant evidence and assignments | Data Model + Architecture |
 | PDM-AUD-002 | one typed AuditCriterion table with mandatory FrameworkVersion and optional same-version Requirement | exact FKs and CHECK avoid a generic polymorphic pair while keeping one criterion identity | Data Model |
 | PDM-AUD-003 | one AuditTestControlLink with XOR Control/ControlAssessment FKs | follows approved typed-link pattern; no `type,id` | Data Model |
 | PDM-AUD-004 | one anchor Requirement per AuditTest; cross-framework links cite approved crosswalk | makes grouping justification structurally reproducible | Architecture + Regulatory Content Owner |
 
-All four remain `PENDING_HUMAN_APPROVAL`; Codex does not approve them.
+All four were approved by the human amendment gate recorded in `docs/governance/PRE_F4_AUDIT_MODEL_AMENDMENT_APPROVAL.md`.

@@ -3,18 +3,18 @@
 | Campo | Valor |
 |---|---|
 | Base schema | approved/materialized Phase 3 schema, 214 tables |
-| Target candidate | 229 tables; 15 additions; 1 altered table |
+| Approved target | 229 tables; 15 additions; 1 altered table |
 | Contract owner | Data Model Owner |
 | Human approvers | Data Model Owner, Architecture Owner, Security & Privacy Reviewer, QA/Release Owner |
-| Status | `PENDING_HUMAN_APPROVAL` |
+| Status | `APPROVED_FOR_EXECUTION` |
 
-No SQL or migration file is created by this task. No database or QA environment is contacted or mutated.
+The approved implementation is the single transactional migration `20260916001000_pre_f4_integrated_audit_model.sql`. Runtime evidence is recorded separately and this plan does not authorize functional Audit implementation.
 
 ## Migration identity
 
-After `AUDIT_MODEL_AMENDMENT_REVIEW=PASS`, allocate the next valid 14-digit UTC migration ID under the approved grammar:
+The next valid 14-digit migration ID allocated under the approved grammar is:
 
-`<YYYYMMDDHHMMSS>_pre_f4_integrated_audit_model.sql`
+`20260916001000_pre_f4_integrated_audit_model.sql`
 
 It is one project-owned, checksum-pinned, transactional migration unless PostgreSQL proves an operation cannot be transactional. No such exception is currently proposed.
 
@@ -78,8 +78,8 @@ There is no committed intermediate state with dual scope/lead authority.
 Isolated development -> QA -> production uses identical bytes/checksum. Required evidence: target identity, backup reference, preflight counts, reconciliation checksum or explicit zero-row result, ledger before/after, schema diff, constraint/index inventory, negative tenant tests, crosswalk tests, rebuild, reapply, failure rollback and restore timing.
 
 ```text
-MIGRATION_CREATED=0
-DDL_EXECUTED=0
+MIGRATION_CREATED=1
+MIGRATION_ID=20260916001000
 QA_DATABASE_MUTATED=0
-MIGRATION_PLAN_STATUS=PENDING_HUMAN_APPROVAL
+MIGRATION_PLAN_STATUS=APPROVED_FOR_EXECUTION
 ```

@@ -1,4 +1,7 @@
-# 33 - Catálogo completo de entidades canónicas por bounded context
+# 33 - Catálogo completo de entidades canónicas por bounded context — v1.5
+
+> Active baseline: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16`.
+> Status: `ACTIVE`; human approval recorded in `docs/governance/PRE_F4_AUDIT_MODEL_AMENDMENT_APPROVAL.md`.
 
 Este catálogo es la autoridad nominal de entidades lógicas. Un término contractual que requiera identidad, versionado, lineage o referencia reproducible debe aparecer aquí, aunque su implementación física pueda consolidarse conforme a la regla final.
 
@@ -45,7 +48,15 @@ Issue, IssueOrigin, Action, ActionVerification, ActionEvidenceLink.
 `IssueOrigin` conserva origen tipado exclusivamente hacia RequirementAssessment, ControlAssessment, AssuranceTest, AuditTest, Risk, Incident o SupplierAssessment; no es una referencia polimórfica libre.
 
 ## Audit
-AuditUniverseItem, AuditProgram, Audit, AuditWorkpaper, AuditTest, AuditSample. Findings se representan como Issue con origen Audit.
+AuditUniverseItem, AuditProgram, Audit, AuditObjective, AuditCriterion, AuditScope, AuditTeamAssignment, AuditCompetency, AuditorCompetencyAssertion, AuditCompetencyRequirement, AuditCompetencyValidation, AuditAgendaItem, AuditWorkpaper, AuditTest, AuditSample. Findings se representan como Issue con origen AuditTest.
+
+`AuditObjective`, `AuditCriterion`, `AuditScope`, `AuditTeamAssignment` y `AuditAgendaItem` estructuran el plan de una Audit sin reemplazar FrameworkVersion, Requirement, Subject ni TenantMembership. `AuditCriterion` referencia siempre una FrameworkVersion y opcionalmente un Requirement perteneciente a esa versión. `AuditScope` relaciona la Audit con un Subject dentro de una FrameworkVersion seleccionada.
+
+`AuditCompetency` es un registry PLATFORM_CONTROL versionado. `AuditorCompetencyAssertion` registra por tenant la competencia vigente de una TenantMembership con evidencia/verificación. `AuditCompetencyRequirement` declara la competencia requerida por Audit, FrameworkVersion y rol de equipo; `AuditCompetencyValidation` conserva la validación reproducible contra una asignación y una assertion vigente.
+
+Las asignaciones de equipo usan exclusivamente `lead_auditor | auditor | technical_expert`. Existe exactamente un lead activo por Audit. `lead_membership_id` y `scope_text` dejan de ser autoridad en el modelo final enmendado: lead y scope se expresan mediante las entidades tipadas anteriores.
+
+AuditTest se relaciona mediante tablas soporte tipadas con N Requirements, Control/ControlAssessment tenant y RequirementAssessment. Una agrupación de Requirements de distintas FrameworkVersion exige un RequirementCrosswalkMapping aprobado y efectivo con relación `equivalent | partially_equivalent | overlaps | supports`. No fusiona Requirements ni copia conclusions; cada Requirement conserva applicability, RequirementAssessment, result_status, domain_conclusion y lineage.
 
 ## Incidents & Loss
 Incident, IncidentSubjectLink, RootCauseRecord. LossEvent permanece en Risk por metodología/pérdida, enlazable a Incident.

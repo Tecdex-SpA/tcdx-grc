@@ -1,4 +1,7 @@
-# 43 — Plan maestro rector de diseño y desarrollo
+# 43 — Plan maestro rector de diseño y desarrollo — v1.5
+
+> Active baseline: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16`.
+> Status: `ACTIVE`; human approval recorded in `docs/governance/PRE_F4_AUDIT_MODEL_AMENDMENT_APPROVAL.md`.
 
 ## 1. Autoridad
 
@@ -33,7 +36,7 @@ Estas elecciones sólo cambian mediante ADR humano aprobado y actualización pre
 
 ### Fase 0 — Baseline rector
 
-Salida: baseline `TCDX_GRC_MASTER_REGENT_BASELINE_v1.4_2026-09-15`, documentos 00–45, sin auxiliares ni históricos normativos. Gate: `RECTOR_BASELINE=PASS`.
+Salida: baseline `TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16`, documentos 00–48 aplicables, con v1.4 preservado como histórico verificable. Gate: `RECTOR_BASELINE=PASS`.
 
 ### Fase 1 — Modelo físico definitivo
 
@@ -65,9 +68,15 @@ Applicability, assessment, SoA, control lifecycle, assurance, evidence, issue/ga
 
 Taxonomías, metodología, inherente/residual, controles, apetito/tolerancia, KRI, tratamientos, incidentes y pérdidas. Gate: `RISK_RUNTIME=PASS`.
 
-### Fase 7 — Audit + Third Parties + Resilience + Privacy
+### Fase 7 — Integrated Audit + Third Parties + Resilience + Privacy
 
-Cada dominio se entrega como slice completo con RBAC, eventos, reportes y E2E. Gate: `ASSURANCE_OPERATIONS=PASS`.
+Audit se entrega como módulo integrado multi-norma alineado al contrato 48. Una Audit selecciona entre una y tres FrameworkVersion, conserva objetivos, criterios, scopes tipados por FrameworkVersion+Subject, equipo, lead/auditor/technical expert, competencias validadas y agenda integrada.
+
+AuditTest puede cubrir múltiples Requirements sólo mediante links tipados. Si los Requirements pertenecen a FrameworkVersion distintas, toda agrupación adicional debe citar un RequirementCrosswalkMapping aprobado, efectivo y con relationship_type `equivalent | partially_equivalent | overlaps | supports`. Coincidencia de numeración HLS nunca basta. Cada Requirement conserva identity, applicability, RequirementAssessment, result_status, domain_conclusion y lineage independientes.
+
+AuditTest puede vincular Control o ControlAssessment tenant y RequirementAssessment mediante FKs tipadas. Evidence, Issue y Action continúan bajo sus autoridades existentes; Audit no crea copias ni motores paralelos. Agenda enlaza tests, scopes y AuditTeamAssignment.
+
+Third Parties, Resilience y Privacy mantienen sus contratos v1.4. Cada dominio se entrega como slice completo con persistence, domain, API, RBAC, audit, UI, tests, E2E, runtime y traceability. Gate: `ASSURANCE_OPERATIONS=PASS`; para Audit requiere previamente `AUDIT_MODEL_AMENDMENT_REVIEW=PASS` y migración incremental aprobada/materializada.
 
 ### Fase 8 — Data/Integration/Rules/Impact
 

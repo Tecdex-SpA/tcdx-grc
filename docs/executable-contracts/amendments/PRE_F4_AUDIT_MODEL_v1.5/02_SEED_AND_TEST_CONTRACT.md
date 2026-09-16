@@ -2,19 +2,19 @@
 
 ## Seed manifest
 
-No executable seed is created. Candidate `SEED-AUD-001` publishes versioned PLATFORM_CONTROL AuditCompetency definitions only after human approval.
+No executable competency seed is created. `SEED-AUD-001` may publish versioned PLATFORM_CONTROL AuditCompetency definitions only after domain-owner publication approval.
 
 | field | contract |
 |---|---|
 | owner | Architecture Owner + Auditor Lead domain owner |
-| source | approved v1.5 contract and authorized competency methodology source |
+| source | active v1.5 contract and authorized competency methodology source |
 | stable key | `audit_competency:<competency_code>:<version>` |
 | version | positive integer; published version immutable |
 | idempotency | stable key + canonical checksum; mismatch fails closed |
 | update policy | new version only |
 | deprecation | explicit supersession/effective_to; history retained |
 | environment | all environments through identical manifest bytes |
-| dependencies | candidate v1.5 approval and physical amendment migration |
+| dependencies | active v1.5 and physical amendment migration |
 
 No competency rows are invented by this amendment. Exact competency content is a Regulatory/Audit domain-owner publication gate.
 

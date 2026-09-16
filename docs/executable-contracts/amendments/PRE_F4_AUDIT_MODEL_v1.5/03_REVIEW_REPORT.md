@@ -10,10 +10,10 @@ TENANT_ISOLATION_GAPS=0
 UNSOURCED_OPERATIONS=0
 GENERIC_POLYMORPHIC_REFERENCES=0
 JSONB_SEMANTIC_SHORTCUTS=0
-STATUS=PENDING_HUMAN_APPROVAL
-HUMAN_GATE_REQUIRED=AUDIT_MODEL_AMENDMENT_REVIEW
+STATUS=APPROVED_ACTIVE_CONTRACT
+AUDIT_MODEL_AMENDMENT_REVIEW=PASS
 ```
 
 Count note: one GET plus fourteen mutating POST operations. Each POST maps to an explicit permission, a distinct audit code and an idempotency class; three agenda link operations intentionally share `audit.audit_agenda.update`.
 
-Codex does not set `EXECUTABLE_CONTRACTS=PASS` for this amendment.
+The human project authority approved this executable-contract amendment on candidate commit `6a31034ae1ecc1f9ee551431fb2a504a25fb52ce`. Functional implementation remains phase-gated.

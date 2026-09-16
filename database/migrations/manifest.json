@@ -121,6 +121,24 @@
       "postconditions": [
         "ledger_outcome=applied"
       ]
+    },
+    {
+      "id": "20260916001000",
+      "filename": "20260916001000_pre_f4_integrated_audit_model.sql",
+      "sha256": "c4247051c223960eb5ca817a0f85650dbc828a7864e48f66a1a73b1d298a224d",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16",
+        "ledger_count=9",
+        "physical_tables=214",
+        "existing_audits=0_or_approved_reconciliation"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=229",
+        "audit_scope_and_lead_dual_authority=0"
+      ]
     }
   ]
 }
