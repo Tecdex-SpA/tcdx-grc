@@ -23,7 +23,7 @@ export class MemoryRegulatoryPackRepository implements RegulatoryPackRepository 
           frameworkVersionId: newUuidV7(),
           importChecksum: pack.importChecksum,
           contentHash: pack.contentHash,
-          lifecycleState: "review"
+          lifecycleState: pack.governance.authorityClass === "NON_AUTHORITATIVE_TEST_PACK" ? "draft" : "review"
         };
         staged.imports.set(`${pack.packCode}:${pack.importChecksum}`, persisted);
         staged.versions.set(`${pack.packCode}:${pack.versionNumber}`, persisted);

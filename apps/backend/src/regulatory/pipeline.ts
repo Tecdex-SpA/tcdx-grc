@@ -1,8 +1,8 @@
 import type { AuthorizationFacts } from "../security/authorization.js";
 import { authorize } from "../security/authorization.js";
 import { FoundationError } from "../errors.js";
-import { candidateState, validateAndNormalize } from "./validator.js";
-import type { ImportResult, RegulatoryPackImportInput } from "./model.js";
+import { assertRegulatoryAssertionAllowed, authorizeRegulatoryExecution, candidateState, validateAndNormalize } from "./validator.js";
+import type { ImportResult, RegulatoryAssertionKind, RegulatoryExecutionContext, RegulatoryExecutionEnvelope, RegulatoryPackImportInput } from "./model.js";
 import type { RegulatoryPackRepository } from "./repository.js";
 
 export class RegulatoryPackPipeline {
@@ -19,6 +19,7 @@ export class RegulatoryPackPipeline {
         frameworkVersionId: replay.frameworkVersionId,
         importChecksum: replay.importChecksum,
         replayed: true,
+        authorityClass: input.governance.authorityClass,
         candidateState: state,
         coverage: normalized.coverage
       };
@@ -36,10 +37,19 @@ export class RegulatoryPackPipeline {
         frameworkVersionId: persisted.frameworkVersionId,
         importChecksum: persisted.importChecksum,
         replayed: false,
+        authorityClass: input.governance.authorityClass,
         candidateState: state,
         coverage: normalized.coverage
       };
     });
+  }
+
+  authorizeExecution(input: RegulatoryPackImportInput, context: RegulatoryExecutionContext): RegulatoryExecutionEnvelope {
+    return authorizeRegulatoryExecution(input, context);
+  }
+
+  authorizeResultAssertion(envelope: RegulatoryExecutionEnvelope, assertionKind: RegulatoryAssertionKind): void {
+    assertRegulatoryAssertionAllowed(envelope, assertionKind);
   }
 
   async publish(input: RegulatoryPackImportInput, command: {

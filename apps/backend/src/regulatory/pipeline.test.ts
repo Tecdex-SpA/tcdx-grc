@@ -35,6 +35,16 @@ function fixture(): RegulatoryPackImportInput {
       definitivePublication: true,
       sourceChecksum: "a".repeat(64)
     },
+    governance: {
+      authorityClass: "AUTHORIZED_NORMATIVE_SOURCE",
+      sourceRoles: ["authorized_normative_source"],
+      devDemoExecutionEligible: true,
+      commercialPublicationEligible: true,
+      certificationAssertionEligible: true,
+      provenance: "licensed-source-manifest:ISO_IEC_27001_2022",
+      contentScope: "Governed licensed test fixture",
+      coverageScope: "Complete fixture population only"
+    },
     importedByUserIdentityId: USER_IMPORTER,
     importChecksum: "0".repeat(64),
     units: [{
@@ -99,6 +109,66 @@ function fixture(): RegulatoryPackImportInput {
       { role: "GRC_MANAGER", userIdentityId: USER_GRC, approvalRef: "approval:grc:1" }
     ]
   });
+}
+
+function nonAuthoritativeTestFixture(packCode: "ISO_9001_2015" | "ISO_9001_2026" | "ISO_IEC_27001_2022" | "ISO_IEC_42001_2023" = "ISO_IEC_27001_2022"): RegulatoryPackImportInput {
+  const input = fixture();
+  input.packCode = packCode;
+  input.packName = `${packCode} non-authoritative functional test pack`;
+  input.edition = `test-${packCode.toLowerCase()}`;
+  input.versionNumber = 9000001;
+  input.frameworkCode = packCode.startsWith("ISO_9001") ? "ISO_9001" : packCode.replace(/_2022$|_2023$/, "");
+  input.frameworkName = `${packCode} governed functional test version`;
+  input.source = {
+    ...input.source,
+    sourceCode: `${packCode}_PUBLIC_REFERENCE_TEST`,
+    origin: "official_source",
+    authorized: false,
+    definitivePublication: packCode !== "ISO_9001_2026",
+    licenseClassification: "non_authoritative_test_pack"
+  };
+  input.governance = {
+    authorityClass: "NON_AUTHORITATIVE_TEST_PACK",
+    sourceRoles: ["official_metadata", "provisional_supporting_reference", "test_data_source"],
+    devDemoExecutionEligible: true,
+    commercialPublicationEligible: false,
+    certificationAssertionEligible: false,
+    provenance: "docs/regulatory-packs/provisional-sources/provisional-public-reference-packs.json",
+    contentScope: "Public metadata and deliberately non-normative functional test markers",
+    coverageScope: "The declared test fixture only; never the ISO standard"
+  };
+  input.units = [{
+    ...input.units[0]!,
+    sourceLocator: `${packCode}:test-marker:1`,
+    parentSourceLocator: null,
+    unitType: "other",
+    unitCode: "TEST-1",
+    title: "Non-normative functional test marker",
+    licensedContentRef: `test-data://${packCode}/marker/1`,
+    provenanceRef: `public-metadata:${packCode}#functional-test-marker`,
+    reviewed: true
+  }];
+  input.requirements = [];
+  input.controls = [];
+  input.requirementControlMappings = [];
+  input.normativeUnitControlMappings = [];
+  input.crosswalks = [];
+  input.coverageExpected = { normativeUnits: 1, requirements: 0, referenceControls: 0, editorialMappings: 0, complianceMappings: 0 };
+  input.approvals = [];
+  return finalize(input);
+}
+
+function executionContext(runtimeEnvironment: "development" | "test" | "qa" | "production", value: "demo" | "test" | "commercial", tenantId = "00000000-0000-7000-8000-000000000101") {
+  return {
+    runtimeEnvironment,
+    tenantId,
+    tenantAccountClassification: {
+      tenantId,
+      value,
+      selectedLayerId: "effective-configuration:tenant-account-classification",
+      layerIds: ["configuration-definition:tenant-account-classification", "configuration-override:demo-tenant"]
+    }
+  } as const;
 }
 
 const publishAuthorization: AuthorizationFacts = {
@@ -207,12 +277,139 @@ describe("generic regulatory pack pipeline", () => {
 
     const unauthorized = fixture();
     unauthorized.source = { ...unauthorized.source, authorized: false };
-    expect(() => validateAndNormalize(finalize(unauthorized))).toThrow("not authorized");
+    expect(() => validateAndNormalize(finalize(unauthorized))).toThrow("authorized normative source role");
 
     const prepublication = fixture();
     prepublication.packCode = "ISO_9001_2026";
     prepublication.source = { ...prepublication.source, definitivePublication: false };
     expect(() => validateAndNormalize(finalize(prepublication))).toThrow("definitive publication");
+  });
+
+  it("executes a non-authoritative ISO test pack only in non-production for an explicitly classified demo/test tenant", async () => {
+    const pipeline = new RegulatoryPackPipeline(new MemoryRegulatoryPackRepository());
+    const input = nonAuthoritativeTestFixture();
+    const imported = await pipeline.import(input);
+    const envelope = pipeline.authorizeExecution(input, executionContext("qa", "demo"));
+    expect(imported.authorityClass).toBe("NON_AUTHORITATIVE_TEST_PACK");
+    expect(imported.candidateState).toBe("BLOCKED_LICENSE");
+    expect(envelope.resultProvenance.executionPurpose).toBe("functional_test");
+    expect(envelope.authorizedNormativeSource).toBe(false);
+  });
+
+  it("rejects the same test pack for production, commercial tenants and cross-tenant classification lineage", () => {
+    const pipeline = new RegulatoryPackPipeline(new MemoryRegulatoryPackRepository());
+    const input = nonAuthoritativeTestFixture();
+    expect(() => pipeline.authorizeExecution(input, executionContext("production", "demo"))).toThrow("cannot execute in production");
+    expect(() => pipeline.authorizeExecution(input, executionContext("qa", "commercial"))).toThrow("demo/test tenant");
+    const mismatched = executionContext("qa", "demo");
+    expect(() => pipeline.authorizeExecution(input, {
+      ...mismatched,
+      tenantAccountClassification: { ...mismatched.tenantAccountClassification, tenantId: "00000000-0000-7000-8000-000000000102" }
+    })).toThrow("active tenant");
+  });
+
+  it("retains test authority and provenance while blocking official compliance and certification assertions", () => {
+    const pipeline = new RegulatoryPackPipeline(new MemoryRegulatoryPackRepository());
+    const input = nonAuthoritativeTestFixture();
+    const envelope = pipeline.authorizeExecution(input, executionContext("development", "test"));
+    expect(envelope).toMatchObject({
+      authorityClass: "NON_AUTHORITATIVE_TEST_PACK",
+      commercialAssertionAllowed: false,
+      certificationAssertionAllowed: false,
+      resultProvenance: {
+        authorityClass: "NON_AUTHORITATIVE_TEST_PACK",
+        sourceRoles: ["official_metadata", "provisional_supporting_reference", "test_data_source"]
+      }
+    });
+    expect(() => pipeline.authorizeResultAssertion(envelope, "commercial_compliance")).toThrow("cannot support official compliance");
+    expect(() => pipeline.authorizeResultAssertion(envelope, "certification")).toThrow("cannot support official compliance");
+  });
+
+  it.each(["ISO_9001_2015", "ISO_9001_2026", "ISO_IEC_27001_2022", "ISO_IEC_42001_2023"] as const)(
+    "keeps %s commercially BLOCKED_LICENSE without transforming public references into licensed content",
+    async (packCode) => {
+      const input = nonAuthoritativeTestFixture(packCode);
+      const result = await new RegulatoryPackPipeline(new MemoryRegulatoryPackRepository()).import(input);
+      expect(result.candidateState).toBe("BLOCKED_LICENSE");
+      expect(input.source.authorized).toBe(false);
+      expect(input.source.licenseClassification).toBe("non_authoritative_test_pack");
+      expect(input.governance.commercialPublicationEligible).toBe(false);
+    }
+  );
+
+  it("does not expose a global license bypass and keeps test publication blocked", async () => {
+    const pipeline = new RegulatoryPackPipeline(new MemoryRegulatoryPackRepository());
+    const invalid = nonAuthoritativeTestFixture();
+    invalid.governance = { ...invalid.governance, commercialPublicationEligible: true };
+    expect(() => validateAndNormalize(finalize(invalid))).toThrow("DEV/DEMO-only");
+
+    const input = nonAuthoritativeTestFixture();
+    const imported = await pipeline.import(input);
+    await expect(pipeline.publish(input, {
+      regulatoryPackVersionId: imported.regulatoryPackVersionId,
+      actorUserIdentityId: USER_GRC,
+      correlationId: "00000000-0000-7000-8000-000000000010",
+      idempotencyKey: "test-publish-1",
+      requestHash: "d".repeat(64)
+    }, publishAuthorization)).rejects.toMatchObject({ code: "TCDX.REGULATORY.PUBLICATION_BLOCKED" });
+  });
+
+  it("replays test-pack imports idempotently and rejects source drift", async () => {
+    const pipeline = new RegulatoryPackPipeline(new MemoryRegulatoryPackRepository());
+    const input = nonAuthoritativeTestFixture();
+    const first = await pipeline.import(input);
+    const second = await pipeline.import(input);
+    expect(first.replayed).toBe(false);
+    expect(second.replayed).toBe(true);
+    const drifted = nonAuthoritativeTestFixture();
+    drifted.units = [{ ...drifted.units[0]!, title: "Changed non-normative marker", contentHash: "f".repeat(64) }];
+    await expect(pipeline.import(finalize(drifted))).rejects.toMatchObject({ code: "TCDX.REGULATORY.SOURCE_DRIFT" });
+  });
+
+  it("treats any attempted test-to-licensed authority change as source drift", async () => {
+    const pipeline = new RegulatoryPackPipeline(new MemoryRegulatoryPackRepository());
+    const testInput = nonAuthoritativeTestFixture();
+    await pipeline.import(testInput);
+    const reclassified = nonAuthoritativeTestFixture();
+    reclassified.source = {
+      ...reclassified.source,
+      sourceCode: "ISO_IEC_27001_2022_LICENSED_REPLACEMENT",
+      origin: "licensed_file",
+      authorized: true,
+      licenseClassification: "licensed_internal"
+    };
+    reclassified.governance = {
+      ...reclassified.governance,
+      authorityClass: "AUTHORIZED_NORMATIVE_SOURCE",
+      sourceRoles: ["authorized_normative_source"],
+      commercialPublicationEligible: true,
+      certificationAssertionEligible: true
+    };
+    await expect(pipeline.import(finalize(reclassified))).rejects.toMatchObject({ code: "TCDX.REGULATORY.SOURCE_DRIFT" });
+  });
+
+  it("keeps the official Ley 21.719 path available outside demo without test-pack restrictions", () => {
+    const law = fixture();
+    law.packCode = "CL_LEY_21719";
+    law.packName = "Ley 21.719";
+    law.frameworkCode = "CL_LEY_21719";
+    law.edition = "2026-12-01";
+    law.effectiveFrom = "2026-12-01T00:00:00.000Z";
+    law.source = { ...law.source, sourceCode: "BCN_CL_LEY_21719", sourceType: "law", publisher: "Biblioteca del Congreso Nacional de Chile", origin: "official_source" };
+    law.controls = [{ ...law.controls[0]!, origin: "tcdx_baseline" }];
+    law.governance = { ...law.governance, provenance: "official-bcn-source-manifest:CL_LEY_21719" };
+    law.approvals = [
+      { role: "REGULATORY_CONTENT_STEWARD", userIdentityId: USER_STEWARD, approvalRef: "a:1" },
+      { role: "COMPLIANCE_MANAGER", userIdentityId: USER_COMPLIANCE, approvalRef: "a:2" },
+      { role: "PRIVACY_MANAGER", userIdentityId: USER_CISO, approvalRef: "a:3" },
+      { role: "LEGAL_REVIEWER", userIdentityId: "00000000-0000-7000-8000-000000000006", approvalRef: "a:4" },
+      { role: "GRC_MANAGER", userIdentityId: USER_GRC, approvalRef: "a:5" }
+    ];
+    const finalized = finalize(law);
+    const envelope = new RegulatoryPackPipeline(new MemoryRegulatoryPackRepository()).authorizeExecution(finalized, executionContext("production", "commercial"));
+    expect(envelope.authorityClass).toBe("AUTHORIZED_NORMATIVE_SOURCE");
+    expect(envelope.resultProvenance.executionPurpose).toBe("governed");
+    expect(envelope.commercialAssertionAllowed).toBe(true);
   });
 
   it("validates typed crosswalk integrity without generic polymorphic targets", () => {

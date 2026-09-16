@@ -16,6 +16,15 @@ export type PackCandidateState =
   | "BLOCKED_CONTRACT_DECISION";
 
 export type SourceOrigin = "licensed_file" | "official_source";
+export type RegulatoryAuthorityClass = "AUTHORIZED_NORMATIVE_SOURCE" | "NON_AUTHORITATIVE_TEST_PACK";
+export type RegulatorySourceRole =
+  | "authorized_normative_source"
+  | "official_metadata"
+  | "provisional_supporting_reference"
+  | "supporting_reference"
+  | "test_data_source";
+export type RegulatoryRuntimeEnvironment = "development" | "test" | "qa" | "production";
+export type TenantAccountClassification = "demo" | "test" | "commercial";
 export type UnitType = "section" | "chapter" | "clause" | "subclause" | "annex" | "article" | "paragraph" | "numeral" | "transitory_provision" | "schedule" | "control_group" | "other";
 export type RequirementKind = "shall" | "legal_obligation" | "contractual_obligation" | "policy_mandate" | "other";
 export type ControlOrigin = "regulatory_reference" | "tcdx_baseline";
@@ -151,6 +160,16 @@ export type RegulatoryPackImportInput = {
   frameworkCode: string;
   frameworkName: string;
   source: RegulatorySourceInput;
+  governance: {
+    authorityClass: RegulatoryAuthorityClass;
+    sourceRoles: ReadonlyArray<RegulatorySourceRole>;
+    devDemoExecutionEligible: boolean;
+    commercialPublicationEligible: boolean;
+    certificationAssertionEligible: boolean;
+    provenance: string;
+    contentScope: string;
+    coverageScope: string;
+  };
   importedByUserIdentityId: string;
   importChecksum: string;
   units: ReadonlyArray<NormativeUnitInput>;
@@ -193,6 +212,47 @@ export type ImportResult = {
   frameworkVersionId: string;
   importChecksum: string;
   replayed: boolean;
+  authorityClass: RegulatoryAuthorityClass;
   candidateState: PackCandidateState;
   coverage: CoverageResult;
 };
+
+export type RegulatoryExecutionContext = {
+  runtimeEnvironment: RegulatoryRuntimeEnvironment;
+  tenantId: string;
+  tenantAccountClassification: {
+    tenantId: string;
+    value: TenantAccountClassification;
+    selectedLayerId: string;
+    layerIds: ReadonlyArray<string>;
+  };
+};
+
+export type RegulatoryExecutionEnvelope = {
+  packCode: RegulatoryPackCode;
+  importChecksum: string;
+  sourceChecksum: string;
+  authorityClass: RegulatoryAuthorityClass;
+  sourceRoles: ReadonlyArray<RegulatorySourceRole>;
+  authorizedNormativeSource: boolean;
+  executionContext: {
+    runtimeEnvironment: RegulatoryRuntimeEnvironment;
+    tenantId: string;
+    tenantAccountClassification: TenantAccountClassification;
+    configurationSelectedLayerId: string;
+    configurationLayerIds: ReadonlyArray<string>;
+  };
+  resultProvenance: {
+    packCode: RegulatoryPackCode;
+    importChecksum: string;
+    sourceChecksum: string;
+    authorityClass: RegulatoryAuthorityClass;
+    sourceRoles: ReadonlyArray<RegulatorySourceRole>;
+    governanceProvenance: string;
+    executionPurpose: "governed" | "functional_test";
+  };
+  commercialAssertionAllowed: boolean;
+  certificationAssertionAllowed: boolean;
+};
+
+export type RegulatoryAssertionKind = "commercial_compliance" | "certification";

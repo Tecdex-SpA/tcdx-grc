@@ -52,6 +52,8 @@ async function findVersion(transaction: Transaction<FoundationDatabase>, packCod
 }
 
 async function persistPack(transaction: Transaction<FoundationDatabase>, pack: NormalizedRegulatoryPack): Promise<PersistedRegulatoryPack> {
+  const testPack = pack.governance.authorityClass === "NON_AUTHORITATIVE_TEST_PACK";
+  const editableLifecycleState = testPack ? "draft" : "review";
   const packRow = await sql<{ regulatory_pack_id: string }>`SELECT regulatory_pack_id FROM regulatory.regulatory_packs WHERE pack_code=${pack.packCode}`.execute(transaction);
   const regulatoryPackId = packRow.rows[0]?.regulatory_pack_id;
   if (!regulatoryPackId) throw new FoundationError("TCDX.REGULATORY.PACK_HEADER_MISSING", "Required regulatory pack header is missing", 409);
@@ -75,7 +77,7 @@ async function persistPack(transaction: Transaction<FoundationDatabase>, pack: N
   const packVersion = await sql<{ regulatory_pack_version_id: string }>`
     INSERT INTO regulatory.regulatory_pack_versions
       (regulatory_pack_version_id,created_by_user_identity_id,version_number,lifecycle_state,effective_from,regulatory_pack_id,edition,license_classification,content_hash)
-    VALUES (${versionId}::uuid,${pack.importedByUserIdentityId}::uuid,${pack.versionNumber},'review',${pack.effectiveFrom}::timestamptz,
+    VALUES (${versionId}::uuid,${pack.importedByUserIdentityId}::uuid,${pack.versionNumber},${editableLifecycleState},${pack.effectiveFrom}::timestamptz,
       ${regulatoryPackId}::uuid,${pack.edition},${pack.source.licenseClassification},${pack.contentHash})
     ON CONFLICT (regulatory_pack_id,version_number) DO UPDATE SET content_hash=EXCLUDED.content_hash
       WHERE regulatory.regulatory_pack_versions.lifecycle_state <> 'published'
@@ -102,7 +104,7 @@ async function persistPack(transaction: Transaction<FoundationDatabase>, pack: N
     INSERT INTO regulatory.framework_versions
       (framework_version_id,created_by_user_identity_id,ownership_class,tenant_id,framework_id,version_number,edition,lifecycle_state,effective_from,content_hash)
     VALUES (${frameworkVersionCandidate}::uuid,${pack.importedByUserIdentityId}::uuid,'GLOBAL_REFERENCE',NULL,${frameworkId}::uuid,
-      ${pack.versionNumber},${pack.edition},'review',${pack.effectiveFrom}::timestamptz,${pack.contentHash})
+      ${pack.versionNumber},${pack.edition},${editableLifecycleState},${pack.effectiveFrom}::timestamptz,${pack.contentHash})
     ON CONFLICT (framework_id,version_number) DO UPDATE SET content_hash=EXCLUDED.content_hash
       WHERE regulatory.framework_versions.lifecycle_state <> 'published'
     RETURNING framework_version_id
@@ -169,7 +171,7 @@ async function persistPack(transaction: Transaction<FoundationDatabase>, pack: N
       INSERT INTO controls.controls
         (control_id,created_by_user_identity_id,updated_by_user_identity_id,ownership_class,tenant_id,control_code,name,control_origin,lifecycle_state)
       VALUES (${newUuidV7()}::uuid,${pack.importedByUserIdentityId}::uuid,${pack.importedByUserIdentityId}::uuid,${ownership},NULL,
-        ${control.controlCode},${control.name},${control.origin},'review')
+        ${control.controlCode},${control.name},${control.origin},${editableLifecycleState})
       ON CONFLICT (ownership_class,tenant_id,control_code) DO UPDATE SET name=EXCLUDED.name,updated_at=CURRENT_TIMESTAMP,
         updated_by_user_identity_id=EXCLUDED.updated_by_user_identity_id,row_version=controls.controls.row_version+1
       RETURNING control_id
@@ -182,7 +184,7 @@ async function persistPack(transaction: Transaction<FoundationDatabase>, pack: N
          frequency_code,execution_method,verification_method,minimum_evidence,suggested_owner_role_code,lifecycle_state)
       VALUES (${newUuidV7()}::uuid,${pack.importedByUserIdentityId}::uuid,${ownership},NULL,${controlId}::uuid,1,${control.objective},
         ${control.controlType},${control.nature},${control.frequencyCode},${control.executionMethod},${control.verificationMethod},
-        ${control.minimumEvidence},${control.suggestedOwnerRoleCode},'review')
+        ${control.minimumEvidence},${control.suggestedOwnerRoleCode},${editableLifecycleState})
       ON CONFLICT (control_id,version_number) DO UPDATE SET objective=EXCLUDED.objective
         WHERE controls.control_versions.lifecycle_state <> 'published'
       RETURNING control_version_id
@@ -200,7 +202,7 @@ async function persistPack(transaction: Transaction<FoundationDatabase>, pack: N
          mapping_type,coverage_contribution,rationale,lifecycle_state,provenance_ref)
       VALUES (${newUuidV7()}::uuid,${pack.importedByUserIdentityId}::uuid,'GLOBAL_REFERENCE',NULL,${requirementIds.get(mapping.requirementCode)}::uuid,
         ${controlVersionIds.get(mapping.controlCode)}::uuid,${mappingVersion++},${mapping.mappingType},${mapping.coverageContribution},
-        ${mapping.rationale},'review',${mapping.provenanceRef})
+        ${mapping.rationale},${editableLifecycleState},${mapping.provenanceRef})
       ON CONFLICT DO NOTHING
     `.execute(transaction);
   }
@@ -211,7 +213,7 @@ async function persistPack(transaction: Transaction<FoundationDatabase>, pack: N
          mapping_version,source_locator,rationale,lifecycle_state,provenance_ref)
       VALUES (${newUuidV7()}::uuid,${pack.importedByUserIdentityId}::uuid,'GLOBAL_REFERENCE',NULL,
         ${unitIds.get(mapping.normativeUnitSourceLocator)}::uuid,${controlVersionIds.get(mapping.controlCode)}::uuid,${mappingVersion++},
-        ${mapping.sourceLocator},${mapping.rationale},'review',${mapping.provenanceRef})
+        ${mapping.sourceLocator},${mapping.rationale},${editableLifecycleState},${mapping.provenanceRef})
       ON CONFLICT DO NOTHING
     `.execute(transaction);
   }
@@ -232,7 +234,7 @@ async function persistPack(transaction: Transaction<FoundationDatabase>, pack: N
         (framework_crosswalk_id,created_by_user_identity_id,ownership_class,tenant_id,source_framework_version_id,target_framework_version_id,
          crosswalk_version,direction,lifecycle_state,provenance_ref)
       VALUES (${crosswalkId}::uuid,${pack.importedByUserIdentityId}::uuid,'GLOBAL_REFERENCE',NULL,${frameworkVersionId}::uuid,
-        ${targetFrameworkVersionId}::uuid,1,${crosswalk.direction},'review',${crosswalk.provenanceRef})
+        ${targetFrameworkVersionId}::uuid,1,${crosswalk.direction},${editableLifecycleState},${crosswalk.provenanceRef})
     `.execute(transaction);
     for (const mapping of crosswalk.mappings) {
       let sourceId: string | undefined;
@@ -308,10 +310,10 @@ async function persistPack(transaction: Transaction<FoundationDatabase>, pack: N
        source_edition,imported_by_user_identity_id,imported_at,row_count,outcome)
     VALUES (${newUuidV7()}::uuid,${pack.importedByUserIdentityId}::uuid,${regulatoryPackVersionId}::uuid,${regulatorySourceId}::uuid,
       ${pack.importChecksum},${pack.edition},${pack.importedByUserIdentityId}::uuid,CURRENT_TIMESTAMP,
-      ${pack.units.length + pack.requirements.length + pack.controls.length},'validated')
+      ${pack.units.length + pack.requirements.length + pack.controls.length},${testPack ? "validated_test_non_authoritative" : "validated"})
   `.execute(transaction);
 
-  return { regulatoryPackVersionId, frameworkVersionId, importChecksum: pack.importChecksum, contentHash: pack.contentHash, lifecycleState: "review" };
+  return { regulatoryPackVersionId, frameworkVersionId, importChecksum: pack.importChecksum, contentHash: pack.contentHash, lifecycleState: editableLifecycleState };
 }
 
 function transactionAdapter(transaction: Transaction<FoundationDatabase>): RegulatoryPackTransaction {
