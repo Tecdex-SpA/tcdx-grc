@@ -60,16 +60,31 @@ The human project authority explicitly approved H-001 through H-006 and the exec
 
 The human project authority explicitly approved the Phase 3 foundations runtime corresponding to commit `d98f3f2454c2c9fbece0379ec97e7c09d1ecf151` after QA materialization and validation of the definitive PostgreSQL database, backend foundation runtime and frontend foundation runtime.
 
+## Human approval — Visual baseline v1.0
+
+`VISUAL_BASELINE=ACTIVE`
+`VISUAL_BASELINE_ID=TCDX_GRC_VISUAL_BASELINE_v1.0`
+`VISUAL_BASELINE_APPROVED_COMMIT=eb4ceee`
+`VISUAL_AUTHORITY_PATH=docs/ui`
+`VISUAL_BASELINE_HUMAN_APPROVAL_DATE=2026-09-16`
+`BRAND_REFERENCE_MODE=READ_ONLY`
+
+The human project authority approved the TCDX GRC visual baseline v1.0, including the dashboard baseline, Tecdex design tokens, component contract, layout/navigation contract, visual acceptance gates and the local versioned official Tecdex logo asset. The visual baseline governs presentation only and cannot override the rector baseline, canonical data model, physical model, executable contracts, RBAC or lifecycle semantics.
+
 ## Current authorized phase
 
 `PHASE_3=COMPLETE`
 `FOUNDATIONS_RUNTIME=PASS`
 `AUDIT_MODEL_MIGRATION_RUNTIME=PASS`
 `DATABASE_TABLES=229`
-`PHASE_4=AUTHORIZED`
-`FUNCTIONAL_PRODUCT_SLICES=BLOCKED_PENDING_PHASE_4_SCOPE`
-`PHASE_4_STARTED=1`
+`PHASE_4=COMPLETE`
+`PHASE_4_IMPLEMENTATION=COMPLETE`
+`PHASE_4_CONTENT_GATES_PARTIAL=YES`
+`VISUAL_BASELINE=ACTIVE`
+`VISUAL_BASELINE_ID=TCDX_GRC_VISUAL_BASELINE_v1.0`
+`PHASE_5=BLOCKED_PENDING_HUMAN_GATE`
+`PHASE_5_STARTED=0`
 
-Phase 3 remains closed and the approved PRE-F4 integrated Audit model amendment is materially present in QA. Phase 4 regulatory-pack infrastructure work has started under its approved scope. Functional product slices remain blocked; no pack is PASS without its independent source, coverage, review and human gate.
+Phase 4 engineering is closed. Independent regulatory content gates remain open where licensed or structured content is still pending; those gates do not reopen Phase 4 implementation. The approved visual baseline is active for all subsequent UI work. Phase 5 has not started and requires an explicit human phase gate before implementation begins.
 
 This file is mutable execution state. It is not part of the immutable rector baseline and cannot override it.

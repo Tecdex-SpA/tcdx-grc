@@ -10,6 +10,30 @@ This repository is governed for 100% of the TCDX GRC product lifecycle by the im
 
 Codex MUST NOT treat implementation code, tests, framework conventions, historical documents, mocks or its own reasoning as a source of product authority.
 
+## Permanent visual authority
+
+`VISUAL_BASELINE=ACTIVE`
+`VISUAL_BASELINE_ID=TCDX_GRC_VISUAL_BASELINE_v1.0`
+`VISUAL_AUTHORITY_PATH=docs/ui`
+`BRAND_REFERENCE=Tecdex-SpA/tecdex-design-system`
+`BRAND_REFERENCE_MODE=READ_ONLY`
+
+For every task that creates, modifies or reviews user-facing UI, Codex MUST, before changing frontend code:
+
+1. Read `docs/ui/VISUAL_BASELINE_MANIFEST.json`.
+2. Read every active visual contract referenced under `docs/ui/`.
+3. Use the approved local/versioned Tecdex brand assets under `docs/ui/assets/brand/`.
+4. Treat the approved baseline images under `docs/ui/baselines/` as human-approved visual references.
+5. Preserve the approved tokens, layout, navigation, component language, density and branding unless a human-approved visual amendment exists.
+6. Treat `Tecdex-SpA/tecdex-design-system` strictly as READ ONLY reference material.
+7. Never modify domain semantics, database structure, RBAC, lifecycle or canonical contracts to satisfy a visual decision.
+8. Execute applicable visual-regression checks for UI changes.
+9. Never self-declare `HUMAN_UI_REVIEW=PASS`; only the human project authority may approve that gate.
+
+If the visual authority is missing, internally inconsistent or cannot be reconciled with a higher rector contract, Codex MUST stop the frontend portion and report `VISUAL_CONTRACT_GATE=BLOCKED`.
+
+The visual contract is subordinate to the master rector baseline and canonical product/data contracts. It governs presentation, not business authority.
+
 ## Mandatory execution protocol
 
 Before any change, Codex MUST:
