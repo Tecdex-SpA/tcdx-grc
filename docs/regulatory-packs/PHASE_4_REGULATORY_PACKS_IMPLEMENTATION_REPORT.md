@@ -47,7 +47,7 @@ Four test-pack definitions exist under `docs/regulatory-packs/test-packs/`, sepa
 | `ISO_IEC_27001_2022` | `BLOCKED_LICENSE` | `NOT_READY` | Atomic source content and toolkit unavailable |
 | `ISO_IEC_42001_2023` | `BLOCKED_LICENSE` | `NOT_READY` | Atomic source/Annex A content unavailable |
 
-The official BCN page confirms Ley 21.719 identity, deferred effective date `2026-12-01`, and modification through Ley 21.806. The official source remains `AUTHORIZED_NORMATIVE_SOURCE`; it is not restricted to demo. The declared PDF/text artifact is not mounted locally, so deterministic extraction, hashing, complete coverage and human review remain `BLOCKED_SOURCE_ARTIFACT_NOT_MOUNTED`, not `BLOCKED_SOURCE_UNAVAILABLE`.
+The official BCN/LeyChile source artifact for Ley 21.719 is now materialized in the governed repository at `docs/regulatory-packs/official-sources/CL_LEY_21719/source/Ley-21719_13-DIC-2024.pdf`. Source artifact evidence: `SOURCE_ARTIFACT_MOUNTED=PASS`, `SOURCE_ARTIFACT_BYTES=188910`, `SOURCE_ARTIFACT_SHA256=dfa06873ed8ca08f79f81985d9b4b03c654b1eb4b828b82156277fe953200345`. The source remains `AUTHORIZED_NORMATIVE_SOURCE` and is not restricted to demo use. The remaining gate is structured deterministic transformation of the mounted official artifact into the governed `NormativeUnit` / atomic `Requirement` representation, followed by coverage calculation and human review. Its current state is `PENDING_STRUCTURED_IMPORT`.
 
 ## Traceability and affected layers
 
