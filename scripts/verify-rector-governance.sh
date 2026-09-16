@@ -104,11 +104,35 @@ if grep -q '^`FUNCTIONAL_DEVELOPMENT=BLOCKED`$' "$MASTER_STATUS" 2>/dev/null || 
   done
 fi
 
+emit_current_phase_status() {
+  awk '
+    /^## Current authorized phase[[:space:]]*$/ {
+      in_section=1
+      next
+    }
+
+    in_section && /^## / {
+      exit
+    }
+
+    in_section && /^`[A-Z0-9_]+=.*`$/ {
+      line=$0
+      sub(/^`/, "", line)
+      sub(/`$/, "", line)
+      print line
+    }
+  ' "$MASTER_STATUS"
+}
+
+current_phase_status="$(emit_current_phase_status)"
+
+[[ -n "$current_phase_status" ]] \
+  || fail "MASTER_EXECUTION_STATUS.md has no machine-readable assignments in Current authorized phase"
+
 echo "RECTOR_GATE=PASS"
 echo "BASELINE_STATUS=ACTIVE"
 echo "BASELINE_ID=$baseline_id"
 echo "RECTOR_BASELINE_INTEGRITY=PASS"
 echo "CODEX_VARIATION_BUDGET=ZERO"
-echo "PHYSICAL_MODEL_DESIGN=AUTHORIZED"
-echo "MIGRATIONS=BLOCKED"
-echo "FUNCTIONAL_DEVELOPMENT=BLOCKED"
+echo "EXECUTION_STATUS_SOURCE=$MASTER_STATUS"
+printf '%s\n' "$current_phase_status"
