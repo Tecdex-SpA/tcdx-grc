@@ -92,6 +92,42 @@
       "next_action": "Acquire licensed ISO 9001:2026 edition 6 PDF/ePub and generate the governed RegulatoryPackImportInput from that artifact."
     },
     {
+      "pack_code": "ISO_IEC_27001_2022",
+      "pack_name": "ISO/IEC 27001:2022 + Amd 1:2024",
+      "framework_code": "ISO_IEC_27001",
+      "edition": "2022+Amd1:2024",
+      "source_role": "public_reference_metadata",
+      "runtime_import_eligible": false,
+      "required_runtime_source_origin": "licensed_file",
+      "current_lifecycle_status": "published_current",
+      "public_metadata": {
+        "standard_reference": "ISO/IEC 27001:2022",
+        "standard_title": "Information security, cybersecurity and privacy protection — Information security management systems — Requirements",
+        "edition_number": 3,
+        "publication_month": "2022-10",
+        "amendment_reference": "ISO/IEC 27001:2022/Amd 1:2024",
+        "amendment_title": "Climate action changes",
+        "amendment_publication_year": 2024
+      },
+      "official_sources": [
+        {
+          "publisher": "International Organization for Standardization",
+          "uri": "https://www.iso.org/standard/27001",
+          "role": "official_standard_metadata_and_preview"
+        }
+      ],
+      "public_structure_only": {
+        "high_level_management_system_clauses": ["4", "5", "6", "7", "8", "9", "10"],
+        "annex_presence": ["A"]
+      },
+      "normative_units": [],
+      "requirements": [],
+      "controls": [],
+      "coverage_expected": null,
+      "blocker": "A licensed ISO/IEC 27001:2022 source artifact plus Amendment 1:2024 is required before governed runtime import. Public metadata must not be converted into reconstructed normative text or Annex A control content.",
+      "next_action": "When the licensed ISO/IEC 27001:2022 and Amd 1:2024 artifacts are available, checksum them and generate the governed RegulatoryPackImportInput including the complete NormativeUnit hierarchy, Requirements, Annex A regulatory_reference controls, mappings and provenance."
+    },
+    {
       "pack_code": "ISO_IEC_42001_2023",
       "pack_name": "ISO/IEC 42001:2023",
       "framework_code": "ISO_IEC_42001",
