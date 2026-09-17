@@ -71,6 +71,16 @@ The human project authority explicitly approved the Phase 3 foundations runtime 
 
 The human project authority approved the TCDX GRC visual baseline v1.0, including the dashboard baseline, Tecdex design tokens, component contract, layout/navigation contract, visual acceptance gates and the local versioned official Tecdex logo asset. The visual baseline governs presentation only and cannot override the rector baseline, canonical data model, physical model, executable contracts, RBAC or lifecycle semantics.
 
+## Human approval — Phase 5 authorization
+
+`PHASE_5_HUMAN_DECISION=DR-PHASE5-2026-09-17-001`
+`PHASE_5_API_READ_DECISION=DR-PHASE5-API-READ-2026-09-17-002`
+`PHASE_5_RELEASE_DEPENDENCY_DECISION=DR-PHASE5-RELEASE-DEPS-2026-09-17-003`
+`PHASE_5_HUMAN_APPROVER=Andrés Barouh`
+`PHASE_5_HUMAN_APPROVAL_DATE=2026-09-17`
+
+The human project authority, Andrés Barouh, acting explicitly as Product Owner/CPO, Architecture Owner, Backend Owner, Security & Privacy Reviewer and QA/Release Owner, authorized Phase 5 Core GRC Slice and approved the controlled Phase 5 read-contract amendment and release-dependency manifest. Product/runtime segregation-of-duties requirements remain mandatory and are not waived by project-governance role accumulation.
+
 ## Current authorized phase
 
 `PHASE_3=COMPLETE`
@@ -82,9 +92,12 @@ The human project authority approved the TCDX GRC visual baseline v1.0, includin
 `PHASE_4_CONTENT_GATES_PARTIAL=YES`
 `VISUAL_BASELINE=ACTIVE`
 `VISUAL_BASELINE_ID=TCDX_GRC_VISUAL_BASELINE_v1.0`
-`PHASE_5=BLOCKED_PENDING_HUMAN_GATE`
+`PHASE_5=AUTHORIZED`
+`PHASE_5_API_READ_CONTRACT=APPROVED`
+`PHASE_5_RELEASE_DEPENDENCIES=APPROVED`
 `PHASE_5_STARTED=0`
+`PHASE_6_STARTED=0`
 
-Phase 4 engineering is closed. Independent regulatory content gates remain open where licensed or structured content is still pending; those gates do not reopen Phase 4 implementation. The approved visual baseline is active for all subsequent UI work. Phase 5 has not started and requires an explicit human phase gate before implementation begins.
+Phase 4 engineering is closed. Independent regulatory content gates remain open where licensed or structured content is still pending; those gates do not reopen Phase 4 implementation. Phase 5 is human-authorized, its read-contract decision and release dependencies are approved, and implementation has not yet started. The approved visual baseline remains mandatory for all Phase 5 UI work.
 
 This file is mutable execution state. It is not part of the immutable rector baseline and cannot override it.
