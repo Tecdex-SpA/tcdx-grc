@@ -3,7 +3,7 @@ info:
   title: TCDX GRC API Base Contract
   version: 1.0.0-contract-candidate
   description: >-
-    Contrato schema-first aprobado de Fase 2 con las enmiendas PRE-F5 y PRE-F5B. Publica 97 operaciones que cierran
+    Contrato schema-first aprobado de Fase 2 con las enmiendas PRE-F5, PRE-F5B y PRE-F5C. Publica 106 operaciones que cierran
     trazabilidad rector-capability-permission-audit-idempotency-modelo físico.
     H-003..H-005 autorizan las operaciones mínimas de Configuration,
     privacy retention/erasure y lifecycle-registry sobre entidades existentes.
@@ -367,7 +367,7 @@ paths:
       operationId: applicabilitySubmit
       tags: ["compliance"]
       summary: "ISO_COMPLIANCE: applicabilitySubmit"
-      description: "Derived from 21,22,44. Actor: author. Tenant semantics: exact version and rationale required. Contract shape: Command+ETag → Applicability."
+      description: "Derived from 21,22,44. Actor: author. Tenant semantics: exact row_version and rationale required. Contract shape: ApplicabilitySubmitRequest.expected_version → Applicability."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "ISO_COMPLIANCE"
       x-tcdx-permission: "`compliance.applicability.submit`"
@@ -396,7 +396,7 @@ paths:
       operationId: applicabilityApprove
       tags: ["compliance"]
       summary: "ISO_COMPLIANCE: applicabilityApprove"
-      description: "Derived from 22,44. Actor: authorized reviewer. Tenant semantics: SoD; same tenant; global Requirement unchanged. Contract shape: Decision+ETag → Applicability."
+      description: "Derived from 22,44. Actor: authorized reviewer. Tenant semantics: SoD; same tenant; global Requirement unchanged. Contract shape: ApplicabilityApproveRequest.expected_version → Applicability."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "ISO_COMPLIANCE"
       x-tcdx-permission: "`compliance.applicability.approve`"
@@ -485,7 +485,7 @@ paths:
       operationId: requirementAssessmentStart
       tags: ["compliance"]
       summary: "ISO_COMPLIANCE: requirementAssessmentStart"
-      description: "Derived from 21. Actor: assessor. Tenant semantics: `not_assessed→in_progress`. Contract shape: Command+ETag → Assessment."
+      description: "Derived from 21. Actor: assessor. Tenant semantics: `not_assessed→in_progress`. Contract shape: RequirementAssessmentStartRequest.expected_version → Assessment."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "ISO_COMPLIANCE"
       x-tcdx-permission: "`compliance.requirement_assessment.update`"
@@ -514,7 +514,7 @@ paths:
       operationId: requirementAssessmentSubmit
       tags: ["compliance"]
       summary: "ISO_COMPLIANCE: requirementAssessmentSubmit"
-      description: "Derived from 21,38. Actor: assessor. Tenant semantics: `in_progress→assessed`; result fields separate. Contract shape: AssessmentSubmit+ETag → Assessment."
+      description: "Derived from 21,38. Actor: assessor. Tenant semantics: `in_progress→assessed`; result fields separate. Contract shape: RequirementAssessmentSubmitRequest.expected_version → Assessment."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "ISO_COMPLIANCE"
       x-tcdx-permission: "`compliance.requirement_assessment.submit`"
@@ -543,7 +543,7 @@ paths:
       operationId: requirementAssessmentApprove
       tags: ["compliance"]
       summary: "ISO_COMPLIANCE: requirementAssessmentApprove"
-      description: "Derived from 21,22. Actor: reviewer. Tenant semantics: SoD; `assessed→approved`. Contract shape: Decision+ETag → Assessment."
+      description: "Derived from 21,22. Actor: reviewer. Tenant semantics: SoD; `assessed→approved`. Contract shape: RequirementAssessmentApproveRequest.expected_version → Assessment."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "ISO_COMPLIANCE"
       x-tcdx-permission: "`compliance.requirement_assessment.approve`"
@@ -572,7 +572,7 @@ paths:
       operationId: soaPublish
       tags: ["compliance"]
       summary: "ISO_COMPLIANCE: soaPublish"
-      description: "Derived from 22,41,44. Actor: GRC/Compliance Manager. Tenant semantics: version complete; controls accessible; immutable after publish. Contract shape: Reason+ETag → SoA."
+      description: "Derived from 22,41,44. Actor: GRC/Compliance Manager. Tenant semantics: version complete; controls accessible; immutable after publish. Contract shape: SoaPublishRequest.expected_version → SoA."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "ISO_COMPLIANCE"
       x-tcdx-permission: "`compliance.soa.publish`"
@@ -713,12 +713,41 @@ paths:
         '403': { $ref: '#/components/responses/AuthorizationError' }
         '404': { $ref: '#/components/responses/NotFoundError' }
         '409': { $ref: '#/components/responses/ConflictError' }
+  "/control-assessments/{id}:start":
+    post:
+      operationId: controlAssessmentStart
+      tags: ["controls"]
+      summary: "CONTROLS_ASSURANCE: controlAssessmentStart"
+      description: "DR-PRE-F5C-2026-09-21-005: exact planned-to-in_progress transition using the target ControlAssessment row_version."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CONTROLS_ASSURANCE"
+      x-tcdx-permission: "`controls.control_assessment.update`"
+      x-tcdx-scope: "assigned_object, tenant"
+      x-tcdx-audit-event: "`audit.controls.control_assessment.start.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`controls.control_assessments`"
+      x-tcdx-rector-source: "DR-PRE-F5C-2026-09-21-005; 21,25"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ControlAssessmentStartRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
   "/control-assessments/{id}:complete":
     post:
       operationId: controlAssessmentSubmit
       tags: ["controls"]
       summary: "CONTROLS_ASSURANCE: controlAssessmentSubmit"
-      description: "Derived from 21,38,39. Actor: assessor. Tenant semantics: `in_progress→completed`; coverage/status explicit. Contract shape: AssessmentSubmit+ETag → ControlAssessment."
+      description: "Derived from 21,38,39. Actor: assessor. Tenant semantics: `in_progress→completed`; coverage/status explicit. Contract shape: ControlAssessmentSubmitRequest.expected_version → ControlAssessment."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "CONTROLS_ASSURANCE"
       x-tcdx-permission: "`controls.control_assessment.submit`"
@@ -747,7 +776,7 @@ paths:
       operationId: controlAssessmentReview
       tags: ["controls"]
       summary: "CONTROLS_ASSURANCE: controlAssessmentReview"
-      description: "Derived from 21,22. Actor: reviewer. Tenant semantics: `completed→reviewed`; independence policy. Contract shape: Decision+ETag → ControlAssessment."
+      description: "Derived from 21,22. Actor: reviewer. Tenant semantics: `completed→reviewed`; independence policy. Contract shape: ControlAssessmentReviewRequest.expected_version → ControlAssessment."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "CONTROLS_ASSURANCE"
       x-tcdx-permission: "`controls.control_assessment.review`"
@@ -776,7 +805,7 @@ paths:
       operationId: controlAssessmentApprove
       tags: ["controls"]
       summary: "CONTROLS_ASSURANCE: controlAssessmentApprove"
-      description: "Derived from 21,22. Actor: approver. Tenant semantics: `reviewed→approved`; SoD. Contract shape: Decision+ETag → ControlAssessment."
+      description: "Derived from 21,22. Actor: approver. Tenant semantics: `reviewed→approved`; SoD. Contract shape: ControlAssessmentApproveRequest.expected_version → ControlAssessment."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "CONTROLS_ASSURANCE"
       x-tcdx-permission: "`controls.control_assessment.approve`"
@@ -800,12 +829,41 @@ paths:
         '403': { $ref: '#/components/responses/AuthorizationError' }
         '404': { $ref: '#/components/responses/NotFoundError' }
         '409': { $ref: '#/components/responses/ConflictError' }
+  "/assurance-tests/{id}:start":
+    post:
+      operationId: assuranceTestStart
+      tags: ["controls"]
+      summary: "CONTROLS_ASSURANCE: assuranceTestStart"
+      description: "DR-PRE-F5C-2026-09-21-005: exact planned-to-in_progress transition using the target AssuranceTest row_version."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CONTROLS_ASSURANCE"
+      x-tcdx-permission: "`controls.assurance_test.execute`"
+      x-tcdx-scope: "assigned_object, audit_engagement"
+      x-tcdx-audit-event: "`audit.controls.assurance_test.start.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`controls.assurance_tests`"
+      x-tcdx-rector-source: "DR-PRE-F5C-2026-09-21-005; 21,22,25"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/AssuranceTestStartRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
   "/assurance-tests/{id}:execute":
     post:
       operationId: assuranceTestExecute
       tags: ["controls"]
       summary: "CONTROLS_ASSURANCE: assuranceTestExecute"
-      description: "Derived from 21,22. Actor: assigned tester. Tenant semantics: evidence/samples same tenant; no autoapproval. Contract shape: TestExecution+ETag → AssuranceTest."
+      description: "Derived from 21,22. Actor: assigned tester. Tenant semantics: evidence/samples same tenant; no autoapproval. Contract shape: AssuranceTestExecuteRequest.expected_version → AssuranceTest."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "CONTROLS_ASSURANCE"
       x-tcdx-permission: "`controls.assurance_test.execute`"
@@ -822,6 +880,64 @@ paths:
         content:
           application/json:
             schema: { $ref: '#/components/schemas/AssuranceTestExecuteRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/assurance-tests/{id}:review":
+    post:
+      operationId: assuranceTestReview
+      tags: ["controls"]
+      summary: "CONTROLS_ASSURANCE: assuranceTestReview"
+      description: "DR-PRE-F5C-2026-09-21-005: exact completed-to-reviewed transition with reviewer independence and target row_version CAS."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CONTROLS_ASSURANCE"
+      x-tcdx-permission: "`controls.assurance_test.review`"
+      x-tcdx-scope: "tenant, audit_engagement"
+      x-tcdx-audit-event: "`audit.controls.assurance_test.review.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`controls.assurance_tests`"
+      x-tcdx-rector-source: "DR-PRE-F5C-2026-09-21-005; 21,22,25"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/AssuranceTestReviewRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/assurance-tests/{id}:approve":
+    post:
+      operationId: assuranceTestApprove
+      tags: ["controls"]
+      summary: "CONTROLS_ASSURANCE: assuranceTestApprove"
+      description: "DR-PRE-F5C-2026-09-21-005: exact reviewed-to-approved transition with SoD and target row_version CAS."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CONTROLS_ASSURANCE"
+      x-tcdx-permission: "`controls.assurance_test.approve`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.controls.assurance_test.approve.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`controls.assurance_tests`"
+      x-tcdx-rector-source: "DR-PRE-F5C-2026-09-21-005; 21,22,25"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/AssuranceTestApproveRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -955,7 +1071,7 @@ paths:
       operationId: evidenceRequestFulfill
       tags: ["evidence"]
       summary: "EVIDENCE_DOCUMENTS: evidenceRequestFulfill"
-      description: "Derived from 21,24. Actor: Evidence Owner. Tenant semantics: EvidenceVersion eligible and same tenant. Contract shape: Fulfillment+ETag → EvidenceRequest."
+      description: "Derived from 21,24. Actor: Evidence Owner. Tenant semantics: EvidenceVersion eligible and same tenant. Contract shape: EvidenceRequestFulfillRequest.expected_version → EvidenceRequest."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "EVIDENCE_DOCUMENTS"
       x-tcdx-permission: "`evidence.evidence_request.submit`"
@@ -984,7 +1100,7 @@ paths:
       operationId: evidenceSubmit
       tags: ["evidence"]
       summary: "EVIDENCE_DOCUMENTS: evidenceSubmit"
-      description: "Derived from 21,24. Actor: Evidence Owner. Tenant semantics: scan PASS; typed links; `draft→submitted`. Contract shape: Command+ETag → EvidenceVersion."
+      description: "Derived from 21,24. Actor: Evidence Owner. Tenant semantics: scan PASS; typed links; `draft→submitted`. Contract shape: EvidenceSubmitRequest.expected_version → EvidenceVersion."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "EVIDENCE_DOCUMENTS"
       x-tcdx-permission: "`evidence.evidence.submit`"
@@ -1013,7 +1129,7 @@ paths:
       operationId: evidenceReviewStart
       tags: ["evidence"]
       summary: "EVIDENCE_DOCUMENTS: evidenceReviewStart"
-      description: "Derived from 21,22. Actor: reviewer. Tenant semantics: reviewer eligible; `submitted→under_review`. Contract shape: Command+ETag → EvidenceVersion."
+      description: "Derived from 21,22. Actor: reviewer. Tenant semantics: reviewer eligible; `submitted→under_review`. Contract shape: EvidenceReviewStartRequest.expected_version → EvidenceVersion."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "EVIDENCE_DOCUMENTS"
       x-tcdx-permission: "`evidence.evidence.review`"
@@ -1042,7 +1158,7 @@ paths:
       operationId: evidenceApprove
       tags: ["evidence"]
       summary: "EVIDENCE_DOCUMENTS: evidenceApprove"
-      description: "Derived from 21,22,24. Actor: reviewer. Tenant semantics: SoD; relevance/sufficiency; `under_review→approved`. Contract shape: ReviewDecision+ETag → EvidenceVersion."
+      description: "Derived from 21,22,24. Actor: reviewer. Tenant semantics: SoD; relevance/sufficiency; `under_review→approved`. Contract shape: EvidenceApproveRequest.expected_version → EvidenceVersion."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "EVIDENCE_DOCUMENTS"
       x-tcdx-permission: "`evidence.evidence.approve`"
@@ -1071,7 +1187,7 @@ paths:
       operationId: evidenceReject
       tags: ["evidence"]
       summary: "EVIDENCE_DOCUMENTS: evidenceReject"
-      description: "Derived from 21,24. Actor: reviewer. Tenant semantics: reason required; `under_review→rejected`. Contract shape: ReviewDecision+ETag → EvidenceVersion."
+      description: "Derived from 21,24. Actor: reviewer. Tenant semantics: reason required; `under_review→rejected`. Contract shape: EvidenceRejectRequest.expected_version → EvidenceVersion."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "EVIDENCE_DOCUMENTS"
       x-tcdx-permission: "`evidence.evidence.reject`"
@@ -1161,7 +1277,7 @@ paths:
       operationId: issueTriage
       tags: ["remediation"]
       summary: "ISSUES_ACTIONS: issueTriage"
-      description: "Derived from 21. Actor: GRC/domain manager. Tenant semantics: `open→triaged`; severity != lifecycle. Contract shape: Triage+ETag → Issue."
+      description: "Derived from 21. Actor: GRC/domain manager. Tenant semantics: `open→triaged`; severity != lifecycle. Contract shape: IssueTriageRequest.expected_version → Issue."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "ISSUES_ACTIONS"
       x-tcdx-permission: "`remediation.issue.transition`"
@@ -1178,6 +1294,93 @@ paths:
         content:
           application/json:
             schema: { $ref: '#/components/schemas/IssueTriageRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/issues/{id}:start-remediation":
+    post:
+      operationId: issueStartRemediation
+      tags: ["remediation"]
+      summary: "ISSUES_ACTIONS: issueStartRemediation"
+      description: "DR-PRE-F5C-2026-09-21-005: explicit triaged-to-remediation_in_progress command; Actions never close the Issue implicitly."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISSUES_ACTIONS"
+      x-tcdx-permission: "`remediation.issue.transition`"
+      x-tcdx-scope: "tenant, assigned_object, owned_object"
+      x-tcdx-audit-event: "`audit.remediation.issue.start_remediation.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`remediation.issues`"
+      x-tcdx-rector-source: "DR-PRE-F5C-2026-09-21-005; 21,22"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/IssueStartRemediationRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/issues/{id}:request-verification":
+    post:
+      operationId: issueRequestVerification
+      tags: ["remediation"]
+      summary: "ISSUES_ACTIONS: issueRequestVerification"
+      description: "DR-PRE-F5C-2026-09-21-005: explicit remediation_in_progress-to-pending_verification command."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISSUES_ACTIONS"
+      x-tcdx-permission: "`remediation.issue.transition`"
+      x-tcdx-scope: "tenant, assigned_object, owned_object"
+      x-tcdx-audit-event: "`audit.remediation.issue.request_verification.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`remediation.issues`"
+      x-tcdx-rector-source: "DR-PRE-F5C-2026-09-21-005; 21,22"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/IssueRequestVerificationRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/issues/{id}:verify-close":
+    post:
+      operationId: issueVerifyClose
+      tags: ["remediation"]
+      summary: "ISSUES_ACTIONS: issueVerifyClose"
+      description: "DR-PRE-F5C-2026-09-21-005: explicit pending_verification-to-verified_closed command with independent-verifier policy."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISSUES_ACTIONS"
+      x-tcdx-permission: "`remediation.issue.transition`"
+      x-tcdx-scope: "tenant, assigned_object, owned_object"
+      x-tcdx-audit-event: "`audit.remediation.issue.verify_close.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`remediation.issues`"
+      x-tcdx-rector-source: "DR-PRE-F5C-2026-09-21-005; 21,22"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/IssueVerifyCloseRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -1219,7 +1422,7 @@ paths:
       operationId: actionStart
       tags: ["remediation"]
       summary: "ISSUES_ACTIONS: actionStart"
-      description: "Derived from 21. Actor: Action Owner. Tenant semantics: `pending→in_progress`. Contract shape: Command+ETag → Action."
+      description: "Derived from 21. Actor: Action Owner. Tenant semantics: `pending→in_progress`. Contract shape: ActionStartRequest.expected_version → Action."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "ISSUES_ACTIONS"
       x-tcdx-permission: "`remediation.action.transition`"
@@ -1248,7 +1451,7 @@ paths:
       operationId: actionComplete
       tags: ["remediation"]
       summary: "ISSUES_ACTIONS: actionComplete"
-      description: "Derived from 21,22. Actor: Action Owner. Tenant semantics: closure evidence; `in_review→completed`. Contract shape: Completion+ETag → Action."
+      description: "Derived from 21,22. Actor: Action Owner. Tenant semantics: closure evidence; `in_review→completed`. Contract shape: ActionCompleteRequest.expected_version → Action."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "ISSUES_ACTIONS"
       x-tcdx-permission: "`remediation.action.transition`"
@@ -1306,7 +1509,7 @@ paths:
       operationId: actionVerify
       tags: ["remediation"]
       summary: "ISSUES_ACTIONS: actionVerify"
-      description: "Derived from 21,22. Actor: independent verifier. Tenant semantics: completer≠verifier under policy; `completed→verified`. Contract shape: Verification+ETag → Action."
+      description: "Derived from 21,22. Actor: independent verifier. Tenant semantics: completer≠verifier under policy; `completed→verified`. Contract shape: ActionVerifyRequest.expected_version → Action."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "ISSUES_ACTIONS"
       x-tcdx-permission: "`remediation.action.verify`"
@@ -2398,6 +2601,34 @@ paths:
         '403': { $ref: '#/components/responses/AuthorizationError' }
         '404': { $ref: '#/components/responses/NotFoundError' }
         '409': { $ref: '#/components/responses/ConflictError' }
+    post:
+      operationId: soaCreate
+      tags: ["compliance"]
+      summary: "ISO_COMPLIANCE: soaCreate"
+      description: "DR-PRE-F5C-2026-09-21-005: creates one draft StatementOfApplicability and its initial item set in one tenant-scoped transaction."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISO_COMPLIANCE"
+      x-tcdx-permission: "`compliance.soa.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.compliance.soa.create.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`regulatory.statements_of_applicability`, `regulatory.statement_of_applicability_items`"
+      x-tcdx-rector-source: "DR-PRE-F5C-2026-09-21-005; 09,22,41,44"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/SoaCreateRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
   "/statements-of-applicability/{id}":
     get:
       operationId: soaGet
@@ -2529,6 +2760,34 @@ paths:
         - { $ref: '#/components/parameters/AssignedMembershipIdFilter' }
       responses:
         '200': { $ref: '#/components/responses/AssuranceTestListSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+    post:
+      operationId: assuranceTestCreate
+      tags: ["controls"]
+      summary: "CONTROLS_ASSURANCE: assuranceTestCreate"
+      description: "DR-PRE-F5C-2026-09-21-005: creates a planned AssuranceTest against a same-tenant Control and its compatible version."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CONTROLS_ASSURANCE"
+      x-tcdx-permission: "`controls.assurance_test.create`"
+      x-tcdx-scope: "tenant, audit_engagement"
+      x-tcdx-audit-event: "`audit.controls.assurance_test.create.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`controls.assurance_tests`"
+      x-tcdx-rector-source: "DR-PRE-F5C-2026-09-21-005; 09,21,22,25"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/AssuranceTestCreateRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
         '401': { $ref: '#/components/responses/AuthenticationError' }
         '403': { $ref: '#/components/responses/AuthorizationError' }
@@ -2817,14 +3076,6 @@ components:
         type: string
         minLength: 1
         maxLength: 255
-    IfMatch:
-      name: If-Match
-      in: header
-      required: true
-      description: Strong ETag representing current row_version for mutable critical resources.
-      schema:
-        type: string
-        pattern: '^"[1-9][0-9]*"$'
     Cursor:
       name: page[cursor]
       in: query
@@ -2931,9 +3182,6 @@ components:
     RequestId:
       description: Server request attempt UUID.
       schema: { type: string, format: uuid }
-    ETag:
-      description: Strong row_version ETag for mutable resources.
-      schema: { type: string }
     IdempotencyReplayed:
       description: 'true when response is the persisted replay for the same fingerprint.'
       schema: { type: boolean }
@@ -3012,9 +3260,10 @@ components:
     RequirementApplicabilityProjection:
       type: object
       additionalProperties: false
-      required: [requirement_applicability_id, requirement_id, applicability_version, applicability_decision, lifecycle_state, effective_from]
+      required: [requirement_applicability_id, row_version, requirement_id, applicability_version, applicability_decision, lifecycle_state, effective_from]
       properties:
         requirement_applicability_id: { $ref: '#/components/schemas/UuidV7' }
+        row_version: { type: integer, format: int64, minimum: 1 }
         requirement_id: { $ref: '#/components/schemas/UuidV7' }
         scope_subject_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
         applicability_version: { type: integer, format: int64, minimum: 1 }
@@ -3027,9 +3276,10 @@ components:
     RequirementAssessmentProjection:
       type: object
       additionalProperties: false
-      required: [requirement_assessment_id, requirement_applicability_id, methodology_version_ref, lifecycle_state, result_status]
+      required: [requirement_assessment_id, row_version, requirement_applicability_id, methodology_version_ref, lifecycle_state, result_status]
       properties:
         requirement_assessment_id: { $ref: '#/components/schemas/UuidV7' }
+        row_version: { type: integer, format: int64, minimum: 1 }
         requirement_applicability_id: { $ref: '#/components/schemas/UuidV7' }
         methodology_version_ref: { $ref: '#/components/schemas/UuidV7' }
         lifecycle_state: { type: string }
@@ -3055,9 +3305,10 @@ components:
     StatementOfApplicabilityProjection:
       type: object
       additionalProperties: false
-      required: [statement_of_applicability_id, framework_version_id, soa_version, title, lifecycle_state]
+      required: [statement_of_applicability_id, row_version, framework_version_id, soa_version, title, lifecycle_state]
       properties:
         statement_of_applicability_id: { $ref: '#/components/schemas/UuidV7' }
+        row_version: { type: integer, format: int64, minimum: 1 }
         framework_version_id: { $ref: '#/components/schemas/UuidV7' }
         soa_version: { type: integer, format: int64, minimum: 1 }
         title: { type: string }
@@ -3142,9 +3393,10 @@ components:
     ControlAssessmentProjection:
       type: object
       additionalProperties: false
-      required: [control_assessment_id, control_id, control_version_id, methodology_version_ref, lifecycle_state, result_status]
+      required: [control_assessment_id, row_version, control_id, control_version_id, methodology_version_ref, lifecycle_state, result_status]
       properties:
         control_assessment_id: { $ref: '#/components/schemas/UuidV7' }
+        row_version: { type: integer, format: int64, minimum: 1 }
         control_id: { $ref: '#/components/schemas/UuidV7' }
         control_version_id: { $ref: '#/components/schemas/UuidV7' }
         methodology_version_ref: { $ref: '#/components/schemas/UuidV7' }
@@ -3175,9 +3427,10 @@ components:
     AssuranceTestProjection:
       type: object
       additionalProperties: false
-      required: [assurance_test_id, control_id, control_version_id, test_code, lifecycle_state, result_status]
+      required: [assurance_test_id, row_version, control_id, control_version_id, test_code, lifecycle_state, result_status]
       properties:
         assurance_test_id: { $ref: '#/components/schemas/UuidV7' }
+        row_version: { type: integer, format: int64, minimum: 1 }
         control_id: { $ref: '#/components/schemas/UuidV7' }
         control_version_id: { $ref: '#/components/schemas/UuidV7' }
         test_code: { type: string }
@@ -3248,9 +3501,10 @@ components:
     EvidenceVersionProjection:
       type: object
       additionalProperties: false
-      required: [evidence_version_id, evidence_id, version_number, lifecycle_state, provenance_ref]
+      required: [evidence_version_id, row_version, evidence_id, version_number, lifecycle_state, provenance_ref]
       properties:
         evidence_version_id: { $ref: '#/components/schemas/UuidV7' }
+        row_version: { type: integer, format: int64, minimum: 1 }
         evidence_id: { $ref: '#/components/schemas/UuidV7' }
         version_number: { type: integer, format: int64, minimum: 1 }
         lifecycle_state: { type: string }
@@ -3536,6 +3790,31 @@ components:
       properties:
         expected_version: { type: integer, format: int64, minimum: 1 }
         reason: { type: string, minLength: 1 }
+    SoaItemCreateInput:
+      type: object
+      additionalProperties: false
+      required: [reference_control_version_id, applicability_decision, justification, implementation_state]
+      properties:
+        reference_control_version_id: { $ref: '#/components/schemas/UuidV7' }
+        applicability_decision: { type: string, minLength: 1, maxLength: 32 }
+        justification: { type: string, minLength: 1 }
+        implementation_state: { type: string, minLength: 1, maxLength: 32 }
+        tenant_control_id: { $ref: '#/components/schemas/UuidV7' }
+        tenant_control_version_id: { $ref: '#/components/schemas/UuidV7' }
+      description: Reference and optional tenant Control identities must be accessible and mutually compatible in the selected tenant.
+    SoaCreateRequest:
+      type: object
+      additionalProperties: false
+      required: [framework_version_id, title, items]
+      properties:
+        framework_version_id: { $ref: '#/components/schemas/UuidV7' }
+        title: { type: string, minLength: 1 }
+        effective_from: { $ref: '#/components/schemas/UtcTimestamp' }
+        items:
+          type: array
+          minItems: 1
+          items: { $ref: '#/components/schemas/SoaItemCreateInput' }
+      description: Tenant, soa_version, initial draft state, row_version and technical identities are server-controlled.
     ControlInstantiateRequest:
       type: object
       additionalProperties: false
@@ -3566,6 +3845,12 @@ components:
         methodology_version_ref: { $ref: '#/components/schemas/UuidV7' }
         effective_configuration_id: { $ref: '#/components/schemas/UuidV7' }
       description: Control, version and optional EffectiveConfiguration must be compatible and belong to the selected tenant where applicable.
+    ControlAssessmentStartRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
     ControlAssessmentSubmitRequest:
       type: object
       additionalProperties: false
@@ -3603,6 +3888,22 @@ components:
         sample_period_start: { $ref: '#/components/schemas/UtcTimestamp' }
         sample_period_end: { $ref: '#/components/schemas/UtcTimestamp' }
         result_status: { $ref: '#/components/schemas/ResultStatus' }
+    AssuranceTestCreateRequest:
+      type: object
+      additionalProperties: false
+      required: [control_id, control_version_id, test_code]
+      properties:
+        control_id: { $ref: '#/components/schemas/UuidV7' }
+        control_version_id: { $ref: '#/components/schemas/UuidV7' }
+        test_code: { type: string, minLength: 1, maxLength: 128 }
+        planned_at: { $ref: '#/components/schemas/UtcTimestamp' }
+      description: Creates only planned state; tenant, row_version, actors and lifecycle timestamps are server-controlled.
+    AssuranceTestStartRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
     AssuranceTestExecuteRequest:
       type: object
       additionalProperties: false
@@ -3615,6 +3916,19 @@ components:
           type: array
           items: { $ref: '#/components/schemas/AssuranceSampleExecuteInput' }
       description: Executor identity and executed_at are server-derived; samples, when supplied, must be same-tenant and internally consistent.
+    AssuranceTestReviewRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+    AssuranceTestApproveRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+      description: SoD and reviewed-to-approved state are enforced from authoritative state.
     UploadIntentCreateRequest:
       type: object
       additionalProperties: false
@@ -3777,6 +4091,27 @@ components:
         business_owner_subject_id: { $ref: '#/components/schemas/UuidV7' }
         due_date: { type: string, format: date }
       description: Severity and priority remain distinct from the open-to-triaged lifecycle transition.
+    IssueStartRemediationRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+    IssueRequestVerificationRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+    IssueVerifyCloseRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version, verification_decision, rationale]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+        verification_decision: { type: string, enum: [accepted] }
+        rationale: { type: string, minLength: 1 }
+      description: Verifier identity and closed_at are server-derived; required SoD is enforced before closing the Issue.
     ActionCreateRequest:
       type: object
       additionalProperties: false
@@ -3963,7 +4298,7 @@ components:
     pagination: Opaque cursor with stable operation-allowlisted sort and UUIDv7 tie-breaker; command/single-resource operations do not paginate.
     tenant-context: Resolved and checked against active membership; never trusted as authorization solely because supplied by client.
     filtering: Resource-specific allowlists; no arbitrary field/operator language.
-    optimistic-concurrency: Strong ETag/If-Match from row_version on editable critical entities; stale write is 409.
+    optimistic-concurrency: Phase 5 stateful commands carry `expected_version`, which must equal the target row's explicit `row_version`; stale writes return 409. No `xmin`, implicit substitute or dual header authority is permitted.
     idempotency: PostgreSQL IdempotencyRecord is authoritative; Redis may not decide replay/conflict.
     files: Quarantine, type/size validation, malware scan, checksum and classification precede Evidence eligibility.
     async: Heavy reports/imports/bulk are jobs with row-level outcomes and explicit partial failure.

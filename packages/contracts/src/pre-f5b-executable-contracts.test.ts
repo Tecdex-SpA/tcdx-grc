@@ -32,13 +32,19 @@ const f5MutationSchemas: Record<string, string> = {
   requirementAssessmentStart: "RequirementAssessmentStartRequest",
   requirementAssessmentSubmit: "RequirementAssessmentSubmitRequest",
   requirementAssessmentApprove: "RequirementAssessmentApproveRequest",
+  soaCreate: "SoaCreateRequest",
   soaPublish: "SoaPublishRequest",
   controlInstantiate: "ControlInstantiateRequest",
   controlAssessmentCreate: "ControlAssessmentCreateRequest",
+  controlAssessmentStart: "ControlAssessmentStartRequest",
   controlAssessmentSubmit: "ControlAssessmentSubmitRequest",
   controlAssessmentReview: "ControlAssessmentReviewRequest",
   controlAssessmentApprove: "ControlAssessmentApproveRequest",
+  assuranceTestCreate: "AssuranceTestCreateRequest",
+  assuranceTestStart: "AssuranceTestStartRequest",
   assuranceTestExecute: "AssuranceTestExecuteRequest",
+  assuranceTestReview: "AssuranceTestReviewRequest",
+  assuranceTestApprove: "AssuranceTestApproveRequest",
   uploadIntentCreate: "UploadIntentCreateRequest",
   uploadFinalize: "UploadFinalizeRequest",
   evidenceRequestCreate: "EvidenceRequestCreateRequest",
@@ -50,6 +56,9 @@ const f5MutationSchemas: Record<string, string> = {
   evidenceReject: "EvidenceRejectRequest",
   issueCreate: "IssueCreateRequest",
   issueTriage: "IssueTriageRequest",
+  issueStartRemediation: "IssueStartRemediationRequest",
+  issueRequestVerification: "IssueRequestVerificationRequest",
+  issueVerifyClose: "IssueVerifyCloseRequest",
   actionCreate: "ActionCreateRequest",
   actionStart: "ActionStartRequest",
   actionSubmitForReview: "ActionSubmitForReviewRequest",
@@ -64,10 +73,14 @@ const versionedF5Mutations = new Set([
   "requirementAssessmentSubmit",
   "requirementAssessmentApprove",
   "soaPublish",
+  "controlAssessmentStart",
   "controlAssessmentSubmit",
   "controlAssessmentReview",
   "controlAssessmentApprove",
   "assuranceTestExecute",
+  "assuranceTestStart",
+  "assuranceTestReview",
+  "assuranceTestApprove",
   "uploadFinalize",
   "evidenceRequestFulfill",
   "evidenceSubmit",
@@ -75,6 +88,9 @@ const versionedF5Mutations = new Set([
   "evidenceApprove",
   "evidenceReject",
   "issueTriage",
+  "issueStartRemediation",
+  "issueRequestVerification",
+  "issueVerifyClose",
   "actionStart",
   "actionSubmitForReview",
   "actionComplete",
@@ -133,17 +149,17 @@ function parseMatrixOperations(source: string): Map<string, { method: string; pa
 describe("PRE-F5B executable-contract closure", () => {
   const operations = parseOperations(openApi);
 
-  it("publishes exactly 97 operations and 71 mutations", () => {
-    expect(operations.size).toBe(97);
+  it("publishes exactly 106 operations and 80 mutations after PRE-F5C", () => {
+    expect(operations.size).toBe(106);
     expect([...operations.values()].filter(({ method }) => method === "get")).toHaveLength(26);
-    expect([...operations.values()].filter(({ method }) => method === "post")).toHaveLength(71);
-    expect(matrix).toContain("`CONTRACTUAL_OPERATIONS=97`");
-    expect(matrix).toContain("`PUBLIC_MUTATING_OPERATIONS=71`");
+    expect([...operations.values()].filter(({ method }) => method === "post")).toHaveLength(80);
+    expect(matrix).toContain("`CONTRACTUAL_OPERATIONS=106`");
+    expect(matrix).toContain("`PUBLIC_MUTATING_OPERATIONS=80`");
   });
 
   it("keeps every operation ID, method and path aligned between OpenAPI and the matrix", () => {
     const matrixOperations = parseMatrixOperations(matrix);
-    expect(matrixOperations.size).toBe(97);
+    expect(matrixOperations.size).toBe(106);
     const matrixEntries = [...matrixOperations.entries()].sort(([left], [right]) => left.localeCompare(right));
     const openApiEntries = [...operations.entries()]
       .map(([operationId, { method, path }]) => [operationId, { method, path }] as const)
@@ -151,8 +167,8 @@ describe("PRE-F5B executable-contract closure", () => {
     expect(matrixEntries).toEqual(openApiEntries);
   });
 
-  it("closes the exact 30 Phase 5 mutation request schemas without dual concurrency authority", () => {
-    expect(Object.keys(f5MutationSchemas)).toHaveLength(30);
+  it("closes the exact 39 Phase 5 mutation request schemas without dual concurrency authority", () => {
+    expect(Object.keys(f5MutationSchemas)).toHaveLength(39);
     for (const [operationId, requestSchema] of Object.entries(f5MutationSchemas)) {
       const operation = operations.get(operationId);
       expect(operation?.method, operationId).toBe("post");
@@ -167,7 +183,7 @@ describe("PRE-F5B executable-contract closure", () => {
         expect(request, `${operationId} create request`).not.toContain("expected_version");
       }
     }
-    expect(versionedF5Mutations.size).toBe(21);
+    expect(versionedF5Mutations.size).toBe(28);
     expect(schemaBlock("IssueCreateRequest")).toContain("priority: { type: string, minLength: 1, maxLength: 32 }");
     expect(schemaBlock("IssueTriageRequest")).toContain("priority: { type: string, minLength: 1, maxLength: 32 }");
     expect(schemaBlock("ActionCreateRequest")).toContain("priority: { type: string, minLength: 1, maxLength: 32 }");
@@ -192,9 +208,9 @@ describe("PRE-F5B executable-contract closure", () => {
       if (event) expect(events, `${operationId} event catalog`).toContain(`\`${event}\``);
     }
     expect(idempotency).toContain("All 26 published GET operations");
-    expect(idempotency).toContain("All 71 published POST operations");
-    expect(audits).toContain("MUTATING_OPERATIONS=71");
-    expect(audits).toContain("PUBLISHED_AUDIT_EVENT_CODES=166");
+    expect(idempotency).toContain("All 80 published POST operations");
+    expect(audits).toContain("MUTATING_OPERATIONS=80");
+    expect(audits).toContain("PUBLISHED_AUDIT_EVENT_CODES=154");
   });
 
   it("fixes cursor pagination and stable order for the ten Phase 5 collections", () => {

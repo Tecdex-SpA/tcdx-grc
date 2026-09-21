@@ -2,6 +2,7 @@
   "contract": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16",
   "physicalModelCommit": "a822bb92d0d585edd84adc8a1c65ec280923cc8e",
   "physicalModelAmendmentCommit": "6a31034ae1ecc1f9ee551431fb2a504a25fb52ce",
+  "preF5cDecision": "DR-PRE-F5C-2026-09-21-005",
   "tableCount": 229,
   "tables": [
     {
@@ -4216,7 +4217,7 @@
     },
     {
       "name": "regulatory.requirement_applicabilities",
-      "profile": "TI",
+      "profile": "TM",
       "primaryKey": [
         "requirement_applicability_id"
       ],
@@ -4244,6 +4245,30 @@
           "type": "uuid",
           "nullable": true,
           "default": null
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "row_version",
+          "type": "bigint",
+          "nullable": false,
+          "default": "1"
         },
         {
           "name": "tenant_id",
@@ -4310,10 +4335,18 @@
           "type": "timestamptz",
           "nullable": true,
           "default": null
+        },
+        {
+          "name": "superseded_by_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
         }
       ],
       "checks": [
+        "row_version_positive",
         "created_actor_one",
+        "updated_actor_one",
         "effective_from_effective_to"
       ],
       "uniqueConstraints": [
@@ -4324,13 +4357,14 @@
         [
           "tenant_id",
           "requirement_id",
+          "scope_subject_id",
           "applicability_version"
         ]
       ]
     },
     {
       "name": "regulatory.requirement_assessments",
-      "profile": "TI",
+      "profile": "TM",
       "primaryKey": [
         "requirement_assessment_id"
       ],
@@ -4358,6 +4392,30 @@
           "type": "uuid",
           "nullable": true,
           "default": null
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "row_version",
+          "type": "bigint",
+          "nullable": false,
+          "default": "1"
         },
         {
           "name": "tenant_id",
@@ -4427,7 +4485,9 @@
         }
       ],
       "checks": [
+        "row_version_positive",
         "created_actor_one",
+        "updated_actor_one",
         "coverage_percent_range",
         "result_status"
       ],
@@ -4440,7 +4500,7 @@
     },
     {
       "name": "regulatory.statements_of_applicability",
-      "profile": "TI",
+      "profile": "TM",
       "primaryKey": [
         "statement_of_applicability_id"
       ],
@@ -4468,6 +4528,30 @@
           "type": "uuid",
           "nullable": true,
           "default": null
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "row_version",
+          "type": "bigint",
+          "nullable": false,
+          "default": "1"
         },
         {
           "name": "tenant_id",
@@ -4531,7 +4615,9 @@
         }
       ],
       "checks": [
+        "row_version_positive",
         "created_actor_one",
+        "updated_actor_one",
         "effective_from_effective_to"
       ],
       "uniqueConstraints": [
@@ -4541,6 +4627,7 @@
         ],
         [
           "tenant_id",
+          "framework_version_id",
           "soa_version"
         ]
       ]
@@ -4632,6 +4719,11 @@
         [
           "tenant_id",
           "statement_of_applicability_item_id"
+        ],
+        [
+          "tenant_id",
+          "statement_of_applicability_id",
+          "reference_control_version_id"
         ]
       ]
     },
@@ -5756,7 +5848,7 @@
     },
     {
       "name": "controls.control_assessments",
-      "profile": "TI",
+      "profile": "TM",
       "primaryKey": [
         "control_assessment_id"
       ],
@@ -5784,6 +5876,30 @@
           "type": "uuid",
           "nullable": true,
           "default": null
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "row_version",
+          "type": "bigint",
+          "nullable": false,
+          "default": "1"
         },
         {
           "name": "tenant_id",
@@ -5871,7 +5987,9 @@
         }
       ],
       "checks": [
+        "row_version_positive",
         "created_actor_one",
+        "updated_actor_one",
         "coverage_percent_range",
         "result_status"
       ],
@@ -5884,7 +6002,7 @@
     },
     {
       "name": "controls.assurance_tests",
-      "profile": "TI",
+      "profile": "TM",
       "primaryKey": [
         "assurance_test_id"
       ],
@@ -5912,6 +6030,30 @@
           "type": "uuid",
           "nullable": true,
           "default": null
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "row_version",
+          "type": "bigint",
+          "nullable": false,
+          "default": "1"
         },
         {
           "name": "tenant_id",
@@ -5999,7 +6141,9 @@
         }
       ],
       "checks": [
+        "row_version_positive",
         "created_actor_one",
+        "updated_actor_one",
         "result_status"
       ],
       "uniqueConstraints": [
@@ -6563,7 +6707,7 @@
     },
     {
       "name": "evidence.evidence_versions",
-      "profile": "TV",
+      "profile": "TM",
       "primaryKey": [
         "evidence_version_id"
       ],
@@ -6593,20 +6737,56 @@
           "default": null
         },
         {
+          "name": "updated_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "row_version",
+          "type": "bigint",
+          "nullable": false,
+          "default": "1"
+        },
+        {
           "name": "tenant_id",
           "type": "uuid",
           "nullable": false,
           "default": null
         },
         {
-          "name": "version_number",
-          "type": "bigint",
+          "name": "evidence_id",
+          "type": "uuid",
           "nullable": false,
           "default": null
         },
         {
-          "name": "lifecycle_state",
-          "type": "varchar(32)",
+          "name": "document_version_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "file_object_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "version_number",
+          "type": "bigint",
           "nullable": false,
           "default": null
         },
@@ -6629,30 +6809,6 @@
           "default": null
         },
         {
-          "name": "superseded_by_id",
-          "type": "uuid",
-          "nullable": true,
-          "default": null
-        },
-        {
-          "name": "evidence_id",
-          "type": "uuid",
-          "nullable": false,
-          "default": null
-        },
-        {
-          "name": "document_version_id",
-          "type": "uuid",
-          "nullable": true,
-          "default": null
-        },
-        {
-          "name": "file_object_id",
-          "type": "uuid",
-          "nullable": true,
-          "default": null
-        },
-        {
           "name": "period_start",
           "type": "timestamptz",
           "nullable": true,
@@ -6662,6 +6818,12 @@
           "name": "period_end",
           "type": "timestamptz",
           "nullable": true,
+          "default": null
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "varchar(32)",
+          "nullable": false,
           "default": null
         },
         {
@@ -6683,6 +6845,12 @@
           "default": null
         },
         {
+          "name": "superseded_by_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
           "name": "provenance_ref",
           "type": "text",
           "nullable": false,
@@ -6690,7 +6858,9 @@
         }
       ],
       "checks": [
+        "row_version_positive",
         "created_actor_one",
+        "updated_actor_one",
         "effective_from_effective_to",
         "period_start_period_end"
       ],
@@ -6698,6 +6868,11 @@
         [
           "tenant_id",
           "evidence_version_id"
+        ],
+        [
+          "tenant_id",
+          "evidence_id",
+          "version_number"
         ]
       ]
     },

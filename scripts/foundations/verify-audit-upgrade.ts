@@ -24,7 +24,7 @@ const runner = resolve(repositoryRoot, "scripts/foundations/migrate.ts");
 const schemaVerifier = resolve(repositoryRoot, "scripts/foundations/verify-schema.ts");
 const migrationDirectory = resolve(repositoryRoot, "database/migrations");
 const fullManifest = readJson<Manifest>("database/migrations/manifest.json");
-if (fullManifest.migrations.length !== 10) throw new Error("Audit upgrade test requires exactly ten reviewed migrations");
+if (fullManifest.migrations.length !== 11) throw new Error("Audit upgrade test requires the eleven reviewed migrations through PRE-F5C");
 
 function runNode(script: string, args: string[], environment: NodeJS.ProcessEnv) {
   return spawnSync(process.execPath, ["--experimental-strip-types", script, ...args], {
@@ -98,7 +98,7 @@ try {
 }
 
 const upgradeResult = runNode(runner, ["apply"], commonEnvironment);
-if (upgradeResult.status !== 0) throw new Error(`214 to 229 Audit upgrade failed: ${combinedOutput(upgradeResult)}`);
+if (upgradeResult.status !== 0) throw new Error(`214-table baseline through PRE-F5C upgrade failed: ${combinedOutput(upgradeResult)}`);
 const schemaResult = runNode(schemaVerifier, [], commonEnvironment);
 if (schemaResult.status !== 0) throw new Error(`229-table schema verification failed: ${combinedOutput(schemaResult)}`);
 const schema = JSON.parse(schemaResult.stdout) as { actualPhysicalTables?: number; schemaMismatches?: number };
@@ -124,7 +124,7 @@ try {
 
 const pass = beforeTables === 214 && beforeLedger === 9 && existingAuditGuard === "PASS"
   && guardedTables === 214 && guardedLedger === 9 && schema.actualPhysicalTables === 229
-  && schema.schemaMismatches === 0 && afterLedger === 10 && legacyColumns === 0 && addedTables === 15;
+  && schema.schemaMismatches === 0 && afterLedger === 11 && legacyColumns === 0 && addedTables === 15;
 process.stdout.write(`${JSON.stringify({
   auditUpgradeTest: pass ? "PASS" : "BLOCKED",
   tablesBefore: beforeTables,

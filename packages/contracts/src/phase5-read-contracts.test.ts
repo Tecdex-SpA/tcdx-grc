@@ -121,11 +121,11 @@ describe("PRE-F5 approved read-contract materialization", () => {
   });
 
   it("keeps cross-catalog operation counts and operation IDs unique", () => {
-    expect(openApiOperations.size).toBe(97);
-    expect(matrixOperations.size).toBe(97);
-    expect([...openApiOperations.values()].filter(({ method }) => method === "post")).toHaveLength(71);
+    expect(openApiOperations.size).toBe(106);
+    expect(matrixOperations.size).toBe(106);
+    expect([...openApiOperations.values()].filter(({ method }) => method === "post")).toHaveLength(80);
     expect([...openApiOperations.values()].filter(({ method }) => method === "get")).toHaveLength(26);
-    expect([...matrixOperations.values()].filter(({ method }) => method === "post")).toHaveLength(71);
+    expect([...matrixOperations.values()].filter(({ method }) => method === "post")).toHaveLength(80);
     expect([...matrixOperations.values()].filter(({ method }) => method === "get")).toHaveLength(26);
   });
 
@@ -137,22 +137,22 @@ describe("PRE-F5 approved read-contract materialization", () => {
     }
     expect(permissions).toContain("PRE_F5_READ_PERMISSION_ADDITIONS=10");
     expect(permissions).toContain("PRE_F5B_PERMISSION_ADDITIONS=1");
-    expect(permissions).toContain("TOTAL_EXECUTABLE_PERMISSIONS=145");
-    expect(permissions).toContain("DATABASE_CONTRACT_CHANGED=0");
+    expect(permissions).toContain("TOTAL_EXECUTABLE_PERMISSIONS=147");
+    expect(permissions).toContain("DATABASE_CONTRACT_CHANGED=1");
   });
 
   it("keeps every material projection field backed by the frozen physical model", () => {
     const physicalColumns = new Map(expectedSchema.tables.map((table) => [table.name, new Set(table.columns.map(({ name }) => name))]));
     const expectedFields: Record<string, string[]> = {
-      "regulatory.requirement_applicabilities": ["requirement_applicability_id", "requirement_id", "scope_subject_id", "applicability_version", "applicability_decision", "rationale", "lifecycle_state", "effective_from", "effective_to", "approved_at"],
-      "regulatory.requirement_assessments": ["requirement_assessment_id", "requirement_applicability_id", "methodology_version_ref", "lifecycle_state", "result_status", "domain_conclusion", "coverage_percent", "assessed_at", "approved_at", "effective_configuration_id", "superseded_by_id"],
-      "regulatory.statements_of_applicability": ["statement_of_applicability_id", "framework_version_id", "soa_version", "title", "lifecycle_state", "effective_from", "effective_to", "approved_at", "published_at", "superseded_by_id"],
+      "regulatory.requirement_applicabilities": ["requirement_applicability_id", "row_version", "requirement_id", "scope_subject_id", "applicability_version", "applicability_decision", "rationale", "lifecycle_state", "effective_from", "effective_to", "approved_at", "superseded_by_id"],
+      "regulatory.requirement_assessments": ["requirement_assessment_id", "row_version", "requirement_applicability_id", "methodology_version_ref", "lifecycle_state", "result_status", "domain_conclusion", "coverage_percent", "assessed_at", "approved_at", "effective_configuration_id", "superseded_by_id"],
+      "regulatory.statements_of_applicability": ["statement_of_applicability_id", "row_version", "framework_version_id", "soa_version", "title", "lifecycle_state", "effective_from", "effective_to", "approved_at", "published_at", "superseded_by_id"],
       "controls.controls": ["control_id", "row_version", "ownership_class", "control_code", "name", "control_origin", "based_on_control_version_id", "business_owner_subject_id", "lifecycle_state"],
-      "controls.control_assessments": ["control_assessment_id", "control_id", "control_version_id", "methodology_version_ref", "lifecycle_state", "result_status", "domain_conclusion", "design_effectiveness", "operating_effectiveness", "overall_effectiveness", "coverage_percent", "effective_configuration_id", "assessed_at", "superseded_by_id"],
-      "controls.assurance_tests": ["assurance_test_id", "control_id", "control_version_id", "test_code", "lifecycle_state", "result_status", "domain_conclusion", "planned_at", "executed_at", "reviewed_at", "approved_at", "executor_membership_id", "reviewer_membership_id", "superseded_by_id"],
+      "controls.control_assessments": ["control_assessment_id", "row_version", "control_id", "control_version_id", "methodology_version_ref", "lifecycle_state", "result_status", "domain_conclusion", "design_effectiveness", "operating_effectiveness", "overall_effectiveness", "coverage_percent", "effective_configuration_id", "assessed_at", "superseded_by_id"],
+      "controls.assurance_tests": ["assurance_test_id", "row_version", "control_id", "control_version_id", "test_code", "lifecycle_state", "result_status", "domain_conclusion", "planned_at", "executed_at", "reviewed_at", "approved_at", "executor_membership_id", "reviewer_membership_id", "superseded_by_id"],
       "evidence.evidence_requests": ["evidence_request_id", "row_version", "request_code", "requirement_id", "control_id", "requirement_assessment_id", "control_assessment_id", "assurance_test_id", "lifecycle_state", "requested_by_membership_id", "assigned_membership_id", "due_at", "fulfilled_at"],
       "evidence.evidences": ["evidence_id", "row_version", "evidence_code", "evidence_type", "business_owner_subject_id", "lifecycle_state", "valid_from", "valid_to", "retention_policy_id", "source_kind"],
-      "evidence.evidence_versions": ["evidence_version_id", "evidence_id", "version_number", "lifecycle_state", "document_version_id", "file_object_id", "period_start", "period_end", "effective_from", "effective_to", "submitted_at", "approved_at", "expires_at", "published_at", "superseded_by_id", "provenance_ref"],
+      "evidence.evidence_versions": ["evidence_version_id", "row_version", "evidence_id", "version_number", "lifecycle_state", "document_version_id", "file_object_id", "period_start", "period_end", "effective_from", "effective_to", "submitted_at", "approved_at", "expires_at", "published_at", "superseded_by_id", "provenance_ref"],
       "remediation.issues": ["issue_id", "row_version", "issue_code", "issue_kind", "title", "description", "lifecycle_state", "severity", "priority", "business_owner_subject_id", "due_date", "dismissal_reason", "closed_at"],
       "remediation.actions": ["action_id", "row_version", "issue_id", "action_code", "title", "description", "lifecycle_state", "priority", "assigned_membership_id", "due_date", "completed_at", "verified_at", "cancel_reason"]
     };

@@ -139,6 +139,26 @@
         "physical_tables=229",
         "audit_scope_and_lead_dual_authority=0"
       ]
+    },
+    {
+      "id": "20260921000100",
+      "filename": "20260921000100_pre_f5c_executable_physical_reconciliation.sql",
+      "sha256": "1181d7ab26718927124de880e351fbaba3f2daaca41267a1ef66d28ac2021680",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16",
+        "ledger_count=10",
+        "physical_tables=229",
+        "pre_f5c_columns=absent"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=229",
+        "mutable_f5_rows=row_version",
+        "pre_f5c_lifecycle_delta=39",
+        "pre_f5c_permissions=2"
+      ]
     }
   ]
 }

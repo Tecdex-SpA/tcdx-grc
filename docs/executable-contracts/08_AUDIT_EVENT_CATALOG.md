@@ -6,7 +6,7 @@
 | Approving human roles | Architecture Owner, Security & Privacy Reviewer, QA/Release Owner, domain owners |
 | Status | `CONTRACT_DEFINED` |
 
-Audit events record accountability/outcome and never act as the domain event bus. The exact `audit_event_code` for each of the 71 mutating API operations is the `audit.*.v1` code in artifact 03. This includes `audit.evidence.evidence.create.v1` and `audit.remediation.action.submit_review.v1`. The 95 lifecycle edges use the exact `audit.lifecycle.<entity>.<command>.v1` code published row-by-row in artifact 09. GET operations produce no material audit by default, while protected-content access/export may add an access audit only through an approved policy.
+Audit events record accountability/outcome and never act as the domain event bus. The exact `audit_event_code` for each of the 80 mutating API operations is the `audit.*.v1` code in artifact 03, including `audit.evidence.evidence.create.v1`. For every API-backed lifecycle command, artifact 09 publishes that same operation-specific code and the implementation persists exactly one material AuditEvent; it never adds a second `audit.lifecycle.*` event. Only internal/system transitions without a public operation-specific code retain `audit.lifecycle.<entity>.<command>.v1`. GET operations produce no material audit by default, while protected-content access/export may add an access audit only through an approved policy.
 
 ## Code convention
 
@@ -48,14 +48,14 @@ Authentication failures are security telemetry; authorization/SoD denial for a k
 ## Coverage
 
 ```text
-MUTATING_OPERATIONS=71
-MUTATING_OPERATIONS_WITH_AUDIT=71
-PUBLISHED_LIFECYCLE_EDGES=95
-PUBLISHED_LIFECYCLE_AUDIT_CODES=95
-PUBLISHED_AUDIT_EVENT_CODES=166
+MUTATING_OPERATIONS=80
+MUTATING_OPERATIONS_WITH_AUDIT=80
+PUBLISHED_LIFECYCLE_EDGES=100
+PUBLISHED_LIFECYCLE_AUDIT_CODES=100
+PUBLISHED_AUDIT_EVENT_CODES=154
 AUDIT_MAPPING_GAPS=0
 ```
 
-H-003..H-005 publish eight reinforced operation audit codes through artifact 03. H-006 publishes exactly `audit.lifecycle.issue.dismiss.v1` for each of the two source-state-specific registry rows; the code is stable while the registry row preserves the exact `from_state`. Erasure audit stores policy/version, action by object class, exclusions/hold and outcome without reintroducing erased personal data. Configuration and lifecycle publication retain author/reviewer/approver/publisher evidence and do not fabricate tenant context for PLATFORM_CONTROL.
+Counts are derived from artifacts 03 and 09: 80 operation codes plus lifecycle-only codes, with API-backed lifecycle codes deduplicated, yield 154 unique published codes. H-006 retains source-specific dismissal codes because dismissal has no public F5 operation. Erasure audit stores policy/version, action by object class, exclusions/hold and outcome without reintroducing erased personal data. Configuration and lifecycle publication retain author/reviewer/approver/publisher evidence and do not fabricate tenant context for PLATFORM_CONTROL.
 
 `AUDIT_EVENT_CATALOG=PASS` as a Fase 2 contract candidate.
