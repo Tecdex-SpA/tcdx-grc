@@ -41,11 +41,9 @@ The first successful logical command stores mutation, AuditEvent, OutboxEvent an
 
 ## Per-operation assignment
 
-Artifact 03 is authoritative for the assignment. The five GET operations are `NATURALLY_IDEMPOTENT`:
+Artifact 03 is authoritative for the assignment. All 26 published GET operations are `NATURALLY_IDEMPOTENT`: the five original reads (`accessGet, normativeUnitList, requirementList, snapshotGet, effectiveConfigurationGet`) plus the exact 21 PRE-F5 Core GRC reads approved by `DR-PHASE5-API-READ-2026-09-17-002`.
 
-`accessGet, normativeUnitList, requirementList, snapshotGet, effectiveConfigurationGet`.
-
-All 69 published POST operations are `IDEMPOTENCY_KEY_REQUIRED`. This includes upload finalization, async job requests, configuration/registry publication and controlled erasure: a durable PostgreSQL command/job record is created before any object-store/provider/worker/per-object erasure effect. No published operation is `NON_RETRYABLE_WITHOUT_RECONCILIATION`; that class is reserved for a future approved operation whose external effect cannot be placed behind a durable keyed command. Such an operation cannot be added silently.
+All 71 published POST operations are `IDEMPOTENCY_KEY_REQUIRED`. This includes upload finalization, `evidenceCreate`, `actionSubmitForReview`, async job requests, configuration/registry publication and controlled erasure: a durable PostgreSQL command/job record is created before any object-store/provider/worker/per-object erasure effect. No published operation is `NON_RETRYABLE_WITHOUT_RECONCILIATION`; that class is reserved for a future approved operation whose external effect cannot be placed behind a durable keyed command. Such an operation cannot be added silently.
 
 All 95 internal lifecycle command edges published in SEED-007 are also `IDEMPOTENCY_KEY_REQUIRED`, tenant/actor/command/aggregate bound, fingerprinted with current row_version and persisted atomically with audit and any required outbox event. The two `Issue -> dismissed` rows bind the source state in the fingerprint and cannot replay across `open` and `triaged`.
 
@@ -53,8 +51,8 @@ All 95 internal lifecycle command edges published in SEED-007 are also `IDEMPOTE
 
 | profile | operations | fingerprint fields in addition to binding/operation/key |
 |---|---|---|
-| CREATE | create/instantiate/request/start POSTs | canonical JSON body, target parent IDs, command schema version |
-| TRANSITION | `:submit/:approve/:review/:reject/:start/:complete/:verify/:publish/:archive/:triage/:fulfill/:finalize/:end/:revoke` | aggregate UUID, expected ETag/row_version, decision/reason and command-specific inputs |
+| CREATE | create/instantiate/request/start POSTs, including `evidenceCreate` | canonical JSON body, target parent IDs, typed target set, FileObject identity, command schema version |
+| TRANSITION | `:submit/:submit-for-review/:approve/:review/:reject/:start/:complete/:verify/:publish/:archive/:triage/:fulfill/:finalize/:end/:revoke` | aggregate UUID, expected version, decision/reason and command-specific inputs |
 | ASYNC | sync/calculation/rule/report/AI requests | definition/version IDs, scope/period, input/config references and purpose |
 | FILE | upload intent/finalize | file UUID when allocated, declared metadata/checksum/size/MIME; signed URL and secret material excluded |
 

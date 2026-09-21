@@ -6,7 +6,7 @@
 | Approving human roles | Architecture Owner, Security & Privacy Reviewer, QA/Release Owner, domain owners |
 | Status | `CONTRACT_DEFINED` |
 
-Audit events record accountability/outcome and never act as the domain event bus. The exact `audit_event_code` for each of the 69 mutating API operations is the `audit.*.v1` code in artifact 03. The 95 lifecycle edges use the exact `audit.lifecycle.<entity>.<command>.v1` code published row-by-row in artifact 09. Five GET operations produce no material audit by default, while protected-content access/export may add an access audit only through an approved policy.
+Audit events record accountability/outcome and never act as the domain event bus. The exact `audit_event_code` for each of the 71 mutating API operations is the `audit.*.v1` code in artifact 03. This includes `audit.evidence.evidence.create.v1` and `audit.remediation.action.submit_review.v1`. The 95 lifecycle edges use the exact `audit.lifecycle.<entity>.<command>.v1` code published row-by-row in artifact 09. GET operations produce no material audit by default, while protected-content access/export may add an access audit only through an approved policy.
 
 ## Code convention
 
@@ -48,11 +48,11 @@ Authentication failures are security telemetry; authorization/SoD denial for a k
 ## Coverage
 
 ```text
-MUTATING_OPERATIONS=69
-MUTATING_OPERATIONS_WITH_AUDIT=69
+MUTATING_OPERATIONS=71
+MUTATING_OPERATIONS_WITH_AUDIT=71
 PUBLISHED_LIFECYCLE_EDGES=95
 PUBLISHED_LIFECYCLE_AUDIT_CODES=95
-PUBLISHED_AUDIT_EVENT_CODES=164
+PUBLISHED_AUDIT_EVENT_CODES=166
 AUDIT_MAPPING_GAPS=0
 ```
 

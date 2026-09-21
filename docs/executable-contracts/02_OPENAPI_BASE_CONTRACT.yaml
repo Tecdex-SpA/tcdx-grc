@@ -3,12 +3,14 @@ info:
   title: TCDX GRC API Base Contract
   version: 1.0.0-contract-candidate
   description: >-
-    Contrato schema-first aprobado de Fase 2 con la enmienda read PRE-F5. Publica 95 operaciones que cierran
+    Contrato schema-first aprobado de Fase 2 con las enmiendas PRE-F5 y PRE-F5B. Publica 97 operaciones que cierran
     trazabilidad rector-capability-permission-audit-idempotency-modelo físico.
     H-003..H-005 autorizan las operaciones mínimas de Configuration,
     privacy retention/erasure y lifecycle-registry sobre entidades existentes.
     DR-PHASE5-API-READ-2026-09-17-002 autoriza exactamente 21 lecturas
     Core GRC sobre entidades y relaciones existentes, sin cambio de base de datos.
+    DR-PRE-F5B-2026-09-21-004 cierra paginación, requests de mutación,
+    materialización de Evidence y submit-for-review de Action sin iniciar Fase 5.
   x-contract-owner: Architecture Owner
   x-approving-human-roles:
     - Architecture Owner
@@ -19,6 +21,7 @@ info:
   x-master-regent: TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16
   x-phase-5-read-contract-decision: DR-PHASE5-API-READ-2026-09-17-002
   x-phase-5-read-contract-status: MATERIALIZED
+  x-phase-5-executable-contracts-status: CLOSED
   x-database-contract-changed: false
 servers:
   - url: /api/v1
@@ -314,6 +317,7 @@ paths:
       x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
       x-tcdx-transaction-boundary: "RO"
       x-tcdx-physical-entities: "`regulatory.requirement_applicabilities`"
+      x-tcdx-stable-order: "created_at DESC, requirement_applicability_id DESC"
       x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,44"
       parameters:
         - { $ref: '#/components/parameters/CorrelationId' }
@@ -350,7 +354,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/ApplicabilityCreateRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -379,7 +383,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/ApplicabilitySubmitRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -408,7 +412,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/ApplicabilityApproveRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -431,6 +435,7 @@ paths:
       x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
       x-tcdx-transaction-boundary: "RO"
       x-tcdx-physical-entities: "`regulatory.requirement_assessments`, `regulatory.requirement_applicabilities`"
+      x-tcdx-stable-order: "created_at DESC, requirement_assessment_id DESC"
       x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,38,44"
       parameters:
         - { $ref: '#/components/parameters/CorrelationId' }
@@ -467,7 +472,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/RequirementAssessmentCreateRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -496,7 +501,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/RequirementAssessmentStartRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -525,7 +530,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/RequirementAssessmentSubmitRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -554,7 +559,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/RequirementAssessmentApproveRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -583,7 +588,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/SoaPublishRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -641,7 +646,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/ControlInstantiateRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -664,6 +669,7 @@ paths:
       x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
       x-tcdx-transaction-boundary: "RO"
       x-tcdx-physical-entities: "`controls.control_assessments`"
+      x-tcdx-stable-order: "created_at DESC, control_assessment_id DESC"
       x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,38"
       parameters:
         - { $ref: '#/components/parameters/CorrelationId' }
@@ -699,7 +705,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/ControlAssessmentCreateRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -728,7 +734,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/ControlAssessmentSubmitRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -757,7 +763,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/ControlAssessmentReviewRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -786,7 +792,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/ControlAssessmentApproveRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -815,7 +821,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/AssuranceTestExecuteRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -844,7 +850,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/UploadIntentCreateRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -873,7 +879,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/UploadFinalizeRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -896,6 +902,7 @@ paths:
       x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
       x-tcdx-transaction-boundary: "RO"
       x-tcdx-physical-entities: "`evidence.evidence_requests`"
+      x-tcdx-stable-order: "created_at DESC, evidence_request_id DESC"
       x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,24,44"
       parameters:
         - { $ref: '#/components/parameters/CorrelationId' }
@@ -935,7 +942,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/EvidenceRequestCreateRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -964,7 +971,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/EvidenceRequestFulfillRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -993,7 +1000,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/EvidenceSubmitRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -1022,7 +1029,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/EvidenceReviewStartRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -1051,7 +1058,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/EvidenceApproveRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -1080,7 +1087,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/EvidenceRejectRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -1103,6 +1110,7 @@ paths:
       x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
       x-tcdx-transaction-boundary: "RO"
       x-tcdx-physical-entities: "`remediation.issues`, `remediation.issue_origins`"
+      x-tcdx-stable-order: "created_at DESC, issue_id DESC"
       x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,44"
       parameters:
         - { $ref: '#/components/parameters/CorrelationId' }
@@ -1140,7 +1148,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/IssueCreateRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -1169,7 +1177,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/IssueTriageRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -1198,7 +1206,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/ActionCreateRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -1227,7 +1235,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/ActionStartRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -1256,7 +1264,36 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/ActionCompleteRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/actions/{id}:submit-for-review":
+    post:
+      operationId: actionSubmitForReview
+      tags: ["remediation"]
+      summary: "ISSUES_ACTIONS: actionSubmitForReview"
+      description: "Approved by DR-PRE-F5B-2026-09-21-004. Explicit `in_progress→in_review` Action transition; it never completes the Action."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISSUES_ACTIONS"
+      x-tcdx-permission: "`remediation.action.transition`"
+      x-tcdx-scope: "assigned_object, owned_object"
+      x-tcdx-audit-event: "`audit.remediation.action.submit_review.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`remediation.actions`, audit/idempotency"
+      x-tcdx-rector-source: "DR-PRE-F5B-2026-09-21-004; 21 §7; 22; SEED-007 action.submit_review"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ActionSubmitForReviewRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -1285,7 +1322,7 @@ paths:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/ActionVerifyRequest' }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -2345,6 +2382,7 @@ paths:
       x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
       x-tcdx-transaction-boundary: "RO"
       x-tcdx-physical-entities: "`regulatory.statements_of_applicability`"
+      x-tcdx-stable-order: "created_at DESC, statement_of_applicability_id DESC"
       x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,41,44"
       parameters:
         - { $ref: '#/components/parameters/CorrelationId' }
@@ -2399,6 +2437,7 @@ paths:
       x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
       x-tcdx-transaction-boundary: "RO"
       x-tcdx-physical-entities: "`controls.controls`, `controls.control_versions`, `controls.control_scopes`"
+      x-tcdx-stable-order: "created_at DESC, control_id DESC"
       x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,44"
       parameters:
         - { $ref: '#/components/parameters/CorrelationId' }
@@ -2478,6 +2517,7 @@ paths:
       x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
       x-tcdx-transaction-boundary: "RO"
       x-tcdx-physical-entities: "`controls.assurance_tests`"
+      x-tcdx-stable-order: "created_at DESC, assurance_test_id DESC"
       x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,38"
       parameters:
         - { $ref: '#/components/parameters/CorrelationId' }
@@ -2557,6 +2597,7 @@ paths:
       x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
       x-tcdx-transaction-boundary: "RO"
       x-tcdx-physical-entities: "`evidence.evidences`, authorized current version metadata"
+      x-tcdx-stable-order: "created_at DESC, evidence_id DESC"
       x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,24"
       parameters:
         - { $ref: '#/components/parameters/CorrelationId' }
@@ -2569,6 +2610,37 @@ paths:
         - { $ref: '#/components/parameters/ExpiresToFilter' }
       responses:
         '200': { $ref: '#/components/responses/EvidenceListSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+    post:
+      operationId: evidenceCreate
+      tags: ["evidence"]
+      summary: "EVIDENCE_DOCUMENTS: evidenceCreate"
+      description: >-
+        Approved by DR-PRE-F5B-2026-09-21-004. Materializes a distinct Evidence aggregate,
+        its first draft EvidenceVersion and requested typed EvidenceLinks from one finalized,
+        scan-PASS FileObject in one transaction; no binary is duplicated and no signed URL is persisted.
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "EVIDENCE_DOCUMENTS"
+      x-tcdx-permission: "`evidence.evidence.create`"
+      x-tcdx-scope: "tenant, assigned_object, owned_object"
+      x-tcdx-audit-event: "`audit.evidence.evidence.create.v1`"
+      x-tcdx-domain-events: "`evidence.evidence.created.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`evidence.file_objects`, `evidence.evidences`, `evidence.evidence_versions`, `evidence.evidence_links`, audit/outbox/idempotency"
+      x-tcdx-rector-source: "DR-PRE-F5B-2026-09-21-004; 22 §10; 24; 25; 30 §4; 44 §8"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/EvidenceCreateRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
         '401': { $ref: '#/components/responses/AuthenticationError' }
         '403': { $ref: '#/components/responses/AuthorizationError' }
@@ -2661,6 +2733,7 @@ paths:
       x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
       x-tcdx-transaction-boundary: "RO"
       x-tcdx-physical-entities: "`remediation.actions`"
+      x-tcdx-stable-order: "created_at DESC, action_id DESC"
       x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22"
       parameters:
         - { $ref: '#/components/parameters/CorrelationId' }
@@ -2757,12 +2830,16 @@ components:
       in: query
       required: false
       schema: { type: string, minLength: 1 }
+      description: >-
+        Opaque cursor encoding the stable-order components and server-controlled continuation context.
+        It is not authority: tenant, entitlement, scope, object policy and filters are revalidated and
+        cannot be changed by cursor contents. Offset pagination is not accepted.
     PageSize:
       name: page[size]
       in: query
       required: false
-      schema: { type: integer, minimum: 1 }
-      description: Maximum and default require human approval per resource/volumetry; clients must not assume them.
+      schema: { type: integer, minimum: 1, maximum: 100, default: 25 }
+      description: Integer from 1 through 100. Non-integer, below-minimum or above-maximum values return the COMMON HTTP 400 validation error.
     Sort:
       name: sort
       in: query
@@ -3392,6 +3469,358 @@ components:
         signed_upload_url: { type: string, format: uri }
         expires_at: { $ref: '#/components/schemas/UtcTimestamp' }
       description: Signed URL is short-lived and never logged; FileObject is unusable as Evidence until scan PASS and governed version/review flow.
+    ApplicabilityCreateRequest:
+      type: object
+      additionalProperties: false
+      required: [requirement_id, applicability_decision, rationale, effective_from]
+      properties:
+        requirement_id: { $ref: '#/components/schemas/UuidV7' }
+        scope_subject_id: { $ref: '#/components/schemas/UuidV7' }
+        applicability_decision: { type: string, minLength: 1, maxLength: 32 }
+        rationale: { type: string, minLength: 1 }
+        effective_from: { $ref: '#/components/schemas/UtcTimestamp' }
+        effective_to: { $ref: '#/components/schemas/UtcTimestamp' }
+      description: Requirement must be accessible; scope Subject, when present, belongs to the selected tenant. Version, tenant and initial lifecycle are server-controlled.
+    ApplicabilitySubmitRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version, rationale]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+        rationale: { type: string, minLength: 1 }
+    ApplicabilityApproveRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+      description: Approval actor and timestamp come only from the authorized server context; SoD remains mandatory.
+    RequirementAssessmentCreateRequest:
+      type: object
+      additionalProperties: false
+      required: [requirement_applicability_id, methodology_version_ref]
+      properties:
+        requirement_applicability_id: { $ref: '#/components/schemas/UuidV7' }
+        methodology_version_ref: { $ref: '#/components/schemas/UuidV7' }
+        effective_configuration_id: { $ref: '#/components/schemas/UuidV7' }
+      description: Applicability and optional EffectiveConfiguration must be same-tenant and compatible; initial lifecycle/result state is server-controlled.
+    RequirementAssessmentStartRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+    RequirementAssessmentSubmitRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version, result_status]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+        result_status: { $ref: '#/components/schemas/ResultStatus' }
+        domain_conclusion:
+          type: string
+          enum: [not_assessed, compliant, partially_compliant, non_compliant, not_applicable, insufficient_evidence]
+        coverage_percent: { type: number, minimum: 0, maximum: 100 }
+      description: result_status and domain_conclusion are distinct; assessed_at is server-generated.
+    RequirementAssessmentApproveRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+      description: SoD and the assessed-to-approved precondition are enforced from authoritative state.
+    SoaPublishRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version, reason]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+        reason: { type: string, minLength: 1 }
+    ControlInstantiateRequest:
+      type: object
+      additionalProperties: false
+      required: [based_on_control_version_id, control_code, name, business_owner_subject_id, objective, control_type, nature, frequency_code, execution_method, verification_method, minimum_evidence]
+      properties:
+        based_on_control_version_id: { $ref: '#/components/schemas/UuidV7' }
+        control_code: { type: string, minLength: 1, maxLength: 160 }
+        name: { type: string, minLength: 1 }
+        business_owner_subject_id: { $ref: '#/components/schemas/UuidV7' }
+        objective: { type: string, minLength: 1 }
+        control_type: { type: string, enum: [preventive, detective, corrective, directive] }
+        nature: { type: string, enum: [manual, automated, hybrid] }
+        frequency_code: { type: string, minLength: 1, maxLength: 64 }
+        execution_method: { type: string, minLength: 1 }
+        verification_method: { type: string, minLength: 1 }
+        minimum_evidence: { type: string, minLength: 1 }
+        suggested_owner_role_code: { type: string, minLength: 1, maxLength: 96 }
+        effective_from: { $ref: '#/components/schemas/UtcTimestamp' }
+        effective_to: { $ref: '#/components/schemas/UtcTimestamp' }
+      description: Creates only a TENANT_OWNED tenant_instantiated Control and version 1 from an accessible global/platform ControlVersion.
+    ControlAssessmentCreateRequest:
+      type: object
+      additionalProperties: false
+      required: [control_id, control_version_id, methodology_version_ref]
+      properties:
+        control_id: { $ref: '#/components/schemas/UuidV7' }
+        control_version_id: { $ref: '#/components/schemas/UuidV7' }
+        methodology_version_ref: { $ref: '#/components/schemas/UuidV7' }
+        effective_configuration_id: { $ref: '#/components/schemas/UuidV7' }
+      description: Control, version and optional EffectiveConfiguration must be compatible and belong to the selected tenant where applicable.
+    ControlAssessmentSubmitRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version, result_status]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+        result_status: { $ref: '#/components/schemas/ResultStatus' }
+        domain_conclusion: { type: string, enum: [effective, partially_effective, ineffective, not_tested, insufficient_evidence] }
+        design_effectiveness: { type: number, minimum: 0, maximum: 100 }
+        operating_effectiveness: { type: number, minimum: 0, maximum: 100 }
+        coverage_percent: { type: number, minimum: 0, maximum: 100 }
+      description: Overall effectiveness is derived by the compatible methodology and is not client authority; assessed_at is server-generated.
+    ControlAssessmentReviewRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+    ControlAssessmentApproveRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+      description: SoD and reviewed-to-approved state are enforced from authoritative state.
+    AssuranceSampleExecuteInput:
+      type: object
+      additionalProperties: false
+      required: [sample_code, sample_count, selection_method, result_status]
+      properties:
+        sample_code: { type: string, minLength: 1, maxLength: 128 }
+        population_count: { type: integer, format: int64, minimum: 0 }
+        sample_count: { type: integer, format: int64, minimum: 0 }
+        selection_method: { type: string, minLength: 1, maxLength: 64 }
+        sample_period_start: { $ref: '#/components/schemas/UtcTimestamp' }
+        sample_period_end: { $ref: '#/components/schemas/UtcTimestamp' }
+        result_status: { $ref: '#/components/schemas/ResultStatus' }
+    AssuranceTestExecuteRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version, result_status]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+        result_status: { $ref: '#/components/schemas/ResultStatus' }
+        domain_conclusion: { type: string, enum: [effective, partially_effective, ineffective, not_tested, insufficient_evidence] }
+        samples:
+          type: array
+          items: { $ref: '#/components/schemas/AssuranceSampleExecuteInput' }
+      description: Executor identity and executed_at are server-derived; samples, when supplied, must be same-tenant and internally consistent.
+    UploadIntentCreateRequest:
+      type: object
+      additionalProperties: false
+      required: [original_filename, declared_mime, size_bytes, classification, retention_policy_id, source_provenance]
+      properties:
+        original_filename: { type: string, minLength: 1 }
+        declared_mime: { type: string, minLength: 1, maxLength: 255 }
+        size_bytes: { type: integer, format: int64, minimum: 0 }
+        classification: { type: string, minLength: 1, maxLength: 32 }
+        retention_policy_id: { $ref: '#/components/schemas/UuidV7' }
+        source_provenance: { type: string, minLength: 1 }
+        effective_from: { $ref: '#/components/schemas/UtcTimestamp' }
+        effective_to: { $ref: '#/components/schemas/UtcTimestamp' }
+      description: Object key, encryption reference, scan state and signed upload delivery are server-controlled.
+    UploadFinalizeRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version, detected_mime, size_bytes, sha256, storage_version]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+        detected_mime: { type: string, minLength: 1, maxLength: 255 }
+        size_bytes: { type: integer, format: int64, minimum: 0 }
+        sha256: { type: string, pattern: '^[a-f0-9]{64}$' }
+        storage_version: { type: string, minLength: 1, maxLength: 128 }
+      description: Finalization verifies metadata and moves only to governed quarantine; scan PASS is a separate authoritative outcome.
+    EvidenceRequestCreateRequest:
+      type: object
+      additionalProperties: false
+      required: [request_code]
+      oneOf:
+        - required: [requirement_id]
+        - required: [control_id]
+        - required: [requirement_assessment_id]
+        - required: [control_assessment_id]
+        - required: [assurance_test_id]
+      properties:
+        request_code: { type: string, minLength: 1, maxLength: 128 }
+        requirement_id: { $ref: '#/components/schemas/UuidV7' }
+        control_id: { $ref: '#/components/schemas/UuidV7' }
+        requirement_assessment_id: { $ref: '#/components/schemas/UuidV7' }
+        control_assessment_id: { $ref: '#/components/schemas/UuidV7' }
+        assurance_test_id: { $ref: '#/components/schemas/UuidV7' }
+        assigned_membership_id: { $ref: '#/components/schemas/UuidV7' }
+        due_at: { $ref: '#/components/schemas/UtcTimestamp' }
+      description: Exactly one approved typed target must be present; target existence, visibility, type and tenant compatibility are validated before persistence.
+    EvidenceRequestFulfillRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version, evidence_version_id]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+        evidence_version_id: { $ref: '#/components/schemas/UuidV7' }
+    EvidenceLinkCreateInput:
+      type: object
+      additionalProperties: false
+      oneOf:
+        - required: [requirement_id]
+        - required: [control_id]
+        - required: [control_version_id]
+        - required: [requirement_assessment_id]
+        - required: [control_assessment_id]
+        - required: [assurance_test_id]
+      properties:
+        requirement_id: { $ref: '#/components/schemas/UuidV7' }
+        control_id: { $ref: '#/components/schemas/UuidV7' }
+        control_version_id: { $ref: '#/components/schemas/UuidV7' }
+        requirement_assessment_id: { $ref: '#/components/schemas/UuidV7' }
+        control_assessment_id: { $ref: '#/components/schemas/UuidV7' }
+        assurance_test_id: { $ref: '#/components/schemas/UuidV7' }
+        claim: { type: string, minLength: 1 }
+        effective_from: { $ref: '#/components/schemas/UtcTimestamp' }
+        effective_to: { $ref: '#/components/schemas/UtcTimestamp' }
+      description: Exactly one typed target is accepted; a ControlVersion-only link never proves tenant implementation.
+    EvidenceCreateRequest:
+      type: object
+      additionalProperties: false
+      required: [evidence_code, evidence_type, retention_policy_id, source_kind, file_object_id, provenance_ref, links]
+      properties:
+        evidence_code: { type: string, minLength: 1, maxLength: 128 }
+        evidence_type: { type: string, minLength: 1, maxLength: 64 }
+        business_owner_subject_id: { $ref: '#/components/schemas/UuidV7' }
+        valid_from: { $ref: '#/components/schemas/UtcTimestamp' }
+        valid_to: { $ref: '#/components/schemas/UtcTimestamp' }
+        retention_policy_id: { $ref: '#/components/schemas/UuidV7' }
+        source_kind: { type: string, minLength: 1, maxLength: 32 }
+        file_object_id: { $ref: '#/components/schemas/UuidV7' }
+        period_start: { $ref: '#/components/schemas/UtcTimestamp' }
+        period_end: { $ref: '#/components/schemas/UtcTimestamp' }
+        effective_from: { $ref: '#/components/schemas/UtcTimestamp' }
+        effective_to: { $ref: '#/components/schemas/UtcTimestamp' }
+        expires_at: { $ref: '#/components/schemas/UtcTimestamp' }
+        provenance_ref: { type: string, minLength: 1 }
+        links:
+          type: array
+          minItems: 1
+          items: { $ref: '#/components/schemas/EvidenceLinkCreateInput' }
+      description: FileObject must be finalized, usable and scan-PASS; all objects and policies must be tenant-compatible. Evidence, first draft version and links are created atomically.
+    EvidenceSubmitRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+    EvidenceReviewStartRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+    EvidenceApproveRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version, rationale]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+        sufficiency: { type: string, minLength: 1, maxLength: 32 }
+        relevance: { type: string, minLength: 1, maxLength: 32 }
+        rationale: { type: string, minLength: 1 }
+      description: Decision=approved, reviewer identity and reviewed_at are server-derived; submitter/reviewer SoD is enforced.
+    EvidenceRejectRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version, rationale]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+        sufficiency: { type: string, minLength: 1, maxLength: 32 }
+        relevance: { type: string, minLength: 1, maxLength: 32 }
+        rationale: { type: string, minLength: 1 }
+      description: Decision=rejected, reviewer identity and reviewed_at are server-derived; rejection reason is mandatory.
+    IssueCreateRequest:
+      type: object
+      additionalProperties: false
+      required: [issue_code, issue_kind, title, description, severity, priority, origin_role]
+      oneOf:
+        - required: [requirement_assessment_id]
+        - required: [control_assessment_id]
+        - required: [assurance_test_id]
+      properties:
+        issue_code: { type: string, minLength: 1, maxLength: 128 }
+        issue_kind: { type: string, enum: [finding, non_conformity, gap, exception, audit_observation] }
+        title: { type: string, minLength: 1 }
+        description: { type: string, minLength: 1 }
+        severity: { type: string, minLength: 1, maxLength: 32 }
+        priority: { type: string, minLength: 1, maxLength: 32 }
+        business_owner_subject_id: { $ref: '#/components/schemas/UuidV7' }
+        due_date: { type: string, format: date }
+        requirement_assessment_id: { $ref: '#/components/schemas/UuidV7' }
+        control_assessment_id: { $ref: '#/components/schemas/UuidV7' }
+        assurance_test_id: { $ref: '#/components/schemas/UuidV7' }
+        origin_role: { type: string, minLength: 1, maxLength: 32 }
+      description: Exactly one Core GRC typed origin is accepted in Phase 5; risk, incident, supplier and audit origins remain outside this slice.
+    IssueTriageRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version, severity, priority]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+        severity: { type: string, minLength: 1, maxLength: 32 }
+        priority: { type: string, minLength: 1, maxLength: 32 }
+        business_owner_subject_id: { $ref: '#/components/schemas/UuidV7' }
+        due_date: { type: string, format: date }
+      description: Severity and priority remain distinct from the open-to-triaged lifecycle transition.
+    ActionCreateRequest:
+      type: object
+      additionalProperties: false
+      required: [action_code, title, description, priority]
+      properties:
+        action_code: { type: string, minLength: 1, maxLength: 128 }
+        title: { type: string, minLength: 1 }
+        description: { type: string, minLength: 1 }
+        priority: { type: string, minLength: 1, maxLength: 32 }
+        assigned_membership_id: { $ref: '#/components/schemas/UuidV7' }
+        due_date: { type: string, format: date }
+      description: Parent Issue is the path identity and must belong to the selected tenant; initial state is pending.
+    ActionStartRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+    ActionSubmitForReviewRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+      description: Executes only action.submit_review from in_progress to in_review.
+    ActionCompleteRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version, evidence_version_id, link_role]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+        evidence_version_id: { $ref: '#/components/schemas/UuidV7' }
+        link_role: { type: string, minLength: 1, maxLength: 32 }
+      description: Closure EvidenceVersion must be eligible and same-tenant; completion is allowed only from in_review and never verifies the Action.
+    ActionVerifyRequest:
+      type: object
+      additionalProperties: false
+      required: [expected_version, verification_decision, rationale]
+      properties:
+        expected_version: { type: integer, format: int64, minimum: 1 }
+        verification_decision: { type: string, enum: [accepted] }
+        rationale: { type: string, minLength: 1 }
+        retest_reference: { type: string, minLength: 1 }
+      description: Verifier identity and verified_at are server-derived; the verifier/completer SoD policy is enforced.
     DomainCommandRequest:
       type: object
       description: Operation-specific schema placeholder constrained by the named request contract in artifact 03; implementations must refine it without adding fields or semantics not traced to that contract.

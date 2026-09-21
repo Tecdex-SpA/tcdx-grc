@@ -46,6 +46,7 @@ Payload profiles:
 | `evidence.file.quarantined.v1` | Evidence / uploadFinalize | FileObject; TENANT_OWNED | CREATED + checksum/MIME/size refs | malware-scan worker | restricted | 24 |
 | `evidence.request.opened.v1` | Evidence / evidenceRequestCreate | EvidenceRequest; TENANT_OWNED | CREATED + typed target ref | notification policy | confidential | 21,24 |
 | `evidence.request.fulfilled.v1` | Evidence / evidenceRequestFulfill | EvidenceRequest; TENANT_OWNED | TRANSITION + EvidenceVersion ref | request owner notification | confidential | 21,24 |
+| `evidence.evidence.created.v1` | Evidence / evidenceCreate | Evidence; TENANT_OWNED | CREATED + first EvidenceVersion ID + FileObject/checksum ref + typed target classes; never binary or signed URL | NONE_CONTRACTUALLY_REQUIRED | restricted | DR-PRE-F5B-2026-09-21-004; 24,25 |
 | `evidence.evidence.submitted.v1` | Evidence / evidenceSubmit | EvidenceVersion; TENANT_OWNED | TRANSITION | review workflow | confidential | 21,24 |
 | `evidence.evidence.approved.v1` | Evidence / evidenceApprove | EvidenceVersion; TENANT_OWNED | DECISION + period/eligibility refs | metrics/rules/snapshot invalidation policy | restricted | 21,24 |
 | `evidence.evidence.rejected.v1` | Evidence / evidenceReject | EvidenceVersion; TENANT_OWNED | DECISION | submitter notification | restricted | 21,24 |
@@ -82,6 +83,6 @@ Payload profiles:
 | `privacy.erasure_execution.reviewed.v1` | Privacy / erasureExecutionReview | ErasureExecutionRecord; TENANT_OWNED | DECISION + reviewer/outcome and exception refs | NONE_CONTRACTUALLY_REQUIRED | restricted | 22,23,39; H-004 |
 | `platform.lifecycle_transition.published.v1` | Platform Governance / lifecycleTransitionPublish | LifecycleTransitionDefinition; PLATFORM_CONTROL | PUBLISHED + edge/permission/policy/event hash; no arbitrary rule body | registry cache invalidator only; cache non-authoritative | confidential | 21,33; H-005 |
 
-`PUBLISHED_EVENT_TYPES=55`. No future consumer is invented. A consumer addition changes this catalog and tests; it does not acquire write authority over the producer aggregate.
+`PUBLISHED_EVENT_TYPES=56`. No future consumer is invented. A consumer addition changes this catalog and tests; it does not acquire write authority over the producer aggregate.
 
 `EVENT_CATALOG=PASS` as a Fase 2 contract candidate.

@@ -121,11 +121,11 @@ describe("PRE-F5 approved read-contract materialization", () => {
   });
 
   it("keeps cross-catalog operation counts and operation IDs unique", () => {
-    expect(openApiOperations.size).toBe(95);
-    expect(matrixOperations.size).toBe(95);
-    expect([...openApiOperations.values()].filter(({ method }) => method === "post")).toHaveLength(69);
+    expect(openApiOperations.size).toBe(97);
+    expect(matrixOperations.size).toBe(97);
+    expect([...openApiOperations.values()].filter(({ method }) => method === "post")).toHaveLength(71);
     expect([...openApiOperations.values()].filter(({ method }) => method === "get")).toHaveLength(26);
-    expect([...matrixOperations.values()].filter(({ method }) => method === "post")).toHaveLength(69);
+    expect([...matrixOperations.values()].filter(({ method }) => method === "post")).toHaveLength(71);
     expect([...matrixOperations.values()].filter(({ method }) => method === "get")).toHaveLength(26);
   });
 
@@ -136,7 +136,8 @@ describe("PRE-F5 approved read-contract materialization", () => {
       expect(permission.endsWith(".read")).toBe(true);
     }
     expect(permissions).toContain("PRE_F5_READ_PERMISSION_ADDITIONS=10");
-    expect(permissions).toContain("TOTAL_EXECUTABLE_PERMISSIONS=144");
+    expect(permissions).toContain("PRE_F5B_PERMISSION_ADDITIONS=1");
+    expect(permissions).toContain("TOTAL_EXECUTABLE_PERMISSIONS=145");
     expect(permissions).toContain("DATABASE_CONTRACT_CHANGED=0");
   });
 
