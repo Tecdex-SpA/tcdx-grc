@@ -93,6 +93,19 @@ The human project authority, Andrés Barouh, acting explicitly as Product Owner/
 
 The human project authority approved the PRE-F5B decision that closes the remaining Core GRC executable-contract blockers: cursor pagination for the ten approved collection reads, 30 closed mutation request schemas, explicit Action submit-for-review and explicit Evidence materialization with typed EvidenceLinks. This is documentary/executable-contract closure only; it changes no physical schema or runtime seed and does not start Phase 5.
 
+## Human approval — PRE-F5C executable/physical reconciliation
+
+`PRE_F5C_HUMAN_DECISION=DR-PRE-F5C-2026-09-21-005`
+`PRE_F5C_LOCAL_GATE=PASS`
+`PHASE_5_EXECUTABILITY_PREFLIGHT=PASS`
+`PRE_F5C_PHYSICAL_MODEL_AMENDMENT=PASS_LOCAL_CANDIDATE`
+`PRE_F5C_MIGRATION_ID=20260921000100`
+`PRE_F5C_QA_MIGRATION_EXECUTED=0`
+`PRE_F5C_PHYSICAL_RUNTIME=BLOCKED_PENDING_SEPARATE_QA_AUTHORIZATION`
+`PRE_F5C_HUMAN_APPROVAL_DATE=2026-09-21`
+
+The human project authority approved the PRE-F5C decisions that reconcile explicit F5 row-version concurrency, the six mutable workflow rows, four physical integrity constraints, lifecycle reachability, nine missing API operations, exactly two permissions and the single-write audit rule. The migration candidate and executable preflight pass in isolated local PostgreSQL 16 with 229 tables. QA materialization remains a separate human gate and Phase 5 remains not started.
+
 ## Current authorized phase
 
 `PHASE_3=COMPLETE`
@@ -112,10 +125,14 @@ The human project authority approved the PRE-F5B decision that closes the remain
 `PHASE_5_MUTATION_REQUEST_SCHEMAS=PASS`
 `PHASE_5_ACTION_WORKFLOW_CONTRACT=PASS`
 `PHASE_5_EVIDENCE_CREATION_CONTRACT=PASS`
-`CORE_GRC_SLICE=READY_FOR_IMPLEMENTATION`
+`PRE_F5C_LOCAL_GATE=PASS`
+`PHASE_5_EXECUTABILITY_PREFLIGHT=PASS`
+`PRE_F5C_PHYSICAL_RUNTIME=BLOCKED_PENDING_SEPARATE_QA_AUTHORIZATION`
+`QA_MIGRATION_EXECUTED=0`
+`CORE_GRC_SLICE=BLOCKED_PENDING_PRE_F5C_QA_MATERIALIZATION`
 `PHASE_5_STARTED=0`
 `PHASE_6_STARTED=0`
 
-Phase 4 engineering is closed. Independent regulatory content gates remain open where licensed or structured content is still pending; those gates do not reopen Phase 4 implementation. Phase 5 is human-authorized; its read contract, release dependencies and remaining PRE-F5B executable contracts are closed, so the Core GRC slice is ready to begin implementation under a separate Phase 5 execution. Implementation has not yet started. The approved visual baseline remains mandatory for all Phase 5 UI work.
+Phase 4 engineering is closed. Independent regulatory content gates remain open where licensed or structured content is still pending; those gates do not reopen Phase 4 implementation. Phase 5 remains human-authorized but not started. PRE-F5C local reconciliation and executability preflight pass; the Core GRC slice remains blocked until a separate human-authorized QA backup, migration, schema/isolation verification and post-materialization report establish `PRE_F5C_PHYSICAL_RUNTIME=PASS`. The approved visual baseline remains mandatory for all future Phase 5 UI work.
 
 This file is mutable execution state. It is not part of the immutable rector baseline and cannot override it.
