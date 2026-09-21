@@ -3,10 +3,12 @@ info:
   title: TCDX GRC API Base Contract
   version: 1.0.0-contract-candidate
   description: >-
-    Contrato schema-first de Fase 2. Publica sólo las 74 operaciones que cierran
+    Contrato schema-first aprobado de Fase 2 con la enmienda read PRE-F5. Publica 95 operaciones que cierran
     trazabilidad rector-capability-permission-audit-idempotency-modelo físico.
     H-003..H-005 autorizan las operaciones mínimas de Configuration,
     privacy retention/erasure y lifecycle-registry sobre entidades existentes.
+    DR-PHASE5-API-READ-2026-09-17-002 autoriza exactamente 21 lecturas
+    Core GRC sobre entidades y relaciones existentes, sin cambio de base de datos.
   x-contract-owner: Architecture Owner
   x-approving-human-roles:
     - Architecture Owner
@@ -14,7 +16,10 @@ info:
     - Security & Privacy Reviewer
   x-status: CANDIDATE_READY_FOR_HUMAN_REVIEW
   x-wire-conventions-status: CONTRACT_DEFINED
-  x-master-regent: TCDX_GRC_MASTER_REGENT_BASELINE_v1.4_2026-09-15
+  x-master-regent: TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16
+  x-phase-5-read-contract-decision: DR-PHASE5-API-READ-2026-09-17-002
+  x-phase-5-read-contract-status: MATERIALIZED
+  x-database-contract-changed: false
 servers:
   - url: /api/v1
     description: Major v1 tenant/business API base path; deployment host is environment configuration.
@@ -295,6 +300,36 @@ paths:
         '404': { $ref: '#/components/responses/NotFoundError' }
         '409': { $ref: '#/components/responses/ConflictError' }
   "/requirement-applicabilities":
+    get:
+      operationId: applicabilityList
+      tags: ["compliance"]
+      summary: "ISO_COMPLIANCE: applicabilityList"
+      description: "Approved by DR-PHASE5-API-READ-2026-09-17-002. Cursor-paginated RequirementApplicability projection; every row is tenant-, entitlement-, scope- and object-policy-filtered."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISO_COMPLIANCE"
+      x-tcdx-permission: "`compliance.applicability.read`"
+      x-tcdx-scope: "tenant, organizational_unit, process, service, assigned_object, owned_object"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`regulatory.requirement_applicabilities`"
+      x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,44"
+      parameters:
+        - { $ref: '#/components/parameters/CorrelationId' }
+        - { $ref: '#/components/parameters/TenantContext' }
+        - { $ref: '#/components/parameters/Cursor' }
+        - { $ref: '#/components/parameters/PageSize' }
+        - { $ref: '#/components/parameters/LifecycleStateFilter' }
+        - { $ref: '#/components/parameters/RequirementIdFilter' }
+        - { $ref: '#/components/parameters/ScopeSubjectIdFilter' }
+      responses:
+        '200': { $ref: '#/components/responses/RequirementApplicabilityListSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
     post:
       operationId: applicabilityCreate
       tags: ["compliance"]
@@ -382,6 +417,36 @@ paths:
         '404': { $ref: '#/components/responses/NotFoundError' }
         '409': { $ref: '#/components/responses/ConflictError' }
   "/requirement-assessments":
+    get:
+      operationId: requirementAssessmentList
+      tags: ["compliance"]
+      summary: "ISO_COMPLIANCE: requirementAssessmentList"
+      description: "Approved by DR-PHASE5-API-READ-2026-09-17-002. Cursor-paginated RequirementAssessment projection; result_status and domain_conclusion remain distinct."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISO_COMPLIANCE"
+      x-tcdx-permission: "`compliance.requirement_assessment.read`"
+      x-tcdx-scope: "tenant, organizational_unit, process, service, assigned_object, owned_object"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`regulatory.requirement_assessments`, `regulatory.requirement_applicabilities`"
+      x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,38,44"
+      parameters:
+        - { $ref: '#/components/parameters/CorrelationId' }
+        - { $ref: '#/components/parameters/TenantContext' }
+        - { $ref: '#/components/parameters/Cursor' }
+        - { $ref: '#/components/parameters/PageSize' }
+        - { $ref: '#/components/parameters/LifecycleStateFilter' }
+        - { $ref: '#/components/parameters/RequirementIdFilter' }
+        - { $ref: '#/components/parameters/ScopeSubjectIdFilter' }
+      responses:
+        '200': { $ref: '#/components/responses/RequirementAssessmentListSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
     post:
       operationId: requirementAssessmentCreate
       tags: ["compliance"]
@@ -585,6 +650,35 @@ paths:
         '404': { $ref: '#/components/responses/NotFoundError' }
         '409': { $ref: '#/components/responses/ConflictError' }
   "/control-assessments":
+    get:
+      operationId: controlAssessmentList
+      tags: ["controls"]
+      summary: "CONTROLS_ASSURANCE: controlAssessmentList"
+      description: "Approved by DR-PHASE5-API-READ-2026-09-17-002. Cursor-paginated ControlAssessment projection over authorized tenant Controls."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CONTROLS_ASSURANCE"
+      x-tcdx-permission: "`controls.control_assessment.read`"
+      x-tcdx-scope: "tenant, organizational_unit, process, service, assigned_object, owned_object, audit_engagement"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`controls.control_assessments`"
+      x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,38"
+      parameters:
+        - { $ref: '#/components/parameters/CorrelationId' }
+        - { $ref: '#/components/parameters/TenantContext' }
+        - { $ref: '#/components/parameters/Cursor' }
+        - { $ref: '#/components/parameters/PageSize' }
+        - { $ref: '#/components/parameters/LifecycleStateFilter' }
+        - { $ref: '#/components/parameters/ControlIdFilter' }
+      responses:
+        '200': { $ref: '#/components/responses/ControlAssessmentListSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
     post:
       operationId: controlAssessmentCreate
       tags: ["controls"]
@@ -788,6 +882,39 @@ paths:
         '404': { $ref: '#/components/responses/NotFoundError' }
         '409': { $ref: '#/components/responses/ConflictError' }
   "/evidence-requests":
+    get:
+      operationId: evidenceRequestList
+      tags: ["evidence"]
+      summary: "EVIDENCE_DOCUMENTS: evidenceRequestList"
+      description: "Approved by DR-PHASE5-API-READ-2026-09-17-002. Cursor-paginated EvidenceRequest projection with only typed contractual target filters."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "EVIDENCE_DOCUMENTS"
+      x-tcdx-permission: "`evidence.evidence_request.read`"
+      x-tcdx-scope: "tenant, assigned_object, owned_object, audit_engagement"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`evidence.evidence_requests`"
+      x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,24,44"
+      parameters:
+        - { $ref: '#/components/parameters/CorrelationId' }
+        - { $ref: '#/components/parameters/TenantContext' }
+        - { $ref: '#/components/parameters/Cursor' }
+        - { $ref: '#/components/parameters/PageSize' }
+        - { $ref: '#/components/parameters/LifecycleStateFilter' }
+        - { $ref: '#/components/parameters/RequirementIdFilter' }
+        - { $ref: '#/components/parameters/ControlIdFilter' }
+        - { $ref: '#/components/parameters/AssignedMembershipIdFilter' }
+        - { $ref: '#/components/parameters/DueFromFilter' }
+        - { $ref: '#/components/parameters/DueToFilter' }
+      responses:
+        '200': { $ref: '#/components/responses/EvidenceRequestListSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
     post:
       operationId: evidenceRequestCreate
       tags: ["evidence"]
@@ -962,6 +1089,37 @@ paths:
         '404': { $ref: '#/components/responses/NotFoundError' }
         '409': { $ref: '#/components/responses/ConflictError' }
   "/issues":
+    get:
+      operationId: issueList
+      tags: ["remediation"]
+      summary: "ISSUES_ACTIONS: issueList"
+      description: "Approved by DR-PHASE5-API-READ-2026-09-17-002. Cursor-paginated Issue projection constrained by tenant, scope, object policy and authorized typed-origin visibility."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISSUES_ACTIONS"
+      x-tcdx-permission: "`remediation.issue.read`"
+      x-tcdx-scope: "tenant, assigned_object, owned_object, audit_engagement"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`remediation.issues`, `remediation.issue_origins`"
+      x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,44"
+      parameters:
+        - { $ref: '#/components/parameters/CorrelationId' }
+        - { $ref: '#/components/parameters/TenantContext' }
+        - { $ref: '#/components/parameters/Cursor' }
+        - { $ref: '#/components/parameters/PageSize' }
+        - { $ref: '#/components/parameters/LifecycleStateFilter' }
+        - { $ref: '#/components/parameters/OwnerSubjectIdFilter' }
+        - { $ref: '#/components/parameters/DueFromFilter' }
+        - { $ref: '#/components/parameters/DueToFilter' }
+      responses:
+        '200': { $ref: '#/components/responses/IssueListSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
     post:
       operationId: issueCreate
       tags: ["remediation"]
@@ -2124,6 +2282,427 @@ paths:
         '403': { $ref: '#/components/responses/AuthorizationError' }
         '404': { $ref: '#/components/responses/NotFoundError' }
         '409': { $ref: '#/components/responses/ConflictError' }
+  "/requirement-applicabilities/{id}":
+    get:
+      operationId: applicabilityGet
+      tags: ["compliance"]
+      summary: "ISO_COMPLIANCE: applicabilityGet"
+      description: "Approved PRE-F5 detail projection. Foreign-tenant and out-of-scope identifiers are concealed as TCDX.RESOURCE.NOT_FOUND."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISO_COMPLIANCE"
+      x-tcdx-permission: "`compliance.applicability.read`"
+      x-tcdx-scope: "tenant, organizational_unit, process, service, assigned_object, owned_object"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`regulatory.requirement_applicabilities`"
+      x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,44"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/RequirementApplicabilityDetailSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/requirement-assessments/{id}":
+    get:
+      operationId: requirementAssessmentGet
+      tags: ["compliance"]
+      summary: "ISO_COMPLIANCE: requirementAssessmentGet"
+      description: "Approved PRE-F5 detail projection preserving lifecycle_state, result_status and domain_conclusion as separate semantics."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISO_COMPLIANCE"
+      x-tcdx-permission: "`compliance.requirement_assessment.read`"
+      x-tcdx-scope: "tenant, organizational_unit, process, service, assigned_object, owned_object"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`regulatory.requirement_assessments`"
+      x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,38,44"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/RequirementAssessmentDetailSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/statements-of-applicability":
+    get:
+      operationId: soaList
+      tags: ["compliance"]
+      summary: "ISO_COMPLIANCE: soaList"
+      description: "Approved PRE-F5 cursor-paginated StatementOfApplicability projection; this is not a reporting engine."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISO_COMPLIANCE"
+      x-tcdx-permission: "`compliance.soa.read`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`regulatory.statements_of_applicability`"
+      x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,41,44"
+      parameters:
+        - { $ref: '#/components/parameters/CorrelationId' }
+        - { $ref: '#/components/parameters/TenantContext' }
+        - { $ref: '#/components/parameters/Cursor' }
+        - { $ref: '#/components/parameters/PageSize' }
+        - { $ref: '#/components/parameters/LifecycleStateFilter' }
+        - { $ref: '#/components/parameters/FrameworkVersionIdFilter' }
+      responses:
+        '200': { $ref: '#/components/responses/StatementOfApplicabilityListSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/statements-of-applicability/{id}":
+    get:
+      operationId: soaGet
+      tags: ["compliance"]
+      summary: "ISO_COMPLIANCE: soaGet"
+      description: "Approved PRE-F5 SoA detail projection with authorized StatementOfApplicabilityItem children; no child endpoint or identity is added."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISO_COMPLIANCE"
+      x-tcdx-permission: "`compliance.soa.read`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`regulatory.statements_of_applicability`, `regulatory.statement_of_applicability_items`"
+      x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,41,44"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/StatementOfApplicabilityDetailSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/controls":
+    get:
+      operationId: controlList
+      tags: ["controls"]
+      summary: "CONTROLS_ASSURANCE: controlList"
+      description: "Approved PRE-F5 cursor-paginated Control projection; global references and tenant Controls retain distinct ownership and implementation semantics."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CONTROLS_ASSURANCE"
+      x-tcdx-permission: "`controls.control.read`"
+      x-tcdx-scope: "tenant, organizational_unit, process, service, assigned_object, owned_object, audit_engagement"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`controls.controls`, `controls.control_versions`, `controls.control_scopes`"
+      x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,44"
+      parameters:
+        - { $ref: '#/components/parameters/CorrelationId' }
+        - { $ref: '#/components/parameters/TenantContext' }
+        - { $ref: '#/components/parameters/Cursor' }
+        - { $ref: '#/components/parameters/PageSize' }
+        - { $ref: '#/components/parameters/LifecycleStateFilter' }
+        - { $ref: '#/components/parameters/OwnerSubjectIdFilter' }
+        - { $ref: '#/components/parameters/ScopeSubjectIdFilter' }
+      responses:
+        '200': { $ref: '#/components/responses/ControlListSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/controls/{id}":
+    get:
+      operationId: controlGet
+      tags: ["controls"]
+      summary: "CONTROLS_ASSURANCE: controlGet"
+      description: "Approved PRE-F5 Control detail with authorized ControlVersion, ControlObjective and ControlScope projections."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CONTROLS_ASSURANCE"
+      x-tcdx-permission: "`controls.control.read`"
+      x-tcdx-scope: "tenant, organizational_unit, process, service, assigned_object, owned_object, audit_engagement"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`controls.controls`, `controls.control_versions`, `controls.control_objectives`, `controls.control_scopes`"
+      x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,44"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/ControlDetailSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/control-assessments/{id}":
+    get:
+      operationId: controlAssessmentGet
+      tags: ["controls"]
+      summary: "CONTROLS_ASSURANCE: controlAssessmentGet"
+      description: "Approved PRE-F5 ControlAssessment detail preserving authoritative status, conclusion and effectiveness fields."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CONTROLS_ASSURANCE"
+      x-tcdx-permission: "`controls.control_assessment.read`"
+      x-tcdx-scope: "tenant, organizational_unit, process, service, assigned_object, owned_object, audit_engagement"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`controls.control_assessments`"
+      x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,38"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/ControlAssessmentDetailSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/assurance-tests":
+    get:
+      operationId: assuranceTestList
+      tags: ["controls"]
+      summary: "CONTROLS_ASSURANCE: assuranceTestList"
+      description: "Approved PRE-F5 cursor-paginated AssuranceTest projection constrained by tenant, assignment, engagement and target-object policy."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CONTROLS_ASSURANCE"
+      x-tcdx-permission: "`controls.assurance_test.read`"
+      x-tcdx-scope: "tenant, assigned_object, owned_object, audit_engagement"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`controls.assurance_tests`"
+      x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,38"
+      parameters:
+        - { $ref: '#/components/parameters/CorrelationId' }
+        - { $ref: '#/components/parameters/TenantContext' }
+        - { $ref: '#/components/parameters/Cursor' }
+        - { $ref: '#/components/parameters/PageSize' }
+        - { $ref: '#/components/parameters/LifecycleStateFilter' }
+        - { $ref: '#/components/parameters/ControlIdFilter' }
+        - { $ref: '#/components/parameters/AssignedMembershipIdFilter' }
+      responses:
+        '200': { $ref: '#/components/responses/AssuranceTestListSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/assurance-tests/{id}":
+    get:
+      operationId: assuranceTestGet
+      tags: ["controls"]
+      summary: "CONTROLS_ASSURANCE: assuranceTestGet"
+      description: "Approved PRE-F5 AssuranceTest detail with authorized AssuranceSample and result projections."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CONTROLS_ASSURANCE"
+      x-tcdx-permission: "`controls.assurance_test.read`"
+      x-tcdx-scope: "tenant, assigned_object, owned_object, audit_engagement"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`controls.assurance_tests`, `controls.assurance_samples`"
+      x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,38"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/AssuranceTestDetailSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/evidence-requests/{id}":
+    get:
+      operationId: evidenceRequestGet
+      tags: ["evidence"]
+      summary: "EVIDENCE_DOCUMENTS: evidenceRequestGet"
+      description: "Approved PRE-F5 EvidenceRequest detail. The typed target is exposed only when independently authorized."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "EVIDENCE_DOCUMENTS"
+      x-tcdx-permission: "`evidence.evidence_request.read`"
+      x-tcdx-scope: "tenant, assigned_object, owned_object, audit_engagement"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`evidence.evidence_requests`"
+      x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,24,44"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/EvidenceRequestDetailSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/evidence":
+    get:
+      operationId: evidenceList
+      tags: ["evidence"]
+      summary: "EVIDENCE_DOCUMENTS: evidenceList"
+      description: "Approved PRE-F5 cursor-paginated Evidence projection. Binary content, secrets and signed URLs are never returned by this read contract."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "EVIDENCE_DOCUMENTS"
+      x-tcdx-permission: "`evidence.evidence.read`"
+      x-tcdx-scope: "tenant, assigned_object, owned_object, audit_engagement"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`evidence.evidences`, authorized current version metadata"
+      x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,24"
+      parameters:
+        - { $ref: '#/components/parameters/CorrelationId' }
+        - { $ref: '#/components/parameters/TenantContext' }
+        - { $ref: '#/components/parameters/Cursor' }
+        - { $ref: '#/components/parameters/PageSize' }
+        - { $ref: '#/components/parameters/LifecycleStateFilter' }
+        - { $ref: '#/components/parameters/OwnerSubjectIdFilter' }
+        - { $ref: '#/components/parameters/ExpiresFromFilter' }
+        - { $ref: '#/components/parameters/ExpiresToFilter' }
+      responses:
+        '200': { $ref: '#/components/responses/EvidenceListSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/evidence/{id}":
+    get:
+      operationId: evidenceGet
+      tags: ["evidence"]
+      summary: "EVIDENCE_DOCUMENTS: evidenceGet"
+      description: "Approved PRE-F5 Evidence detail with authorized EvidenceVersion, EvidenceLink and EvidenceReview metadata projections."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "EVIDENCE_DOCUMENTS"
+      x-tcdx-permission: "`evidence.evidence.read`"
+      x-tcdx-scope: "tenant, assigned_object, owned_object, audit_engagement"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`evidence.evidences`, `evidence.evidence_versions`, `evidence.evidence_links`, `evidence.evidence_reviews`"
+      x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,24,44"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/EvidenceDetailSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/evidence-versions/{id}":
+    get:
+      operationId: evidenceVersionGet
+      tags: ["evidence"]
+      summary: "EVIDENCE_DOCUMENTS: evidenceVersionGet"
+      description: "Approved PRE-F5 EvidenceVersion detail with authorized link/review metadata; file binary and signed URLs remain outside the response."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "EVIDENCE_DOCUMENTS"
+      x-tcdx-permission: "`evidence.evidence.read`"
+      x-tcdx-scope: "tenant, assigned_object, owned_object, audit_engagement"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`evidence.evidence_versions`, `evidence.evidence_links`, `evidence.evidence_reviews`"
+      x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,24,44"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/EvidenceVersionDetailSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/issues/{id}":
+    get:
+      operationId: issueGet
+      tags: ["remediation"]
+      summary: "ISSUES_ACTIONS: issueGet"
+      description: "Approved PRE-F5 Issue detail with typed IssueOrigin children; the origin projection never grants access to its source object."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISSUES_ACTIONS"
+      x-tcdx-permission: "`remediation.issue.read`"
+      x-tcdx-scope: "tenant, assigned_object, owned_object, audit_engagement"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`remediation.issues`, `remediation.issue_origins`"
+      x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,44"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/IssueDetailSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/actions":
+    get:
+      operationId: actionList
+      tags: ["remediation"]
+      summary: "ISSUES_ACTIONS: actionList"
+      description: "Approved PRE-F5 cursor-paginated Action projection constrained by parent-Issue visibility, assignment, scope and object policy."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISSUES_ACTIONS"
+      x-tcdx-permission: "`remediation.action.read`"
+      x-tcdx-scope: "tenant, assigned_object, owned_object, audit_engagement"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`remediation.actions`"
+      x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22"
+      parameters:
+        - { $ref: '#/components/parameters/CorrelationId' }
+        - { $ref: '#/components/parameters/TenantContext' }
+        - { $ref: '#/components/parameters/Cursor' }
+        - { $ref: '#/components/parameters/PageSize' }
+        - { $ref: '#/components/parameters/LifecycleStateFilter' }
+        - { $ref: '#/components/parameters/IssueIdFilter' }
+        - { $ref: '#/components/parameters/AssignedMembershipIdFilter' }
+        - { $ref: '#/components/parameters/DueFromFilter' }
+        - { $ref: '#/components/parameters/DueToFilter' }
+      responses:
+        '200': { $ref: '#/components/responses/ActionListSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/actions/{id}":
+    get:
+      operationId: actionGet
+      tags: ["remediation"]
+      summary: "ISSUES_ACTIONS: actionGet"
+      description: "Approved PRE-F5 Action detail with authorized ActionEvidenceLink and ActionVerification metadata."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISSUES_ACTIONS"
+      x-tcdx-permission: "`remediation.action.read`"
+      x-tcdx-scope: "tenant, assigned_object, owned_object, audit_engagement"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`remediation.actions`, `remediation.action_evidence_links`, `remediation.action_verifications`"
+      x-tcdx-rector-source: "DR-PHASE5-API-READ-2026-09-17-002; 09,22,24"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/ActionDetailSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
 tags: []
 components:
   securitySchemes:
@@ -2196,6 +2775,78 @@ components:
       required: false
       description: Resource-specific allowlisted filter object; generic operators are not authorized by this base contract.
       schema: { type: string }
+    LifecycleStateFilter:
+      name: filter[lifecycle_state]
+      in: query
+      required: false
+      description: Exact lifecycle-state value from the target resource contract; no generic operator syntax.
+      schema: { type: string, minLength: 1 }
+    RequirementIdFilter:
+      name: filter[requirement_id]
+      in: query
+      required: false
+      description: Existing Requirement reference; visibility of the Requirement is independently enforced.
+      schema: { $ref: '#/components/schemas/UuidV7' }
+    FrameworkVersionIdFilter:
+      name: filter[framework_version_id]
+      in: query
+      required: false
+      description: Existing entitled FrameworkVersion reference.
+      schema: { $ref: '#/components/schemas/UuidV7' }
+    ControlIdFilter:
+      name: filter[control_id]
+      in: query
+      required: false
+      description: Existing authorized Control reference.
+      schema: { $ref: '#/components/schemas/UuidV7' }
+    IssueIdFilter:
+      name: filter[issue_id]
+      in: query
+      required: false
+      description: Existing authorized parent Issue reference.
+      schema: { $ref: '#/components/schemas/UuidV7' }
+    ScopeSubjectIdFilter:
+      name: filter[scope_subject_id]
+      in: query
+      required: false
+      description: Existing same-tenant Subject used by the canonical scope relationship.
+      schema: { $ref: '#/components/schemas/UuidV7' }
+    OwnerSubjectIdFilter:
+      name: filter[business_owner_subject_id]
+      in: query
+      required: false
+      description: Existing same-tenant business-owner Subject; object policy remains authoritative.
+      schema: { $ref: '#/components/schemas/UuidV7' }
+    AssignedMembershipIdFilter:
+      name: filter[assigned_membership_id]
+      in: query
+      required: false
+      description: Existing active same-tenant membership used by the canonical assignment relationship.
+      schema: { $ref: '#/components/schemas/UuidV7' }
+    DueFromFilter:
+      name: filter[due_from]
+      in: query
+      required: false
+      description: Inclusive lower bound for an existing due date/timestamp field.
+      schema: { type: string, format: date }
+    DueToFilter:
+      name: filter[due_to]
+      in: query
+      required: false
+      description: Inclusive upper bound for an existing due date/timestamp field.
+      schema: { type: string, format: date }
+    ExpiresFromFilter:
+      name: filter[expires_from]
+      in: query
+      required: false
+      description: Inclusive lower bound over authorized EvidenceVersion expiry metadata.
+      schema: { type: string, format: date-time }
+    ExpiresToFilter:
+      name: filter[expires_to]
+      in: query
+      required: false
+      description: Inclusive upper bound over authorized EvidenceVersion expiry metadata.
+      schema: { type: string, format: date-time }
   headers:
     CorrelationId:
       description: Effective end-to-end correlation UUID.
@@ -2281,6 +2932,447 @@ components:
       properties:
         next_cursor: { type: [string, 'null'] }
         has_more: { type: boolean }
+    RequirementApplicabilityProjection:
+      type: object
+      additionalProperties: false
+      required: [requirement_applicability_id, requirement_id, applicability_version, applicability_decision, lifecycle_state, effective_from]
+      properties:
+        requirement_applicability_id: { $ref: '#/components/schemas/UuidV7' }
+        requirement_id: { $ref: '#/components/schemas/UuidV7' }
+        scope_subject_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        applicability_version: { type: integer, format: int64, minimum: 1 }
+        applicability_decision: { type: string }
+        rationale: { type: string }
+        lifecycle_state: { type: string }
+        effective_from: { $ref: '#/components/schemas/UtcTimestamp' }
+        effective_to: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        approved_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+    RequirementAssessmentProjection:
+      type: object
+      additionalProperties: false
+      required: [requirement_assessment_id, requirement_applicability_id, methodology_version_ref, lifecycle_state, result_status]
+      properties:
+        requirement_assessment_id: { $ref: '#/components/schemas/UuidV7' }
+        requirement_applicability_id: { $ref: '#/components/schemas/UuidV7' }
+        methodology_version_ref: { $ref: '#/components/schemas/UuidV7' }
+        lifecycle_state: { type: string }
+        result_status: { $ref: '#/components/schemas/ResultStatus' }
+        domain_conclusion: { type: [string, 'null'] }
+        coverage_percent: { type: [number, 'null'], minimum: 0, maximum: 100 }
+        assessed_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        approved_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        effective_configuration_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        superseded_by_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+    StatementOfApplicabilityItemProjection:
+      type: object
+      additionalProperties: false
+      required: [statement_of_applicability_item_id, reference_control_version_id, applicability_decision, justification, implementation_state]
+      properties:
+        statement_of_applicability_item_id: { $ref: '#/components/schemas/UuidV7' }
+        reference_control_version_id: { $ref: '#/components/schemas/UuidV7' }
+        applicability_decision: { type: string }
+        justification: { type: string }
+        implementation_state: { type: string }
+        tenant_control_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        tenant_control_version_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+    StatementOfApplicabilityProjection:
+      type: object
+      additionalProperties: false
+      required: [statement_of_applicability_id, framework_version_id, soa_version, title, lifecycle_state]
+      properties:
+        statement_of_applicability_id: { $ref: '#/components/schemas/UuidV7' }
+        framework_version_id: { $ref: '#/components/schemas/UuidV7' }
+        soa_version: { type: integer, format: int64, minimum: 1 }
+        title: { type: string }
+        lifecycle_state: { type: string }
+        effective_from: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        effective_to: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        approved_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        published_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        superseded_by_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        items:
+          type: array
+          items: { $ref: '#/components/schemas/StatementOfApplicabilityItemProjection' }
+          description: Present only on authorized detail projection.
+    ControlVersionProjection:
+      type: object
+      additionalProperties: false
+      required: [control_version_id, control_id, version_number, objective, control_type, nature, frequency_code, execution_method, verification_method, minimum_evidence, lifecycle_state]
+      properties:
+        control_version_id: { $ref: '#/components/schemas/UuidV7' }
+        control_id: { $ref: '#/components/schemas/UuidV7' }
+        version_number: { type: integer, format: int64, minimum: 1 }
+        objective: { type: string }
+        control_type: { type: string }
+        nature: { type: string }
+        frequency_code: { type: string }
+        execution_method: { type: string }
+        verification_method: { type: string }
+        minimum_evidence: { type: string }
+        suggested_owner_role_code: { type: [string, 'null'] }
+        lifecycle_state: { type: string }
+        effective_from: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        effective_to: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        published_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        superseded_by_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+    ControlObjectiveProjection:
+      type: object
+      additionalProperties: false
+      required: [control_objective_id, control_version_id, objective_code, description, display_order]
+      properties:
+        control_objective_id: { $ref: '#/components/schemas/UuidV7' }
+        control_version_id: { $ref: '#/components/schemas/UuidV7' }
+        objective_code: { type: string }
+        description: { type: string }
+        display_order: { type: integer }
+    ControlScopeProjection:
+      type: object
+      additionalProperties: false
+      required: [control_scope_id, control_id, subject_id, scope_role]
+      properties:
+        control_scope_id: { $ref: '#/components/schemas/UuidV7' }
+        control_id: { $ref: '#/components/schemas/UuidV7' }
+        subject_id: { $ref: '#/components/schemas/UuidV7' }
+        scope_role: { type: string }
+        effective_from: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        effective_to: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+    ControlProjection:
+      type: object
+      additionalProperties: false
+      required: [control_id, row_version, ownership_class, control_code, name, control_origin, lifecycle_state]
+      properties:
+        control_id: { $ref: '#/components/schemas/UuidV7' }
+        row_version: { type: integer, format: int64, minimum: 1 }
+        ownership_class: { $ref: '#/components/schemas/OwnershipClass' }
+        control_code: { type: string }
+        name: { type: string }
+        control_origin: { type: string, enum: [regulatory_reference, tcdx_baseline, tenant_instantiated, tenant_defined] }
+        based_on_control_version_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        business_owner_subject_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        lifecycle_state: { type: string }
+        versions:
+          type: array
+          items: { $ref: '#/components/schemas/ControlVersionProjection' }
+          description: Present only when authorized by the detail projection.
+        objectives:
+          type: array
+          items: { $ref: '#/components/schemas/ControlObjectiveProjection' }
+          description: Authorized objective references for projected ControlVersions.
+        scopes:
+          type: array
+          items: { $ref: '#/components/schemas/ControlScopeProjection' }
+          description: Same-tenant authorized ControlScope references.
+    ControlAssessmentProjection:
+      type: object
+      additionalProperties: false
+      required: [control_assessment_id, control_id, control_version_id, methodology_version_ref, lifecycle_state, result_status]
+      properties:
+        control_assessment_id: { $ref: '#/components/schemas/UuidV7' }
+        control_id: { $ref: '#/components/schemas/UuidV7' }
+        control_version_id: { $ref: '#/components/schemas/UuidV7' }
+        methodology_version_ref: { $ref: '#/components/schemas/UuidV7' }
+        lifecycle_state: { type: string }
+        result_status: { $ref: '#/components/schemas/ResultStatus' }
+        domain_conclusion: { type: [string, 'null'] }
+        design_effectiveness: { type: [number, 'null'] }
+        operating_effectiveness: { type: [number, 'null'] }
+        overall_effectiveness: { type: [number, 'null'] }
+        coverage_percent: { type: [number, 'null'], minimum: 0, maximum: 100 }
+        effective_configuration_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        assessed_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        superseded_by_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+    AssuranceSampleProjection:
+      type: object
+      additionalProperties: false
+      required: [assurance_sample_id, assurance_test_id, sample_code, sample_count, selection_method, result_status]
+      properties:
+        assurance_sample_id: { $ref: '#/components/schemas/UuidV7' }
+        assurance_test_id: { $ref: '#/components/schemas/UuidV7' }
+        sample_code: { type: string }
+        population_count: { type: [integer, 'null'], format: int64, minimum: 0 }
+        sample_count: { type: integer, format: int64, minimum: 0 }
+        selection_method: { type: string }
+        sample_period_start: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        sample_period_end: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        result_status: { $ref: '#/components/schemas/ResultStatus' }
+    AssuranceTestProjection:
+      type: object
+      additionalProperties: false
+      required: [assurance_test_id, control_id, control_version_id, test_code, lifecycle_state, result_status]
+      properties:
+        assurance_test_id: { $ref: '#/components/schemas/UuidV7' }
+        control_id: { $ref: '#/components/schemas/UuidV7' }
+        control_version_id: { $ref: '#/components/schemas/UuidV7' }
+        test_code: { type: string }
+        lifecycle_state: { type: string }
+        result_status: { $ref: '#/components/schemas/ResultStatus' }
+        domain_conclusion: { type: [string, 'null'] }
+        planned_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        executed_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        reviewed_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        approved_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        executor_membership_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        reviewer_membership_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        superseded_by_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        samples:
+          type: array
+          items: { $ref: '#/components/schemas/AssuranceSampleProjection' }
+          description: Present only on authorized detail projection.
+    EvidenceRequestProjection:
+      type: object
+      additionalProperties: false
+      required: [evidence_request_id, row_version, request_code, lifecycle_state, requested_by_membership_id]
+      properties:
+        evidence_request_id: { $ref: '#/components/schemas/UuidV7' }
+        row_version: { type: integer, format: int64, minimum: 1 }
+        request_code: { type: string }
+        requirement_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        control_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        requirement_assessment_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        control_assessment_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        assurance_test_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        lifecycle_state: { type: string }
+        requested_by_membership_id: { $ref: '#/components/schemas/UuidV7' }
+        assigned_membership_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        due_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        fulfilled_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+      description: Exactly one typed target ID is populated, as enforced by the frozen physical contract.
+    EvidenceLinkProjection:
+      type: object
+      additionalProperties: false
+      required: [evidence_link_id, evidence_version_id]
+      properties:
+        evidence_link_id: { $ref: '#/components/schemas/UuidV7' }
+        evidence_version_id: { $ref: '#/components/schemas/UuidV7' }
+        requirement_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        control_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        control_version_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        requirement_assessment_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        control_assessment_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        assurance_test_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        claim: { type: [string, 'null'] }
+        effective_from: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        effective_to: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+      description: Exactly one typed target is populated; the link never confers target-object read authority.
+    EvidenceReviewProjection:
+      type: object
+      additionalProperties: false
+      required: [evidence_review_id, evidence_id, evidence_version_id, reviewer_membership_id, decision, rationale, reviewed_at]
+      properties:
+        evidence_review_id: { $ref: '#/components/schemas/UuidV7' }
+        evidence_id: { $ref: '#/components/schemas/UuidV7' }
+        evidence_version_id: { $ref: '#/components/schemas/UuidV7' }
+        reviewer_membership_id: { $ref: '#/components/schemas/UuidV7' }
+        decision: { type: string }
+        sufficiency: { type: [string, 'null'] }
+        relevance: { type: [string, 'null'] }
+        rationale: { type: string }
+        reviewed_at: { $ref: '#/components/schemas/UtcTimestamp' }
+    EvidenceVersionProjection:
+      type: object
+      additionalProperties: false
+      required: [evidence_version_id, evidence_id, version_number, lifecycle_state, provenance_ref]
+      properties:
+        evidence_version_id: { $ref: '#/components/schemas/UuidV7' }
+        evidence_id: { $ref: '#/components/schemas/UuidV7' }
+        version_number: { type: integer, format: int64, minimum: 1 }
+        lifecycle_state: { type: string }
+        document_version_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        file_object_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        period_start: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        period_end: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        effective_from: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        effective_to: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        submitted_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        approved_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        expires_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        published_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        superseded_by_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        provenance_ref: { type: string }
+        links:
+          type: array
+          items: { $ref: '#/components/schemas/EvidenceLinkProjection' }
+          description: Present only when the linked target metadata is authorized.
+        reviews:
+          type: array
+          items: { $ref: '#/components/schemas/EvidenceReviewProjection' }
+          description: Present only when review metadata is authorized.
+      description: Never contains file binary, secret material or signed URLs.
+    EvidenceProjection:
+      type: object
+      additionalProperties: false
+      required: [evidence_id, row_version, evidence_code, evidence_type, lifecycle_state, retention_policy_id, source_kind]
+      properties:
+        evidence_id: { $ref: '#/components/schemas/UuidV7' }
+        row_version: { type: integer, format: int64, minimum: 1 }
+        evidence_code: { type: string }
+        evidence_type: { type: string }
+        business_owner_subject_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        lifecycle_state: { type: string }
+        valid_from: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        valid_to: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        retention_policy_id: { $ref: '#/components/schemas/UuidV7' }
+        source_kind: { type: string }
+        versions:
+          type: array
+          items: { $ref: '#/components/schemas/EvidenceVersionProjection' }
+          description: Present only on authorized detail projection.
+    IssueOriginProjection:
+      type: object
+      additionalProperties: false
+      required: [issue_origin_id, issue_id, origin_role]
+      properties:
+        issue_origin_id: { $ref: '#/components/schemas/UuidV7' }
+        issue_id: { $ref: '#/components/schemas/UuidV7' }
+        requirement_assessment_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        control_assessment_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        assurance_test_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        audit_test_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        risk_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        incident_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        supplier_assessment_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        origin_role: { type: string }
+      description: Exactly one typed origin ID is populated; no generic polymorphic reference is authorized.
+    IssueProjection:
+      type: object
+      additionalProperties: false
+      required: [issue_id, row_version, issue_code, issue_kind, title, description, lifecycle_state, severity, priority]
+      properties:
+        issue_id: { $ref: '#/components/schemas/UuidV7' }
+        row_version: { type: integer, format: int64, minimum: 1 }
+        issue_code: { type: string }
+        issue_kind: { type: string }
+        title: { type: string }
+        description: { type: string }
+        lifecycle_state: { type: string }
+        severity: { type: string }
+        priority: { type: string }
+        business_owner_subject_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        due_date: { type: [string, 'null'], format: date }
+        dismissal_reason: { type: [string, 'null'] }
+        closed_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        origins:
+          type: array
+          items: { $ref: '#/components/schemas/IssueOriginProjection' }
+          description: Present only when typed origin metadata is authorized.
+    ActionEvidenceLinkProjection:
+      type: object
+      additionalProperties: false
+      required: [action_evidence_link_id, action_id, evidence_version_id, link_role]
+      properties:
+        action_evidence_link_id: { $ref: '#/components/schemas/UuidV7' }
+        action_id: { $ref: '#/components/schemas/UuidV7' }
+        evidence_version_id: { $ref: '#/components/schemas/UuidV7' }
+        link_role: { type: string }
+      description: Link metadata does not grant Evidence read authority.
+    ActionVerificationProjection:
+      type: object
+      additionalProperties: false
+      required: [action_verification_id, action_id, verifier_membership_id, verification_decision, rationale, verified_at]
+      properties:
+        action_verification_id: { $ref: '#/components/schemas/UuidV7' }
+        action_id: { $ref: '#/components/schemas/UuidV7' }
+        verifier_membership_id: { $ref: '#/components/schemas/UuidV7' }
+        verification_decision: { type: string }
+        rationale: { type: string }
+        verified_at: { $ref: '#/components/schemas/UtcTimestamp' }
+        retest_reference: { type: [string, 'null'] }
+    ActionProjection:
+      type: object
+      additionalProperties: false
+      required: [action_id, row_version, issue_id, action_code, title, description, lifecycle_state, priority]
+      properties:
+        action_id: { $ref: '#/components/schemas/UuidV7' }
+        row_version: { type: integer, format: int64, minimum: 1 }
+        issue_id: { $ref: '#/components/schemas/UuidV7' }
+        action_code: { type: string }
+        title: { type: string }
+        description: { type: string }
+        lifecycle_state: { type: string }
+        priority: { type: string }
+        assigned_membership_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        due_date: { type: [string, 'null'], format: date }
+        completed_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        verified_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        cancel_reason: { type: [string, 'null'] }
+        evidence_links:
+          type: array
+          items: { $ref: '#/components/schemas/ActionEvidenceLinkProjection' }
+          description: Present only when link metadata is authorized; linked Evidence requires independent permission.
+        verifications:
+          type: array
+          items: { $ref: '#/components/schemas/ActionVerificationProjection' }
+          description: Present only on authorized detail projection.
+    RequirementApplicabilityPage:
+      type: object
+      additionalProperties: false
+      required: [items, page]
+      properties:
+        items: { type: array, items: { $ref: '#/components/schemas/RequirementApplicabilityProjection' } }
+        page: { $ref: '#/components/schemas/PageMeta' }
+    RequirementAssessmentPage:
+      type: object
+      additionalProperties: false
+      required: [items, page]
+      properties:
+        items: { type: array, items: { $ref: '#/components/schemas/RequirementAssessmentProjection' } }
+        page: { $ref: '#/components/schemas/PageMeta' }
+    StatementOfApplicabilityPage:
+      type: object
+      additionalProperties: false
+      required: [items, page]
+      properties:
+        items: { type: array, items: { $ref: '#/components/schemas/StatementOfApplicabilityProjection' } }
+        page: { $ref: '#/components/schemas/PageMeta' }
+    ControlPage:
+      type: object
+      additionalProperties: false
+      required: [items, page]
+      properties:
+        items: { type: array, items: { $ref: '#/components/schemas/ControlProjection' } }
+        page: { $ref: '#/components/schemas/PageMeta' }
+    ControlAssessmentPage:
+      type: object
+      additionalProperties: false
+      required: [items, page]
+      properties:
+        items: { type: array, items: { $ref: '#/components/schemas/ControlAssessmentProjection' } }
+        page: { $ref: '#/components/schemas/PageMeta' }
+    AssuranceTestPage:
+      type: object
+      additionalProperties: false
+      required: [items, page]
+      properties:
+        items: { type: array, items: { $ref: '#/components/schemas/AssuranceTestProjection' } }
+        page: { $ref: '#/components/schemas/PageMeta' }
+    EvidenceRequestPage:
+      type: object
+      additionalProperties: false
+      required: [items, page]
+      properties:
+        items: { type: array, items: { $ref: '#/components/schemas/EvidenceRequestProjection' } }
+        page: { $ref: '#/components/schemas/PageMeta' }
+    EvidencePage:
+      type: object
+      additionalProperties: false
+      required: [items, page]
+      properties:
+        items: { type: array, items: { $ref: '#/components/schemas/EvidenceProjection' } }
+        page: { $ref: '#/components/schemas/PageMeta' }
+    IssuePage:
+      type: object
+      additionalProperties: false
+      required: [items, page]
+      properties:
+        items: { type: array, items: { $ref: '#/components/schemas/IssueProjection' } }
+        page: { $ref: '#/components/schemas/PageMeta' }
+    ActionPage:
+      type: object
+      additionalProperties: false
+      required: [items, page]
+      properties:
+        items: { type: array, items: { $ref: '#/components/schemas/ActionProjection' } }
+        page: { $ref: '#/components/schemas/PageMeta' }
     AsyncOperation:
       type: object
       additionalProperties: false
@@ -2324,6 +3416,90 @@ components:
       content:
         application/json:
           schema: { $ref: '#/components/schemas/OperationResult' }
+    RequirementApplicabilityListSuccess:
+      description: Authorized cursor page of RequirementApplicability projections.
+      headers: { X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }, X-Request-Id: { $ref: '#/components/headers/RequestId' } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/RequirementApplicabilityPage' } } }
+    RequirementApplicabilityDetailSuccess:
+      description: Authorized RequirementApplicability detail projection.
+      headers: { X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }, X-Request-Id: { $ref: '#/components/headers/RequestId' } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/RequirementApplicabilityProjection' } } }
+    RequirementAssessmentListSuccess:
+      description: Authorized cursor page of RequirementAssessment projections.
+      headers: { X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }, X-Request-Id: { $ref: '#/components/headers/RequestId' } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/RequirementAssessmentPage' } } }
+    RequirementAssessmentDetailSuccess:
+      description: Authorized RequirementAssessment detail projection.
+      headers: { X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }, X-Request-Id: { $ref: '#/components/headers/RequestId' } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/RequirementAssessmentProjection' } } }
+    StatementOfApplicabilityListSuccess:
+      description: Authorized cursor page of StatementOfApplicability projections.
+      headers: { X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }, X-Request-Id: { $ref: '#/components/headers/RequestId' } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/StatementOfApplicabilityPage' } } }
+    StatementOfApplicabilityDetailSuccess:
+      description: Authorized StatementOfApplicability detail projection with permitted items.
+      headers: { X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }, X-Request-Id: { $ref: '#/components/headers/RequestId' } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/StatementOfApplicabilityProjection' } } }
+    ControlListSuccess:
+      description: Authorized cursor page of Control projections.
+      headers: { X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }, X-Request-Id: { $ref: '#/components/headers/RequestId' } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/ControlPage' } } }
+    ControlDetailSuccess:
+      description: Authorized Control detail projection with permitted version/objective/scope references.
+      headers: { X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }, X-Request-Id: { $ref: '#/components/headers/RequestId' } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/ControlProjection' } } }
+    ControlAssessmentListSuccess:
+      description: Authorized cursor page of ControlAssessment projections.
+      headers: { X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }, X-Request-Id: { $ref: '#/components/headers/RequestId' } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/ControlAssessmentPage' } } }
+    ControlAssessmentDetailSuccess:
+      description: Authorized ControlAssessment detail projection.
+      headers: { X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }, X-Request-Id: { $ref: '#/components/headers/RequestId' } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/ControlAssessmentProjection' } } }
+    AssuranceTestListSuccess:
+      description: Authorized cursor page of AssuranceTest projections.
+      headers: { X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }, X-Request-Id: { $ref: '#/components/headers/RequestId' } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/AssuranceTestPage' } } }
+    AssuranceTestDetailSuccess:
+      description: Authorized AssuranceTest detail projection with permitted samples.
+      headers: { X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }, X-Request-Id: { $ref: '#/components/headers/RequestId' } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/AssuranceTestProjection' } } }
+    EvidenceRequestListSuccess:
+      description: Authorized cursor page of EvidenceRequest projections.
+      headers: { X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }, X-Request-Id: { $ref: '#/components/headers/RequestId' } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/EvidenceRequestPage' } } }
+    EvidenceRequestDetailSuccess:
+      description: Authorized EvidenceRequest detail projection.
+      headers: { X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }, X-Request-Id: { $ref: '#/components/headers/RequestId' } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/EvidenceRequestProjection' } } }
+    EvidenceListSuccess:
+      description: Authorized cursor page of Evidence projections.
+      headers: { X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }, X-Request-Id: { $ref: '#/components/headers/RequestId' } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/EvidencePage' } } }
+    EvidenceDetailSuccess:
+      description: Authorized Evidence detail projection with permitted version/link/review metadata.
+      headers: { X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }, X-Request-Id: { $ref: '#/components/headers/RequestId' } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/EvidenceProjection' } } }
+    EvidenceVersionDetailSuccess:
+      description: Authorized EvidenceVersion detail projection with permitted link/review metadata.
+      headers: { X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }, X-Request-Id: { $ref: '#/components/headers/RequestId' } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/EvidenceVersionProjection' } } }
+    IssueListSuccess:
+      description: Authorized cursor page of Issue projections.
+      headers: { X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }, X-Request-Id: { $ref: '#/components/headers/RequestId' } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/IssuePage' } } }
+    IssueDetailSuccess:
+      description: Authorized Issue detail projection with permitted typed origins.
+      headers: { X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }, X-Request-Id: { $ref: '#/components/headers/RequestId' } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/IssueProjection' } } }
+    ActionListSuccess:
+      description: Authorized cursor page of Action projections.
+      headers: { X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }, X-Request-Id: { $ref: '#/components/headers/RequestId' } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/ActionPage' } } }
+    ActionDetailSuccess:
+      description: Authorized Action detail projection with permitted evidence-link/verification metadata.
+      headers: { X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }, X-Request-Id: { $ref: '#/components/headers/RequestId' } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/ActionProjection' } } }
     ValidationError:
       description: Request validation failed without domain mutation.
       content:
