@@ -81,6 +81,18 @@ The human project authority approved the TCDX GRC visual baseline v1.0, includin
 
 The human project authority, Andrés Barouh, acting explicitly as Product Owner/CPO, Architecture Owner, Backend Owner, Security & Privacy Reviewer and QA/Release Owner, authorized Phase 5 Core GRC Slice and approved the controlled Phase 5 read-contract amendment and release-dependency manifest. Product/runtime segregation-of-duties requirements remain mandatory and are not waived by project-governance role accumulation.
 
+## Human approval — PRE-F5B executable-contract closure
+
+`PHASE_5_EXECUTABLE_CONTRACT_DECISION=DR-PRE-F5B-2026-09-21-004`
+`PHASE_5_EXECUTABLE_CONTRACTS=CLOSED`
+`PHASE_5_PAGINATION_CONTRACT=PASS`
+`PHASE_5_MUTATION_REQUEST_SCHEMAS=PASS`
+`PHASE_5_ACTION_WORKFLOW_CONTRACT=PASS`
+`PHASE_5_EVIDENCE_CREATION_CONTRACT=PASS`
+`PHASE_5_EXECUTABLE_CONTRACT_HUMAN_APPROVAL_DATE=2026-09-21`
+
+The human project authority approved the PRE-F5B decision that closes the remaining Core GRC executable-contract blockers: cursor pagination for the ten approved collection reads, 30 closed mutation request schemas, explicit Action submit-for-review and explicit Evidence materialization with typed EvidenceLinks. This is documentary/executable-contract closure only; it changes no physical schema or runtime seed and does not start Phase 5.
+
 ## Current authorized phase
 
 `PHASE_3=COMPLETE`
@@ -95,9 +107,15 @@ The human project authority, Andrés Barouh, acting explicitly as Product Owner/
 `PHASE_5=AUTHORIZED`
 `PHASE_5_API_READ_CONTRACT=APPROVED`
 `PHASE_5_RELEASE_DEPENDENCIES=APPROVED`
+`PHASE_5_EXECUTABLE_CONTRACTS=CLOSED`
+`PHASE_5_PAGINATION_CONTRACT=PASS`
+`PHASE_5_MUTATION_REQUEST_SCHEMAS=PASS`
+`PHASE_5_ACTION_WORKFLOW_CONTRACT=PASS`
+`PHASE_5_EVIDENCE_CREATION_CONTRACT=PASS`
+`CORE_GRC_SLICE=READY_FOR_IMPLEMENTATION`
 `PHASE_5_STARTED=0`
 `PHASE_6_STARTED=0`
 
-Phase 4 engineering is closed. Independent regulatory content gates remain open where licensed or structured content is still pending; those gates do not reopen Phase 4 implementation. Phase 5 is human-authorized, its read-contract decision and release dependencies are approved, and implementation has not yet started. The approved visual baseline remains mandatory for all Phase 5 UI work.
+Phase 4 engineering is closed. Independent regulatory content gates remain open where licensed or structured content is still pending; those gates do not reopen Phase 4 implementation. Phase 5 is human-authorized; its read contract, release dependencies and remaining PRE-F5B executable contracts are closed, so the Core GRC slice is ready to begin implementation under a separate Phase 5 execution. Implementation has not yet started. The approved visual baseline remains mandatory for all Phase 5 UI work.
 
 This file is mutable execution state. It is not part of the immutable rector baseline and cannot override it.

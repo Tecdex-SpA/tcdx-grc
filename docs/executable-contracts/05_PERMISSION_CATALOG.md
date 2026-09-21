@@ -53,7 +53,7 @@ Scopes abbreviate exact rector scopes. `tenant*` means tenant plus narrower obje
 | `remediation.issue.create` | ISSUES_ACTIONS | create issue | tenant, audit_engagement, assigned_object | typed origin same tenant | GRC Manager, Quality Manager, Compliance Manager, Risk Manager, Auditor | audit | 21,42,44 |
 | `remediation.issue.transition` | ISSUES_ACTIONS | transition issue | tenant, assigned_object, owned_object | same tenant | GRC Manager, Issue assignee through custom role grant | exact lifecycle; reason for dismiss/reopen | 21,22 |
 | `remediation.action.create` | ISSUES_ACTIONS | create action | tenant, assigned_object | issue same tenant | GRC Manager, Quality Manager, Compliance Manager, Risk Manager, Auditor Lead | audit | 21,42 |
-| `remediation.action.transition` | ISSUES_ACTIONS | start/complete/reopen/cancel action | assigned_object, owned_object | same tenant | Action Owner | completed≠verified; audit | 21,22,42 |
+| `remediation.action.transition` | ISSUES_ACTIONS | start/submit-for-review/complete/reopen/cancel action | assigned_object, owned_object | same tenant | Action Owner | exact published lifecycle edge; completed≠verified; audit | 21,22,42; DR-PRE-F5B-2026-09-21-004 |
 | `remediation.action.verify` | ISSUES_ACTIONS | verify action | tenant, assigned_object | same tenant | GRC Manager, Auditor Lead | completer≠verifier where policy applies; sensitive | 21,22,42 |
 | `risk.risk.create` | OPERATIONAL_RISK | create risk | tenant, organizational_unit, process, service | same tenant | Risk Manager | entitlement; audit | 22,39,42 |
 | `risk.risk_assessment.create` | OPERATIONAL_RISK | create assessment | tenant, assigned_object | same tenant | Risk Manager | methodology/config versioned | 19,39 |
@@ -101,9 +101,18 @@ The permission codes use HTML code markup in this PRE-F5 table to keep them outs
 | <code>remediation.issue.read</code> | ISSUES_ACTIONS | read Issue and authorized typed origins | tenant, assigned_object, owned_object, audit_engagement | selected tenant; origin object visibility and object policy enforced | Viewer, Report Viewer, Executive/Board Viewer, GRC Manager, Quality Manager, Compliance Manager, Risk Manager, CISO/Security Manager, AI Governance Manager, Privacy Manager, Legal Reviewer, Auditor Lead, Auditor, Process Owner, Control Owner, Action Owner | read-only; typed origin projection cannot expand access to source object | DR-PHASE5-API-READ-2026-09-17-002; 09,22,42,44 |
 | <code>remediation.action.read</code> | ISSUES_ACTIONS | read Action and authorized evidence-link/verification metadata | tenant, assigned_object, owned_object, audit_engagement | selected tenant; parent Issue visibility, assignment and object policy enforced | Viewer, Report Viewer, Executive/Board Viewer, GRC Manager, Quality Manager, Compliance Manager, Risk Manager, CISO/Security Manager, AI Governance Manager, Privacy Manager, Legal Reviewer, Auditor Lead, Auditor, Process Owner, Control Owner, Evidence Owner, Action Owner | read-only; no transition/verify authority; linked Evidence still requires evidence read authority | DR-PHASE5-API-READ-2026-09-17-002; 09,22,24,42 |
 
+## PRE-F5B Evidence materialization permission
+
+The explicit Evidence materialization command cannot reuse Document/FileObject authority without collapsing the identities kept separate by rector 24. Rector 22 §5/§10 assigns Evidence Owner the create/send responsibility and permits the canonical `create` action on resource `evidence`. Therefore DR-PRE-F5B-2026-09-21-004 materializes exactly this contract-only permission; it creates no capability, scope or runtime seed in this task.
+
+| permission_code | capability | action/resource | allowed scopes | tenant boundary | base roles containing it | entitlement / SoD / sensitive / audit | rector source |
+|---|---|---|---|---|---|---|---|
+| <code>evidence.evidence.create</code> | EVIDENCE_DOCUMENTS | materialize Evidence + first EvidenceVersion + typed EvidenceLinks from finalized FileObject | tenant, assigned_object, owned_object | FileObject, Evidence, version, links, owner, retention policy and tenant targets must be same tenant; global targets independently accessible | Evidence Owner | FileObject finalized/usable/scan PASS; typed-target validation; no binary duplication or signed URL persistence; audit/outbox/idempotency same transaction | DR-PRE-F5B-2026-09-21-004; 22 §5/§10; 24; 25; 30 §4; 44 §8 |
+
 ```text
 PRE_F5_READ_PERMISSION_ADDITIONS=10
-TOTAL_EXECUTABLE_PERMISSIONS=144
+PRE_F5B_PERMISSION_ADDITIONS=1
+TOTAL_EXECUTABLE_PERMISSIONS=145
 PHASE_3_SEED_PERMISSION_ROWS=134
 DATABASE_CONTRACT_CHANGED=0
 ```
