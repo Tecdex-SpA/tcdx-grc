@@ -109,12 +109,23 @@ The explicit Evidence materialization command cannot reuse Document/FileObject a
 |---|---|---|---|---|---|---|---|
 | <code>evidence.evidence.create</code> | EVIDENCE_DOCUMENTS | materialize Evidence + first EvidenceVersion + typed EvidenceLinks from finalized FileObject | tenant, assigned_object, owned_object | FileObject, Evidence, version, links, owner, retention policy and tenant targets must be same tenant; global targets independently accessible | Evidence Owner | FileObject finalized/usable/scan PASS; typed-target validation; no binary duplication or signed URL persistence; audit/outbox/idempotency same transaction | DR-PRE-F5B-2026-09-21-004; 22 §5/§10; 24; 25; 30 §4; 44 §8 |
 
+## PRE-F5C executability permissions
+
+These two permissions are the only permission additions authorized by DR-PRE-F5C-2026-09-21-005. Their runtime Permission and baseline RolePermission rows are included in the governed PRE-F5C incremental migration. Role mappings resolve by `permission_code` and `role_code`; absence remains DENY.
+
+| permission_code | capability | action/resource | allowed scopes | tenant boundary | base roles containing it | entitlement / SoD / sensitive / audit | rector source |
+|---|---|---|---|---|---|---|---|
+| <code>compliance.soa.create</code> | ISO_COMPLIANCE | create a complete draft StatementOfApplicability header and immutable item set | tenant | FrameworkVersion and all referenced controls are accessible; tenant controls/versions, when present, belong to the selected tenant | GRC Manager, Compliance Manager | creation only; publish remains separately authorized and audited | DR-PRE-F5C-2026-09-21-005; 21,22,23,30,44 |
+| <code>controls.assurance_test.create</code> | CONTROLS_ASSURANCE | create AssuranceTest in `planned` | tenant, audit_engagement | target Control/ControlVersion and assignment context are tenant-compatible | GRC Manager, Auditor Lead, Auditor | creation only; execute/review/approve remain separate; SoD preserved | DR-PRE-F5C-2026-09-21-005; 21,22,30 |
+
 ```text
 PRE_F5_READ_PERMISSION_ADDITIONS=10
 PRE_F5B_PERMISSION_ADDITIONS=1
-TOTAL_EXECUTABLE_PERMISSIONS=145
+PRE_F5C_PERMISSION_ADDITIONS=2
+TOTAL_EXECUTABLE_PERMISSIONS=147
 PHASE_3_SEED_PERMISSION_ROWS=134
-DATABASE_CONTRACT_CHANGED=0
+PRE_F5C_RUNTIME_PERMISSION_ROWS=2
+DATABASE_CONTRACT_CHANGED=1
 ```
 
 ## Additional lifecycle-registry permissions
@@ -206,7 +217,7 @@ H-003..H-005 authorize these Permission rows over existing entities and capabili
 | `platform.lifecycle_transition.administer` | CORE_PLATFORM | administer draft registry definition | platform | PLATFORM_CONTROL; no tenant variant entity | Platform Admin | versioned; no arbitrary executable rules; reinforced audit | 21,22,33; H-005 |
 | `platform.lifecycle_transition.publish` | CORE_PLATFORM | publish registry definition | platform | PLATFORM_CONTROL; published immutable | Platform Admin | review/publish SoD; reinforced audit; not domain transition execution | 21,22,33; H-005 |
 
-`PUBLISHED_PERMISSION_ROWS=134`. A Permission may exist without a base grant. Every authorization remains default DENY and entitlement/scope/object-policy/SoD constrained.
+`PHASE_3_RUNTIME_PERMISSION_ROWS=134`; `PRE_F5C_RUNTIME_PERMISSION_ROWS=2`; `TOTAL_EXECUTABLE_PERMISSIONS=147`. The ten PRE-F5 read contracts and PRE-F5B Evidence-create contract remain executable-contract rows whose broader Phase 5 runtime materialization is outside PRE-F5C. A Permission may exist without a base grant. Every authorization remains default DENY and entitlement/scope/object-policy/SoD constrained.
 
 ## Grant rules
 

@@ -35,12 +35,16 @@ function expectedNames(pattern: RegExp, relativePath: string): Set<string> {
 const expectedConstraints = new Set([
   ...expectedNames(/ADD CONSTRAINT "([^"]+)" (?:CHECK|UNIQUE|FOREIGN KEY)/g, "database/migrations/20260916000600_constraints_and_uniqueness.sql"),
   ...expectedNames(/ADD CONSTRAINT "([^"]+)" (?:CHECK|UNIQUE|FOREIGN KEY)/g, "database/migrations/20260916000700_foreign_keys.sql"),
-  ...expectedNames(/ADD CONSTRAINT "([^"]+)" (?:CHECK|UNIQUE|FOREIGN KEY)/g, "database/migrations/20260916001000_pre_f4_integrated_audit_model.sql")
+  ...expectedNames(/ADD CONSTRAINT "([^"]+)" (?:CHECK|UNIQUE|FOREIGN KEY)/g, "database/migrations/20260916001000_pre_f4_integrated_audit_model.sql"),
+  ...expectedNames(/ADD CONSTRAINT "([^"]+)" (?:CHECK|UNIQUE|FOREIGN KEY)/g, "database/migrations/20260921000100_pre_f5c_executable_physical_reconciliation.sql")
 ]);
 expectedConstraints.delete("fk_audits__lead_membership_id");
+expectedConstraints.delete("uq_requirement_applicabilities__tenant_id_requirement__c645d089");
+expectedConstraints.delete("uq_statements_of_applicability__tenant_id_soa_version");
 const expectedIndexes = new Set([
   ...expectedNames(/CREATE (?:UNIQUE )?INDEX "([^"]+)"/g, "database/migrations/20260916000800_required_indexes.sql"),
-  ...expectedNames(/CREATE (?:UNIQUE )?INDEX "([^"]+)"/g, "database/migrations/20260916001000_pre_f4_integrated_audit_model.sql")
+  ...expectedNames(/CREATE (?:UNIQUE )?INDEX "([^"]+)"/g, "database/migrations/20260916001000_pre_f4_integrated_audit_model.sql"),
+  ...expectedNames(/CREATE (?:UNIQUE )?INDEX "([^"]+)"/g, "database/migrations/20260921000100_pre_f5c_executable_physical_reconciliation.sql")
 ]);
 expectedIndexes.delete("ix_audits__lead_membership_id");
 

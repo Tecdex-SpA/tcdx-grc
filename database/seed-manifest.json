@@ -1,5 +1,5 @@
 {
-  "manifestVersion": 1,
+  "manifestVersion": 2,
   "source": "docs/executable-contracts/09_SEED_MANIFESTS.md",
   "entries": [
     "SEED-001",
@@ -12,11 +12,15 @@
     "SEED-008",
     "SEED-009",
     "SEED-011",
-    "SEED-012"
+    "SEED-012",
+    "PRE-F5C-INCREMENTAL"
   ],
-  "permissionRows": 134,
-  "lifecycleEdges": 95,
+  "permissionRows": 136,
+  "lifecycleEdges": 100,
+  "rawLifecycleDefinitionRows": 134,
   "configurationDefaults": 0,
   "protectedRegulatoryContents": 0,
-  "contentSha256": "94547ff1fa6a9accf56ff6f28be93afeb91b8c290ca9bb224667862c64c8c2e7"
+  "contentSha256": "94547ff1fa6a9accf56ff6f28be93afeb91b8c290ca9bb224667862c64c8c2e7",
+  "incrementalMigration": "20260921000100_pre_f5c_executable_physical_reconciliation.sql",
+  "incrementalSha256": "1181d7ab26718927124de880e351fbaba3f2daaca41267a1ef66d28ac2021680"
 }

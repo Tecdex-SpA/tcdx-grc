@@ -10,6 +10,7 @@ const physicalPath = resolve(root, "docs/physical-data-model/01_PHYSICAL_DATA_MO
 const permissionPath = resolve(root, "docs/executable-contracts/05_PERMISSION_CATALOG.md");
 const seedPath = resolve(root, "docs/executable-contracts/09_SEED_MANIFESTS.md");
 const generatedAt = "2026-09-16T00:00:00.000Z";
+const preF5cGeneratedAt = "2026-09-21T00:00:00.000Z";
 
 const sha256 = (value) => createHash("sha256").update(value).digest("hex");
 const q = (value) => `'${String(value).replaceAll("'", "''")}'`;
@@ -363,6 +364,10 @@ function uniqueDefinitions(row) {
     "ops_audit.lifecycle_transition_definitions": [["entity_type", "from_state", "command_code", "version_number"]],
     "ops_audit.lifecycle_transition_scopes": [["lifecycle_transition_definition_id", "scope_kind"]],
     "ops_audit.lifecycle_transition_side_effects": [["lifecycle_transition_definition_id", "event_code"], ["lifecycle_transition_definition_id", "ordinal"]],
+    "regulatory.requirement_applicabilities": [["tenant_id", "requirement_id", "scope_subject_id", "applicability_version"]],
+    "regulatory.statements_of_applicability": [["tenant_id", "framework_version_id", "soa_version"]],
+    "regulatory.statement_of_applicability_items": [["tenant_id", "statement_of_applicability_id", "reference_control_version_id"]],
+    "evidence.evidence_versions": [["tenant_id", "evidence_id", "version_number"]],
     "audit.audit_objectives": [["audit_id", "objective_code"], ["audit_id", "ordinal"]],
     "audit.audit_criteria": [["audit_id", "ordinal"]],
     "audit.audit_scopes": [["audit_id", "framework_version_id", "subject_id"], ["audit_id", "scope_code"]],
@@ -806,9 +811,9 @@ END $$;
   return [preflight, createTablesSql(rows, ["audit"]), constraintsSql(rows), auditAmendmentForeignKeys(rows, allRows), auditAmendmentIndexes(rows), auditAmendmentTriggersSql(), dropLegacy].join("\n");
 }
 
-function deterministicUuid(stableKey) {
-  const bytes = Buffer.from(sha256(`TCDX_GRC_PHASE3_V1:${stableKey}`), "hex");
-  const timestamp = BigInt(Date.parse(generatedAt));
+function deterministicUuid(stableKey, namespace = "TCDX_GRC_PHASE3_V1", instant = generatedAt) {
+  const bytes = Buffer.from(sha256(`${namespace}:${stableKey}`), "hex");
+  const timestamp = BigInt(Date.parse(instant));
   const out = Buffer.alloc(16);
   for (let i = 0; i < 6; i++) out[5 - i] = Number((timestamp >> BigInt(i * 8)) & 0xffn);
   bytes.copy(out, 6, 6, 16);
@@ -850,7 +855,7 @@ function parseLifecycle() {
     if (cells.length !== 10 || !cells[3]?.includes(".")) continue;
     rows.push({ entity: cells[0], from: cells[1], to: cells[2], command: cells[3], permission: cells[4], preconditions: cells[5], audit: cells[6], event: cells[7] });
   }
-  if (rows.length !== 95) throw new Error(`Expected 95 lifecycle edges, parsed ${rows.length}`);
+  if (rows.length !== 100) throw new Error(`Expected 100 reconciled lifecycle edges, parsed ${rows.length}`);
   return rows;
 }
 
@@ -923,11 +928,139 @@ function bootstrapSql() {
   return `${schemas.map((schema) => `CREATE SCHEMA IF NOT EXISTS ${quoteIdent(schema)};`).join("\n")}\n\nCREATE TABLE platform.schema_migrations (\n  migration_id char(14) NOT NULL,\n  filename text NOT NULL,\n  content_sha256 char(64) NOT NULL,\n  transactional boolean NOT NULL,\n  runner_version varchar(32) NOT NULL,\n  started_at timestamptz NOT NULL,\n  applied_at timestamptz NOT NULL,\n  duration_ms bigint NOT NULL,\n  outcome varchar(16) NOT NULL,\n  CONSTRAINT pk_schema_migrations PRIMARY KEY (migration_id),\n  CONSTRAINT uq_schema_migrations__filename UNIQUE (filename),\n  CONSTRAINT ck_schema_migrations__outcome CHECK (outcome = 'applied'),\n  CONSTRAINT ck_schema_migrations__duration CHECK (duration_ms >= 0)\n);\n`;
 }
 
+function preF5cUuid(stableKey) {
+  return deterministicUuid(stableKey, "TCDX_GRC_PRE_F5C_V1", preF5cGeneratedAt);
+}
+
+function preF5cMigrationSql(rows) {
+  const lifecycle = parseLifecycle();
+  const permissions = parsePermissions();
+  const currentByKey = new Map(lifecycle.map((edge) => [`${edge.entity}|${edge.from}|${edge.command}`, edge]));
+  const newKeys = new Set([
+    ...lifecycle.filter((edge) => ["RequirementApplicability", "StatementOfApplicability", "EvidenceVersion"].includes(edge.entity)),
+    lifecycle.find((edge) => edge.entity === "AssuranceTest" && edge.command === "assurance_test.execute")
+  ].filter(Boolean).map((edge) => `${edge.entity}|${edge.from}|${edge.command}`));
+  const revisedKeys = new Set(lifecycle.filter((edge) =>
+    (edge.entity === "RequirementAssessment" && edge.command !== "requirement_assessment.supersede")
+    || edge.entity === "ControlAssessment"
+    || (edge.entity === "AssuranceTest" && ["assurance_test.start", "assurance_test.review", "assurance_test.approve"].includes(edge.command))
+    || (edge.entity === "Issue" && ["issue.triage", "issue.start_remediation", "issue.request_verification", "issue.verify_close"].includes(edge.command))
+    || (edge.entity === "Action" && ["action.start", "action.submit_review", "action.complete", "action.verify"].includes(edge.command))
+  ).map((edge) => `${edge.entity}|${edge.from}|${edge.command}`));
+  const activeEdges = [...newKeys, ...revisedKeys].map((key) => {
+    const edge = currentByKey.get(key);
+    if (!edge) throw new Error(`Missing PRE-F5C lifecycle edge ${key}`);
+    return { ...edge, version: newKeys.has(key) ? 1 : 2 };
+  });
+  if (activeEdges.length !== 31) throw new Error(`Expected 31 PRE-F5C active lifecycle definitions, found ${activeEdges.length}`);
+
+  const historicalSupersessions = [
+    ["Evidence", "draft", "evidence.submit"],
+    ["Evidence", "submitted", "evidence.start_review"],
+    ["Evidence", "under_review", "evidence.approve"],
+    ["Evidence", "under_review", "evidence.reject"],
+    ["Evidence", "approved", "evidence.expire"],
+    ["Evidence", "approved", "evidence.supersede"],
+    ["Evidence", "rejected", "evidence.revise"],
+    ["AssuranceTest", "in_progress", "assurance_test.complete"]
+  ];
+  const out = [
+    "-- PRE-F5C executable/physical reconciliation; approved by DR-PRE-F5C-2026-09-21-005.",
+    "-- Forward-only rollback is operational backup/restore; no destructive down migration is authorized.",
+    "DO $$",
+    "DECLARE ledger_rows integer; physical_rows integer;",
+    "BEGIN",
+    "  SELECT count(*) INTO ledger_rows FROM platform.schema_migrations WHERE outcome = 'applied';",
+    "  IF ledger_rows <> 10 OR NOT EXISTS (SELECT 1 FROM platform.schema_migrations WHERE migration_id = '20260916001000') THEN",
+    "    RAISE EXCEPTION 'PRE_F5C_PREFLIGHT_LEDGER_EXPECTED_10_APPLIED';",
+    "  END IF;",
+    `  SELECT count(*) INTO physical_rows FROM pg_catalog.pg_tables WHERE schemaname IN (${[...new Set(rows.map((row) => row.schema))].map(q).join(", ")}) AND NOT (schemaname = 'platform' AND tablename = 'schema_migrations');`,
+    "  IF physical_rows <> 229 THEN RAISE EXCEPTION 'PRE_F5C_PREFLIGHT_EXPECTED_229_TABLES'; END IF;",
+    "  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'regulatory' AND table_name = 'requirement_applicabilities' AND column_name = 'row_version') THEN",
+    "    RAISE EXCEPTION 'PRE_F5C_PREFLIGHT_ALREADY_MATERIALIZED';",
+    "  END IF;",
+    "END $$;",
+    ""
+  ];
+
+  const mutableTables = [
+    "regulatory.requirement_applicabilities", "regulatory.requirement_assessments", "regulatory.statements_of_applicability",
+    "controls.control_assessments", "controls.assurance_tests", "evidence.evidence_versions"
+  ];
+  for (const table of mutableTables) {
+    const tableName = table.split(".")[1];
+    out.push(
+      `ALTER TABLE ${fq(table)} ADD COLUMN "updated_at" timestamptz, ADD COLUMN "updated_by_user_identity_id" uuid, ADD COLUMN "updated_by_service_principal_id" uuid, ADD COLUMN "row_version" bigint NOT NULL DEFAULT 1;`,
+      `UPDATE ${fq(table)} SET "updated_at" = "created_at" WHERE "updated_at" IS NULL;`,
+      `ALTER TABLE ${fq(table)} ALTER COLUMN "updated_at" SET DEFAULT CURRENT_TIMESTAMP, ALTER COLUMN "updated_at" SET NOT NULL;`,
+      `ALTER TABLE ${fq(table)} ADD CONSTRAINT ${constraint(`ck_${tableName}__updated_actor_one`)} CHECK (num_nonnulls(updated_by_user_identity_id, updated_by_service_principal_id) <= 1), ADD CONSTRAINT ${constraint(`ck_${tableName}__row_version_positive`)} CHECK (row_version > 0);`,
+      `ALTER TABLE ${fq(table)} ADD CONSTRAINT ${constraint(`fk_${tableName}__updated_by_user_identity_id`)} FOREIGN KEY ("updated_by_user_identity_id") REFERENCES "iam"."user_identities" ("user_identity_id") ON UPDATE NO ACTION ON DELETE RESTRICT, ADD CONSTRAINT ${constraint(`fk_${tableName}__updated_by_service_principal_id`)} FOREIGN KEY ("updated_by_service_principal_id") REFERENCES "iam"."service_principals" ("service_principal_id") ON UPDATE NO ACTION ON DELETE RESTRICT;`,
+      ""
+    );
+  }
+  out.push(
+    `ALTER TABLE "regulatory"."requirement_applicabilities" ADD COLUMN "superseded_by_id" uuid;`,
+    `ALTER TABLE "regulatory"."requirement_applicabilities" DROP CONSTRAINT "uq_requirement_applicabilities__tenant_id_requirement__c645d089";`,
+    `ALTER TABLE "regulatory"."requirement_applicabilities" ADD CONSTRAINT ${constraint("uq_requirement_applicabilities__tenant_id_requirement_id_scope_subject_id_applicability_version")} UNIQUE NULLS NOT DISTINCT ("tenant_id", "requirement_id", "scope_subject_id", "applicability_version");`,
+    `ALTER TABLE "regulatory"."requirement_applicabilities" ADD CONSTRAINT ${constraint("fk_requirement_applicabilities__superseded_by_id")} FOREIGN KEY ("tenant_id", "superseded_by_id") REFERENCES "regulatory"."requirement_applicabilities" ("tenant_id", "requirement_applicability_id") ON UPDATE NO ACTION ON DELETE RESTRICT;`,
+    `ALTER TABLE "regulatory"."statements_of_applicability" DROP CONSTRAINT "uq_statements_of_applicability__tenant_id_soa_version";`,
+    `ALTER TABLE "regulatory"."statements_of_applicability" ADD CONSTRAINT ${constraint("uq_statements_of_applicability__tenant_id_framework_version_id_soa_version")} UNIQUE NULLS NOT DISTINCT ("tenant_id", "framework_version_id", "soa_version");`,
+    `ALTER TABLE "regulatory"."statement_of_applicability_items" ADD CONSTRAINT ${constraint("uq_statement_of_applicability_items__tenant_id_statement_of_applicability_id_reference_control_version_id")} UNIQUE NULLS NOT DISTINCT ("tenant_id", "statement_of_applicability_id", "reference_control_version_id");`,
+    `ALTER TABLE "evidence"."evidence_versions" ADD CONSTRAINT ${constraint("uq_evidence_versions__tenant_id_evidence_id_version_number")} UNIQUE NULLS NOT DISTINCT ("tenant_id", "evidence_id", "version_number");`,
+    ""
+  );
+
+  const permissionRows = [
+    { code: "compliance.soa.create", domain: "compliance", resource: "soa", action: "create", roles: ["GRC_MANAGER", "COMPLIANCE_MANAGER"] },
+    { code: "controls.assurance_test.create", domain: "controls", resource: "assurance_test", action: "create", roles: ["GRC_MANAGER", "AUDITOR_LEAD", "AUDITOR"] }
+  ];
+  for (const permission of permissionRows) {
+    out.push(`INSERT INTO iam.permissions (permission_id, created_at, created_by_user_identity_id, created_by_service_principal_id, updated_at, updated_by_user_identity_id, updated_by_service_principal_id, row_version, permission_code, domain_code, resource_code, action_code, lifecycle_state) VALUES (${q(preF5cUuid(`permission:${permission.code}:v1`))}, ${q(preF5cGeneratedAt)}, NULL, NULL, ${q(preF5cGeneratedAt)}, NULL, NULL, 1, ${q(permission.code)}, ${q(permission.domain)}, ${q(permission.resource)}, ${q(permission.action)}, 'published') ON CONFLICT (permission_code) DO NOTHING;`);
+    for (const roleCode of permission.roles) {
+      out.push(`INSERT INTO iam.role_permissions (role_permission_id, created_at, created_by_user_identity_id, created_by_service_principal_id, ownership_class, tenant_id, role_id, permission_id) SELECT ${q(preF5cUuid(`grant:${roleCode}:${permission.code}:v1`))}, ${q(preF5cGeneratedAt)}, NULL, NULL, 'PLATFORM_CONTROL', NULL, r.role_id, p.permission_id FROM iam.roles r CROSS JOIN iam.permissions p WHERE r.role_code = ${q(roleCode)} AND r.tenant_id IS NULL AND p.permission_code = ${q(permission.code)} ON CONFLICT DO NOTHING;`);
+    }
+  }
+  out.push("");
+
+  const transitionColumns = "lifecycle_transition_definition_id, created_at, created_by_user_identity_id, created_by_service_principal_id, entity_type, version_number, from_state, command_code, to_state, precondition_policy_ref, permission_id, sod_policy_ref, audit_event_code, notification_policy_ref, recalculation_policy_ref, idempotency_semantics, concurrency_semantics, system_actor_allowed, lifecycle_state, published_at";
+  for (const edge of activeEdges) {
+    const stable = `transition:${edge.entity}:${edge.from}:${edge.command}:v${edge.version}`;
+    const transitionId = preF5cUuid(stable);
+    out.push(`INSERT INTO ops_audit.lifecycle_transition_definitions (${transitionColumns}) SELECT ${q(transitionId)}, ${q(preF5cGeneratedAt)}, NULL, NULL, ${q(edge.entity)}, ${edge.version}, ${q(edge.from)}, ${q(edge.command)}, ${q(edge.to)}, ${q(`contract:${stable}`)}, p.permission_id, 'contract:default-deny-sod:v1', ${q(edge.audit)}, 'NONE_CONTRACTUALLY_REQUIRED', 'NONE_CONTRACTUALLY_REQUIRED', 'IDEMPOTENCY_KEY_REQUIRED', 'ROW_VERSION_COMPARE_AND_SWAP', false, 'published', ${q(preF5cGeneratedAt)} FROM iam.permissions p WHERE p.permission_code = ${q(edge.permission)} ON CONFLICT DO NOTHING;`);
+    const permission = permissions.find((item) => item.permissionCode === edge.permission);
+    if (!permission) throw new Error(`No executable Permission seed for lifecycle permission ${edge.permission}`);
+    for (const scope of permission.scopes) {
+      out.push(`INSERT INTO ops_audit.lifecycle_transition_scopes (lifecycle_transition_scope_id, created_at, created_by_user_identity_id, created_by_service_principal_id, lifecycle_transition_definition_id, scope_kind) VALUES (${q(preF5cUuid(`${stable}:scope:${scope}`))}, ${q(preF5cGeneratedAt)}, NULL, NULL, ${q(transitionId)}, ${q(scope)}) ON CONFLICT DO NOTHING;`);
+    }
+    if (edge.event !== "NONE_CONTRACTUALLY_REQUIRED") {
+      out.push(`INSERT INTO ops_audit.lifecycle_transition_side_effects (lifecycle_transition_side_effect_id, created_at, created_by_user_identity_id, created_by_service_principal_id, lifecycle_transition_definition_id, event_code, ordinal, is_required) VALUES (${q(preF5cUuid(`${stable}:event:${edge.event}`))}, ${q(preF5cGeneratedAt)}, NULL, NULL, ${q(transitionId)}, ${q(edge.event)}, 1, true) ON CONFLICT DO NOTHING;`);
+    }
+  }
+  for (const [entity, from, command] of historicalSupersessions) {
+    const stable = `transition:${entity}:${from}:${command}:v2:superseded`;
+    out.push(`INSERT INTO ops_audit.lifecycle_transition_definitions (${transitionColumns}) SELECT ${q(preF5cUuid(stable))}, ${q(preF5cGeneratedAt)}, NULL, NULL, entity_type, 2, from_state, command_code, to_state, ${q(`contract:${stable}`)}, permission_id, sod_policy_ref, audit_event_code, notification_policy_ref, recalculation_policy_ref, idempotency_semantics, concurrency_semantics, system_actor_allowed, 'superseded', NULL FROM ops_audit.lifecycle_transition_definitions WHERE entity_type = ${q(entity)} AND from_state = ${q(from)} AND command_code = ${q(command)} AND version_number = 1 ON CONFLICT DO NOTHING;`);
+  }
+  out.push(
+    "",
+    "DO $$",
+    "DECLARE physical_rows integer;",
+    "BEGIN",
+    `  SELECT count(*) INTO physical_rows FROM pg_catalog.pg_tables WHERE schemaname IN (${[...new Set(rows.map((row) => row.schema))].map(q).join(", ")}) AND NOT (schemaname = 'platform' AND tablename = 'schema_migrations');`,
+    "  IF physical_rows <> 229 THEN RAISE EXCEPTION 'PRE_F5C_POSTCONDITION_EXPECTED_229_TABLES'; END IF;",
+    "  IF (SELECT count(*) FROM iam.permissions WHERE permission_code IN ('compliance.soa.create','controls.assurance_test.create')) <> 2 THEN RAISE EXCEPTION 'PRE_F5C_POSTCONDITION_PERMISSIONS'; END IF;",
+    "  IF (SELECT count(*) FROM ops_audit.lifecycle_transition_definitions WHERE created_at = '2026-09-21T00:00:00.000Z'::timestamptz) <> 39 THEN RAISE EXCEPTION 'PRE_F5C_POSTCONDITION_LIFECYCLE_DELTA'; END IF;",
+    "END $$;",
+    ""
+  );
+  return out.join("\n");
+}
+
 function expectedInventory(rows) {
   return {
     contract: "TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16",
     physicalModelCommit: "a822bb92d0d585edd84adc8a1c65ec280923cc8e",
     physicalModelAmendmentCommit: "6a31034ae1ecc1f9ee551431fb2a504a25fb52ce",
+    preF5cDecision: "DR-PRE-F5C-2026-09-21-005",
     tableCount: rows.length,
     tables: rows.map((row) => ({
       name: row.name, profile: row.profile, primaryKey: [row.pk],
@@ -956,18 +1089,24 @@ const rows = [
   ...amendmentRows
 ];
 const migrationDir = resolve(root, "database/migrations");
-const migrations = [
-  ["20260916000100_bootstrap_schemas_and_ledger.sql", bootstrapSql()],
-  ["20260916000200_platform_iam_organization.sql", createTablesSql(baseRows, ["platform", "iam", "org"])],
-  ["20260916000300_normative_control_evidence.sql", createTablesSql(baseRows, ["regulatory", "controls", "evidence"])],
-  ["20260916000400_risk_operations_privacy.sql", createTablesSql(baseRows, ["risk", "remediation", "audit", "operations", "third_party", "resilience", "privacy", "survey"])],
-  ["20260916000500_data_integration_reporting_ai.sql", createTablesSql(baseRows, ["data", "rules", "integration", "config", "reporting", "knowledge", "ai", "notification", "ops_audit"])],
-  ["20260916000600_constraints_and_uniqueness.sql", constraintsSql(baseRows)],
-  ["20260916000700_foreign_keys.sql", foreignKeysSql(baseRows)],
-  ["20260916000800_required_indexes.sql", indexesSql(baseRows)],
-  ["20260916000900_canonical_seeds.sql", seedsSql()],
-  ["20260916001000_pre_f4_integrated_audit_model.sql", auditAmendmentSql(amendmentRows, rows)]
-];
+const historicalMigrations = [
+  ["20260916000100_bootstrap_schemas_and_ledger.sql", "4f29910baacf82526fb06226c237024b7315038a4868baa7bbda56ced4779437"],
+  ["20260916000200_platform_iam_organization.sql", "08fce9d08e729f097095a10cfdfbf093c43f9d8cbfbee97d39594691f4ad8f29"],
+  ["20260916000300_normative_control_evidence.sql", "f300aac95b6fba36c09fc6ac77550bf574f953c0ee0ad374a8cbf6fdb338ef9f"],
+  ["20260916000400_risk_operations_privacy.sql", "a38d2a7babbe77d79783d66e8ce909916e967be739d3712f303e51883d85a81b"],
+  ["20260916000500_data_integration_reporting_ai.sql", "bac1e0a421a4d532eb2da27e4bc9453125cfa407a2e8da904c8749c726815764"],
+  ["20260916000600_constraints_and_uniqueness.sql", "7d079aa1234050b6dde06d9fb3cad939144fcbccdf287cc31bbe863c68899bf5"],
+  ["20260916000700_foreign_keys.sql", "d2112e4b402e8789312d5473969b615e6d7ab344a58a2211f790c4423dd4361f"],
+  ["20260916000800_required_indexes.sql", "d3502b9de76209b54b40497e6b9fdf94d463335d1f5441fb0fb924786648336e"],
+  ["20260916000900_canonical_seeds.sql", "94547ff1fa6a9accf56ff6f28be93afeb91b8c290ca9bb224667862c64c8c2e7"],
+  ["20260916001000_pre_f4_integrated_audit_model.sql", "c4247051c223960eb5ca817a0f85650dbc828a7864e48f66a1a73b1d298a224d"]
+].map(([filename, approvedSha256]) => {
+  const content = readFileSync(resolve(migrationDir, filename), "utf8");
+  if (sha256(content) !== approvedSha256) throw new Error(`Historical migration drift: ${filename}`);
+  return [filename, content];
+});
+const preF5cMigration = ["20260921000100_pre_f5c_executable_physical_reconciliation.sql", preF5cMigrationSql(rows)];
+const migrations = [...historicalMigrations, preF5cMigration];
 const manifest = {
   manifestVersion: 1,
   runnerVersion: "1.0.0",
@@ -976,19 +1115,23 @@ const manifest = {
   advisoryLockSource: "tcdx-grc:platform.schema_migrations:v1",
   migrations: migrations.map(([filename, content]) => ({
     id: filename.slice(0, 14), filename, sha256: sha256(content), transactional: true,
-    preconditions: filename.includes("pre_f4")
+    preconditions: filename.includes("pre_f5c")
+      ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=10", "physical_tables=229", "pre_f5c_columns=absent"]
+      : filename.includes("pre_f4")
       ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=9", "physical_tables=214", "existing_audits=0_or_approved_reconciliation"]
       : ["database_name=tcdx-grc", "postgres_major=16"],
-    postconditions: filename.includes("pre_f4")
+    postconditions: filename.includes("pre_f5c")
+      ? ["ledger_outcome=applied", "physical_tables=229", "mutable_f5_rows=row_version", "pre_f5c_lifecycle_delta=39", "pre_f5c_permissions=2"]
+      : filename.includes("pre_f4")
       ? ["ledger_outcome=applied", "physical_tables=229", "audit_scope_and_lead_dual_authority=0"]
       : ["ledger_outcome=applied"]
   }))
 };
 
-for (const [filename, content] of migrations) writeOrCheck(resolve(migrationDir, filename), content);
+writeOrCheck(resolve(migrationDir, preF5cMigration[0]), preF5cMigration[1]);
 writeOrCheck(resolve(root, "database/migrations/manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`);
 writeOrCheck(resolve(root, "database/expected-schema.json"), `${JSON.stringify(expectedInventory(rows), null, 2)}\n`);
-const canonicalSeedSql = migrations.find(([filename]) => filename === "20260916000900_canonical_seeds.sql")[1];
-writeOrCheck(resolve(root, "database/seed-manifest.json"), `${JSON.stringify({ manifestVersion: 1, source: "docs/executable-contracts/09_SEED_MANIFESTS.md", entries: ["SEED-001", "SEED-002", "SEED-003", "SEED-004", "SEED-005", "SEED-006", "SEED-007", "SEED-008", "SEED-009", "SEED-011", "SEED-012"], permissionRows: 134, lifecycleEdges: 95, configurationDefaults: 0, protectedRegulatoryContents: 0, contentSha256: sha256(canonicalSeedSql) }, null, 2)}\n`);
+const canonicalSeedSql = historicalMigrations.find(([filename]) => filename === "20260916000900_canonical_seeds.sql")[1];
+writeOrCheck(resolve(root, "database/seed-manifest.json"), `${JSON.stringify({ manifestVersion: 2, source: "docs/executable-contracts/09_SEED_MANIFESTS.md", entries: ["SEED-001", "SEED-002", "SEED-003", "SEED-004", "SEED-005", "SEED-006", "SEED-007", "SEED-008", "SEED-009", "SEED-011", "SEED-012", "PRE-F5C-INCREMENTAL"], permissionRows: 136, lifecycleEdges: 100, rawLifecycleDefinitionRows: 134, configurationDefaults: 0, protectedRegulatoryContents: 0, contentSha256: sha256(canonicalSeedSql), incrementalMigration: preF5cMigration[0], incrementalSha256: sha256(preF5cMigration[1]) }, null, 2)}\n`);
 
-console.log(JSON.stringify({ mode: checkOnly ? "check" : "write", physicalTables: rows.length, permissions: 134, lifecycleEdges: 95, migrations: migrations.length }, null, 2));
+console.log(JSON.stringify({ mode: checkOnly ? "check" : "write", physicalTables: rows.length, permissions: 136, lifecycleEdges: 100, rawLifecycleDefinitionRows: 134, migrations: migrations.length }, null, 2));
