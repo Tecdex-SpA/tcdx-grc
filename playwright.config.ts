@@ -10,7 +10,9 @@ export default defineConfig({
   },
   projects: [
     { name: "chromium-desktop", use: { ...devices["Desktop Chrome"], viewport: { width: 1536, height: 1024 } } },
-    { name: "chromium-responsive", use: { ...devices["Desktop Chrome"], viewport: { width: 720, height: 900 } } }
+    { name: "chromium-laptop", use: { ...devices["Desktop Chrome"], viewport: { width: 1280, height: 800 } } },
+    { name: "chromium-tablet", use: { ...devices["Desktop Chrome"], viewport: { width: 1024, height: 768 } } },
+    { name: "chromium-narrow", use: { ...devices["Desktop Chrome"], viewport: { width: 390, height: 844 } } }
   ],
   webServer: {
     command: "npm --prefix apps/frontend run dev -- --host 127.0.0.1 --port 4173",

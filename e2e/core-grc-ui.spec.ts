@@ -49,39 +49,51 @@ async function mockRuntime(page: Page): Promise<void> {
   });
 }
 
-test.beforeAll(async () => { await mkdir("artifacts/phase5-ui", { recursive: true }); });
+const baselineDirectory = "docs/ui/baselines/phase5-v1.1";
+
+test.beforeAll(async () => { await mkdir(baselineDirectory, { recursive: true }); });
 
 test("dashboard visual contract, drill-down and accessibility", async ({ page }, testInfo) => {
   await mockRuntime(page);
   await page.goto("/dashboard");
   await expect(page.getByRole("heading", { name: /Hola/ })).toBeVisible();
   await expect(page.locator(".kpi-card")).toHaveCount(4);
-  await expect(page.getByText("Datos actuales del tenant")).toBeVisible();
-  await page.screenshot({ path: `artifacts/phase5-ui/dashboard-${testInfo.project.name}.png`, fullPage: true });
+  await expect(page.getByText("Registros visibles del tenant")).toBeVisible();
+  if (!testInfo.project.name.includes("narrow")) await expect(page.getByText("Responsable GRC")).toBeVisible();
+  await page.screenshot({ path: `${baselineDirectory}/dashboard-${testInfo.project.name}.png`, fullPage: true });
   await page.keyboard.press("Tab");
   await expect(page.locator(":focus-visible")).toBeVisible();
-  if (testInfo.project.name.includes("responsive")) {
+  if (testInfo.project.name.includes("narrow")) {
     await expect(page.getByRole("button", { name: "Abrir navegación" })).toBeVisible();
     await page.getByRole("button", { name: "Abrir navegación" }).click();
     await expect(page.getByRole("navigation", { name: "Navegación principal" })).toBeVisible();
   }
 });
 
-for (const [routeName, heading, screenshot] of [
-  ["cumplimiento", "Aplicabilidad", "compliance-list"],
-  ["controles", "Controles", "control-detail"],
-  ["evidencias", "Evidencias", "evidence-detail"],
-  ["acciones", "Acciones", "issue-action-detail"]
+for (const [routeName, heading, screenshot, openDetail] of [
+  ["cumplimiento", "Aplicabilidad", "aplicabilidad", false],
+  ["requisitos", "Evaluaciones de requisitos", "evaluaciones-requisitos", false],
+  ["cumplimiento", "Declaración de aplicabilidad", "soa", false],
+  ["controles", "Controles", "controles", false],
+  ["controles", "Evaluaciones de control", "evaluaciones-control", false],
+  ["controles", "Pruebas de aseguramiento", "pruebas-aseguramiento", true],
+  ["evidencias", "Solicitudes de evidencia", "solicitudes-evidencia", false],
+  ["evidencias", "Evidencias", "evidencias", true],
+  ["acciones", "Hallazgos y brechas", "hallazgos", false],
+  ["acciones", "Acciones", "acciones", true]
 ] as const) {
-  test(`${heading} stable functional surface`, async ({ page }, testInfo) => {
+  test(`${heading} mantiene la baseline comercial en español`, async ({ page }, testInfo) => {
     await mockRuntime(page);
     await page.goto(`/${routeName}`);
-    if (routeName === "evidencias" || routeName === "acciones") await page.getByRole("tab", { name: heading, exact: true }).click();
+    await page.getByRole("tab", { name: heading, exact: true }).click();
     await expect(page.getByRole("heading", { name: heading })).toBeVisible();
     await expect(page.getByRole("table")).toBeVisible();
-    await page.getByRole("button", { name: "Ver detalle" }).click();
-    await expect(page.getByRole("dialog")).toBeVisible();
-    await expect(page.getByRole("dialog").locator(".spinner")).toHaveCount(0);
-    await page.screenshot({ path: `artifacts/phase5-ui/${screenshot}-${testInfo.project.name}.png`, fullPage: true });
+    await expect(page.locator("body")).not.toContainText(/in_progress|in_review|under_review|remediation_in_progress|pending_verification/);
+    if (openDetail) {
+      await page.getByRole("button", { name: "Ver detalle" }).click();
+      await expect(page.getByRole("dialog")).toBeVisible();
+      await expect(page.getByRole("dialog").locator(".spinner")).toHaveCount(0);
+    }
+    await page.screenshot({ path: `${baselineDirectory}/${screenshot}-${testInfo.project.name}.png`, fullPage: true });
   });
 }

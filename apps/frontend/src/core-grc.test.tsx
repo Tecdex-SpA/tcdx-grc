@@ -1,7 +1,10 @@
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { availableWorkflowActions, canCreate, modules, StatusBadge, type Access } from "./core-grc.js";
+import { availableWorkflowActions, canCreate, DataCard, KpiCard, modules, StatePanel, StatusBadge, TableShell, type Access } from "./core-grc.js";
+import { displayValue, fieldLabel, roleLabel } from "./i18n/display-text.js";
+import { moduleLabels, uiText } from "./i18n/es.js";
+import { STATUS_LABELS, statusLabel } from "./i18n/status-labels.js";
 
 describe("Core GRC UI contract", () => {
   it("publishes only the authorized Phase 5 resource modules", () => {
@@ -14,8 +17,8 @@ describe("Core GRC UI contract", () => {
 
   it("does not encode lifecycle state by color alone", () => {
     const markup = renderToStaticMarkup(<StatusBadge value="under_review"/>);
-    expect(markup).toContain("under review");
-    expect(markup).toContain("class=\"status warning\"");
+    expect(markup).toContain("En revisión");
+    expect(markup).toContain("class=\"status info\"");
   });
 
   it("shows lifecycle actions only with the exact permission and state", () => {
@@ -41,5 +44,37 @@ describe("Core GRC UI contract", () => {
     expect(canCreate(definition, access)).toBe(true);
     expect(canCreate(definition, { ...access, permissions: [] })).toBe(false);
     expect(canCreate(definition, { ...access, capability_groups: [] })).toBe(false);
+  });
+
+  it("UI_SPANISH_CONSISTENCY centralizes Spanish navigation, modules, states and roles", () => {
+    expect(uiText.navigation.dashboard).toBe("Panel principal");
+    expect(Object.values(moduleLabels)).toContain("Evaluaciones de control");
+    expect(Object.values(STATUS_LABELS)).toEqual(expect.arrayContaining(["Pendiente", "En progreso", "En revisión", "Aprobada", "Cierre verificado"]));
+    expect(roleLabel("GRC Manager")).toBe("Responsable GRC");
+    expect(fieldLabel("business_owner_subject_id")).toBe("ID del responsable de negocio");
+  });
+
+  it("USER_VISIBLE_INTERNAL_CODES never renders known lifecycle or snake-case values", () => {
+    for (const code of ["pending", "in_progress", "in_review", "under_review", "remediation_in_progress", "pending_verification", "verified_closed"]) {
+      const markup = renderToStaticMarkup(<StatusBadge value={code}/>);
+      expect(markup).toContain(statusLabel(code));
+      expect(markup).not.toContain(code);
+      expect(markup).not.toContain("_");
+    }
+    expect(displayValue("insufficient_evidence")).toBe("Evidencia insuficiente");
+    expect(displayValue("unpublished_internal_code")).toBe("Valor contractual");
+  });
+
+  it("VISUAL_COMPONENT_CONSISTENCY reuses the approved component language", () => {
+    const markup = renderToStaticMarkup(<>
+      <KpiCard label="Registros visibles" value="4" detail="Elementos cargados" tone="teal" icon="check"/>
+      <DataCard title="Distribución"><span>Contenido</span></DataCard>
+      <TableShell label="Registros"><table><tbody><tr><td>Dato</td></tr></tbody></table></TableShell>
+      <StatePanel kind="empty"/>
+    </>);
+    expect(markup).toContain("kpi-card teal");
+    expect(markup).toContain("data-card");
+    expect(markup).toContain("table-card");
+    expect(markup).toContain("Sin registros visibles");
   });
 });
