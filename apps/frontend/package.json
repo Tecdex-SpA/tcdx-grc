@@ -5,7 +5,8 @@
   "type": "module",
   "engines": { "node": "22.23.2" },
   "scripts": {
-    "build": "tsc -b && vite build",
+    "dev": "vite --config vite.config.ts",
+    "build": "tsc -b && vite build --config vite.config.ts",
     "lint": "tsc -b --pretty false",
     "typecheck": "tsc -b --pretty false"
   },

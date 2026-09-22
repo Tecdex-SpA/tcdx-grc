@@ -1,16 +1,14 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
+import { ApiClient } from "./api-client.js";
+import { BrowserSessionTokenProvider, selectedTenant } from "./browser-auth.js";
+import { frontendConfig } from "./config.js";
+import { CoreGrcApp } from "./core-grc.js";
 
-function FoundationShell() {
-  return (
-    <main className="foundation-shell">
-      <h1>TCDX GRC</h1>
-      <p>Foundation runtime</p>
-    </main>
-  );
-}
+const config = frontendConfig(import.meta.env);
+const api = new ApiClient(config.apiOrigin, new BrowserSessionTokenProvider(), selectedTenant);
 
 const root = document.getElementById("root");
 if (!root) throw new Error("Missing root element");
-createRoot(root).render(<React.StrictMode><FoundationShell /></React.StrictMode>);
+createRoot(root).render(<React.StrictMode><CoreGrcApp api={api}/></React.StrictMode>);

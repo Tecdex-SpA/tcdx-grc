@@ -1106,7 +1106,12 @@ const historicalMigrations = [
   return [filename, content];
 });
 const preF5cMigration = ["20260921000100_pre_f5c_executable_physical_reconciliation.sql", preF5cMigrationSql(rows)];
-const migrations = [...historicalMigrations, preF5cMigration];
+const phase5RuntimeMigrationFilename = "20260921000200_phase5_core_grc_runtime_permissions.sql";
+const phase5RuntimeMigration = [phase5RuntimeMigrationFilename, readFileSync(resolve(migrationDir, phase5RuntimeMigrationFilename), "utf8")];
+if (sha256(phase5RuntimeMigration[1]) !== "8cc3d1b2a64a5b00ffd55f93ccfbcdfcde5406ffa9c1fa7f2d2055f505048eb0") {
+  throw new Error(`Phase 5 runtime migration drift: ${phase5RuntimeMigrationFilename}`);
+}
+const migrations = [...historicalMigrations, preF5cMigration, phase5RuntimeMigration];
 const manifest = {
   manifestVersion: 1,
   runnerVersion: "1.0.0",
@@ -1115,12 +1120,16 @@ const manifest = {
   advisoryLockSource: "tcdx-grc:platform.schema_migrations:v1",
   migrations: migrations.map(([filename, content]) => ({
     id: filename.slice(0, 14), filename, sha256: sha256(content), transactional: true,
-    preconditions: filename.includes("pre_f5c")
+    preconditions: filename.includes("phase5_core_grc")
+      ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=11", "physical_tables=229"]
+      : filename.includes("pre_f5c")
       ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=10", "physical_tables=229", "pre_f5c_columns=absent"]
       : filename.includes("pre_f4")
       ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=9", "physical_tables=214", "existing_audits=0_or_approved_reconciliation"]
       : ["database_name=tcdx-grc", "postgres_major=16"],
-    postconditions: filename.includes("pre_f5c")
+    postconditions: filename.includes("phase5_core_grc")
+      ? ["ledger_outcome=applied", "physical_tables=229", "phase5_runtime_permissions=11"]
+      : filename.includes("pre_f5c")
       ? ["ledger_outcome=applied", "physical_tables=229", "mutable_f5_rows=row_version", "pre_f5c_lifecycle_delta=39", "pre_f5c_permissions=2"]
       : filename.includes("pre_f4")
       ? ["ledger_outcome=applied", "physical_tables=229", "audit_scope_and_lead_dual_authority=0"]

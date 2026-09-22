@@ -159,6 +159,23 @@
         "pre_f5c_lifecycle_delta=39",
         "pre_f5c_permissions=2"
       ]
+    },
+    {
+      "id": "20260921000200",
+      "filename": "20260921000200_phase5_core_grc_runtime_permissions.sql",
+      "sha256": "8cc3d1b2a64a5b00ffd55f93ccfbcdfcde5406ffa9c1fa7f2d2055f505048eb0",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16",
+        "ledger_count=11",
+        "physical_tables=229"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=229",
+        "phase5_runtime_permissions=11"
+      ]
     }
   ]
 }

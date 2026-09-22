@@ -14,3 +14,5 @@ export type { FileStoragePort } from "./ports/file-storage.js";
 export { UnavailableAIServicePort } from "./ports/ai-service.js";
 export type { AIServicePort } from "./ports/ai-service.js";
 export type { ObservabilityPort } from "./ports/observability.js";
+export { registerCoreGrcRoutes } from "./core-grc/routes.js";
+export { resources } from "./core-grc/model.js";
