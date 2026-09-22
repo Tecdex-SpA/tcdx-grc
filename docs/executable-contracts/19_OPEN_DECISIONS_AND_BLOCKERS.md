@@ -38,3 +38,25 @@ OPEN_BLOCKERS=0
 ```
 
 Provider/model/DPA, concrete IdP values, alert routing, signed-URL TTL and licensed regulatory contents are explicit later runtime/security/content gates. They do not alter the generic Phase 2 contract and are not counted as Phase 2 blockers.
+
+## PRE-F5D post-implementation reconciliation blockers
+
+The historical Phase 2 closure above remains unchanged. Runtime integration exposed the following narrower PRE-F5D gaps between published concepts, the frozen physical model and executable wire contracts. None is closed by inference, environment configuration, a tenant-shaped workaround or implementation code.
+
+| blocker_id | unresolved decision | exact evidence | affected contract | required human owners | status |
+|---|---|---|---|---|---|
+| F5D-001 | Physical binding from a canonical `UserIdentity` to a platform `Role` with platform scope | `iam.roles` and `iam.role_permissions` can be `PLATFORM_CONTROL`, but the only human role assignment is tenant-owned `iam.membership_roles(tenant_id, tenant_membership_id, role_id, ...)`; no approved UserIdentity-to-Role relation exists | Platform Admin principal resolution, grant, revocation and bootstrap | Data Model Owner, Architecture Owner, Security & Privacy Reviewer | `BLOCKED_MODEL_GAP` |
+| F5D-002 | Exact `TenantCreateRequest` and `Tenant` response | `platform.tenants` requires `tenant_code`, names, timezone, lifecycle and classification, but no authority decides initial lifecycle/classification vocabulary or client-supplied versus server-derived fields; response projection is absent | `tenantCreate` | Product Owner, Architecture Owner, Backend Owner, Security & Privacy Reviewer | `BLOCKED_EXECUTABLE_CONTRACT` |
+| F5D-003 | Exact `MembershipCreateRequest` and `Membership` response | tenant comes from authenticated context and `iam.tenant_memberships` requires identity, state and joined time, but invitation/materialization semantics, initial state/time authority and response projection are absent | `membershipCreate` | Product Owner, Architecture Owner, Backend Owner, Security & Privacy Reviewer | `BLOCKED_EXECUTABLE_CONTRACT` |
+| F5D-004 | Exact `MembershipRoleAssignRequest` and `RoleAssignment` response | membership comes from path and tenant from authenticated context; physical assignment additionally requires role, scope and validity, but the wire union, validity-time authority and response projection are absent | `membershipRoleAssign` | Product Owner, Architecture Owner, Backend Owner, Security & Privacy Reviewer | `BLOCKED_EXECUTABLE_CONTRACT` |
+| F5D-005 | Authenticated-user tenant-context discovery | `accessGet` is published only as `AccessQuery -> EffectiveAccess`; no authorized membership-discovery path/operationId, dedicated permission, response projection or pagination decision exists | membership/context discovery | Product Owner, Architecture Owner, Backend Owner, Security & Privacy Reviewer | `BLOCKED_EXECUTABLE_CONTRACT` |
+| F5D-006 | TCDX application-token issuance after external OIDC authentication | artifact 13 requires the protected-API access token itself to be JWT, but no internal issuer/audience, asymmetric signing/key rotation, subject binding, lifetime, session/revocation, delivery endpoint or audit contract is published | browser authentication to protected API boundary | Architecture Owner, Security & Privacy Reviewer, Backend Owner | `BLOCKED_PENDING_ARCHITECTURE_DECISION` |
+
+```text
+PRE_F5D_OPEN_BLOCKERS=6
+PLATFORM_ADMIN_PHYSICAL_BINDING=BLOCKED_MODEL_GAP
+TENANT_CONTEXT_DISCOVERY=BLOCKED_EXECUTABLE_CONTRACT
+APPLICATION_TOKEN_ISSUANCE=BLOCKED_PENDING_ARCHITECTURE_DECISION
+```
+
+These blockers do not authorize a new table, column, FK, fake/platform tenant, provider allowlist, email-based privilege, local credential store, opaque-token acceptance or `id_token` use as an API bearer. External human identity remains keyed by provider issuer plus stable subject; email is an attribute only. A future TCDX Managed Identity is an external OIDC boundary and adds no password, hash or MFA-secret field to the GRC database.
