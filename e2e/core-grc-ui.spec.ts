@@ -30,7 +30,7 @@ async function mockRuntime(page: Page): Promise<void> {
   await page.route("**/api/v1/**", async (route: Route) => {
     const url = new URL(route.request().url());
     if (url.pathname.endsWith("/access/me")) {
-      await route.fulfill({ json: { tenant_id: tenantId, membership_id: tenantId, tenant_name: "Tenant no normativo", user_name: "Revisor Fase 5", permissions, scopes: ["tenant"], capability_groups: ["ISO_COMPLIANCE", "CONTROLS_ASSURANCE", "EVIDENCE_DOCUMENTS", "ISSUES_ACTIONS"], roles: ["GRC Manager"] } });
+      await route.fulfill({ json: { tenant_id: tenantId, membership_id: tenantId, tenant_name: "Tenant no normativo", user_name: "Revisor GRC", permissions, scopes: ["tenant"], capability_groups: ["ISO_COMPLIANCE", "CONTROLS_ASSURANCE", "EVIDENCE_DOCUMENTS", "ISSUES_ACTIONS"], roles: ["GRC Manager"] } });
       return;
     }
     if (route.request().method() === "POST") {
@@ -49,17 +49,29 @@ async function mockRuntime(page: Page): Promise<void> {
   });
 }
 
-const baselineDirectory = "docs/ui/baselines/phase5-v1.1";
+const baselineDirectory = "docs/ui/baselines/phase5-v1.2";
 
 test.beforeAll(async () => { await mkdir(baselineDirectory, { recursive: true }); });
 
 test("dashboard visual contract, drill-down and accessibility", async ({ page }, testInfo) => {
   await mockRuntime(page);
   await page.goto("/dashboard");
+  await expect(page.locator(".brand img")).toBeVisible();
+  await expect.poll(() => page.locator(".brand img").evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
   await expect(page.getByRole("heading", { name: /Hola/ })).toBeVisible();
   await expect(page.locator(".kpi-card")).toHaveCount(4);
   await expect(page.getByText("Registros visibles del tenant")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Estado de requisitos" })).toBeVisible();
+  await expect(page.getByText("Sobre registros visibles · 2").first()).toBeVisible();
+  await expect(page.getByText("Válido", { exact: true })).toBeVisible();
+  await expect(page.getByText("Datos insuficientes", { exact: true })).toBeVisible();
+  await expect(page.locator("body")).not.toContainText(/Fase 5|revisión visual humana|estado de implementación|result_status|insufficient_data|remediation_in_progress|in_review/);
+  await expect(page.locator("body")).not.toContainText(/benchmark|puntaje global|tendencia de cumplimiento|meta anual/i);
   if (!testInfo.project.name.includes("narrow")) await expect(page.getByText("Responsable GRC")).toBeVisible();
+  if (testInfo.project.name.includes("desktop") || testInfo.project.name.includes("laptop")) {
+    const lowerVisual = await page.getByRole("heading", { name: "Estado de controles" }).boundingBox();
+    expect(lowerVisual?.y).toBeLessThan(testInfo.project.name.includes("desktop") ? 1024 : 800);
+  }
   await page.screenshot({ path: `${baselineDirectory}/dashboard-${testInfo.project.name}.png`, fullPage: true });
   await page.keyboard.press("Tab");
   await expect(page.locator(":focus-visible")).toBeVisible();
@@ -88,6 +100,7 @@ for (const [routeName, heading, screenshot, openDetail] of [
     await page.getByRole("tab", { name: heading, exact: true }).click();
     await expect(page.getByRole("heading", { name: heading })).toBeVisible();
     await expect(page.getByRole("table")).toBeVisible();
+    await expect(page.locator("body")).not.toContainText(/Fase 5|revisión visual humana|estado de implementación/i);
     await expect(page.locator("body")).not.toContainText(/in_progress|in_review|under_review|remediation_in_progress|pending_verification/);
     if (openDetail) {
       await page.getByRole("button", { name: "Ver detalle" }).click();

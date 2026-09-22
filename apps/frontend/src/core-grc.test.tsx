@@ -1,7 +1,7 @@
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { availableWorkflowActions, canCreate, DataCard, KpiCard, modules, StatePanel, StatusBadge, TableShell, type Access } from "./core-grc.js";
+import { availableWorkflowActions, canCreate, DataCard, distributionFromRows, KpiCard, modules, StackedDistribution, StatePanel, StatusBadge, TableShell, type Access } from "./core-grc.js";
 import { displayValue, fieldLabel, roleLabel } from "./i18n/display-text.js";
 import { moduleLabels, uiText } from "./i18n/es.js";
 import { STATUS_LABELS, statusLabel } from "./i18n/status-labels.js";
@@ -76,5 +76,37 @@ describe("Core GRC UI contract", () => {
     expect(markup).toContain("data-card");
     expect(markup).toContain("table-card");
     expect(markup).toContain("Sin registros visibles");
+  });
+
+  it("removes development and governance artifacts from commercial UI copy", () => {
+    const commercialCopy = JSON.stringify(uiText);
+    expect(commercialCopy).not.toMatch(/Fase 5|revisi[oó]n visual humana|gate|estado de implementaci[oó]n/i);
+  });
+
+  it("builds dashboard distributions only from loaded records and labels the denominator", () => {
+    const rows = [
+      { result_status: "valid" },
+      { result_status: "insufficient_data" },
+      { result_status: "valid" }
+    ];
+    const distribution = distributionFromRows(rows, "result_status");
+    expect(distribution.map(({ value, label, count, tone }) => ({ value, label, count, tone }))).toEqual([
+      { value: "valid", label: "Válido", count: 2, tone: "success" },
+      { value: "insufficient_data", label: "Datos insuficientes", count: 1, tone: "warning" }
+    ]);
+    expect(distribution[0]?.percentage).toBeCloseTo(66.67, 2);
+    expect(distribution[1]?.percentage).toBeCloseTo(33.33, 2);
+    const markup = renderToStaticMarkup(<StackedDistribution rows={rows} field="result_status" emptyDetail="Sin evaluaciones"/>);
+    expect(markup).toContain("Sobre registros visibles · 3");
+    expect(markup).toContain("Válido");
+    expect(markup).toContain("Datos insuficientes");
+    expect(markup).not.toContain("result_status");
+  });
+
+  it("renders insufficient data without synthesizing a zero metric", () => {
+    const markup = renderToStaticMarkup(<StackedDistribution rows={[]} field="result_status" emptyDetail="Sin evaluaciones"/>);
+    expect(markup).toContain("Datos insuficientes");
+    expect(markup).not.toMatch(/>0</);
+    expect(distributionFromRows([], "result_status")).toEqual([]);
   });
 });

@@ -301,50 +301,90 @@ export function KpiCard({ label, value, detail, tone, icon }: { label: string; v
   return <article className={`kpi-card ${tone}`}><div className="kpi-heading"><p>{label}</p><span className="kpi-icon"><Icon name={icon}/></span></div><strong>{value}</strong><span>{detail}</span></article>;
 }
 
-export function DataCard({ title, action, className = "", children }: { title: string; action?: React.ReactNode; className?: string; children: React.ReactNode }) {
-  return <article className={`data-card ${className}`}><header><h2>{title}</h2>{action}</header>{children}</article>;
+export function DataCard({ title, subtitle, action, className = "", children }: { title: string; subtitle?: string; action?: React.ReactNode; className?: string; children: React.ReactNode }) {
+  return <article className={`data-card ${className}`}><header><div><h2>{title}</h2>{subtitle && <p>{subtitle}</p>}</div>{action}</header>{children}</article>;
 }
 
 export function ResponsiveChartFrame({ label, children }: { label: string; children: React.ReactNode }) {
   return <div className="chart-frame" role="img" aria-label={label}>{children}</div>;
 }
 
-function DistributionBars({ rows, states }: { rows: Row[]; states: readonly string[] }) {
-  return <div className="progress-list">{states.map((state) => { const value = rows.filter((row) => row.lifecycle_state === state).length; const width = rows.length === 0 ? 0 : Math.round(value / rows.length * 100); return <div key={state}><span><span>{statusLabel(state)}</span><b>{value}</b></span><div className="progress"><i style={{ width: `${width}%` }}/></div></div>; })}</div>;
+export type DistributionDatum = { value: string; label: string; count: number; percentage: number; tone: "success" | "warning" | "danger" | "info" | "neutral" };
+
+function distributionTone(value: string): DistributionDatum["tone"] {
+  if (value === "valid") return "success";
+  if (value === "invalid") return "danger";
+  if (value === "insufficient_data" || value === "insufficient_evidence" || value === "no_data") return "warning";
+  return statusTone(value);
+}
+
+export function distributionFromRows(rows: Row[], field: string): DistributionDatum[] {
+  const counts = new Map<string, number>();
+  for (const row of rows) {
+    const value = row[field];
+    if (typeof value === "string" && value.length > 0) counts.set(value, (counts.get(value) ?? 0) + 1);
+  }
+  const total = [...counts.values()].reduce((sum, count) => sum + count, 0);
+  if (total === 0) return [];
+  return [...counts.entries()].map(([value, count]) => ({ value, label: displayValue(value), count, percentage: count / total * 100, tone: distributionTone(value) }));
+}
+
+export function StackedDistribution({ rows, field, emptyDetail }: { rows: Row[]; field: string; emptyDetail: string }) {
+  const distribution = distributionFromRows(rows, field);
+  if (distribution.length === 0) return <StatePanel kind="insufficient-data" detail={emptyDetail}/>;
+  const total = distribution.reduce((sum, item) => sum + item.count, 0);
+  return <ResponsiveChartFrame label={`${uiText.dashboard.distributionAria}: ${total} ${uiText.common.visibleCount}`}>
+    <p className="dataset-label">{uiText.common.visibleDataset} · {total}</p>
+    <div className="stacked-bar" aria-hidden="true">{distribution.map((item) => <i className={`distribution-segment ${item.tone}`} style={{ width: `${item.percentage}%` }} key={item.value}/>)}</div>
+    <div className="distribution-legend">{distribution.map((item) => <div key={item.value} title={`${item.label}: ${item.count} ${uiText.dashboard.distributionTooltip}`}><span><i className={`legend-marker ${item.tone}`} aria-hidden="true"/>{item.label}</span><strong>{item.count}<small>{Math.round(item.percentage)}%</small></strong></div>)}</div>
+  </ResponsiveChartFrame>;
+}
+
+function EntityDistribution({ label, rows, field = "lifecycle_state" }: { label: string; rows: Row[]; field?: string }) {
+  const distribution = distributionFromRows(rows, field);
+  if (distribution.length === 0) return null;
+  return <section className="entity-distribution"><div className="entity-distribution-heading"><strong>{label}</strong><span>{rows.length}</span></div>{distribution.map((item) => <div className="compact-bar" key={item.value} title={`${item.label}: ${item.count} ${uiText.dashboard.distributionTooltip}`}><span><i className={`legend-marker ${item.tone}`} aria-hidden="true"/>{item.label}</span><b>{item.count}</b><div><i className={item.tone} style={{ width: `${item.percentage}%` }}/></div></div>)}</section>;
 }
 
 function Dashboard({ api, access }: { api: ApiClient; access: Access }) {
-  const dashboardModules = [modules[1]!, modules[7]!, modules[8]!, modules[9]!];
+  const dashboardModules = [modules[1]!, modules[4]!, modules[6]!, modules[7]!, modules[8]!, modules[9]!];
   const moduleAccess = dashboardModules.map((definition) => canRead(definition, access));
   const assessmentLoad = usePage(api, dashboardModules[0]!, moduleAccess[0]!)[0];
-  const evidenceLoad = usePage(api, dashboardModules[1]!, moduleAccess[1]!)[0];
-  const issueLoad = usePage(api, dashboardModules[2]!, moduleAccess[2]!)[0];
-  const actionLoad = usePage(api, dashboardModules[3]!, moduleAccess[3]!)[0];
-  const loads = [assessmentLoad, evidenceLoad, issueLoad, actionLoad];
+  const controlAssessmentLoad = usePage(api, dashboardModules[1]!, moduleAccess[1]!)[0];
+  const evidenceRequestLoad = usePage(api, dashboardModules[2]!, moduleAccess[2]!)[0];
+  const evidenceLoad = usePage(api, dashboardModules[3]!, moduleAccess[3]!)[0];
+  const issueLoad = usePage(api, dashboardModules[4]!, moduleAccess[4]!)[0];
+  const actionLoad = usePage(api, dashboardModules[5]!, moduleAccess[5]!)[0];
+  const loads = [assessmentLoad, controlAssessmentLoad, evidenceRequestLoad, evidenceLoad, issueLoad, actionLoad];
   if (loads.some((load) => load.state === "loading")) return <LoadingState/>;
   const validLoads = loads.map((load) => load.state === "ready" ? load.data : []);
-  const [assessments, evidence, issues, actions] = validLoads;
-  const partial = loads.some((load) => load.state === "error") || moduleAccess.some((allowed) => !allowed);
-  const validAssessments = assessments!.filter((row) => row.result_status === "valid").length;
-  const insufficientAssessments = assessments!.filter((row) => String(row.result_status).startsWith("insufficient_") || row.result_status === "no_data").length;
-  const count = (rows: Row[] | undefined, states: string[]) => (rows ?? []).filter((row) => states.includes(String(row.lifecycle_state))).length;
+  const [assessments, controlAssessments, evidenceRequests, evidence, issues, actions] = validLoads;
+  const accessPartial = loads.some((load) => load.state === "error") || moduleAccess.some((allowed) => !allowed);
+  const pagePartial = loads.some((load) => load.state === "ready" && load.page.has_more);
   const cards = [
-    { label: uiText.dashboard.assessments, value: moduleAccess[0] ? String(assessments!.length) : "—", detail: moduleAccess[0] ? `${validAssessments} ${uiText.dashboard.validResult}` : uiText.states.unavailableTitle, tone: "teal" as const, icon: "check" },
-    { label: uiText.dashboard.issues, value: moduleAccess[2] ? String(issues!.length) : "—", detail: moduleAccess[2] ? `${count(issues, ["open", "triaged", "remediation_in_progress", "pending_verification"])} ${uiText.dashboard.openFlow}` : uiText.states.unavailableTitle, tone: "orange" as const, icon: "alert" },
-    { label: uiText.dashboard.actions, value: moduleAccess[3] ? String(actions!.length) : "—", detail: moduleAccess[3] ? `${count(actions, ["pending", "in_progress", "in_review", "completed"])} ${uiText.dashboard.activeInView}` : uiText.states.unavailableTitle, tone: "blue" as const, icon: "task" },
-    { label: uiText.dashboard.evidence, value: moduleAccess[1] ? String(evidence!.length) : "—", detail: moduleAccess[1] ? uiText.dashboard.evidenceContext : uiText.states.unavailableTitle, tone: "green" as const, icon: "file" }
+    { label: uiText.dashboard.assessments, value: moduleAccess[0] ? String(assessments!.length) : "—", detail: moduleAccess[0] ? uiText.common.visibleDataset : uiText.states.unavailableTitle, tone: "teal" as const, icon: "check" },
+    { label: uiText.dashboard.controlAssessments, value: moduleAccess[1] ? String(controlAssessments!.length) : "—", detail: moduleAccess[1] ? uiText.common.visibleDataset : uiText.states.unavailableTitle, tone: "blue" as const, icon: "shield" },
+    { label: uiText.dashboard.issues, value: moduleAccess[4] ? String(issues!.length) : "—", detail: moduleAccess[4] ? uiText.common.visibleDataset : uiText.states.unavailableTitle, tone: "orange" as const, icon: "alert" },
+    { label: uiText.dashboard.evidenceRequests, value: moduleAccess[2] ? String(evidenceRequests!.length) : "—", detail: moduleAccess[2] ? uiText.common.visibleDataset : uiText.states.unavailableTitle, tone: "green" as const, icon: "file" }
   ];
-  const actionStates = ["pending", "in_progress", "in_review", "completed", "verified"];
+  const attentionRows: Array<Row & { entityLabel: string }> = [
+    ...issues!.map((row) => ({ ...row, entityLabel: uiText.dashboard.issueItems })),
+    ...actions!.map((row) => ({ ...row, entityLabel: uiText.dashboard.actionItems })),
+    ...evidenceRequests!.map((row) => ({ ...row, entityLabel: uiText.dashboard.evidenceRequestItems }))
+  ].slice(0, 5);
   return <>
     <div className="page-heading dashboard-heading"><div><p className="eyebrow">{uiText.dashboard.eyebrow}</p><h1>{uiText.dashboard.greeting}{access.user_name ? `, ${access.user_name.split(" ")[0]}` : ""}</h1><p>{uiText.dashboard.description}</p></div><span className="context-pill">{uiText.common.currentTenantData}</span></div>
-    {partial && <div className="state-inline"><StatePanel kind="partial-data" detail={uiText.states.permissionDetail}/></div>}
+    {(accessPartial || pagePartial) && <div className="state-inline"><StatePanel kind="partial-data" detail={pagePartial ? uiText.dashboard.partialDataset : uiText.states.permissionDetail}/></div>}
     <section className="kpi-grid">{cards.map((card) => <KpiCard {...card} key={card.label}/>)}</section>
-    <section className="dashboard-grid">
-      <DataCard title={uiText.dashboard.assessmentDistribution} className="chart-card" action={<button className="link-button" onClick={() => navigate("requisitos")}>{uiText.dashboard.seeAssessments} →</button>}>{assessments!.length === 0 ? <StatePanel kind="insufficient-data" detail={uiText.dashboard.noAssessments}/> : <ResponsiveChartFrame label={uiText.dashboard.assessmentDistribution}><div className="metric-bars"><div><span><i className="dot success"/>{uiText.dashboard.valid}</span><strong>{validAssessments}</strong></div><div><span><i className="dot warning"/>{uiText.dashboard.insufficient}</span><strong>{insufficientAssessments}</strong></div><div><span><i className="dot"/>{uiText.dashboard.otherStates}</span><strong>{assessments!.length - validAssessments - insufficientAssessments}</strong></div></div></ResponsiveChartFrame>}</DataCard>
-      <DataCard title={uiText.dashboard.actionDistribution} className="chart-card" action={<button className="link-button" onClick={() => navigate("acciones")}>{uiText.dashboard.seeActions} →</button>}>{actions!.length === 0 ? <StatePanel kind="insufficient-data" detail={uiText.dashboard.noActions}/> : <ResponsiveChartFrame label={uiText.dashboard.actionDistribution}><DistributionBars rows={actions!} states={actionStates}/></ResponsiveChartFrame>}</DataCard>
-      <DataCard title={uiText.dashboard.recentRecords} className="activity-card">{[...issues!, ...actions!, ...evidence!].slice(0, 6).map((row, index) => <div className="activity" key={index}><span className="activity-icon"><Icon name="check"/></span><div><strong>{displayValue(row.title ?? row.evidence_code ?? row.issue_code ?? row.action_code ?? uiText.dashboard.record)}</strong><StatusBadge value={row.lifecycle_state}/></div></div>)}{issues!.length + actions!.length + evidence!.length === 0 && <EmptyState/>}</DataCard>
+    <section className="executive-grid">
+      <DataCard title={uiText.dashboard.assessmentDistribution} subtitle={uiText.dashboard.assessmentDistributionDetail} className="primary-visual" action={<button className="link-button" onClick={() => navigate("requisitos")}>{uiText.dashboard.seeAssessments} →</button>}><StackedDistribution rows={assessments!} field="result_status" emptyDetail={uiText.dashboard.noAssessments}/></DataCard>
+      <DataCard title={uiText.dashboard.operationalAttention} subtitle={uiText.dashboard.operationalAttentionDetail} className="attention-card">{attentionRows.map((row, index) => <div className="activity" key={index}><span className="activity-icon"><Icon name="alert"/></span><div><small>{String(row.entityLabel)}</small><strong>{displayValue(row.title ?? row.request_code ?? row.issue_code ?? row.action_code ?? uiText.dashboard.record)}</strong><StatusBadge value={row.lifecycle_state}/></div></div>)}{attentionRows.length === 0 && <StatePanel kind="insufficient-data" detail={uiText.dashboard.noAttention}/>}</DataCard>
     </section>
-    <aside className="phase-callout"><span className="flag"><Icon name="flag"/></span><div><strong>{uiText.dashboard.phase}</strong><p>{uiText.dashboard.phaseDetail}</p></div><span className="review-badge">{uiText.dashboard.humanReview}</span></aside>
+    <section className="operational-grid">
+      <DataCard title={uiText.dashboard.controlsDistribution} subtitle={uiText.dashboard.controlsDistributionDetail} className="compact-visual" action={<button className="link-button" onClick={() => navigate("controles")}>{uiText.dashboard.seeControls} →</button>}>{controlAssessments!.length === 0 ? <StatePanel kind="insufficient-data" detail={uiText.dashboard.noControlAssessments}/> : <ResponsiveChartFrame label={uiText.dashboard.controlsDistribution}><p className="dataset-label">{uiText.common.visibleDataset} · {controlAssessments!.length}</p><EntityDistribution label={uiText.dashboard.controlAssessmentItems} rows={controlAssessments!}/></ResponsiveChartFrame>}</DataCard>
+      <DataCard title={uiText.dashboard.remediationDistribution} subtitle={uiText.dashboard.remediationDistributionDetail} className="compact-visual" action={<button className="link-button" onClick={() => navigate("acciones")}>{uiText.dashboard.seeActions} →</button>}>{issues!.length + actions!.length === 0 ? <StatePanel kind="insufficient-data" detail={uiText.dashboard.noRemediation}/> : <ResponsiveChartFrame label={uiText.dashboard.remediationDistribution}><p className="dataset-label">{uiText.common.visibleDataset} · {issues!.length + actions!.length}</p><div className="entity-pair"><EntityDistribution label={uiText.dashboard.issueItems} rows={issues!}/><EntityDistribution label={uiText.dashboard.actionItems} rows={actions!}/></div></ResponsiveChartFrame>}</DataCard>
+      <DataCard title={uiText.dashboard.evidenceDistribution} subtitle={uiText.dashboard.evidenceDistributionDetail} className="compact-visual" action={<button className="link-button" onClick={() => navigate("evidencias")}>{uiText.dashboard.seeEvidence} →</button>}>{evidenceRequests!.length + evidence!.length === 0 ? <StatePanel kind="insufficient-data" detail={uiText.dashboard.noEvidence}/> : <ResponsiveChartFrame label={uiText.dashboard.evidenceDistribution}><p className="dataset-label">{uiText.common.visibleDataset} · {evidenceRequests!.length + evidence!.length}</p><div className="entity-pair"><EntityDistribution label={uiText.dashboard.evidenceRequestItems} rows={evidenceRequests!}/><EntityDistribution label={uiText.dashboard.evidenceItems} rows={evidence!}/></div></ResponsiveChartFrame>}</DataCard>
+    </section>
   </>;
 }
 
@@ -360,7 +400,7 @@ function Sidebar({ active, access, open, close }: { active: string; access: Acce
       return Boolean(definition && canRead(definition, access));
     });
   };
-  return <aside className={`sidebar ${open ? "open" : ""}`}><div className="brand"><img src="/tecdex-logo-light.svg" alt="Tecdex"/><span>GRC</span></div><nav aria-label={uiText.navigation.mainAria}>{nav.filter(([id]) => visible(id)).map(([id, label, icon]) => <button key={id} className={active === id ? "active" : ""} onClick={() => { navigate(id); close(); }}><Icon name={icon}/><span>{label}</span></button>)}</nav><div className="sidebar-footer"><strong>TCDX GRC</strong><span>{uiText.shell.productStage}</span></div></aside>;
+  return <aside className={`sidebar ${open ? "open" : ""}`}><div className="brand"><img src="/tecdex-logo-light.svg" alt="Tecdex"/><span>GRC</span></div><nav aria-label={uiText.navigation.mainAria}>{nav.filter(([id]) => visible(id)).map(([id, label, icon]) => <button key={id} className={active === id ? "active" : ""} onClick={() => { navigate(id); close(); }}><Icon name={icon}/><span>{label}</span></button>)}</nav><div className="sidebar-footer"><strong>TCDX GRC</strong><span>{uiText.shell.productContext}</span></div></aside>;
 }
 
 const workspaceGroups: Readonly<Record<string, readonly string[]>> = {
