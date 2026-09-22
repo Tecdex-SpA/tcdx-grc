@@ -1,10 +1,16 @@
 import { buildApp } from "./app.js";
 import { loadConfig } from "./config.js";
 import { createDatabase, databaseReady } from "./database.js";
+import { BlockedIdentityVerifier } from "./security/authentication.js";
+import { UnavailableFileStoragePort } from "./ports/file-storage.js";
 
 const config = loadConfig(process.env);
 const database = createDatabase(config);
-const app = buildApp(() => databaseReady(database));
+const app = buildApp(() => databaseReady(database), {
+  database,
+  identityVerifier: new BlockedIdentityVerifier(),
+  fileStorage: new UnavailableFileStoragePort()
+});
 
 let shuttingDown = false;
 

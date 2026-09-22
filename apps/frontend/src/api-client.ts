@@ -20,6 +20,7 @@ export class ApiClient {
     const headers = new Headers(init.headers);
     headers.set("authorization", `Bearer ${token}`);
     headers.set("accept", "application/json");
+    if (init.body) headers.set("content-type", "application/json");
     const tenant = this.selectedTenant();
     if (tenant) headers.set("x-tcdx-tenant-id", tenant.tenantId);
     const response = await fetch(new URL(path, this.origin), { ...init, headers });
@@ -29,5 +30,9 @@ export class ApiClient {
       throw new ApiProblem(problem, response.status);
     }
     return await response.json() as T;
+  }
+
+  async post<T>(path: string, body: Record<string, unknown>, idempotencyKey = crypto.randomUUID()): Promise<T> {
+    return this.request<T>(path, { method: "POST", headers: { "Idempotency-Key": idempotencyKey }, body: JSON.stringify(body) });
   }
 }

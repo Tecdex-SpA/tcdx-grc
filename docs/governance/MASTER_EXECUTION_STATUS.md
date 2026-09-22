@@ -4,8 +4,8 @@
 `BASELINE_STATUS=ACTIVE`
 `RECTOR_BASELINE=PASS`
 `RECTOR_DOCUMENT_CONSISTENCY=PASS`
-`SEMANTIC_CONFLICTS=0`
-`UNRESOLVED_ARCHITECTURAL_FINDINGS=0`
+`SEMANTIC_CONFLICTS=2`
+`UNRESOLVED_ARCHITECTURAL_FINDINGS=1`
 `SCOPE_EXPANSIONS=0`
 `CODEX_VARIATION_BUDGET=ZERO`
 
@@ -106,6 +106,21 @@ The human project authority approved the PRE-F5B decision that closes the remain
 
 The human project authority approved the PRE-F5C decisions that reconcile explicit F5 row-version concurrency, the six mutable workflow rows, four physical integrity constraints, lifecycle reachability, nine missing API operations, exactly two permissions and the single-write audit rule. The migration candidate and executable preflight pass in isolated local PostgreSQL 16 with 229 tables. QA materialization remains a separate human gate and Phase 5 remains not started.
 
+## Phase 5 local implementation — runtime unverified
+
+`PHASE_5_STARTED=1`
+`PHASE_5_IMPLEMENTATION=IMPLEMENTED_UNVERIFIED_RUNTIME`
+`CORE_GRC_SLICE=BLOCKED_PENDING_RUNTIME`
+`PHASE_5_RUNTIME_PERMISSION_MIGRATION=20260921000200`
+`PHASE_5_RUNTIME_PERMISSION_MIGRATION_EXECUTED=0`
+`PHASE_5_LOCAL_VERIFICATION_DATE=2026-09-22`
+`PHASE_5_LOCAL_FULL_TESTS=PASS_92_OF_92`
+`PHASE_5_LOCAL_PLAYWRIGHT=PASS_10_OF_10`
+`HUMAN_UI_REVIEW=PENDING`
+`PHASE_6_STARTED=0`
+
+The governed local implementation materializes 21 approved Core GRC reads and 35 contract-reconciled mutations with PostgreSQL-derived access, tenant/object policy, lifecycle registry, explicit row-version CAS, idempotency, audit and authorized outbox behavior. The final local verification on 2026-09-22 passed rector integrity/status, the 8/8 Phase 5 preflight, lint, backend/frontend typecheck, 92/92 full-suite tests, production build and 10/10 Playwright scenarios. The data-only Phase 5 runtime-permission migration is a local candidate and has not been applied to QA. Upload intent/finalization remain unavailable without a real governed object-storage runtime and a physical representation that can persist the contractual pre-finalization state. `evidenceRequestFulfill` remains unmaterialized because its API audit code conflicts with the authoritative lifecycle seed. `controlAssessmentSubmit` remains unmaterialized because its exclusive `assigned_object` scope has no authoritative ControlAssessment assignee relation in the frozen physical model. OIDC remains fail-closed. Full details and local evidence are in `PHASE_5_CORE_GRC_IMPLEMENTATION_REPORT.md`.
+
 ## Current authorized phase
 
 `PHASE_3=COMPLETE`
@@ -129,10 +144,11 @@ The human project authority approved the PRE-F5C decisions that reconcile explic
 `PHASE_5_EXECUTABILITY_PREFLIGHT=PASS`
 `PRE_F5C_PHYSICAL_RUNTIME=PASS`
 `QA_MIGRATION_EXECUTED=1`
-`CORE_GRC_SLICE=READY_FOR_IMPLEMENTATION`
-`PHASE_5_STARTED=0`
+`PHASE_5_IMPLEMENTATION=IMPLEMENTED_UNVERIFIED_RUNTIME`
+`CORE_GRC_SLICE=BLOCKED_PENDING_RUNTIME`
+`PHASE_5_STARTED=1`
 `PHASE_6_STARTED=0`
 
-Phase 4 engineering is closed. Independent regulatory content gates remain open where licensed or structured content is still pending; those gates do not reopen Phase 4 implementation. Phase 5 remains human-authorized but not started. PRE-F5C local reconciliation, executability preflight and governed QA materialization are complete: migration `20260921000100` is applied, the QA database remains at 229 physical tables with zero schema/seed mismatches and zero tenant-isolation gaps, and backend/database readiness plus frontend health pass. `PRE_F5C_PHYSICAL_RUNTIME=PASS` and `CORE_GRC_SLICE=READY_FOR_IMPLEMENTATION`. The approved visual baseline remains mandatory for all future Phase 5 UI work.
+Phase 4 engineering is closed. Independent regulatory content gates remain open where licensed or structured content is still pending; those gates do not reopen Phase 4 implementation. Phase 5 implementation has started and has a tested local candidate, but it is not runtime-verified or complete. PRE-F5C migration `20260921000100` remains applied in QA with 229 physical tables; Phase 5 migration `20260921000200` is not applied. The Core GRC slice remains blocked pending an approved OIDC/object-storage runtime, resolution of the two executable/physical conflicts, governed runtime verification and human UI review. The approved visual baseline remains mandatory.
 
 This file is mutable execution state. It is not part of the immutable rector baseline and cannot override it.

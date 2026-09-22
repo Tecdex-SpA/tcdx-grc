@@ -2,10 +2,12 @@ import Fastify, { type FastifyInstance } from "fastify";
 import { validate as validateUuid } from "uuid";
 import { newUuidV7 } from "./uuid.js";
 import { problemFromError } from "./errors.js";
+import type { CoreGrcDependencies } from "./core-grc/model.js";
+import { registerCoreGrcRoutes } from "./core-grc/routes.js";
 
 export type ReadinessProbe = () => Promise<boolean>;
 
-export function buildApp(readinessProbe: ReadinessProbe): FastifyInstance {
+export function buildApp(readinessProbe: ReadinessProbe, coreGrc?: CoreGrcDependencies): FastifyInstance {
   const app = Fastify({ logger: false });
 
   app.addHook("onRequest", async (request, reply) => {
@@ -28,6 +30,8 @@ export function buildApp(readinessProbe: ReadinessProbe): FastifyInstance {
     if (!database) return reply.code(503).send({ state: "down", dependencies: { database: "down" } });
     return { state: "up" as const, dependencies: { database: "up" as const } };
   });
+
+  if (coreGrc) registerCoreGrcRoutes(app, coreGrc);
 
   return app;
 }
