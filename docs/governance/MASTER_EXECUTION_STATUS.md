@@ -1,11 +1,11 @@
 # TCDX GRC — Master Execution Status
 
-`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16`
+`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.6_2026-09-23`
 `BASELINE_STATUS=ACTIVE`
 `RECTOR_BASELINE=PASS`
 `RECTOR_DOCUMENT_CONSISTENCY=PASS`
-`SEMANTIC_CONFLICTS=2`
-`UNRESOLVED_ARCHITECTURAL_FINDINGS=1`
+`SEMANTIC_CONFLICTS=0`
+`UNRESOLVED_ARCHITECTURAL_FINDINGS=0`
 `SCOPE_EXPANSIONS=0`
 `CODEX_VARIATION_BUDGET=ZERO`
 
@@ -106,6 +106,29 @@ The human project authority approved the PRE-F5B decision that closes the remain
 
 The human project authority approved the PRE-F5C decisions that reconcile explicit F5 row-version concurrency, the six mutable workflow rows, four physical integrity constraints, lifecycle reachability, nine missing API operations, exactly two permissions and the single-write audit rule. The migration candidate and executable preflight pass in isolated local PostgreSQL 16 with 229 tables. QA materialization remains a separate human gate and Phase 5 remains not started.
 
+## Human activation — PRE-F5E Platform IAM and token boundary
+
+`PRE_F5E=PASS`
+`PRE_F5E_F5D_BLOCKERS_CLOSED=7`
+`PRE_F5E_F5D_BLOCKERS_OPEN=0`
+`PRE_F5E_RECTOR_BASELINE=TCDX_GRC_MASTER_REGENT_BASELINE_v1.6_2026-09-23`
+`PRE_F5E_RECTOR_ACTIVATION=PASS`
+`PRE_F5E_PHYSICAL_MODEL_AMENDMENT=PASS_LOCAL_CANDIDATE`
+`PRE_F5E_MIGRATION_ID=20260923000100`
+`PRE_F5E_CANDIDATE_DATABASE_TABLES=230`
+`PRE_F5E_QA_MIGRATION_EXECUTED=0`
+`F5D_001_PLATFORM_AUTHORITY=CLOSED`
+`F5D_002_TENANT_CREATE=CLOSED`
+`F5D_003_MEMBERSHIP_CREATE=CLOSED`
+`F5D_004_MEMBERSHIP_ROLE_ASSIGN=CLOSED`
+`F5D_005_TENANT_CONTEXT_DISCOVERY=CLOSED`
+`F5D_006_APPLICATION_TOKEN=CLOSED`
+`F5D_007_FIRST_PLATFORM_ADMIN_BOOTSTRAP=CLOSED`
+`F5D_007_RUNTIME_CEREMONY=DEFERRED_TO_NEXT_AUTHORIZED_RUNTIME_STAGE`
+`PRE_F5E_HUMAN_DECISION_DATE=2026-09-23`
+
+The 2026-09-23 human authority activated rector baseline v1.6 and closed F5D-001 through F5D-007. Persisted `PlatformRoleAssignment` separates Platform authority from TenantMembership; Tenant creation starts active/confidential under a closed classification vocabulary; Membership creation starts active for an existing canonical UserIdentity; and the one-time internal, serialized, audited, PLATFORM_ADMIN-only bootstrap contract crosses the initial zero-grant state. The bootstrap adds no table/public endpoint/allowlist/seed and its runtime ceremony is deferred to the next authorized runtime/security stage. The 230-table physical model and migration remain local candidates; the QA runtime remains at 229 tables and neither QA migration nor runtime implementation is authorized by this activation.
+
 ## Phase 5 local implementation — runtime unverified
 
 `PHASE_5_STARTED=1`
@@ -126,7 +149,10 @@ The governed local implementation materializes 21 approved Core GRC reads and 35
 `PHASE_3=COMPLETE`
 `FOUNDATIONS_RUNTIME=PASS`
 `AUDIT_MODEL_MIGRATION_RUNTIME=PASS`
-`DATABASE_TABLES=229`
+`PRE_F5C_QA_MIGRATION_EXECUTED=1`
+`PRE_F5E_QA_MIGRATION_EXECUTED=0`
+`DATABASE_TABLES_ACTIVE_QA=229`
+`DATABASE_TABLES_TARGET_CANONICAL=230`
 `PHASE_4=COMPLETE`
 `PHASE_4_IMPLEMENTATION=COMPLETE`
 `PHASE_4_CONTENT_GATES_PARTIAL=YES`
@@ -143,12 +169,15 @@ The governed local implementation materializes 21 approved Core GRC reads and 35
 `PRE_F5C_LOCAL_GATE=PASS`
 `PHASE_5_EXECUTABILITY_PREFLIGHT=PASS`
 `PRE_F5C_PHYSICAL_RUNTIME=PASS`
-`QA_MIGRATION_EXECUTED=1`
+`PRE_F5E=PASS`
+`PRE_F5E_F5D_BLOCKERS_OPEN=0`
 `PHASE_5_IMPLEMENTATION=IMPLEMENTED_UNVERIFIED_RUNTIME`
+`PHASE_5_RUNTIME_CLOSURE=PENDING`
 `CORE_GRC_SLICE=BLOCKED_PENDING_RUNTIME`
 `PHASE_5_STARTED=1`
+`PHASE_6=BLOCKED`
 `PHASE_6_STARTED=0`
 
-Phase 4 engineering is closed. Independent regulatory content gates remain open where licensed or structured content is still pending; those gates do not reopen Phase 4 implementation. Phase 5 implementation has started and has a tested local candidate, but it is not runtime-verified or complete. PRE-F5C migration `20260921000100` remains applied in QA with 229 physical tables; Phase 5 migration `20260921000200` is not applied. The Core GRC slice remains blocked pending an approved OIDC/object-storage runtime, resolution of the two executable/physical conflicts, governed runtime verification and human UI review. The approved visual baseline remains mandatory.
+Phase 4 engineering is closed. Independent regulatory content gates remain open where licensed or structured content is still pending; those gates do not reopen Phase 4 implementation. Phase 5 implementation has started and has a tested local candidate, but it is not runtime-verified or complete. PRE-F5C migration `20260921000100` remains applied in QA with 229 physical tables; Phase 5 migration `20260921000200` and PRE-F5E migration `20260923000100` are not applied. The Core GRC slice remains blocked pending approved OIDC/object-storage runtime, governed runtime verification and human UI review. The approved visual baseline remains mandatory.
 
 This file is mutable execution state. It is not part of the immutable rector baseline and cannot override it.

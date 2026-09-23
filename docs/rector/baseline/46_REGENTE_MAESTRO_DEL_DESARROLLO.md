@@ -4,7 +4,7 @@
 
 Este documento es el punto de entrada obligatorio y la constitución operativa maestra del desarrollo TCDX GRC. Integra y gobierna los documentos 00–48 aplicables de este baseline. No reemplaza sus contratos especializados: fija cómo deben ser interpretados, ejecutados y verificados durante todo el ciclo hasta `MARKET_RELEASE_READY=PASS`.
 
-`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16`
+`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.6_2026-09-23`
 
 `CODEX_VARIATION_BUDGET=ZERO`
 

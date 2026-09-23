@@ -1,14 +1,15 @@
-# 33 - Catálogo completo de entidades canónicas por bounded context — v1.5
+# 33 - Catálogo completo de entidades canónicas por bounded context — v1.6
 
-> Active baseline: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16`.
-> Status: `ACTIVE`; human approval recorded in `docs/governance/PRE_F4_AUDIT_MODEL_AMENDMENT_APPROVAL.md`.
+> Active baseline: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.6_2026-09-23`.
 
 Este catálogo es la autoridad nominal de entidades lógicas. Un término contractual que requiera identidad, versionado, lineage o referencia reproducible debe aparecer aquí, aunque su implementación física pueda consolidarse conforme a la regla final.
 
 ## Identity & Access
-UserIdentity, TenantMembership, Role, Permission, RolePermission, MembershipRole, ServicePrincipal, ImpersonationSession.
+UserIdentity, TenantMembership, Role, Permission, RolePermission, MembershipRole, PlatformRoleAssignment, ServicePrincipal, ImpersonationSession.
 
 `Permission` es el único registry canónico de definiciones de permiso. `PermissionDefinition` queda retirado como alias y no constituye una entidad distinta.
+
+`PlatformRoleAssignment` es la única relación canónica entre `UserIdentity` y un `Role` `PLATFORM_CONTROL`. Es persistida, auditable y temporal; no posee `tenant_id` ni `tenant_membership_id`. `MembershipRole` permanece como la única asignación humana tenant-owned y requiere `TenantMembership`. Ambas relaciones consumen los mismos catálogos `Role` y `Permission`; no crean un segundo IAM.
 
 ## Tenant & Commercial Entitlements
 Tenant, Organization, Subscription, Plan, PlanVersion, Capability, Entitlement, UsageLimit, FeatureFlag.

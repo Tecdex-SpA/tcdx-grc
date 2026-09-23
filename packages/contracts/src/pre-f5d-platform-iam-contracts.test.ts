@@ -35,12 +35,13 @@ describe("PRE-F5D Platform IAM contract reconciliation", () => {
     expect(iamMigration).not.toContain("platform_tenant");
   });
 
-  it("does not reinterpret tenant MembershipRole as a platform-role binding", () => {
+  it("preserves the historical model gap while the PRE-F5E candidate adds one canonical non-tenant binding", () => {
     const iamTables = expectedSchema.tables.filter(({ name }) => name.startsWith("iam.")).map(({ name }) => name).sort();
     expect(iamTables).toEqual([
       "iam.impersonation_sessions",
       "iam.membership_roles",
       "iam.permissions",
+      "iam.platform_role_assignments",
       "iam.role_permissions",
       "iam.roles",
       "iam.service_principals",
@@ -50,25 +51,22 @@ describe("PRE-F5D Platform IAM contract reconciliation", () => {
     expect(physicalRbac).toContain("`iam.membership_roles` | tenant+membership+role+scope+validity");
     expect(iamMigration).toMatch(/CREATE TABLE "iam"\."membership_roles"[\s\S]*?"tenant_id" uuid NOT NULL[\s\S]*?"tenant_membership_id" uuid NOT NULL/);
     expect(seeds).toContain("'PLATFORM_CONTROL', NULL, 'PLATFORM_ADMIN', 'Platform Admin'");
-    expect(blockers).toContain("F5D-001");
+    expect(blockers).toContain("F5D_001_PLATFORM_AUTHORITY=CLOSED");
   });
 
-  it("never reports an administrative schema closed while it still uses DomainCommandRequest", () => {
-    const schemas = {
-      TENANT_CREATE_SCHEMA: "tenantCreate",
-      MEMBERSHIP_CREATE_SCHEMA: "membershipCreate",
-      MEMBERSHIP_ROLE_ASSIGN_SCHEMA: "membershipRoleAssign"
-    } as const;
-    for (const [statusName, operationId] of Object.entries(schemas)) {
-      const status = new RegExp(`^${statusName}=([^\\n]+)$`, "m").exec(reconciliation)?.[1];
-      expect(status, statusName).toBeDefined();
-      if (status === "CLOSED") {
-        expect(operationBlock(operationId), operationId).not.toContain("DomainCommandRequest");
-      } else {
-        expect(status, statusName).toBe("BLOCKED_EXECUTABLE_CONTRACT");
-        expect(operationBlock(operationId), operationId).toContain("DomainCommandRequest");
-      }
-    }
+  it("preserves PRE-F5D history while current schemas follow the PRE-F5E ledger", () => {
+    expect(reconciliation).toContain("TENANT_CREATE_SCHEMA=BLOCKED_EXECUTABLE_CONTRACT");
+    expect(reconciliation).toContain("MEMBERSHIP_CREATE_SCHEMA=BLOCKED_EXECUTABLE_CONTRACT");
+    expect(reconciliation).toContain("MEMBERSHIP_ROLE_ASSIGN_SCHEMA=BLOCKED_EXECUTABLE_CONTRACT");
+    expect(blockers).toContain("F5D_002_TENANT_CREATE=CLOSED");
+    expect(blockers).toContain("F5D_003_MEMBERSHIP_CREATE=CLOSED");
+    expect(blockers).toContain("F5D_004_MEMBERSHIP_ROLE_ASSIGN=CLOSED");
+    expect(operationBlock("tenantCreate")).toContain("TenantCreateRequest");
+    expect(operationBlock("tenantCreate")).not.toContain("DomainCommandRequest");
+    expect(operationBlock("membershipCreate")).toContain("MembershipCreateRequest");
+    expect(operationBlock("membershipCreate")).not.toContain("DomainCommandRequest");
+    expect(operationBlock("membershipRoleAssign")).not.toContain("DomainCommandRequest");
+    expect(operationBlock("membershipRoleAssign")).toContain("MembershipRoleAssignRequest");
   });
 
   it("retains permission, scope, audit, event and idempotency on every published admin mutation", () => {
@@ -89,18 +87,19 @@ describe("PRE-F5D Platform IAM contract reconciliation", () => {
     }
   });
 
-  it("blocks tenant-context discovery until a permission and complete executable shape are approved", () => {
+  it("preserves the historical discovery blocker and recognizes its PRE-F5E closure", () => {
     expect(reconciliation).toContain("TENANT_CONTEXT_DISCOVERY=BLOCKED_EXECUTABLE_CONTRACT");
     expect(reconciliation).toContain("MISSING_DECISIONS=PATH_OR_ACCESSGET_SEMANTICS,OPERATION_ID,PERMISSION,RESPONSE_SHAPE,PAGINATION");
+    expect(blockers).toContain("F5D_005_TENANT_CONTEXT_DISCOVERY=CLOSED");
     expect(openApi).not.toMatch(/operationId: (?:membershipList|tenantContextList|tenantMembershipList)/);
     expect(operationBlock("accessGet")).toContain('x-tcdx-permission: "authenticated context"');
-    expect(operationBlock("accessGet")).not.toContain("TenantMembershipPage");
+    expect(operationBlock("accessGet")).toContain("AccessGetSuccess");
   });
 
   it("prohibits using an id_token as the protected-API bearer", () => {
     expect(reconciliation).toContain("ID_TOKEN_AS_API_BEARER=PROHIBITED");
-    expect(authentication).toContain("Authorization: Bearer <access-token>");
-    expect(authentication).toContain("The access token is a JWT");
+    expect(authentication).toContain("Authorization: Bearer <TCDX-application-access-token>");
+    expect(authentication).toContain("external `id_token`");
   });
 
   it("keeps opaque access tokens fail-closed under the JWT contract", () => {
@@ -112,7 +111,7 @@ describe("PRE-F5D Platform IAM contract reconciliation", () => {
   it("keeps UserIdentity provider-neutral and keyed by issuer plus stable subject, not email", () => {
     expect(reconciliation).toContain("EXTERNAL_IDENTITY_KEY=provider_issuer+stable_subject");
     expect(reconciliation).toContain("EMAIL_ROLE=ATTRIBUTE_NOT_PRIMARY_IDENTITY");
-    expect(authentication).toContain("The concrete commercial IdP, exact claims mapping, issuer URL");
+    expect(authentication).toContain("exact `issuer + stable subject`");
     expect((authentication + physicalRbac + reconciliation).toLowerCase()).not.toContain("zoho");
   });
 
@@ -124,9 +123,9 @@ describe("PRE-F5D Platform IAM contract reconciliation", () => {
     expect(reconciliation).toContain("MFA_SECRET_COLUMNS_ADDED=0");
   });
 
-  it("preserves the frozen 229-table schema with no PRE-F5D migration", () => {
-    expect(expectedSchema.tableCount).toBe(229);
-    expect(expectedSchema.tables).toHaveLength(229);
+  it("preserves PRE-F5D's historical 229-table evidence while exposing the 230-table PRE-F5E candidate", () => {
+    expect(expectedSchema.tableCount).toBe(230);
+    expect(expectedSchema.tables).toHaveLength(230);
     expect(reconciliation).toContain("DATABASE_TABLES=229");
     expect(reconciliation).toContain("DATABASE_SCHEMA_CHANGED=0");
     expect(reconciliation).toContain("MIGRATION_CREATED=0");

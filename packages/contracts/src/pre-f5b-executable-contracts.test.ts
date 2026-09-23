@@ -271,9 +271,9 @@ describe("PRE-F5B executable-contract closure", () => {
     expect(idempotency).toContain("including `evidenceCreate`");
   });
 
-  it("preserves the 229-table frozen schema and adds no runtime-seed claim", () => {
+  it("preserves PRE-F5B's no-runtime-seed claim within the later 230-table PRE-F5E candidate", () => {
     const expectedSchema = JSON.parse(expectedSchemaSource) as { tables: Array<{ name: string }> };
-    expect(expectedSchema.tables).toHaveLength(229);
+    expect(expectedSchema.tables).toHaveLength(230);
     for (const table of ["evidence.file_objects", "evidence.evidences", "evidence.evidence_versions", "evidence.evidence_links"]) {
       expect(expectedSchema.tables.some(({ name }) => name === table), table).toBe(true);
     }

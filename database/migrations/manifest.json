@@ -176,6 +176,25 @@
         "physical_tables=229",
         "phase5_runtime_permissions=11"
       ]
+    },
+    {
+      "id": "20260923000100",
+      "filename": "20260923000100_pre_f5e_platform_authority.sql",
+      "sha256": "4ee0b3d24c7d7aa6ea87a8e9a6618cd2a7b164aedf1e3990590c3cf1b512ea82",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16",
+        "ledger_count=12",
+        "physical_tables=229",
+        "platform_role_assignments=absent"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=230",
+        "platform_role_assignments=present",
+        "person_specific_grants=0"
+      ]
     }
   ]
 }

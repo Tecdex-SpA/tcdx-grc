@@ -88,3 +88,25 @@ MATERIAL_DECISIONS_WITHOUT_OWNER=0
 ```
 
 H-001..H-006, DR-PHASE5-API-READ-2026-09-17-002, DR-PRE-F5B-2026-09-21-004 and DR-PRE-F5C-2026-09-21-005 are the cited human authority for the current rows. No LegalHold entity, capability, hard-delete operation, dismissed exit, tenant registry, generic Evidence target or inferred configuration default is introduced.
+
+## PRE-F5E post-Phase-2 traceability
+
+PRE-F5E preserves the earlier traceability history and publishes the following 2026-09-23 candidate reconciliation:
+
+| PRE-F5E item | rector / human authority | physical authority | executable evidence | result |
+|---|---|---|---|---|
+| Platform human authority | human PRE-F5E F5D-001 2026-09-23; active rector v1.6 09/22/30/33/39 | candidate `iam.platform_role_assignments`; existing UserIdentity/Role/RolePermission/Permission | physical PRE-F5E amendment; migration `20260923000100`; 13/19/21 | `CLOSED` |
+| `tenantCreate` | human PRE-F5E F5D-002 2026-09-23; rector v1.6 candidate 21/39 | `platform.tenants`; active/confidential server defaults and classification CHECK | 02 `TenantCreateRequest`/`TenantProjection`; 03/19/21 | `CLOSED_BY_HUMAN_DECISION_PRE_F5E` |
+| `membershipCreate` | human PRE-F5E F5D-003 2026-09-23; rector v1.6 candidate 21/22/39 | `iam.tenant_memberships`; active server default | 02 `MembershipCreateRequest`/`TenantMembershipProjection`; 03/19/21 | `CLOSED_BY_HUMAN_DECISION_PRE_F5E` |
+| `membershipRoleAssign` | human H5; rector 22/23/42 | `iam.membership_roles` existing columns/scopes/validity | 02 `MembershipRoleAssignRequest`/projection; 03/19/21 | `CLOSED_BY_HUMAN_DECISION_PRE_F5E` |
+| own tenant-context discovery | human H6; rector 09/22/42 | UserIdentity/Membership/Role/Tenant existing relations | 02 `EffectiveAccess.available_tenant_contexts`; 03/19/21 | `CLOSED_BY_HUMAN_DECISION_PRE_F5E` |
+| TCDX application JWT | human H2/H7/H8; rector 25/26/34/43 | no canonical schema change; secrets/runtime state external | 02 bearer profile; 08/13/19/21 | `CLOSED_BY_HUMAN_DECISION_PRE_F5E` |
+| first Platform Admin bootstrap | human F5D-007 decision 2026-09-23; active rector v1.6 09/22/39 | candidate `iam.platform_role_assignments`, canonical PLATFORM_ADMIN Role row and `ops_audit.audit_events`; no bootstrap table | internal one-time command contract in 08/10/13/19/21; no public OpenAPI operation | `CLOSED_RUNTIME_CEREMONY_DEFERRED` |
+
+```text
+PRE_F5E_TRACEABILITY=7/7_ACCOUNTED
+PRE_F5E_CLOSED=7
+PRE_F5E_BLOCKED=0
+PRE_F5E_HUMAN_ACTIVATION_PENDING=0
+PRE_F5E_UNSOURCED_CONTRACTS=0
+```

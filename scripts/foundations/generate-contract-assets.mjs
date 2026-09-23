@@ -11,6 +11,7 @@ const permissionPath = resolve(root, "docs/executable-contracts/05_PERMISSION_CA
 const seedPath = resolve(root, "docs/executable-contracts/09_SEED_MANIFESTS.md");
 const generatedAt = "2026-09-16T00:00:00.000Z";
 const preF5cGeneratedAt = "2026-09-21T00:00:00.000Z";
+const preF5eCandidateId = "TCDX_GRC_MASTER_REGENT_BASELINE_v1.6_2026-09-23";
 
 const sha256 = (value) => createHash("sha256").update(value).digest("hex");
 const q = (value) => `'${String(value).replaceAll("'", "''")}'`;
@@ -221,6 +222,29 @@ function auditAmendmentRows() {
   ];
 }
 
+function preF5eAmendmentRows() {
+  const pk = "platform_role_assignment_id";
+  return [{
+    name: "iam.platform_role_assignments",
+    schema: "iam",
+    table: "platform_role_assignments",
+    entity: "PlatformRoleAssignment",
+    profile: "I",
+    pk,
+    columns: [
+      ...profileColumns("I", pk),
+      ["ownership_class", "varchar(24)", false, "PLATFORM_CONTROL"],
+      ["user_identity_id", "uuid", false],
+      ["role_id", "uuid", false],
+      ["valid_from", "timestamptz", false],
+      ["valid_to", "timestamptz", true]
+    ],
+    integrity: "FK UserIdentity; composite FK Role+ownership; CHECK PLATFORM_CONTROL; one open active user+role enforced by partial unique index",
+    retention: "validity; audit; AO/POL",
+    fieldText: "approved PRE-F5E Platform authority amendment candidate"
+  }];
+}
+
 function sqlDefault(raw, type) {
   if (raw === undefined) return "";
   if (raw === "CURRENT_TIMESTAMP") return " DEFAULT CURRENT_TIMESTAMP";
@@ -256,7 +280,9 @@ function tableChecks(row) {
     add("actor_one", "num_nonnulls(actor_user_identity_id, actor_service_principal_id) <= 1");
   if (row.name === "ops_audit.idempotency_records")
     add("actor_required", "num_nonnulls(actor_user_identity_id, actor_service_principal_id) = 1");
-  if (names.has("ownership_class")) {
+  if (row.name === "iam.platform_role_assignments") {
+    add("ownership_class", "ownership_class = 'PLATFORM_CONTROL'");
+  } else if (names.has("ownership_class")) {
     add("ownership_class", "ownership_class IN ('GLOBAL_REFERENCE','PLATFORM_CONTROL','TENANT_OWNED','TENANT_DERIVED')");
     add("tenant_ownership", "((ownership_class IN ('TENANT_OWNED','TENANT_DERIVED')) = (tenant_id IS NOT NULL))");
   }
@@ -273,6 +299,7 @@ function tableChecks(row) {
   }
   if (names.has("calculation_status")) add("calculation_status", "calculation_status IN ('pending','running','succeeded','failed','cancelled')");
   if (names.has("result_status")) add("result_status", "result_status IN ('valid','no_data','insufficient_data','insufficient_coverage','stale_source','conflicting_sources','dependency_pending','invalid_input','source_error','calculation_error','not_applicable','superseded')");
+  if (row.name === "platform.tenants") add("data_classification", "data_classification IN ('public','internal','confidential','restricted')");
   const auditChecks = {
     "audit.audit_objectives": [
       ["ordinal_nonnegative", "ordinal >= 0"], ["statement_nonempty", "btrim(statement) <> ''"]
@@ -359,6 +386,7 @@ function uniqueDefinitions(row) {
     "regulatory.regulatory_pack_versions": [["regulatory_pack_id", "version_number"]],
     "platform.entitlements": [["plan_version_id", "capability_id"]],
     "iam.role_permissions": [["ownership_class", "tenant_id", "role_id", "permission_id"]],
+    "iam.roles": [["role_id", "ownership_class"]],
     "risk.impact_scale_levels": [["impact_scale_definition_id", "level_value"]],
     "risk.likelihood_scale_levels": [["likelihood_scale_definition_id", "level_value"]],
     "ops_audit.lifecycle_transition_definitions": [["entity_type", "from_state", "command_code", "version_number"]],
@@ -1058,9 +1086,11 @@ function preF5cMigrationSql(rows) {
 function expectedInventory(rows) {
   return {
     contract: "TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16",
+    rectorCandidate: preF5eCandidateId,
     physicalModelCommit: "a822bb92d0d585edd84adc8a1c65ec280923cc8e",
     physicalModelAmendmentCommit: "6a31034ae1ecc1f9ee551431fb2a504a25fb52ce",
     preF5cDecision: "DR-PRE-F5C-2026-09-21-005",
+    preF5eDecisionDate: "2026-09-23",
     tableCount: rows.length,
     tables: rows.map((row) => ({
       name: row.name, profile: row.profile, primaryKey: [row.pk],
@@ -1082,11 +1112,19 @@ function writeOrCheck(path, content) {
 
 const baseRows = parsePhysicalModel();
 const amendmentRows = auditAmendmentRows();
+const preF5eRows = preF5eAmendmentRows();
 const rows = [
-  ...baseRows.map((row) => row.name === "audit.audits"
-    ? { ...row, columns: row.columns.filter((column) => !["scope_text", "lead_membership_id"].includes(column[0])) }
-    : row),
-  ...amendmentRows
+  ...baseRows.map((row) => {
+    if (row.name === "audit.audits") return { ...row, columns: row.columns.filter((column) => !["scope_text", "lead_membership_id"].includes(column[0])) };
+    if (row.name === "platform.tenants") return { ...row, columns: row.columns.map((column) => column[0] === "lifecycle_state"
+      ? [column[0], column[1], column[2], "active"]
+      : column[0] === "data_classification" ? [column[0], column[1], column[2], "confidential"] : column) };
+    if (row.name === "iam.tenant_memberships") return { ...row, columns: row.columns.map((column) => column[0] === "membership_state"
+      ? [column[0], column[1], column[2], "active"] : column) };
+    return row;
+  }),
+  ...amendmentRows,
+  ...preF5eRows
 ];
 const migrationDir = resolve(root, "database/migrations");
 const historicalMigrations = [
@@ -1111,7 +1149,9 @@ const phase5RuntimeMigration = [phase5RuntimeMigrationFilename, readFileSync(res
 if (sha256(phase5RuntimeMigration[1]) !== "8cc3d1b2a64a5b00ffd55f93ccfbcdfcde5406ffa9c1fa7f2d2055f505048eb0") {
   throw new Error(`Phase 5 runtime migration drift: ${phase5RuntimeMigrationFilename}`);
 }
-const migrations = [...historicalMigrations, preF5cMigration, phase5RuntimeMigration];
+const preF5eMigrationFilename = "20260923000100_pre_f5e_platform_authority.sql";
+const preF5eMigration = [preF5eMigrationFilename, readFileSync(resolve(migrationDir, preF5eMigrationFilename), "utf8")];
+const migrations = [...historicalMigrations, preF5cMigration, phase5RuntimeMigration, preF5eMigration];
 const manifest = {
   manifestVersion: 1,
   runnerVersion: "1.0.0",
@@ -1120,14 +1160,18 @@ const manifest = {
   advisoryLockSource: "tcdx-grc:platform.schema_migrations:v1",
   migrations: migrations.map(([filename, content]) => ({
     id: filename.slice(0, 14), filename, sha256: sha256(content), transactional: true,
-    preconditions: filename.includes("phase5_core_grc")
+    preconditions: filename.includes("pre_f5e")
+      ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=12", "physical_tables=229", "platform_role_assignments=absent"]
+      : filename.includes("phase5_core_grc")
       ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=11", "physical_tables=229"]
       : filename.includes("pre_f5c")
       ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=10", "physical_tables=229", "pre_f5c_columns=absent"]
       : filename.includes("pre_f4")
       ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=9", "physical_tables=214", "existing_audits=0_or_approved_reconciliation"]
       : ["database_name=tcdx-grc", "postgres_major=16"],
-    postconditions: filename.includes("phase5_core_grc")
+    postconditions: filename.includes("pre_f5e")
+      ? ["ledger_outcome=applied", "physical_tables=230", "platform_role_assignments=present", "person_specific_grants=0"]
+      : filename.includes("phase5_core_grc")
       ? ["ledger_outcome=applied", "physical_tables=229", "phase5_runtime_permissions=11"]
       : filename.includes("pre_f5c")
       ? ["ledger_outcome=applied", "physical_tables=229", "mutable_f5_rows=row_version", "pre_f5c_lifecycle_delta=39", "pre_f5c_permissions=2"]

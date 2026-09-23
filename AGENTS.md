@@ -1,11 +1,11 @@
 # TCDX GRC — Codex Project Constitution
 
-This repository is governed for 100% of the TCDX GRC product lifecycle by the immutable master baseline `TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16` under `docs/rector/baseline/`, with `46_REGENTE_MAESTRO_DEL_DESARROLLO.md` as the mandatory entry point and `docs/governance/CODEX_RECTOR_ENFORCEMENT.md` as enforcement contract.
+This repository is governed for 100% of the TCDX GRC product lifecycle by the immutable master baseline `TCDX_GRC_MASTER_REGENT_BASELINE_v1.6_2026-09-23` under `docs/rector/baseline/`, with `46_REGENTE_MAESTRO_DEL_DESARROLLO.md` as the mandatory entry point and `docs/governance/CODEX_RECTOR_ENFORCEMENT.md` as enforcement contract.
 
 ## Current gate
 
 `PROJECT_MODE=RECTOR_GOVERNED`
-`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16`
+`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.6_2026-09-23`
 `CODEX_VARIATION_BUDGET=ZERO`
 
 Codex MUST NOT treat implementation code, tests, framework conventions, historical documents, mocks or its own reasoning as a source of product authority.

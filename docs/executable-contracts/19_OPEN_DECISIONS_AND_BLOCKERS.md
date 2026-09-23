@@ -4,7 +4,7 @@
 |---|---|
 | Contract owner | Architecture Owner |
 | Approving human roles | listed per decision |
-| Status | `CLOSED_FOR_HUMAN_GATE_REVIEW` |
+| Status | `PRE_F5E_PASS` |
 
 ## Resolved continuation blockers
 
@@ -60,3 +60,31 @@ APPLICATION_TOKEN_ISSUANCE=BLOCKED_PENDING_ARCHITECTURE_DECISION
 ```
 
 These blockers do not authorize a new table, column, FK, fake/platform tenant, provider allowlist, email-based privilege, local credential store, opaque-token acceptance or `id_token` use as an API bearer. External human identity remains keyed by provider issuer plus stable subject; email is an attribute only. A future TCDX Managed Identity is an external OIDC boundary and adds no password, hash or MFA-secret field to the GRC database.
+
+## PRE-F5E blocker ledger — 2026-09-23 activated reconciliation
+
+The PRE-F5D table above and its original prohibitions are preserved as historical discovery evidence. On 2026-09-23 the human project authority approved the missing F5D-001/002/003 semantics, F5D-007 and activation of rector baseline v1.6. The physical migration remains a local candidate pending a separate environment authorization.
+
+| blocker_id | PRE-F5E decision and reconciliation | current evidence | status |
+|---|---|---|---|
+| F5D-001 | Platform authority is a separate persisted IAM grant path, never a runtime allowlist or TenantMembership | active rector v1.6 adds `PlatformRoleAssignment`; physical candidate `iam.platform_role_assignments` has no tenant/membership and enforces `PLATFORM_CONTROL` through check + composite Role FK | `CLOSED` |
+| F5D-002 | caller supplies only `tenant_code`, `legal_name`, `display_name`, IANA `default_timezone`; server owns ID, active lifecycle, confidential initial classification and technical metadata | artifact 02 `TenantCreateRequest`/`TenantProjection`; migration candidate sets defaults and closed classification check | `CLOSED_BY_HUMAN_DECISION_PRE_F5E` |
+| F5D-003 | materialize active membership for existing canonical `user_identity_id`; tenant/ID/times server-owned; no invite/email/identity/credential/role side effect | artifact 02 `MembershipCreateRequest`/`TenantMembershipProjection`; migration candidate sets active membership default | `CLOSED_BY_HUMAN_DECISION_PRE_F5E` |
+| F5D-004 | exact same-tenant role/scope assignment using existing MembershipRole discriminants; server-time `valid_from`; optional canonical `valid_to`; no PLATFORM_CONTROL role | artifact 02 `MembershipRoleAssignRequest` and `MembershipRoleAssignmentProjection`; artifact 03 row | `CLOSED_BY_HUMAN_DECISION_PRE_F5E` |
+| F5D-005 | expand `accessGet` with active own-membership contexts before tenant selection | artifact 02 `EffectiveAccess.available_tenant_contexts`; complete bounded deterministic collection; no tenant header/global enumeration | `CLOSED_BY_HUMAN_DECISION_PRE_F5E` |
+| F5D-006 | external proof -> canonical UserIdentity -> TCDX short-lived asymmetric application JWT -> API | artifacts 13/21 close claims, issuer/audience, keys, browser delivery, revocation and audit; external/ID/opaque tokens prohibited as bearer | `CLOSED_BY_HUMAN_DECISION_PRE_F5E` |
+| F5D-007 | internal one-time bootstrap for the first Platform Admin over the already authenticated canonical UserIdentity | rector v1.6 candidate 09/22/39 and artifacts 08/10/13/18/21 require exact PLATFORM_ADMIN resolution, common role-row lock, zero active plus zero historical assignments, atomic reinforced audit and permanent second-use DENY; no public endpoint/table/allowlist/seed | `CLOSED_BY_HUMAN_DECISION_PRE_F5E` |
+
+```text
+PRE_F5E=PASS
+PRE_F5E_OPEN_BLOCKERS=0
+PRE_F5E_HUMAN_ACTIVATION_PENDING=0
+F5D_001_PLATFORM_AUTHORITY=CLOSED
+F5D_002_TENANT_CREATE=CLOSED
+F5D_003_MEMBERSHIP_CREATE=CLOSED
+F5D_004_MEMBERSHIP_ROLE_ASSIGN=CLOSED
+F5D_005_TENANT_CONTEXT_DISCOVERY=CLOSED
+F5D_006_APPLICATION_TOKEN=CLOSED
+F5D_007_FIRST_PLATFORM_ADMIN_BOOTSTRAP=CLOSED
+F5D_007_RUNTIME_CEREMONY=DEFERRED_TO_NEXT_AUTHORIZED_RUNTIME_STAGE
+```

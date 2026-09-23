@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Baseline | `TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16` |
+| Baseline | `TCDX_GRC_MASTER_REGENT_BASELINE_v1.6_2026-09-23` |
 | Contract owner | Architecture Owner |
 | Domain owner | Auditor Lead / GRC Manager |
 | Human approvers | Product Owner/CPO, Architecture Owner, Data Model Owner, Security & Privacy Reviewer, Backend Owner, QA/Release Owner |

@@ -1,5 +1,7 @@
 # Permission, capability and base-role catalog
 
+PRE-F5E does not add a Permission or role catalog. Platform grants resolve through persisted `iam.platform_role_assignments` to existing `Role(PLATFORM_CONTROL)` rows and this same Permission catalog; tenant grants continue through active TenantMembership and MembershipRole. Email and runtime allowlists are never grant authority.
+
 | Campo | Valor |
 |---|---|
 | Contract owner | Security & Privacy Reviewer |

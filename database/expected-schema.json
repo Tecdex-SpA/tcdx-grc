@@ -1,9 +1,11 @@
 {
   "contract": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16",
+  "rectorCandidate": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.6_2026-09-23",
   "physicalModelCommit": "a822bb92d0d585edd84adc8a1c65ec280923cc8e",
   "physicalModelAmendmentCommit": "6a31034ae1ecc1f9ee551431fb2a504a25fb52ce",
   "preF5cDecision": "DR-PRE-F5C-2026-09-21-005",
-  "tableCount": 229,
+  "preF5eDecisionDate": "2026-09-23",
+  "tableCount": 230,
   "tables": [
     {
       "name": "platform.tenants",
@@ -88,19 +90,20 @@
           "name": "lifecycle_state",
           "type": "varchar(32)",
           "nullable": false,
-          "default": null
+          "default": "active"
         },
         {
           "name": "data_classification",
           "type": "varchar(32)",
           "nullable": false,
-          "default": null
+          "default": "confidential"
         }
       ],
       "checks": [
         "row_version_positive",
         "created_actor_one",
-        "updated_actor_one"
+        "updated_actor_one",
+        "data_classification"
       ],
       "uniqueConstraints": [
         [
@@ -1028,7 +1031,7 @@
           "name": "membership_state",
           "type": "varchar(32)",
           "nullable": false,
-          "default": null
+          "default": "active"
         },
         {
           "name": "joined_at",
@@ -1167,6 +1170,10 @@
           "ownership_class",
           "tenant_id",
           "role_code"
+        ],
+        [
+          "role_id",
+          "ownership_class"
         ]
       ]
     },
@@ -25626,6 +25633,75 @@
           "lineage_role"
         ]
       ]
+    },
+    {
+      "name": "iam.platform_role_assignments",
+      "profile": "I",
+      "primaryKey": [
+        "platform_role_assignment_id"
+      ],
+      "columns": [
+        {
+          "name": "platform_role_assignment_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "ownership_class",
+          "type": "varchar(24)",
+          "nullable": false,
+          "default": "PLATFORM_CONTROL"
+        },
+        {
+          "name": "user_identity_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "role_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "valid_from",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "valid_to",
+          "type": "timestamptz",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "checks": [
+        "created_actor_one",
+        "ownership_class",
+        "valid_from_valid_to"
+      ],
+      "uniqueConstraints": []
     }
   ]
 }

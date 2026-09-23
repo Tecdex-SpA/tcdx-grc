@@ -95,9 +95,9 @@ describe("PRE-F5C Phase 5 executability preflight", () => {
   const edges = parseLifecycle(lifecycleSource);
   const tables = new Map(expectedSchema.tables.map((table) => [table.name, table]));
 
-  it("keeps exactly 229 tables and gives every same-row F5 workflow target the canonical mutable columns", () => {
-    expect(expectedSchema.tableCount).toBe(229);
-    expect(expectedSchema.tables).toHaveLength(229);
+  it("keeps the 230-table PRE-F5E candidate and gives every same-row F5 workflow target the canonical mutable columns", () => {
+    expect(expectedSchema.tableCount).toBe(230);
+    expect(expectedSchema.tables).toHaveLength(230);
     const mutable = [
       "regulatory.requirement_applicabilities",
       "regulatory.requirement_assessments",
