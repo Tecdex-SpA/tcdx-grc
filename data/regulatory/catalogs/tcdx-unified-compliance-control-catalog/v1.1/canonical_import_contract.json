@@ -1,0 +1,38 @@
+{
+  "contract_name": "TCDX Unified Compliance Control Catalog canonical import contract",
+  "version": "1.1",
+  "rector_basis": [
+    "44_CONTRATO_ESTRUCTURA_NORMATIVA_REQUISITOS_CONTROLES.md",
+    "37_REGULATORY_PACK_CONTRACT.md",
+    "41_BASELINE_REGULATORIO_OBLIGATORIO.md",
+    "35_SOURCE_PRECEDENCE_CONFLICT_RESOLUTION_POLICY.md"
+  ],
+  "scope": [
+    "ISO_9001_2015",
+    "ISO_9001_2026",
+    "ISO_IEC_27001_2022",
+    "ISO_IEC_42001_2023",
+    "CL_LEY_21719"
+  ],
+  "rules": [
+    "Do not add or alter physical schema to fit this catalog.",
+    "Do not import full ISO normative text unless a licensed source is supplied by TCDX.",
+    "NormativeUnit is editorial structure; Requirement is atomic evaluable obligation; Control is operational/reference mechanism.",
+    "Annex A catalog controls are Control/ControlVersion regulatory_reference, not Requirement.",
+    "TCDX baseline controls are PLATFORM_CONTROL, tenant_id NULL, control_origin tcdx_baseline.",
+    "Tenant controls must be instantiated through canonical flows and based_on_control_version_id; do not duplicate global controls by seed.",
+    "UUIDs are UUIDv7 created by the importer. No UUID is stored in this catalog. Upsert/identity uses business keys.",
+    "Published history is immutable. Future licensed reconciliation creates governed versions/mappings; it does not rewrite prior published identities.",
+    "Crosswalks are typed. Do not create generic object_type/object_id relations.",
+    "QA/development use of provisional ISO summaries is allowed; official compliance/readiness use is blocked until licensing and review gates pass."
+  ],
+  "fail_closed_conditions": [
+    "unknown framework_code",
+    "unresolved parent NormativeUnit",
+    "unresolved Requirement normative unit",
+    "unknown TCDX baseline control in RequirementControlMapping",
+    "duplicate business key",
+    "attempt to materialize quarantined relation",
+    "attempt to mark ISO content official/licensed without licensed source manifest"
+  ]
+}

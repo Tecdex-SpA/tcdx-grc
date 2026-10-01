@@ -34,7 +34,7 @@ describe("unconfigured provider boundaries", () => {
       permissionGranted: true,
       scope: "tenant",
       objectPolicyAllowed: true,
-      fileObjectId: "file",
+      uploadIntentId: "intent",
       declaredMime: "application/pdf",
       sizeBytes: 1,
       classification: "restricted"

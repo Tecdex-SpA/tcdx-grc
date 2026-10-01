@@ -135,7 +135,7 @@ async function persistPack(transaction: Transaction<FoundationDatabase>, pack: N
         ${unit.parentSourceLocator === null ? null : unitIds.get(unit.parentSourceLocator)}::uuid,${unit.unitType},${unit.unitCode},${unit.title},
         ${unit.displayOrder},${unit.sourceLocator},${unit.contentLanguage},${unit.licensedContent},${unit.licensedContentRef},${unit.contentHash},
         ${pack.source.licenseClassification},${unit.provenanceRef})
-      ON CONFLICT (source_locator) DO UPDATE SET title=EXCLUDED.title
+      ON CONFLICT (framework_version_id,source_locator) DO UPDATE SET title=EXCLUDED.title
         WHERE regulatory.normative_units.framework_version_id=EXCLUDED.framework_version_id
       RETURNING normative_unit_id
     `.execute(transaction);

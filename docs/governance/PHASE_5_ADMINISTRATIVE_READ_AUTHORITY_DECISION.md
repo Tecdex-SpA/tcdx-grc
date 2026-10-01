@@ -1,0 +1,18 @@
+# Phase 5 administrative read authority — human decision 2026-09-28
+
+The human project authority approved this Phase 5 amendment in the execution packet dated 2026-09-28. The active master regent remains `TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23`. This amendment adds no IAM entity, capability group, tenant, credential store or direct UserIdentity grant. It authorizes only the four read permissions and projections below, over the existing canonical IAM and Platform tables. The approved visual navigation is `Configuraciones -> Empresas | Usuarios`.
+
+| Permission | Ownership and scope | Authorized base role | Read authority |
+|---|---|---|---|
+| `platform.tenant.read` | `PLATFORM_CONTROL`, `platform` | `PLATFORM_ADMIN` | Global Tenant list/detail; Tenant Admin has no global enumeration. |
+| `platform.membership.read` | `TENANT_OWNED`, `platform` or `tenant` | `PLATFORM_ADMIN` or `TENANT_ADMIN` respectively | Platform Admin selects an explicit canonical tenant; Tenant Admin reads only its authenticated active tenant. |
+| `platform.membership_invitation.read` | `TENANT_OWNED`, `platform` | `PLATFORM_ADMIN` | Explicit tenant's invitations; create/update grants remain unchanged. |
+| `platform.role.read` | Platform or tenant catalog, `platform` or `tenant` | `PLATFORM_ADMIN` or `TENANT_ADMIN` respectively | Platform Admin reads Platform roles and a selected tenant's roles; Tenant Admin reads only its tenant's roles. |
+
+All reads require a valid TCDX application bearer, active canonical identity, persisted role assignment and exact published permission. Platform reads use the PlatformRoleAssignment path; tenant reads require active TenantMembership, CORE_PLATFORM entitlement, tenant-scoped MembershipRole and backend-validated tenant context. Missing or foreign targets fail closed. A client tenant parameter is never authorization proof. List pagination follows the approved cursor contract (`page[size]` 1..100, default 25; stable `created_at DESC, id DESC`); cursors do not authorize access.
+
+Tenant projection is restricted to `tenant_id`, `tenant_code`, `legal_name`, `display_name`, `default_timezone`, `lifecycle_state`, `data_classification`, `created_at`, `updated_at`. Membership projection is restricted to `tenant_membership_id`, `tenant_id`, `user_identity_id`, `membership_state`, `joined_at`, `ended_at`, and the associated identity's `display_name`, `email_normalized`, `lifecycle_state`, `last_authenticated_at`. Assignment projection contains only `membership_role_id`, `role_id`, `role_code`, `role_name`, `scope_kind`, `valid_from`, `valid_to`. Invitation projection contains only `tenant_membership_invitation_id`, `tenant_id`, `invitee_email`, persisted `lifecycle_state`, effective `effective_state`, `created_at`, `expires_at`, `accepted_at`, `revoked_at`, `tenant_membership_id`, and `row_version` needed by the approved revoke CAS. Effective `expired` is derived at read time from PostgreSQL server time; persistence is unchanged. Role projection contains only `role_id`, `tenant_id`, `ownership_class`, `role_code`, `name`, `is_baseline`, `lifecycle_state`.
+
+No read returns `identity_key`, stable subject, invitation token/digest, provider token, bearer, password, MFA secret or credential material. No `platform.permission.read` operation is added because role-code/name and assignment data suffice for the approved UI. The existing `membershipRoleAssign` authority remains tenant-only; this read decision does not grant Platform Admin tenant mutation rights by implication.
+
+This approval does not waive Phase 5 QA, human visual review, real second-human SoD, production, commit, push, PR, merge, PRE-6 or Phase 6 gates.

@@ -49,9 +49,9 @@ function schemaBlock(schemaName: string): string {
 }
 
 describe("PRE-F5E canonical Platform IAM materialization", () => {
-  it("publishes one checksummed migration and exactly 230 candidate tables", () => {
-    expect(expectedSchema.tableCount).toBe(230);
-    expect(expectedSchema.tables).toHaveLength(230);
+  it("preserves the checksummed PRE-F5E migration inside the approved 233-table inventory", () => {
+    expect(expectedSchema.tableCount).toBe(235);
+    expect(expectedSchema.tables).toHaveLength(235);
     const migrations = migrationManifest.migrations.filter(({ filename }) => /pre[_-]?f5e/i.test(filename));
     expect(migrations).toHaveLength(1);
     expect(migrations[0]).toMatchObject({ id: "20260923000100", filename: "20260923000100_pre_f5e_platform_authority.sql" });
@@ -114,7 +114,7 @@ describe("PRE-F5E canonical Platform IAM materialization", () => {
   });
 
   it("adds no bootstrap authority, tenant dependency, person seed, table or public endpoint", () => {
-    expect(expectedSchema.tableCount).toBe(230);
+    expect(expectedSchema.tableCount).toBe(235);
     expect(expectedSchema.tables.filter(({ name }) => /bootstrap/i.test(name))).toHaveLength(0);
     expect(preF5eMigration).not.toMatch(/CREATE\s+TABLE[^;]*bootstrap/is);
     expect(preF5eMigration).not.toMatch(/INSERT\s+INTO\s+iam\.platform_role_assignments/i);
@@ -126,8 +126,8 @@ describe("PRE-F5E canonical Platform IAM materialization", () => {
     expect(preF5eContract).toContain("creates no bootstrap table, enabled flag, personal seed, environment allowlist, second authority or public endpoint");
   });
 
-  it("keeps the exact candidate evidence and selects the activated v1.6 baseline", () => {
-    expect(activeBaselineId.trim()).toBe("TCDX_GRC_MASTER_REGENT_BASELINE_v1.6_2026-09-23");
+  it("keeps the exact v1.6 candidate evidence while selecting the activated v1.7 baseline", () => {
+    expect(activeBaselineId.trim()).toBe("TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23");
     expect(activeBaselineStatus.trim()).toBe("ACTIVE");
     const entries = candidateManifest.trim().split("\n");
     expect(entries).toHaveLength(10);
@@ -218,10 +218,11 @@ describe("PRE-F5E canonical Platform IAM materialization", () => {
     }
   });
 
-  it("adds no GRC credential field, provider semantic, fake tenant or Phase 6 change", () => {
+  it("adds no GRC credential field, unapproved provider implementation, fake tenant or Phase 6 change", () => {
     const columns = expectedSchema.tables.flatMap(({ name, columns: tableColumns }) => tableColumns.map(({ name: column }) => `${name}.${column}`));
     expect(columns.filter((column) => /password|password_hash|mfa_secret|recovery_secret/i.test(column))).toEqual([]);
-    expect((preF5eContract + authentication + openApi)).not.toMatch(/\b(?:Zoho|Entra|Okta|Google|Keycloak)\b/i);
+    expect(openApi).toContain("authentication_method: { type: string, const: ZOHO }");
+    expect(openApi).not.toMatch(/authentication_method:\s*\{[^\n]*(?:ENTRA|GOOGLE|LOCAL|OKTA|KEYCLOAK)/i);
     expect(preF5eReport).toContain("FAKE_TENANT_CREATED=0");
     expect(preF5eReport).toContain("PLATFORM_TENANT_CREATED=0");
     expect(preF5eReport).toContain("PHASE_6_STARTED=0");

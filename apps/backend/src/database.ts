@@ -3,6 +3,7 @@ import pg from "pg";
 import type { BackendConfig } from "./config.js";
 
 export type FoundationDatabase = Record<string, never>;
+export { sql } from "kysely";
 
 export function createDatabase(config: BackendConfig): Kysely<FoundationDatabase> {
   const pool = new pg.Pool({

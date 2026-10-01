@@ -17,6 +17,8 @@ Estos estados iniciales no autorizan una transición CRUD genérica. Toda transi
 
 EvidenceRequest: `open -> fulfilled | cancelled | expired`.
 
+`evidence_request.fulfill` publica como código único de auditoría `audit.lifecycle.evidence_request.fulfill.v1`. Una versión posterior de la arista reemplaza contractualmente cualquier código contradictorio sin reescribir la definición histórica publicada.
+
 Evidence lifecycle: `draft -> submitted -> under_review -> approved | rejected`.
 
 Desde `approved`: `expired | superseded` según vigencia/reemplazo. Desde `rejected`: puede volver a `draft` como nueva revisión/version según policy; no pasa a expired.
@@ -24,6 +26,8 @@ Desde `approved`: `expired | superseded` según vigencia/reemplazo. Desde `rejec
 - approve/reject requiere reviewer distinto del submitter cuando SoD aplica;
 - expiry no borra el objeto;
 - superseded conserva historial.
+
+FileUploadIntent: `pending_upload -> quarantined -> scanning -> promoted`; desde `quarantined` o `scanning` puede pasar a `rejected`; desde `pending_upload` puede pasar a `expired | cancelled`. `promoted`, `rejected`, `expired` y `cancelled` son terminales. La promoción crea un `FileObject` final con metadata real; el intent nunca se convierte en evidencia ni almacenamiento permanente alternativo.
 
 ## 3. RequirementAssessment
 
@@ -36,6 +40,8 @@ Resultado de evaluación es campo separado del lifecycle.
 `planned -> in_progress -> completed -> reviewed -> approved`
 
 Conclusión separada del lifecycle.
+
+`control_assessment.complete` admite `owned_object` únicamente cuando ownership sobre el `Control` padre se resuelve mediante una relación canónica vigente, y `tenant` únicamente por grant publicado. No admite `assigned_object` como requisito exclusivo ni permite inferir owner desde creator, email, nombre o payload.
 
 ## 5. Risk
 

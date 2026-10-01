@@ -9,7 +9,7 @@ import lifecycle from "../../../docs/executable-contracts/09_SEED_MANIFESTS.md?r
 import decision from "../../../docs/governance/PRE_F5B_EXECUTABLE_CONTRACT_DECISION.md?raw";
 import openApi from "../../../docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml?raw";
 
-type ParsedOperation = { method: "get" | "post"; path: string; block: string };
+type ParsedOperation = { method: "get" | "post" | "put"; path: string; block: string };
 
 const collectionOrders: Record<string, string> = {
   applicabilityList: "created_at DESC, requirement_applicability_id DESC",
@@ -101,7 +101,7 @@ function parseOperations(source: string): Map<string, ParsedOperation> {
   const lines = source.split("\n");
   const result = new Map<string, ParsedOperation>();
   let path = "";
-  let method: "get" | "post" | "" = "";
+  let method: "get" | "post" | "put" | "" = "";
   for (let index = 0; index < lines.length; index += 1) {
     const line = lines[index] ?? "";
     const pathMatch = /^  "([^"]+)":$/.exec(line);
@@ -110,9 +110,9 @@ function parseOperations(source: string): Map<string, ParsedOperation> {
       method = "";
       continue;
     }
-    const methodMatch = /^    (get|post):$/.exec(line);
+    const methodMatch = /^    (get|post|put):$/.exec(line);
     if (methodMatch) {
-      method = methodMatch[1] as "get" | "post";
+      method = methodMatch[1] as "get" | "post" | "put";
       continue;
     }
     const operationMatch = /^      operationId: ([A-Za-z0-9]+)$/.exec(line);
@@ -120,7 +120,7 @@ function parseOperations(source: string): Map<string, ParsedOperation> {
     const block: string[] = [];
     for (let cursor = index; cursor < lines.length; cursor += 1) {
       const candidate = lines[cursor] ?? "";
-      if (cursor > index && (/^    (get|post):$/.test(candidate) || /^  "[^"]+":$/.test(candidate) || candidate === "tags: []")) break;
+      if (cursor > index && (/^    (get|post|put):$/.test(candidate) || /^  "[^"]+":$/.test(candidate) || candidate === "tags: []")) break;
       block.push(candidate);
     }
     result.set(operationMatch[1] ?? "", { method, path, block: block.join("\n") });
@@ -140,7 +140,7 @@ function schemaBlock(name: string): string {
 function parseMatrixOperations(source: string): Map<string, { method: string; path: string }> {
   const result = new Map<string, { method: string; path: string }>();
   for (const row of source.split("\n")) {
-    const match = /^\| ([A-Za-z0-9]+) \| (GET|POST) `([^`]+)` \|/.exec(row);
+    const match = /^\| ([A-Za-z0-9]+) \| (GET|POST|PUT) `([^`]+)` \|/.exec(row);
     if (match) result.set(match[1] ?? "", { method: (match[2] ?? "").toLowerCase(), path: match[3] ?? "" });
   }
   return result;
@@ -149,17 +149,18 @@ function parseMatrixOperations(source: string): Map<string, { method: string; pa
 describe("PRE-F5B executable-contract closure", () => {
   const operations = parseOperations(openApi);
 
-  it("publishes exactly 106 operations and 80 mutations after PRE-F5C", () => {
-    expect(operations.size).toBe(106);
-    expect([...operations.values()].filter(({ method }) => method === "get")).toHaveLength(26);
-    expect([...operations.values()].filter(({ method }) => method === "post")).toHaveLength(80);
-    expect(matrix).toContain("`CONTRACTUAL_OPERATIONS=106`");
-    expect(matrix).toContain("`PUBLIC_MUTATING_OPERATIONS=80`");
+  it("keeps cumulative operation counts after the approved Phase 5 additions", () => {
+    expect(operations.size).toBe(Number(matrix.match(/`CONTRACTUAL_OPERATIONS=(\d+)`/)?.[1]));
+    expect([...operations.values()].filter(({ method }) => method === "get")).toHaveLength(Number(matrix.match(/`PUBLIC_READ_OPERATIONS=(\d+)`/)?.[1]));
+    expect([...operations.values()].filter(({ method }) => method === "post")).toHaveLength(94);
+    expect([...operations.values()].filter(({ method }) => method === "put")).toHaveLength(1);
+    expect(matrix).toContain(`\`CONTRACTUAL_OPERATIONS=${operations.size}\``);
+    expect(matrix).toContain("`PUBLIC_MUTATING_OPERATIONS=95`");
   });
 
   it("keeps every operation ID, method and path aligned between OpenAPI and the matrix", () => {
     const matrixOperations = parseMatrixOperations(matrix);
-    expect(matrixOperations.size).toBe(106);
+    expect(matrixOperations.size).toBe(operations.size);
     const matrixEntries = [...matrixOperations.entries()].sort(([left], [right]) => left.localeCompare(right));
     const openApiEntries = [...operations.entries()]
       .map(([operationId, { method, path }]) => [operationId, { method, path }] as const)
@@ -201,6 +202,10 @@ describe("PRE-F5B executable-contract closure", () => {
       if (operation.method === "post") {
         expect(operation.block, `${operationId} idempotency`).toContain('x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"');
         expect(audit, `${operationId} audit`).toMatch(/^audit\..+\.v1$/);
+      } else if (operation.method === "put") {
+        expect(operationId).toBe("uploadContentPut");
+        expect(operation.block).toContain('x-tcdx-idempotency-class: "INTENT_SCOPED_RETRY"');
+        expect(operation.block).toContain('x-tcdx-audit-event: "NONE; transport is accounted by uploadIntentCreate/uploadFinalize"');
       } else {
         expect(operation.block, `${operationId} idempotency`).toContain('x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"');
         expect(operation.block, `${operationId} audit`).toContain('x-tcdx-audit-event: "NONE"');
@@ -208,9 +213,9 @@ describe("PRE-F5B executable-contract closure", () => {
       if (event) expect(events, `${operationId} event catalog`).toContain(`\`${event}\``);
     }
     expect(idempotency).toContain("All 26 published GET operations");
-    expect(idempotency).toContain("All 80 published POST operations");
-    expect(audits).toContain("MUTATING_OPERATIONS=80");
-    expect(audits).toContain("PUBLISHED_AUDIT_EVENT_CODES=154");
+    expect(idempotency).toContain("All 94 published POST operations");
+    expect(audits).toContain("MUTATING_OPERATIONS=95");
+    expect(audits).toContain("PUBLISHED_AUDIT_EVENT_CODES=168");
   });
 
   it("fixes cursor pagination and stable order for the ten Phase 5 collections", () => {
@@ -271,9 +276,9 @@ describe("PRE-F5B executable-contract closure", () => {
     expect(idempotency).toContain("including `evidenceCreate`");
   });
 
-  it("preserves PRE-F5B's no-runtime-seed claim within the later 230-table PRE-F5E candidate", () => {
+  it("preserves PRE-F5B's historical no-runtime-seed claim within the cumulative table inventory", () => {
     const expectedSchema = JSON.parse(expectedSchemaSource) as { tables: Array<{ name: string }> };
-    expect(expectedSchema.tables).toHaveLength(230);
+    expect(expectedSchema.tables).toHaveLength(235);
     for (const table of ["evidence.file_objects", "evidence.evidences", "evidence.evidence_versions", "evidence.evidence_links"]) {
       expect(expectedSchema.tables.some(({ name }) => name === table), table).toBe(true);
     }

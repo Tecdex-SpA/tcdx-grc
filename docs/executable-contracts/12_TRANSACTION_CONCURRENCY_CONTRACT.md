@@ -16,11 +16,13 @@
 ## Concurrency mechanisms
 
 - Mutable profiles use positive monotonic `row_version`; API exposes strong ETag and requires `If-Match` for critical updates.
+- RetentionPolicy review/approve/publish uses one concurrency authority at the API boundary: a strong quoted `If-Match` value. The backend translates it to the target row's `row_version`; a body `expected_version`, weak ETag, `xmin`, timestamp or business `version_number` is rejected.
 - Stale version produces concurrency conflict and no mutation/event.
 - Published versions, observations, snapshots, audit, source resolutions and other append-only records are never updated to resolve a conflict.
 - Idempotency uniqueness is ownership/tenant/actor/operation/key; same key/different hash fails.
 - Worker claims, schedules, outbox delivery and job retries require a database locking/claim strategy selected in implementation without changing business semantics. Exact SQL is Fase 3.
 - Multi-row invariants identified as TX in physical model 03 are checked under a transaction/lock level sufficient to prevent write skew; the Fase 3 implementation must document the lock set and isolation proof per invariant.
+- Membership invitation acceptance locks the digest-bound invitation row before UserIdentity resolution and membership mutation, revalidates `pending` and server expiry under that lock, relies on canonical uniqueness for `(tenant_id,user_identity_id)`, consumes the invitation and writes accept audit/outbox plus conditional membership event in one transaction. Revoke uses the same row lock and strong `If-Match`; only one accept/revoke contender can win.
 
 ## Critical TX invariants
 

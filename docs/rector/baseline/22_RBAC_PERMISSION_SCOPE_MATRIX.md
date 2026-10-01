@@ -115,6 +115,8 @@ NormativeUnit y Requirement de packs globales publicados son de sólo lectura pa
 
 Todo objeto tenant-owned debe resolver scope desde relaciones canónicas, nunca desde parámetros aportados por el cliente. Si un objeto pertenece a múltiples scopes, la policy declara `ANY` o `ALL`; no se asume. Los exports heredan exactamente el scope de lectura de los objetos exportados.
 
+Para `controlAssessmentSubmit`, `owned_object` se resuelve exclusivamente desde ownership/responsabilidad canónica del `Control` padre. El creator de `ControlAssessment` no adquiere ownership. Mientras no exista una relación canónica entre el actor y el `Subject` owner, ese scope falla cerrado; sólo un grant publicado `tenant` puede autorizar el command. No se crea ni infiere assignee.
+
 ## 12. Operaciones sensibles
 
 `administer`, `approve`, `verify`, `publish`, `impersonate`, acceso a credenciales y cambios de methodology/rule/permission catalog requieren audit reforzado. Las credenciales secretas nunca son retornadas por permiso de lectura; sólo referencias y metadata no sensible.

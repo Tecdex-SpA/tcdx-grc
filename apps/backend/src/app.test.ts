@@ -18,4 +18,19 @@ describe("foundation health", () => {
     expect(response.json()).toEqual({ state: "down", dependencies: { database: "down" } });
     await app.close();
   });
+
+  it("permits only the configured browser origin and handles authenticated API preflight", async () => {
+    const app = buildApp(async () => true, undefined, undefined, "https://grc-www.tcdx.int");
+    const allowed = await app.inject({
+      method: "OPTIONS", url: "/api/v1/access/me",
+      headers: { origin: "https://grc-www.tcdx.int", "access-control-request-method": "GET", "access-control-request-headers": "authorization,x-tcdx-tenant-id" }
+    });
+    expect(allowed.statusCode).toBe(204);
+    expect(allowed.headers["access-control-allow-origin"]).toBe("https://grc-www.tcdx.int");
+    expect(allowed.headers["access-control-allow-headers"]).toContain("Authorization");
+    const denied = await app.inject({ method: "GET", url: "/health/live", headers: { origin: "https://untrusted.example" } });
+    expect(denied.statusCode).toBe(403);
+    expect(denied.headers["access-control-allow-origin"]).toBeUndefined();
+    await app.close();
+  });
 });

@@ -85,8 +85,9 @@ function requestSchema(name: string): { required: string[]; properties: string[]
   const remainder = source.slice(start + marker.length);
   const next = remainder.search(/^    [A-Za-z0-9]+:\n/m);
   const block = remainder.slice(0, next < 0 ? undefined : next);
-  const required = /required: \[([^\]]*)\]/.exec(block)?.[1]?.split(",").map((field) => field.trim()).filter(Boolean) ?? [];
-  const properties = block.slice(block.indexOf("      properties:\n") + 18).split("\n").flatMap((line) => /^        ([a-z][a-z0-9_]*):/.exec(line)?.[1] ?? []);
+  const required = /^      required: \[([^\]]*)\]/m.exec(block)?.[1]?.split(",").map((field) => field.trim()).filter(Boolean) ?? [];
+  const topLevelProperties = /^      properties:\n((?:^(?!      [a-z])[\s\S]*\n?)*)/m.exec(block)?.[1] ?? "";
+  const properties = topLevelProperties.split("\n").flatMap((line) => /^        ([a-z][a-z0-9_]*):/.exec(line)?.[1] ?? []);
   return { required, properties };
 }
 
@@ -175,7 +176,7 @@ describe("Core GRC authorization and data isolation", () => {
 });
 
 describe("Core GRC executable request and route contract", () => {
-  it("matches all 21 approved read routes and their authorization/response extensions", () => {
+  it("matches all 23 approved read routes and their authorization/response extensions", () => {
     const operations = openApiOperations();
     const names = {
       applicability: ["applicabilityList", "applicabilityGet"],
@@ -186,6 +187,7 @@ describe("Core GRC executable request and route contract", () => {
       assuranceTest: ["assuranceTestList", "assuranceTestGet"],
       evidenceRequest: ["evidenceRequestList", "evidenceRequestGet"],
       evidence: ["evidenceList", "evidenceGet"],
+      retentionPolicy: ["retentionPolicyList", "retentionPolicyGet"],
       issue: ["issueList", "issueGet"],
       action: ["actionList", "actionGet"]
     } as const;
@@ -214,14 +216,14 @@ describe("Core GRC executable request and route contract", () => {
     expect(version.block).toContain(`x-tcdx-permission: "\`${resources.evidenceVersion.permission}\`"`);
     expect(version.block).toContain(`x-tcdx-capability: "${resources.evidenceVersion.capability}"`);
     expect(contractScopes(version.block)).toEqual([...resources.evidenceVersion.scopes].sort());
-    expect(checked + 1).toBe(21);
+    expect(checked + 1).toBe(23);
   });
 
-  it("matches the 35 safely materialized mutation routes, fields, scopes and extensions", () => {
+  it("matches all Phase 5 mutation routes, fields, scopes and extensions", () => {
     const operations = openApiOperations();
     const routeByOperation = new Map(coreGrcCommandRoutes.map(([operationId, path]) => [operationId, routeContractPath(path)]));
     expect([...mutations.keys()].sort()).toEqual([...routeByOperation.keys()].sort());
-    expect([...operations.keys()].filter((operationId) => ["uploadIntentCreate", "uploadFinalize", "evidenceRequestFulfill", "controlAssessmentSubmit"].includes(operationId) && !mutations.has(operationId)).sort()).toEqual(["controlAssessmentSubmit", "evidenceRequestFulfill", "uploadFinalize", "uploadIntentCreate"]);
+    expect([...operations.keys()].filter((operationId) => ["uploadIntentCreate", "uploadFinalize", "evidenceRequestFulfill", "controlAssessmentSubmit"].includes(operationId) && !mutations.has(operationId))).toEqual([]);
     for (const [operationId, definition] of mutations) {
       const operation = operations.get(operationId);
       expect(operation?.method, operationId).toBe("post");
@@ -235,9 +237,15 @@ describe("Core GRC executable request and route contract", () => {
       expect(operation?.block, `${operationId} transaction`).toContain('x-tcdx-transaction-boundary: "TX"');
       expect(operation?.block, `${operationId} response`).toContain("'202': { $ref: '#/components/responses/OperationSuccess' }");
       const schema = requestSchema(operation!.schema!);
-      expect([...definition.allowedFields].sort(), `${operationId} fields`).toEqual(schema.properties.sort());
-      expect([...definition.requiredFields].sort(), `${operationId} required`).toEqual(schema.required.sort());
-      if (coreGrcCommandRoutes.find(([candidate]) => candidate === operationId)?.[2] === "target") expect(definition.requiredFields, `${operationId} expected_version`).toContain("expected_version");
+      const retentionTransition = ["retentionPolicyUpdate", "retentionPolicyReview", "retentionPolicyApprove", "retentionPolicyPublish"].includes(operationId);
+      const apiAllowed = retentionTransition ? definition.allowedFields.filter((field) => field !== "expected_version") : definition.allowedFields;
+      const apiRequired = retentionTransition ? definition.requiredFields.filter((field) => field !== "expected_version") : definition.requiredFields;
+      expect([...apiAllowed].sort(), `${operationId} fields`).toEqual(schema.properties.sort());
+      expect([...apiRequired].sort(), `${operationId} required`).toEqual(schema.required.sort());
+      if (coreGrcCommandRoutes.find(([candidate]) => candidate === operationId)?.[2] === "target") {
+        expect(definition.requiredFields, `${operationId} internal expected_version`).toContain("expected_version");
+        if (retentionTransition) expect(operation?.block, `${operationId} If-Match`).toContain("#/components/parameters/IfMatch");
+      }
     }
   });
 
@@ -246,6 +254,9 @@ describe("Core GRC executable request and route contract", () => {
     const cases: Array<[string, Record<string, unknown>]> = [
       ["applicabilityCreate", { requirement_id: "not-a-uuid", applicability_decision: "applicable", rationale: "reason", effective_from: "2026-09-21T00:00:00Z" }],
       ["applicabilityCreate", { requirement_id: resourceId, applicability_decision: "applicable", rationale: "reason", effective_from: "2026-09-21" }],
+      ["applicabilityCreate", { requirement_id: resourceId, applicability_decision: "pending", effective_from: "2026-09-21T00:00:00Z" }],
+      ["applicabilityCreate", { requirement_id: resourceId, applicability_decision: "not_applicable", effective_from: "2026-09-21T00:00:00Z" }],
+      ["applicabilityCreate", { requirement_id: resourceId, applicability_decision: "not_applicable", rationale: "   ", effective_from: "2026-09-21T00:00:00Z" }],
       ["requirementAssessmentSubmit", { expected_version: 1, result_status: "unknown" }],
       ["requirementAssessmentSubmit", { expected_version: 1, result_status: "valid", coverage_percent: 101 }],
       ["soaCreate", { framework_version_id: resourceId, title: "SoA", items: [{ reference_control_version_id: resourceId, applicability_decision: "yes", justification: "why", implementation_state: "active", convenience: true }] }]
@@ -281,6 +292,7 @@ describe("Core GRC lifecycle, SoD and optimistic concurrency", () => {
   it("enforces separation of duties before approval CAS", async () => {
     const definition = mutations.get("applicabilityApprove")!;
     const database = executor((query) => {
+      if (query.sql.includes("FROM platform.subscriptions s") && query.sql.includes("subscription_regulatory_packs")) return { rows: [] };
       if (query.sql.includes("prior_actor")) return { rows: [{ prior_actor: actorId }] };
       if (query.sql.includes("FROM regulatory.requirement_applicabilities")) return { rows: [{ requirement_applicability_id: resourceId, row_version: 1, lifecycle_state: "submitted", created_at: new Date(), created_by_user_identity_id: actorId }] };
       if (query.sql.includes("current_edges")) return { rows: [{ to_state: "approved", audit_event_code: definition.auditEvent, sod_policy_ref: "distinct_actor", scope_kind: "tenant" }] };
@@ -291,25 +303,26 @@ describe("Core GRC lifecycle, SoD and optimistic concurrency", () => {
       .rejects.toSatisfy((error: unknown) => code(error) === "TCDX.AUTHORIZATION.DENIED");
   });
 
-  it("keeps evidenceRequestFulfill unmaterialized on the exact audit-code contradiction", () => {
+  it("materializes evidenceRequestFulfill with the single approved audit code", () => {
     const operation = openApiOperations().get("evidenceRequestFulfill")!;
     const seed = readFileSync("docs/executable-contracts/09_SEED_MANIFESTS.md", "utf8");
     const apiAudit = /x-tcdx-audit-event: "`([^`]+)`"/.exec(operation.block)?.[1];
     const lifecycleRow = seed.split("\n").find((line) => line.startsWith("| `EvidenceRequest` | `open` | `fulfilled` | `evidence_request.fulfill` |"));
     const lifecycleAudit = lifecycleRow?.split("|").map((cell) => cell.trim())[7]?.replaceAll("`", "");
-    expect(apiAudit).toBe("audit.evidence.request.fulfill.v1");
+    expect(apiAudit).toBe("audit.lifecycle.evidence_request.fulfill.v1");
     expect(lifecycleAudit).toBe("audit.lifecycle.evidence_request.fulfill.v1");
-    expect(apiAudit).not.toBe(lifecycleAudit);
-    expect(mutations.has("evidenceRequestFulfill")).toBe(false);
-    expect(coreGrcCommandRoutes.some(([operationId]) => operationId === "evidenceRequestFulfill")).toBe(false);
+    expect(apiAudit).toBe(lifecycleAudit);
+    expect(mutations.has("evidenceRequestFulfill")).toBe(true);
+    expect(coreGrcCommandRoutes.some(([operationId]) => operationId === "evidenceRequestFulfill")).toBe(true);
   });
 
-  it("keeps assigned-only ControlAssessment completion closed without an authoritative assignee relation", () => {
+  it("publishes ControlAssessment completion only for owned_object or tenant scope", () => {
     const operation = openApiOperations().get("controlAssessmentSubmit")!;
-    expect(contractScopes(operation.block)).toEqual(["assigned_object"]);
+    expect(contractScopes(operation.block)).toEqual(["owned_object", "tenant"]);
     expect("assignedMembershipColumn" in resources.controlAssessment).toBe(false);
-    expect(mutations.has("controlAssessmentSubmit")).toBe(false);
-    expect(coreGrcCommandRoutes.some(([operationId]) => operationId === "controlAssessmentSubmit")).toBe(false);
+    expect(resources.controlAssessment.ownedByCreator).toBe(false);
+    expect(mutations.has("controlAssessmentSubmit")).toBe(true);
+    expect(coreGrcCommandRoutes.some(([operationId]) => operationId === "controlAssessmentSubmit")).toBe(true);
   });
 
   it("links Evidence to its draft EvidenceVersion with exactly one typed target", async () => {

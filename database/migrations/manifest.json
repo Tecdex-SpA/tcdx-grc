@@ -195,6 +195,260 @@
         "platform_role_assignments=present",
         "person_specific_grants=0"
       ]
+    },
+    {
+      "id": "20260923000200",
+      "filename": "20260923000200_phase5_final_closure.sql",
+      "sha256": "96a56b5669cd6e6fd0d751dc12526e3fe6ad2c612e77a8a7e144c847775be96c",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16",
+        "ledger_count=13",
+        "physical_tables=230",
+        "file_upload_intents=absent"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=231",
+        "file_upload_intents=present",
+        "active_lifecycle_amendments=2",
+        "secret_or_blob_columns=0"
+      ]
+    },
+    {
+      "id": "20260924000100",
+      "filename": "20260924000100_phase5_subscription_create_catalog.sql",
+      "sha256": "a41efa51265d5f95a342674bdbac2faecf37ac31ac1c45aef47b394c7e380f2f",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16",
+        "ledger_count=14",
+        "physical_tables=231",
+        "platform.subscription.create=absent"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=231",
+        "platform.subscription.create=published",
+        "PLATFORM_ADMIN_grant=1"
+      ]
+    },
+    {
+      "id": "20260924000200",
+      "filename": "20260924000200_phase5_retention_policy_lifecycle.sql",
+      "sha256": "751ff47c9644b8d7134bb16148728a075e61af3057fa2a271e280a1fb1cd1728",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16",
+        "ledger_count=15",
+        "physical_tables=231",
+        "retention_policy_lifecycle_state=present",
+        "retention_policy_row_version=absent"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=231",
+        "retention_effective_from_nullable=yes",
+        "retention_effective_to_nullable=yes",
+        "retention_row_version=bigint_not_null_default_1",
+        "retention_lifecycle_edges=3"
+      ]
+    },
+    {
+      "id": "20260924000300",
+      "filename": "20260924000300_phase5_membership_invitation.sql",
+      "sha256": "0942e5eb360f7157a444d7b04fbe7558312e8d782347e60a745a8d4365034806",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16",
+        "ledger_count=16",
+        "physical_tables=231",
+        "tenant_membership_invitations=absent",
+        "membership_invitation_permissions=absent"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=232",
+        "tenant_membership_invitations=present",
+        "membership_invitation_permissions=2",
+        "PLATFORM_ADMIN_only_grants=2"
+      ]
+    },
+    {
+      "id": "20260925000100",
+      "filename": "20260925000100_phase5_membership_invitation_platform_authority_reconciliation.sql",
+      "sha256": "b66f88a19323d7a92465f6e61e762dffcf511eae55e53456d811c7912d3dad8a",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16",
+        "ledger_count=17",
+        "physical_tables=232",
+        "applied_membership_invitation_sha256=0942e5eb...",
+        "PLATFORM_ADMIN=exactly_1"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=232",
+        "membership_invitation_permissions=2",
+        "PLATFORM_ADMIN_only_grants=2",
+        "unauthorized_grants=0",
+        "service_actor_fks=2"
+      ]
+    },
+    {
+      "id": "20260928000100",
+      "filename": "20260928000100_phase5_administrative_read_permissions.sql",
+      "sha256": "d19c72ce5a0b9e5caa65d8b6b93daec1b2188dee54067551bb8ac3c8c7dcdd35",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16",
+        "ledger_count=18",
+        "physical_tables=232",
+        "applied_membership_invitation_authority_sha256=b66f88a1...",
+        "administrative_read_permissions=absent"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=232",
+        "administrative_read_permissions=4",
+        "unauthorized_grants=0",
+        "direct_identity_grants=0"
+      ]
+    },
+    {
+      "id": "20260928000200",
+      "filename": "20260928000200_phase5_membership_role_revoke_platform_grant.sql",
+      "sha256": "d47e4fa07250092c5b8c063a60713528627acee864f93278b3c5f0ed5dd57cdc",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16",
+        "ledger_count=19",
+        "physical_tables=232",
+        "applied_administrative_read_sha256=d19c72ce...",
+        "published_permissions=154",
+        "platform_admin_role_assign_grant=absent"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=232",
+        "published_permissions=154",
+        "platform_admin_role_assign_grant=1",
+        "direct_identity_grants=0"
+      ]
+    },
+    {
+      "id": "20260928000300",
+      "filename": "20260928000300_phase5_control_assessment_start_tenant_scope.sql",
+      "sha256": "4e38ffe74d4c5324d16871228e65e800396d538f45aaf29b052d895bfb5cbe84",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16",
+        "ledger_count=20",
+        "physical_tables=232",
+        "applied_role_revoke_grant_sha256=d47e4fa07250092c5b8c063a60713528627acee864f93278b3c5f0ed5dd57cdc",
+        "control_assessment_start_v2=published",
+        "control_owner_update_template_grant=1"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=232",
+        "published_permissions=154",
+        "control_assessment_start_v3_tenant_scope=published",
+        "direct_identity_grants=0"
+      ]
+    },
+    {
+      "id": "20260928000400",
+      "filename": "20260928000400_phase5_regulatory_catalog_contract_alignment.sql",
+      "sha256": "1d4e5a51372531a1a5645dd5152cd00742016a3e5a7f3c508193caa65afcb929",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16",
+        "ledger_count=21",
+        "physical_tables=232",
+        "published_permissions=154",
+        "crosswalk_mapping_rows=0",
+        "normative_unit_composite_duplicates=0",
+        "existing_requirements_content_valid"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=232",
+        "published_permissions=154",
+        "normative_unit_business_key=composite",
+        "requirement_editorial_summary=present",
+        "crosswalk_mapping_metadata=present"
+      ]
+    },
+    {
+      "id": "20260929000100",
+      "filename": "20260929000100_phase5_subscription_regulatory_pack_authority.sql",
+      "sha256": "58db95213900be09348312702659b292f53a5913fe03df99102c444320c70bbd",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16",
+        "ledger_count=22",
+        "physical_tables=232",
+        "published_permissions=154",
+        "subscription_regulatory_packs=absent"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=233",
+        "published_permissions=154",
+        "subscription_regulatory_packs=present",
+        "no_active_overlap"
+      ]
+    },
+    {
+      "id": "20260929000200",
+      "filename": "20260929000200_phase5_plus_permissions_applicability.sql",
+      "sha256": "58d52157c20f5daa95d533030fa0b2ed4f85d7faea1a0f256a167f608a23ea8d",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16",
+        "ledger_count=23",
+        "physical_tables=233",
+        "published_permissions=154"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=233",
+        "published_permissions=158",
+        "applicability_decision=closed"
+      ]
+    },
+    {
+      "id": "20260929000300",
+      "filename": "20260929000300_phase5_plus_subject_validation_access.sql",
+      "sha256": "5eb46ac182929c1649fed610a4d66cd92017ea07b473aba933e5c167f5e1dfdb",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16",
+        "ledger_count=24",
+        "physical_tables=233",
+        "published_permissions=158",
+        "no_duplicate_active_subject_generation"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=235",
+        "published_permissions=163",
+        "subject_active_interval_unique",
+        "validation_access_separate_from_subscription"
+      ]
     }
   ]
 }

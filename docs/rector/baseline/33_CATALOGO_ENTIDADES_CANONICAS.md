@@ -1,6 +1,6 @@
-# 33 - Catálogo completo de entidades canónicas por bounded context — v1.6
+# 33 - Catálogo completo de entidades canónicas por bounded context — v1.7
 
-> Active baseline: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.6_2026-09-23`.
+> Active baseline: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23`.
 
 Este catálogo es la autoridad nominal de entidades lógicas. Un término contractual que requiera identidad, versionado, lineage o referencia reproducible debe aparecer aquí, aunque su implementación física pueda consolidarse conforme a la regla final.
 
@@ -34,9 +34,11 @@ Control, ControlVersion, ControlObjective, ControlScope, ControlAssessment, Assu
 Control/ControlVersion declara `control_origin=regulatory_reference|tcdx_baseline|tenant_instantiated|tenant_defined` y ownership coherente. Una instancia tenant puede referenciar `based_on_control_version_id`; no muta ni demuestra implementación del control global.
 
 ## Evidence & Documents
-Document, DocumentVersion, Evidence, EvidenceVersion, EvidenceRequest, EvidenceReview, EvidenceLink, FileObject.
+Document, DocumentVersion, Evidence, EvidenceVersion, EvidenceRequest, EvidenceReview, EvidenceLink, FileUploadIntent, FileObject.
 
 `EvidenceLink` es una relación tipada hacia Requirement, Control, ControlVersion, RequirementAssessment, ControlAssessment o AssuranceTest. `EvidenceRequest` apunta exactamente a Requirement, Control, RequirementAssessment, ControlAssessment o AssuranceTest. Ninguna de ambas relaciones autoriza `(type,id)` sin integridad.
+
+`FileUploadIntent` es una entidad tenant-owned temporal de coordinación previa a la materialización: contiene propósito contractual cerrado, clave opaca server-owned de cuarentena, metadata declarada no confiable, lifecycle, expiración, actores e idempotencia/concurrencia. No es Evidence, DocumentVersion ni un segundo FileObject; sólo puede referenciar un `FileObject` final del mismo tenant después de scan PASS, caracterización y promoción.
 
 ## Risk
 RiskTaxonomy, RiskMethodology, ImpactScaleDefinition, LikelihoodScaleDefinition, Risk, RiskScope, RiskAssessment, RiskControlMapping, RiskTreatment, RiskAcceptance, RiskAppetitePolicy, RiskTolerancePolicy, KRI, RiskKriMapping, LossEvent, LossRecovery.

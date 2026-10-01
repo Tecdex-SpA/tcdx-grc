@@ -54,3 +54,17 @@ Rebuild proof is empty PostgreSQL 16 -> every migration in order -> approved see
 Identical reviewed bytes/checksums promote isolated development -> QA -> production. Production DDL outside the runner is prohibited. Evidence per environment includes revision, manifest/checksums, target identity, preflight, backup reference, ledger before/after, lock result, duration, postconditions, schema/grant diff, negative tenant checks, failure/retry result and approval/change record. Secrets are never captured.
 
 `MIGRATION_PLAN=PASS` as a Phase 2 contract candidate. Implementation and execution remain blocked for Phase 3/human gates.
+
+## Phase 5 RetentionPolicy forward-only amendment
+
+Migration `20260924000200_phase5_retention_policy_lifecycle.sql` follows the fifteen applied QA migrations. It preserves all 231 physical tables and changes only the existing `privacy.retention_policies`: `effective_from` and `effective_to` become nullable and `row_version bigint NOT NULL DEFAULT 1` is added. Closed CHECK constraints materialize the approved policy kind, numeric precedence, `expiry_or_closure`, lifecycle states and publication/effective timestamp coherence. The same transaction publishes the three approved lifecycle registry edges; it adds no permission, role, entity, table or disposition column. Operational rollback is the verified pre-apply backup/restore procedure, never a destructive down migration.
+
+## Phase 5 canonical membership invitation amendment
+
+Applied migration `20260924000300_phase5_membership_invitation.sql` is immutable at SHA-256 `0942e5eb360f7157a444d7b04fbe7558312e8d782347e60a745a8d4365034806`. It created only `iam.tenant_membership_invitations`, published the two authorized permission rows and produced 232 domain tables/17 ledger rows, but its already-applied grant materialization targeted `TENANT_ADMIN`, contrary to the later controlling Platform-authority clarification in the approved decision.
+
+Migration `20260925000100_phase5_membership_invitation_platform_authority_reconciliation.sql` is the minimal forward-only successor. It requires the exact applied predecessor checksum, preserves 232 tables and the two Permission rows, removes every superseded invitation grant, and creates exactly two PLATFORM_CONTROL grants on the single published baseline `PLATFORM_ADMIN` with zero other grants. It also tightens terminal-field coherence and adds the two missing canonical service-actor FKs/indexes. It creates no entity, permission, role, capability, entitlement, credential or business fixture. Postcondition is 232 domain tables and 18 applied migrations. No applied migration bytes change.
+
+## Phase 5 administrative read catalog release
+
+Human decision 2026-09-28 authorizes the forward-only data-only migration `20260928000100_phase5_administrative_read_permissions.sql` after the exact applied `20260925000100` checksum. It preserves 232 domain tables, immutable predecessor bytes and every invitation lifecycle row. It publishes only `platform.tenant.read`, `platform.membership.read`, `platform.membership_invitation.read` and `platform.role.read`, with exact baseline Platform/Tenant Admin grants and zero direct UserIdentity grants. The runner applies it only after isolated PostgreSQL 16 rebuild, checksum/replay/concurrency/unknown-ledger gates, QA backup/read-only preflight and correct owner authority. QA is not considered applied merely because this migration is in the source manifest.

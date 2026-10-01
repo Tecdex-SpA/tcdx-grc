@@ -6,9 +6,21 @@
 | Approving human roles | Architecture Owner, Security & Privacy Reviewer, QA/Release Owner, domain owners |
 | Status | `CONTRACT_DEFINED` |
 
-Audit events record accountability/outcome and never act as the domain event bus. The exact `audit_event_code` for each of the 80 mutating API operations is the `audit.*.v1` code in artifact 03, including `audit.evidence.evidence.create.v1`. For every API-backed lifecycle command, artifact 09 publishes that same operation-specific code and the implementation persists exactly one material AuditEvent; it never adds a second `audit.lifecycle.*` event. Only internal/system transitions without a public operation-specific code retain `audit.lifecycle.<entity>.<command>.v1`. GET operations produce no material audit by default, while protected-content access/export may add an access audit only through an approved policy.
+Audit events record accountability/outcome and never act as the domain event bus. The exact `audit_event_code` for each audited POST operation is the `audit.*.v1` code in artifact 03, including `audit.evidence.evidence.create.v1`, the five RetentionPolicy operation codes, the two Platform-governed invitation mutations and the two SubscriptionRegulatoryPack commands. For every API-backed lifecycle command, artifact 09 publishes that same operation-specific code and the implementation persists exactly one material AuditEvent; it never adds a second `audit.lifecycle.*` event. Only internal/system transitions without a public operation-specific code retain `audit.lifecycle.<entity>.<command>.v1`. GET operations produce no material audit by default, while protected-content access/export may add an access audit only through an approved policy.
+
+The Phase 5 human amendment designates `audit.lifecycle.evidence_request.fulfill.v1` as the single canonical exception/name for the public `evidenceRequestFulfill` command. It is emitted exactly once; `audit.evidence.request.fulfill.v1` is not an active alias and is never emitted.
 
 PRE-F5E additionally publishes three runtime-security boundary codes outside the public API-operation/lifecycle cardinality: `audit.iam.application_token.issue.v1`, `audit.iam.application_token.privileged_use.v1` and `audit.iam.application_token.revoke.v1`. They audit application-token lifecycle and privileged use without creating a GRC domain endpoint, table or event-bus fact.
+
+The Phase 5 Subscription decision publishes `audit.platform.subscription.create.v1` as the material audit for `subscriptionCreate`. The same transaction emits `platform.subscription.created.v1` through the governed outbox and also records the existing reinforced privileged-use audit. No update, cancel, delete or change-plan audit/event is authorized by this decision.
+
+The human Phase 5+ resolution of 2026-09-29 publishes `audit.platform.subscription_regulatory_pack.activate.v1` and `audit.platform.subscription_regulatory_pack.revoke.v1` for the distinct contractual relation. Activation records the exact Subscription, RegulatoryPackVersion and effective interval. Revocation records before/after, actor and required reason. Both operations emit their corresponding `platform.subscription_regulatory_pack.*.v1` outbox event in the same transaction. No physical DELETE or generic Subscription update is authorized.
+
+The Phase 5+ human architecture resolution additionally publishes `audit.organization.subject.create.v1`, `audit.platform.tenant_account_classification.set.v1`, `audit.platform.regulatory_pack_validation_provenance.create.v1`, `audit.platform.regulatory_pack_validation_access.create.v1` and `audit.platform.regulatory_pack_validation_access.revoke.v1`. These record Subject identity, classification layer change, exact provenance/version approval, exact tenant access interval and required revocation reason respectively. They emit no domain outbox event because no approved downstream fact contract exists. No commercial entitlement or licence assertion is made.
+
+DR-PHASE5-CANONICAL-TENANT-USER-ENROLLMENT-2026-09-24 publishes `audit.platform.membership_invitation.create.v1`, `audit.platform.membership_invitation.accept.v1` and `audit.platform.membership_invitation.revoke.v1`. Payloads may contain canonical invitation/membership identifiers, method, lifecycle, expiry and actor/correlation, but never the clear invitation token, token digest, external token or unnecessary email. Acceptance audit is written once in the same transaction that consumes the invitation and creates/reuses membership; assigning a role remains a separate `membershipRoleAssign` fact.
+
+The human Phase 5 MembershipRole revoke decision of 2026-09-28 uses the existing `audit.platform.role.revoke.v1` for exactly one TENANT_OWNED assignment. It records canonical actor, tenant, assignment, role, before/after validity and required reason in the same transaction as the validity closure and `iam.role.revoked.v1` outbox event. Platform Admin use additionally records the existing reinforced privileged-use audit. Same-key replay produces no new audit/outbox event; no identity secret, token, digest or PlatformRoleAssignment is included.
 
 The 2026-09-23 Platform grant candidate additionally reserves `audit.iam.platform_role_assignment.assign.v1`, `audit.iam.platform_role_assignment.revoke.v1` and `audit.iam.platform_role_assignment.bootstrap.v1`. The bootstrap code belongs exclusively to the internal one-time `FIRST_PLATFORM_ADMIN_BOOTSTRAP` ceremony and is persisted atomically with its first grant; it is not a public endpoint or reusable grant. Any later authorized administration command must use the applicable reinforced code. Payload includes canonical user/role/validity, actor, required bootstrap justification, outcome and correlation, never email or external credential data.
 
@@ -53,16 +65,16 @@ Authentication failures are security telemetry; authorization/SoD denial for a k
 ## Coverage
 
 ```text
-MUTATING_OPERATIONS=80
-MUTATING_OPERATIONS_WITH_AUDIT=80
-PUBLISHED_LIFECYCLE_EDGES=100
-PUBLISHED_LIFECYCLE_AUDIT_CODES=100
-PUBLISHED_AUDIT_EVENT_CODES=154
+MUTATING_OPERATIONS=95
+MUTATING_OPERATIONS_WITH_AUDIT=92
+PUBLISHED_LIFECYCLE_EDGES=103
+PUBLISHED_LIFECYCLE_AUDIT_CODES=103
+PUBLISHED_AUDIT_EVENT_CODES=168
 PUBLISHED_SECURITY_BOUNDARY_AUDIT_CODES=3
 PUBLISHED_PLATFORM_GRANT_AUDIT_CODES=3
 AUDIT_MAPPING_GAPS=0
 ```
 
-The 154-code count is derived only from artifacts 03 and 09: 80 operation codes plus lifecycle-only codes, with API-backed lifecycle codes deduplicated. The three PRE-F5E token-security codes and two Platform-grant codes are counted separately because they add no API operation or lifecycle edge. H-006 retains source-specific dismissal codes because dismissal has no public F5 operation. Erasure audit stores policy/version, action by object class, exclusions/hold and outcome without reintroducing erased personal data. Configuration and lifecycle publication retain author/reviewer/approver/publisher evidence and do not fabricate tenant context for PLATFORM_CONTROL.
+The 161-code count adds `audit.privacy.retention_policy.update.v1` for the human-authorized draft update to the prior 160-code catalog. The RetentionPolicy lifecycle amendment adds create/review/approve audit codes while reusing the already-published publish code. The v1.7 replacement of the contradictory fulfillment code by the single canonical `audit.lifecycle.evidence_request.fulfill.v1` removes the former duplicate alias from the active catalog. The three PRE-F5E token-security codes and three Platform-grant codes remain counted separately because they add no lifecycle edge. Binary content transfer is accounted for by upload-request/finalize audit; authorized GET has no material audit by default under this contract.
 
 `AUDIT_EVENT_CATALOG=PASS` as a Fase 2 contract candidate.

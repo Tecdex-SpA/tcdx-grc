@@ -49,9 +49,13 @@ Control 1--N AssuranceTest
 
 Document 1--N DocumentVersion
 Evidence 1--N EvidenceVersion
+Tenant 1--N FileUploadIntent; cada intent pertenece a un actor canónico, tiene expiración obligatoria y coordina exclusivamente la cuarentena previa a materialización.
+FileUploadIntent 0..1--1 FileObject: la relación sólo existe al terminar promoción scan-PASS; un FileObject no es creado al solicitar upload.
 EvidenceVersion N--N Requirement/Control/ControlVersion/RequirementAssessment/ControlAssessment/AssuranceTest mediante EvidenceLink tipado. `Control` identifica la implementación tenant; `ControlVersion` identifica la versión de referencia o la versión concreta cuando corresponda. Ninguno sustituye al otro.
 Evidence 1--N EvidenceReview
 EvidenceRequest referencia exactamente un target permitido: Requirement, Control, RequirementAssessment, ControlAssessment o AssuranceTest, y puede satisfacerse por N EvidenceVersion. El target se implementa con FKs tipadas/constraints equivalentes; queda prohibido un `(target_type,target_id)` sin integridad referencial.
+
+FileUploadIntent usa una discriminación contractual cerrada para propósito Evidence/Document y no acepta bucket/key/tenant aportado por cliente. Su promoción conserva tenant, clasificación y retención en el FileObject final y no duplica la autoridad de FileObject.
 
 ## 5. Risk
 

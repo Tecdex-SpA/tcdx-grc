@@ -1,0 +1,57 @@
+{
+  "NormativeUnit.unit_type": [
+    "section",
+    "chapter",
+    "clause",
+    "subclause",
+    "annex",
+    "article",
+    "paragraph",
+    "numeral",
+    "transitory_provision",
+    "schedule",
+    "control_group",
+    "other"
+  ],
+  "Requirement.requirement_kind": [
+    "shall",
+    "legal_obligation",
+    "contractual_obligation",
+    "policy_mandate",
+    "other"
+  ],
+  "RequirementControlMapping.mapping_type": [
+    "satisfies",
+    "supports",
+    "mitigates",
+    "detects",
+    "evidences"
+  ],
+  "Crosswalk.relationship_type": [
+    "equivalent",
+    "partially_equivalent",
+    "overlaps",
+    "supports",
+    "supersedes",
+    "no_match"
+  ],
+  "Control.control_origin": [
+    "regulatory_reference",
+    "tcdx_baseline",
+    "tenant_instantiated",
+    "tenant_defined"
+  ],
+  "ownership_class": [
+    "GLOBAL_REFERENCE",
+    "PLATFORM_CONTROL",
+    "TENANT_OWNED"
+  ],
+  "normalization_maps": {
+    "annex_control_group": "control_group",
+    "annex_control": "other",
+    "article_or_obligation": "article",
+    "management_requirement": "shall",
+    "direct": "satisfies",
+    "supporting": "supports"
+  }
+}

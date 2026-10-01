@@ -1,22 +1,35 @@
 import { createHash } from "node:crypto";
 import { CompiledQuery, sql, type Transaction } from "kysely";
 import { validate as validateUuid } from "uuid";
-import type { ScopeKind } from "@tcdx-grc/shared-types";
+import { CONTROL_NATURES, CONTROL_TYPES, type ScopeKind } from "@tcdx-grc/shared-types";
 import { newUuidV7 } from "../uuid.js";
 import type { FoundationDatabase } from "../database.js";
 import { FoundationError } from "../errors.js";
+import { packVisibility } from "../regulatory/pack-entitlement.js";
+import type { AuthorizedFileAccess, FileStoragePort } from "../ports/file-storage.js";
 import { claimIdempotency, completeIdempotency, persistAuditEvent, persistOutboxEvent } from "../persistence/foundation-records.js";
 import type { CoreActor, ResourceKey } from "./model.js";
 import { resources } from "./model.js";
-import { assertLifecycleEdge, requireAccess } from "./security.js";
-import { casTransition, detailResource, getResource, insertRow } from "./repository.js";
+import { assertLifecycleEdge, grantedScopes, requireAccess } from "./security.js";
+import { casRetentionPolicyTransition, casRetentionPolicyUpdate, casTransition, detailResource, getResource, insertRow } from "./repository.js";
 
 type Body = Record<string, unknown>;
-type MutationResult = { resource: ResourceKey; id: string; response?: Record<string, unknown> };
+type MutationResult = {
+  resource: ResourceKey;
+  id: string;
+  response?: Record<string, unknown>;
+  auditAfter?: Record<string, unknown>;
+  auditOutcome?: "success" | "failure";
+  deferredError?: FoundationError;
+  afterCommit?: () => Promise<void>;
+  rollbackExternal?: () => Promise<void>;
+};
 type MutationContext = {
   transaction: Transaction<FoundationDatabase>;
   actor: CoreActor;
   body: Body;
+  correlationId?: string;
+  fileStorage?: FileStoragePort;
   targetId?: string;
   parentId?: string;
 };
@@ -31,6 +44,7 @@ export type MutationDefinition = {
   allowedFields: readonly string[];
   requiredFields: readonly string[];
   execute(context: MutationContext): Promise<MutationResult>;
+  replay?(context: MutationContext, result: { resource: ResourceKey; id: string }): Promise<{ response: Record<string, unknown>; afterCommit?: () => Promise<void> }>;
 };
 
 function canonical(value: unknown): string {
@@ -60,6 +74,11 @@ function number(body: Body, key: string): number {
   return value;
 }
 
+function optionalNumber(body: Body, key: string): number | null {
+  if (body[key] === undefined || body[key] === null) return null;
+  return number(body, key);
+}
+
 function version(body: Body): number {
   const value = number(body, "expected_version");
   if (!Number.isSafeInteger(value) || value < 1) throw new FoundationError("TCDX.VALIDATION.FAILED", "Validation failed", 400, false, { field: "expected_version" });
@@ -74,6 +93,11 @@ function validateClosedBody(definition: MutationDefinition, body: Body): void {
   if (unknown || missing) throw new FoundationError("TCDX.VALIDATION.FAILED", "Validation failed", 400, false, { field: unknown ?? missing });
   for (const [field, value] of Object.entries(body)) validateField(field, value);
   if (definition.operationId === "soaCreate") validateObjectArray(body.items, "items", soaItemFields, ["reference_control_version_id", "applicability_decision", "justification", "implementation_state"]);
+  if (definition.operationId === "applicabilityCreate") {
+    if (body.applicability_decision !== "applicable" && body.applicability_decision !== "not_applicable") invalidField("applicability_decision");
+    if (body.applicability_decision === "not_applicable" &&
+        (typeof body.rationale !== "string" || !body.rationale.trim())) invalidField("rationale");
+  }
   if (definition.operationId === "assuranceTestExecute" && body.samples !== undefined) validateObjectArray(body.samples, "samples", assuranceSampleFields, ["sample_code", "sample_count", "selection_method", "result_status"]);
   if (definition.operationId === "evidenceCreate") validateObjectArray(body.links, "links", evidenceLinkFields, []);
   for (const [start, end] of [["effective_from", "effective_to"], ["valid_from", "valid_to"], ["period_start", "period_end"]] as const) {
@@ -98,20 +122,21 @@ const uuidFields = new Set([
 const timestampFields = new Set(["effective_from", "effective_to", "planned_at", "due_at", "valid_from", "valid_to", "period_start", "period_end", "expires_at", "sample_period_start", "sample_period_end"]);
 const dateFields = new Set(["due_date"]);
 const percentageFields = new Set(["coverage_percent", "design_effectiveness", "operating_effectiveness"]);
-const integerFields = new Set(["expected_version", "population_count", "sample_count"]);
+const integerFields = new Set(["expected_version", "population_count", "sample_count", "size_bytes", "version_number", "retention_seconds", "precedence_rank"]);
 const maxLengths: Record<string, number> = {
   applicability_decision: 32, control_code: 160, control_type: 32, nature: 32, frequency_code: 64, suggested_owner_role_code: 96,
   test_code: 128, sample_code: 128, selection_method: 64, request_code: 128, evidence_code: 128, evidence_type: 64, source_kind: 32,
   sufficiency: 32, relevance: 32, issue_code: 128, issue_kind: 32, severity: 32, priority: 32, origin_role: 32, action_code: 128,
-  link_role: 32, implementation_state: 32
+  link_role: 32, implementation_state: 32, declared_mime: 255, classification: 32, policy_code: 128, policy_kind: 32, trigger_event_code: 96
 };
 const enumFields: Record<string, ReadonlySet<string>> = {
   result_status: resultStatuses,
   domain_conclusion: new Set(["not_assessed", "compliant", "partially_compliant", "non_compliant", "not_applicable", "insufficient_evidence", "effective", "partially_effective", "ineffective", "not_tested"]),
-  control_type: new Set(["preventive", "detective", "corrective", "directive"]),
-  nature: new Set(["manual", "automated", "hybrid"]),
+  control_type: new Set(CONTROL_TYPES),
+  nature: new Set(CONTROL_NATURES),
   issue_kind: new Set(["finding", "non_conformity", "gap", "exception", "audit_observation"]),
-  verification_decision: new Set(["accepted"])
+  verification_decision: new Set(["accepted"]),
+  classification: new Set(["public", "internal", "confidential", "restricted"])
 };
 const soaItemFields = new Set(["reference_control_version_id", "applicability_decision", "justification", "implementation_state", "tenant_control_id", "tenant_control_version_id"]);
 const assuranceSampleFields = new Set(["sample_code", "population_count", "sample_count", "selection_method", "sample_period_start", "sample_period_end", "result_status"]);
@@ -148,10 +173,31 @@ function validateObjectArray(value: unknown, field: string, allowed: ReadonlySet
   }
 }
 
-async function referenceExists(tx: Transaction<FoundationDatabase>, table: string, idColumn: string, id: string, tenantId: string, globalAllowed = false): Promise<void> {
-  const predicate = globalAllowed ? "(tenant_id IS NULL OR tenant_id=$2::uuid)" : "tenant_id=$2::uuid";
-  const result = await tx.executeQuery<{ found: number }>(CompiledQuery.raw(`SELECT 1 AS found FROM ${table} WHERE "${idColumn}"=$1::uuid AND ${predicate}`, [id, tenantId]));
+async function referenceExists(tx: Transaction<FoundationDatabase>, table: string, idColumn: string, id: string, tenantId: string, globalAllowed = false,
+  runtimeEnvironment: CoreActor["runtimeEnvironment"] = "production"): Promise<void> {
+  const values: unknown[] = [id, tenantId];
+  let predicate = globalAllowed ? "(tenant_id IS NULL OR tenant_id=$2::uuid)" : "tenant_id=$2::uuid";
+  if (globalAllowed && ["regulatory.requirements", "regulatory.framework_versions", "controls.control_versions"].includes(table)) {
+    const visibility = await packVisibility(tx, tenantId, runtimeEnvironment);
+    const allowed = table === "controls.control_versions"
+      ? [...visibility.globalControlVersionIds] : [...visibility.frameworkVersionIds];
+    values.push(allowed);
+    const scope = table === "regulatory.requirements" ? "framework_version_id" : idColumn;
+    predicate = `(tenant_id=$2::uuid OR (tenant_id IS NULL AND ${scope}=ANY($3::uuid[])))`;
+  }
+  const result = await tx.executeQuery<{ found: number }>(CompiledQuery.raw(`SELECT 1 AS found FROM ${table} WHERE "${idColumn}"=$1::uuid AND ${predicate}`, values));
   if (!result.rows[0]) throw new FoundationError("TCDX.RESOURCE.NOT_FOUND", "Resource not found", 404);
+}
+
+async function assertSelectableSubject(tx: Transaction<FoundationDatabase>, subjectId: string, tenantId: string): Promise<void> {
+  const result = await sql<{ subject_id: string }>`
+    SELECT subject_id FROM org.subjects
+     WHERE subject_id=${subjectId}::uuid AND tenant_id=${tenantId}::uuid
+       AND lifecycle_state='active' AND superseded_by_subject_id IS NULL
+       AND effective_from<=transaction_timestamp()
+       AND (effective_to IS NULL OR effective_to>transaction_timestamp())
+  `.execute(tx);
+  if (result.rows.length !== 1) throw new FoundationError("TCDX.RESOURCE.NOT_FOUND", "Resource not found", 404);
 }
 
 async function assertTenantMembership(tx: Transaction<FoundationDatabase>, membershipId: string, tenantId: string): Promise<void> {
@@ -199,13 +245,17 @@ function actorColumns(actor: CoreActor): Record<string, unknown> {
 }
 
 async function createApplicability({ transaction: tx, actor, body }: MutationContext): Promise<MutationResult> {
+  const decision = string(body, "applicability_decision");
+  if (decision !== "applicable" && decision !== "not_applicable") invalidField("applicability_decision");
+  const rationale = typeof body.rationale === "string" ? body.rationale : "";
+  if (decision === "not_applicable" && !rationale.trim()) invalidField("rationale");
   const requirementId = string(body, "requirement_id");
-  await referenceExists(tx, "regulatory.requirements", "requirement_id", requirementId, actor.tenantId, true);
+  await referenceExists(tx, "regulatory.requirements", "requirement_id", requirementId, actor.tenantId, true, actor.runtimeEnvironment);
   const scope = optionalString(body, "scope_subject_id");
-  if (scope) await referenceExists(tx, "org.subjects", "subject_id", scope, actor.tenantId);
+  if (scope) await assertSelectableSubject(tx, scope, actor.tenantId);
   const max = await sql<{ next_version: string }>`SELECT COALESCE(MAX(applicability_version),0)+1 AS next_version FROM regulatory.requirement_applicabilities WHERE tenant_id=${actor.tenantId}::uuid AND requirement_id=${requirementId}::uuid AND scope_subject_id IS NOT DISTINCT FROM ${scope}::uuid`.execute(tx);
   const id = newUuidV7();
-  await insertRow(tx, "regulatory.requirement_applicabilities", { requirement_applicability_id: id, tenant_id: actor.tenantId, ...actorColumns(actor), requirement_id: requirementId, scope_subject_id: scope, applicability_version: max.rows[0]!.next_version, applicability_decision: string(body, "applicability_decision"), rationale: string(body, "rationale"), lifecycle_state: "draft", effective_from: string(body, "effective_from"), effective_to: optionalString(body, "effective_to") });
+  await insertRow(tx, "regulatory.requirement_applicabilities", { requirement_applicability_id: id, tenant_id: actor.tenantId, ...actorColumns(actor), requirement_id: requirementId, scope_subject_id: scope, applicability_version: max.rows[0]!.next_version, applicability_decision: decision, rationale, lifecycle_state: "draft", effective_from: string(body, "effective_from"), effective_to: optionalString(body, "effective_to") });
   return { resource: "applicability", id };
 }
 
@@ -219,7 +269,7 @@ async function createRequirementAssessment({ transaction: tx, actor, body }: Mut
 
 async function createSoa({ transaction: tx, actor, body }: MutationContext): Promise<MutationResult> {
   const framework = string(body, "framework_version_id");
-  await referenceExists(tx, "regulatory.framework_versions", "framework_version_id", framework, actor.tenantId, true);
+  await referenceExists(tx, "regulatory.framework_versions", "framework_version_id", framework, actor.tenantId, true, actor.runtimeEnvironment);
   if (!Array.isArray(body.items) || body.items.length === 0) throw new FoundationError("TCDX.VALIDATION.FAILED", "Validation failed", 400, false, { field: "items" });
   const max = await sql<{ next_version: string }>`SELECT COALESCE(MAX(soa_version),0)+1 AS next_version FROM regulatory.statements_of_applicability WHERE tenant_id=${actor.tenantId}::uuid AND framework_version_id=${framework}::uuid`.execute(tx);
   const id = newUuidV7();
@@ -228,7 +278,7 @@ async function createSoa({ transaction: tx, actor, body }: MutationContext): Pro
     if (!raw || typeof raw !== "object") throw new FoundationError("TCDX.VALIDATION.FAILED", "Validation failed", 400, false, { field: "items" });
     const item = raw as Body;
     const controlVersion = string(item, "reference_control_version_id");
-    await referenceExists(tx, "controls.control_versions", "control_version_id", controlVersion, actor.tenantId, true);
+    await referenceExists(tx, "controls.control_versions", "control_version_id", controlVersion, actor.tenantId, true, actor.runtimeEnvironment);
     const tenantControl = optionalString(item, "tenant_control_id");
     const tenantControlVersion = optionalString(item, "tenant_control_version_id");
     if (Boolean(tenantControl) !== Boolean(tenantControlVersion)) throw new FoundationError("TCDX.INVARIANT.VIOLATION", "Tenant Control and ControlVersion must be provided together", 422);
@@ -241,8 +291,11 @@ async function createSoa({ transaction: tx, actor, body }: MutationContext): Pro
 
 async function instantiateControl({ transaction: tx, actor, body }: MutationContext): Promise<MutationResult> {
   const basedOn = string(body, "based_on_control_version_id");
-  await referenceExists(tx, "controls.control_versions", "control_version_id", basedOn, actor.tenantId, true);
-  await referenceExists(tx, "org.subjects", "subject_id", string(body, "business_owner_subject_id"), actor.tenantId);
+  const visibility = await packVisibility(tx, actor.tenantId, actor.runtimeEnvironment);
+  if (!visibility.globalControlVersionIds.has(basedOn)) {
+    throw new FoundationError("TCDX.RESOURCE.NOT_FOUND", "Resource not found", 404);
+  }
+  await assertSelectableSubject(tx, string(body, "business_owner_subject_id"), actor.tenantId);
   const id = newUuidV7();
   const versionId = newUuidV7();
   await insertRow(tx, resources.control.table, { control_id: id, tenant_id: actor.tenantId, ownership_class: "TENANT_OWNED", ...actorColumns(actor), control_code: string(body, "control_code"), name: string(body, "name"), control_origin: "tenant_instantiated", based_on_control_version_id: basedOn, business_owner_subject_id: string(body, "business_owner_subject_id"), lifecycle_state: "active" });
@@ -276,7 +329,7 @@ async function createEvidenceRequest({ transaction: tx, actor, body }: MutationC
   const target = targets[0]!;
   const mappings: Record<string, [string, string, boolean?]> = { requirement_id: ["regulatory.requirements", "requirement_id", true], control_id: [resources.control.table, resources.control.idColumn], requirement_assessment_id: [resources.requirementAssessment.table, resources.requirementAssessment.idColumn], control_assessment_id: [resources.controlAssessment.table, resources.controlAssessment.idColumn], assurance_test_id: [resources.assuranceTest.table, resources.assuranceTest.idColumn] };
   const targetMapping = mappings[target]!;
-  await referenceExists(tx, targetMapping[0], targetMapping[1], string(body, target), actor.tenantId, targetMapping[2] ?? false);
+  await referenceExists(tx, targetMapping[0], targetMapping[1], string(body, target), actor.tenantId, targetMapping[2] ?? false, actor.runtimeEnvironment);
   const assignedMembership = optionalString(body, "assigned_membership_id");
   if (assignedMembership) await assertTenantMembership(tx, assignedMembership, actor.tenantId);
   const id = newUuidV7();
@@ -305,10 +358,80 @@ async function createEvidence({ transaction: tx, actor, body }: MutationContext)
     if (targets.length !== 1) throw new FoundationError("TCDX.INVARIANT.VIOLATION", "Exactly one typed evidence link target is required", 422);
     const target = targets[0]!;
     const targetMapping = mappings[target]!;
-    await referenceExists(tx, targetMapping[0], targetMapping[1], string(link, target), actor.tenantId, targetMapping[2] ?? false);
+    await referenceExists(tx, targetMapping[0], targetMapping[1], string(link, target), actor.tenantId, targetMapping[2] ?? false, actor.runtimeEnvironment);
     await insertRow(tx, "evidence.evidence_links", { evidence_link_id: newUuidV7(), tenant_id: actor.tenantId, ...actorColumns(actor), evidence_version_id: versionId, requirement_id: optionalString(link, "requirement_id"), control_id: optionalString(link, "control_id"), control_version_id: optionalString(link, "control_version_id"), requirement_assessment_id: optionalString(link, "requirement_assessment_id"), control_assessment_id: optionalString(link, "control_assessment_id"), assurance_test_id: optionalString(link, "assurance_test_id"), claim: optionalString(link, "claim"), effective_from: optionalString(link, "effective_from"), effective_to: optionalString(link, "effective_to") });
   }
   return { resource: "evidence", id: evidenceId };
+}
+
+const retentionPrecedence = new Map<string, number>([
+  ["legal_hold", 500],
+  ["mandatory_regulatory_policy", 400],
+  ["contractual_policy", 300],
+  ["tenant_policy", 200],
+  ["product_baseline", 100]
+]);
+
+async function createRetentionPolicy({ transaction: tx, actor, body }: MutationContext): Promise<MutationResult> {
+  const policyKind = string(body, "policy_kind");
+  const precedenceRank = number(body, "precedence_rank");
+  const versionNumber = number(body, "version_number");
+  const retentionSeconds = number(body, "retention_seconds");
+  if (!Number.isSafeInteger(versionNumber) || versionNumber < 1) invalidField("version_number");
+  if (!Number.isSafeInteger(retentionSeconds) || retentionSeconds < 0) invalidField("retention_seconds");
+  if (!Number.isSafeInteger(precedenceRank) || retentionPrecedence.get(policyKind) !== precedenceRank) invalidField("precedence_rank");
+  if (string(body, "trigger_event_code") !== "expiry_or_closure") invalidField("trigger_event_code");
+  if (typeof body.is_mandatory !== "boolean") invalidField("is_mandatory");
+  const id = newUuidV7();
+  await insertRow(tx, resources.retentionPolicy.table, {
+    retention_policy_id: id,
+    tenant_id: actor.tenantId,
+    ownership_class: "TENANT_OWNED",
+    ...actorColumns(actor),
+    row_version: 1,
+    policy_code: string(body, "policy_code"),
+    version_number: versionNumber,
+    policy_kind: policyKind,
+    retention_seconds: retentionSeconds,
+    trigger_event_code: "expiry_or_closure",
+    precedence_rank: precedenceRank,
+    is_mandatory: body.is_mandatory,
+    lifecycle_state: "draft",
+    effective_from: null,
+    effective_to: null,
+    regulatory_source_id: null
+  });
+  return { resource: "retentionPolicy", id };
+}
+
+function retentionPolicyTransition(fromState: string, command: string, approve = false, publish = false) {
+  return async ({ transaction: tx, actor, body, targetId }: MutationContext): Promise<MutationResult> => {
+    if (!targetId) throw new FoundationError("TCDX.VALIDATION.FAILED", "Validation failed", 400);
+    const definition = resources.retentionPolicy;
+    const permission = mutationPermission.get(command)!;
+    await getResource(tx, actor, definition, targetId, true, permission);
+    const edge = await assertLifecycleEdge(tx, actor, { entityType: "RetentionPolicy", fromState, commandCode: command, permission });
+    if (edge.auditEventCode !== mutationAudit.get(command)) throw new FoundationError("TCDX.INVARIANT.VIOLATION", "Audit contract mismatch", 422);
+    if (approve) {
+      const author = await tx.executeQuery<{ created_by_user_identity_id: string | null }>(CompiledQuery.raw(
+        "SELECT created_by_user_identity_id FROM privacy.retention_policies WHERE tenant_id=$1::uuid AND retention_policy_id=$2::uuid",
+        [actor.tenantId, targetId]
+      ));
+      if (author.rows[0]?.created_by_user_identity_id === actor.userIdentityId) throw new FoundationError("TCDX.AUTHORIZATION.DENIED", "Access denied", 403);
+    }
+    await casRetentionPolicyTransition(tx, actor, targetId, version(body), fromState, edge.toState, publish);
+    return { resource: "retentionPolicy", id: targetId };
+  };
+}
+
+async function updateRetentionPolicy({ transaction: tx, actor, body, targetId }: MutationContext): Promise<MutationResult> {
+  if (!targetId) throw new FoundationError("TCDX.VALIDATION.FAILED", "Validation failed", 400);
+  await getResource(tx, actor, resources.retentionPolicy, targetId, true, "privacy.retention_policy.update");
+  const retentionSeconds = number(body, "retention_seconds");
+  if (!Number.isSafeInteger(retentionSeconds) || retentionSeconds < 0) invalidField("retention_seconds");
+  if (typeof body.is_mandatory !== "boolean") invalidField("is_mandatory");
+  await casRetentionPolicyUpdate(tx, actor, targetId, version(body), { retention_seconds: retentionSeconds, is_mandatory: body.is_mandatory });
+  return { resource: "retentionPolicy", id: targetId };
 }
 
 async function createIssue({ transaction: tx, actor, body }: MutationContext): Promise<MutationResult> {
@@ -335,13 +458,280 @@ async function createAction({ transaction: tx, actor, body, parentId }: Mutation
   return { resource: "action", id };
 }
 
-type TransitionSpec = { resource: ResourceKey; entity: string; from: string; command: string; requiresDistinctActor?: boolean; changes?: (body: Body, actor: CoreActor) => Record<string, unknown>; before?: (tx: Transaction<FoundationDatabase>, actor: CoreActor, body: Body, id: string, current: Record<string, unknown>) => Promise<void>; after?: (tx: Transaction<FoundationDatabase>, actor: CoreActor, body: Body, id: string, row: Record<string, unknown>) => Promise<void> };
+function fileStorageContext(context: MutationContext, permission: string, scopes: readonly ScopeKind[]): { port: FileStoragePort; access: AuthorizedFileAccess } {
+  const { actor, correlationId, fileStorage } = context;
+  requireAccess(actor, permission, "EVIDENCE_DOCUMENTS", scopes);
+  if (!fileStorage) throw new FoundationError("TCDX.DEPENDENCY.UNAVAILABLE", "File storage runtime is not configured", 503, true);
+  if (!correlationId) throw new FoundationError("TCDX.INVARIANT.VIOLATION", "Correlation context is required", 422);
+  const grants = grantedScopes(actor, permission);
+  const scope = scopes.find((candidate) => grants.has(candidate));
+  if (!scope) throw new FoundationError("TCDX.AUTHORIZATION.DENIED", "Access denied", 403);
+  return {
+    port: fileStorage,
+    access: {
+      tenantId: actor.tenantId,
+      correlationId,
+      capabilityEnabled: true,
+      permissionGranted: true,
+      scope,
+      objectPolicyAllowed: true
+    }
+  };
+}
+
+async function createUploadIntent(context: MutationContext): Promise<MutationResult> {
+  const { transaction: tx, actor, body } = context;
+  const retentionPolicyId = string(body, "retention_policy_id");
+  await referenceExists(tx, "privacy.retention_policies", "retention_policy_id", retentionPolicyId, actor.tenantId, true);
+  const id = newUuidV7();
+  const { port, access } = fileStorageContext(context, "evidence.document.create", ["tenant"]);
+  const allocation = await port.allocateQuarantineUpload({
+    ...access,
+    uploadIntentId: id,
+    declaredMime: string(body, "declared_mime"),
+    sizeBytes: number(body, "size_bytes"),
+    classification: string(body, "classification")
+  });
+  await insertRow(tx, resources.fileUploadIntent.table, {
+    file_upload_intent_id: id,
+    tenant_id: actor.tenantId,
+    ...actorColumns(actor),
+    purpose: "evidence_document",
+    original_filename: string(body, "original_filename"),
+    declared_mime: string(body, "declared_mime"),
+    expected_size_bytes: number(body, "size_bytes"),
+    classification: string(body, "classification"),
+    retention_policy_id: retentionPolicyId,
+    source_provenance: string(body, "source_provenance"),
+    effective_from: optionalString(body, "effective_from"),
+    effective_to: optionalString(body, "effective_to"),
+    quarantine_object_key: allocation.objectKey,
+    lifecycle_state: "pending_upload",
+    expires_at: allocation.expiresAt
+  });
+  const response = {
+    upload_intent_id: id,
+    lifecycle_state: "pending_upload",
+    upload_url: `/api/v1/file-upload-intents/${id}/content`,
+    expires_at: allocation.expiresAt.toISOString()
+  };
+  return {
+    resource: "fileUploadIntent",
+    id,
+    response,
+    auditAfter: {
+      upload_intent_id: id,
+      lifecycle_state: "pending_upload",
+      expires_at: allocation.expiresAt.toISOString()
+    }
+  };
+}
+
+async function replayUploadIntent(context: MutationContext, result: { resource: ResourceKey; id: string }): Promise<{ response: Record<string, unknown> }> {
+  if (result.resource !== "fileUploadIntent") throw new FoundationError("TCDX.CONFLICT.IDEMPOTENCY", "Idempotent result is incompatible", 409);
+  const current = await getResource(context.transaction, context.actor, resources.fileUploadIntent, result.id, true, "evidence.document.create");
+  if (current.lifecycle_state !== "pending_upload" || Date.parse(String(current.expires_at)) <= Date.now()) {
+    throw new FoundationError("TCDX.LIFECYCLE.TRANSITION_DENIED", "Upload intent is no longer uploadable", 409);
+  }
+  const { port, access } = fileStorageContext(context, "evidence.document.create", ["tenant"]);
+  const allocation = await port.allocateQuarantineUpload({
+    ...access,
+    uploadIntentId: result.id,
+    declaredMime: String(current.declared_mime),
+    sizeBytes: Number(current.expected_size_bytes),
+    classification: String(current.classification),
+    expiresAt: new Date(String(current.expires_at))
+  });
+  if (allocation.objectKey !== current.quarantine_object_key) throw new FoundationError("TCDX.INVARIANT.VIOLATION", "Quarantine key contract mismatch", 422);
+  return {
+    response: {
+      upload_intent_id: result.id,
+      lifecycle_state: "pending_upload",
+      upload_url: `/api/v1/file-upload-intents/${result.id}/content`,
+      expires_at: String(current.expires_at)
+    }
+  };
+}
+
+function rejectableStorageError(error: unknown): error is FoundationError {
+  return error instanceof FoundationError && error.statusCode === 422 && !error.retryable;
+}
+
+async function finalizeUploadIntent(context: MutationContext): Promise<MutationResult> {
+  const { transaction: tx, actor, body, targetId } = context;
+  if (!targetId) throw new FoundationError("TCDX.VALIDATION.FAILED", "Validation failed", 400);
+  const current = await getResource(tx, actor, resources.fileUploadIntent, targetId, true, "evidence.document.update");
+  if (current.lifecycle_state !== "pending_upload") throw new FoundationError("TCDX.LIFECYCLE.TRANSITION_DENIED", "Lifecycle transition denied", 409);
+  const expectedVersion = version(body);
+  if (Number(current.row_version) !== expectedVersion) throw new FoundationError("TCDX.CONFLICT.CONCURRENCY", "Concurrent modification detected", 409, true);
+  if (Date.parse(String(current.expires_at)) <= Date.now()) {
+    await casTransition(tx, actor, resources.fileUploadIntent, targetId, expectedVersion, "pending_upload", "expired", { expired_at: new Date() });
+    const response = await detailResource(tx, actor, resources.fileUploadIntent, targetId, "evidence.document.update");
+    return {
+      resource: "fileUploadIntent",
+      id: targetId,
+      response,
+      auditAfter: response,
+      auditOutcome: "failure",
+      deferredError: new FoundationError("TCDX.LIFECYCLE.TRANSITION_DENIED", "Upload intent has expired", 409)
+    };
+  }
+  const fileObjectId = newUuidV7();
+  const { port, access } = fileStorageContext(context, "evidence.document.update", ["tenant", "owned_object"]);
+  let finalized: Awaited<ReturnType<FileStoragePort["finalizeQuarantine"]>>;
+  try {
+    finalized = await port.finalizeQuarantine({
+      ...access,
+      uploadIntentId: targetId,
+      fileObjectId,
+      quarantineObjectKey: String(current.quarantine_object_key),
+      declaredMime: String(current.declared_mime),
+      expectedSizeBytes: Number(current.expected_size_bytes)
+    });
+  } catch (error) {
+    if (!rejectableStorageError(error)) throw error;
+    const rejected = await casTransition(tx, actor, resources.fileUploadIntent, targetId, expectedVersion, "pending_upload", "rejected", {
+      uploaded_at: new Date(),
+      scan_started_at: new Date(),
+      scan_completed_at: new Date(),
+      rejected_at: new Date()
+    });
+    const response = await detailResource(tx, actor, resources.fileUploadIntent, targetId, "evidence.document.update");
+    return {
+      resource: "fileUploadIntent",
+      id: targetId,
+      response,
+      auditAfter: response,
+      auditOutcome: "failure",
+      deferredError: error
+    };
+  }
+  const now = new Date();
+  const rollbackExternal = () => port.removeFinalizedObject({ ...access, fileObjectId, objectKey: finalized.objectKey });
+  if (finalized.objectKey !== `objects/${fileObjectId}` || finalized.scanState !== "passed") {
+    if (finalized.objectKey === `objects/${fileObjectId}`) await rollbackExternal();
+    throw new FoundationError("TCDX.INVARIANT.VIOLATION", "Storage promotion contract mismatch", 422);
+  }
+  try {
+    await insertRow(tx, resources.fileObject.table, {
+      file_object_id: fileObjectId,
+      tenant_id: actor.tenantId,
+      ...actorColumns(actor),
+      object_key: finalized.objectKey,
+      original_filename: current.original_filename,
+      declared_mime: current.declared_mime,
+      detected_mime: finalized.detectedMime,
+      size_bytes: finalized.sizeBytes,
+      sha256: finalized.sha256,
+      encryption_key_ref: finalized.encryptionKeyRef,
+      classification: current.classification,
+      retention_policy_id: current.retention_policy_id,
+      scan_status: finalized.scanState,
+      scan_completed_at: now,
+      storage_version: finalized.storageVersion,
+      source_provenance: current.source_provenance,
+      effective_from: current.effective_from,
+      effective_to: current.effective_to
+    });
+    await casTransition(tx, actor, resources.fileUploadIntent, targetId, expectedVersion, "pending_upload", "promoted", {
+      uploaded_at: now,
+      scan_started_at: now,
+      scan_completed_at: now,
+      promoted_at: now,
+      file_object_id: fileObjectId
+    });
+  } catch (error) {
+    await rollbackExternal();
+    throw error;
+  }
+  return {
+    resource: "fileObject",
+    id: fileObjectId,
+    afterCommit: () => port.removeQuarantine({ ...access, uploadIntentId: targetId, quarantineObjectKey: String(current.quarantine_object_key) }),
+    rollbackExternal
+  };
+}
+
+async function replayUploadFinalize(context: MutationContext, result: { resource: ResourceKey; id: string }): Promise<{ response: Record<string, unknown>; afterCommit?: () => Promise<void> }> {
+  if (result.resource !== "fileObject" || !context.targetId) throw new FoundationError("TCDX.CONFLICT.IDEMPOTENCY", "Idempotent result is incompatible", 409);
+  const intent = await getResource(context.transaction, context.actor, resources.fileUploadIntent, context.targetId, false, "evidence.document.update");
+  if (intent.lifecycle_state !== "promoted" || intent.file_object_id !== result.id) throw new FoundationError("TCDX.CONFLICT.IDEMPOTENCY", "Idempotent result is incompatible", 409);
+  const response = await detailResource(context.transaction, context.actor, resources.fileObject, result.id, "evidence.document.update");
+  const { port, access } = fileStorageContext(context, "evidence.document.update", ["tenant", "owned_object"]);
+  return {
+    response,
+    afterCommit: () => port.removeQuarantine({ ...access, uploadIntentId: context.targetId!, quarantineObjectKey: String(intent.quarantine_object_key) })
+  };
+}
+
+async function assertEvidenceRequestFulfillmentTarget(tx: Transaction<FoundationDatabase>, actor: CoreActor, evidenceRequestId: string, evidenceVersionId: string): Promise<void> {
+  await assertEligibleEvidenceVersion(tx, evidenceVersionId, actor.tenantId);
+  const compatible = await sql<{ found: number }>`
+    SELECT 1 AS found
+      FROM evidence.evidence_requests er
+      JOIN evidence.evidence_versions ev ON ev.tenant_id=er.tenant_id AND ev.evidence_version_id=${evidenceVersionId}::uuid
+      JOIN evidence.evidence_links el ON el.tenant_id=ev.tenant_id AND el.evidence_version_id=ev.evidence_version_id
+     WHERE er.tenant_id=${actor.tenantId}::uuid AND er.evidence_request_id=${evidenceRequestId}::uuid
+       AND (
+         (er.requirement_id IS NOT NULL AND el.requirement_id=er.requirement_id)
+         OR (er.control_id IS NOT NULL AND el.control_id=er.control_id)
+         OR (er.requirement_assessment_id IS NOT NULL AND el.requirement_assessment_id=er.requirement_assessment_id)
+         OR (er.control_assessment_id IS NOT NULL AND el.control_assessment_id=er.control_assessment_id)
+         OR (er.assurance_test_id IS NOT NULL AND el.assurance_test_id=er.assurance_test_id)
+       )
+     LIMIT 1
+  `.execute(tx);
+  if (!compatible.rows[0]) throw new FoundationError("TCDX.INVARIANT.VIOLATION", "Evidence version does not satisfy the request target", 422);
+}
+
+async function assertControlAssessmentSubmitObjectPolicy(_tx: Transaction<FoundationDatabase>, actor: CoreActor, _body: Body, _id: string): Promise<void> {
+  const grants = grantedScopes(actor, "controls.control_assessment.submit");
+  if (grants.has("tenant")) return;
+  if (grants.has("owned_object")) {
+    // v1.7 has canonical Control.business_owner_subject_id but no canonical UserIdentity/TenantMembership-to-Subject relation.
+    // Creator identity, names, email and request payload are not ownership authority, so this path remains fail-closed.
+    throw new FoundationError("TCDX.AUTHORIZATION.DENIED", "Control ownership cannot be resolved for this actor", 403);
+  }
+  throw new FoundationError("TCDX.AUTHORIZATION.DENIED", "Access denied", 403);
+}
+
+function controlAssessmentSubmissionChanges(body: Body): Record<string, unknown> {
+  const resultStatus = string(body, "result_status");
+  const design = optionalNumber(body, "design_effectiveness");
+  const operating = optionalNumber(body, "operating_effectiveness");
+  const coverage = optionalNumber(body, "coverage_percent");
+  const conclusion = optionalString(body, "domain_conclusion");
+  if ((design === null) !== (operating === null)) invalidField(design === null ? "design_effectiveness" : "operating_effectiveness");
+  if (resultStatus === "valid") {
+    if (design === null) invalidField("design_effectiveness");
+    if (operating === null) invalidField("operating_effectiveness");
+    if (coverage === null || coverage < 80) invalidField("coverage_percent");
+    if (!conclusion || !["effective", "partially_effective", "ineffective"].includes(conclusion)) invalidField("domain_conclusion");
+  }
+  if (resultStatus === "insufficient_coverage") {
+    if (design === null) invalidField("design_effectiveness");
+    if (operating === null) invalidField("operating_effectiveness");
+    if (coverage === null || coverage >= 80) invalidField("coverage_percent");
+  }
+  return {
+    result_status: resultStatus,
+    domain_conclusion: conclusion,
+    design_effectiveness: design,
+    operating_effectiveness: operating,
+    overall_effectiveness: design === null || operating === null ? null : Math.min(design, operating),
+    coverage_percent: coverage,
+    assessed_at: new Date()
+  };
+}
+
+type TransitionSpec = { resource: ResourceKey; entity: string; from: string; command: string; requiresDistinctActor?: boolean; changes?: (body: Body, actor: CoreActor) => Record<string, unknown>; beforeLoad?: (tx: Transaction<FoundationDatabase>, actor: CoreActor, body: Body, id: string) => Promise<void>; before?: (tx: Transaction<FoundationDatabase>, actor: CoreActor, body: Body, id: string, current: Record<string, unknown>) => Promise<void>; after?: (tx: Transaction<FoundationDatabase>, actor: CoreActor, body: Body, id: string, row: Record<string, unknown>) => Promise<void> };
 
 function transition(spec: TransitionSpec) {
   return async ({ transaction: tx, actor, body, targetId }: MutationContext): Promise<MutationResult> => {
     if (!targetId) throw new FoundationError("TCDX.VALIDATION.FAILED", "Validation failed", 400);
     const definition = resources[spec.resource];
     const permission = mutationPermission.get(spec.command)!;
+    if (spec.beforeLoad) await spec.beforeLoad(tx, actor, body, targetId);
     const current = await getResource(tx, actor, definition, targetId, true, permission);
     const edge = await assertLifecycleEdge(tx, actor, { entityType: spec.entity, fromState: spec.from, commandCode: spec.command, permission });
     if (edge.auditEventCode !== mutationAudit.get(spec.command)) throw new FoundationError("TCDX.INVARIANT.VIOLATION", "Audit contract mismatch", 422);
@@ -363,12 +753,14 @@ const operationScopes: Readonly<Record<string, readonly ScopeKind[]>> = {
   applicabilityCreate: ["tenant"], applicabilitySubmit: ["tenant", "owned_object"], applicabilityApprove: ["tenant"],
   requirementAssessmentCreate: ["tenant"], requirementAssessmentStart: ["assigned_object", "tenant"], requirementAssessmentSubmit: ["assigned_object", "tenant"], requirementAssessmentApprove: ["tenant"],
   soaCreate: ["tenant"], soaPublish: ["tenant"], controlInstantiate: ["tenant"],
-  controlAssessmentCreate: ["tenant", "owned_object"], controlAssessmentStart: ["assigned_object", "tenant"], controlAssessmentReview: ["tenant"], controlAssessmentApprove: ["tenant"],
+  controlAssessmentCreate: ["tenant", "owned_object"], controlAssessmentStart: ["tenant"], controlAssessmentSubmit: ["owned_object", "tenant"], controlAssessmentReview: ["tenant"], controlAssessmentApprove: ["tenant"],
   assuranceTestCreate: ["tenant", "audit_engagement"], assuranceTestStart: ["assigned_object", "audit_engagement"], assuranceTestExecute: ["assigned_object"], assuranceTestReview: ["tenant", "audit_engagement"], assuranceTestApprove: ["tenant"],
-  evidenceRequestCreate: ["tenant"], evidenceCreate: ["tenant", "assigned_object", "owned_object"],
+  uploadIntentCreate: ["tenant"], uploadFinalize: ["tenant", "owned_object"],
+  evidenceRequestCreate: ["tenant"], evidenceRequestFulfill: ["assigned_object", "tenant"], evidenceCreate: ["tenant", "assigned_object", "owned_object"],
   evidenceSubmit: ["owned_object", "assigned_object"], evidenceReviewStart: ["assigned_object", "tenant"], evidenceApprove: ["tenant"], evidenceReject: ["tenant"],
   issueCreate: ["tenant"], issueTriage: ["tenant"], issueStartRemediation: ["tenant", "assigned_object", "owned_object"], issueRequestVerification: ["tenant", "assigned_object", "owned_object"], issueVerifyClose: ["tenant", "assigned_object", "owned_object"],
-  actionCreate: ["tenant"], actionStart: ["assigned_object", "owned_object"], actionSubmitForReview: ["assigned_object", "owned_object"], actionComplete: ["assigned_object", "owned_object"], actionVerify: ["tenant"]
+  actionCreate: ["tenant"], actionStart: ["assigned_object", "owned_object"], actionSubmitForReview: ["assigned_object", "owned_object"], actionComplete: ["assigned_object", "owned_object"], actionVerify: ["tenant"],
+  retentionPolicyCreate: ["tenant"], retentionPolicyUpdate: ["tenant"], retentionPolicyReview: ["tenant"], retentionPolicyApprove: ["tenant"], retentionPolicyPublish: ["tenant"]
 };
 
 function def(value: Omit<MutationDefinition, "scopes">): MutationDefinition {
@@ -386,12 +778,14 @@ const transitionDefinitions: Array<[string, Omit<MutationDefinition, "execute" |
   ["requirementAssessmentApprove", { operationId: "requirementAssessmentApprove", permission: "compliance.requirement_assessment.approve", capability: "ISO_COMPLIANCE", auditEvent: "audit.compliance.requirement_assessment.approve.v1", domainEvent: "compliance.requirement_assessment.approved.v1", allowedFields: e, requiredFields: e }, { resource: "requirementAssessment", entity: "RequirementAssessment", from: "assessed", command: "requirement_assessment.approve", requiresDistinctActor: true, changes: () => ({ approved_at: new Date() }) }],
   ["soaPublish", { operationId: "soaPublish", permission: "compliance.soa.publish", capability: "ISO_COMPLIANCE", auditEvent: "audit.compliance.soa.publish.v1", domainEvent: "compliance.soa.published.v1", allowedFields: [...e, "reason"], requiredFields: [...e, "reason"] }, { resource: "soa", entity: "StatementOfApplicability", from: "draft", command: "soa.publish", changes: () => ({ published_at: new Date(), approved_at: new Date() }) }],
   ["controlAssessmentStart", { operationId: "controlAssessmentStart", permission: "controls.control_assessment.update", capability: "CONTROLS_ASSURANCE", auditEvent: "audit.controls.control_assessment.start.v1", allowedFields: e, requiredFields: e }, { resource: "controlAssessment", entity: "ControlAssessment", from: "planned", command: "control_assessment.start" }],
+  ["controlAssessmentSubmit", { operationId: "controlAssessmentSubmit", permission: "controls.control_assessment.submit", capability: "CONTROLS_ASSURANCE", auditEvent: "audit.controls.control_assessment.complete.v1", domainEvent: "controls.control_assessment.completed.v1", allowedFields: [...e, "result_status", "domain_conclusion", "design_effectiveness", "operating_effectiveness", "coverage_percent"], requiredFields: [...e, "result_status"] }, { resource: "controlAssessment", entity: "ControlAssessment", from: "in_progress", command: "control_assessment.complete", beforeLoad: assertControlAssessmentSubmitObjectPolicy, changes: controlAssessmentSubmissionChanges }],
   ["controlAssessmentReview", { operationId: "controlAssessmentReview", permission: "controls.control_assessment.review", capability: "CONTROLS_ASSURANCE", auditEvent: "audit.controls.control_assessment.review.v1", allowedFields: e, requiredFields: e }, { resource: "controlAssessment", entity: "ControlAssessment", from: "completed", command: "control_assessment.review", requiresDistinctActor: true }],
   ["controlAssessmentApprove", { operationId: "controlAssessmentApprove", permission: "controls.control_assessment.approve", capability: "CONTROLS_ASSURANCE", auditEvent: "audit.controls.control_assessment.approve.v1", domainEvent: "controls.control_assessment.approved.v1", allowedFields: e, requiredFields: e }, { resource: "controlAssessment", entity: "ControlAssessment", from: "reviewed", command: "control_assessment.approve", requiresDistinctActor: true }],
   ["assuranceTestStart", { operationId: "assuranceTestStart", permission: "controls.assurance_test.execute", capability: "CONTROLS_ASSURANCE", auditEvent: "audit.controls.assurance_test.start.v1", allowedFields: e, requiredFields: e }, { resource: "assuranceTest", entity: "AssuranceTest", from: "planned", command: "assurance_test.start" }],
   ["assuranceTestExecute", { operationId: "assuranceTestExecute", permission: "controls.assurance_test.execute", capability: "CONTROLS_ASSURANCE", auditEvent: "audit.controls.assurance_test.execute.v1", domainEvent: "controls.assurance_test.completed.v1", allowedFields: [...e, "result_status", "domain_conclusion", "samples"], requiredFields: [...e, "result_status"] }, { resource: "assuranceTest", entity: "AssuranceTest", from: "in_progress", command: "assurance_test.execute", changes: (b) => ({ result_status: string(b, "result_status"), domain_conclusion: optionalString(b, "domain_conclusion"), executed_at: new Date() }), after: async (tx, actor, body, id) => { if (!Array.isArray(body.samples)) return; for (const raw of body.samples) { const sample = raw as Body; await insertRow(tx, "controls.assurance_samples", { assurance_sample_id: newUuidV7(), tenant_id: actor.tenantId, ...actorColumns(actor), assurance_test_id: id, sample_code: string(sample, "sample_code"), population_count: sample.population_count ?? null, sample_count: number(sample, "sample_count"), selection_method: string(sample, "selection_method"), sample_period_start: optionalString(sample, "sample_period_start"), sample_period_end: optionalString(sample, "sample_period_end"), result_status: string(sample, "result_status") }); } } }],
   ["assuranceTestReview", { operationId: "assuranceTestReview", permission: "controls.assurance_test.review", capability: "CONTROLS_ASSURANCE", auditEvent: "audit.controls.assurance_test.review.v1", allowedFields: e, requiredFields: e }, { resource: "assuranceTest", entity: "AssuranceTest", from: "completed", command: "assurance_test.review", requiresDistinctActor: true, changes: (_b, a) => ({ reviewed_at: new Date(), reviewer_membership_id: a.membershipId }) }],
   ["assuranceTestApprove", { operationId: "assuranceTestApprove", permission: "controls.assurance_test.approve", capability: "CONTROLS_ASSURANCE", auditEvent: "audit.controls.assurance_test.approve.v1", allowedFields: e, requiredFields: e }, { resource: "assuranceTest", entity: "AssuranceTest", from: "reviewed", command: "assurance_test.approve", requiresDistinctActor: true, changes: () => ({ approved_at: new Date() }) }],
+  ["evidenceRequestFulfill", { operationId: "evidenceRequestFulfill", permission: "evidence.evidence_request.submit", capability: "EVIDENCE_DOCUMENTS", auditEvent: "audit.lifecycle.evidence_request.fulfill.v1", domainEvent: "evidence.request.fulfilled.v1", allowedFields: [...e, "evidence_version_id"], requiredFields: [...e, "evidence_version_id"] }, { resource: "evidenceRequest", entity: "EvidenceRequest", from: "open", command: "evidence_request.fulfill", before: async (tx, actor, body, id) => assertEvidenceRequestFulfillmentTarget(tx, actor, id, string(body, "evidence_version_id")), changes: () => ({ fulfilled_at: new Date() }), after: async (tx, actor, body, id) => { await insertRow(tx, "evidence.evidence_request_fulfillments", { evidence_request_fulfillment_id: newUuidV7(), tenant_id: actor.tenantId, ...actorColumns(actor), evidence_request_id: id, evidence_version_id: string(body, "evidence_version_id"), fulfilled_at: new Date() }); } }],
   ["evidenceSubmit", { operationId: "evidenceSubmit", permission: "evidence.evidence.submit", capability: "EVIDENCE_DOCUMENTS", auditEvent: "audit.evidence.evidence.submit.v1", domainEvent: "evidence.evidence.submitted.v1", allowedFields: e, requiredFields: e }, { resource: "evidenceVersion", entity: "EvidenceVersion", from: "draft", command: "evidence.submit", before: async (tx, actor, _body, id) => assertEvidenceVersionSubmittable(tx, id, actor.tenantId), changes: () => ({ submitted_at: new Date() }) }],
   ["evidenceReviewStart", { operationId: "evidenceReviewStart", permission: "evidence.evidence.review", capability: "EVIDENCE_DOCUMENTS", auditEvent: "audit.evidence.evidence.start_review.v1", allowedFields: e, requiredFields: e }, { resource: "evidenceVersion", entity: "EvidenceVersion", from: "submitted", command: "evidence.start_review" }],
   ["evidenceApprove", { operationId: "evidenceApprove", permission: "evidence.evidence.approve", capability: "EVIDENCE_DOCUMENTS", auditEvent: "audit.evidence.evidence.approve.v1", domainEvent: "evidence.evidence.approved.v1", allowedFields: [...e, "sufficiency", "relevance", "rationale"], requiredFields: [...e, "rationale"] }, { resource: "evidenceVersion", entity: "EvidenceVersion", from: "under_review", command: "evidence.approve", changes: () => ({ approved_at: new Date(), published_at: new Date() }), after: async (tx, actor, body, id, row) => { const creator = await sql<{ created_by_user_identity_id: string | null }>`SELECT created_by_user_identity_id FROM evidence.evidence_versions WHERE tenant_id=${actor.tenantId}::uuid AND evidence_version_id=${id}::uuid`.execute(tx); if (creator.rows[0]?.created_by_user_identity_id === actor.userIdentityId) throw new FoundationError("TCDX.AUTHORIZATION.DENIED", "Access denied", 403); await insertRow(tx, "evidence.evidence_reviews", { evidence_review_id: newUuidV7(), tenant_id: actor.tenantId, ...actorColumns(actor), evidence_id: row.evidence_id, evidence_version_id: id, reviewer_membership_id: actor.membershipId, decision: "approved", sufficiency: optionalString(body, "sufficiency"), relevance: optionalString(body, "relevance"), rationale: string(body, "rationale"), reviewed_at: new Date() }); } }],
@@ -418,18 +812,61 @@ function addCreate(operationId: string, permission: string, capability: string, 
   mutations.set(operationId, def({ operationId, permission, capability, auditEvent, ...(domainEvent ? { domainEvent } : {}), allowedFields, requiredFields, execute }));
 }
 
-addCreate("applicabilityCreate", "compliance.applicability.create", "ISO_COMPLIANCE", "audit.compliance.applicability.create.v1", ["requirement_id", "scope_subject_id", "applicability_decision", "rationale", "effective_from", "effective_to"], ["requirement_id", "applicability_decision", "rationale", "effective_from"], createApplicability);
+addCreate("applicabilityCreate", "compliance.applicability.create", "ISO_COMPLIANCE", "audit.compliance.applicability.create.v1", ["requirement_id", "scope_subject_id", "applicability_decision", "rationale", "effective_from", "effective_to"], ["requirement_id", "applicability_decision", "effective_from"], createApplicability);
 addCreate("requirementAssessmentCreate", "compliance.requirement_assessment.create", "ISO_COMPLIANCE", "audit.compliance.requirement_assessment.create.v1", ["requirement_applicability_id", "methodology_version_ref", "effective_configuration_id"], ["requirement_applicability_id", "methodology_version_ref"], createRequirementAssessment);
 addCreate("soaCreate", "compliance.soa.create", "ISO_COMPLIANCE", "audit.compliance.soa.create.v1", ["framework_version_id", "title", "effective_from", "items"], ["framework_version_id", "title", "items"], createSoa);
 addCreate("controlInstantiate", "controls.control.create", "CONTROLS_ASSURANCE", "audit.controls.control.instantiate.v1", ["based_on_control_version_id", "control_code", "name", "business_owner_subject_id", "objective", "control_type", "nature", "frequency_code", "execution_method", "verification_method", "minimum_evidence", "suggested_owner_role_code", "effective_from", "effective_to"], ["based_on_control_version_id", "control_code", "name", "business_owner_subject_id", "objective", "control_type", "nature", "frequency_code", "execution_method", "verification_method", "minimum_evidence"], instantiateControl, "controls.control.instantiated.v1");
 addCreate("controlAssessmentCreate", "controls.control_assessment.create", "CONTROLS_ASSURANCE", "audit.controls.control_assessment.create.v1", ["control_id", "control_version_id", "methodology_version_ref", "effective_configuration_id"], ["control_id", "control_version_id", "methodology_version_ref"], createControlAssessment);
 addCreate("assuranceTestCreate", "controls.assurance_test.create", "CONTROLS_ASSURANCE", "audit.controls.assurance_test.create.v1", ["control_id", "control_version_id", "test_code", "planned_at"], ["control_id", "control_version_id", "test_code"], createAssuranceTest);
+addCreate("retentionPolicyCreate", "privacy.retention_policy.create", "PRIVACY", "audit.privacy.retention_policy.create.v1", ["policy_code", "version_number", "policy_kind", "retention_seconds", "trigger_event_code", "precedence_rank", "is_mandatory"], ["policy_code", "version_number", "policy_kind", "retention_seconds", "trigger_event_code", "precedence_rank", "is_mandatory"], createRetentionPolicy);
+mutations.set("retentionPolicyUpdate", def({
+  operationId: "retentionPolicyUpdate", permission: "privacy.retention_policy.update", capability: "PRIVACY",
+  auditEvent: "audit.privacy.retention_policy.update.v1",
+  allowedFields: ["expected_version", "retention_seconds", "is_mandatory"],
+  requiredFields: ["expected_version", "retention_seconds", "is_mandatory"],
+  execute: updateRetentionPolicy
+}));
+for (const [operationId, permission, auditEvent, fromState, command, approve, publish, domainEvent] of [
+  ["retentionPolicyReview", "privacy.retention_policy.review", "audit.privacy.retention_policy.review.v1", "draft", "retention_policy.review", false, false, undefined],
+  ["retentionPolicyApprove", "privacy.retention_policy.approve", "audit.privacy.retention_policy.approve.v1", "under_review", "retention_policy.approve", true, false, undefined],
+  ["retentionPolicyPublish", "privacy.retention_policy.publish", "audit.privacy.retention_policy.publish.v1", "approved", "retention_policy.publish", false, true, "privacy.retention_policy.published.v1"]
+] as const) {
+  mutationPermission.set(command, permission);
+  mutationAudit.set(command, auditEvent);
+  mutations.set(operationId, def({
+    operationId, permission, capability: "PRIVACY", auditEvent,
+    ...(domainEvent ? { domainEvent } : {}),
+    allowedFields: e, requiredFields: e,
+    execute: retentionPolicyTransition(fromState, command, approve, publish)
+  }));
+}
+mutations.set("uploadIntentCreate", def({
+  operationId: "uploadIntentCreate",
+  permission: "evidence.document.create",
+  capability: "EVIDENCE_DOCUMENTS",
+  auditEvent: "audit.evidence.file.upload_requested.v1",
+  allowedFields: ["original_filename", "declared_mime", "size_bytes", "classification", "retention_policy_id", "source_provenance", "effective_from", "effective_to"],
+  requiredFields: ["original_filename", "declared_mime", "size_bytes", "classification", "retention_policy_id", "source_provenance"],
+  execute: createUploadIntent,
+  replay: replayUploadIntent
+}));
+mutations.set("uploadFinalize", def({
+  operationId: "uploadFinalize",
+  permission: "evidence.document.update",
+  capability: "EVIDENCE_DOCUMENTS",
+  auditEvent: "audit.evidence.file.finalize.v1",
+  domainEvent: "evidence.file.quarantined.v1",
+  allowedFields: e,
+  requiredFields: e,
+  execute: finalizeUploadIntent,
+  replay: replayUploadFinalize
+}));
 addCreate("evidenceRequestCreate", "evidence.evidence_request.create", "EVIDENCE_DOCUMENTS", "audit.evidence.request.create.v1", ["request_code", "requirement_id", "control_id", "requirement_assessment_id", "control_assessment_id", "assurance_test_id", "assigned_membership_id", "due_at"], ["request_code"], createEvidenceRequest, "evidence.request.opened.v1");
 addCreate("evidenceCreate", "evidence.evidence.create", "EVIDENCE_DOCUMENTS", "audit.evidence.evidence.create.v1", ["evidence_code", "evidence_type", "business_owner_subject_id", "valid_from", "valid_to", "retention_policy_id", "source_kind", "file_object_id", "period_start", "period_end", "effective_from", "effective_to", "expires_at", "provenance_ref", "links"], ["evidence_code", "evidence_type", "retention_policy_id", "source_kind", "file_object_id", "provenance_ref", "links"], createEvidence, "evidence.evidence.created.v1");
 addCreate("issueCreate", "remediation.issue.create", "ISSUES_ACTIONS", "audit.remediation.issue.create.v1", ["issue_code", "issue_kind", "title", "description", "severity", "priority", "business_owner_subject_id", "due_date", "requirement_assessment_id", "control_assessment_id", "assurance_test_id", "origin_role"], ["issue_code", "issue_kind", "title", "description", "severity", "priority", "origin_role"], createIssue, "remediation.issue.opened.v1");
 addCreate("actionCreate", "remediation.action.create", "ISSUES_ACTIONS", "audit.remediation.action.create.v1", ["action_code", "title", "description", "priority", "assigned_membership_id", "due_date"], ["action_code", "title", "description", "priority"], createAction, "remediation.action.created.v1");
 
-export async function executeMutation(transaction: Transaction<FoundationDatabase>, actor: CoreActor, definition: MutationDefinition, input: { body: Body; idempotencyKey: string; correlationId: string; targetId?: string; parentId?: string }): Promise<{ response: Record<string, unknown>; replayed: boolean }> {
+export async function executeMutation(transaction: Transaction<FoundationDatabase>, actor: CoreActor, definition: MutationDefinition, input: { body: Body; idempotencyKey: string; correlationId: string; fileStorage?: FileStoragePort; targetId?: string; parentId?: string }): Promise<{ response: Record<string, unknown>; replayed: boolean; afterCommit?: () => Promise<void>; deferredError?: FoundationError }> {
   validateClosedBody(definition, input.body);
   requireAccess(actor, definition.permission, definition.capability, definition.scopes);
   if (!input.idempotencyKey || input.idempotencyKey.length > 255) throw new FoundationError("TCDX.VALIDATION.FAILED", "Idempotency-Key is required", 400, false, { field: "Idempotency-Key" });
@@ -437,13 +874,48 @@ export async function executeMutation(transaction: Transaction<FoundationDatabas
   const claim = await claimIdempotency(transaction, { idempotencyRecordId: newUuidV7(), ownershipClass: "TENANT_OWNED", tenantId: actor.tenantId, actor: { userIdentityId: actor.userIdentityId }, correlationId: input.correlationId, operationCode: definition.operationId, key: input.idempotencyKey, requestHash });
   if (claim.state === "replay") {
     if (!claim.resultRef) throw new FoundationError("TCDX.CONFLICT.RESOURCE", "Idempotent result unavailable", 409, true);
-    const [resource, id] = claim.resultRef.split(":") as [ResourceKey, string];
-    return { response: await detailResource(transaction, actor, resources[resource], id, definition.permission), replayed: true };
+    if (claim.resultStatusCode === "failed") throw new FoundationError("TCDX.CONFLICT.IDEMPOTENCY", "Previous idempotent attempt failed", 409);
+    const [rawResource, id] = claim.resultRef.split(":");
+    if (!rawResource || !id || !(rawResource in resources)) throw new FoundationError("TCDX.CONFLICT.RESOURCE", "Idempotent result unavailable", 409, true);
+    const resource = rawResource as ResourceKey;
+    const context: MutationContext = {
+      transaction,
+      actor,
+      body: input.body,
+      correlationId: input.correlationId,
+      ...(input.fileStorage ? { fileStorage: input.fileStorage } : {}),
+      ...(input.targetId ? { targetId: input.targetId } : {}),
+      ...(input.parentId ? { parentId: input.parentId } : {})
+    };
+    const replay = definition.replay
+      ? await definition.replay(context, { resource, id })
+      : { response: await detailResource(transaction, actor, resources[resource], id, definition.permission) };
+    return { ...replay, replayed: true };
   }
-  const result = await definition.execute({ transaction, actor, body: input.body, ...(input.targetId ? { targetId: input.targetId } : {}), ...(input.parentId ? { parentId: input.parentId } : {}) });
-  const response = result.response ?? await detailResource(transaction, actor, resources[result.resource], result.id, definition.permission);
-  await persistAuditEvent(transaction, { auditEventId: newUuidV7(), ownershipClass: "TENANT_OWNED", tenantId: actor.tenantId, actor: { userIdentityId: actor.userIdentityId }, correlationId: input.correlationId, eventCode: definition.auditEvent, aggregateType: resources[result.resource].name, aggregateId: result.id, commandCode: definition.operationId, outcome: "success", classification: "internal", after: response });
-  if (definition.domainEvent) await persistOutboxEvent(transaction, { outboxEventId: newUuidV7(), eventId: newUuidV7(), ownershipClass: "TENANT_OWNED", tenantId: actor.tenantId, actor: { userIdentityId: actor.userIdentityId }, correlationId: input.correlationId, eventType: definition.domainEvent, aggregateType: resources[result.resource].name, aggregateId: result.id, classification: "internal", payload: { aggregate_id: result.id, row_version: response.row_version } });
-  await completeIdempotency(transaction, { idempotencyRecordId: claim.idempotencyRecordId, requestHash, resultStatusCode: "completed", resultRef: `${result.resource}:${result.id}`, responseHash: hash(response) });
-  return { response, replayed: false };
+  const context: MutationContext = {
+    transaction,
+    actor,
+    body: input.body,
+    correlationId: input.correlationId,
+    ...(input.fileStorage ? { fileStorage: input.fileStorage } : {}),
+    ...(input.targetId ? { targetId: input.targetId } : {}),
+    ...(input.parentId ? { parentId: input.parentId } : {})
+  };
+  let result: MutationResult | undefined;
+  try {
+    result = await definition.execute(context);
+    const response = result.response ?? await detailResource(transaction, actor, resources[result.resource], result.id, definition.permission);
+    await persistAuditEvent(transaction, { auditEventId: newUuidV7(), ownershipClass: "TENANT_OWNED", tenantId: actor.tenantId, actor: { userIdentityId: actor.userIdentityId }, correlationId: input.correlationId, eventCode: definition.auditEvent, aggregateType: resources[result.resource].name, aggregateId: result.id, commandCode: definition.operationId, outcome: result.auditOutcome ?? "success", classification: "internal", after: result.auditAfter ?? response });
+    if (definition.domainEvent && !result.deferredError) await persistOutboxEvent(transaction, { outboxEventId: newUuidV7(), eventId: newUuidV7(), ownershipClass: "TENANT_OWNED", tenantId: actor.tenantId, actor: { userIdentityId: actor.userIdentityId }, correlationId: input.correlationId, eventType: definition.domainEvent, aggregateType: resources[result.resource].name, aggregateId: result.id, classification: "internal", payload: { aggregate_id: result.id, row_version: response.row_version } });
+    await completeIdempotency(transaction, { idempotencyRecordId: claim.idempotencyRecordId, requestHash, resultStatusCode: result.deferredError ? "failed" : "completed", resultRef: `${result.resource}:${result.id}`, responseHash: hash(response) });
+    return {
+      response,
+      replayed: false,
+      ...(result.afterCommit ? { afterCommit: result.afterCommit } : {}),
+      ...(result.deferredError ? { deferredError: result.deferredError } : {})
+    };
+  } catch (error) {
+    if (result?.rollbackExternal) await result.rollbackExternal();
+    throw error;
+  }
 }

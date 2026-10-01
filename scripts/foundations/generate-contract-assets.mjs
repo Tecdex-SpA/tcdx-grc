@@ -11,7 +11,7 @@ const permissionPath = resolve(root, "docs/executable-contracts/05_PERMISSION_CA
 const seedPath = resolve(root, "docs/executable-contracts/09_SEED_MANIFESTS.md");
 const generatedAt = "2026-09-16T00:00:00.000Z";
 const preF5cGeneratedAt = "2026-09-21T00:00:00.000Z";
-const preF5eCandidateId = "TCDX_GRC_MASTER_REGENT_BASELINE_v1.6_2026-09-23";
+const phase5FinalRegentId = "TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23";
 
 const sha256 = (value) => createHash("sha256").update(value).digest("hex");
 const q = (value) => `'${String(value).replaceAll("'", "''")}'`;
@@ -140,7 +140,7 @@ function parsePhysicalModel() {
     const columns = [merged.get(pk), ...[...merged.values()].filter((col) => col[0] !== pk)];
     rows.push({ name, schema: name.split(".")[0], table: name.split(".")[1], entity, profile, pk, columns, integrity: cells[3], retention: cells[4], fieldText: cells[2] });
   }
-  if (rows.length !== 214) throw new Error(`Expected 214 physical tables, parsed ${rows.length}`);
+  if (rows.length !== 215) throw new Error(`Expected 215 physical tables, parsed ${rows.length}`);
   return rows;
 }
 
@@ -245,6 +245,135 @@ function preF5eAmendmentRows() {
   }];
 }
 
+function phase5FinalAmendmentRows() {
+  const pk = "file_upload_intent_id";
+  return [{
+    name: "evidence.file_upload_intents",
+    schema: "evidence",
+    table: "file_upload_intents",
+    entity: "FileUploadIntent",
+    profile: "TM",
+    pk,
+    columns: [
+      ...profileColumns("TM", pk),
+      ["purpose", "varchar(32)", false],
+      ["original_filename", "text", false],
+      ["declared_mime", "varchar(255)", false],
+      ["expected_size_bytes", "bigint", false],
+      ["classification", "varchar(32)", false],
+      ["retention_policy_id", "uuid", false],
+      ["source_provenance", "text", false],
+      ["effective_from", "timestamptz", true],
+      ["effective_to", "timestamptz", true],
+      ["quarantine_object_key", "text", false],
+      ["lifecycle_state", "varchar(32)", false],
+      ["expires_at", "timestamptz", false],
+      ["uploaded_at", "timestamptz", true],
+      ["scan_started_at", "timestamptz", true],
+      ["scan_completed_at", "timestamptz", true],
+      ["promoted_at", "timestamptz", true],
+      ["rejected_at", "timestamptz", true],
+      ["expired_at", "timestamptz", true],
+      ["cancelled_at", "timestamptz", true],
+      ["file_object_id", "uuid", true]
+    ],
+    integrity: "UQ `quarantine_object_key`; UQ `file_object_id`; same-tenant final FileObject; closed lifecycle; expiry; no blob/secret",
+    retention: "ephemeral cleanup after terminal state per retention policy; audit",
+    fieldText: "approved Phase 5 final closure amendment v1.7"
+  }];
+}
+
+function phase5SubscriptionRegulatoryPackAmendmentRows() {
+  const pk = "subscription_regulatory_pack_id";
+  return [{
+    name: "platform.subscription_regulatory_packs",
+    schema: "platform",
+    table: "subscription_regulatory_packs",
+    entity: "SubscriptionRegulatoryPack",
+    profile: "TM",
+    pk,
+    columns: [
+      ...profileColumns("TM", pk),
+      ["subscription_id", "uuid", false],
+      ["regulatory_pack_version_id", "uuid", false],
+      ["lifecycle_state", "varchar(32)", false],
+      ["effective_from", "timestamptz", false],
+      ["effective_to", "timestamptz", true]
+    ],
+    integrity: "composite tenant Subscription FK; global pack-version FK; UQ temporal business key; exclusion against overlapping intervals; active may have planned expiry and revoked is closed",
+    retention: "effective interval; material audit; immutable closed history",
+    fieldText: "approved 2026-09-29 Phase 5 Subscription RegulatoryPackVersion amendment"
+  }];
+}
+
+function phase5PlusValidationRows() {
+  return [
+    {
+      name: "regulatory.regulatory_pack_validation_provenances", schema: "regulatory",
+      table: "regulatory_pack_validation_provenances", entity: "RegulatoryPackValidationProvenance",
+      profile: "PLATFORM_CONTROL", pk: "regulatory_pack_validation_provenance_id",
+      columns: [
+        ["regulatory_pack_validation_provenance_id", "uuid", false],
+        ["regulatory_pack_version_id", "uuid", false], ["regulatory_import_manifest_id", "uuid", false],
+        ["regulatory_source_id", "uuid", false], ["authority_class", "varchar(48)", false, "NON_AUTHORITATIVE_TEST_PACK"],
+        ["source_role", "varchar(48)", false], ["provenance_ref", "text", false],
+        ["source_checksum", "char(64)", false], ["created_at", "timestamptz", false, "transaction_timestamp()"],
+        ["created_by_user_identity_id", "uuid", false]
+      ],
+      integrity: "UQ `regulatory_pack_version_id`; exact manifest/source provenance; immutable approval",
+      retention: "permanent provenance", fieldText: "Phase 5+ human decision 2026-09-29"
+    },
+    {
+      name: "platform.regulatory_pack_validation_accesses", schema: "platform",
+      table: "regulatory_pack_validation_accesses", entity: "RegulatoryPackValidationAccess",
+      profile: "PLATFORM_CONTROL", pk: "regulatory_pack_validation_access_id",
+      columns: [
+        ["regulatory_pack_validation_access_id", "uuid", false],
+        ["ownership_class", "varchar(24)", false, "PLATFORM_CONTROL"], ["tenant_id", "uuid", false],
+        ["regulatory_pack_version_id", "uuid", false], ["regulatory_pack_validation_provenance_id", "uuid", false],
+        ["lifecycle_state", "varchar(32)", false, "active"], ["effective_from", "timestamptz", false],
+        ["effective_to", "timestamptz", true], ["row_version", "bigint", false, "1"],
+        ["created_at", "timestamptz", false, "transaction_timestamp()"],
+        ["created_by_user_identity_id", "uuid", false],
+        ["updated_at", "timestamptz", false, "transaction_timestamp()"],
+        ["updated_by_user_identity_id", "uuid", false]
+      ],
+      integrity: "UQ `(tenant_id,regulatory_pack_validation_access_id)`; exclusion of overlapping tenant/pack intervals",
+      retention: "closed historical access retained", fieldText: "Phase 5+ human decision 2026-09-29"
+    }
+  ];
+}
+
+function phase5RetentionPolicyAmendment(row) {
+  if (row.name !== "privacy.retention_policies") return row;
+  const columns = row.columns.map((column) => {
+    if (column[0] === "effective_from" || column[0] === "effective_to") return [column[0], column[1], true, column[3]];
+    return column;
+  });
+  columns.splice(columns.findIndex((column) => column[0] === "tenant_id"), 0, ["row_version", "bigint", false, "1"]);
+  return {
+    ...row,
+    columns,
+    integrity: `${row.integrity}; closed policy_kind/precedence/trigger/lifecycle vocabularies; publication timestamp coherence`,
+    fieldText: "approved Phase 5 RetentionPolicy forward-only lifecycle amendment"
+  };
+}
+
+function phase5RegulatoryCatalogAmendment(row) {
+  if (row.name === "regulatory.requirements") {
+    return { ...row, columns: [...row.columns, ["editorial_summary", "text", true]],
+      fieldText: `${row.fieldText}; approved editorial representation amendment` };
+  }
+  if (["regulatory.normative_unit_crosswalk_mappings", "regulatory.requirement_crosswalk_mappings", "regulatory.control_crosswalk_mappings"].includes(row.name)) {
+    return { ...row, columns: [...row.columns,
+      ["direction", "varchar(32)", false], ["provenance_ref", "text", false],
+      ["effective_from", "timestamptz", false], ["effective_to", "timestamptz", true],
+      ["mapping_version_number", "bigint", false]],
+      fieldText: `${row.fieldText}; approved per-mapping direction, provenance, effective interval and semantic version amendment` };
+  }
+  return row;
+}
+
 function sqlDefault(raw, type) {
   if (raw === undefined) return "";
   if (raw === "CURRENT_TIMESTAMP") return " DEFAULT CURRENT_TIMESTAMP";
@@ -273,7 +402,7 @@ function tableChecks(row) {
   const add = (key, expression) => checks.push({ key, expression });
   if (names.has("row_version")) add("row_version_positive", "row_version > 0");
   if (names.has("created_by_user_identity_id") && names.has("created_by_service_principal_id"))
-    add("created_actor_one", "num_nonnulls(created_by_user_identity_id, created_by_service_principal_id) <= 1");
+    add("created_actor_one", `num_nonnulls(created_by_user_identity_id, created_by_service_principal_id) ${row.name === "platform.subscription_regulatory_packs" ? "=" : "<="} 1`);
   if (names.has("updated_by_user_identity_id") && names.has("updated_by_service_principal_id"))
     add("updated_actor_one", "num_nonnulls(updated_by_user_identity_id, updated_by_service_principal_id) <= 1");
   if (names.has("actor_user_identity_id") && names.has("actor_service_principal_id"))
@@ -300,6 +429,34 @@ function tableChecks(row) {
   if (names.has("calculation_status")) add("calculation_status", "calculation_status IN ('pending','running','succeeded','failed','cancelled')");
   if (names.has("result_status")) add("result_status", "result_status IN ('valid','no_data','insufficient_data','insufficient_coverage','stale_source','conflicting_sources','dependency_pending','invalid_input','source_error','calculation_error','not_applicable','superseded')");
   if (row.name === "platform.tenants") add("data_classification", "data_classification IN ('public','internal','confidential','restricted')");
+  if (row.name === "platform.subscription_regulatory_packs") {
+    add("lifecycle", "lifecycle_state IN ('active','revoked')");
+    add("interval_state", "lifecycle_state = 'active' OR (lifecycle_state = 'revoked' AND effective_to IS NOT NULL)");
+  }
+  if (row.name === "evidence.file_upload_intents") {
+    add("purpose", "purpose = 'evidence_document'");
+    add("size_nonnegative", "expected_size_bytes >= 0");
+    add("classification", "classification IN ('public','internal','confidential','restricted')");
+    add("lifecycle", "lifecycle_state IN ('pending_upload','quarantined','scanning','promoted','rejected','expired','cancelled')");
+    add("expiry", "expires_at > created_at");
+    add("terminal_state", "state/timestamp/FileObject coherence");
+  }
+  if (row.name === "iam.tenant_membership_invitations") {
+    add("email_normalized", "invitee_email = lower(btrim(invitee_email)) AND invitee_email LIKE '%@%'");
+    add("authentication_method", "authentication_method = 'ZOHO'");
+    add("token_digest", "token_digest ~ '^[0-9a-f]{64}$'");
+    add("lifecycle", "lifecycle_state IN ('pending','accepted','expired','revoked')");
+    add("expiry", "expires_at > created_at");
+    add("accepted_coherence", "accepted terminal fields are all present only for lifecycle_state = 'accepted' and otherwise all NULL");
+    add("revoked_coherence", "revocation fields are present only for lifecycle_state = 'revoked' and otherwise all NULL");
+  }
+  if (row.name === "privacy.retention_policies") {
+    add("policy_kind", "policy_kind IN ('legal_hold','mandatory_regulatory_policy','contractual_policy','tenant_policy','product_baseline')");
+    add("precedence_rank", "(policy_kind = 'legal_hold' AND precedence_rank = 500) OR (policy_kind = 'mandatory_regulatory_policy' AND precedence_rank = 400) OR (policy_kind = 'contractual_policy' AND precedence_rank = 300) OR (policy_kind = 'tenant_policy' AND precedence_rank = 200) OR (policy_kind = 'product_baseline' AND precedence_rank = 100)");
+    add("trigger_event", "trigger_event_code = 'expiry_or_closure'");
+    add("lifecycle", "lifecycle_state IN ('draft','under_review','approved','published')");
+    add("publication_effective_from", "(lifecycle_state = 'published' AND effective_from IS NOT NULL) OR (lifecycle_state IN ('draft','under_review','approved') AND effective_from IS NULL)");
+  }
   const auditChecks = {
     "audit.audit_objectives": [
       ["ordinal_nonnegative", "ordinal >= 0"], ["statement_nonempty", "btrim(statement) <> ''"]
@@ -381,9 +538,15 @@ function uniqueDefinitions(row) {
     columns = columns.filter((name) => names.has(name));
     if (columns.length) uniques.push(columns);
   }
+  if (row.name === "org.subjects") return [["tenant_id", "subject_id"]];
   const exact = {
+    "regulatory.regulatory_pack_validation_provenances": [["regulatory_pack_version_id"], ["regulatory_pack_version_id", "regulatory_pack_validation_provenance_id"]],
+    "platform.subscription_regulatory_packs": [["subscription_id", "regulatory_pack_version_id", "effective_from"]],
     "platform.plan_versions": [["plan_id", "version_number"]],
     "regulatory.regulatory_pack_versions": [["regulatory_pack_id", "version_number"]],
+    "regulatory.normative_units": [["framework_version_id", "source_locator"]],
+    "regulatory.requirement_control_mappings": [["requirement_id", "control_version_id", "mapping_type", "mapping_version"]],
+    "regulatory.normative_unit_control_mappings": [["normative_unit_id", "control_version_id", "mapping_version"]],
     "platform.entitlements": [["plan_version_id", "capability_id"]],
     "iam.role_permissions": [["ownership_class", "tenant_id", "role_id", "permission_id"]],
     "iam.roles": [["role_id", "ownership_class"]],
@@ -396,6 +559,7 @@ function uniqueDefinitions(row) {
     "regulatory.statements_of_applicability": [["tenant_id", "framework_version_id", "soa_version"]],
     "regulatory.statement_of_applicability_items": [["tenant_id", "statement_of_applicability_id", "reference_control_version_id"]],
     "evidence.evidence_versions": [["tenant_id", "evidence_id", "version_number"]],
+    "evidence.file_upload_intents": [["quarantine_object_key"], ["file_object_id"]],
     "audit.audit_objectives": [["audit_id", "objective_code"], ["audit_id", "ordinal"]],
     "audit.audit_criteria": [["audit_id", "ordinal"]],
     "audit.audit_scopes": [["audit_id", "framework_version_id", "subject_id"], ["audit_id", "scope_code"]],
@@ -414,6 +578,18 @@ function uniqueDefinitions(row) {
   if (row.name === "ops_audit.audit_events") {
     for (let index = uniques.length - 1; index >= 0; index--) {
       if (uniques[index].length === 1 && uniques[index][0] === "event_code") uniques.splice(index, 1);
+    }
+  }
+  if (row.name === "regulatory.normative_units") {
+    for (let index = uniques.length - 1; index >= 0; index--) {
+      if (uniques[index].length === 1 && uniques[index][0] === "source_locator") uniques.splice(index, 1);
+    }
+  }
+  if (row.name === "regulatory.requirement_control_mappings" || row.name === "regulatory.normative_unit_control_mappings") {
+    for (let index = uniques.length - 1; index >= 0; index--) {
+      const columns = uniques[index];
+      if ((columns.length === 1 && columns[0] === "mapping_version")
+        || columns.join("|") === "ownership_class|tenant_id|mapping_version") uniques.splice(index, 1);
     }
   }
   if (row.name === "config.configuration_overrides") {
@@ -1086,7 +1262,7 @@ function preF5cMigrationSql(rows) {
 function expectedInventory(rows) {
   return {
     contract: "TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16",
-    rectorCandidate: preF5eCandidateId,
+    rectorCandidate: phase5FinalRegentId,
     physicalModelCommit: "a822bb92d0d585edd84adc8a1c65ec280923cc8e",
     physicalModelAmendmentCommit: "6a31034ae1ecc1f9ee551431fb2a504a25fb52ce",
     preF5cDecision: "DR-PRE-F5C-2026-09-21-005",
@@ -1113,6 +1289,8 @@ function writeOrCheck(path, content) {
 const baseRows = parsePhysicalModel();
 const amendmentRows = auditAmendmentRows();
 const preF5eRows = preF5eAmendmentRows();
+const phase5FinalRows = phase5FinalAmendmentRows();
+const phase5SubscriptionRegulatoryPackRows = phase5SubscriptionRegulatoryPackAmendmentRows();
 const rows = [
   ...baseRows.map((row) => {
     if (row.name === "audit.audits") return { ...row, columns: row.columns.filter((column) => !["scope_text", "lead_membership_id"].includes(column[0])) };
@@ -1121,10 +1299,13 @@ const rows = [
       : column[0] === "data_classification" ? [column[0], column[1], column[2], "confidential"] : column) };
     if (row.name === "iam.tenant_memberships") return { ...row, columns: row.columns.map((column) => column[0] === "membership_state"
       ? [column[0], column[1], column[2], "active"] : column) };
-    return row;
+    return phase5RegulatoryCatalogAmendment(phase5RetentionPolicyAmendment(row));
   }),
   ...amendmentRows,
-  ...preF5eRows
+  ...preF5eRows,
+  ...phase5FinalRows,
+  ...phase5SubscriptionRegulatoryPackRows,
+  ...phase5PlusValidationRows()
 ];
 const migrationDir = resolve(root, "database/migrations");
 const historicalMigrations = [
@@ -1143,7 +1324,11 @@ const historicalMigrations = [
   if (sha256(content) !== approvedSha256) throw new Error(`Historical migration drift: ${filename}`);
   return [filename, content];
 });
-const preF5cMigration = ["20260921000100_pre_f5c_executable_physical_reconciliation.sql", preF5cMigrationSql(rows)];
+const preF5cMigrationFilename = "20260921000100_pre_f5c_executable_physical_reconciliation.sql";
+const preF5cMigration = [preF5cMigrationFilename, readFileSync(resolve(migrationDir, preF5cMigrationFilename), "utf8")];
+if (sha256(preF5cMigration[1]) !== "1181d7ab26718927124de880e351fbaba3f2daaca41267a1ef66d28ac2021680") {
+  throw new Error(`Historical migration drift: ${preF5cMigrationFilename}`);
+}
 const phase5RuntimeMigrationFilename = "20260921000200_phase5_core_grc_runtime_permissions.sql";
 const phase5RuntimeMigration = [phase5RuntimeMigrationFilename, readFileSync(resolve(migrationDir, phase5RuntimeMigrationFilename), "utf8")];
 if (sha256(phase5RuntimeMigration[1]) !== "8cc3d1b2a64a5b00ffd55f93ccfbcdfcde5406ffa9c1fa7f2d2055f505048eb0") {
@@ -1151,7 +1336,37 @@ if (sha256(phase5RuntimeMigration[1]) !== "8cc3d1b2a64a5b00ffd55f93ccfbcdfcde540
 }
 const preF5eMigrationFilename = "20260923000100_pre_f5e_platform_authority.sql";
 const preF5eMigration = [preF5eMigrationFilename, readFileSync(resolve(migrationDir, preF5eMigrationFilename), "utf8")];
-const migrations = [...historicalMigrations, preF5cMigration, phase5RuntimeMigration, preF5eMigration];
+const phase5FinalMigrationFilename = "20260923000200_phase5_final_closure.sql";
+const phase5FinalMigration = [phase5FinalMigrationFilename, readFileSync(resolve(migrationDir, phase5FinalMigrationFilename), "utf8")];
+if (sha256(phase5FinalMigration[1]) !== "96a56b5669cd6e6fd0d751dc12526e3fe6ad2c612e77a8a7e144c847775be96c") {
+  throw new Error(`Phase 5 final migration drift: ${phase5FinalMigrationFilename}`);
+}
+const phase5SubscriptionCatalogFilename = "20260924000100_phase5_subscription_create_catalog.sql";
+const phase5SubscriptionCatalogMigration = [phase5SubscriptionCatalogFilename, readFileSync(resolve(migrationDir, phase5SubscriptionCatalogFilename), "utf8")];
+const phase5RetentionPolicyFilename = "20260924000200_phase5_retention_policy_lifecycle.sql";
+const phase5RetentionPolicyMigration = [phase5RetentionPolicyFilename, readFileSync(resolve(migrationDir, phase5RetentionPolicyFilename), "utf8")];
+const phase5MembershipInvitationFilename = "20260924000300_phase5_membership_invitation.sql";
+const phase5MembershipInvitationMigration = [phase5MembershipInvitationFilename, readFileSync(resolve(migrationDir, phase5MembershipInvitationFilename), "utf8")];
+if (sha256(phase5MembershipInvitationMigration[1]) !== "0942e5eb360f7157a444d7b04fbe7558312e8d782347e60a745a8d4365034806") {
+  throw new Error(`Applied Phase 5 membership invitation migration drift: ${phase5MembershipInvitationFilename}`);
+}
+const phase5MembershipInvitationAuthorityFilename = "20260925000100_phase5_membership_invitation_platform_authority_reconciliation.sql";
+const phase5MembershipInvitationAuthorityMigration = [phase5MembershipInvitationAuthorityFilename, readFileSync(resolve(migrationDir, phase5MembershipInvitationAuthorityFilename), "utf8")];
+const phase5AdministrativeReadFilename = "20260928000100_phase5_administrative_read_permissions.sql";
+const phase5AdministrativeReadMigration = [phase5AdministrativeReadFilename, readFileSync(resolve(migrationDir, phase5AdministrativeReadFilename), "utf8")];
+const phase5MembershipRoleRevokeFilename = "20260928000200_phase5_membership_role_revoke_platform_grant.sql";
+const phase5MembershipRoleRevokeMigration = [phase5MembershipRoleRevokeFilename, readFileSync(resolve(migrationDir, phase5MembershipRoleRevokeFilename), "utf8")];
+const phase5ControlAssessmentStartFilename = "20260928000300_phase5_control_assessment_start_tenant_scope.sql";
+const phase5ControlAssessmentStartMigration = [phase5ControlAssessmentStartFilename, readFileSync(resolve(migrationDir, phase5ControlAssessmentStartFilename), "utf8")];
+const phase5RegulatoryCatalogFilename = "20260928000400_phase5_regulatory_catalog_contract_alignment.sql";
+const phase5RegulatoryCatalogMigration = [phase5RegulatoryCatalogFilename, readFileSync(resolve(migrationDir, phase5RegulatoryCatalogFilename), "utf8")];
+const phase5SubscriptionRegulatoryPackFilename = "20260929000100_phase5_subscription_regulatory_pack_authority.sql";
+const phase5SubscriptionRegulatoryPackMigration = [phase5SubscriptionRegulatoryPackFilename, readFileSync(resolve(migrationDir, phase5SubscriptionRegulatoryPackFilename), "utf8")];
+const phase5PlusFilename = "20260929000200_phase5_plus_permissions_applicability.sql";
+const phase5PlusMigration = [phase5PlusFilename, readFileSync(resolve(migrationDir, phase5PlusFilename), "utf8")];
+const phase5PlusValidationFilename = "20260929000300_phase5_plus_subject_validation_access.sql";
+const phase5PlusValidationMigration = [phase5PlusValidationFilename, readFileSync(resolve(migrationDir, phase5PlusValidationFilename), "utf8")];
+const migrations = [...historicalMigrations, preF5cMigration, phase5RuntimeMigration, preF5eMigration, phase5FinalMigration, phase5SubscriptionCatalogMigration, phase5RetentionPolicyMigration, phase5MembershipInvitationMigration, phase5MembershipInvitationAuthorityMigration, phase5AdministrativeReadMigration, phase5MembershipRoleRevokeMigration, phase5ControlAssessmentStartMigration, phase5RegulatoryCatalogMigration, phase5SubscriptionRegulatoryPackMigration, phase5PlusMigration, phase5PlusValidationMigration];
 const manifest = {
   manifestVersion: 1,
   runnerVersion: "1.0.0",
@@ -1160,7 +1375,31 @@ const manifest = {
   advisoryLockSource: "tcdx-grc:platform.schema_migrations:v1",
   migrations: migrations.map(([filename, content]) => ({
     id: filename.slice(0, 14), filename, sha256: sha256(content), transactional: true,
-    preconditions: filename.includes("pre_f5e")
+    preconditions: filename.includes("phase5_plus_subject_validation_access")
+      ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=24", "physical_tables=233", "published_permissions=158", "no_duplicate_active_subject_generation"]
+      : filename.includes("phase5_plus_permissions_applicability")
+      ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=23", "physical_tables=233", "published_permissions=154"]
+      : filename.includes("subscription_regulatory_pack_authority")
+      ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=22", "physical_tables=232", "published_permissions=154", "subscription_regulatory_packs=absent"]
+      : filename.includes("regulatory_catalog_contract_alignment")
+      ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=21", "physical_tables=232", "published_permissions=154", "crosswalk_mapping_rows=0", "normative_unit_composite_duplicates=0", "existing_requirements_content_valid"]
+      : filename.includes("control_assessment_start_tenant_scope")
+      ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=20", "physical_tables=232", "applied_role_revoke_grant_sha256=d47e4fa07250092c5b8c063a60713528627acee864f93278b3c5f0ed5dd57cdc", "control_assessment_start_v2=published", "control_owner_update_template_grant=1"]
+      : filename.includes("membership_role_revoke_platform_grant")
+      ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=19", "physical_tables=232", "applied_administrative_read_sha256=d19c72ce...", "published_permissions=154", "platform_admin_role_assign_grant=absent"]
+      : filename.includes("administrative_read_permissions")
+      ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=18", "physical_tables=232", "applied_membership_invitation_authority_sha256=b66f88a1...", "administrative_read_permissions=absent"]
+      : filename.includes("platform_authority_reconciliation")
+      ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=17", "physical_tables=232", "applied_membership_invitation_sha256=0942e5eb...", "PLATFORM_ADMIN=exactly_1"]
+      : filename.includes("phase5_membership_invitation")
+      ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=16", "physical_tables=231", "tenant_membership_invitations=absent", "membership_invitation_permissions=absent"]
+      : filename.includes("phase5_retention_policy_lifecycle")
+      ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=15", "physical_tables=231", "retention_policy_lifecycle_state=present", "retention_policy_row_version=absent"]
+      : filename.includes("phase5_subscription_create_catalog")
+      ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=14", "physical_tables=231", "platform.subscription.create=absent"]
+      : filename.includes("phase5_final_closure")
+      ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=13", "physical_tables=230", "file_upload_intents=absent"]
+      : filename.includes("pre_f5e")
       ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=12", "physical_tables=229", "platform_role_assignments=absent"]
       : filename.includes("phase5_core_grc")
       ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=11", "physical_tables=229"]
@@ -1169,7 +1408,31 @@ const manifest = {
       : filename.includes("pre_f4")
       ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=9", "physical_tables=214", "existing_audits=0_or_approved_reconciliation"]
       : ["database_name=tcdx-grc", "postgres_major=16"],
-    postconditions: filename.includes("pre_f5e")
+    postconditions: filename.includes("phase5_plus_subject_validation_access")
+      ? ["ledger_outcome=applied", "physical_tables=235", "published_permissions=163", "subject_active_interval_unique", "validation_access_separate_from_subscription"]
+      : filename.includes("phase5_plus_permissions_applicability")
+      ? ["ledger_outcome=applied", "physical_tables=233", "published_permissions=158", "applicability_decision=closed"]
+      : filename.includes("subscription_regulatory_pack_authority")
+      ? ["ledger_outcome=applied", "physical_tables=233", "published_permissions=154", "subscription_regulatory_packs=present", "no_active_overlap"]
+      : filename.includes("regulatory_catalog_contract_alignment")
+      ? ["ledger_outcome=applied", "physical_tables=232", "published_permissions=154", "normative_unit_business_key=composite", "requirement_editorial_summary=present", "crosswalk_mapping_metadata=present"]
+      : filename.includes("control_assessment_start_tenant_scope")
+      ? ["ledger_outcome=applied", "physical_tables=232", "published_permissions=154", "control_assessment_start_v3_tenant_scope=published", "direct_identity_grants=0"]
+      : filename.includes("membership_role_revoke_platform_grant")
+      ? ["ledger_outcome=applied", "physical_tables=232", "published_permissions=154", "platform_admin_role_assign_grant=1", "direct_identity_grants=0"]
+      : filename.includes("administrative_read_permissions")
+      ? ["ledger_outcome=applied", "physical_tables=232", "administrative_read_permissions=4", "unauthorized_grants=0", "direct_identity_grants=0"]
+      : filename.includes("platform_authority_reconciliation")
+      ? ["ledger_outcome=applied", "physical_tables=232", "membership_invitation_permissions=2", "PLATFORM_ADMIN_only_grants=2", "unauthorized_grants=0", "service_actor_fks=2"]
+      : filename.includes("phase5_membership_invitation")
+      ? ["ledger_outcome=applied", "physical_tables=232", "tenant_membership_invitations=present", "membership_invitation_permissions=2", "PLATFORM_ADMIN_only_grants=2"]
+      : filename.includes("phase5_retention_policy_lifecycle")
+      ? ["ledger_outcome=applied", "physical_tables=231", "retention_effective_from_nullable=yes", "retention_effective_to_nullable=yes", "retention_row_version=bigint_not_null_default_1", "retention_lifecycle_edges=3"]
+      : filename.includes("phase5_subscription_create_catalog")
+      ? ["ledger_outcome=applied", "physical_tables=231", "platform.subscription.create=published", "PLATFORM_ADMIN_grant=1"]
+      : filename.includes("phase5_final_closure")
+      ? ["ledger_outcome=applied", "physical_tables=231", "file_upload_intents=present", "active_lifecycle_amendments=2", "secret_or_blob_columns=0"]
+      : filename.includes("pre_f5e")
       ? ["ledger_outcome=applied", "physical_tables=230", "platform_role_assignments=present", "person_specific_grants=0"]
       : filename.includes("phase5_core_grc")
       ? ["ledger_outcome=applied", "physical_tables=229", "phase5_runtime_permissions=11"]
@@ -1181,10 +1444,116 @@ const manifest = {
   }))
 };
 
-writeOrCheck(resolve(migrationDir, preF5cMigration[0]), preF5cMigration[1]);
 writeOrCheck(resolve(root, "database/migrations/manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`);
 writeOrCheck(resolve(root, "database/expected-schema.json"), `${JSON.stringify(expectedInventory(rows), null, 2)}\n`);
 const canonicalSeedSql = historicalMigrations.find(([filename]) => filename === "20260916000900_canonical_seeds.sql")[1];
-writeOrCheck(resolve(root, "database/seed-manifest.json"), `${JSON.stringify({ manifestVersion: 2, source: "docs/executable-contracts/09_SEED_MANIFESTS.md", entries: ["SEED-001", "SEED-002", "SEED-003", "SEED-004", "SEED-005", "SEED-006", "SEED-007", "SEED-008", "SEED-009", "SEED-011", "SEED-012", "PRE-F5C-INCREMENTAL"], permissionRows: 136, lifecycleEdges: 100, rawLifecycleDefinitionRows: 134, configurationDefaults: 0, protectedRegulatoryContents: 0, contentSha256: sha256(canonicalSeedSql), incrementalMigration: preF5cMigration[0], incrementalSha256: sha256(preF5cMigration[1]) }, null, 2)}\n`);
+writeOrCheck(resolve(root, "database/seed-manifest.json"), `${JSON.stringify({
+  manifestVersion: 2,
+  source: "docs/executable-contracts/09_SEED_MANIFESTS.md",
+  entries: ["SEED-001", "SEED-002", "SEED-003", "SEED-004", "SEED-005", "SEED-006", "SEED-007", "SEED-008", "SEED-009", "SEED-011", "SEED-012", "PRE-F5C-INCREMENTAL"],
+  permissionRows: 136,
+  lifecycleEdges: 103,
+  rawLifecycleDefinitionRows: 139,
+  configurationDefaults: 0,
+  protectedRegulatoryContents: 0,
+  contentSha256: sha256(canonicalSeedSql),
+  incrementalMigration: preF5cMigration[0],
+  incrementalSha256: sha256(preF5cMigration[1]),
+  phase5RuntimePermissions: {
+    migrationId: "20260921000200",
+    permissionRows: 11,
+    rolePermissionRows: 136,
+    permissionCodes: [
+      "compliance.applicability.read",
+      "compliance.requirement_assessment.read",
+      "compliance.soa.read",
+      "controls.control.read",
+      "controls.control_assessment.read",
+      "controls.assurance_test.read",
+      "evidence.evidence_request.read",
+      "evidence.evidence.read",
+      "remediation.issue.read",
+      "remediation.action.read",
+      "evidence.evidence.create"
+    ]
+  },
+  phase5SubscriptionPermission: {
+    migrationId: "20260924000100",
+    permissionRows: 1,
+    rolePermissionRows: 1,
+    permissionCodes: ["platform.subscription.create"]
+  },
+  phase5RetentionPolicyLifecycle: {
+    migrationId: "20260924000200",
+    lifecycleEdges: 3,
+    commands: ["retention_policy.review", "retention_policy.approve", "retention_policy.publish"],
+    rowVersionAuthority: "privacy.retention_policies.row_version"
+  },
+  phase5MembershipInvitationPermissions: {
+    migrationId: "20260924000300",
+    authorityReconciliationMigrationId: "20260925000100",
+    permissionRows: 2,
+    rolePermissionRows: 2,
+    rolePermissionPolicy: "PLATFORM_ADMIN_ONLY",
+    permissionCodes: ["platform.membership_invitation.create", "platform.membership_invitation.update"]
+  },
+  phase5AdministrativeReadPermissions: {
+    migrationId: "20260928000100",
+    permissionRows: 4,
+    permissionCodes: ["platform.tenant.read", "platform.membership.read", "platform.membership_invitation.read", "platform.role.read"],
+    platformAdminGrantRows: 4,
+    tenantAdminTemplateGrantRows: 2,
+    tenantAdminGrantRowsPerTenant: 2
+  },
+  phase5ControlAssessmentStart: {
+    migrationId: "20260928000300",
+    lifecycleDefinitionDelta: 1,
+    authoritativeScope: "tenant",
+    permissionCode: "controls.control_assessment.update"
+  },
+  phase5PlusPermissions: {
+    migrationId: "20260929000200",
+    permissionRows: 4,
+    permissionCodes: [
+      "platform.subscription_regulatory_pack.read",
+      "platform.subscription_regulatory_pack.create",
+      "platform.subscription_regulatory_pack.archive",
+      "organization.subject.read"
+    ]
+  },
+  phase5PlusValidation: {
+    migrationId: "20260929000300",
+    permissionRows: 5,
+    configurationDefaults: 1,
+    permissionCodes: [
+      "organization.subject.create",
+      "platform.regulatory_pack_validation_access.read",
+      "platform.regulatory_pack_validation_access.create",
+      "platform.regulatory_pack_validation_access.archive",
+      "platform.tenant_account_classification.update"
+    ]
+  }
+}, null, 2)}\n`);
 
-console.log(JSON.stringify({ mode: checkOnly ? "check" : "write", physicalTables: rows.length, permissions: 136, lifecycleEdges: 100, rawLifecycleDefinitionRows: 134, migrations: migrations.length }, null, 2));
+const openApiPath = resolve(root, "docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml");
+const operationMatrixPath = resolve(root, "docs/executable-contracts/03_API_RESOURCE_OPERATION_MATRIX.md");
+const openApiSource = readFileSync(openApiPath, "utf8");
+const matrixSource = readFileSync(operationMatrixPath, "utf8");
+const operationIds = [...openApiSource.matchAll(/^      operationId: ([A-Za-z0-9]+)$/gm)].map((match) => match[1]);
+const operationRows = [...matrixSource.matchAll(/^\| ([A-Za-z0-9]+) \| (GET|POST|PUT) `[^`]+` \|/gm)];
+if (new Set(operationIds).size !== operationIds.length || operationRows.length !== operationIds.length ||
+    operationRows.some((match) => !operationIds.includes(match[1]))) throw new Error("OpenAPI/matrix operation drift");
+const readCount = operationRows.filter((match) => match[2] === "GET").length;
+const mutatingCount = operationRows.length - readCount;
+const openApiWithCount = openApiSource.replace(/Publica \d+ operaciones que cierran/,
+  `Publica ${operationIds.length} operaciones que cierran`);
+const matrixWithCount = matrixSource.replace(/`CONTRACTUAL_OPERATIONS=\d+`; `PUBLIC_READ_OPERATIONS=\d+`; `PUBLIC_MUTATING_OPERATIONS=\d+`/,
+  `\`CONTRACTUAL_OPERATIONS=${operationIds.length}\`; \`PUBLIC_READ_OPERATIONS=${readCount}\`; \`PUBLIC_MUTATING_OPERATIONS=${mutatingCount}\``);
+if (openApiWithCount === openApiSource && !openApiSource.includes(`Publica ${operationIds.length} operaciones que cierran`))
+  throw new Error("OpenAPI operation summary missing");
+if (matrixWithCount === matrixSource && !matrixSource.includes(`\`CONTRACTUAL_OPERATIONS=${operationIds.length}\``))
+  throw new Error("Matrix operation summary missing");
+writeOrCheck(openApiPath, openApiWithCount);
+writeOrCheck(operationMatrixPath, matrixWithCount);
+
+console.log(JSON.stringify({ mode: checkOnly ? "check" : "write", physicalTables: rows.length, permissionsAfterCatalogRelease: 163, lifecycleEdges: 103, rawLifecycleDefinitionRows: 140, migrations: migrations.length, operations: operationIds.length, readOperations: readCount }, null, 2));

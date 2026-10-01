@@ -34,7 +34,7 @@ Cada concepto canónico tiene una única autoridad de escritura de negocio.
 - Organization posee estructura organizacional y objetos internos de negocio; `Subject` es un registro de identidad/referencia, no una segunda autoridad del objeto.
 - Regulatory & Compliance posee Regulatory Packs, FrameworkVersion, NormativeUnit, Requirements, applicability, SoA y RequirementAssessment.
 - Controls & Assurance posee Controls globales/TCDX/tenant, ControlVersion, ControlAssessment y AssuranceTest. El origen y ownership del control no se mezclan.
-- Evidence & Documents posee Document/Evidence lifecycle y archivos gobernados.
+- Evidence & Documents posee Document/Evidence lifecycle, `FileUploadIntent` como coordinación temporal pre-materialización y `FileObject` sólo para objetos binarios finales caracterizados.
 - Risk posee Risk, RiskAssessment, RiskTreatment, appetite/tolerance, KRI y LossEvent.
 - Issues & Remediation posee Issue y Action.
 - Audit posee programa/engagement/workpapers/tests; findings se crean como Issue mediante command contractual.

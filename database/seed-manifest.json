@@ -16,8 +16,8 @@
     "PRE-F5C-INCREMENTAL"
   ],
   "permissionRows": 136,
-  "lifecycleEdges": 100,
-  "rawLifecycleDefinitionRows": 134,
+  "lifecycleEdges": 103,
+  "rawLifecycleDefinitionRows": 139,
   "configurationDefaults": 0,
   "protectedRegulatoryContents": 0,
   "contentSha256": "94547ff1fa6a9accf56ff6f28be93afeb91b8c290ca9bb224667862c64c8c2e7",
@@ -39,6 +39,76 @@
       "remediation.issue.read",
       "remediation.action.read",
       "evidence.evidence.create"
+    ]
+  },
+  "phase5SubscriptionPermission": {
+    "migrationId": "20260924000100",
+    "permissionRows": 1,
+    "rolePermissionRows": 1,
+    "permissionCodes": [
+      "platform.subscription.create"
+    ]
+  },
+  "phase5RetentionPolicyLifecycle": {
+    "migrationId": "20260924000200",
+    "lifecycleEdges": 3,
+    "commands": [
+      "retention_policy.review",
+      "retention_policy.approve",
+      "retention_policy.publish"
+    ],
+    "rowVersionAuthority": "privacy.retention_policies.row_version"
+  },
+  "phase5MembershipInvitationPermissions": {
+    "migrationId": "20260924000300",
+    "authorityReconciliationMigrationId": "20260925000100",
+    "permissionRows": 2,
+    "rolePermissionRows": 2,
+    "rolePermissionPolicy": "PLATFORM_ADMIN_ONLY",
+    "permissionCodes": [
+      "platform.membership_invitation.create",
+      "platform.membership_invitation.update"
+    ]
+  },
+  "phase5AdministrativeReadPermissions": {
+    "migrationId": "20260928000100",
+    "permissionRows": 4,
+    "permissionCodes": [
+      "platform.tenant.read",
+      "platform.membership.read",
+      "platform.membership_invitation.read",
+      "platform.role.read"
+    ],
+    "platformAdminGrantRows": 4,
+    "tenantAdminTemplateGrantRows": 2,
+    "tenantAdminGrantRowsPerTenant": 2
+  },
+  "phase5ControlAssessmentStart": {
+    "migrationId": "20260928000300",
+    "lifecycleDefinitionDelta": 1,
+    "authoritativeScope": "tenant",
+    "permissionCode": "controls.control_assessment.update"
+  },
+  "phase5PlusPermissions": {
+    "migrationId": "20260929000200",
+    "permissionRows": 4,
+    "permissionCodes": [
+      "platform.subscription_regulatory_pack.read",
+      "platform.subscription_regulatory_pack.create",
+      "platform.subscription_regulatory_pack.archive",
+      "organization.subject.read"
+    ]
+  },
+  "phase5PlusValidation": {
+    "migrationId": "20260929000300",
+    "permissionRows": 5,
+    "configurationDefaults": 1,
+    "permissionCodes": [
+      "organization.subject.create",
+      "platform.regulatory_pack_validation_access.read",
+      "platform.regulatory_pack_validation_access.create",
+      "platform.regulatory_pack_validation_access.archive",
+      "platform.tenant_account_classification.update"
     ]
   }
 }

@@ -3,7 +3,7 @@ info:
   title: TCDX GRC API Base Contract
   version: 1.0.0-contract-candidate
   description: >-
-    Contrato schema-first aprobado de Fase 2 con las enmiendas PRE-F5, PRE-F5B, PRE-F5C y los cierres compatibles PRE-F5E. Publica 106 operaciones que cierran
+    Contrato schema-first aprobado de Fase 2 con las enmiendas PRE-F5, PRE-F5B, PRE-F5C, los cierres compatibles PRE-F5E y las decisiones Subscription, lecturas administrativas y Fase 5+. Publica 142 operaciones que cierran
     trazabilidad rector-capability-permission-audit-idempotency-modelo físico.
     H-003..H-005 autorizan las operaciones mínimas de Configuration,
     privacy retention/erasure y lifecycle-registry sobre entidades existentes.
@@ -21,16 +21,332 @@ info:
     - Security & Privacy Reviewer
   x-status: CANDIDATE_READY_FOR_HUMAN_REVIEW
   x-wire-conventions-status: CONTRACT_DEFINED
-  x-master-regent: TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16
-  x-rector-candidate: TCDX_GRC_MASTER_REGENT_BASELINE_v1.6_2026-09-23
+  x-master-regent: TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23
+  x-phase-5-subscription-decision: HUMAN_APPROVED_2026-09-24
   x-phase-5-read-contract-decision: DR-PHASE5-API-READ-2026-09-17-002
   x-phase-5-read-contract-status: MATERIALIZED
+  x-phase-5-administrative-read-decision: HUMAN_APPROVED_2026-09-28
+  x-phase-5-plus-resolution: HUMAN_APPROVED_2026-09-29
   x-phase-5-executable-contracts-status: CLOSED
   x-database-contract-changed: true
 servers:
   - url: /api/v1
     description: Major v1 tenant/business API base path; deployment host is environment configuration.
 paths:
+  "/subjects":
+    get:
+      operationId: subjectList
+      tags: ["organization"]
+      summary: "CORE_PLATFORM: tenant-scoped operational Subject selector"
+      description: "Active, effective org.Subject only; authenticated tenant context, search by display_name/canonical_key, subject_type and cursor pagination. No sensitive metadata."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`organization.subject.read`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`org.subjects`"
+      x-tcdx-rector-source: "Human Phase 5+ resolution 2026-09-29; 16,22,44"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/Cursor' }, { $ref: '#/components/parameters/PageSize' }]
+      responses:
+        '200': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+    post:
+      operationId: subjectCreate
+      tags: ["organization"]
+      summary: "Create a tenant-owned canonical Subject"
+      description: "Closed body: subject_type, canonical_key, display_name. Server owns tenant, UUIDv7, active lifecycle and transaction timestamp."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`organization.subject.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.organization.subject.create.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`org.subjects`"
+      x-tcdx-rector-source: "Human Phase 5+ architecture resolution 2026-09-29; 16,22,25,39"
+      responses:
+        '201': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/platform/tenants/{id}/account-classification":
+    get:
+      operationId: tenantAccountClassificationGet
+      tags: ["platform"]
+      summary: "Resolve persisted effective tenant classification"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.tenant_account_classification.update`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`config.configuration_definitions`, `config.configuration_overrides`"
+      x-tcdx-rector-source: "Human Phase 5+ architecture resolution 2026-09-29"
+      responses:
+        '200': { $ref: '#/components/responses/OperationSuccess' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+    post:
+      operationId: tenantAccountClassificationSet
+      tags: ["platform"]
+      summary: "Version the audited tenant classification override"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.tenant_account_classification.update`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "`audit.platform.tenant_account_classification.set.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`config.configuration_definitions`, `config.configuration_overrides`"
+      x-tcdx-rector-source: "Human Phase 5+ architecture resolution 2026-09-29"
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+  "/platform/regulatory-pack-validation-provenances":
+    post:
+      operationId: validationProvenanceCreate
+      tags: ["regulatory"]
+      summary: "Approve exact non-authoritative provenance for one draft pack version"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.regulatory_pack_validation_access.create`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "`audit.platform.regulatory_pack_validation_provenance.create.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`regulatory.regulatory_pack_validation_provenances`"
+      x-tcdx-rector-source: "Human Phase 5+ architecture resolution 2026-09-29"
+      responses:
+        '201': { $ref: '#/components/responses/OperationSuccess' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+  "/platform/tenants/{id}/regulatory-pack-validation-accesses":
+    get:
+      operationId: validationAccessPlatformList
+      tags: ["regulatory"]
+      summary: "Read validation access for an exact tenant as Platform Admin"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.regulatory_pack_validation_access.read`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`platform.regulatory_pack_validation_accesses`"
+      x-tcdx-rector-source: "Human Phase 5+ architecture resolution 2026-09-29"
+      responses:
+        '200': { $ref: '#/components/responses/OperationSuccess' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+  "/platform/regulatory-pack-validation-candidates":
+    get:
+      operationId: validationAccessCandidateList
+      tags: ["regulatory"]
+      summary: "Discover eligible draft non-authoritative validation metadata as Platform Admin"
+      description: "Derived, non-persisted version/provenance projection. No tenant enumeration, commercial entitlement, official publication/licence assertion or normative text. Production denies. Candidate discovery does not authorize access creation."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.regulatory_pack_validation_access.read`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`regulatory.regulatory_packs`, `regulatory.regulatory_pack_versions`, `regulatory.regulatory_pack_validation_provenances`, `regulatory.regulatory_import_manifests`, `regulatory.regulatory_sources`"
+      x-tcdx-rector-source: "Human STEP 22J approval 2026-09-30; Phase 5+ amendment"
+      parameters:
+        - { $ref: '#/components/parameters/CorrelationId' }
+        - { $ref: '#/components/parameters/PageSize' }
+        - { $ref: '#/components/parameters/Cursor' }
+        - name: filter[effective_from]
+          in: query
+          required: false
+          description: "Validation access start instant for temporal discovery; defaults to database transaction_timestamp(). Does not set access.effective_from."
+          schema: { type: string, format: date-time }
+      responses:
+        '200':
+          description: "Eligible metadata page only"
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ValidationAccessCandidatePage' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+  "/regulatory-pack-validation-accesses/current":
+    get:
+      operationId: validationAccessTenantList
+      tags: ["regulatory"]
+      summary: "Read own tenant validation access as Tenant Admin"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.regulatory_pack_validation_access.read`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`platform.regulatory_pack_validation_accesses`"
+      x-tcdx-rector-source: "Human Phase 5+ architecture resolution 2026-09-29"
+      responses:
+        '200': { $ref: '#/components/responses/OperationSuccess' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+  "/platform/regulatory-pack-validation-accesses":
+    post:
+      operationId: validationAccessCreate
+      tags: ["regulatory"]
+      summary: "Grant exact non-authoritative validation access"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.regulatory_pack_validation_access.create`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "`audit.platform.regulatory_pack_validation_access.create.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`platform.regulatory_pack_validation_accesses`"
+      x-tcdx-rector-source: "Human Phase 5+ architecture resolution 2026-09-29"
+      responses:
+        '201': { $ref: '#/components/responses/OperationSuccess' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+  "/platform/regulatory-pack-validation-accesses/{id}:revoke":
+    post:
+      operationId: validationAccessRevoke
+      tags: ["regulatory"]
+      summary: "Revoke validation access with reason and If-Match"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.regulatory_pack_validation_access.archive`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "`audit.platform.regulatory_pack_validation_access.revoke.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`platform.regulatory_pack_validation_accesses`"
+      x-tcdx-rector-source: "Human Phase 5+ architecture resolution 2026-09-29"
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/subscriptions/{id}/regulatory-packs":
+    get:
+      operationId: subscriptionRegulatoryPackList
+      tags: ["platform"]
+      summary: "Read exact pack assignments of one Subscription"
+      description: "Platform Admin platform scope or Tenant Admin own authenticated tenant only; effective_state is derived from the assignment interval."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.subscription_regulatory_pack.read`"
+      x-tcdx-scope: "platform or own tenant"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`platform.subscription_regulatory_packs`"
+      x-tcdx-rector-source: "Human Phase 5+ resolution 2026-09-29; 22,37"
+      responses:
+        '200': { $ref: '#/components/responses/OperationSuccess' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+    post:
+      operationId: subscriptionRegulatoryPackActivate
+      tags: ["platform"]
+      summary: "Activate exact published RegulatoryPackVersion, forward only"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.subscription_regulatory_pack.create`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "`audit.platform.subscription_regulatory_pack.activate.v1`"
+      x-tcdx-domain-events: "`platform.subscription_regulatory_pack.activate.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`platform.subscription_regulatory_packs`"
+      x-tcdx-rector-source: "Human Phase 5+ resolution 2026-09-29; 22,25,37"
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/subscriptions/current/regulatory-packs":
+    get:
+      operationId: subscriptionRegulatoryPackCurrentList
+      tags: ["platform"]
+      summary: "Tenant Admin read of own active Subscription packs"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.subscription_regulatory_pack.read`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`platform.subscriptions`, `platform.subscription_regulatory_packs`"
+      x-tcdx-rector-source: "Human Phase 5+ resolution 2026-09-29"
+      responses:
+        '200': { $ref: '#/components/responses/OperationSuccess' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+  "/subscription-regulatory-packs/{id}":
+    get:
+      operationId: subscriptionRegulatoryPackGet
+      tags: ["platform"]
+      summary: "Read one pack assignment with exact scope"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.subscription_regulatory_pack.read`"
+      x-tcdx-scope: "platform or own tenant"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`platform.subscription_regulatory_packs`"
+      x-tcdx-rector-source: "Human Phase 5+ resolution 2026-09-29"
+      responses:
+        '200': { $ref: '#/components/responses/OperationSuccess' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+  "/subscription-regulatory-packs/{id}:revoke":
+    post:
+      operationId: subscriptionRegulatoryPackRevoke
+      tags: ["platform"]
+      summary: "Revoke effective pack assignment with If-Match/CAS and reason"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.subscription_regulatory_pack.archive`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "`audit.platform.subscription_regulatory_pack.revoke.v1`"
+      x-tcdx-domain-events: "`platform.subscription_regulatory_pack.revoke.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`platform.subscription_regulatory_packs`"
+      x-tcdx-rector-source: "Human Phase 5+ resolution 2026-09-29; 22,25,37"
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/platform/regulatory-pack-versions":
+    get:
+      operationId: regulatoryPackVersionSelectableList
+      tags: ["platform"]
+      summary: "Published selectable RegulatoryPackVersions for Platform Admin"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.subscription_regulatory_pack.create`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`regulatory.regulatory_pack_versions`"
+      x-tcdx-rector-source: "Human Phase 5+ resolution 2026-09-29; 37"
+      responses:
+        '200': { $ref: '#/components/responses/OperationSuccess' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
   "/access/me":
     get:
       operationId: accessGet
@@ -56,6 +372,27 @@ paths:
         '404': { $ref: '#/components/responses/NotFoundError' }
         '409': { $ref: '#/components/responses/ConflictError' }
   "/platform/tenants":
+    get:
+      operationId: tenantList
+      tags: ["platform"]
+      summary: "CORE_PLATFORM: tenantList"
+      description: "Platform Admin only; global administrative Tenant metadata. No tenant header or caller-supplied authority. Stable cursor pagination. Subscription metadata, if included, is derived only from canonical commercial entities."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.tenant.read`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`platform.tenants`; optional canonical Subscription/Plan/PlanVersion"
+      x-tcdx-rector-source: "22,42; human administrative-read decision 2026-09-28"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/PageSize' }, { $ref: '#/components/parameters/Cursor' }]
+      responses:
+        '200': { $ref: '#/components/responses/TenantAdministrativeListSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
     post:
       operationId: tenantCreate
       tags: ["platform"]
@@ -79,6 +416,58 @@ paths:
             schema: { $ref: '#/components/schemas/TenantCreateRequest' }
       responses:
         '202': { $ref: '#/components/responses/TenantCreateSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/platform/tenants/{tenant_id}":
+    get:
+      operationId: tenantGet
+      tags: ["platform"]
+      summary: "CORE_PLATFORM: tenantGet"
+      description: "Platform Admin only; canonical tenant metadata and optional derived current commercial summary."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.tenant.read`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`platform.tenants`; optional canonical Subscription/Plan/PlanVersion"
+      x-tcdx-rector-source: "22,42; human administrative-read decision 2026-09-28"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { name: tenant_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/TenantAdministrativeGetSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+  "/platform/subscriptions":
+    post:
+      operationId: subscriptionCreate
+      tags: ["platform"]
+      summary: "CORE_PLATFORM: subscriptionCreate"
+      description: "Approved by the 2026-09-24 Phase 5 Subscription decision. Actor: Platform Admin with the published platform.subscription.create Permission. No tenant header. Caller selects an existing active tenant and existing published PlanVersion and supplies only the canonical subscription business code. Subscription ID, active lifecycle, start time and actors are server-owned. Effective entitlements remain derived exclusively from the selected PlanVersion; capability and entitlement lists are forbidden. Contract shape: SubscriptionCreateRequest → SubscriptionProjection."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.subscription.create`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "`audit.platform.subscription.create.v1`"
+      x-tcdx-domain-events: "`platform.subscription.created.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`platform.subscriptions`, `platform.tenants`, `platform.plans`, `platform.plan_versions`, `platform.entitlements`, audit/idempotency/outbox"
+      x-tcdx-rector-source: "09,22,25,42; Phase 5 Subscription human decision 2026-09-24"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/SubscriptionCreateRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/SubscriptionCreateSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
         '401': { $ref: '#/components/responses/AuthenticationError' }
         '403': { $ref: '#/components/responses/AuthorizationError' }
@@ -114,6 +503,27 @@ paths:
         '404': { $ref: '#/components/responses/NotFoundError' }
         '409': { $ref: '#/components/responses/ConflictError' }
   "/memberships":
+    get:
+      operationId: membershipList
+      tags: ["iam"]
+      summary: "CORE_PLATFORM: membershipList"
+      description: "Platform Admin supplies explicit tenant_id without tenant header; Tenant Admin uses its validated active tenant header and cannot override it. No email-based authority."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.membership.read`"
+      x-tcdx-scope: "platform or tenant, respectively"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`iam.tenant_memberships`, `iam.user_identities`, `iam.membership_roles`, `iam.roles`"
+      x-tcdx-rector-source: "22,42; human administrative-read decision 2026-09-28"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/AdministrativeTenantId' }, { $ref: '#/components/parameters/PageSize' }, { $ref: '#/components/parameters/Cursor' }]
+      responses:
+        '200': { $ref: '#/components/responses/MembershipAdministrativeListSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
     post:
       operationId: membershipCreate
       tags: ["iam"]
@@ -142,7 +552,153 @@ paths:
         '403': { $ref: '#/components/responses/AuthorizationError' }
         '404': { $ref: '#/components/responses/NotFoundError' }
         '409': { $ref: '#/components/responses/ConflictError' }
+  "/memberships/{membership_id}":
+    get:
+      operationId: membershipGet
+      tags: ["iam"]
+      summary: "CORE_PLATFORM: membershipGet"
+      description: "Same dual Platform/Tenant authority as membershipList; path identity is not authority."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.membership.read`"
+      x-tcdx-scope: "platform or tenant, respectively"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`iam.tenant_memberships`, `iam.user_identities`, `iam.membership_roles`, `iam.roles`"
+      x-tcdx-rector-source: "22,42; human administrative-read decision 2026-09-28"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/AdministrativeTenantId' }, { name: membership_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/MembershipAdministrativeGetSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+  "/platform/membership-invitations":
+    get:
+      operationId: membershipInvitationList
+      tags: ["platform"]
+      summary: "CORE_PLATFORM: membershipInvitationList"
+      description: "Platform Admin only; explicit validated tenant_id; persisted and effective lifecycle states, never clear token or digest."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.membership_invitation.read`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`iam.tenant_membership_invitations`"
+      x-tcdx-rector-source: "human administrative-read decision 2026-09-28"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/AdministrativeTenantId' }, { $ref: '#/components/parameters/PageSize' }, { $ref: '#/components/parameters/Cursor' }]
+      responses:
+        '200': { $ref: '#/components/responses/MembershipInvitationAdministrativeListSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+    post:
+      operationId: membershipInvitationCreate
+      tags: ["platform"]
+      summary: "CORE_PLATFORM: membershipInvitationCreate"
+      description: "DR-PHASE5-CANONICAL-TENANT-USER-ENROLLMENT-2026-09-24. Platform Admin creates a tenant-owned, Zoho-only Phase 5 invitation for one explicit active tenant. TenantMembershipInvitation ID, pending state and PT24H expiry are server-owned. The email is delivery/bootstrap ceremony input only and never identity or RBAC authority. The clear 256-bit token is returned only on the first successful response; replay returns null and the server persists only its digest."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.membership_invitation.create`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "`audit.platform.membership_invitation.create.v1`"
+      x-tcdx-domain-events: "`iam.membership_invitation.created.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`iam.tenant_membership_invitations`"
+      x-tcdx-rector-source: "DR-PHASE5-CANONICAL-TENANT-USER-ENROLLMENT-2026-09-24"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/MembershipInvitationCreateRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/MembershipInvitationCreateSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/platform/membership-invitations/{invitation_id}":
+    get:
+      operationId: membershipInvitationGet
+      tags: ["platform"]
+      summary: "CORE_PLATFORM: membershipInvitationGet"
+      description: "Platform Admin only; explicit tenant_id and safe invitation lifecycle projection, never token or digest."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.membership_invitation.read`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`iam.tenant_membership_invitations`"
+      x-tcdx-rector-source: "human administrative-read decision 2026-09-28"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/AdministrativeTenantId' }, { name: invitation_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/MembershipInvitationAdministrativeGetSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+  "/platform/membership-invitations/{invitation_id}/revoke":
+    post:
+      operationId: membershipInvitationRevoke
+      tags: ["platform"]
+      summary: "CORE_PLATFORM: membershipInvitationRevoke"
+      description: "Platform Admin revokes an unexpired pending invitation selected by canonical ID. If-Match provides row-version compare-and-swap; accepted, expired or already revoked invitations fail closed. Acceptance does not require or confer Platform authority."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.membership_invitation.update`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "`audit.platform.membership_invitation.revoke.v1`"
+      x-tcdx-domain-events: "`iam.membership_invitation.revoked.v1`"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`iam.tenant_membership_invitations`"
+      x-tcdx-rector-source: "DR-PHASE5-CANONICAL-TENANT-USER-ENROLLMENT-2026-09-24"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: invitation_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/MembershipInvitationRevokeRequest' }
+      responses:
+        '202': { $ref: '#/components/responses/MembershipInvitationRevokeSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
   "/memberships/{membership_id}/role-assignments":
+    get:
+      operationId: membershipRoleList
+      tags: ["iam"]
+      summary: "CORE_PLATFORM: membershipRoleList"
+      description: "Same dual Platform/Tenant membership read authority; only roles of the selected canonical membership."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.membership.read`"
+      x-tcdx-scope: "platform or tenant, respectively"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`iam.membership_roles`, `iam.roles`, `iam.tenant_memberships`"
+      x-tcdx-rector-source: "22,42; human administrative-read decision 2026-09-28"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/AdministrativeTenantId' }, { $ref: '#/components/parameters/PageSize' }, { $ref: '#/components/parameters/Cursor' }, { name: membership_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/MembershipRoleAdministrativeListSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
     post:
       operationId: membershipRoleAssign
       tags: ["iam"]
@@ -171,30 +727,75 @@ paths:
         '403': { $ref: '#/components/responses/AuthorizationError' }
         '404': { $ref: '#/components/responses/NotFoundError' }
         '409': { $ref: '#/components/responses/ConflictError' }
+  "/roles":
+    get:
+      operationId: roleList
+      tags: ["iam"]
+      summary: "CORE_PLATFORM: roleList"
+      description: "Platform Admin may list Platform roles and roles of an explicit selected tenant; Tenant Admin sees only TENANT_OWNED roles of its authenticated active tenant. Role catalog is display data, never assignment authority."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.role.read`"
+      x-tcdx-scope: "platform or tenant, respectively"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`iam.roles`"
+      x-tcdx-rector-source: "22,42; human administrative-read decision 2026-09-28"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/AdministrativeTenantId' }, { $ref: '#/components/parameters/PageSize' }, { $ref: '#/components/parameters/Cursor' }]
+      responses:
+        '200': { $ref: '#/components/responses/RoleAdministrativeListSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+  "/roles/{role_id}":
+    get:
+      operationId: roleGet
+      tags: ["iam"]
+      summary: "CORE_PLATFORM: roleGet"
+      description: "Same dual Platform/Tenant role-read authority; Platform Admin may read Platform or selected tenant role; Tenant Admin cannot read Platform role."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.role.read`"
+      x-tcdx-scope: "platform or tenant, respectively"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`iam.roles`"
+      x-tcdx-rector-source: "22,42; human administrative-read decision 2026-09-28"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/AdministrativeTenantId' }, { name: role_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/RoleAdministrativeGetSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
   "/role-assignments/{assignment_id}:revoke":
     post:
       operationId: membershipRoleRevoke
       tags: ["iam"]
       summary: "CORE_PLATFORM: membershipRoleRevoke"
-      description: "Derived from 22,23. Actor: Tenant Admin. Tenant semantics: ends validity; never deletes history. Contract shape: Reason+ETag → RoleAssignment."
+      description: "Human Phase 5 decision 2026-09-28. Tenant Admin uses validated tenant header and no tenant_id query; Platform Admin uses explicit selected tenant_id query and no tenant header. Closes only the selected active TENANT_OWNED MembershipRole.valid_to at server transaction time; never deletes history or touches PlatformRoleAssignment. Strong ETag is SHA-256 of assignment ID and canonical UTC valid_from/valid_to. Same-key replay returns the completed result without a second event."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "CORE_PLATFORM"
       x-tcdx-permission: "`platform.role.assign`"
-      x-tcdx-scope: "tenant"
+      x-tcdx-scope: "tenant or explicit selected platform tenant"
       x-tcdx-audit-event: "`audit.platform.role.revoke.v1`"
       x-tcdx-domain-events: "`iam.role.revoked.v1`"
       x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
       x-tcdx-transaction-boundary: "TX"
       x-tcdx-physical-entities: "`iam.membership_roles`"
-      x-tcdx-rector-source: "22,23"
-      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: assignment_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      x-tcdx-rector-source: "22,23; human Phase 5 MembershipRole revoke decision 2026-09-28"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/AdministrativeTenantId' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/MembershipRoleIfMatch' }, { name: X-TCDX-Tenant-Id, in: header, required: false, schema: { $ref: '#/components/schemas/UuidV7' } }, { name: assignment_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
       requestBody:
         required: true
         content:
           application/json:
-            schema: { $ref: '#/components/schemas/DomainCommandRequest' }
+            schema: { $ref: '#/components/schemas/MembershipRoleRevokeRequest' }
       responses:
-        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '202': { $ref: '#/components/responses/MembershipRoleRevokeSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
         '401': { $ref: '#/components/responses/AuthenticationError' }
         '403': { $ref: '#/components/responses/AuthorizationError' }
@@ -722,17 +1323,17 @@ paths:
       operationId: controlAssessmentStart
       tags: ["controls"]
       summary: "CONTROLS_ASSURANCE: controlAssessmentStart"
-      description: "DR-PRE-F5C-2026-09-21-005: exact planned-to-in_progress transition using the target ControlAssessment row_version."
+      description: "Control Owner with tenant scope; exact planned-to-in_progress transition using the target row_version. No assignee or creator ownership inference."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "CONTROLS_ASSURANCE"
       x-tcdx-permission: "`controls.control_assessment.update`"
-      x-tcdx-scope: "assigned_object, tenant"
+      x-tcdx-scope: "tenant"
       x-tcdx-audit-event: "`audit.controls.control_assessment.start.v1`"
       x-tcdx-domain-events: "NONE"
       x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
       x-tcdx-transaction-boundary: "TX"
       x-tcdx-physical-entities: "`controls.control_assessments`"
-      x-tcdx-rector-source: "DR-PRE-F5C-2026-09-21-005; 21,25"
+      x-tcdx-rector-source: "Human Phase 5 Start decision 2026-09-28; DR-PRE-F5C-2026-09-21-005; 21,22,25"
       parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
       requestBody:
         required: true
@@ -755,13 +1356,13 @@ paths:
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "CONTROLS_ASSURANCE"
       x-tcdx-permission: "`controls.control_assessment.submit`"
-      x-tcdx-scope: "assigned"
+      x-tcdx-scope: "owned_object, tenant"
       x-tcdx-audit-event: "`audit.controls.control_assessment.complete.v1`"
       x-tcdx-domain-events: "`controls.control_assessment.completed.v1`"
       x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
       x-tcdx-transaction-boundary: "TX"
-      x-tcdx-physical-entities: "assessment"
-      x-tcdx-rector-source: "21,38,39"
+      x-tcdx-physical-entities: "`controls.control_assessments`, `controls.controls`"
+      x-tcdx-rector-source: "Phase 5 final human decision 2026-09-23; 21,22,38,39"
       parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
       requestBody:
         required: true
@@ -954,7 +1555,7 @@ paths:
       operationId: uploadIntentCreate
       tags: ["evidence"]
       summary: "EVIDENCE_DOCUMENTS: uploadIntentCreate"
-      description: "Derived from 24. Actor: Evidence Owner. Tenant semantics: opaque key/quarantine; authorization before URL. Contract shape: UploadIntentRequest → UploadIntent."
+      description: "Phase 5 v1.7 amendment. Creates a durable FileUploadIntent, never an incomplete FileObject. Tenant, bucket, quarantine key, expiry and signed URL are server-controlled."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "EVIDENCE_DOCUMENTS"
       x-tcdx-permission: "`evidence.document.create`"
@@ -963,8 +1564,8 @@ paths:
       x-tcdx-domain-events: "NONE"
       x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
       x-tcdx-transaction-boundary: "TX"
-      x-tcdx-physical-entities: "`evidence.file_objects`"
-      x-tcdx-rector-source: "24"
+      x-tcdx-physical-entities: "`evidence.file_upload_intents`"
+      x-tcdx-rector-source: "Phase 5 final human decision 2026-09-23; 24,30,33"
       parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
       requestBody:
         required: true
@@ -978,23 +1579,23 @@ paths:
         '403': { $ref: '#/components/responses/AuthorizationError' }
         '404': { $ref: '#/components/responses/NotFoundError' }
         '409': { $ref: '#/components/responses/ConflictError' }
-  "/files/{file_object_id}:finalize":
+  "/file-upload-intents/{id}:finalize":
     post:
       operationId: uploadFinalize
       tags: ["evidence"]
       summary: "EVIDENCE_DOCUMENTS: uploadFinalize"
-      description: "Derived from 24. Actor: uploader/service. Tenant semantics: verifies size/MIME/checksum; remains unusable until scan PASS. Contract shape: UploadFinalize+ETag → FileObject."
+      description: "Finalizes one same-tenant FileUploadIntent. Trusted runtime obtains actual size, MIME and SHA-256, performs fail-closed malware scan and promotes only scan-PASS content to a final FileObject."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "EVIDENCE_DOCUMENTS"
       x-tcdx-permission: "`evidence.document.update`"
-      x-tcdx-scope: "tenant/owned"
+      x-tcdx-scope: "tenant, owned_object"
       x-tcdx-audit-event: "`audit.evidence.file.finalize.v1`"
       x-tcdx-domain-events: "`evidence.file.quarantined.v1`"
       x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
       x-tcdx-transaction-boundary: "TX"
-      x-tcdx-physical-entities: "file object"
-      x-tcdx-rector-source: "24"
-      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: file_object_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      x-tcdx-physical-entities: "`evidence.file_upload_intents`, `evidence.file_objects`"
+      x-tcdx-rector-source: "Phase 5 final human decision 2026-09-23; 24,30,33"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
       requestBody:
         required: true
         content:
@@ -1007,6 +1608,56 @@ paths:
         '403': { $ref: '#/components/responses/AuthorizationError' }
         '404': { $ref: '#/components/responses/NotFoundError' }
         '409': { $ref: '#/components/responses/ConflictError' }
+  "/file-upload-intents/{id}/content":
+    put:
+      operationId: uploadContentPut
+      tags: ["evidence"]
+      summary: "EVIDENCE_DOCUMENTS: uploadContentPut"
+      description: "Authenticated GRC HTTPS transport into the server-owned pending intent quarantine key. Content-Length must equal expected_size_bytes; no caller bucket/key or MinIO URL is accepted. Finalization performs trusted MIME, SHA-256 and ClamAV checks."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "EVIDENCE_DOCUMENTS"
+      x-tcdx-permission: "`evidence.document.update`"
+      x-tcdx-scope: "tenant, owned_object"
+      x-tcdx-audit-event: "NONE; transport is accounted by uploadIntentCreate/uploadFinalize"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "INTENT_SCOPED_RETRY"
+      x-tcdx-transaction-boundary: "LOCKED_INTENT_AND_PRIVATE_STORAGE"
+      x-tcdx-physical-entities: "`evidence.file_upload_intents`, private MinIO quarantine"
+      x-tcdx-rector-source: "24; human Phase 5 browser transport decision 2026-09-28"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/octet-stream: { schema: { type: string, format: binary } } }
+      responses:
+        '204': { description: "Content staged in private quarantine" }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+        '413': { $ref: '#/components/responses/ValidationError' }
+  "/file-objects/{id}/content":
+    get:
+      operationId: fileObjectDownload
+      tags: ["evidence"]
+      summary: "EVIDENCE_DOCUMENTS: fileObjectDownload"
+      description: "Streams only a tenant-authorized scan-PASS FileObject from private MinIO through GRC HTTPS. Filename is sanitized for Content-Disposition; bucket/key and internal URL are never client inputs."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "EVIDENCE_DOCUMENTS"
+      x-tcdx-permission: "`evidence.evidence.read`"
+      x-tcdx-scope: "tenant, owned_object"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO_AND_PRIVATE_STORAGE_STREAM"
+      x-tcdx-physical-entities: "`evidence.file_objects`, private MinIO final object"
+      x-tcdx-rector-source: "24; human Phase 5 browser transport decision 2026-09-28"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { description: "Authorized binary stream with safe Content-Disposition", content: { application/octet-stream: { schema: { type: string, format: binary } } } }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
   "/evidence-requests":
     get:
       operationId: evidenceRequestList
@@ -1080,12 +1731,12 @@ paths:
       x-tcdx-capability: "EVIDENCE_DOCUMENTS"
       x-tcdx-permission: "`evidence.evidence_request.submit`"
       x-tcdx-scope: "assigned/tenant"
-      x-tcdx-audit-event: "`audit.evidence.request.fulfill.v1`"
+      x-tcdx-audit-event: "`audit.lifecycle.evidence_request.fulfill.v1`"
       x-tcdx-domain-events: "`evidence.request.fulfilled.v1`"
       x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
       x-tcdx-transaction-boundary: "TX"
       x-tcdx-physical-entities: "request/fulfillments"
-      x-tcdx-rector-source: "21,24"
+      x-tcdx-rector-source: "Phase 5 final human decision 2026-09-23; 21,24"
       parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
       requestBody:
         required: true
@@ -2364,12 +3015,161 @@ paths:
         '403': { $ref: '#/components/responses/AuthorizationError' }
         '404': { $ref: '#/components/responses/NotFoundError' }
         '409': { $ref: '#/components/responses/ConflictError' }
+  "/retention-policies":
+    get:
+      operationId: retentionPolicyList
+      tags: ["privacy"]
+      summary: "PRIVACY: retentionPolicyList"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.read`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`privacy.retention_policies`"
+      x-tcdx-rector-source: "H-004; human Phase 5 read/update decision 2026-09-28"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/PageSize' }, { $ref: '#/components/parameters/Cursor' }]
+      responses:
+        '200': { $ref: '#/components/responses/OperationSuccess' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+    post:
+      operationId: retentionPolicyCreate
+      tags: ["privacy"]
+      summary: "PRIVACY: retentionPolicyCreate"
+      description: "Phase 5 RetentionPolicy amendment. Creates only a tenant-owned draft; lifecycle, effective interval, row_version, actor and disposition semantics are server-controlled."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.retention_policy.create.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-disposition-semantics: "purge_if_no_legal_hold"
+      x-tcdx-physical-entities: "`privacy.retention_policies`, audit/idempotency"
+      x-tcdx-rector-source: "22,23,33,39; H-004; Phase 5 RetentionPolicy authorization 2026-09-24"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionPolicyCreateRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/retention-policies/{id}":
+    get:
+      operationId: retentionPolicyGet
+      tags: ["privacy"]
+      summary: "PRIVACY: retentionPolicyGet"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.read`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`privacy.retention_policies`"
+      x-tcdx-rector-source: "H-004; human Phase 5 read/update decision 2026-09-28"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/OperationSuccess' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+  "/retention-policies/{id}:update":
+    post:
+      operationId: retentionPolicyUpdate
+      tags: ["privacy"]
+      summary: "PRIVACY: retentionPolicyUpdate"
+      description: "Updates retention_seconds and is_mandatory on a tenant draft. Strong If-Match is the sole concurrency authority."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.update`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.retention_policy.update.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.retention_policies`, audit/idempotency"
+      x-tcdx-rector-source: "H-004; human Phase 5 read/update decision 2026-09-28"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionPolicyUpdateRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/retention-policies/{id}:review":
+    post:
+      operationId: retentionPolicyReview
+      tags: ["privacy"]
+      summary: "PRIVACY: retentionPolicyReview"
+      description: "Transitions a tenant RetentionPolicy from draft to under_review with strong If-Match against row_version."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.review`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.retention_policy.review.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.retention_policies`, lifecycle registry, audit/idempotency"
+      x-tcdx-rector-source: "21,22,23,39; H-004; Phase 5 RetentionPolicy authorization 2026-09-24"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionPolicyTransitionRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/retention-policies/{id}:approve":
+    post:
+      operationId: retentionPolicyApprove
+      tags: ["privacy"]
+      summary: "PRIVACY: retentionPolicyApprove"
+      description: "Transitions under_review to approved. Legal Reviewer must be a different UserIdentity from the policy author."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.approve`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.retention_policy.approve.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.retention_policies`, lifecycle registry, audit/idempotency"
+      x-tcdx-rector-source: "21,22,23,39,42; H-004; Phase 5 RetentionPolicy authorization 2026-09-24"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionPolicyTransitionRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
   "/retention-policies/{id}:publish":
     post:
       operationId: retentionPolicyPublish
       tags: ["privacy"]
       summary: "PRIVACY: retentionPolicyPublish"
-      description: "H-004. Publishes an approved tenant policy without weakening mandatory regulatory or contractual retention."
+      description: "H-004. Transitions approved to published, sets effective_from atomically from the server transaction timestamp and leaves effective_to NULL."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "PRIVACY"
       x-tcdx-permission: "`privacy.retention_policy.publish`"
@@ -2383,7 +3183,7 @@ paths:
       parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
       requestBody:
         required: true
-        content: { application/json: { schema: { $ref: '#/components/schemas/DomainCommandRequest' } } }
+        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionPolicyTransitionRequest' } } }
       responses:
         '202': { $ref: '#/components/responses/OperationSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
@@ -3055,6 +3855,12 @@ components:
       description: UUIDv7 tenant context for tenant business operations; forbidden for platform/global operations unless their approved operation contract explicitly requires a target tenant.
       schema:
         $ref: '#/components/schemas/UuidV7'
+    AdministrativeTenantId:
+      name: tenant_id
+      in: query
+      required: false
+      description: Required for Platform administrative reads of tenant-owned data; forbidden together with a tenant header. Tenant Admin derives tenant only from its validated active header.
+      schema: { $ref: '#/components/schemas/UuidV7' }
     CorrelationId:
       name: X-Correlation-Id
       in: header
@@ -3080,6 +3886,20 @@ components:
         type: string
         minLength: 1
         maxLength: 255
+    IfMatch:
+      name: If-Match
+      in: header
+      required: true
+      description: Strong quoted decimal ETag containing the current positive RetentionPolicy row_version. Weak validators and a body expected_version are rejected.
+      schema:
+        type: string
+        pattern: '^"[1-9][0-9]*"$'
+    MembershipRoleIfMatch:
+      name: If-Match
+      in: header
+      required: true
+      description: Strong quoted SHA-256 ETag from the current MembershipRole administrative projection. Weak validators are rejected.
+      schema: { type: string, pattern: '^"[0-9a-f]{64}"$' }
     Cursor:
       name: page[cursor]
       in: query
@@ -3189,7 +4009,35 @@ components:
     IdempotencyReplayed:
       description: 'true when response is the persisted replay for the same fingerprint.'
       schema: { type: boolean }
+    ETag:
+      description: Strong operation-specific resource validator; use the corresponding operation's If-Match contract.
+      schema: { type: string }
   schemas:
+    ValidationAccessCandidatePage:
+      type: object
+      additionalProperties: false
+      required: [items, page]
+      properties:
+        items: { type: array, items: { $ref: '#/components/schemas/ValidationAccessCandidate' } }
+        page: { $ref: '#/components/schemas/PageMeta' }
+    ValidationAccessCandidate:
+      type: object
+      additionalProperties: false
+      required: [regulatory_pack_version_id, regulatory_pack_validation_provenance_id, pack_code, name, edition, license_classification, version_state, pack_state, authority_class, source_role, provenance_ref, version_effective_from, version_effective_to]
+      properties:
+        regulatory_pack_version_id: { $ref: '#/components/schemas/UuidV7' }
+        regulatory_pack_validation_provenance_id: { $ref: '#/components/schemas/UuidV7' }
+        pack_code: { type: string }
+        name: { type: string }
+        edition: { type: string }
+        license_classification: { type: string, enum: [NOT_YET_LICENSED, non_authoritative_test_pack] }
+        version_state: { type: string, enum: [draft] }
+        pack_state: { type: string, enum: [draft] }
+        authority_class: { type: string, enum: [NON_AUTHORITATIVE_TEST_PACK] }
+        source_role: { type: string, enum: [provisional_supporting_reference, supporting_reference, test_data_source] }
+        provenance_ref: { type: string }
+        version_effective_from: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        version_effective_to: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
     UuidV7:
       type: string
       format: uuid
@@ -3202,6 +4050,133 @@ components:
       type: string
       enum: [public, internal, confidential, restricted]
       description: Closed, versioned Platform vocabulary. tenantCreate always persists the server-owned initial value confidential.
+    TenantAdministrativeProjection:
+      type: object
+      additionalProperties: false
+      required: [tenant_id, tenant_code, legal_name, display_name, default_timezone, lifecycle_state, data_classification, created_at, updated_at, current_subscription]
+      properties:
+        tenant_id: { $ref: '#/components/schemas/UuidV7' }
+        tenant_code: { type: string }
+        legal_name: { type: string }
+        display_name: { type: string }
+        default_timezone: { type: string }
+        lifecycle_state: { type: string }
+        data_classification: { $ref: '#/components/schemas/DataClassification' }
+        created_at: { $ref: '#/components/schemas/UtcTimestamp' }
+        updated_at: { $ref: '#/components/schemas/UtcTimestamp' }
+        current_subscription:
+          oneOf: [{ $ref: '#/components/schemas/TenantCurrentSubscription' }, { type: 'null' }]
+    TenantCurrentSubscription:
+      type: object
+      additionalProperties: false
+      required: [subscription_id, subscription_code, lifecycle_state, plan_code, plan_name, plan_version_number]
+      properties:
+        subscription_id: { $ref: '#/components/schemas/UuidV7' }
+        subscription_code: { type: string }
+        lifecycle_state: { type: string }
+        plan_code: { type: string }
+        plan_name: { type: string }
+        plan_version_number: { type: integer }
+    AdministrativeUserIdentity:
+      type: object
+      additionalProperties: false
+      required: [display_name, email_normalized, lifecycle_state, last_authenticated_at]
+      properties:
+        display_name: { type: [string, 'null'] }
+        email_normalized: { type: [string, 'null'], format: email }
+        lifecycle_state: { type: string }
+        last_authenticated_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+      description: Minimal display attributes only; external identity authority remains issuer plus stable subject, never email.
+    MembershipAdministrativeProjection:
+      type: object
+      additionalProperties: false
+      required: [tenant_membership_id, tenant_id, user_identity_id, membership_state, joined_at, ended_at, user_identity, roles]
+      properties:
+        tenant_membership_id: { $ref: '#/components/schemas/UuidV7' }
+        tenant_id: { $ref: '#/components/schemas/UuidV7' }
+        user_identity_id: { $ref: '#/components/schemas/UuidV7' }
+        membership_state: { type: string }
+        joined_at: { $ref: '#/components/schemas/UtcTimestamp' }
+        ended_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        user_identity: { $ref: '#/components/schemas/AdministrativeUserIdentity' }
+        roles: { type: array, items: { $ref: '#/components/schemas/MembershipRoleAdministrativeProjection' } }
+    MembershipRoleAdministrativeProjection:
+      type: object
+      additionalProperties: false
+      required: [membership_role_id, role_id, role_code, role_name, scope_kind, valid_from, valid_to, etag]
+      properties:
+        membership_role_id: { $ref: '#/components/schemas/UuidV7' }
+        role_id: { $ref: '#/components/schemas/UuidV7' }
+        role_code: { type: string }
+        role_name: { type: string }
+        scope_kind: { type: string }
+        valid_from: { $ref: '#/components/schemas/UtcTimestamp' }
+        valid_to: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        etag: { type: string, pattern: '^[0-9a-f]{64}$' }
+    MembershipInvitationAdministrativeProjection:
+      type: object
+      additionalProperties: false
+      required: [tenant_membership_invitation_id, tenant_id, invitee_email, lifecycle_state, effective_state, created_at, expires_at, accepted_at, revoked_at, tenant_membership_id, row_version]
+      properties:
+        tenant_membership_invitation_id: { $ref: '#/components/schemas/UuidV7' }
+        tenant_id: { $ref: '#/components/schemas/UuidV7' }
+        invitee_email: { type: string, format: email }
+        lifecycle_state: { type: string, enum: [pending, accepted, expired, revoked] }
+        effective_state: { type: string, enum: [pending, accepted, expired, revoked] }
+        created_at: { $ref: '#/components/schemas/UtcTimestamp' }
+        expires_at: { $ref: '#/components/schemas/UtcTimestamp' }
+        accepted_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        revoked_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        tenant_membership_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        row_version: { type: integer, minimum: 1 }
+      description: Neither token nor digest can appear in any administrative read.
+    RoleAdministrativeProjection:
+      type: object
+      additionalProperties: false
+      required: [role_id, tenant_id, ownership_class, role_code, name, is_baseline, lifecycle_state]
+      properties:
+        role_id: { $ref: '#/components/schemas/UuidV7' }
+        tenant_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        ownership_class: { type: string, enum: [PLATFORM_CONTROL, TENANT_OWNED] }
+        role_code: { type: string }
+        name: { type: string }
+        is_baseline: { type: boolean }
+        lifecycle_state: { type: string }
+    TenantAdministrativePage:
+      type: object
+      additionalProperties: false
+      required: [items, page]
+      properties:
+        items: { type: array, items: { $ref: '#/components/schemas/TenantAdministrativeProjection' } }
+        page: { $ref: '#/components/schemas/PageMeta' }
+    MembershipAdministrativePage:
+      type: object
+      additionalProperties: false
+      required: [items, page]
+      properties:
+        items: { type: array, items: { $ref: '#/components/schemas/MembershipAdministrativeProjection' } }
+        page: { $ref: '#/components/schemas/PageMeta' }
+    MembershipRoleAdministrativePage:
+      type: object
+      additionalProperties: false
+      required: [items, page]
+      properties:
+        items: { type: array, items: { $ref: '#/components/schemas/MembershipRoleAdministrativeProjection' } }
+        page: { $ref: '#/components/schemas/PageMeta' }
+    MembershipInvitationAdministrativePage:
+      type: object
+      additionalProperties: false
+      required: [items, page]
+      properties:
+        items: { type: array, items: { $ref: '#/components/schemas/MembershipInvitationAdministrativeProjection' } }
+        page: { $ref: '#/components/schemas/PageMeta' }
+    RoleAdministrativePage:
+      type: object
+      additionalProperties: false
+      required: [items, page]
+      properties:
+        items: { type: array, items: { $ref: '#/components/schemas/RoleAdministrativeProjection' } }
+        page: { $ref: '#/components/schemas/PageMeta' }
     TenantCreateRequest:
       type: object
       additionalProperties: false
@@ -3241,6 +4216,38 @@ components:
         correlation_id: { type: string, format: uuid }
         resource_id: { $ref: '#/components/schemas/UuidV7' }
         result: { $ref: '#/components/schemas/TenantProjection' }
+    SubscriptionCreateRequest:
+      type: object
+      additionalProperties: false
+      required: [tenant_id, plan_version_id, subscription_code]
+      properties:
+        tenant_id: { $ref: '#/components/schemas/UuidV7' }
+        plan_version_id: { $ref: '#/components/schemas/UuidV7' }
+        subscription_code: { type: string, minLength: 1, maxLength: 96 }
+      description: The target tenant and PlanVersion are explicit canonical identifiers. subscription_id, lifecycle_state=active, starts_at, actor metadata, capabilities and entitlements are server-owned or derived and forbidden as caller input.
+    SubscriptionProjection:
+      type: object
+      additionalProperties: false
+      required: [subscription_id, tenant_id, plan_version_id, subscription_code, lifecycle_state, starts_at, ends_at, cancelled_at]
+      properties:
+        subscription_id: { $ref: '#/components/schemas/UuidV7' }
+        tenant_id: { $ref: '#/components/schemas/UuidV7' }
+        plan_version_id: { $ref: '#/components/schemas/UuidV7' }
+        subscription_code: { type: string, minLength: 1, maxLength: 96 }
+        lifecycle_state: { type: string, const: active }
+        starts_at: { $ref: '#/components/schemas/UtcTimestamp' }
+        ends_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        cancelled_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+    SubscriptionCreateOperationResult:
+      type: object
+      additionalProperties: false
+      required: [operation_id, status, correlation_id, resource_id, result]
+      properties:
+        operation_id: { type: string, const: subscriptionCreate }
+        status: { type: string, const: completed }
+        correlation_id: { type: string, format: uuid }
+        resource_id: { $ref: '#/components/schemas/UuidV7' }
+        result: { $ref: '#/components/schemas/SubscriptionProjection' }
     MembershipCreateRequest:
       type: object
       additionalProperties: false
@@ -3268,6 +4275,65 @@ components:
         correlation_id: { type: string, format: uuid }
         resource_id: { $ref: '#/components/schemas/UuidV7' }
         result: { $ref: '#/components/schemas/TenantMembershipProjection' }
+    MembershipInvitationCreateRequest:
+      type: object
+      additionalProperties: false
+      required: [tenant_id, invitee_email, authentication_method]
+      properties:
+        tenant_id: { $ref: '#/components/schemas/UuidV7' }
+        invitee_email: { type: string, format: email, maxLength: 320 }
+        authentication_method: { type: string, const: ZOHO }
+      description: tenant_id selects one existing active tenant under Platform authority. invitee_email is temporary delivery/bootstrap ceremony input only; it never selects, merges or authorizes a UserIdentity and never grants a Permission or role.
+    TenantMembershipInvitationProjection:
+      type: object
+      additionalProperties: false
+      required: [tenant_membership_invitation_id, tenant_id, invitee_email, authentication_method, lifecycle_state, expires_at, accepted_at, tenant_membership_id, revoked_at, row_version]
+      properties:
+        tenant_membership_invitation_id: { $ref: '#/components/schemas/UuidV7' }
+        tenant_id: { $ref: '#/components/schemas/UuidV7' }
+        invitee_email: { type: string, format: email, maxLength: 320 }
+        authentication_method: { type: string, const: ZOHO }
+        lifecycle_state: { type: string, enum: [pending, accepted, expired, revoked] }
+        expires_at: { $ref: '#/components/schemas/UtcTimestamp' }
+        accepted_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        tenant_membership_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
+        revoked_at: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        row_version: { type: integer, format: int64, minimum: 1 }
+    MembershipInvitationCreateProjection:
+      allOf:
+        - { $ref: '#/components/schemas/TenantMembershipInvitationProjection' }
+        - type: object
+          additionalProperties: false
+          required: [invitation_token]
+          properties:
+            invitation_token:
+              oneOf: [{ type: string, minLength: 43, maxLength: 43, writeOnly: true }, { type: 'null' }]
+              description: Clear one-time delivery secret returned only on initial creation. Null on idempotent replay; never persisted, audited or logged.
+    MembershipInvitationCreateOperationResult:
+      type: object
+      additionalProperties: false
+      required: [operation_id, status, correlation_id, resource_id, result]
+      properties:
+        operation_id: { type: string, const: membershipInvitationCreate }
+        status: { type: string, const: completed }
+        correlation_id: { type: string, format: uuid }
+        resource_id: { $ref: '#/components/schemas/UuidV7' }
+        result: { $ref: '#/components/schemas/MembershipInvitationCreateProjection' }
+    MembershipInvitationRevokeRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        reason: { type: string, minLength: 1, maxLength: 2000 }
+    MembershipInvitationRevokeOperationResult:
+      type: object
+      additionalProperties: false
+      required: [operation_id, status, correlation_id, resource_id, result]
+      properties:
+        operation_id: { type: string, const: membershipInvitationRevoke }
+        status: { type: string, const: completed }
+        correlation_id: { type: string, format: uuid }
+        resource_id: { $ref: '#/components/schemas/UuidV7' }
+        result: { $ref: '#/components/schemas/TenantMembershipInvitationProjection' }
     AvailableTenantContext:
       type: object
       additionalProperties: false
@@ -3288,12 +4354,17 @@ components:
     EffectiveAccess:
       type: object
       additionalProperties: false
-      required: [available_tenant_contexts]
+      required: [available_tenant_contexts, effective_platform_role_codes]
       properties:
         available_tenant_contexts:
           type: array
           items: { $ref: '#/components/schemas/AvailableTenantContext' }
           description: Complete bounded set of the authenticated canonical UserIdentity's own active memberships in active tenants, ordered by tenant_display_name ASC then tenant_id ASC; no tenant header, global enumeration or pagination is used.
+        effective_platform_role_codes:
+          type: array
+          uniqueItems: true
+          items: { type: string, minLength: 1, maxLength: 96 }
+          description: Minimal lexicographically ordered summary of the authenticated human's own active PLATFORM_CONTROL roles for UI presentation only. Backend authorization is recomputed for every Platform request; this projection never authorizes a command.
     MembershipRoleAssignRequest:
       type: object
       additionalProperties: false
@@ -3328,7 +4399,7 @@ components:
     MembershipRoleAssignmentProjection:
       type: object
       additionalProperties: false
-      required: [membership_role_id, tenant_membership_id, role_id, scope_kind, valid_from]
+      required: [membership_role_id, tenant_membership_id, role_id, scope_kind, valid_from, etag]
       properties:
         membership_role_id: { $ref: '#/components/schemas/UuidV7' }
         tenant_membership_id: { $ref: '#/components/schemas/UuidV7' }
@@ -3342,6 +4413,23 @@ components:
         audit_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
         valid_from: { $ref: '#/components/schemas/UtcTimestamp' }
         valid_to: { oneOf: [{ $ref: '#/components/schemas/UtcTimestamp' }, { type: 'null' }] }
+        etag: { type: string, pattern: '^[0-9a-f]{64}$' }
+    MembershipRoleRevokeRequest:
+      type: object
+      additionalProperties: false
+      required: [reason]
+      properties:
+        reason: { type: string, minLength: 1, maxLength: 2000 }
+    MembershipRoleRevokeOperationResult:
+      type: object
+      additionalProperties: false
+      required: [operation_id, status, correlation_id, resource_id, result]
+      properties:
+        operation_id: { type: string, const: membershipRoleRevoke }
+        status: { type: string, const: completed }
+        correlation_id: { type: string, format: uuid }
+        resource_id: { $ref: '#/components/schemas/UuidV7' }
+        result: { $ref: '#/components/schemas/MembershipRoleAssignmentProjection' }
     MembershipRoleAssignmentOperationResult:
       type: object
       additionalProperties: false
@@ -3425,7 +4513,7 @@ components:
         requirement_id: { $ref: '#/components/schemas/UuidV7' }
         scope_subject_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
         applicability_version: { type: integer, format: int64, minimum: 1 }
-        applicability_decision: { type: string }
+        applicability_decision: { type: string, enum: [applicable, not_applicable] }
         rationale: { type: string }
         lifecycle_state: { type: string }
         effective_from: { $ref: '#/components/schemas/UtcTimestamp' }
@@ -3816,10 +4904,22 @@ components:
     ControlPage:
       type: object
       additionalProperties: false
-      required: [items, page]
+      required: [items, page, framework_filters]
       properties:
         items: { type: array, items: { $ref: '#/components/schemas/ControlProjection' } }
         page: { $ref: '#/components/schemas/PageMeta' }
+        framework_filters:
+          type: array
+          description: Effective contracted framework versions visible to the authenticated tenant, independent of result pagination.
+          items:
+            type: object
+            additionalProperties: false
+            required: [framework_version_id, framework_code, framework_name, edition]
+            properties:
+              framework_version_id: { $ref: '#/components/schemas/UuidV7' }
+              framework_code: { type: string }
+              framework_name: { type: string }
+              edition: { type: string }
     ControlAssessmentPage:
       type: object
       additionalProperties: false
@@ -3874,25 +4974,32 @@ components:
     UploadIntent:
       type: object
       additionalProperties: false
-      required: [file_object_id, upload_state]
+      required: [upload_intent_id, lifecycle_state, upload_url, expires_at]
       properties:
-        file_object_id: { $ref: '#/components/schemas/UuidV7' }
-        upload_state: { type: string, enum: [quarantine_pending] }
-        signed_upload_url: { type: string, format: uri }
+        upload_intent_id: { $ref: '#/components/schemas/UuidV7' }
+        lifecycle_state: { type: string, enum: [pending_upload] }
+        upload_url: { type: string, format: uri-reference }
         expires_at: { $ref: '#/components/schemas/UtcTimestamp' }
-      description: Signed URL is short-lived and never logged; FileObject is unusable as Evidence until scan PASS and governed version/review flow.
+      description: Browser upload_url is an authenticated relative GRC path. Internal short-lived signed MinIO URLs are never returned, persisted or logged. No FileObject exists until trusted scan-PASS promotion.
     ApplicabilityCreateRequest:
       type: object
       additionalProperties: false
-      required: [requirement_id, applicability_decision, rationale, effective_from]
+      required: [requirement_id, applicability_decision, effective_from]
+      if:
+        properties:
+          applicability_decision: { const: not_applicable }
+      then:
+        required: [rationale]
+        properties:
+          rationale: { type: string, pattern: '.*\S.*' }
       properties:
         requirement_id: { $ref: '#/components/schemas/UuidV7' }
         scope_subject_id: { $ref: '#/components/schemas/UuidV7' }
-        applicability_decision: { type: string, minLength: 1, maxLength: 32 }
-        rationale: { type: string, minLength: 1 }
+        applicability_decision: { type: string, enum: [applicable, not_applicable] }
+        rationale: { type: string }
         effective_from: { $ref: '#/components/schemas/UtcTimestamp' }
         effective_to: { $ref: '#/components/schemas/UtcTimestamp' }
-      description: Requirement must be accessible; scope Subject, when present, belongs to the selected tenant. Version, tenant and initial lifecycle are server-controlled.
+      description: Requirement must be accessible; scope Subject, when present, is active, effective and belongs to the selected tenant. Rationale is required and nonblank for not_applicable; applicable permits omission. Version, tenant and initial lifecycle are server-controlled.
     ApplicabilitySubmitRequest:
       type: object
       additionalProperties: false
@@ -4104,14 +5211,10 @@ components:
     UploadFinalizeRequest:
       type: object
       additionalProperties: false
-      required: [expected_version, detected_mime, size_bytes, sha256, storage_version]
+      required: [expected_version]
       properties:
         expected_version: { type: integer, format: int64, minimum: 1 }
-        detected_mime: { type: string, minLength: 1, maxLength: 255 }
-        size_bytes: { type: integer, format: int64, minimum: 0 }
-        sha256: { type: string, pattern: '^[a-f0-9]{64}$' }
-        storage_version: { type: string, minLength: 1, maxLength: 128 }
-      description: Finalization verifies metadata and moves only to governed quarantine; scan PASS is a separate authoritative outcome.
+      description: Client supplies no detected MIME, checksum, storage version, bucket or key. All final metadata is derived by trusted runtime.
     EvidenceRequestCreateRequest:
       type: object
       additionalProperties: false
@@ -4314,6 +5417,32 @@ components:
         rationale: { type: string, minLength: 1 }
         retest_reference: { type: string, minLength: 1 }
       description: Verifier identity and verified_at are server-derived; the verifier/completer SoD policy is enforced.
+    RetentionPolicyCreateRequest:
+      type: object
+      additionalProperties: false
+      required: [policy_code, version_number, policy_kind, retention_seconds, trigger_event_code, precedence_rank, is_mandatory]
+      properties:
+        policy_code: { type: string, minLength: 1, maxLength: 128 }
+        version_number: { type: integer, format: int64, minimum: 1 }
+        policy_kind: { type: string, enum: [legal_hold, mandatory_regulatory_policy, contractual_policy, tenant_policy, product_baseline] }
+        retention_seconds: { type: integer, format: int64, minimum: 0 }
+        trigger_event_code: { type: string, enum: [expiry_or_closure] }
+        precedence_rank: { type: integer, enum: [500, 400, 300, 200, 100] }
+        is_mandatory: { type: boolean }
+      description: Precedence must match policy_kind exactly (500/400/300/200/100). effective_from, effective_to, lifecycle, row_version, regulatory source and disposition are not caller-controlled.
+    RetentionPolicyTransitionRequest:
+      type: object
+      additionalProperties: false
+      maxProperties: 0
+      description: Empty command body. The sole API concurrency precondition is the strong If-Match header.
+    RetentionPolicyUpdateRequest:
+      type: object
+      additionalProperties: false
+      required: [retention_seconds, is_mandatory]
+      properties:
+        retention_seconds: { type: integer, format: int64, minimum: 0 }
+        is_mandatory: { type: boolean }
+      description: Draft-only update; strong If-Match supplies row_version. Policy identity, kind, trigger, precedence and lifecycle remain server-controlled.
     DomainCommandRequest:
       type: object
       description: Operation-specific schema placeholder constrained by the named request contract in artifact 03; implementations must refine it without adding fields or semantics not traced to that contract.
@@ -4329,6 +5458,33 @@ components:
         resource_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
         result: { type: [object, 'null'] }
   responses:
+    TenantAdministrativeListSuccess:
+      description: Authorized global Tenant metadata cursor page.
+      content: { application/json: { schema: { $ref: '#/components/schemas/TenantAdministrativePage' } } }
+    TenantAdministrativeGetSuccess:
+      description: Authorized canonical Tenant metadata.
+      content: { application/json: { schema: { $ref: '#/components/schemas/TenantAdministrativeProjection' } } }
+    MembershipAdministrativeListSuccess:
+      description: Authorized tenant-bound membership cursor page with minimal identity display attributes and roles.
+      content: { application/json: { schema: { $ref: '#/components/schemas/MembershipAdministrativePage' } } }
+    MembershipAdministrativeGetSuccess:
+      description: Authorized tenant-bound membership detail.
+      content: { application/json: { schema: { $ref: '#/components/schemas/MembershipAdministrativeProjection' } } }
+    MembershipRoleAdministrativeListSuccess:
+      description: Authorized role assignments of one tenant-bound membership.
+      content: { application/json: { schema: { $ref: '#/components/schemas/MembershipRoleAdministrativePage' } } }
+    MembershipInvitationAdministrativeListSuccess:
+      description: Authorized safe invitation metadata cursor page, never token or digest.
+      content: { application/json: { schema: { $ref: '#/components/schemas/MembershipInvitationAdministrativePage' } } }
+    MembershipInvitationAdministrativeGetSuccess:
+      description: Authorized safe invitation detail, never token or digest.
+      content: { application/json: { schema: { $ref: '#/components/schemas/MembershipInvitationAdministrativeProjection' } } }
+    RoleAdministrativeListSuccess:
+      description: Authorized Platform or tenant role catalog cursor page.
+      content: { application/json: { schema: { $ref: '#/components/schemas/RoleAdministrativePage' } } }
+    RoleAdministrativeGetSuccess:
+      description: Authorized Platform or tenant role catalog detail.
+      content: { application/json: { schema: { $ref: '#/components/schemas/RoleAdministrativeProjection' } } }
     AccessGetSuccess:
       description: Authenticated principal access projection including only the human principal's own active available tenant contexts; no preselected tenant is required.
       headers:
@@ -4346,6 +5502,15 @@ components:
       content:
         application/json:
           schema: { $ref: '#/components/schemas/TenantCreateOperationResult' }
+    SubscriptionCreateSuccess:
+      description: Completed canonical Subscription projection; replay returns the identical persisted result.
+      headers:
+        X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }
+        X-Request-Id: { $ref: '#/components/headers/RequestId' }
+        Idempotency-Replayed: { $ref: '#/components/headers/IdempotencyReplayed' }
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/SubscriptionCreateOperationResult' }
     MembershipCreateSuccess:
       description: Completed canonical TenantMembership projection; replay returns the identical persisted result.
       headers:
@@ -4355,6 +5520,23 @@ components:
       content:
         application/json:
           schema: { $ref: '#/components/schemas/MembershipCreateOperationResult' }
+    MembershipInvitationCreateSuccess:
+      description: Invitation projection plus the clear token once; idempotent replay returns the same persisted projection with invitation_token null.
+      headers:
+        X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }
+        Idempotency-Replayed: { $ref: '#/components/headers/IdempotencyReplayed' }
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/MembershipInvitationCreateOperationResult' }
+    MembershipInvitationRevokeSuccess:
+      description: Revoked invitation projection.
+      headers:
+        X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }
+        Idempotency-Replayed: { $ref: '#/components/headers/IdempotencyReplayed' }
+        ETag: { $ref: '#/components/headers/ETag' }
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/MembershipInvitationRevokeOperationResult' }
     MembershipRoleAssignSuccess:
       description: Completed canonical MembershipRole assignment projection; replay returns the identical persisted result.
       headers:
@@ -4364,6 +5546,16 @@ components:
       content:
         application/json:
           schema: { $ref: '#/components/schemas/MembershipRoleAssignmentOperationResult' }
+    MembershipRoleRevokeSuccess:
+      description: Selected MembershipRole validity closed; same-key replay returns the same persisted assignment without another audit or outbox event.
+      headers:
+        X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }
+        X-Request-Id: { $ref: '#/components/headers/RequestId' }
+        Idempotency-Replayed: { $ref: '#/components/headers/IdempotencyReplayed' }
+        ETag: { $ref: '#/components/headers/ETag' }
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/MembershipRoleRevokeOperationResult' }
     OperationSuccess:
       description: Command accepted/completed or query completed under the operation-specific response contract.
       headers:
@@ -4491,7 +5683,7 @@ components:
     pagination: Opaque cursor with stable operation-allowlisted sort and UUIDv7 tie-breaker; command/single-resource operations do not paginate.
     tenant-context: Resolved and checked against active membership; never trusted as authorization solely because supplied by client.
     filtering: Resource-specific allowlists; no arbitrary field/operator language.
-    optimistic-concurrency: Phase 5 stateful commands carry `expected_version`, which must equal the target row's explicit `row_version`; stale writes return 409. No `xmin`, implicit substitute or dual header authority is permitted.
+    optimistic-concurrency: Phase 5 stateful commands carry `expected_version`, except RetentionPolicy review/approve/publish whose strong `If-Match` is translated server-side to the same target `row_version`, and MembershipRoleRevoke using a strong SHA-256 validity `If-Match`; stale writes return 409. No `xmin`, business-version substitute, body/header dual authority or caller-controlled publication timestamp is permitted.
     idempotency: PostgreSQL IdempotencyRecord is authoritative; Redis may not decide replay/conflict.
     files: Quarantine, type/size validation, malware scan, checksum and classification precede Evidence eligibility.
     async: Heavy reports/imports/bulk are jobs with row-level outcomes and explicit partial failure.

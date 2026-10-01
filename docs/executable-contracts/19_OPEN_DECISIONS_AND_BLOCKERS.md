@@ -88,3 +88,22 @@ F5D_006_APPLICATION_TOKEN=CLOSED
 F5D_007_FIRST_PLATFORM_ADMIN_BOOTSTRAP=CLOSED
 F5D_007_RUNTIME_CEREMONY=DEFERRED_TO_NEXT_AUTHORIZED_RUNTIME_STAGE
 ```
+
+## Phase 5 canonical tenant-user enrollment decision — 2026-09-24
+
+`MISSING_CANONICAL_USER_ENROLLMENT` is contractually closed by `DR-PHASE5-CANONICAL-TENANT-USER-ENROLLMENT-2026-09-24` for QA/Phase 5 only. The decision authorizes `TenantMembershipInvitation`, Platform-scoped create/revoke permissions granted only to the base `PLATFORM_ADMIN` role, and the narrowly bounded Zoho `MEMBERSHIP_INVITATION_ACCEPT` ceremony. Acceptance neither requires nor grants Platform authority. It does not authorize Entra, Google Workspace, LOCAL password/MFA, commercial user administration, PRE-6 or Phase 6. Runtime completion remains gated on the forward-only migration, applicable local gates, QA deployment and a real second human's Zoho login; no fictitious identity, SQL fixture or out-of-band UUID may satisfy it.
+
+## Phase 5 isolated lifecycle findings — 2026-09-28
+
+The isolated PostgreSQL 16 integration proves RetentionPolicy creation/review/distinct-actor approval/publication, storage persistence and malware rejection, Evidence approval/fulfillment and `controlAssessmentSubmit`; it rolls back every synthetic business row. It does not constitute a QA smoke or human SoD acceptance.
+
+| blocker_id | evidence | exact missing decision or implementation | independent work allowed |
+|---|---|---|---|
+| F5-CONTROL-START-001 | Human Phase 5 decision 2026-09-28 authorizes tenant scope for CONTROL_OWNER using the existing `controls.control_assessment.update` permission; no assignee or creator-based ownership model | `CLOSED_LOCAL_CANDIDATE`: executable contracts and backend align; migration `20260928000300` publishes immutable v3 Start with tenant scope; isolated PostgreSQL 16 lifecycle test exercises Start then Submit | QA backup, canonical migration runner and candidate deploy remain owner gates; no QA mutation in this execution |
+| F5-ROLE-REVOKE-001 | Human Phase 5 decision 2026-09-28 closes the operation on existing temporal `iam.membership_roles.valid_to` and reuses the published `platform.role.assign` permission. A forward-only Platform Admin grant, explicit Platform tenant selection, strong validity ETag, idempotency, audit/outbox and UI confirmation are the approved implementation | `CLOSED_BY_HUMAN_DECISION`; QA remains pending until the new grant migration and candidate runtime deploy pass | Tenant and Platform revoke use separate authority paths; no PlatformRoleAssignment mutation |
+
+These are Phase 5 slice decisions, not changes to the historical Phase 2 or PRE-F5E blocker counts above. Neither authorizes a SQL business fixture in QA or a creator-as-owner shortcut. Browser file transport through GRC HTTPS and RetentionPolicy read/update were human-approved on 2026-09-28 as local candidates; QA runtime and real-human ceremonies remain pending.
+
+## Phase 5+ human closure — 2026-09-29
+
+The human resolution closes the three precheck decisions: dedicated `platform.subscription_regulatory_pack.read/create/archive` with exact Platform/Tenant grants, existing physical `org.subjects` exposed through the single new `organization.subject.read` authority, and exact persisted RequirementApplicability decisions `applicable|not_applicable`. The forward-only implementation is local only. No new rector contradiction is identified; QA apply, real actor ceremonies and human UI review remain separate gates. No Phase 6 work is authorized by this closure.

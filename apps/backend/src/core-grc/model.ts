@@ -8,9 +8,11 @@ export type CoreGrcDependencies = {
   database: Kysely<FoundationDatabase>;
   identityVerifier: IdentityVerifier;
   fileStorage: FileStoragePort;
+  runtimeEnvironment?: "development" | "test" | "qa" | "production";
 };
 
 export type CoreActor = {
+  runtimeEnvironment?: "development" | "test" | "qa" | "production";
   tenantId: string;
   membershipId: string;
   userIdentityId: string;
@@ -30,6 +32,7 @@ export type ResourceDefinition = {
   scopes: readonly ScopeKind[];
   projection: readonly string[];
   assignedMembershipColumn?: string;
+  ownedByCreator?: boolean;
   filters?: Readonly<Record<string, { expression: string; type: "uuid" | "text" | "date" | "timestamp" }>>;
 };
 
@@ -67,7 +70,7 @@ export const resources = {
   controlAssessment: {
     name: "ControlAssessment", table: "controls.control_assessments", idColumn: "control_assessment_id",
     permission: "controls.control_assessment.read", capability: "CONTROLS_ASSURANCE",
-    scopes: ["tenant", "organizational_unit", "process", "service", "assigned_object", "owned_object", "audit_engagement"],
+    scopes: ["tenant", "organizational_unit", "process", "service", "assigned_object", "owned_object", "audit_engagement"], ownedByCreator: false,
     projection: ["control_assessment_id", "row_version", "control_id", "control_version_id", "methodology_version_ref", "lifecycle_state", "result_status", "domain_conclusion", "design_effectiveness", "operating_effectiveness", "overall_effectiveness", "coverage_percent", "effective_configuration_id", "assessed_at", "superseded_by_id"],
     filters: { "filter[control_id]": { expression: "t.control_id", type: "uuid" } }
   },
@@ -84,6 +87,24 @@ export const resources = {
     scopes: ["tenant", "assigned_object", "owned_object", "audit_engagement"],
     projection: ["evidence_request_id", "row_version", "request_code", "requirement_id", "control_id", "requirement_assessment_id", "control_assessment_id", "assurance_test_id", "lifecycle_state", "requested_by_membership_id", "assigned_membership_id", "due_at", "fulfilled_at"],
     filters: { "filter[requirement_id]": { expression: "t.requirement_id", type: "uuid" }, "filter[control_id]": { expression: "t.control_id", type: "uuid" }, "filter[assigned_membership_id]": { expression: "t.assigned_membership_id", type: "uuid" }, "filter[due_from]": { expression: "t.due_at", type: "date" }, "filter[due_to]": { expression: "t.due_at", type: "date" } }
+  },
+  fileUploadIntent: {
+    name: "FileUploadIntent", table: "evidence.file_upload_intents", idColumn: "file_upload_intent_id",
+    permission: "evidence.document.create", capability: "EVIDENCE_DOCUMENTS", ownedByCreator: true,
+    scopes: ["tenant", "owned_object"],
+    projection: ["file_upload_intent_id", "row_version", "purpose", "original_filename", "declared_mime", "expected_size_bytes", "classification", "retention_policy_id", "source_provenance", "effective_from", "effective_to", "quarantine_object_key", "lifecycle_state", "expires_at", "uploaded_at", "scan_started_at", "scan_completed_at", "promoted_at", "rejected_at", "expired_at", "cancelled_at", "file_object_id"]
+  },
+  fileObject: {
+    name: "FileObject", table: "evidence.file_objects", idColumn: "file_object_id",
+    permission: "evidence.evidence.read", capability: "EVIDENCE_DOCUMENTS", ownedByCreator: true,
+    scopes: ["tenant", "owned_object", "assigned_object"],
+    projection: ["file_object_id", "row_version", "original_filename", "declared_mime", "detected_mime", "size_bytes", "sha256", "classification", "retention_policy_id", "scan_status", "scan_completed_at", "storage_version", "source_provenance", "effective_from", "effective_to"]
+  },
+  retentionPolicy: {
+    name: "RetentionPolicy", table: "privacy.retention_policies", idColumn: "retention_policy_id",
+    permission: "privacy.retention_policy.read", capability: "PRIVACY", ownedByCreator: false,
+    scopes: ["tenant"],
+    projection: ["retention_policy_id", "row_version", "ownership_class", "policy_code", "version_number", "policy_kind", "retention_seconds", "trigger_event_code", "precedence_rank", "is_mandatory", "lifecycle_state", "effective_from", "effective_to", "regulatory_source_id"]
   },
   evidence: {
     name: "Evidence", table: "evidence.evidences", idColumn: "evidence_id", permission: "evidence.evidence.read", capability: "EVIDENCE_DOCUMENTS",

@@ -19,7 +19,7 @@ COPY apps/frontend apps/frontend
 COPY packages/contracts packages/contracts
 COPY packages/shared-types packages/shared-types
 
-ARG VITE_API_ORIGIN=https://grc-bk.tcdx.int
+ARG VITE_API_ORIGIN=https://grc.tecdex.net
 ENV VITE_API_ORIGIN=$VITE_API_ORIGIN
 
 RUN pnpm --filter @tcdx-grc/frontend build

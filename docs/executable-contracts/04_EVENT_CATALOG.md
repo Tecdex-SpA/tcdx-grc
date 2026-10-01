@@ -28,7 +28,13 @@ Payload profiles:
 |---|---|---|---|---|---|---|
 | `platform.tenant.provisioned.v1` | Platform / tenantCreate | Tenant; PLATFORM_CONTROL | CREATED | tenant-bootstrap worker | confidential | 25,42,43 F3 |
 | `platform.tenant.archived.v1` | Platform / tenantArchive | Tenant; PLATFORM_CONTROL | TRANSITION | NONE_CONTRACTUALLY_REQUIRED | confidential | 23,39 |
+| `platform.subscription.created.v1` | Platform / subscriptionCreate | Subscription; PLATFORM_CONTROL | CREATED + tenant and published PlanVersion refs; entitlements remain derived from the catalog | authorization/entitlement cache invalidation only; cache non-authoritative | confidential | Human decision 2026-09-24; 25,42 |
+| `platform.subscription_regulatory_pack.activate.v1` | Platform / subscriptionRegulatoryPackActivate | SubscriptionRegulatoryPack; PLATFORM_CONTROL | Exact Subscription, RegulatoryPackVersion, effective interval and actor | invalidate derived pack visibility; no content licensing change | confidential | Human Phase 5+ resolution 2026-09-29; 25,37 |
+| `platform.subscription_regulatory_pack.revoke.v1` | Platform / subscriptionRegulatoryPackRevoke | SubscriptionRegulatoryPack; PLATFORM_CONTROL | Ended interval, reason and actor; historical GRC retained | invalidate derived pack visibility; no DELETE | confidential | Human Phase 5+ resolution 2026-09-29; 25,37 |
 | `iam.membership.created.v1` | IAM / membershipCreate | TenantMembership; TENANT_OWNED | CREATED | NONE_CONTRACTUALLY_REQUIRED | confidential/PII-minimized | 22,42 |
+| `iam.membership_invitation.created.v1` | IAM / membershipInvitationCreate | TenantMembershipInvitation; TENANT_OWNED | CREATED | invitation delivery integration may consume; token/email excluded from payload | confidential/PII-minimized | DR-PHASE5-CANONICAL-TENANT-USER-ENROLLMENT-2026-09-24 |
+| `iam.membership_invitation.accepted.v1` | IAM / MEMBERSHIP_INVITATION_ACCEPT | TenantMembershipInvitation; TENANT_OWNED | ACCEPTED | authorization cache invalidator only; membership event emitted separately only when created | confidential/PII-minimized | DR-PHASE5-CANONICAL-TENANT-USER-ENROLLMENT-2026-09-24 |
+| `iam.membership_invitation.revoked.v1` | IAM / membershipInvitationRevoke | TenantMembershipInvitation; TENANT_OWNED | REVOKED | pending delivery cancellation | confidential/PII-minimized | DR-PHASE5-CANONICAL-TENANT-USER-ENROLLMENT-2026-09-24 |
 | `iam.role.assigned.v1` | IAM / membershipRoleAssign | MembershipRole; TENANT_OWNED | CREATED | authorization cache invalidator only; cache non-authoritative | confidential | 22,26 |
 | `iam.role.revoked.v1` | IAM / membershipRoleRevoke | MembershipRole; TENANT_OWNED | TRANSITION | authorization cache invalidator only | confidential | 22,26 |
 | `iam.impersonation.started.v1` | IAM / impersonationStart | ImpersonationSession; TENANT_OWNED | CREATED | security monitoring | restricted | 22 |
@@ -83,6 +89,6 @@ Payload profiles:
 | `privacy.erasure_execution.reviewed.v1` | Privacy / erasureExecutionReview | ErasureExecutionRecord; TENANT_OWNED | DECISION + reviewer/outcome and exception refs | NONE_CONTRACTUALLY_REQUIRED | restricted | 22,23,39; H-004 |
 | `platform.lifecycle_transition.published.v1` | Platform Governance / lifecycleTransitionPublish | LifecycleTransitionDefinition; PLATFORM_CONTROL | PUBLISHED + edge/permission/policy/event hash; no arbitrary rule body | registry cache invalidator only; cache non-authoritative | confidential | 21,33; H-005 |
 
-`PUBLISHED_EVENT_TYPES=56`. No future consumer is invented. A consumer addition changes this catalog and tests; it does not acquire write authority over the producer aggregate.
+`PUBLISHED_EVENT_TYPES=57`. No future consumer is invented. A consumer addition changes this catalog and tests; it does not acquire write authority over the producer aggregate.
 
 `EVENT_CATALOG=PASS` as a Fase 2 contract candidate.

@@ -13,7 +13,7 @@
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck",
     "test": "vitest run --config vitest.config.ts",
-    "test:integration": "vitest run --config vitest.integration.config.ts",
+    "test:integration": "TCDX_ISOLATED_REBUILD=true TCDX_SECURITY_INTEGRATION=true TCDX_PHASE5_LIFECYCLE_INTEGRATION=true vitest run --config vitest.integration.config.ts --no-file-parallelism",
     "test:e2e": "playwright test",
     "db:migrate": "node --experimental-strip-types scripts/foundations/migrate.ts apply",
     "db:status": "node --experimental-strip-types scripts/foundations/migrate.ts status",
@@ -29,6 +29,8 @@
     "db:restore-test": "node --experimental-strip-types scripts/foundations/verify-restore.ts",
     "seed:verify": "node --experimental-strip-types scripts/foundations/verify-seeds.ts",
     "seed:reapply": "node --experimental-strip-types scripts/foundations/verify-seed-reapply.ts",
+    "security:verify": "TCDX_SECURITY_INTEGRATION=true vitest run --no-file-parallelism apps/backend/src/security/runtime-security.postgres.test.ts apps/backend/src/security/membership-invitation.postgres.test.ts apps/backend/src/security/membership-role-revoke.postgres.test.ts",
+    "phase5:integration": "TCDX_PHASE5_LIFECYCLE_INTEGRATION=true vitest run apps/backend/src/core-grc/phase5-lifecycle.postgres.test.ts",
     "contracts:generate": "node scripts/foundations/generate-contract-assets.mjs",
     "contracts:verify": "node scripts/foundations/generate-contract-assets.mjs --check",
     "secrets:scan": "node scripts/foundations/secret-scan.mjs"

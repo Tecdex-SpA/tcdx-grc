@@ -45,6 +45,7 @@ describe("PRE-F5D Platform IAM contract reconciliation", () => {
       "iam.role_permissions",
       "iam.roles",
       "iam.service_principals",
+      "iam.tenant_membership_invitations",
       "iam.tenant_memberships",
       "iam.user_identities"
     ]);
@@ -91,7 +92,8 @@ describe("PRE-F5D Platform IAM contract reconciliation", () => {
     expect(reconciliation).toContain("TENANT_CONTEXT_DISCOVERY=BLOCKED_EXECUTABLE_CONTRACT");
     expect(reconciliation).toContain("MISSING_DECISIONS=PATH_OR_ACCESSGET_SEMANTICS,OPERATION_ID,PERMISSION,RESPONSE_SHAPE,PAGINATION");
     expect(blockers).toContain("F5D_005_TENANT_CONTEXT_DISCOVERY=CLOSED");
-    expect(openApi).not.toMatch(/operationId: (?:membershipList|tenantContextList|tenantMembershipList)/);
+    expect(openApi).toContain("operationId: membershipList");
+    expect(openApi).not.toMatch(/operationId: (?:tenantContextList|tenantMembershipList)/);
     expect(operationBlock("accessGet")).toContain('x-tcdx-permission: "authenticated context"');
     expect(operationBlock("accessGet")).toContain("AccessGetSuccess");
   });
@@ -112,7 +114,8 @@ describe("PRE-F5D Platform IAM contract reconciliation", () => {
     expect(reconciliation).toContain("EXTERNAL_IDENTITY_KEY=provider_issuer+stable_subject");
     expect(reconciliation).toContain("EMAIL_ROLE=ATTRIBUTE_NOT_PRIMARY_IDENTITY");
     expect(authentication).toContain("exact `issuer + stable subject`");
-    expect((authentication + physicalRbac + reconciliation).toLowerCase()).not.toContain("zoho");
+    expect(authentication).toContain("Zoho is the only enabled provider");
+    expect(authentication).toContain("issuer + stable subject");
   });
 
   it("adds no password, password-hash or MFA-secret field to the GRC model", () => {
@@ -123,9 +126,9 @@ describe("PRE-F5D Platform IAM contract reconciliation", () => {
     expect(reconciliation).toContain("MFA_SECRET_COLUMNS_ADDED=0");
   });
 
-  it("preserves PRE-F5D's historical 229-table evidence while exposing the 230-table PRE-F5E candidate", () => {
-    expect(expectedSchema.tableCount).toBe(230);
-    expect(expectedSchema.tables).toHaveLength(230);
+  it("preserves PRE-F5D's historical 229-table evidence while exposing the approved 233-table inventory", () => {
+    expect(expectedSchema.tableCount).toBe(235);
+    expect(expectedSchema.tables).toHaveLength(235);
     expect(reconciliation).toContain("DATABASE_TABLES=229");
     expect(reconciliation).toContain("DATABASE_SCHEMA_CHANGED=0");
     expect(reconciliation).toContain("MIGRATION_CREATED=0");
