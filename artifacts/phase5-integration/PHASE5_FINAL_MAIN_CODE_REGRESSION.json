@@ -1,0 +1,179 @@
+{
+  "capturedAt": "2026-10-08T12:33:18.884285+00:00",
+  "mainCommit": "7225f1ee607c0c9be5c810976f66c3c27a40e06c",
+  "mainTree": "1c2ed45425238497431ba865b4ec4b1953e4cc8e",
+  "functionalSourceUnchanged": true,
+  "counts": {
+    "unit": 485,
+    "frontend": 81,
+    "postgres": 82,
+    "grc-e2e-retry": 428,
+    "iam-e2e": 21
+  },
+  "requiredCodeGates": "PASS",
+  "receipts": {
+    "unit": {
+      "gate": "final-main-unit",
+      "exitCode": 0,
+      "mode": "unit",
+      "log": "/tmp/tcdx-grc-phase5-integration-final-main-unit.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY",
+      "rawOutputSha256": "fc7a0c8fd48c51daab7dc6f8e88b867e420889d3a2b3861db8a6490411f603b9"
+    },
+    "frontend": {
+      "gate": "final-main-frontend",
+      "exitCode": 0,
+      "mode": "unit",
+      "log": "/tmp/tcdx-grc-phase5-integration-final-main-frontend.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY",
+      "rawOutputSha256": "b42343978204fc350429d7f10f49db26f0029d613da626f5119dbe9585ae5723"
+    },
+    "postgres": {
+      "gate": "final-main-postgres",
+      "exitCode": 0,
+      "mode": "isolated",
+      "log": "/tmp/tcdx-grc-phase5-integration-final-main-postgres.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY",
+      "rawOutputSha256": "e78149e05bffd3b60f039ae73b97766166d1f048aeaf5031f730a312ffb6bae9"
+    },
+    "grc-e2e-retry": {
+      "gate": "final-main-grc-e2e-retry",
+      "exitCode": 0,
+      "mode": "e2e",
+      "log": "/tmp/tcdx-grc-phase5-integration-final-main-grc-e2e-retry.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY",
+      "rawOutputSha256": "6ddd6b9bb8c75edb994c34ac86f676f53b75d5e3410d8b03107ac448ec39ec7e"
+    },
+    "grc-affected": {
+      "gate": "final-main-grc-affected",
+      "exitCode": 0,
+      "mode": "e2e",
+      "log": "/tmp/tcdx-grc-phase5-integration-final-main-grc-affected.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY",
+      "rawOutputSha256": "f8f245cabf4e74e133a86500ad51c72f44a8bc1a0ad86dbe5264d749ff311ad6"
+    },
+    "iam-e2e": {
+      "gate": "final-main-iam-e2e",
+      "exitCode": 0,
+      "mode": "e2e",
+      "log": "/tmp/tcdx-grc-phase5-integration-final-main-iam-e2e.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY",
+      "rawOutputSha256": "1dcfb2a6517e477f1c5f362185efdb098a397d3e15921ec5543b210966b27746"
+    },
+    "typecheck": {
+      "gate": "final-main-typecheck",
+      "exitCode": 0,
+      "mode": "static",
+      "log": "/tmp/tcdx-grc-phase5-integration-final-main-typecheck.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY",
+      "rawOutputSha256": "a7e2d6c6942659972f85b8ea2e352f976ed676c0ebb823f0de98248d5c132900"
+    },
+    "lint": {
+      "gate": "final-main-lint",
+      "exitCode": 0,
+      "mode": "static",
+      "log": "/tmp/tcdx-grc-phase5-integration-final-main-lint.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY",
+      "rawOutputSha256": "aa06e7796c252ac39e972f3463284f8c2cc5b468aa36b766d1f920e5b757056c"
+    },
+    "contracts": {
+      "gate": "final-main-contracts",
+      "exitCode": 0,
+      "mode": "static",
+      "log": "/tmp/tcdx-grc-phase5-integration-final-main-contracts.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY",
+      "rawOutputSha256": "3b1db8edc2d317b056ee164b5cae869afaffa6cb0db50b7e9b1fe607c482ed7b"
+    },
+    "openapi": {
+      "gate": "final-main-openapi",
+      "exitCode": 0,
+      "mode": "static",
+      "log": "/tmp/tcdx-grc-phase5-integration-final-main-openapi.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY",
+      "rawOutputSha256": "f6aa9dfdfd966a05148276f97553e0272aac7712142a6131027c6e42fd346b5f"
+    },
+    "rector": {
+      "gate": "final-main-rector",
+      "exitCode": 0,
+      "mode": "static",
+      "log": "/tmp/tcdx-grc-phase5-integration-final-main-rector.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY",
+      "rawOutputSha256": "c873d0aca12c3a33cc74df1e37fd4473c24857723253f02c81c9663019f4b32a"
+    },
+    "secrets": {
+      "gate": "final-main-secrets",
+      "exitCode": 0,
+      "mode": "static",
+      "log": "/tmp/tcdx-grc-phase5-integration-final-main-secrets.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY",
+      "rawOutputSha256": "a75019bbb34e91d8173a767beaee5c58c4f7262c7f6a8bcb72731af6351a5c76"
+    },
+    "grc-e2e": {
+      "gate": "final-main-grc-e2e",
+      "exitCode": 1,
+      "mode": "e2e",
+      "log": "/tmp/tcdx-grc-phase5-integration-final-main-grc-e2e.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY",
+      "rawOutputSha256": "7be0f32596dbbddc2c8c106f1b687173a1c3847124180c82add1c742c5277c68"
+    },
+    "public-last": {
+      "gate": "final-main-public-last",
+      "exitCode": 1,
+      "mode": "static",
+      "log": "/tmp/tcdx-grc-phase5-integration-final-main-public-last.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY",
+      "rawOutputSha256": "13030624e7a40a413176884d5f23235b178e42e63458d0c286fb6ae25124d85c"
+    },
+    "assets-retry": {
+      "gate": "final-main-assets-retry",
+      "exitCode": 0,
+      "mode": "static",
+      "log": "/tmp/tcdx-grc-phase5-integration-final-main-assets-retry.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY",
+      "rawOutputSha256": "ec034acd01937a924abd8c8bc78b8a4edf9e6a5af16ce9a2c36388abe395d069"
+    },
+    "assets-check": {
+      "gate": "final-main-assets-check",
+      "exitCode": 1,
+      "mode": "static",
+      "log": "/tmp/tcdx-grc-phase5-integration-final-main-assets-check.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY",
+      "rawOutputSha256": "82c2d68e673a9a1a90326b66ff2e41a3f53381cc0e082eac6d0097d211b120a5"
+    }
+  },
+  "initialFinalTreeE2ETimeout": "Preserved427 pass/1 timeout; affected original case passed12 repeated viewport executions and complete original428 suite passed with unchanged limits. No source or test assertion changed.",
+  "gitIntegrity": "PASS",
+  "rawArchiveSha256": "77a63dcd01ae007dab550f61aeccb46355ef5dee765b9e6583a74013020d139a"
+}
