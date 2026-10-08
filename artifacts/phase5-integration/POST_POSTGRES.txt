@@ -1,0 +1,59 @@
+$ TCDX_ISOLATED_REBUILD=true TCDX_SECURITY_INTEGRATION=true TCDX_PHASE5_LIFECYCLE_INTEGRATION=true vitest run --config vitest.integration.config.ts --no-file-parallelism
+
+ RUN  v5.0.1 /Users/andresbarouh/repos/tcdx-grc
+
+{
+  "oidcUserIdentityBoundary": "PASS",
+  "firstPlatformAdminBootstrap": "PASS",
+  "bootstrapConcurrency": [
+    "fulfilled",
+    "rejected"
+  ],
+  "tenantBootstrap": "PASS",
+  "platformRbac": "PASS",
+  "subscriptionCreate": {
+    "subscription_id": "01a11b69-3444-7281-8937-e2a48baa2389",
+    "tenant_id": "01a11b69-3276-77c3-89be-f0b86d04811f",
+    "plan_version_id": "01a0a783-6000-73d1-a52c-eaa706d6696a",
+    "subscription_code": "RT-01a11b69",
+    "lifecycle_state": "active",
+    "starts_at": "2026-10-08T12:07:21.915Z",
+    "ends_at": null,
+    "cancelled_at": null
+  },
+  "subscriptionReplay": true,
+  "tenantCreateDefaults": {
+    "tenant_id": "01a11b69-3276-77c3-89be-f0b86d04811f",
+    "tenant_code": "RT-32547c19e4a3",
+    "legal_name": "Runtime Verification One",
+    "display_name": "Runtime One",
+    "default_timezone": "America/Santiago",
+    "lifecycle_state": "active",
+    "data_classification": "confidential"
+  },
+  "membershipCreateNoAutomaticRole": true,
+  "membershipRoleAssign": {
+    "membership_role_id": "01a11b69-3488-71c8-95c3-1676ae5ff2f7",
+    "tenant_membership_id": "01a11b69-346d-76ce-b44b-759227586cbd",
+    "role_id": "01a11b69-30cd-711d-8134-b77c3924b3f7",
+    "scope_kind": "tenant",
+    "organizational_unit_id": null,
+    "process_id": null,
+    "service_id": null,
+    "audit_id": null,
+    "valid_from": "2026-10-08T12:07:21.982Z",
+    "valid_to": null,
+    "etag": "fbcecb562b248763fda2248f75c4f14b2653544f81c6c1355f59c29475dd567c"
+  },
+  "accessMeOwnContexts": 2,
+  "tenantAuthorizationDefaultDeny": true,
+  "failures": []
+}
+
+ Test Files  15 passed (15)
+      Tests  82 passed (82)
+   Start at  09:07:14
+   Duration  13.43s (tests 77%, import 19%, transform 3%)
+
+    Isolate  15 workers spawned · ~68ms startup each (spawn + environment, per file)
+             at least ~954ms faster with isolate: false — reuses workers across files instead of one per file
