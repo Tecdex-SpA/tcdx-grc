@@ -4,6 +4,21 @@ import subprocess, json, sys, concurrent.futures
 T=Path('/private/tmp')
 N='tcdx-grc-phase5-integration'
 phase=sys.argv[1]
+if phase=='public_peer':
+ remote="""import socket,subprocess,json
+names=['grc.tecdex.net','iam.grc.tecdex.net']
+urls={'grc':'https://grc.tecdex.net/','discovery':'https://iam.grc.tecdex.net/realms/tcdx-managed-identity/.well-known/openid-configuration','jwks':'https://iam.grc.tecdex.net/realms/tcdx-managed-identity/protocol/openid-connect/certs','admin_root':'https://iam.grc.tecdex.net/admin','admin_console':'https://iam.grc.tecdex.net/admin/master/console/','admin_rest':'https://iam.grc.tecdex.net/admin/realms','master_root':'https://iam.grc.tecdex.net/realms/master','master_discovery':'https://iam.grc.tecdex.net/realms/master/.well-known/openid-configuration','master_auth':'https://iam.grc.tecdex.net/realms/master/protocol/openid-connect/auth'}
+out={}
+for key,url in urls.items():
+ p=subprocess.run(['curl','--silent','--show-error','--max-time','15','--write-out','\\n%{http_code}',url],capture_output=True,text=True)
+ out[key]={'returnCode':p.returncode,'tlsVerified':not p.returncode,'status':int(p.stdout.rsplit('\\n',1)[-1]) if not p.returncode else None}
+ if key=='discovery' and not p.returncode:out[key]['issuer']=json.loads(p.stdout.rsplit('\\n',1)[0])['issuer']
+ if key=='jwks' and not p.returncode:out[key]['key_count']=len(json.loads(p.stdout.rsplit('\\n',1)[0])['keys'])
+print(json.dumps({'dns':{n:socket.gethostbyname(n) for n in names},'results':out,'canonicalURLsOnly':True,'writes':0}))
+"""
+ result=subprocess.run(['ssh','-o','BatchMode=yes','-o','StrictHostKeyChecking=yes','-o','ConnectTimeout=6','tecdex@192.168.2.46','python3 -'],input=remote,capture_output=True,text=True)
+ if result.returncode:print('READONLY_PEER_TRANSPORT_FAILED');sys.exit(1)
+ d=json.loads(result.stdout);(T/(N+'-public-peer.json')).write_text(json.dumps(d,indent=2)+'\n');print(json.dumps(d));sys.exit()
 if phase=='inspect':
  import datetime
  stamp=json.loads((T/(N+'-pre-db.json')).read_text())['capturedAt']

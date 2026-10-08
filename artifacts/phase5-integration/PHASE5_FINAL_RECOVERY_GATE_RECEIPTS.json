@@ -1,0 +1,57 @@
+{
+  "rector": {
+    "gate": "recovery-rector",
+    "exitCode": 0,
+    "mode": "static",
+    "log": "/tmp/tcdx-grc-phase5-integration-recovery-rector.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY",
+    "rawOutputSha256": "c873d0aca12c3a33cc74df1e37fd4473c24857723253f02c81c9663019f4b32a",
+    "evidenceLog": "FINAL_RECOVERY_RECTOR.txt"
+  },
+  "status": {
+    "gate": "recovery-status",
+    "exitCode": 0,
+    "mode": "static",
+    "log": "/tmp/tcdx-grc-phase5-integration-recovery-status.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY",
+    "rawOutputSha256": "4a950b39b20f2de1440a2b45b243b63df607fa3ede7f7e32e9f7e9da71864597",
+    "evidenceLog": "FINAL_RECOVERY_STATUS.txt"
+  },
+  "contracts": {
+    "gate": "recovery-contracts",
+    "exitCode": 0,
+    "mode": "static",
+    "log": "/tmp/tcdx-grc-phase5-integration-recovery-contracts.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY",
+    "rawOutputSha256": "3b1db8edc2d317b056ee164b5cae869afaffa6cb0db50b7e9b1fe607c482ed7b",
+    "evidenceLog": "FINAL_RECOVERY_CONTRACTS.txt"
+  },
+  "openapi": {
+    "gate": "recovery-openapi",
+    "exitCode": 0,
+    "mode": "static",
+    "log": "/tmp/tcdx-grc-phase5-integration-recovery-openapi.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY",
+    "rawOutputSha256": "f6aa9dfdfd966a05148276f97553e0272aac7712142a6131027c6e42fd346b5f",
+    "evidenceLog": "FINAL_RECOVERY_OPENAPI.txt"
+  },
+  "secrets": {
+    "gate": "recovery-secrets",
+    "exitCode": 0,
+    "mode": "static",
+    "log": "/tmp/tcdx-grc-phase5-integration-recovery-secrets.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY",
+    "rawOutputSha256": "a75019bbb34e91d8173a767beaee5c58c4f7262c7f6a8bcb72731af6351a5c76",
+    "evidenceLog": "FINAL_RECOVERY_SECRETS.txt"
+  }
+}
