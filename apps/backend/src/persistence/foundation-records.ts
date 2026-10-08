@@ -61,22 +61,27 @@ export async function persistOutboxEvent(transaction: Transaction<FoundationData
   `.execute(transaction);
 }
 
-export async function claimIdempotency(transaction: Transaction<FoundationDatabase>, record: CommonRecord & {
+type IdempotencyClaimInput = CommonRecord & {
   idempotencyRecordId: string;
   operationCode: string;
   key: string;
   requestHash: string;
-}): Promise<
+  initialResultRef?: string;
+  returnInProgress?: boolean;
+};
+
+export async function claimIdempotency(transaction: Transaction<FoundationDatabase>, record: IdempotencyClaimInput): Promise<
   | { state: "claimed"; idempotencyRecordId: string }
+  | { state: "in_progress"; idempotencyRecordId: string; resultRef: string | null }
   | { state: "replay"; idempotencyRecordId: string; resultStatusCode: string; resultRef: string | null; responseHash: string | null }
 > {
   const [actorUserId, actorServiceId] = actorValues(record.actor);
   const inserted = await sql<{ idempotency_record_id: string }>`
     INSERT INTO ops_audit.idempotency_records
       (idempotency_record_id,ownership_class,tenant_id,actor_user_identity_id,actor_service_principal_id,
-       operation_code,idempotency_key,request_hash,result_status_code,first_seen_at)
+       operation_code,idempotency_key,request_hash,result_status_code,result_ref,first_seen_at)
     VALUES (${record.idempotencyRecordId}::uuid,${record.ownershipClass},${record.tenantId}::uuid,
-      ${actorUserId}::uuid,${actorServiceId}::uuid,${record.operationCode},${record.key},${record.requestHash},'in_progress',CURRENT_TIMESTAMP)
+      ${actorUserId}::uuid,${actorServiceId}::uuid,${record.operationCode},${record.key},${record.requestHash},'in_progress',${record.initialResultRef ?? null},CURRENT_TIMESTAMP)
     ON CONFLICT DO NOTHING RETURNING idempotency_record_id
   `.execute(transaction);
   if (inserted.rows.length === 1) return { state: "claimed", idempotencyRecordId: record.idempotencyRecordId };
@@ -100,6 +105,7 @@ export async function claimIdempotency(transaction: Transaction<FoundationDataba
     throw new FoundationError("TCDX.CONFLICT.IDEMPOTENCY", "Idempotency conflict", 409);
   }
   if (previous.result_status_code === "in_progress") {
+    if (record.returnInProgress) return { state: "in_progress", idempotencyRecordId: previous.idempotency_record_id, resultRef: previous.result_ref };
     throw new FoundationError("TCDX.CONFLICT.IDEMPOTENCY_IN_PROGRESS", "Idempotent operation is in progress", 409, true);
   }
   return {

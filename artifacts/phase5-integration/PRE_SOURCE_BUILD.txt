@@ -1,0 +1,19 @@
+$ pnpm -r build
+packages/shared-types build$ tsc -p tsconfig.json
+packages/contracts build$ tsc -p tsconfig.json
+packages/shared-types build: Done
+packages/contracts build: Done
+apps/backend build$ tsc -p tsconfig.json
+apps/frontend build$ tsc -b && vite build --config vite.config.ts
+apps/frontend build: vite v8.3.0 building client environment for production...
+apps/frontend build: transforming...
+apps/frontend build: ✓ 30 modules transformed.
+apps/frontend build: rendering chunks...
+apps/frontend build: computing gzip size...
+apps/frontend build: dist/index.html                   0.39 kB │ gzip:   0.26 kB
+apps/frontend build: dist/assets/index-BmB4OoCc.css   23.57 kB │ gzip:   5.74 kB
+apps/frontend build: dist/assets/index-B-ZsnPOc.js   389.66 kB │ gzip: 110.45 kB
+apps/frontend build:
+apps/frontend build: ✓ built in 1.48s
+apps/frontend build: Done
+apps/backend build: Done

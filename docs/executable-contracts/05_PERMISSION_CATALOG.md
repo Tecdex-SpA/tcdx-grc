@@ -1,5 +1,18 @@
 # Permission, capability and base-role catalog
 
+## MI6A contract-approved, runtime-unpublished permissions
+
+The human STEP 23L-MI6A decision approves the following `CORE_PLATFORM` Permission definitions at `platform` scope. They are deliberately outside the existing runtime-seed table below: `CONTRACT_PERMISSION_APPROVED=YES`, `RUNTIME_PERMISSION_PUBLISHED=NO`. MI6 must materialize them through the existing Permission/RolePermission model without a new entity or schema; a forward-only catalog seed/migration may be required **in MI6**, subject to its own gate, and is not executed here. The sole initial grant target is the existing `PLATFORM_ADMIN` Platform role; Tenant Admin and Platform Support receive none. Default DENY remains until physical publication and the canonical Platform grant chain succeeds.
+
+| Permission definition | Contract meaning |
+|---|---|
+| platform.managed_identity.read | List/read only nonsecret global identity metadata. |
+| platform.managed_identity.create | Provision one named human; no membership or role grant. |
+| platform.managed_identity.update | Nonsecret metadata only; MI6A publishes no corresponding operation or API. |
+| platform.managed_identity.administer | Sensitive disable, enable, password reset, MFA reset and session revoke only, with reason and reinforced audit. |
+
+The `platform.managed_identity` resource extends rector 22 §10's **initial** Platform resource vocabulary by this explicit human decision. The four action names are already in that rector section's allowed Platform action set. Contract 22 and the API/operation matrix bind the exact approved commands; the presence of a Permission definition never creates a command by itself.
+
 PRE-F5E does not add a Permission or role catalog. Platform grants resolve through persisted `iam.platform_role_assignments` to existing `Role(PLATFORM_CONTROL)` rows and this same Permission catalog; tenant grants continue through active TenantMembership and MembershipRole. Email and runtime allowlists are never grant authority.
 
 | Campo | Valor |
@@ -40,7 +53,7 @@ Scopes abbreviate exact rector scopes. `tenant*` means tenant plus narrower obje
 | `platform.membership_invitation.read` | CORE_PLATFORM | list/detail membership invitation | platform | explicit selected tenant; invitation remains tenant-owned | Platform Admin exclusively | effective expiry derived; token and digest excluded; default DENY | Human Phase 5 administrative-read decision 2026-09-28 |
 | `platform.membership_invitation.create` | CORE_PLATFORM | create/send membership invitation | platform | explicit active tenant; resulting invitation is TENANT_OWNED | Platform Admin exclusively | PT24H one-time digest; no role grant; reinforced audit; default DENY | DR-PHASE5-CANONICAL-TENANT-USER-ENROLLMENT-2026-09-24 |
 | `platform.membership_invitation.update` | CORE_PLATFORM | revoke membership invitation | platform | target tenant resolved from the pending TENANT_OWNED invitation | Platform Admin exclusively | If-Match; reinforced audit; acceptance has no Platform authority; default DENY | DR-PHASE5-CANONICAL-TENANT-USER-ENROLLMENT-2026-09-24 |
-| `platform.role.assign` | CORE_PLATFORM | assign/revoke tenant MembershipRole | tenant; explicit selected Platform tenant for revoke | membership, assignment and TENANT_OWNED role must belong to selected/validated tenant; never PlatformRoleAssignment | Tenant Admin within active tenant; Platform Admin through separate Platform grant for revoke | close validity only; CAS/If-Match; audit/outbox; cannot grant or revoke outside authority | 22,42; human Phase 5 revoke decision 2026-09-28 |
+| `platform.role.assign` | CORE_PLATFORM | assign/revoke tenant MembershipRole | platform, tenant | membership, assignment and TENANT_OWNED role must belong to selected/validated tenant; never PlatformRoleAssignment | Tenant Admin within active tenant for assign/revoke; Platform Admin through separate Platform grant and explicit target tenant for revoke only | assign remains tenant-only; revoke closes validity only with reason, CAS/If-Match and idempotency; audit/outbox; catalog context union never grants Platform assignment authority | 22,42; human Phase 5 revoke decision 2026-09-28 |
 | `platform.role.read` | CORE_PLATFORM | list/detail Role catalog | platform, tenant | Platform Admin selects tenant for tenant roles; Tenant Admin sees only its active tenant roles | Platform Admin, Tenant Admin | no permission or direct UserIdentity grant projection; default DENY | Human Phase 5 administrative-read decision 2026-09-28 |
 | `platform.impersonation_session.impersonate` | CORE_PLATFORM | impersonate | platform | target tenant explicit | Platform Admin | SoD/regulatory restrictions remain; sensitive; reinforced audit | 22 §8/12 |
 | `compliance.normative_unit.read` | ISO_COMPLIANCE | read normative unit | tenant | global pack must be entitled/licensed; tenant content same tenant | Viewer, Report Viewer, Executive/Board Viewer, GRC Manager, Quality Manager, Compliance Manager, CISO/Security Manager, AI Governance Manager, Privacy Manager, Legal Reviewer, Regulatory Content Steward | read-only; pack gate; audit only for protected export/access policy | 22,41,42,44 |
@@ -247,3 +260,50 @@ H-003..H-005 authorize these Permission rows over existing entities and capabili
 - Exports require the resource `export` permission when later published and inherit read scope; no export operation is published in this iteration.
 
 `PERMISSION_CATALOG=PASS` as a Phase 2 contract candidate.
+
+## Approved P2A PlatformRoleAssignment administration
+
+Human approval: Andrés Barouh, STEP 23L-MI10-P2A, 2026-10-06. New definition is a local publication candidate; QA remains167 published permissions. Exactly one new grant to canonical PLATFORM_ADMIN only; no grant to Platform Support, Tenant Admin, tenant/custom roles or MembershipRole. platform.role.assign remains tenant-only. KEYCLOAK_AS_AUTHORITY=NO. Executable24 closes operation semantics.
+
+| permission_code | capability | action/resource | allowed scopes | tenant boundary | base roles containing it | entitlement / SoD / sensitive / audit | source |
+|---|---|---|---|---|---|---|---|
+| <code>platform.role.administer</code> | CORE_PLATFORM | administer platform.role | platform | PlatformRoleAssignment only; no tenant authority | Platform Admin | mutations: reason required, reinforced audit and last active administrator protected; P2E target assignment read only within this same administrative surface | Human P2A; 09,22,25,42; executable24 |
+
+## STEP 23L-MI10-P2E existing permission mapping
+
+Human P2E authorizes read closure only. platformRoleAssignmentList reuses `platform.role.administer` over the same PlatformRoleAssignment administrative object as assign/revoke. Inspecting the exact active assignment IDs is a prerequisite for those already-authorized commands; no additional object, action grant, tenant scope or grantee is introduced. The existing `platform.role.read` contract is Role catalog list/detail and explicitly excludes direct UserIdentity grants, so it cannot authorize target assignment disclosure. `platform.role.assign` remains MembershipRole only.
+
+The existing roleList operation retains `platform.role.read`; optional `assignable_family=platform` restricts its already-authorized platform catalog to published baseline functional platform roles. Existing Platform Admin object policy and current effective permission remain required. Tenant roles/templates and tenant context are excluded in this mode. No Permission, RolePermission, seed or migration is changed; runtime published catalog remains168 permissions,27 migrations.
+
+
+## STEP 23L-TENANT-ONBOARDING-D1-R
+
+Human-approved **contract-only, runtime-unpublished** definition follows the MI6A staging pattern above. It is outside the existing materialized seed/projection table: no generated backend catalog or SQL data changes in D1-R. Executable25 is the exact scope/mode/grant/privacy contract; default DENY until separate authorized publication and implementation.
+
+| Permission definition | resource | action | capability | allowed scopes | approved grants | publication |
+|---|---|---|---|---|---|---|
+| platform.user_identity.read | platform.user_identity (physical resource_code=user_identity) | read | CORE_PLATFORM | platform, tenant | PLATFORM_ADMIN/platform; TENANT_ADMIN/own tenant exact mode, template plus canonical tenant instances | LOCAL_CONTRACT_ONLY; runtime deferred |
+
+Permission has no physical scope column; RolePermission ownership and Role/MembershipRole context plus endpoint predicates select boundary. The tenant grant cannot invoke global directory mode. No new constrained_tenant scope, direct user grant, other-role grant or Managed Identity provisioning grant for Tenant Admin. One definition is approved; global Permission existence is not authorization. Future publication is data-only and separately authorized; no migration28 or historical SQL/seed rewrite here.
+
+## Central Platform tenant-user onboarding — human approved 2026-10-07
+
+The explicit human E2E packet §§8–11 and executable26 approve one bounded
+Platform capability after reuse analysis. No ordinary tenant command broadens.
+
+| Permission definition | resource | action | capability | allowed scopes | approved grants | publication |
+|---|---|---|---|---|---|---|
+| platform.tenant_user.onboard | platform.tenant_user (physical resource_code=tenant_user) | onboard | CORE_PLATFORM | platform | PLATFORM_ADMIN ONLY; no Support, Tenant Admin, tenant template, tenant/custom Role or MembershipRole | DATA_ONLY_CANONICAL_RUNNER |
+
+Existing platform.membership.read authorizes the target-identity tenant-access
+read. Existing platform.role.read and platform.tenant.read authorize runtime
+catalogs. Existing explicit-target membershipRoleRevoke retains platform.role.assign;
+membershipRoleAssign remains own-tenant only. Projection metadata for the new
+permission is CORE_PLATFORM/platform only; endpoint revalidates all predicates.
+
+## Human-approved Phase 5 methodology binding
+
+| Permission | Capability | Operation | Scope | Policy | Roles | Controls | Authority |
+|---|---|---|---|---|---|---|---|
+| `compliance.methodology.read` | ISO_COMPLIANCE | select published methodology | tenant | published, effective, compatible domain; no global edit | existing assessment-create roles only | default DENY; tenant entitlement required | PHASE5_METHODOLOGY_BINDING_ARCHITECTURE_DECISION_20261007; 19,31,39 |
+| `controls.methodology.read` | CONTROLS_ASSURANCE | select published methodology | tenant | published, effective, compatible domain; no global edit | existing assessment-create roles only | default DENY; tenant entitlement required | PHASE5_METHODOLOGY_BINDING_ARCHITECTURE_DECISION_20261007; 19,31,39 |

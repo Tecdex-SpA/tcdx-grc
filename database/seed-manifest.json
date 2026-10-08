@@ -110,5 +110,56 @@
       "platform.regulatory_pack_validation_access.archive",
       "platform.tenant_account_classification.update"
     ]
+  },
+  "phase5Methodologies": {
+    "migrationId": "20261007000200",
+    "permissionRows": 2,
+    "permissionCodes": [
+      "compliance.methodology.read",
+      "controls.methodology.read"
+    ],
+    "methodologyRows": 2,
+    "formulaRows": 2,
+    "methodologyIds": [
+      "01a11900-0000-7001-8000-000000000001",
+      "01a11900-0000-7001-8000-000000000002"
+    ]
+  },
+  "tenantUserOnboardingPermission": {
+    "migrationId": "20261007000100",
+    "permissionRows": 1,
+    "platformAdminGrantRows": 1,
+    "permissionCodes": [
+      "platform.tenant_user.onboard"
+    ]
+  },
+  "userIdentityDiscoveryPermission": {
+    "migrationId": "20261006000200",
+    "permissionRows": 1,
+    "platformAdminGrantRows": 1,
+    "tenantAdminTemplateGrantRows": 1,
+    "tenantAdminGrantRowsPerTenant": 1,
+    "permissionCodes": [
+      "platform.user_identity.read"
+    ]
+  },
+  "platformRoleAdministrationPermission": {
+    "migrationId": "20261006000100",
+    "permissionRows": 1,
+    "platformAdminGrantRows": 1,
+    "permissionCodes": [
+      "platform.role.administer"
+    ]
+  },
+  "managedIdentityPermissions": {
+    "migrationId": "20261001000100",
+    "permissionRows": 4,
+    "platformAdminGrantRows": 4,
+    "permissionCodes": [
+      "platform.managed_identity.read",
+      "platform.managed_identity.create",
+      "platform.managed_identity.update",
+      "platform.managed_identity.administer"
+    ]
   }
 }

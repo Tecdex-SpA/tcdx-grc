@@ -29,12 +29,18 @@ const rows: Record<string, Record<string, unknown>[]> = {
 };
 
 async function mockRuntime(page: Page, roles: string[] = ["GRC_MANAGER"], platformRoles: string[] = []): Promise<void> {
+  const assignedRoles: Record<string, unknown>[] = [];
   await page.addInitScript(() => { sessionStorage.setItem("tcdx.access_token", "contractual-test-token"); });
   await page.route("**/api/v1/**", async (route: Route) => {
     const url = new URL(route.request().url());
     if (url.pathname.endsWith("/access/me")) {
       expect(route.request().headers()["x-tcdx-tenant-id"]).toBeUndefined();
       await route.fulfill({ json: { available_tenant_contexts: [{ tenant_id: tenantId, tenant_display_name: "Tenant no normativo", tenant_membership_id: tenantId, membership_state: "active", effective_role_codes: roles }], effective_platform_role_codes: platformRoles } });
+      return;
+    }
+    if (url.pathname.endsWith("/auth/me/authorization")) {
+      await route.fulfill({ json: { evaluated_at: new Date().toISOString(), platform_permissions: platformRoles.includes("PLATFORM_ADMIN") ? ["platform.tenant.read", "platform.tenant.create", "platform.user_identity.read", "platform.membership.read", "platform.membership_invitation.read", "platform.membership_invitation.create", "platform.membership_invitation.update", "platform.role.read", "platform.role.assign"] : [],
+        tenant_permissions: { tenant_id: tenantId, permissions: roles.includes("TENANT_ADMIN") ? Object.fromEntries(["platform.membership.read", "platform.membership.create", "platform.role.read", "platform.role.assign", "platform.user_identity.read"].map(code => [code, [{scope_kind:"tenant"}]])) : {} } } });
       return;
     }
     if (route.request().method() === "POST") {
@@ -64,6 +70,7 @@ async function mockRuntime(page: Page, roles: string[] = ["GRC_MANAGER"], platfo
       if (url.pathname.endsWith(`/memberships/${memberId}/role-assignments`)) {
         expect(route.request().headers()["x-tcdx-tenant-id"]).toBe(tenantId);
         expect(route.request().postDataJSON()).toEqual({ role_id: roleId, scope_kind: "tenant" });
+        assignedRoles.push({ membership_role_id: roleId, role_id: roleId, scope_kind: "tenant", role_name: "Privacy Manager", valid_from: "2020-01-01T00:00:00Z", valid_to: null });
         await route.fulfill({ status: 202, json: { operation_id: "membershipRoleAssign", status: "completed", result: {} } });
         return;
       }
@@ -101,7 +108,7 @@ async function mockRuntime(page: Page, roles: string[] = ["GRC_MANAGER"], platfo
       return;
     }
     if (url.pathname === "/api/v1/memberships" || url.pathname === `/api/v1/memberships/${memberId}`) {
-      const person = { tenant_membership_id: memberId, tenant_id: tenantId, user_identity_id: memberId, membership_state: "active", joined_at: "2026-09-25T12:00:00Z", ended_at: null, user_identity: { display_name: "Mario de prueba", email_normalized: "mario@example.test", lifecycle_state: "active", last_authenticated_at: null }, roles: [] };
+      const person = { tenant_membership_id: memberId, tenant_id: tenantId, user_identity_id: memberId, membership_state: "active", joined_at: "2026-09-25T12:00:00Z", ended_at: null, user_identity: { display_name: "Mario de prueba", email_normalized: "mario@example.test", lifecycle_state: "active", last_authenticated_at: null }, roles: assignedRoles };
       await route.fulfill({ json: url.pathname.endsWith(memberId) ? person : { items: [person], page: { has_more: false, next_cursor: null } } });
       return;
     }
@@ -478,9 +485,16 @@ test("QA validation content displays its condition and keeps filters tenant-scop
 });
 
 test("login surface exposes the governed OIDC entry point", async ({ page }, testInfo) => {
+  await page.route("**/api/v1/auth/providers", (route) => route.fulfill({ json: { providers: [
+    { provider: "ZOHO", available: true }, { provider: "MICROSOFT_ENTRA_ID", available: false },
+    { provider: "GOOGLE_WORKSPACE", available: false }, { provider: "TCDX_MANAGED_IDENTITY", available: true }
+  ] } }));
   await page.goto("/dashboard");
-  await expect(page.getByRole("heading", { name: "Autenticación requerida" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Ingresar con Zoho" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Tecdex GRC" })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Zoho.*Disponible/ })).toBeEnabled();
+  await expect(page.getByRole("button", { name: /Tecdex Managed Identity.*Disponible/ })).toBeEnabled();
+  await expect(page.getByRole("button", { name: /Microsoft Entra ID.*No disponible/ })).toBeDisabled();
+  await expect(page.getByRole("button", { name: /Google Workspace.*No disponible/ })).toBeDisabled();
   await page.screenshot({ path: `${evidenceDirectory}/login-${testInfo.project.name}.png`, fullPage: true });
 });
 
@@ -500,12 +514,12 @@ test("invitation entry clears the one-time token from the visible URL", async ({
 test("platform admin can generate a Zoho invitation without automatic roles", async ({ page }, testInfo) => {
   await mockRuntime(page, ["TENANT_ADMIN"], ["PLATFORM_ADMIN"]);
   await page.goto("/dashboard");
-  await expect(page.getByRole("heading", { name: "Invitaciones de membresía" })).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "Invitación con identidad corporativa Zoho" })).toHaveCount(0);
   if (testInfo.project.name.includes("narrow")) {
     await page.getByRole("button", { name: "Abrir navegación" }).click();
   }
   await page.getByRole("button", { name: "Usuarios" }).click();
-  await expect(page.getByRole("heading", { name: "Invitaciones de membresía" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Invitación con identidad corporativa Zoho" })).toBeVisible();
   await page.getByRole("button", { name: "Invitar usuario" }).click();
   await page.getByLabel("Correo de invitación").fill("reviewer@example.test");
   await page.screenshot({ path: `${evidenceDirectory}/invitation-admin-${testInfo.project.name}.png`, fullPage: true });
@@ -648,5 +662,113 @@ for (const [routeName, heading, screenshot, openDetail] of [
       await expect(page.getByRole("dialog").locator(".spinner")).toHaveCount(0);
     }
     await page.screenshot({ path: `${evidenceDirectory}/${screenshot}-${testInfo.project.name}.png`, fullPage: true });
+  });
+}
+
+for (const result of ["valid", "no_data"] as const) {
+  test(`Control assessment completes with ${result}, then refetches authoritative state`, async ({ page }) => {
+    await mockRuntime(page);
+    let state = "in_progress";
+    let readsAfterCommand = 0;
+    await page.route("**/api/v1/control-assessments**", async (route) => {
+      const request = route.request();
+      if (request.method() === "POST") {
+        expect(new URL(request.url()).pathname).toBe(`/api/v1/control-assessments/${tenantId}:complete`);
+        expect(request.postDataJSON()).toEqual(result === "valid"
+          ? { expected_version: 2, result_status: result, domain_conclusion: "effective", design_effectiveness: 90, operating_effectiveness: 80, coverage_percent: 100 }
+          : { expected_version: 2, result_status: result });
+        expect(request.headers()["x-tcdx-tenant-id"]).toBe(tenantId);
+        expect(request.headers()["idempotency-key"]).toBeTruthy();
+        state = "completed";
+        await route.fulfill({ status: 202, json: { operation_id: "controlAssessmentSubmit", status: "completed" } });
+        return;
+      }
+      if (state === "completed") readsAfterCommand++;
+      const row = { control_assessment_id: tenantId, row_version: state === "completed" ? 3 : 2, domain_conclusion: "Control QA", lifecycle_state: state };
+      await route.fulfill({ json: new URL(request.url()).pathname.endsWith(tenantId) ? row : { items: [row], page: { has_more: false, next_cursor: null } } });
+    });
+    await page.goto("/evaluaciones-control");
+    await page.getByRole("button", { name: "Ver detalle" }).click();
+    await page.getByLabel("Estado del resultado", { exact: true }).fill(result);
+    if (result === "valid") {
+      await page.getByLabel("Conclusión", { exact: true }).fill("effective");
+      await page.getByLabel("Efectividad de diseño", { exact: true }).fill("90");
+      await page.getByLabel("Efectividad operativa", { exact: true }).fill("80");
+      await page.getByLabel("Cobertura (%)", { exact: true }).fill("100");
+    }
+    await page.getByRole("dialog").getByRole("button", { name: "Completar", exact: true }).click();
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+    await expect.poll(() => readsAfterCommand).toBeGreaterThan(0);
+    await page.getByRole("button", { name: "Ver detalle" }).click();
+    await expect(page.getByRole("dialog").getByRole("button", { name: "Revisar", exact: true })).toBeVisible();
+    await expect(page.getByRole("dialog").getByRole("button", { name: "Completar", exact: true })).toHaveCount(0);
+  });
+}
+
+test("Evidence request keeps backend denial and refetches successful fulfillment", async ({ page }) => {
+  await mockRuntime(page);
+  let state = "open";
+  let commands = 0;
+  await page.route("**/api/v1/evidence-requests**", async (route) => {
+    if (route.request().method() === "POST") {
+      expect(new URL(route.request().url()).pathname).toBe(`/api/v1/evidence-requests/${tenantId}:fulfill`);
+      expect(route.request().postDataJSON()).toEqual({ expected_version: 1, evidence_version_id: memberId });
+      expect(route.request().headers()["x-tcdx-tenant-id"]).toBe(tenantId);
+      commands++;
+      if (commands === 1) {
+        await route.fulfill({ status: 403, json: { type: "about:blank", title: "Denied", status: 403, code: "TCDX.AUTHORIZATION.DENIED" } });
+      } else {
+        state = "fulfilled";
+        await route.fulfill({ status: 202, json: { operation_id: "evidenceRequestFulfill", status: "completed" } });
+      }
+      return;
+    }
+    const row = { evidence_request_id: tenantId, request_code: "QA-REQUEST", row_version: state === "open" ? 1 : 2, lifecycle_state: state };
+    await route.fulfill({ json: new URL(route.request().url()).pathname.endsWith(tenantId) ? row : { items: [row], page: { has_more: false, next_cursor: null } } });
+  });
+  await page.goto("/solicitudes-evidencia");
+  await page.getByRole("button", { name: "Ver detalle" }).click();
+  await page.getByLabel("ID de versión de evidencia", { exact: true }).fill(memberId);
+  await page.getByRole("dialog").getByRole("button", { name: "Cumplir solicitud", exact: true }).click();
+  await expect(page.getByRole("dialog").getByRole("alert")).toBeVisible();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await page.getByRole("dialog").getByRole("button", { name: "Cumplir solicitud", exact: true }).click();
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(page.getByRole("row").filter({ hasText: "QA-REQUEST" })).toContainText("Atendida");
+  await page.getByRole("button", { name: "Ver detalle" }).click();
+  await expect(page.getByRole("dialog").getByRole("button", { name: "Cumplir solicitud", exact: true })).toHaveCount(0);
+});
+
+for (const [module, domain, entityField] of [["requisitos", "compliance", "requirement_applicability_id"], ["evaluaciones-control", "controls", "control_id"]] as const) {
+  test(`${domain} assessment selects the published server methodology without a fabricated default`, async ({ page }) => {
+    await mockRuntime(page, ["COMPLIANCE_MANAGER", "GRC_MANAGER"]);
+    await page.route(`**/api/v1/${domain}-methodologies**`, route => route.fulfill({ json: { items: [{ methodology_version_ref: roleId, name: "Metodología publicada QA", version_number: 2 }], page: { has_more: false, next_cursor: null } } }));
+    let submitted = false;
+    await page.route(`**/api/v1/${domain === "compliance" ? "requirement" : "control"}-assessments`, async route => {
+      if (route.request().method() !== "POST") { await route.fallback(); return; }
+      expect(route.request().postDataJSON()).toMatchObject({ [entityField]: tenantId, methodology_version_ref: roleId });
+      expect(route.request().headers()["x-tcdx-tenant-id"]).toBe(tenantId);
+      submitted = true; await route.fulfill({ status: 201, json: { operation_id: "assessmentCreate", status: "completed", result: {} } });
+    });
+    await page.goto(`/${module}`);
+    await page.getByRole("button", { name: "Nuevo registro", exact: true }).click();
+    const dialog = page.getByRole("dialog");
+    const selector = dialog.getByLabel("Referencia metodológica", { exact: true });
+    await expect(selector).toHaveValue("");
+    await expect(selector.getByRole("option", { name: "Metodología publicada QA · v2" })).toHaveCount(1);
+    await selector.selectOption(roleId);
+    await dialog.getByLabel(domain === "compliance" ? "ID de aplicabilidad" : "ID de control", { exact: true }).fill(tenantId);
+    if (domain === "controls") await dialog.getByLabel("ID de versión del control", { exact: true }).fill(memberId);
+    await dialog.getByRole("button", { name: "Crear registro", exact: true }).click();
+    await expect.poll(() => submitted).toBe(true);
+  });
+  test(`${domain} methodology catalog denial remains explicit and cannot become a free UUID field`, async ({ page }) => {
+    await mockRuntime(page, ["COMPLIANCE_MANAGER", "GRC_MANAGER"]);
+    await page.route(`**/api/v1/${domain}-methodologies**`, route => route.fulfill({ status: 403, json: { code: "TCDX.AUTHORIZATION.DENIED" } }));
+    await page.goto(`/${module}`); await page.getByRole("button", { name: "Nuevo registro", exact: true }).click();
+    const dialog = page.getByRole("dialog");
+    await expect(dialog.getByRole("alert")).toContainText("No fue posible cargar metodologías autorizadas.");
+    await expect(dialog.getByLabel("Referencia metodológica", { exact: true })).toBeDisabled();
+    await expect(dialog.locator('input[aria-label="Referencia metodológica"]')).toHaveCount(0);
   });
 }

@@ -449,6 +449,129 @@
         "subject_active_interval_unique",
         "validation_access_separate_from_subscription"
       ]
+    },
+    {
+      "id": "20261001000100",
+      "filename": "20261001000100_managed_identity_permissions_publication.sql",
+      "sha256": "90503ed1cf626c7d8a3529d323670322e180efde90257ee8bb99efe2736eef07",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16",
+        "ledger_count=25",
+        "latest_migration=20260929000300",
+        "physical_tables=235",
+        "published_permissions=163",
+        "managed_identity_permissions=0",
+        "canonical_platform_admin_roles=1"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=235",
+        "published_permissions=167",
+        "managed_identity_permissions=4",
+        "platform_admin_managed_identity_grants=4",
+        "other_role_managed_identity_grants=0"
+      ]
+    },
+    {
+      "id": "20261006000100",
+      "filename": "20261006000100_platform_role_administration_permission_publication.sql",
+      "sha256": "2a3c0d14748a9494d6ef60572802782eab2cdf3f4e60bef6026d73c48c1b6399",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16",
+        "ledger_count=26",
+        "latest_migration=20261001000100",
+        "physical_tables=235",
+        "published_permissions=167",
+        "platform_role_administer_permissions=0",
+        "canonical_platform_admin_roles=1"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=235",
+        "published_permissions=168",
+        "platform_role_administer_permissions=1",
+        "platform_admin_role_administer_grants=1",
+        "other_role_role_administer_grants=0",
+        "schema_delta=0"
+      ]
+    },
+    {
+      "id": "20261006000200",
+      "filename": "20261006000200_user_identity_discovery_permission_publication.sql",
+      "sha256": "fa7d34a7f33044b8ee02478211c67a6c1c36ee64df0e0d2de57a60101d157c22",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16",
+        "ledger_count=27",
+        "latest_migration=20261006000100",
+        "physical_tables=235",
+        "published_permissions=168",
+        "user_identity_read_permissions=0",
+        "canonical_platform_and_tenant_admin_templates=2"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=235",
+        "published_permissions=169",
+        "user_identity_read_permissions=1",
+        "platform_admin_grant=1",
+        "tenant_admin_template_grant=1",
+        "tenant_admin_grant_per_existing_instance=1",
+        "unauthorized_grants=0",
+        "schema_delta=0"
+      ]
+    },
+    {
+      "id": "20261007000100",
+      "filename": "20261007000100_platform_tenant_user_onboarding_permission_publication.sql",
+      "sha256": "4f91369da1908264eba937e5c9d760a34bcefe3d7de1d726ac558c3f9b138673",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16",
+        "ledger_count=28",
+        "latest_migration=20261006000200",
+        "physical_tables=235",
+        "published_permissions=169",
+        "tenant_user_onboard_permissions=0",
+        "canonical_platform_admin_roles=1"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=235",
+        "published_permissions=170",
+        "tenant_user_onboard_permissions=1",
+        "platform_admin_grant=1",
+        "unauthorized_grants=0",
+        "schema_delta=0"
+      ]
+    },
+    {
+      "id": "20261007000200",
+      "filename": "20261007000200_phase5_methodology_binding.sql",
+      "sha256": "fa178ad731d48045313a11b22f1bdf3c228be502dafa1883136162ad48127850",
+      "transactional": true,
+      "preconditions": [
+        "database_name=tcdx-grc",
+        "postgres_major=16",
+        "ledger_count=29",
+        "latest_migration=20261007000100",
+        "physical_tables=235",
+        "published_permissions=170",
+        "assessment_rows=0"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=237",
+        "published_permissions=172",
+        "methodologies=two_separate_published_versions",
+        "assessment_methodology_fks=validated"
+      ]
     }
   ]
 }

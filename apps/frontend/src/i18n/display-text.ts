@@ -29,6 +29,8 @@ const FIELD_LABELS: Readonly<Record<string, string>> = {
   result_status: "Estado del resultado",
   domain_conclusion: "Conclusión",
   coverage_percent: "Cobertura (%)",
+  design_effectiveness: "Efectividad de diseño",
+  operating_effectiveness: "Efectividad operativa",
   title: "Título",
   name: "Nombre",
   items: "Elementos",

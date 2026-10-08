@@ -1,0 +1,43 @@
+{
+  "realmSettings": [
+    {
+      "name": "master",
+      "enabled": true,
+      "login_theme": null,
+      "events_enabled": true,
+      "admin_events_enabled": true,
+      "admin_events_details_enabled": false
+    },
+    {
+      "name": "tcdx-managed-identity",
+      "enabled": true,
+      "login_theme": "tcdx-grc",
+      "events_enabled": true,
+      "admin_events_enabled": true,
+      "admin_events_details_enabled": false
+    }
+  ],
+  "capturedAt": "2026-10-07T20:16:29.846Z",
+  "exists": true,
+  "enabled": true,
+  "identityActive": true,
+  "platformAssignments": 1,
+  "activePlatformAdmin": 1,
+  "membership": 0,
+  "tenantRoles": 0,
+  "requiredActions": [
+    "CONFIGURE_TOTP",
+    "UPDATE_PASSWORD"
+  ],
+  "otp": 0,
+  "firstLoginRelatedEvents": 0,
+  "lastAuthenticatedNull": true,
+  "sessions": 0,
+  "readOnly": true,
+  "credentialContentsSelected": false,
+  "credentialHashesCaptured": false,
+  "pass": true,
+  "databaseConnection": "Existing IAM PostgreSQL principal over encrypted private SSH, READ ONLY transaction; no bearer token or human session",
+  "newAuthorityCreated": false,
+  "credentialValuesPrintedOrPersisted": false
+}

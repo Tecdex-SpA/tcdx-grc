@@ -50,8 +50,8 @@ function schemaBlock(schemaName: string): string {
 
 describe("PRE-F5E canonical Platform IAM materialization", () => {
   it("preserves the checksummed PRE-F5E migration inside the approved 233-table inventory", () => {
-    expect(expectedSchema.tableCount).toBe(235);
-    expect(expectedSchema.tables).toHaveLength(235);
+    expect(expectedSchema.tableCount).toBe(237);
+    expect(expectedSchema.tables).toHaveLength(237);
     const migrations = migrationManifest.migrations.filter(({ filename }) => /pre[_-]?f5e/i.test(filename));
     expect(migrations).toHaveLength(1);
     expect(migrations[0]).toMatchObject({ id: "20260923000100", filename: "20260923000100_pre_f5e_platform_authority.sql" });
@@ -114,7 +114,7 @@ describe("PRE-F5E canonical Platform IAM materialization", () => {
   });
 
   it("adds no bootstrap authority, tenant dependency, person seed, table or public endpoint", () => {
-    expect(expectedSchema.tableCount).toBe(235);
+    expect(expectedSchema.tableCount).toBe(237);
     expect(expectedSchema.tables.filter(({ name }) => /bootstrap/i.test(name))).toHaveLength(0);
     expect(preF5eMigration).not.toMatch(/CREATE\s+TABLE[^;]*bootstrap/is);
     expect(preF5eMigration).not.toMatch(/INSERT\s+INTO\s+iam\.platform_role_assignments/i);

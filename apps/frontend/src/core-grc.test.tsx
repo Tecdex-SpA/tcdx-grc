@@ -29,9 +29,10 @@ describe("Core GRC UI contract", () => {
     expect(JSON.stringify(availableWorkflowActions(definition, row))).not.toMatch(/permission|scope/);
   });
 
-  it("never exposes the contract-blocked evidence-request fulfillment action", () => {
+  it("offers canonical evidence-request fulfillment only from the open state", () => {
     const definition = modules.find(({ id }) => id === "solicitudes-evidencia")!;
-    expect(availableWorkflowActions(definition, { lifecycle_state: "open", row_version: 1 })).toHaveLength(0);
+    expect(availableWorkflowActions(definition, { lifecycle_state: "open", row_version: 1 }).map(({ suffix }) => suffix)).toEqual(["fulfill"]);
+    for (const state of ["fulfilled", "cancelled", "expired"]) expect(availableWorkflowActions(definition, { lifecycle_state: state })).toHaveLength(0);
   });
 
   it("does not use browser permissions or scopes as authorization authority", () => {

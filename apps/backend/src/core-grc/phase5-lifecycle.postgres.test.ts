@@ -400,7 +400,7 @@ describe.skipIf(!enabled)("Phase 5 lifecycle PostgreSQL isolated integration", (
         const assessmentStart = mutations.get("controlAssessmentStart")!;
         const assessmentSubmit = mutations.get("controlAssessmentSubmit")!;
         const assessment = await executeMutation(tx, actor(assessmentCreate, tenantId, authorMembershipId, authorId, "CONTROL_OWNER"), assessmentCreate, {
-          body: { control_id: controlId, control_version_id: controlVersionId, methodology_version_ref: newUuidV7() },
+          body: { control_id: controlId, control_version_id: controlVersionId, methodology_version_ref: (await sql<{ id: string }>`SELECT control_effectiveness_methodology_id AS id FROM controls.control_effectiveness_methodologies WHERE lifecycle_state='published' ORDER BY version_number DESC LIMIT 1`.execute(tx)).rows[0]!.id },
           idempotencyKey: newUuidV7(), correlationId: newUuidV7()
         });
         const assessmentId = assessment.response.control_assessment_id as string;

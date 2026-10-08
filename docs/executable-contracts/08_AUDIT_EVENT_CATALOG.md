@@ -22,6 +22,8 @@ DR-PHASE5-CANONICAL-TENANT-USER-ENROLLMENT-2026-09-24 publishes `audit.platform.
 
 The human Phase 5 MembershipRole revoke decision of 2026-09-28 uses the existing `audit.platform.role.revoke.v1` for exactly one TENANT_OWNED assignment. It records canonical actor, tenant, assignment, role, before/after validity and required reason in the same transaction as the validity closure and `iam.role.revoked.v1` outbox event. Platform Admin use additionally records the existing reinforced privileged-use audit. Same-key replay produces no new audit/outbox event; no identity secret, token, digest or PlatformRoleAssignment is included.
 
+The human STEP 23L-MI6A decision publishes six future Platform-only Managed Identity material-audit codes: `audit.platform.managed_identity.provision.v1`, `audit.platform.managed_identity.disable.v1`, `audit.platform.managed_identity.enable.v1`, `audit.platform.managed_identity.password_reset.v1`, `audit.platform.managed_identity.mfa_reset.v1` and `audit.platform.managed_identity.session_revoke.v1`. Each corresponds to exactly one approved POST in contract 22 and artifact 03. They require canonical Platform actor, target UserIdentity where known, operation, server time, correlation, result, safe before/after lifecycle metadata and a reason for every operation except provision. `ownership_class=PLATFORM_CONTROL`, `tenant_id=NULL`. Replay writes no second material audit. No password, temporary credential, OTP, TOTP seed, recovery secret, Keycloak client secret, raw token or provider payload appears in the event. Keycloak separately persists authentication and credential/admin events. These codes are contract-approved; runtime audit catalog and database publication are deferred to MI6. There is no Managed Identity GET material audit and no new outbox event under MI6A.
+
 The 2026-09-23 Platform grant candidate additionally reserves `audit.iam.platform_role_assignment.assign.v1`, `audit.iam.platform_role_assignment.revoke.v1` and `audit.iam.platform_role_assignment.bootstrap.v1`. The bootstrap code belongs exclusively to the internal one-time `FIRST_PLATFORM_ADMIN_BOOTSTRAP` ceremony and is persisted atomically with its first grant; it is not a public endpoint or reusable grant. Any later authorized administration command must use the applicable reinforced code. Payload includes canonical user/role/validity, actor, required bootstrap justification, outcome and correlation, never email or external credential data.
 
 ## Code convention
@@ -77,4 +79,30 @@ AUDIT_MAPPING_GAPS=0
 
 The 161-code count adds `audit.privacy.retention_policy.update.v1` for the human-authorized draft update to the prior 160-code catalog. The RetentionPolicy lifecycle amendment adds create/review/approve audit codes while reusing the already-published publish code. The v1.7 replacement of the contradictory fulfillment code by the single canonical `audit.lifecycle.evidence_request.fulfill.v1` removes the former duplicate alias from the active catalog. The three PRE-F5E token-security codes and three Platform-grant codes remain counted separately because they add no lifecycle edge. Binary content transfer is accounted for by upload-request/finalize audit; authorized GET has no material audit by default under this contract.
 
+The coverage counts above describe the **existing runtime-materialized catalog**. The six MI6A codes are separately contract-approved (`MI6A_CONTRACT_AUDIT_CODES=6`) and are not included in the 168 runtime count until MI6 publishes and verifies them under the existing model.
+
 `AUDIT_EVENT_CATALOG=PASS` as a Fase 2 contract candidate.
+
+## STEP 23L-MI10-P2A
+
+P2A activates reserved audit.iam.platform_role_assignment.assign.v1 and audit.iam.platform_role_assignment.revoke.v1 for exactly platformRoleAssign/platformRoleRevoke. Restricted reinforced material audit and existing privileged-use audit commit with mutation/idempotency. Actor, target, role, reason, time, correlation, outcome and validity are minimized per executable24. No domain outbox fact, tenant authority or secret payload.
+
+
+## STEP 23L-TENANT-ONBOARDING-D1-R
+
+Two human-approved local contract audit bindings are added, not runtime-published counts or SQL:
+
+| Operation | Audit code | Privacy / transaction meaning |
+|---|---|---|
+| userIdentityDiscovery | audit.platform.user_identity.discover.v1 | Reinforced access attempt: actor, boundary, own tenant where applicable, mode, criterion type, internal classification, time/outcome/correlation. Raw value and hidden identity references omitted; no new query hash. Business read plus required audit append. |
+| tenantInitialOnboardingCreate | audit.platform.tenant_initial_onboarding.create.v1 | Reinforced parent result/outcome and safe authorized progress. Platform ownership/NULL tenant context; target company is reference, not actor membership. Primitive tenantCreate and internal privileged bootstrap facts retain their audits; completed replay no duplicate material fact. |
+
+No new outbox event. Existing INTERNAL TENANT_BOOTSTRAP keeps audit.iam.application_token.privileged_use.v1 and its replay-attempt semantics. Existing runtime count sections above are historical materialized counts, not this new local contract publication. Executable25 owns exact fields, retention/privacy and fail-closed persistence behavior.
+
+## Managed Identity tenant onboarding E2E — 2026-10-07
+
+`audit.platform.tenant_user.onboard.v1`: Platform actor, explicit safe target, reason, completed/pending references, correlation, success/denied/failure; PLATFORM_CONTROL/null. Children retain `audit.platform.membership.create.v1` / `audit.platform.role.assign.v1`, exact TENANT_OWNED ownership and existing events. No secret/input lookup value in audit.
+
+## Approved Phase 5 methodology amendment
+
+See [27 — canonical methodology binding](27_PHASE5_METHODOLOGY_BINDING.md) and the explicit human architecture approval. Migration `20261007000200` produces 30 migrations / 237 physical tables / 172 permissions. Seeds: separate Compliance and Control Effectiveness version 1, two compatible FormulaDefinitions, two narrowly scoped read permissions; publication audit `audit.compliance.methodology.publish.v1` and `audit.controls.methodology.publish.v1`. No historical migration or immutable rector file is changed.

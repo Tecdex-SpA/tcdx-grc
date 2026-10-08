@@ -135,3 +135,21 @@ PRE_F5E_UNSOURCED_CONTRACTS=0
 | Subject read | Human Phase 5+ §§6–9; rector 16/22/44/46 | existing `org.subjects`; `organization.subject.read` and nine exact tenant roles; minimal scoped page | `subject-read.ts`, `phase5-lifecycle.postgres.test.ts`, Control Subject selector E2E | PASS_LOCAL; QA pending |
 | Applicability | Human Phase 5+ §§10–13; rector 21/22/44/46 | existing `regulatory.requirement_applicabilities`; closed CHECK and N/A rationale CHECK; OpenAPI conditional validation | `service.ts`, `phase5-lifecycle.postgres.test.ts`, applicability selector E2E | PASS_LOCAL; QA pending |
 | Controls filter | Human Phase 5+ §§17,20; rector 16/22/44/46 | existing Control list envelope extended with `framework_filters`, derived from effective pack/framework links | `repository.ts`, `phase5-lifecycle.postgres.test.ts`, four viewport filter E2E | PASS_LOCAL; QA pending |
+
+
+## STEP 23L-TENANT-ONBOARDING-D1-R
+
+| Human-approved slice | API/Permission | Canonical physical path | Contract authority | Runtime status |
+|---|---|---|---|---|
+| Privacy identity discovery | userIdentityDiscovery / platform.user_identity.read; platform and tenant scopes | iam.user_identities, existing RolePermission/grant/context chains, safe provider metadata, ops_audit.audit_events | D1-R human decision; executable25;02/03/05/08/13 | LOCAL_ONLY; Permission runtime0 |
+| Initial company/admin onboarding | tenantInitialOnboardingCreate; existing platform.tenant.create plus new discovery Permission | platform.tenants, existing roles/grants/Membership/assignment, audit/idempotency/outbox; no new entity | D1-R human decision; fast-trackB;SEED010; executable25 | LOCAL_ONLY; no caller implemented; TENANT_BOOTSTRAP_PUBLIC_ENDPOINT=0 |
+
+No schema/SQL/runtime/generated-source change. G6/G7/G8 and MI10 activation remain deferred/frozen.
+
+## Managed Identity tenant onboarding E2E — 2026-10-07
+
+Human MI tenant E2E packet -> DR-2026-10-07-MANAGED-IDENTITY-TENANT-ONBOARDING -> executable26 -> tenantUserOnboardingCreate / userIdentityTenantAccessList -> one DATA-ONLY Permission publication -> exact same-freeze backend/frontend -> isolated security/UI regression -> authorized QA safe verification -> pending human functional test.
+
+## Approved Phase 5 methodology amendment
+
+See [27 — canonical methodology binding](27_PHASE5_METHODOLOGY_BINDING.md) and the explicit human architecture approval. Migration `20261007000200` produces 30 migrations / 237 physical tables / 172 permissions. Seeds: separate Compliance and Control Effectiveness version 1, two compatible FormulaDefinitions, two narrowly scoped read permissions; publication audit `audit.compliance.methodology.publish.v1` and `audit.controls.methodology.publish.v1`. No historical migration or immutable rector file is changed.

@@ -44,3 +44,16 @@ HUMAN_GATE_REQUIRED=EXECUTABLE_CONTRACTS
 - No generic table CRUD, `DELETE`, `update_status`, cross-tenant bypass, protected-content reconstruction or AI authority exists.
 
 Artifacts 01–20 form one review unit. Artifact 18 proves bidirectional traceability, 19 is the authoritative blocker ledger and 20 is the consolidated review result.
+
+
+## STEP 23L-TENANT-ONBOARDING-D1-R
+
+Executable25 closes the human-approved identity discovery, first-company onboarding application boundary, internal TENANT_BOOTSTRAP invariants, privacy/audit, subscription ordering and partial recovery. OpenAPI02/matrix03 transport bindings are local only; Permission05 definition/grants are contract-approved/runtime-unpublished. Source/runtime catalogs, seeds, migrations and QA are unchanged. No independent bootstrap endpoint.
+
+## Managed Identity tenant onboarding E2E — 2026-10-07
+
+Executable26 closes human-approved centralized tenant-user onboarding and the separate target identity/company access projection. It complements executable21–25 without changing generic tenant assignment authority.
+
+## Approved Phase 5 methodology amendment
+
+See [27 — canonical methodology binding](27_PHASE5_METHODOLOGY_BINDING.md) and the explicit human architecture approval. Migration `20261007000200` produces 30 migrations / 237 physical tables / 172 permissions. Seeds: separate Compliance and Control Effectiveness version 1, two compatible FormulaDefinitions, two narrowly scoped read permissions; publication audit `audit.compliance.methodology.publish.v1` and `audit.controls.methodology.publish.v1`. No historical migration or immutable rector file is changed.

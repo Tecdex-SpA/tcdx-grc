@@ -14,6 +14,7 @@ import { recordPrivilegedUse, requirePlatformAccess, resolvePlatformActor } from
 import { administrativeRead } from "../security/administrative-read.js";
 import { listTenantNormativeContent } from "../regulatory/tenant-read.js";
 import { listValidationAccessCandidates } from "../regulatory/validation-candidates.js";
+import { listMethodologies } from "./methodologies.js";
 import { listSelectableSubjects } from "./subject-read.js";
 import { subjectCreate } from "./subject-create.js";
 import { activatePack, listPackAssignments, packAssignmentDetail, packUuid, revokePack } from "../regulatory/pack-contract.js";
@@ -120,6 +121,12 @@ export const coreGrcCommandRoutes: Array<[string, string, "target" | "parent" | 
 ];
 
 export function registerCoreGrcRoutes(app: FastifyInstance, dependencies: CoreGrcDependencies): void {
+  for (const domain of ["compliance", "controls"] as const) {
+    app.get(`/api/v1/${domain}-methodologies`, async (request: FastifyRequest<{ Querystring: Record<string, unknown> }>) => {
+      const actor = await resolveCoreActor(dependencies.database, dependencies.identityVerifier, request);
+      return listMethodologies(dependencies.database, actor, domain, request.query);
+    });
+  }
   app.get("/api/v1/platform/tenants/:id/account-classification", async (request: FastifyRequest<{ Params: Params }>) => {
     if (request.headers["x-tcdx-tenant-id"] !== undefined) throw new FoundationError("TCDX.AUTHORIZATION.DENIED", "Access denied", 403);
     const actor = await resolvePlatformActor(dependencies.database,

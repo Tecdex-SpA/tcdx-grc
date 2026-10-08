@@ -37,3 +37,12 @@ Use deterministic lock ordering per aggregate contract. Database serialization/d
 Upload uses pre-authorized quarantine. Object-store success alone does not commit Evidence. Finalization verifies metadata/checksum/scan and commits PostgreSQL authority; orphan quarantine cleanup is an observable idempotent job, never evidence creation.
 
 `TRANSACTION_CONCURRENCY_CONTRACT=PASS` as a Phase 2 contract candidate.
+
+
+## STEP 23L-TENANT-ONBOARDING-D1-R
+
+Executable25's initial onboarding service uses canonical commands and internal bootstrap; no generic transaction API. Tenant creation/checkpoint and bootstrap/its result are separately truthful GRC step transactions, serialized through existing idempotency claim and canonical tenant locks. No Keycloak call/credential in those transactions. Safe child references/checkpoints are persisted atomically with each step in existing result_ref; D2 must prove crash/retry/lock boundaries without new entity, lease table or weakened invariant. Catalog22roles+Membership+first TENANT_ADMIN+bootstrap audit is one ACID transaction. Role-assignment failures in subsequent onboarding do not roll back prior Membership/identity. See25 for bounded replay and partial errors.
+
+## Managed Identity tenant onboarding E2E — 2026-10-07
+
+Executable26 central onboarding has separately committed Membership and role child transactions with durable safe progress, same-intent nonblocking advisory serialization, target-tenant lock and fresh authority/entitlement predicates in every child. Child audit/outbox/progress is ACID. Failure retains prior children; only pending roles resume. No distributed transaction or identity rollback.

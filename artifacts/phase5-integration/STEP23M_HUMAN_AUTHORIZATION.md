@@ -1,0 +1,5 @@
+# STEP23M explicit human execution authority
+
+2026-10-08: Andrés Barouh, Architecture Owner/Product Owner, explicitly authorized final Phase5 worktree reconciliation, integrity/architecture/migration/RBAC review, local regressions, selective staging, commit, integration to main, normal push to origin/main, postintegration regression and append-only governance/evidence for Tecdex-SpA/tcdx-grc. Commit/push permitted only after all material gates PASS; no repeated authorization is required. Protected PR/CI integration fulfills main authorization with history preserved.
+
+No QA deployment, QA database write, IAM configuration mutation, production deployment, Phase6 start or Phase6 source changes. No reset/clean/stash/rebase/destructive checkout/force push; preserve unrelated work. Required historical closure remains STEP23L PASS, integration pending; all STEP23M checks are fresh. Exact user packet and its mandatory final output are the session source of authority; this record adds no approval or exception.

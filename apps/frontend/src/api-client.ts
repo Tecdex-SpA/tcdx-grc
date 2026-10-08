@@ -1,6 +1,7 @@
 import type { ProblemEnvelope } from "@tcdx-grc/contracts";
 import type { AccessTokenProvider, SelectedTenant } from "./auth-boundary.js";
 import { uiText } from "./i18n/es.js";
+import type { AuthenticationProviderAvailability, CurrentPrincipalAuthorization } from "@tcdx-grc/contracts";
 
 export class ApiProblem extends Error {
   constructor(readonly problem: ProblemEnvelope, readonly status: number) {
@@ -38,6 +39,20 @@ export class ApiClient {
 
   accessMe<T>(): Promise<T> { return this.request<T>("/api/v1/access/me", {}, { tenantContext: "omit" }); }
 
+  async authenticationProviders(signal?: AbortSignal): Promise<AuthenticationProviderAvailability> {
+    const response = await fetch(new URL("/api/v1/auth/providers", this.origin), {
+      headers: { accept: "application/json" }, cache: "no-store", ...(signal ? { signal } : {})
+    });
+    if (!response.ok) throw new Error("PROVIDER_PROJECTION_UNAVAILABLE");
+    return await response.json() as AuthenticationProviderAvailability;
+  }
+
+  currentAuthorization(tenantId: string | null, signal?: AbortSignal): Promise<CurrentPrincipalAuthorization> {
+    return this.request<CurrentPrincipalAuthorization>("/api/v1/auth/me/authorization", {
+      headers: tenantId ? { "X-TCDX-Tenant-Id": tenantId } : {}, cache: "no-store", ...(signal ? { signal } : {})
+    }, { tenantContext: "omit" });
+  }
+
   platformGet<T>(path: string, init: RequestInit = {}): Promise<T> {
     return this.request<T>(path, init, { tenantContext: "omit" });
   }
@@ -50,11 +65,11 @@ export class ApiClient {
     }
   }
 
-  async post<T>(path: string, body: Record<string, unknown>, idempotencyKey = crypto.randomUUID()): Promise<T> {
+  async post<T>(path: string, body: Record<string, unknown>, idempotencyKey: string = crypto.randomUUID()): Promise<T> {
     return this.request<T>(path, { method: "POST", headers: { "Idempotency-Key": idempotencyKey }, body: JSON.stringify(body) });
   }
 
-  async platformPost<T>(path: string, body: Record<string, unknown>, idempotencyKey = crypto.randomUUID()): Promise<T> {
+  async platformPost<T>(path: string, body: Record<string, unknown>, idempotencyKey: string = crypto.randomUUID()): Promise<T> {
     return this.request<T>(path, { method: "POST", headers: { "Idempotency-Key": idempotencyKey }, body: JSON.stringify(body) }, { tenantContext: "omit" });
   }
 

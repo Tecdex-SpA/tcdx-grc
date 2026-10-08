@@ -3,7 +3,7 @@ info:
   title: TCDX GRC API Base Contract
   version: 1.0.0-contract-candidate
   description: >-
-    Contrato schema-first aprobado de Fase 2 con las enmiendas PRE-F5, PRE-F5B, PRE-F5C, los cierres compatibles PRE-F5E y las decisiones Subscription, lecturas administrativas y Fase 5+. Publica 142 operaciones que cierran
+    Contrato schema-first aprobado de Fase 2 con las enmiendas PRE-F5, PRE-F5B, PRE-F5C, los cierres compatibles PRE-F5E y las decisiones Subscription, lecturas administrativas y Fase 5+. Publica 161 operaciones que cierran
     trazabilidad rector-capability-permission-audit-idempotency-modelo físico.
     H-003..H-005 autorizan las operaciones mínimas de Configuration,
     privacy retention/erasure y lifecycle-registry sobre entidades existentes.
@@ -14,6 +14,8 @@ info:
     PRE-F5E cierra tenantCreate, membershipCreate y membershipRoleAssign, amplía accessGet
     con los contextos tenant propios activos, materializa PlatformRoleAssignment como grant
     canónico candidato y separa el TCDX application JWT de todo token externo.
+    Las ocho operaciones MI6A son contrato humano aprobado, sin ruta runtime ni
+    Permission física publicada todavía.
   x-contract-owner: Architecture Owner
   x-approving-human-roles:
     - Architecture Owner
@@ -28,11 +30,435 @@ info:
   x-phase-5-administrative-read-decision: HUMAN_APPROVED_2026-09-28
   x-phase-5-plus-resolution: HUMAN_APPROVED_2026-09-29
   x-phase-5-executable-contracts-status: CLOSED
+  x-step-23l-mi6a-admin-contract: HUMAN_APPROVED_DOC_ONLY_2026-10-01
+  x-step-23l-mi6a-runtime-permissions-published: false
+  x-step-23l-tenant-onboarding-d1-r: HUMAN_APPROVED_LOCAL_CONTRACT_ONLY
+  x-d1-r-runtime-permission-publication: false
+  x-d1-r-schema-change: false
   x-database-contract-changed: true
 servers:
   - url: /api/v1
     description: Major v1 tenant/business API base path; deployment host is environment configuration.
 paths:
+  "/platform/tenants/{tenant_id}/users:onboard":
+    post:
+      operationId: tenantUserOnboardingCreate
+      tags: [platform]
+      summary: "Centralized user access to an explicitly selected company"
+      description: "Executable26: Platform-only canonical identity/Membership onboarding and additive tenant-role reconciliation; target CORE_PLATFORM required. No bootstrap, identity creation, actor Membership, Keycloak authority or generic tenant assignment expansion. Safe durable partial progress; same original intent resumes pending roles only."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.tenant_user.onboard`"
+      x-tcdx-scope: "platform"
+      x-tcdx-platform-only: true
+      x-tcdx-tenant-header-policy: REJECT_403
+      x-tcdx-audit-event: "`audit.platform.tenant_user.onboard.v1`"
+      x-tcdx-domain-events: "iam.membership.created.v1, iam.role.assigned.v1; only new children"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "MEMBERSHIP_AND_EACH_ROLE_CHILD_TX_WITH_DURABLE_PROGRESS"
+      x-tcdx-physical-entities: "platform.tenants, iam.user_identities, iam.tenant_memberships, iam.roles, iam.membership_roles, canonical entitlement/audit/idempotency/outbox"
+      x-tcdx-rector-source: "Human Managed Identity tenant E2E §§8–18; executable26; rector09/22/25/42"
+      parameters:
+        - { $ref: '#/components/parameters/CorrelationId' }
+        - { $ref: '#/components/parameters/IdempotencyKey' }
+        - { name: tenant_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/TenantUserOnboardingRequest' } } } }
+      responses:
+        '201':
+          description: Completed Membership and requested role receipt; no secrets.
+          headers: { Cache-Control: { $ref: '#/components/headers/CacheControlNoStore' }, Idempotency-Replayed: { $ref: '#/components/headers/IdempotencyReplayed' } }
+          content: { application/json: { schema: { $ref: '#/components/schemas/TenantUserOnboardingResult' } } }
+        '400': { description: 'Canonical safe rejection; committed child progress when available.', headers: { Cache-Control: { $ref: '#/components/headers/CacheControlNoStore' } }, content: { application/json: { schema: { $ref: '#/components/schemas/TenantUserOnboardingError' } } } }
+        '401': { description: 'Canonical safe rejection; committed child progress when available.', headers: { Cache-Control: { $ref: '#/components/headers/CacheControlNoStore' } }, content: { application/json: { schema: { $ref: '#/components/schemas/TenantUserOnboardingError' } } } }
+        '403': { description: 'Canonical safe rejection; committed child progress when available.', headers: { Cache-Control: { $ref: '#/components/headers/CacheControlNoStore' } }, content: { application/json: { schema: { $ref: '#/components/schemas/TenantUserOnboardingError' } } } }
+        '404': { description: 'Canonical safe rejection; committed child progress when available.', headers: { Cache-Control: { $ref: '#/components/headers/CacheControlNoStore' } }, content: { application/json: { schema: { $ref: '#/components/schemas/TenantUserOnboardingError' } } } }
+        '409': { description: 'Canonical safe rejection; committed child progress when available.', headers: { Cache-Control: { $ref: '#/components/headers/CacheControlNoStore' } }, content: { application/json: { schema: { $ref: '#/components/schemas/TenantUserOnboardingError' } } } }
+        '503': { description: 'Canonical safe rejection; committed child progress when available.', headers: { Cache-Control: { $ref: '#/components/headers/CacheControlNoStore' } }, content: { application/json: { schema: { $ref: '#/components/schemas/TenantUserOnboardingError' } } } }
+  "/platform/user-identities/{user_identity_id}/tenant-access":
+    get:
+      operationId: userIdentityTenantAccessList
+      tags: [iam]
+      summary: "Company Memberships and active tenant roles for one canonical identity"
+      description: "Executable26: Platform administrative read with existing membership permission and no tenant header; coherent read-only snapshot, target-bound pagination, no provider key or secret."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.membership.read`"
+      x-tcdx-scope: "platform"
+      x-tcdx-platform-only: true
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO_REPEATABLE_READ"
+      x-tcdx-physical-entities: "iam.user_identities, iam.tenant_memberships, platform.tenants, iam.membership_roles, iam.roles"
+      x-tcdx-rector-source: "Human Managed Identity tenant E2E §18; executable26; rector09/22/25/42"
+      parameters:
+        - { $ref: '#/components/parameters/CorrelationId' }
+        - { name: user_identity_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }
+        - { $ref: '#/components/parameters/PageSize' }
+        - { $ref: '#/components/parameters/Cursor' }
+      responses:
+        '200':
+          description: Authorized paginated company access, including empty results.
+          headers: { Cache-Control: { $ref: '#/components/headers/CacheControlNoStore' } }
+          content: { application/json: { schema: { $ref: '#/components/schemas/UserIdentityTenantAccessPage' } } }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '503': { $ref: '#/components/responses/DependencyError' }
+  "/user-identities":
+    get:
+      operationId: userIdentityDiscovery
+      tags: ["iam"]
+      summary: "D1-R privacy-minimized identity selection with exclusive Platform/tenant modes"
+      description: "Executable25: explicit required mode. platform_search requires Platform authority and forbids tenant header. tenant_exact requires own active Membership, effective TENANT_ADMIN, CORE_PLATFORM and validated header; exact email/username, at most one eligible result, no directory/pagination. None/hidden/inactive/ambiguous return indistinguishable empty200. No raw criterion in audit/access logs; no body or unknown input. Authorization before lookup; all responses no-store."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.user_identity.read`"
+      x-tcdx-scope: "platform, tenant"
+      x-tcdx-runtime-status: CONTRACT_ONLY_NOT_PUBLISHED
+      x-tcdx-mode-authorization: { platform_search: PLATFORM_CHAIN_ONLY_NO_TENANT_HEADER, tenant_exact: OWN_ACTIVE_MEMBERSHIP_TENANT_ADMIN_CORE_PLATFORM_VALIDATED_HEADER }
+      x-tcdx-tenant-exact-policy: { list: false, pagination: false, prefix: false, fuzzy: false, autocomplete: false, wildcard: false, maximum_results: 1 }
+      x-tcdx-response-by-mode: { platform_search: "#/components/schemas/UserIdentityDiscoveryPage", tenant_exact: "#/components/schemas/UserIdentityDiscoveryTenantPage" }
+      x-tcdx-input-log-policy: OMIT_RAW_LOOKUP_VALUE
+      x-tcdx-cache-policy: NO_STORE_ALL_RESPONSES
+      x-tcdx-audit-event: "`audit.platform.user_identity.discover.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO_BUSINESS_PLUS_PRIVACY_AUDIT_APPEND"
+      x-tcdx-physical-entities: "`iam.user_identities`, canonical grants/context, safe existing provider metadata, `ops_audit.audit_events`"
+      x-tcdx-rector-source: "Human STEP 23L-TENANT-ONBOARDING-D1-R; executable25; rector09/22/25/42"
+      parameters:
+        - { $ref: '#/components/parameters/CorrelationId' }
+        - { name: mode, in: query, required: true, schema: { type: string, enum: [platform_search, tenant_exact] } }
+        - { name: criterion, in: query, required: true, description: 'tenant_exact allows only email/username; display_name is Platform-only.', schema: { type: string, enum: [display_name, email, username] } }
+        - { name: value, in: query, required: true, description: 'Complete exact email/username metadata; Platform name search is literal substring. No new normalization. Raw value omitted from audit/access logs.', schema: { type: string, minLength: 1, maxLength: 255 } }
+        - { name: X-TCDX-Tenant-Id, in: header, required: false, description: 'Mandatory and backend-validated for tenant_exact; forbidden for platform_search. Never authority by itself.', schema: { $ref: '#/components/schemas/UuidV7' } }
+        - { $ref: '#/components/parameters/PageSize' }
+        - { $ref: '#/components/parameters/Cursor' }
+      responses:
+        '200': { $ref: '#/components/responses/UserIdentityDiscoverySuccess' }
+        '400': { $ref: '#/components/responses/UserIdentityDiscoveryError' }
+        '401': { $ref: '#/components/responses/UserIdentityDiscoveryError' }
+        '403': { $ref: '#/components/responses/UserIdentityDiscoveryError' }
+        '429': { $ref: '#/components/responses/UserIdentityDiscoveryError' }
+        '503': { $ref: '#/components/responses/UserIdentityDiscoveryError' }
+  "/platform/tenants:initial-onboarding":
+    post:
+      operationId: tenantInitialOnboardingCreate
+      tags: ["platform"]
+      summary: "D1-R bounded new-company and first-admin application command"
+      description: "Executable25: requires both Platform permissions; distinct active initial administrator; existing identity or MI already provisioned through its separately authorized operation. tenantCreate then internal TENANT_BOOTSTRAP only. No arbitrary existing tenant input or independently addressable bootstrap. Same bound key reconciles/resumes only its own pending steps; no secret, rollback fiction or implicit actor Membership."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.tenant.create` AND `platform.user_identity.read`"
+      x-tcdx-required-permissions: [platform.tenant.create, platform.user_identity.read]
+      x-tcdx-preprovisioned-mi-permission: platform.managed_identity.create
+      x-tcdx-scope: "platform"
+      x-tcdx-platform-only: true
+      x-tcdx-tenant-header-policy: REJECT_403
+      x-tcdx-runtime-status: CONTRACT_ONLY_NOT_IMPLEMENTED
+      x-tcdx-bootstrap-public-endpoint: false
+      x-tcdx-arbitrary-existing-tenant-input: false
+      x-tcdx-platform-actor-membership-side-effect: 0
+      x-tcdx-first-execution-guards: [ACTIVE_TENANT, ACTIVE_IDENTITY, TARGET_DISTINCT_ACTOR, ZERO_ACTIVE_TENANT_ADMINS, NO_CONSUMED_BOOTSTRAP, NO_DUPLICATE_MEMBERSHIP, EXACT_CANONICAL_TEMPLATE_SET]
+      x-tcdx-first-role-limit: TENANT_ADMIN_ONLY
+      x-tcdx-audit-event: "`audit.platform.tenant_initial_onboarding.create.v1`"
+      x-tcdx-domain-events: "NONE_NEW; tenantCreate retains platform.tenant.provisioned.v1"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "CANONICAL_STEP_TX_AND_DURABLE_IDEMPOTENCY_REFERENCES; NO_DISTRIBUTED_TX"
+      x-tcdx-physical-entities: "`platform.tenants`, `iam.user_identities`, `iam.roles`, `iam.role_permissions`, `iam.tenant_memberships`, `iam.membership_roles`, audit/idempotency/outbox"
+      x-tcdx-rector-source: "Human STEP 23L-TENANT-ONBOARDING-D1-R; executable25; fast-track Decision B; SEED010"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/TenantInitialOnboardingRequest' } } } }
+      responses:
+        '201': { $ref: '#/components/responses/TenantInitialOnboardingSuccess' }
+        '400': { $ref: '#/components/responses/TenantInitialOnboardingError' }
+        '401': { $ref: '#/components/responses/TenantInitialOnboardingError' }
+        '403': { $ref: '#/components/responses/TenantInitialOnboardingError' }
+        '404': { $ref: '#/components/responses/TenantInitialOnboardingError' }
+        '409': { $ref: '#/components/responses/TenantInitialOnboardingError' }
+        '422': { $ref: '#/components/responses/TenantInitialOnboardingError' }
+        '503': { $ref: '#/components/responses/TenantInitialOnboardingError' }
+  "/platform/user-identities/{user_identity_id}/platform-roles":
+    get:
+      operationId: platformRoleAssignmentList
+      tags: ["iam"]
+      summary: "P2E target active PlatformRoleAssignment read"
+      description: "Executable24 P2E: canonical UUIDv7 target; existing identity in any lifecycle, missing target 404, empty assignments 200. Complete unpaginated active validity intervals at one read-only snapshot; canonical platform family only; role_code ASC then assignment ID ASC. Closed/future intervals omitted and retained in persistence. No body/query, tenant, idempotency key or ETag."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.role.administer`"
+      x-tcdx-scope: "platform"
+      x-tcdx-platform-only: true
+      x-tcdx-tenant-header-policy: REJECT_403
+      x-tcdx-tenant-id-input-policy: REJECT_400
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`iam.user_identities`, `iam.platform_role_assignments`, `iam.roles`"
+      x-tcdx-rector-source: "Human STEP 23L-MI10-P2E; executable24; PRE-F5E; 09,22,23,25,42"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { name: user_identity_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/PlatformRoleAssignmentListSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+    post:
+      operationId: platformRoleAssign
+      tags: ["iam"]
+      summary: "P2A canonical PlatformRoleAssignment assign"
+      description: "Executable24: platform only; current canonical permission; no tenant side effects; required reason/key; transactional last-admin protection; original safe result replay; no bootstrap."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.role.administer`"
+      x-tcdx-scope: "platform"
+      x-tcdx-platform-only: true
+      x-tcdx-tenant-header-policy: REJECT_403
+      x-tcdx-tenant-id-input-policy: REJECT_400
+      x-tcdx-audit-event: "`audit.iam.platform_role_assignment.assign.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`iam.platform_role_assignments`, audit/idempotency"
+      x-tcdx-rector-source: "Human STEP 23L-MI10-P2A; executable24; 09,22,25,42"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: user_identity_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/PlatformRoleAssignRequest' } } } }
+      responses:
+        '201': { $ref: '#/components/responses/PlatformRoleAssignmentSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/platform/user-identities/{user_identity_id}/platform-roles/{platform_role_assignment_id}:revoke":
+    post:
+      operationId: platformRoleRevoke
+      tags: ["iam"]
+      summary: "P2A canonical PlatformRoleAssignment revoke"
+      description: "Executable24: platform only; current canonical permission; no tenant side effects; required reason/key; transactional last-admin protection; original safe result replay; no bootstrap."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.role.administer`"
+      x-tcdx-scope: "platform"
+      x-tcdx-platform-only: true
+      x-tcdx-tenant-header-policy: REJECT_403
+      x-tcdx-tenant-id-input-policy: REJECT_400
+      x-tcdx-audit-event: "`audit.iam.platform_role_assignment.revoke.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`iam.platform_role_assignments`, audit/idempotency"
+      x-tcdx-rector-source: "Human STEP 23L-MI10-P2A; executable24; 09,22,25,42"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: user_identity_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }, { name: platform_role_assignment_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/PlatformRoleRevokeRequest' } } } }
+      responses:
+        '200': { $ref: '#/components/responses/PlatformRoleAssignmentSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+  "/platform/managed-identities":
+    get:
+      operationId: managedIdentityList
+      tags: ["iam"]
+      summary: "MI6A: list safe global Managed Identity metadata"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.managed_identity.read`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`iam.user_identities`; safe Keycloak metadata"
+      x-tcdx-rector-source: "Human STEP 23L-MI6A decision 2026-10-01; contract 22"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/PageSize' }, { $ref: '#/components/parameters/Cursor' }]
+      responses:
+        '200': { $ref: '#/components/responses/ManagedIdentityListSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+    post:
+      operationId: managedIdentityProvision
+      tags: ["iam"]
+      summary: "MI6A: provision a named human without GRC grants"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.managed_identity.create`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "`audit.platform.managed_identity.provision.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "KEYCLOAK_ACTION_PLUS_RECONCILED_GRC_TX"
+      x-tcdx-physical-entities: "`iam.user_identities`, audit/idempotency; Keycloak external authority"
+      x-tcdx-rector-source: "Human STEP 23L-MI6A decision 2026-10-01; contract 22"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/ManagedIdentityProvisionRequest' } } } }
+      responses:
+        '201': { $ref: '#/components/responses/ManagedIdentityCredentialOperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '409': { $ref: '#/components/responses/ManagedIdentityCredentialConflictOrRecovery' }
+        '502': { $ref: '#/components/responses/ProviderError' }
+        '503': { $ref: '#/components/responses/DependencyError' }
+  "/platform/managed-identities/{user_identity_id}":
+    get:
+      operationId: managedIdentityRead
+      tags: ["iam"]
+      summary: "MI6A: read safe global Managed Identity metadata"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.managed_identity.read`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`iam.user_identities`; safe Keycloak metadata"
+      x-tcdx-rector-source: "Human STEP 23L-MI6A decision 2026-10-01; contract 22"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { name: user_identity_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/ManagedIdentitySuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+  "/platform/managed-identities/{user_identity_id}:disable":
+    post:
+      operationId: managedIdentityDisable
+      tags: ["iam"]
+      summary: "MI6A: disable identity and invalidate sessions"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.managed_identity.administer`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "`audit.platform.managed_identity.disable.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "KEYCLOAK_ACTION_PLUS_RECONCILED_GRC_TX"
+      x-tcdx-physical-entities: "`iam.user_identities`, audit/idempotency/revocation; Keycloak external authority"
+      x-tcdx-rector-source: "Human STEP 23L-MI6A decision 2026-10-01; contract 22"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: user_identity_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/ManagedIdentityReasonRequest' } } } }
+      responses:
+        '200': { $ref: '#/components/responses/ManagedIdentitySuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+        '502': { $ref: '#/components/responses/ProviderError' }
+        '503': { $ref: '#/components/responses/DependencyError' }
+  "/platform/managed-identities/{user_identity_id}:enable":
+    post:
+      operationId: managedIdentityEnable
+      tags: ["iam"]
+      summary: "MI6A: enable identity without granting authority"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.managed_identity.administer`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "`audit.platform.managed_identity.enable.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "KEYCLOAK_ACTION_PLUS_RECONCILED_GRC_TX"
+      x-tcdx-physical-entities: "`iam.user_identities`, audit/idempotency; Keycloak external authority"
+      x-tcdx-rector-source: "Human STEP 23L-MI6A decision 2026-10-01; contract 22"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: user_identity_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/ManagedIdentityReasonRequest' } } } }
+      responses:
+        '200': { $ref: '#/components/responses/ManagedIdentitySuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+        '502': { $ref: '#/components/responses/ProviderError' }
+        '503': { $ref: '#/components/responses/DependencyError' }
+  "/platform/managed-identities/{user_identity_id}:password-reset":
+    post:
+      operationId: managedIdentityPasswordReset
+      tags: ["iam"]
+      summary: "MI6A: force new credential and invalidate sessions"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.managed_identity.administer`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "`audit.platform.managed_identity.password_reset.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "KEYCLOAK_ACTION_PLUS_RECONCILED_GRC_TX"
+      x-tcdx-physical-entities: "`iam.user_identities`, audit/idempotency/revocation; Keycloak external authority"
+      x-tcdx-rector-source: "Human STEP 23L-MI6A decision 2026-10-01; contract 22"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: user_identity_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/ManagedIdentityPasswordResetRequest' } } } }
+      responses:
+        '200': { $ref: '#/components/responses/ManagedIdentityCredentialOperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ManagedIdentityCredentialConflictOrRecovery' }
+        '502': { $ref: '#/components/responses/ProviderError' }
+        '503': { $ref: '#/components/responses/DependencyError' }
+  "/platform/managed-identities/{user_identity_id}:mfa-reset":
+    post:
+      operationId: managedIdentityMfaReset
+      tags: ["iam"]
+      summary: "MI6A: reset TOTP and invalidate sessions"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.managed_identity.administer`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "`audit.platform.managed_identity.mfa_reset.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "KEYCLOAK_ACTION_PLUS_RECONCILED_GRC_TX"
+      x-tcdx-physical-entities: "`iam.user_identities`, audit/idempotency/revocation; Keycloak external authority"
+      x-tcdx-rector-source: "Human STEP 23L-MI6A decision 2026-10-01; contract 22"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: user_identity_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/ManagedIdentityReasonRequest' } } } }
+      responses:
+        '200': { $ref: '#/components/responses/ManagedIdentitySuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+        '502': { $ref: '#/components/responses/ProviderError' }
+        '503': { $ref: '#/components/responses/DependencyError' }
+  "/platform/managed-identities/{user_identity_id}/sessions:revoke":
+    post:
+      operationId: managedIdentitySessionRevoke
+      tags: ["iam"]
+      summary: "MI6A: revoke Keycloak and GRC application sessions"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.managed_identity.administer`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "`audit.platform.managed_identity.session_revoke.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "KEYCLOAK_ACTION_PLUS_RECONCILED_GRC_TX"
+      x-tcdx-physical-entities: "`iam.user_identities`, audit/idempotency/revocation; Keycloak external authority"
+      x-tcdx-rector-source: "Human STEP 23L-MI6A decision 2026-10-01; contract 22"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/IdempotencyKey' }, { name: user_identity_id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/ManagedIdentityReasonRequest' } } } }
+      responses:
+        '200': { $ref: '#/components/responses/ManagedIdentitySuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+        '502': { $ref: '#/components/responses/ProviderError' }
+        '503': { $ref: '#/components/responses/DependencyError' }
   "/subjects":
     get:
       operationId: subjectList
@@ -76,6 +502,7 @@ paths:
         '403': { $ref: '#/components/responses/AuthorizationError' }
         '409': { $ref: '#/components/responses/ConflictError' }
   "/platform/tenants/{id}/account-classification":
+    parameters: [{ name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
     get:
       operationId: tenantAccountClassificationGet
       tags: ["platform"]
@@ -129,6 +556,7 @@ paths:
         '201': { $ref: '#/components/responses/OperationSuccess' }
         '403': { $ref: '#/components/responses/AuthorizationError' }
   "/platform/tenants/{id}/regulatory-pack-validation-accesses":
+    parameters: [{ name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
     get:
       operationId: validationAccessPlatformList
       tags: ["regulatory"]
@@ -217,6 +645,7 @@ paths:
         '201': { $ref: '#/components/responses/OperationSuccess' }
         '403': { $ref: '#/components/responses/AuthorizationError' }
   "/platform/regulatory-pack-validation-accesses/{id}:revoke":
+    parameters: [{ name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
     post:
       operationId: validationAccessRevoke
       tags: ["regulatory"]
@@ -236,6 +665,7 @@ paths:
         '403': { $ref: '#/components/responses/AuthorizationError' }
         '409': { $ref: '#/components/responses/ConflictError' }
   "/subscriptions/{id}/regulatory-packs":
+    parameters: [{ name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
     get:
       operationId: subscriptionRegulatoryPackList
       tags: ["platform"]
@@ -292,6 +722,7 @@ paths:
         '200': { $ref: '#/components/responses/OperationSuccess' }
         '403': { $ref: '#/components/responses/AuthorizationError' }
   "/subscription-regulatory-packs/{id}":
+    parameters: [{ name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
     get:
       operationId: subscriptionRegulatoryPackGet
       tags: ["platform"]
@@ -311,6 +742,7 @@ paths:
         '403': { $ref: '#/components/responses/AuthorizationError' }
         '404': { $ref: '#/components/responses/NotFoundError' }
   "/subscription-regulatory-packs/{id}:revoke":
+    parameters: [{ name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
     post:
       operationId: subscriptionRegulatoryPackRevoke
       tags: ["platform"]
@@ -371,6 +803,57 @@ paths:
         '403': { $ref: '#/components/responses/AuthorizationError' }
         '404': { $ref: '#/components/responses/NotFoundError' }
         '409': { $ref: '#/components/responses/ConflictError' }
+  "/auth/providers":
+    get:
+      operationId: authenticationProviderList
+      x-tcdx-response-cache-control: "no-store (all statuses)"
+      tags: ["platform"]
+      summary: "Configured and enabled authentication methods for public login entry"
+      description: "Contract 23 section 2. Exactly the closed four-provider set, once each; availability derives from validated backend configuration and registered supported browser clients, not live health. No session, tenant header, query or body. No IdP network call or configuration disclosure. No new Permission or entitlement. Runtime pending MI7-R."
+      security: []
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "public authentication context"
+      x-tcdx-scope: "pre-authentication context (not an RBAC scope)"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "NONE; existing backend configuration and browser client composition"
+      x-tcdx-rector-source: "Human STEP 23L-MI7A; 25,29,43; executable 23 section 2"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }]
+      responses:
+        '200': { $ref: '#/components/responses/AuthenticationProviderListSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '429': { $ref: '#/components/responses/FrontendProjectionRateLimitError' }
+        '503': { $ref: '#/components/responses/FrontendProjectionDependencyError' }
+  "/auth/me/authorization":
+    get:
+      operationId: currentPrincipalAuthorizationRead
+      x-tcdx-response-cache-control: "no-store (all statuses)"
+      x-tcdx-response-vary: "Authorization, X-TCDX-Tenant-Id (all statuses)"
+      tags: ["platform"]
+      summary: "Own effective context permissions for authenticated frontend presentation"
+      description: "Contract 23 section 3. Valid active HUMAN_INTERACTIVE TCDX principal; no new self-read Permission. Platform permissions and optional validated own tenant permissions remain separate. The optional tenant header selects a candidate only. Object policy/SoD and endpoint authorization remain required; this snapshot never authorizes a command. No query or body. Runtime pending MI7-R."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "authenticated context"
+      x-tcdx-scope: "own authenticated context; platform and optional validated tenant grants remain distinct"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`iam.user_identities`, `iam.platform_role_assignments`, `iam.tenant_memberships`, `iam.membership_roles`, `iam.roles`, `iam.role_permissions`, `iam.permissions`, `platform.tenants`, `platform.subscriptions`, `platform.plan_versions`, `platform.entitlements`, `platform.capabilities`"
+      x-tcdx-rector-source: "Human STEP 23L-MI7A; 09,22,42; executable 13,21,22,23 section 3"
+      parameters:
+        - { $ref: '#/components/parameters/AuthorizationProjectionTenantId' }
+        - { $ref: '#/components/parameters/CorrelationId' }
+      responses:
+        '200': { $ref: '#/components/responses/CurrentPrincipalAuthorizationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '503': { $ref: '#/components/responses/FrontendProjectionDependencyError' }
   "/platform/tenants":
     get:
       operationId: tenantList
@@ -732,7 +1215,7 @@ paths:
       operationId: roleList
       tags: ["iam"]
       summary: "CORE_PLATFORM: roleList"
-      description: "Platform Admin may list Platform roles and roles of an explicit selected tenant; Tenant Admin sees only TENANT_OWNED roles of its authenticated active tenant. Role catalog is display data, never assignment authority."
+      description: "Platform Admin may list Platform roles and roles of an explicit selected tenant; Tenant Admin sees only TENANT_OWNED roles of its authenticated active tenant. Role catalog is display data, never assignment authority. P2E assignable_family=platform narrows this existing operation to published baseline platform functional roles eligible for platformRoleAssign; tenant header 403, tenant_id/body 400, canonical code selection, same cursor pagination. No family filter preserves existing behavior."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "CORE_PLATFORM"
       x-tcdx-permission: "`platform.role.read`"
@@ -743,12 +1226,13 @@ paths:
       x-tcdx-transaction-boundary: "RO"
       x-tcdx-physical-entities: "`iam.roles`"
       x-tcdx-rector-source: "22,42; human administrative-read decision 2026-09-28"
-      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/AdministrativeTenantId' }, { $ref: '#/components/parameters/PageSize' }, { $ref: '#/components/parameters/Cursor' }]
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/AdministrativeTenantId' }, { name: assignable_family, in: query, required: false, schema: { type: string, enum: [platform] }, description: 'Exclusive platform-only assignable catalog mode; cannot combine with tenant context.' }, { $ref: '#/components/parameters/PageSize' }, { $ref: '#/components/parameters/Cursor' }]
       responses:
         '200': { $ref: '#/components/responses/RoleAdministrativeListSuccess' }
         '400': { $ref: '#/components/responses/ValidationError' }
         '401': { $ref: '#/components/responses/AuthenticationError' }
         '403': { $ref: '#/components/responses/AuthorizationError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
   "/roles/{role_id}":
     get:
       operationId: roleGet
@@ -3839,6 +4323,85 @@ paths:
         '403': { $ref: '#/components/responses/AuthorizationError' }
         '404': { $ref: '#/components/responses/NotFoundError' }
         '409': { $ref: '#/components/responses/ConflictError' }
+  "/compliance-methodologies":
+    get:
+      operationId: complianceMethodologyList
+      tags: ["compliance"]
+      summary: "ISO_COMPLIANCE: complianceMethodologyList"
+      description: "Human-approved Phase 5 methodology binding; published effective compatible versions only."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "ISO_COMPLIANCE"
+      x-tcdx-permission: "`compliance.methodology.read`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`regulatory.compliance_methodologies`"
+      x-tcdx-stable-order: "methodology_version_ref ASC"
+      x-tcdx-rector-source: "PHASE5_METHODOLOGY_BINDING_ARCHITECTURE_DECISION_20261007; 19,31,39"
+      parameters:
+        - { $ref: '#/components/parameters/CorrelationId' }
+        - { $ref: '#/components/parameters/TenantContext' }
+        - { $ref: '#/components/parameters/Cursor' }
+        - { $ref: '#/components/parameters/PageSize' }
+      responses:
+        '200':
+          description: Published compatible methodologies
+          headers:
+            X-Correlation-ID: { $ref: '#/components/headers/CorrelationId' }
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [items, page]
+                properties:
+                  items: { type: array, items: { $ref: '#/components/schemas/ComplianceMethodology' } }
+                  page: { $ref: '#/components/schemas/PageMeta' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+  "/controls-methodologies":
+    get:
+      operationId: controlsMethodologyList
+      tags: ["controls"]
+      summary: "CONTROLS_ASSURANCE: controlsMethodologyList"
+      description: "Human-approved Phase 5 methodology binding; published effective compatible versions only."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CONTROLS_ASSURANCE"
+      x-tcdx-permission: "`controls.methodology.read`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`controls.control_effectiveness_methodologies`"
+      x-tcdx-stable-order: "methodology_version_ref ASC"
+      x-tcdx-rector-source: "PHASE5_METHODOLOGY_BINDING_ARCHITECTURE_DECISION_20261007; 19,31,39"
+      parameters:
+        - { $ref: '#/components/parameters/CorrelationId' }
+        - { $ref: '#/components/parameters/TenantContext' }
+        - { $ref: '#/components/parameters/Cursor' }
+        - { $ref: '#/components/parameters/PageSize' }
+      responses:
+        '200':
+          description: Published compatible methodologies
+          headers:
+            X-Correlation-ID: { $ref: '#/components/headers/CorrelationId' }
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [items, page]
+                properties:
+                  items: { type: array, items: { $ref: '#/components/schemas/ControlEffectivenessMethodology' } }
+                  page: { $ref: '#/components/schemas/PageMeta' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+
 tags: []
 components:
   securitySchemes:
@@ -3848,6 +4411,12 @@ components:
       bearerFormat: JWT
       description: Short-lived TCDX application access-token JWT issued after external OIDC identity proof. External IdP access tokens, id_tokens and opaque provider tokens are never TCDX API bearer credentials. Backend validates the configured TCDX issuer/audience, asymmetric signature/key, algorithm allowlist, jti, time claims, principal_class and revocation state before GRC authorization.
   parameters:
+    AuthorizationProjectionTenantId:
+      name: X-TCDX-Tenant-Id
+      in: header
+      required: false
+      description: "Contract 23: optional own tenant candidate, validated against active membership; absence yields tenant_permissions null. Malformed/repeated header is 400; foreign/missing context is concealed. Never identity proof or Platform authority."
+      schema: { $ref: '#/components/schemas/UuidV7' }
     TenantContext:
       name: X-TCDX-Tenant-Id
       in: header
@@ -4009,10 +4578,279 @@ components:
     IdempotencyReplayed:
       description: 'true when response is the persisted replay for the same fingerprint.'
       schema: { type: boolean }
+    CacheControlNoStore:
+      description: Sensitive Managed Identity credential-operation responses are never stored by HTTP caches.
+      schema: { type: string, const: no-store }
     ETag:
       description: Strong operation-specific resource validator; use the corresponding operation's If-Match contract.
       schema: { type: string }
   schemas:
+    ComplianceMethodology:
+      type: object
+      additionalProperties: false
+      required: [methodology_version_ref, methodology_code, version_number, name, rector_source, rector_version, formula_definition_id, minimum_coverage, effective_from, effective_to, published_at, partial_compliance_factor]
+      properties:
+        methodology_version_ref: { $ref: '#/components/schemas/UuidV7' }
+        methodology_code: { type: string }
+        version_number: { type: integer, format: int64, minimum: 1 }
+        name: { type: string }
+        rector_source: { type: string }
+        rector_version: { type: string }
+        formula_definition_id: { $ref: '#/components/schemas/UuidV7' }
+        minimum_coverage: { type: number, minimum: 0, maximum: 100 }
+        effective_from: { type: string, format: date-time }
+        effective_to: { type: [string, 'null'], format: date-time }
+        published_at: { type: string, format: date-time }
+        partial_compliance_factor: { type: number, minimum: 0, maximum: 1 }
+    ControlEffectivenessMethodology:
+      type: object
+      additionalProperties: false
+      required: [methodology_version_ref, methodology_code, version_number, name, rector_source, rector_version, formula_definition_id, minimum_coverage, effective_from, effective_to, published_at]
+      properties:
+        methodology_version_ref: { $ref: '#/components/schemas/UuidV7' }
+        methodology_code: { type: string }
+        version_number: { type: integer, format: int64, minimum: 1 }
+        name: { type: string }
+        rector_source: { type: string }
+        rector_version: { type: string }
+        formula_definition_id: { $ref: '#/components/schemas/UuidV7' }
+        minimum_coverage: { type: number, minimum: 0, maximum: 100 }
+        effective_from: { type: string, format: date-time }
+        effective_to: { type: [string, 'null'], format: date-time }
+        published_at: { type: string, format: date-time }
+    TenantUserOnboardingRequest:
+      type: object
+      additionalProperties: false
+      required: [user_identity_id, tenant_role_codes, reason]
+      properties:
+        user_identity_id: { $ref: '#/components/schemas/UuidV7' }
+        tenant_role_codes: { type: array, uniqueItems: true, items: { type: string, minLength: 1, maxLength: 128, pattern: '\S' } }
+        reason: { type: string, minLength: 1, maxLength: 2000, pattern: '\S' }
+    TenantUserOnboardingProgress:
+      type: object
+      additionalProperties: false
+      required: [tenant_id, user_identity_id, membership_id, completed_roles, pending_role_codes]
+      properties:
+        tenant_id: { $ref: '#/components/schemas/UuidV7' }
+        user_identity_id: { $ref: '#/components/schemas/UuidV7' }
+        membership_id: { $ref: '#/components/schemas/UuidV7' }
+        completed_roles:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            required: [role_code, membership_role_id]
+            properties:
+              role_code: { type: string, minLength: 1, maxLength: 128 }
+              membership_role_id: { $ref: '#/components/schemas/UuidV7' }
+        pending_role_codes: { type: array, uniqueItems: true, items: { type: string, minLength: 1, maxLength: 128 } }
+    TenantUserOnboardingResult:
+      allOf:
+        - { $ref: '#/components/schemas/TenantUserOnboardingProgress' }
+        - properties: { pending_role_codes: { maxItems: 0 } }
+    TenantUserOnboardingError:
+      type: object
+      additionalProperties: false
+      required: [code, message, correlation_id, retryable]
+      properties:
+        code: { type: string }
+        message: { type: string }
+        correlation_id: { type: string, format: uuid }
+        retryable: { type: boolean }
+        details:
+          type: object
+          additionalProperties: false
+          required: [tenant_user_onboarding_progress]
+          properties:
+            tenant_user_onboarding_progress: { $ref: '#/components/schemas/TenantUserOnboardingProgress' }
+    UserIdentityTenantAccessPage:
+      type: object
+      additionalProperties: false
+      required: [items, page]
+      properties:
+        page: { $ref: '#/components/schemas/PageMeta' }
+        items:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            required: [tenant_membership_id, tenant_id, user_identity_id, membership_state, joined_at, ended_at, tenant, roles]
+            properties:
+              tenant_membership_id: { $ref: '#/components/schemas/UuidV7' }
+              tenant_id: { $ref: '#/components/schemas/UuidV7' }
+              user_identity_id: { $ref: '#/components/schemas/UuidV7' }
+              membership_state: { type: string }
+              joined_at: { $ref: '#/components/schemas/UtcTimestamp' }
+              ended_at: { type: [string, 'null'], format: date-time }
+              tenant:
+                type: object
+                additionalProperties: false
+                required: [display_name, tenant_code, lifecycle_state]
+                properties:
+                  display_name: { type: string }
+                  tenant_code: { type: string }
+                  lifecycle_state: { type: string }
+              roles:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: false
+                  required: [membership_role_id, role_id, role_code, role_name, scope_kind, valid_from, valid_to, etag]
+                  properties:
+                    membership_role_id: { $ref: '#/components/schemas/UuidV7' }
+                    role_id: { $ref: '#/components/schemas/UuidV7' }
+                    role_code: { type: string }
+                    role_name: { type: string }
+                    scope_kind: { type: string, enum: [tenant, organizational_unit, process, service, audit_engagement, assigned_object, owned_object] }
+                    valid_from: { $ref: '#/components/schemas/UtcTimestamp' }
+                    valid_to: { type: [string, 'null'], format: date-time }
+                    etag: { type: string, pattern: '^[0-9a-f]{64}$' }
+    PlatformRoleCode:
+      type: string
+      description: Closed platform functional family from rector42/executable24; catalog eligibility is decided by backend publication metadata, never this enum alone.
+      enum: [PLATFORM_ADMIN, PLATFORM_SUPPORT]
+    PlatformRoleAssignmentReadProjection:
+      type: object
+      additionalProperties: false
+      required: [platform_role_assignment_id, user_identity_id, role_code, role_name, valid_from, valid_to]
+      properties:
+        platform_role_assignment_id: { $ref: '#/components/schemas/UuidV7' }
+        user_identity_id: { $ref: '#/components/schemas/UuidV7' }
+        role_code: { $ref: '#/components/schemas/PlatformRoleCode' }
+        role_name: { type: string }
+        valid_from: { type: string, format: date-time }
+        valid_to: { type: [string, 'null'], format: date-time }
+    PlatformRoleAssignmentList:
+      type: object
+      additionalProperties: false
+      required: [items]
+      properties:
+        items:
+          type: array
+          maxItems: 2
+          items: { $ref: '#/components/schemas/PlatformRoleAssignmentReadProjection' }
+    PlatformRoleAssignRequest:
+      type: object
+      additionalProperties: false
+      required: [role_code, reason]
+      properties:
+        role_code: { type: string, minLength: 1, maxLength: 128 }
+        reason: { type: string, minLength: 1, maxLength: 2000, pattern: '\S' }
+    PlatformRoleRevokeRequest:
+      type: object
+      additionalProperties: false
+      required: [reason]
+      properties:
+        reason: { type: string, minLength: 1, maxLength: 2000, pattern: '\S' }
+    PlatformRoleAssignmentProjection:
+      type: object
+      additionalProperties: false
+      required: [platform_role_assignment_id, user_identity_id, role_code, valid_from, valid_to]
+      properties:
+        platform_role_assignment_id: { $ref: '#/components/schemas/UuidV7' }
+        user_identity_id: { $ref: '#/components/schemas/UuidV7' }
+        role_code: { type: string }
+        valid_from: { type: string, format: date-time }
+        valid_to: { type: [string, 'null'], format: date-time }
+    AuthenticationProvider:
+      type: string
+      enum: [ZOHO, MICROSOFT_ENTRA_ID, GOOGLE_WORKSPACE, TCDX_MANAGED_IDENTITY]
+    AuthenticationProviderAvailabilityEntry:
+      type: object
+      additionalProperties: false
+      required: [provider, available]
+      properties:
+        provider: { $ref: '#/components/schemas/AuthenticationProvider' }
+        available:
+          type: boolean
+          description: "Validated canonical backend configuration and enabled registered browser flow; not live IdP health."
+    AuthenticationProviderAvailability:
+      type: object
+      additionalProperties: false
+      required: [providers]
+      properties:
+        providers:
+          type: array
+          minItems: 4
+          maxItems: 4
+          uniqueItems: true
+          items: { $ref: '#/components/schemas/AuthenticationProviderAvailabilityEntry' }
+          allOf:
+            - contains: { type: object, required: [provider], properties: { provider: { const: ZOHO } } }
+              minContains: 1
+              maxContains: 1
+            - contains: { type: object, required: [provider], properties: { provider: { const: MICROSOFT_ENTRA_ID } } }
+              minContains: 1
+              maxContains: 1
+            - contains: { type: object, required: [provider], properties: { provider: { const: GOOGLE_WORKSPACE } } }
+              minContains: 1
+              maxContains: 1
+            - contains: { type: object, required: [provider], properties: { provider: { const: TCDX_MANAGED_IDENTITY } } }
+              minContains: 1
+              maxContains: 1
+    TenantPermissionScope:
+      type: object
+      additionalProperties: false
+      required: [scope_kind]
+      properties:
+        scope_kind:
+          type: string
+          enum: [tenant, organizational_unit, process, service, audit_engagement, assigned_object, owned_object]
+        organizational_unit_id: { $ref: '#/components/schemas/UuidV7' }
+        process_id: { $ref: '#/components/schemas/UuidV7' }
+        service_id: { $ref: '#/components/schemas/UuidV7' }
+        audit_id: { $ref: '#/components/schemas/UuidV7' }
+      allOf:
+        - if: { required: [scope_kind], properties: { scope_kind: { const: organizational_unit } } }
+          then: { required: [organizational_unit_id] }
+          else: { not: { required: [organizational_unit_id] } }
+        - if: { required: [scope_kind], properties: { scope_kind: { const: process } } }
+          then: { required: [process_id] }
+          else: { not: { required: [process_id] } }
+        - if: { required: [scope_kind], properties: { scope_kind: { const: service } } }
+          then: { required: [service_id] }
+          else: { not: { required: [service_id] } }
+        - if: { required: [scope_kind], properties: { scope_kind: { const: audit_engagement } } }
+          then: { required: [audit_id] }
+          else: { not: { required: [audit_id] } }
+      description: "Exact own persisted scope grant; structural references remain same-tenant. owned_object and assigned_object require independent target policy, not invented object IDs."
+    CurrentPrincipalTenantPermissions:
+      type: object
+      additionalProperties: false
+      required: [tenant_id, permissions]
+      properties:
+        tenant_id: { $ref: '#/components/schemas/UuidV7' }
+        permissions:
+          type: object
+          propertyNames:
+            type: string
+            minLength: 1
+            maxLength: 160
+            pattern: '^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*){2}$'
+            not:
+              enum: [platform.managed_identity.read, platform.managed_identity.create, platform.managed_identity.update, platform.managed_identity.administer]
+          additionalProperties:
+            type: array
+            minItems: 1
+            uniqueItems: true
+            items: { $ref: '#/components/schemas/TenantPermissionScope' }
+          description: "Only effective published permission codes from catalog 05; each maps solely to its own entitled active assignment scopes. No role names or scope borrowing. Unknown/unpublished/platform-only codes omitted."
+    CurrentPrincipalAuthorization:
+      type: object
+      additionalProperties: false
+      required: [evaluated_at, platform_permissions, tenant_permissions]
+      properties:
+        evaluated_at: { $ref: '#/components/schemas/UtcTimestamp' }
+        platform_permissions:
+          type: array
+          uniqueItems: true
+          items: { type: string, minLength: 1, maxLength: 160, pattern: '^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*){2}$' }
+          description: "Lexically ordered effective published platform-scope grants through active PlatformRoleAssignment; not target-specific ALLOW."
+        tenant_permissions:
+          oneOf:
+            - { type: 'null' }
+            - { $ref: '#/components/schemas/CurrentPrincipalTenantPermissions' }
+      description: "Ephemeral own context eligibility for presentation only. Absence/error is DENY. Backend permission, scope, entitlement, object policy and SoD remain required per request."
     ValidationAccessCandidatePage:
       type: object
       additionalProperties: false
@@ -4050,6 +4888,170 @@ components:
       type: string
       enum: [public, internal, confidential, restricted]
       description: Closed, versioned Platform vocabulary. tenantCreate always persists the server-owned initial value confidential.
+    ManagedIdentityProjection:
+      type: object
+      additionalProperties: false
+      description: Safe global identity metadata; no credential, token, seed or unrestricted membership data.
+      required: [user_identity_id, provider, issuer, subject_reference, username, display_name, identity_lifecycle_state, enabled, mfa_enrolled]
+      properties:
+        user_identity_id: { $ref: '#/components/schemas/UuidV7' }
+        provider: { type: string, enum: [tcdx-managed-identity] }
+        issuer: { type: string, const: 'https://iam.grc.tecdex.net/realms/tcdx-managed-identity' }
+        subject_reference: { type: string, minLength: 1 }
+        username: { type: string, minLength: 1 }
+        display_name: { type: string, minLength: 1 }
+        identity_lifecycle_state: { type: string }
+        enabled: { type: boolean }
+        mfa_enrolled: { type: boolean }
+    ManagedIdentityCredentialOperationResult:
+      type: object
+      additionalProperties: false
+      description: >-
+        Shared Provision/PasswordReset result. The original successful HTTPS response may disclose a
+        newly generated temporary credential once; same-key replay is safe metadata only.
+      required: [identity, credential_disclosed]
+      properties:
+        identity: { $ref: '#/components/schemas/ManagedIdentityProjection' }
+        credential_disclosed: { type: boolean }
+        temporary_credential:
+          type: string
+          minLength: 1
+          description: Present only on the original successful response when credential_disclosed is true; never persisted or replayed.
+      allOf:
+        - if:
+            properties: { credential_disclosed: { const: true } }
+          then:
+            required: [temporary_credential]
+          else:
+            not: { required: [temporary_credential] }
+    ManagedIdentityPage:
+      type: object
+      additionalProperties: false
+      required: [items, page]
+      properties:
+        items: { type: array, items: { $ref: '#/components/schemas/ManagedIdentityProjection' } }
+        page: { $ref: '#/components/schemas/PageMeta' }
+    UserIdentityDiscoveryCandidate:
+      type: object
+      additionalProperties: false
+      required: [user_identity_id, display_name, provider, provider_display, lifecycle_state]
+      properties:
+        user_identity_id: { $ref: '#/components/schemas/UuidV7' }
+        display_name: { type: [string, 'null'], maxLength: 255 }
+        provider: { type: [string, 'null'], description: 'Existing verified provider binding only; never inferred from email/username.' }
+        provider_display: { type: [string, 'null'], maxLength: 255 }
+        lifecycle_state: { type: string, const: active }
+        username: { type: [string, 'null'], maxLength: 255, description: 'Platform mode only; verified presentation metadata, never authority.' }
+        email_normalized: { type: [string, 'null'], format: email, description: 'Platform mode only; safe presentation metadata, never identity key.' }
+      description: 'Executable25 forbids username/email fields in tenant_exact response. No issuer/subject/identity_key/marker/MFA/credential fields.'
+    UserIdentityDiscoveryPage:
+      type: object
+      additionalProperties: false
+      required: [items, meta]
+      properties:
+        items: { type: array, maxItems: 100, items: { $ref: '#/components/schemas/UserIdentityDiscoveryCandidate' } }
+        meta: { $ref: '#/components/schemas/PageMeta' }
+      description: 'Platform cursor page; tenant exact zero/one result, has_more=false,next_cursor=null. Hidden/none/inactive/ambiguous indistinguishable.'
+    UserIdentityDiscoveryTenantCandidate:
+      type: object
+      additionalProperties: false
+      required: [user_identity_id, display_name, provider, provider_display, lifecycle_state]
+      properties:
+        user_identity_id: { $ref: '#/components/schemas/UuidV7' }
+        display_name: { type: [string, 'null'], maxLength: 255 }
+        provider: { type: [string, 'null'] }
+        provider_display: { type: [string, 'null'], maxLength: 255 }
+        lifecycle_state: { type: string, const: active }
+        existing_membership_id: { $ref: '#/components/schemas/UuidV7', description: 'Own-tenant active Membership only, otherwise omitted.' }
+    UserIdentityDiscoveryTenantPage:
+      type: object
+      additionalProperties: false
+      required: [items, meta]
+      properties:
+        items: { type: array, maxItems: 1, items: { $ref: '#/components/schemas/UserIdentityDiscoveryTenantCandidate' } }
+        meta:
+          type: object
+          additionalProperties: false
+          required: [has_more, next_cursor]
+          properties:
+            has_more: { type: boolean, const: false }
+            next_cursor: { type: 'null' }
+    TenantInitialAdministratorSelection:
+      oneOf:
+        - type: object
+          additionalProperties: false
+          required: [kind, user_identity_id]
+          properties:
+            kind: { type: string, const: existing_identity }
+            user_identity_id: { $ref: '#/components/schemas/UuidV7' }
+        - type: object
+          additionalProperties: false
+          required: [kind, user_identity_id]
+          properties:
+            kind: { type: string, const: provisioned_managed_identity }
+            user_identity_id: { $ref: '#/components/schemas/UuidV7' }
+      description: 'MI was provisioned by existing Platform operation before this command. Distinct active canonical identity; no email/username authority, credential or arbitrary role input.'
+    TenantInitialOnboardingRequest:
+      type: object
+      additionalProperties: false
+      required: [tenant, initial_administrator]
+      properties:
+        tenant: { $ref: '#/components/schemas/TenantCreateRequest' }
+        initial_administrator: { $ref: '#/components/schemas/TenantInitialAdministratorSelection' }
+    TenantInitialOnboardingProgress:
+      type: object
+      additionalProperties: false
+      required: [completed_steps, pending_steps]
+      properties:
+        tenant_id: { $ref: '#/components/schemas/UuidV7' }
+        user_identity_id: { $ref: '#/components/schemas/UuidV7' }
+        membership_id: { $ref: '#/components/schemas/UuidV7' }
+        initial_assignment_id: { $ref: '#/components/schemas/UuidV7' }
+        completed_steps: { type: array, uniqueItems: true, items: { type: string, enum: [tenant_create, tenant_bootstrap] } }
+        pending_steps: { type: array, uniqueItems: true, items: { type: string, enum: [tenant_create, tenant_bootstrap] } }
+      description: 'Safe actor-authorized operation receipt, not entity/workflow or RBAC authority. No credentials; refs remain internal to business UX.'
+    TenantInitialOnboardingResult:
+      allOf:
+        - { $ref: '#/components/schemas/TenantInitialOnboardingProgress' }
+        - type: object
+          required: [tenant_id, user_identity_id, membership_id, initial_assignment_id]
+          properties:
+            completed_steps: { type: array, minItems: 2, maxItems: 2, uniqueItems: true, items: { type: string, enum: [tenant_create, tenant_bootstrap] } }
+            pending_steps: { type: array, maxItems: 0 }
+    TenantInitialOnboardingError:
+      allOf:
+        - { $ref: '#/components/schemas/ErrorEnvelope' }
+        - type: object
+          properties:
+            details:
+              type: object
+              additionalProperties: false
+              properties:
+                onboarding_progress: { $ref: '#/components/schemas/TenantInitialOnboardingProgress' }
+    ManagedIdentityProvisionRequest:
+      type: object
+      additionalProperties: false
+      required: [display_name, username, person_verification_ref]
+      properties:
+        display_name: { type: string, minLength: 1, maxLength: 255 }
+        username: { type: string, minLength: 1, maxLength: 255 }
+        person_verification_ref: { type: string, minLength: 1, maxLength: 255 }
+        email: { type: string, format: email }
+      description: Named person and nonsecret verification reference only; no credential, grant, tenant or role input.
+    ManagedIdentityReasonRequest:
+      type: object
+      additionalProperties: false
+      required: [reason]
+      properties:
+        reason: { type: string, minLength: 1, maxLength: 2000 }
+    ManagedIdentityPasswordResetRequest:
+      type: object
+      additionalProperties: false
+      required: [reason, person_verification_ref]
+      properties:
+        reason: { type: string, minLength: 1, maxLength: 2000 }
+        person_verification_ref: { type: string, minLength: 1, maxLength: 255 }
+      description: Nonsecret person-verification reference; no credential value is accepted as input. The original successful response may disclose a newly generated temporary credential once.
     TenantAdministrativeProjection:
       type: object
       additionalProperties: false
@@ -5022,7 +6024,7 @@ components:
         requirement_applicability_id: { $ref: '#/components/schemas/UuidV7' }
         methodology_version_ref: { $ref: '#/components/schemas/UuidV7' }
         effective_configuration_id: { $ref: '#/components/schemas/UuidV7' }
-      description: Applicability and optional EffectiveConfiguration must be same-tenant and compatible; initial lifecycle/result state is server-controlled.
+      description: Applicability and optional EffectiveConfiguration must be same-tenant and compatible; methodology_version_ref resolves a published effective ComplianceMethodology. Initial lifecycle/result state is server-controlled.
     RequirementAssessmentStartRequest:
       type: object
       additionalProperties: false
@@ -5458,6 +6460,89 @@ components:
         resource_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
         result: { type: [object, 'null'] }
   responses:
+    PlatformRoleAssignmentListSuccess:
+      description: Complete active platform assignment intervals for an existing target; zero assignments is a valid empty items collection. Duplicate active role intervals fail closed with canonical 409.
+      headers:
+        Cache-Control: { schema: { type: string, const: no-store } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/PlatformRoleAssignmentList' } } }
+    PlatformRoleAssignmentSuccess:
+      description: Original safe assignment projection; completed replay preserves original status/body and emits no new audit.
+      headers:
+        Idempotency-Replayed: { schema: { type: boolean } }
+        Cache-Control: { schema: { type: string, const: no-store } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/PlatformRoleAssignmentProjection' } } }
+    AuthenticationProviderListSuccess:
+      description: "Canonical configured/enabled provider projection; no configuration values or live health."
+      headers:
+        Cache-Control: { $ref: '#/components/headers/CacheControlNoStore' }
+        X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }
+        X-Request-Id: { $ref: '#/components/headers/RequestId' }
+      content: { application/json: { schema: { $ref: '#/components/schemas/AuthenticationProviderAvailability' } } }
+    CurrentPrincipalAuthorizationSuccess:
+      description: "Own effective context permission grants; no target-specific authorization decision."
+      headers:
+        Cache-Control: { $ref: '#/components/headers/CacheControlNoStore' }
+        Vary: { schema: { type: string, const: 'Authorization, X-TCDX-Tenant-Id' } }
+        X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }
+        X-Request-Id: { $ref: '#/components/headers/RequestId' }
+      content: { application/json: { schema: { $ref: '#/components/schemas/CurrentPrincipalAuthorization' } } }
+    FrontendProjectionDependencyError:
+      description: "Redacted projection dependency failure; never successful empty or previous data. Contract 23 requires no-store on every response, including common errors."
+      headers: { Cache-Control: { $ref: '#/components/headers/CacheControlNoStore' } }
+      content: { application/problem+json: { schema: { $ref: '#/components/schemas/ErrorEnvelope' } } }
+    FrontendProjectionRateLimitError:
+      description: "TCDX.LIMIT.RATE_EXCEEDED only under approved public surface rate policy; Retry-After only when known. No new rate threshold is defined here."
+      headers:
+        Cache-Control: { $ref: '#/components/headers/CacheControlNoStore' }
+        Retry-After: { schema: { type: string }, description: "Present only when the approved limiter knows the retry interval." }
+      content: { application/problem+json: { schema: { $ref: '#/components/schemas/ErrorEnvelope' } } }
+    UserIdentityDiscoverySuccess:
+      description: 'Privacy-minimized discovery; empty tenant result is indistinguishable for none/hidden/inactive/ambiguous.'
+      headers: { Cache-Control: { $ref: '#/components/headers/CacheControlNoStore' } }
+      content: { application/json: { schema: { anyOf: [{ $ref: '#/components/schemas/UserIdentityDiscoveryPage' }, { $ref: '#/components/schemas/UserIdentityDiscoveryTenantPage' }] } } }
+    UserIdentityDiscoveryError:
+      description: 'Executable25 uses06 taxonomy; no lookup on authorization denial, no raw query or hidden target;429 only existing approved policy.'
+      headers: { Cache-Control: { $ref: '#/components/headers/CacheControlNoStore' } }
+      content: { application/problem+json: { schema: { $ref: '#/components/schemas/ErrorEnvelope' } } }
+    TenantInitialOnboardingSuccess:
+      description: 'New tenant and initial admin completed; safe references, no credential. Same-key completed replay has no new material effect.'
+      headers:
+        Cache-Control: { $ref: '#/components/headers/CacheControlNoStore' }
+        Idempotency-Replayed: { schema: { type: boolean }, description: 'True only for completed same-bound-intent replay.' }
+      content: { application/json: { schema: { $ref: '#/components/schemas/TenantInitialOnboardingResult' } } }
+    TenantInitialOnboardingError:
+      description: 'Original06 failure status retained; allowlisted actor-visible safe progress after partial completion, never fake rollback or201 pending.'
+      headers: { Cache-Control: { $ref: '#/components/headers/CacheControlNoStore' } }
+      content: { application/problem+json: { schema: { $ref: '#/components/schemas/TenantInitialOnboardingError' } } }
+    ManagedIdentityListSuccess:
+      description: Safe global Managed Identity cursor page for authorized Platform Admin.
+      content: { application/json: { schema: { $ref: '#/components/schemas/ManagedIdentityPage' } } }
+    ManagedIdentitySuccess:
+      description: Safe Managed Identity projection without credential disclosure.
+      content: { application/json: { schema: { $ref: '#/components/schemas/ManagedIdentityProjection' } } }
+    ManagedIdentityCredentialOperationSuccess:
+      description: >-
+        Original success may disclose the new temporary credential once to the initiating Platform Admin.
+        A reconciled same-key replay has credential_disclosed=false and omits temporary_credential.
+        The value is never recoverable from GRC persistence or another endpoint.
+      headers:
+        Cache-Control: { $ref: '#/components/headers/CacheControlNoStore' }
+        X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }
+        X-Request-Id: { $ref: '#/components/headers/RequestId' }
+        Idempotency-Replayed: { $ref: '#/components/headers/IdempotencyReplayed' }
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ManagedIdentityCredentialOperationResult' }
+    ManagedIdentityCredentialConflictOrRecovery:
+      description: >-
+        Safe conflict envelope. An uncertain credential-changing result returns
+        TCDX.CONFLICT.RECOVERY_REQUIRED (409, retryable=false), never a credential or automatic replay.
+        The ordinary resource/idempotency/lifecycle conflicts retain their existing codes.
+      headers:
+        Cache-Control: { $ref: '#/components/headers/CacheControlNoStore' }
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
     TenantAdministrativeListSuccess:
       description: Authorized global Tenant metadata cursor page.
       content: { application/json: { schema: { $ref: '#/components/schemas/TenantAdministrativePage' } } }
@@ -5671,6 +6756,16 @@ components:
           schema: { $ref: '#/components/schemas/ErrorEnvelope' }
     ConflictError:
       description: State, concurrency or idempotency conflict.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+    ProviderError:
+      description: Redacted external IAM provider failure; no provider payload or secret.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+    DependencyError:
+      description: Required IAM dependency unavailable; no successful empty result.
       content:
         application/problem+json:
           schema: { $ref: '#/components/schemas/ErrorEnvelope' }

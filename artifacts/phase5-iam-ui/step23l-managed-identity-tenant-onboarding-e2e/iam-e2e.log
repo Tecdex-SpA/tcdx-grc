@@ -1,0 +1,33 @@
+$ playwright test --config=iam/playwright.config.ts
+
+Running 21 tests using 3 workers
+
+(node:84266) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84267) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84265) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [mobile] › iam/e2e/theme.spec.ts:6:1 › real IAM login keeps credentials on the IAM form, brand, labels, focus and viewport (1.4s)
+  ✓   2 [tablet] › iam/e2e/theme.spec.ts:6:1 › real IAM login keeps credentials on the IAM form, brand, labels, focus and viewport (1.4s)
+  ✓   3 [desktop] › iam/e2e/theme.spec.ts:6:1 › real IAM login keeps credentials on the IAM form, brand, labels, focus and viewport (1.4s)
+  ✓   4 [mobile] › iam/e2e/theme.spec.ts:33:1 › invalid credentials remain associated with the IAM form and carry no provider product brand (482ms)
+  ✓   5 [tablet] › iam/e2e/theme.spec.ts:33:1 › invalid credentials remain associated with the IAM form and carry no provider product brand (466ms)
+  ✓   6 [desktop] › iam/e2e/theme.spec.ts:33:1 › invalid credentials remain associated with the IAM form and carry no provider product brand (455ms)
+  ✓   7 [mobile] › iam/e2e/theme.spec.ts:44:1 › authentication error uses the same branded layout (224ms)
+  ✓   8 [tablet] › iam/e2e/theme.spec.ts:44:1 › authentication error uses the same branded layout (230ms)
+  ✓   9 [desktop] › iam/e2e/theme.spec.ts:44:1 › authentication error uses the same branded layout (262ms)
+  ✓  11 [tablet] › iam/e2e/theme.spec.ts:53:1 › lost authentication session keeps the branded error and recovery guidance (369ms)
+  ✓  10 [mobile] › iam/e2e/theme.spec.ts:53:1 › lost authentication session keeps the branded error and recovery guidance (379ms)
+  ✓  12 [desktop] › iam/e2e/theme.spec.ts:53:1 › lost authentication session keeps the branded error and recovery guidance (389ms)
+  ✓  14 [mobile] › iam/e2e/theme.spec.ts:76:1 › password update, TOTP setup and OTP challenge retain IAM forms and accessible branding (1.4s)
+  ✓  13 [tablet] › iam/e2e/theme.spec.ts:76:1 › password update, TOTP setup and OTP challenge retain IAM forms and accessible branding (1.5s)
+  ✓  15 [desktop] › iam/e2e/theme.spec.ts:76:1 › password update, TOTP setup and OTP challenge retain IAM forms and accessible branding (1.5s)
+  ✓  16 [mobile] › iam/e2e/theme.spec.ts:138:1 › disabled account remains on the branded IAM surface (308ms)
+  ✓  17 [tablet] › iam/e2e/theme.spec.ts:138:1 › disabled account remains on the branded IAM surface (353ms)
+  ✓  18 [desktop] › iam/e2e/theme.spec.ts:138:1 › disabled account remains on the branded IAM surface (377ms)
+  ✓  19 [mobile] › iam/e2e/theme.spec.ts:151:1 › IAM logout confirmation and information retain the same brand (424ms)
+  ✓  21 [desktop] › iam/e2e/theme.spec.ts:151:1 › IAM logout confirmation and information retain the same brand (346ms)
+  ✓  20 [tablet] › iam/e2e/theme.spec.ts:151:1 › IAM logout confirmation and information retain the same brand (414ms)
+
+  21 passed (5.8s)

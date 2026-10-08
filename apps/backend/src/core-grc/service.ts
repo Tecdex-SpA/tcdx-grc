@@ -9,6 +9,7 @@ import { packVisibility } from "../regulatory/pack-entitlement.js";
 import type { AuthorizedFileAccess, FileStoragePort } from "../ports/file-storage.js";
 import { claimIdempotency, completeIdempotency, persistAuditEvent, persistOutboxEvent } from "../persistence/foundation-records.js";
 import type { CoreActor, ResourceKey } from "./model.js";
+import { resolveMethodology } from "./methodologies.js";
 import { resources } from "./model.js";
 import { assertLifecycleEdge, grantedScopes, requireAccess } from "./security.js";
 import { casRetentionPolicyTransition, casRetentionPolicyUpdate, casTransition, detailResource, getResource, insertRow } from "./repository.js";
@@ -259,7 +260,16 @@ async function createApplicability({ transaction: tx, actor, body }: MutationCon
   return { resource: "applicability", id };
 }
 
+async function assertAssessmentConfiguration(tx: Transaction<FoundationDatabase>, actor: CoreActor, body: Body, domain: string): Promise<void> {
+  const id = optionalString(body, "effective_configuration_id");
+  if (!id) return;
+  const result = await tx.executeQuery(CompiledQuery.raw(`SELECT ec.effective_configuration_id FROM config.effective_configurations ec JOIN config.configuration_definitions cd ON cd.configuration_definition_id=ec.configuration_definition_id WHERE ec.effective_configuration_id=$1::uuid AND ec.tenant_id=$2::uuid AND cd.owner_domain=$3 AND cd.lifecycle_state='published'`, [id, actor.tenantId, domain]));
+  if (!result.rows.length) throw new FoundationError("TCDX.VALIDATION.FAILED", "Configuration is not compatible with this tenant assessment", 400, false, { field: "effective_configuration_id" });
+}
+
 async function createRequirementAssessment({ transaction: tx, actor, body }: MutationContext): Promise<MutationResult> {
+  await resolveMethodology(tx, "compliance", string(body, "methodology_version_ref"));
+  await assertAssessmentConfiguration(tx, actor, body, "compliance");
   const applicabilityId = string(body, "requirement_applicability_id");
   await referenceExists(tx, resources.applicability.table, resources.applicability.idColumn, applicabilityId, actor.tenantId);
   const id = newUuidV7();
@@ -304,6 +314,8 @@ async function instantiateControl({ transaction: tx, actor, body }: MutationCont
 }
 
 async function createControlAssessment({ transaction: tx, actor, body }: MutationContext): Promise<MutationResult> {
+  await resolveMethodology(tx, "controls", string(body, "methodology_version_ref"));
+  await assertAssessmentConfiguration(tx, actor, body, "controls");
   const control = string(body, "control_id");
   const controlVersion = string(body, "control_version_id");
   await referenceExists(tx, resources.control.table, resources.control.idColumn, control, actor.tenantId);
@@ -695,7 +707,8 @@ async function assertControlAssessmentSubmitObjectPolicy(_tx: Transaction<Founda
   throw new FoundationError("TCDX.AUTHORIZATION.DENIED", "Access denied", 403);
 }
 
-function controlAssessmentSubmissionChanges(body: Body): Record<string, unknown> {
+async function controlAssessmentSubmissionChanges(body: Body, _actor: CoreActor, current: Record<string, unknown>, tx: Transaction<FoundationDatabase>): Promise<Record<string, unknown>> {
+  const methodology = await resolveMethodology(tx, "controls", String(current.methodology_version_ref), false);
   const resultStatus = string(body, "result_status");
   const design = optionalNumber(body, "design_effectiveness");
   const operating = optionalNumber(body, "operating_effectiveness");
@@ -705,13 +718,13 @@ function controlAssessmentSubmissionChanges(body: Body): Record<string, unknown>
   if (resultStatus === "valid") {
     if (design === null) invalidField("design_effectiveness");
     if (operating === null) invalidField("operating_effectiveness");
-    if (coverage === null || coverage < 80) invalidField("coverage_percent");
+    if (coverage === null || coverage < methodology.minimum_coverage) invalidField("coverage_percent");
     if (!conclusion || !["effective", "partially_effective", "ineffective"].includes(conclusion)) invalidField("domain_conclusion");
   }
   if (resultStatus === "insufficient_coverage") {
     if (design === null) invalidField("design_effectiveness");
     if (operating === null) invalidField("operating_effectiveness");
-    if (coverage === null || coverage >= 80) invalidField("coverage_percent");
+    if (coverage === null || coverage >= methodology.minimum_coverage) invalidField("coverage_percent");
   }
   return {
     result_status: resultStatus,
@@ -724,7 +737,7 @@ function controlAssessmentSubmissionChanges(body: Body): Record<string, unknown>
   };
 }
 
-type TransitionSpec = { resource: ResourceKey; entity: string; from: string; command: string; requiresDistinctActor?: boolean; changes?: (body: Body, actor: CoreActor) => Record<string, unknown>; beforeLoad?: (tx: Transaction<FoundationDatabase>, actor: CoreActor, body: Body, id: string) => Promise<void>; before?: (tx: Transaction<FoundationDatabase>, actor: CoreActor, body: Body, id: string, current: Record<string, unknown>) => Promise<void>; after?: (tx: Transaction<FoundationDatabase>, actor: CoreActor, body: Body, id: string, row: Record<string, unknown>) => Promise<void> };
+type TransitionSpec = { resource: ResourceKey; entity: string; from: string; command: string; requiresDistinctActor?: boolean; changes?: (body: Body, actor: CoreActor, current: Record<string, unknown>, tx: Transaction<FoundationDatabase>) => Record<string, unknown> | Promise<Record<string, unknown>>; beforeLoad?: (tx: Transaction<FoundationDatabase>, actor: CoreActor, body: Body, id: string) => Promise<void>; before?: (tx: Transaction<FoundationDatabase>, actor: CoreActor, body: Body, id: string, current: Record<string, unknown>) => Promise<void>; after?: (tx: Transaction<FoundationDatabase>, actor: CoreActor, body: Body, id: string, row: Record<string, unknown>) => Promise<void> };
 
 function transition(spec: TransitionSpec) {
   return async ({ transaction: tx, actor, body, targetId }: MutationContext): Promise<MutationResult> => {
@@ -740,7 +753,7 @@ function transition(spec: TransitionSpec) {
       if (previous.rows[0]?.prior_actor === actor.userIdentityId) throw new FoundationError("TCDX.AUTHORIZATION.DENIED", "Access denied", 403);
     }
     if (spec.before) await spec.before(tx, actor, body, targetId, current);
-    const row = await casTransition(tx, actor, definition, targetId, version(body), spec.from, edge.toState, spec.changes?.(body, actor));
+    const row = await casTransition(tx, actor, definition, targetId, version(body), spec.from, edge.toState, await spec.changes?.(body, actor, current, tx));
     if (spec.after) await spec.after(tx, actor, body, targetId, row);
     return { resource: spec.resource, id: targetId };
   };

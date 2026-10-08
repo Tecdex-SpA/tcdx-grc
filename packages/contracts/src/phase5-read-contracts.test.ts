@@ -123,10 +123,10 @@ describe("PRE-F5 approved read-contract materialization", () => {
   it("keeps cross-catalog operation counts and operation IDs unique", () => {
     expect(openApiOperations.size).toBe(Number(matrix.match(/`CONTRACTUAL_OPERATIONS=(\d+)`/)?.[1]));
     expect(matrixOperations.size).toBe(openApiOperations.size);
-    expect([...openApiOperations.values()].filter(({ method }) => method === "post")).toHaveLength(94);
+    expect([...openApiOperations.values()].filter(({ method }) => method === "post")).toHaveLength(104);
     expect([...openApiOperations.values()].filter(({ method }) => method === "put")).toHaveLength(1);
     expect([...openApiOperations.values()].filter(({ method }) => method === "get")).toHaveLength(Number(matrix.match(/`PUBLIC_READ_OPERATIONS=(\d+)`/)?.[1]));
-    expect([...matrixOperations.values()].filter(({ method }) => method === "post")).toHaveLength(94);
+    expect([...matrixOperations.values()].filter(({ method }) => method === "post")).toHaveLength(104);
     expect([...matrixOperations.values()].filter(({ method }) => method === "put")).toHaveLength(1);
     expect([...matrixOperations.values()].filter(({ method }) => method === "get")).toHaveLength(Number(matrix.match(/`PUBLIC_READ_OPERATIONS=(\d+)`/)?.[1]));
   });

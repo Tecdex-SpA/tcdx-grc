@@ -46,6 +46,18 @@ Tenant operations require `X-TCDX-Tenant-Id`. The header selects a candidate con
 
 ## Effective authorization
 
+STEP 23L-MI7A closes the two read-only frontend projections in executable
+contract 23: public `authenticationProviderList` reveals only the closed
+provider identifiers and canonical configured/enabled availability;
+authenticated `currentPrincipalAuthorizationRead` reveals only the human
+principal's own effective context permission grants. The latter uses the
+existing authenticated-context self-read authority, with an optional tenant
+candidate validated against own active membership, and never replaces
+endpoint authorization. It creates no Permission, grant or commercial
+entitlement. `accessGet` remains the unchanged context/role-metadata
+projection. Object policy and SoD still require the target-specific backend
+evaluation below. These are contracts only; runtime awaits MI7-R.
+
 Platform authority is:
 
 `validated TCDX principal -> canonical UserIdentity -> active PlatformRoleAssignment -> Role(PLATFORM_CONTROL) -> RolePermission -> Permission -> platform scope -> object policy -> SoD -> ALLOW`.
@@ -98,3 +110,14 @@ F5D_006_APPLICATION_TOKEN=CLOSED
 ```
 
 `AUTHENTICATION_AUTHORIZATION_CONTRACT=ACTIVE_PRE_F5E`. The application-token boundary and bootstrap semantics are closed contractually; runtime IdP/key/revocation/bootstrap implementation and physical materialization still require their later security/runtime gates.
+
+
+## STEP 23L-TENANT-ONBOARDING-D1-R
+
+The approved platform.user_identity.read Permission supports existing canonical platform and tenant scopes. userIdentityDiscovery requires explicit exclusive mode: Platform chain+PLATFORM_ADMIN for global search, or active own Membership+effective TENANT_ADMIN+CORE_PLATFORM+tenant Permission/scope for exact search only. Request mode, email, username, provider, cursor and tenant header confer no authority. Same Permission has no automatic scope escalation.
+
+tenantInitialOnboardingCreate requires platform.tenant.create AND platform.user_identity.read from active PlatformRoleAssignment; MI-preprovisioned path additionally retains platform.managed_identity.create authorization. It creates only the target initial administrator Membership/tenant role through internal bootstrap, never actor authority. Initial Platform path does not require Subscription; subsequent tenant operations retain commercial entitlement. New bindings are local contract only and remain DENY until implementation/publication. See executable25; no public bootstrap/impersonation/Keycloak-role authority.
+
+## Managed Identity tenant onboarding E2E — 2026-10-07
+
+Centralized tenantUserOnboardingCreate requires new platform.tenant_user.onboard through actual Platform grants plus explicit eligible target tenant/identity and target CORE_PLATFORM. It grants no authority to actor and never borrows tenant membership. Generic membershipRoleAssign remains own-tenant only. Executable26 owns this human-approved bounded addition.

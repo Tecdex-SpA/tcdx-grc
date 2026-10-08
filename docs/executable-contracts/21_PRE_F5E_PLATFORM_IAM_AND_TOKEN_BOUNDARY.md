@@ -221,3 +221,11 @@ MIGRATION_ID=20260923000100
 PHYSICAL_MODEL_CHANGED=1
 TECHNICAL_DEBT_INTRODUCED=0
 ```
+
+## STEP 23L-MI10-P2A
+
+Human STEP 23L-MI10-P2A closes the previously deferred normal PlatformRoleAssignment administration dependency through executable24, platform.role.administer and exactly platformRoleAssign/platformRoleRevoke. Published platform functional family is PLATFORM_ADMIN/PLATFORM_SUPPORT (rector42), independently of template ownership. F5D-007 remains consumed; administration never calls bootstrap. Platform and tenant grants stay independent; local implementation/publication preparation does not authorize QA promotion.
+
+## STEP 23L-MI10-P2E
+
+Human P2E closes the target-specific read gap through executable24/platformRoleAssignmentList under existing platform.role.administer, platform-only. The existing roleList/platform.role.read receives a restrictive assignable_family=platform catalog mode; no new permission/grant/schema. The two independent authority chains and consumed F5D-007 remain unchanged. Reads do not call bootstrap, Keycloak, managed identity provisioning or auth/me/authorization as target authority. Implementation is local only; QA promotion and P2D UI completion remain separate.

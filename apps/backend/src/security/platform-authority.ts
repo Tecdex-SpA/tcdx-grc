@@ -15,7 +15,9 @@ function deny(): never {
   throw new FoundationError("TCDX.AUTHORIZATION.DENIED", "Access denied", 403);
 }
 
-export async function resolvePlatformActor(database: Kysely<FoundationDatabase>, identity: VerifiedIdentity): Promise<PlatformActor> {
+export async function resolvePlatformActor(database: Kysely<FoundationDatabase>, identity: VerifiedIdentity,
+  evaluationTime: "transaction" | "statement" = "transaction"): Promise<PlatformActor> {
+  const now = evaluationTime === "statement" ? sql`statement_timestamp()` : sql`transaction_timestamp()`;
   if (identity.principalClass !== "HUMAN_INTERACTIVE") deny();
   const identityState = await sql<{ lifecycle_state: string }>`
     SELECT lifecycle_state FROM iam.user_identities WHERE user_identity_id=${identity.principalId}::uuid
@@ -31,8 +33,8 @@ export async function resolvePlatformActor(database: Kysely<FoundationDatabase>,
       JOIN iam.permissions p ON p.permission_id=rp.permission_id AND p.lifecycle_state='published'
      WHERE pa.user_identity_id=${identity.principalId}::uuid
        AND pa.ownership_class='PLATFORM_CONTROL'
-       AND pa.valid_from <= transaction_timestamp()
-       AND (pa.valid_to IS NULL OR pa.valid_to > transaction_timestamp())
+       AND pa.valid_from <= ${now}
+       AND (pa.valid_to IS NULL OR pa.valid_to > ${now})
   `.execute(database);
   return {
     identity,

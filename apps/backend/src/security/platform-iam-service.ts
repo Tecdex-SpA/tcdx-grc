@@ -329,7 +329,17 @@ export async function tenantBootstrap(database: Kysely<FoundationDatabase>, acto
     throw new FoundationError("TCDX.AUTHORIZATION.DENIED", "Access denied", 403);
   }
 
-  return database.transaction().setIsolationLevel("read committed").execute(async (transaction) => {
+  return database.transaction().setIsolationLevel("read committed").execute((transaction) => tenantBootstrapInTransaction(transaction, actor, input));
+}
+
+/** Internal application boundary only; the caller owns the step/checkpoint transaction. */
+export async function tenantBootstrapInTransaction(transaction: Transaction<FoundationDatabase>, actor: PlatformActor, input: {
+  tenantId: string; userIdentityId: string; correlationId: string;
+}): Promise<TenantBootstrapResult> {
+    requirePlatformAccess(actor, "platform.tenant.create", actor.roles.includes("PLATFORM_ADMIN"));
+    if (input.userIdentityId === actor.identity.principalId) {
+      throw new FoundationError("TCDX.AUTHORIZATION.DENIED", "Access denied", 403);
+    }
     const tenant = await sql<{ tenant_id: string }>`
       SELECT tenant_id
         FROM platform.tenants
@@ -346,6 +356,32 @@ export async function tenantBootstrap(database: Kysely<FoundationDatabase>, acto
          AND lifecycle_state='active'
     `.execute(transaction);
     if (identity.rows.length !== 1) throw new FoundationError("TCDX.RESOURCE.NOT_FOUND", "Resource not found", 404);
+
+    const history = await sql<{ target: string; membership: string; assignment: string }>`
+      SELECT after_payload->>'user_identity_id' AS target,
+             after_payload->>'tenant_membership_id' AS membership,
+             after_payload->>'membership_role_id' AS assignment
+        FROM ops_audit.audit_events
+       WHERE aggregate_id=${input.tenantId}::uuid AND command_code='TENANT_BOOTSTRAP'
+         AND event_code='audit.iam.application_token.privileged_use.v1' AND outcome='success'
+    `.execute(transaction);
+    const administrators = await sql<{ user_identity_id: string; tenant_membership_id: string; membership_role_id: string }>`
+      SELECT m.user_identity_id,m.tenant_membership_id,mr.membership_role_id
+        FROM iam.membership_roles mr JOIN iam.roles r ON r.role_id=mr.role_id
+        JOIN iam.tenant_memberships m ON m.tenant_membership_id=mr.tenant_membership_id AND m.tenant_id=mr.tenant_id
+       WHERE mr.tenant_id=${input.tenantId}::uuid AND r.tenant_id=mr.tenant_id
+         AND r.ownership_class='TENANT_OWNED' AND r.role_code='TENANT_ADMIN'
+         AND mr.valid_from<=transaction_timestamp() AND (mr.valid_to IS NULL OR mr.valid_to>transaction_timestamp())
+         AND m.membership_state='active' AND (m.ended_at IS NULL OR m.ended_at>transaction_timestamp())
+    `.execute(transaction);
+    const completedReplay = history.rows.length > 0 && administrators.rows.length === 1
+      && history.rows.every((row) => row.target === input.userIdentityId
+        && row.membership === administrators.rows[0]!.tenant_membership_id
+        && row.assignment === administrators.rows[0]!.membership_role_id)
+      && administrators.rows[0]!.user_identity_id === input.userIdentityId;
+    if ((history.rows.length > 0 && !completedReplay) || (administrators.rows.length > 0 && !completedReplay)) {
+      throw bootstrapInvariant("Initial tenant administrator bootstrap is unavailable");
+    }
 
     const templates = await sql<{ role_id: string; role_code: string; name: string }>`
       SELECT role_id,role_code,name
@@ -379,10 +415,13 @@ export async function tenantBootstrap(database: Kysely<FoundationDatabase>, acto
         FROM iam.roles
        WHERE ownership_class='TENANT_OWNED'
          AND tenant_id=${input.tenantId}::uuid
-         AND role_code = ANY(${templateCodes}::text[])
+         AND (is_baseline=TRUE OR role_code = ANY(${templateCodes}::text[]))
        FOR UPDATE
     `.execute(transaction);
     const rolesByCode = new Map(existingRoles.rows.map((role) => [role.role_code, role]));
+    if (existingRoles.rows.some((role) => !templateCodes.includes(role.role_code)) || rolesByCode.size !== existingRoles.rows.length) {
+      throw bootstrapInvariant("SEED-010 tenant role catalog is inconsistent");
+    }
     for (const template of templates.rows) {
       const existing = rolesByCode.get(template.role_code);
       if (existing && (existing.name !== template.name || !existing.is_baseline || existing.lifecycle_state !== "published")) {
@@ -527,7 +566,6 @@ export async function tenantBootstrap(database: Kysely<FoundationDatabase>, acto
       baselineGrantCount: actualGrants.size,
       replayed
     };
-  });
 }
 
 export async function tenantCreate(transaction: Transaction<FoundationDatabase>, actor: PlatformActor, input: {

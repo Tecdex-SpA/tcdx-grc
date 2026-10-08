@@ -1,0 +1,152 @@
+$ TCDX_ISOLATED_REBUILD=true TCDX_SECURITY_INTEGRATION=true TCDX_PHASE5_LIFECYCLE_INTEGRATION=true vitest run --config vitest.integration.config.ts --no-file-parallelism
+
+ RUN  v5.0.1 /Users/andresbarouh/repos/tcdx-grc
+
+ ❯ apps/backend/src/core-grc/phase5-lifecycle.postgres.test.ts (1 test | 1 failed) 2879ms
+   ❯ Phase 5 lifecycle PostgreSQL isolated integration (1)
+     × persists RetentionPolicy, Storage, Evidence and ControlAssessmentSubmit with isolated actors 2875ms
+ ❯ apps/backend/src/security/managed-identity.postgres.test.ts (3 tests | 1 failed) 9966ms
+   ❯ Managed Identity canonical mapping in isolated PostgreSQL (3)
+     × completes the eight-operation local lifecycle with one-time disclosure, safe audit and no grants 5058ms
+{
+  "oidcUserIdentityBoundary": "PASS",
+  "firstPlatformAdminBootstrap": "PASS",
+  "bootstrapConcurrency": [
+    "fulfilled",
+    "rejected"
+  ],
+  "tenantBootstrap": "PASS",
+  "platformRbac": "PASS",
+  "subscriptionCreate": {
+    "subscription_id": "01a11b47-a5a2-750e-a066-dd8c361341cb",
+    "tenant_id": "01a11b47-9f7e-732e-b628-cb7d7320ffa3",
+    "plan_version_id": "01a0a783-6000-73d1-a52c-eaa706d6696a",
+    "subscription_code": "RT-01a11b47",
+    "lifecycle_state": "active",
+    "starts_at": "2026-10-08T11:30:42.667Z",
+    "ends_at": null,
+    "cancelled_at": null
+  },
+  "subscriptionReplay": true,
+  "tenantCreateDefaults": {
+    "tenant_id": "01a11b47-9f7e-732e-b628-cb7d7320ffa3",
+    "tenant_code": "RT-a697bfdf6a82",
+    "legal_name": "Runtime Verification One",
+    "display_name": "Runtime One",
+    "default_timezone": "America/Santiago",
+    "lifecycle_state": "active",
+    "data_classification": "confidential"
+  },
+  "membershipCreateNoAutomaticRole": true,
+  "membershipRoleAssign": {
+    "membership_role_id": "01a11b47-a6dc-74a8-a224-f6bce24095fe",
+    "tenant_membership_id": "01a11b47-a668-7654-89d1-462dd816d54a",
+    "role_id": "01a11b47-9c20-7348-9be0-d590a4b83f3a",
+    "scope_kind": "tenant",
+    "organizational_unit_id": null,
+    "process_id": null,
+    "service_id": null,
+    "audit_id": null,
+    "valid_from": "2026-10-08T11:30:42.976Z",
+    "valid_to": null,
+    "etag": "c2a44486d5addd75bcec95fb93ca5214a89ec9e4bd5e879752fb761693734f9a"
+  },
+  "accessMeOwnContexts": 2,
+  "tenantAuthorizationDefaultDeny": true,
+  "failures": []
+}
+ ❯ apps/backend/src/regulatory/pack-temporal.postgres.test.ts (1 test | 1 failed) 30ms
+   ❯ Phase 5+ pack temporal authority in isolated PostgreSQL (1)
+     × requires exact explicit effective versions and rejects overlapping active contracts 29ms
+ ❯ apps/backend/src/regulatory/phase5-plus-validation.postgres.test.ts (1 test | 1 failed) 96ms
+   ❯ Phase 5+ Subject and provisional validation in isolated PostgreSQL (1)
+     × creates tenant Subjects and grants an exact provisional pack only to a classified non-production tenant 95ms
+ ❯ apps/backend/src/regulatory/validation-candidates.postgres.test.ts (1 test | 1 failed) 15ms
+   ❯ validation candidate physical authority in isolated PostgreSQL (1)
+     × requires every exact provenance chain predicate and never crosses into commercial assignment 14ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  apps/backend/src/core-grc/phase5-lifecycle.postgres.test.ts > Phase 5 lifecycle PostgreSQL isolated integration > persists RetentionPolicy, Storage, Evidence and ControlAssessmentSubmit with isolated actors
+Error: CATALOG_V1_1_MUST_BE_IMPORTED_BEFORE_PHASE5_INTEGRATION
+ ❯ apps/backend/src/core-grc/phase5-lifecycle.postgres.test.ts:261:62
+    259|         const globalControlVersionId = reference.rows[0]?.control_vers…
+    260|         const packVersionId = reference.rows[0]?.regulatory_pack_versi…
+    261|         if (!globalControlVersionId || !packVersionId) throw new Error…
+       |                                                              ^
+    262|         await sql`UPDATE regulatory.regulatory_packs SET lifecycle_sta…
+    263|           WHERE regulatory_pack_id=(SELECT regulatory_pack_id FROM reg…
+ ❯ node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/kysely.js:680:32
+ ❯ DefaultConnectionProvider.provideConnection node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/driver/default-connection-provider.js:10:20
+ ❯ apps/backend/src/core-grc/phase5-lifecycle.postgres.test.ts:73:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  apps/backend/src/security/managed-identity.postgres.test.ts > Managed Identity canonical mapping in isolated PostgreSQL > completes the eight-operation local lifecycle with one-time disclosure, safe audit and no grants
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ apps/backend/src/security/managed-identity.postgres.test.ts:76:3
+     74|   });
+     75|
+     76|   it("completes the eight-operation local lifecycle with one-time disc…
+       |   ^
+     77|     if (process.env.DATABASE_HOST !== "127.0.0.1" || process.env.DATAB…
+     78|       || process.env.TCDX_ISOLATED_REBUILD !== "true") throw new Error…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  apps/backend/src/regulatory/pack-temporal.postgres.test.ts > Phase 5+ pack temporal authority in isolated PostgreSQL > requires exact explicit effective versions and rejects overlapping active contracts
+Error: PUBLISHED_PLAN_AND_IMPORTED_CATALOG_REQUIRED
+ ❯ apps/backend/src/regulatory/pack-temporal.postgres.test.ts:35:55
+     33|            WHERE (effective_from IS NULL OR effective_from<=transactio…
+     34|              AND (effective_to IS NULL OR effective_to>transaction_tim…
+     35|         if (!plan.rows[0] || !original.rows[0]) throw new Error("PUBLI…
+       |                                                       ^
+     36|         const firstId = original.rows[0].regulatory_pack_version_id;
+     37|         await sql`UPDATE regulatory.regulatory_packs SET lifecycle_sta…
+ ❯ node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/kysely.js:680:32
+ ❯ DefaultConnectionProvider.provideConnection node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/driver/default-connection-provider.js:10:20
+ ❯ apps/backend/src/regulatory/pack-temporal.postgres.test.ts:25:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  apps/backend/src/regulatory/phase5-plus-validation.postgres.test.ts > Phase 5+ Subject and provisional validation in isolated PostgreSQL > creates tenant Subjects and grants an exact provisional pack only to a classified non-production tenant
+Error: LOCAL_CATALOG_V11_REQUIRED
+ ❯ apps/backend/src/regulatory/phase5-plus-validation.postgres.test.ts:108:30
+    106|           WHERE p.pack_code='ISO_IEC_27001_2022' AND nu.provenance_ref…
+    107|         const selected = version.rows[0];
+    108|         if (!selected) throw new Error("LOCAL_CATALOG_V11_REQUIRED");
+       |                              ^
+    109|         const expiredVersion = await sql<{ regulatory_pack_version_id:…
+    110|           provenance_ref: string }>`SELECT pv.regulatory_pack_version_…
+ ❯ node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/kysely.js:680:32
+ ❯ DefaultConnectionProvider.provideConnection node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/driver/default-connection-provider.js:10:20
+ ❯ apps/backend/src/regulatory/phase5-plus-validation.postgres.test.ts:45:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  apps/backend/src/regulatory/validation-candidates.postgres.test.ts > validation candidate physical authority in isolated PostgreSQL > requires every exact provenance chain predicate and never crosses into commercial assignment
+Error: LOCAL_CATALOG_V11_REQUIRED
+ ❯ apps/backend/src/regulatory/validation-candidates.postgres.test.ts:34:46
+     32|            ORDER BY p.pack_code
+     33|         `.execute(tx);
+     34|         if (sources.rows.length !== 3) throw new Error("LOCAL_CATALOG_…
+       |                                              ^
+     35|         const first = sources.rows.find((row) => row.pack_code === "IS…
+     36|         const second = sources.rows.find((row) => row.pack_code === "I…
+ ❯ node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/kysely.js:680:32
+ ❯ DefaultConnectionProvider.provideConnection node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/driver/default-connection-provider.js:10:20
+ ❯ apps/backend/src/regulatory/validation-candidates.postgres.test.ts:19:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  5 failed | 10 passed (15)
+      Tests  5 failed | 77 passed (82)
+   Start at  08:29:14
+   Duration  104.68s (tests 72%, import 23%, transform 5%)
+
+    Isolate  15 workers spawned · ~506ms startup each (spawn + environment, per file)
+             at least ~7.08s faster with isolate: false — reuses workers across files instead of one per file
+
+[ELIFECYCLE] Command failed with exit code 1.

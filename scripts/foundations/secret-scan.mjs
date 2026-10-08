@@ -17,6 +17,10 @@ const patterns = [
 // review-pinned to both their repository path and exact line fingerprint so that
 // changing either re-enables detection instead of broadening the scanner bypass.
 const approvedFalsePositives = new Map([
+  // Historical human-gate state, pinned to this exact line; contains no credential.
+  ["docs/governance/MASTER_EXECUTION_STATUS.md", new Set([
+    "aa5c45d1e85a98e45da5ddc46145de9af5f695f841deafd180680fd251b467a2"
+  ])],
   ["docs/executable-contracts/13_AUTHENTICATION_AUTHORIZATION_CONTRACT.md", new Set([
     "0e5e2b5a79e10b67bbfbb1b2ae4437b078c56d00648e8a2d8929da4c39eeea1f"
   ])],

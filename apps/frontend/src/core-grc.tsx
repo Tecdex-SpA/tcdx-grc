@@ -1,10 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
+import { AddTenantUser, InitialCompanyWizard, TenantUserIntent, tenantPresentationPermission } from "./tenant-onboarding.js";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { CONTROL_NATURES, CONTROL_TYPES } from "@tcdx-grc/shared-types";
 import { ApiClient, ApiProblem } from "./api-client.js";
 import { BrowserSession, receiveApplicationToken, receiveInvitationApplicationToken } from "./browser-auth.js";
 import { displayValue, fieldLabel, fieldPlaceholder, roleLabel } from "./i18n/display-text.js";
 import { moduleLabels, uiText } from "./i18n/es.js";
 import { statusLabel, statusTone } from "./i18n/status-labels.js";
+import type { CurrentPrincipalAuthorization } from "@tcdx-grc/contracts";
+import { parseCurrentAuthorization, managedIdentityEligibility } from "./frontend-auth-projections.js";
+import { BrandLogo, brandNames } from "./branding.js";
+import { LoginEntry } from "./login-entry.js";
+import { ManagedIdentityWorkspace } from "./managed-identity.js";
 
 export type TenantContext = { tenant_id: string; tenant_display_name: string; tenant_membership_id: string; membership_state: string; effective_role_codes: string[] };
 export type Access = { available_tenant_contexts: TenantContext[]; effective_platform_role_codes: string[] };
@@ -26,7 +32,7 @@ type ModuleDefinition = {
   id: string; label: string; path: string; idField: string; titleField: string; stateField: string;
 };
 
-export type WorkflowAction = { state: string; label: string; suffix: string; fields?: readonly string[]; versionResource?: boolean };
+export type WorkflowAction = { state: string; label: string; suffix: string; fields?: readonly string[]; optionalFields?: readonly string[]; versionResource?: boolean };
 
 const workflowActions: Readonly<Record<string, readonly WorkflowAction[]>> = {
   cumplimiento: [
@@ -41,6 +47,7 @@ const workflowActions: Readonly<Record<string, readonly WorkflowAction[]>> = {
   soa: [{ state: "draft", label: uiText.actions.publish, suffix: "publish", fields: ["reason"] }],
   "evaluaciones-control": [
     { state: "planned", label: uiText.actions.start, suffix: "start" },
+    { state: "in_progress", label: uiText.actions.complete, suffix: "complete", fields: ["result_status", "domain_conclusion", "design_effectiveness", "operating_effectiveness", "coverage_percent"], optionalFields: ["domain_conclusion", "design_effectiveness", "operating_effectiveness", "coverage_percent"] },
     { state: "completed", label: uiText.actions.review, suffix: "review" },
     { state: "reviewed", label: uiText.actions.approve, suffix: "approve" }
   ],
@@ -49,6 +56,9 @@ const workflowActions: Readonly<Record<string, readonly WorkflowAction[]>> = {
     { state: "in_progress", label: uiText.actions.execute, suffix: "execute", fields: ["result_status", "domain_conclusion", "samples"] },
     { state: "completed", label: uiText.actions.review, suffix: "review" },
     { state: "reviewed", label: uiText.actions.approve, suffix: "approve" }
+  ],
+  "solicitudes-evidencia": [
+    { state: "open", label: uiText.actions.fulfill, suffix: "fulfill", fields: ["evidence_version_id"] }
   ],
   evidencias: [
     { state: "draft", label: uiText.actions.submit, suffix: "submit", versionResource: true },
@@ -72,7 +82,7 @@ const workflowActions: Readonly<Record<string, readonly WorkflowAction[]>> = {
     { state: "pending", label: uiText.actions.start, suffix: "start" },
     { state: "in_progress", label: uiText.actions.submitReview, suffix: "submit-for-review" },
     { state: "in_review", label: uiText.actions.complete, suffix: "complete", fields: ["evidence_version_id", "link_role"] },
-    { state: "completed", label: uiText.actions.verify, suffix: "verify", fields: ["verification_decision", "rationale", "retest_reference"] }
+    { state: "completed", label: uiText.actions.verify, suffix: "verify", fields: ["verification_decision", "rationale", "retest_reference"], optionalFields: ["retest_reference"] }
   ]
 };
 
@@ -120,7 +130,8 @@ const nav = [
 
 const settingsRoutes = {
   companies: "configuraciones/empresas",
-  users: "configuraciones/usuarios"
+  users: "configuraciones/usuarios",
+  managedIdentities: "configuraciones/identidades-gestionadas"
 } as const;
 
 function Icon({ name }: { name: string }) {
@@ -319,6 +330,29 @@ function SubjectSelect({ api, value, onChange }: { api: ApiClient; value: string
   return <div className="control-version-selector"><label><span>Buscar responsable</span><input type="search" aria-label="Buscar Subject por nombre o clave" value={query} onChange={(event) => setQuery(event.target.value)}/></label><label><span>Responsable de negocio</span><select aria-label="Responsable de negocio" value={value} onChange={(event) => onChange(event.target.value)}><option value="">Selecciona un Subject</option>{subjects.map((subject) => <option key={String(subject.subject_id)} value={String(subject.subject_id)}>{String(subject.display_name)} · {String(subject.subject_type)} · {String(subject.canonical_key)}</option>)}</select></label>{error && <p className="form-error" role="alert">No fue posible cargar Subjects autorizados.</p>}</div>;
 }
 
+function MethodologySelect({ api, domain, value, onChange }: { api: ApiClient; domain: "compliance" | "controls"; value: string; onChange(value: string): void }) {
+  const [items, setItems] = useState<Row[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  useEffect(() => {
+    const controller = new AbortController();
+    setLoading(true); setError(false);
+    void (async () => {
+      const available: Row[] = [];
+      let cursor: string | null = null;
+      do {
+        const query = new URLSearchParams({ "page[size]": "100" });
+        if (cursor) query.set("page[cursor]", cursor);
+        const page = await api.request<Page>(`/api/v1/${domain}-methodologies?${query}`, { signal: controller.signal });
+        available.push(...page.items); cursor = page.page.has_more ? page.page.next_cursor : null;
+      } while (cursor);
+      setItems(available); setLoading(false);
+    })().catch(() => { if (!controller.signal.aborted) { setItems([]); setError(true); setLoading(false); } });
+    return () => controller.abort();
+  }, [api, domain]);
+  return <label><span>{fieldLabel("methodology_version_ref")}</span><select aria-label={fieldLabel("methodology_version_ref")} value={value} disabled={loading || error} onChange={(event) => onChange(event.target.value)}><option value="">{loading ? "Cargando metodologías…" : "Selecciona una metodología publicada"}</option>{items.map((item) => <option key={String(item.methodology_version_ref)} value={String(item.methodology_version_ref)}>{String(item.name)} · v{String(item.version_number)}</option>)}</select>{error && <span role="alert">No fue posible cargar metodologías autorizadas.</span>}{!loading && !error && items.length === 0 && <span>Sin metodologías publicadas disponibles.</span>}</label>;
+}
+
 function CreateDrawer({ api, definition, close, completed }: { api: ApiClient; definition: ModuleDefinition; close(): void; completed(): void }) {
   const contract = createContracts[definition.id]!;
   const [form, setForm] = useState<Record<string, string>>({});
@@ -358,7 +392,7 @@ function CreateDrawer({ api, definition, close, completed }: { api: ApiClient; d
   };
   return <div className="drawer-backdrop" role="presentation" onMouseDown={close}><aside className="drawer" role="dialog" aria-modal="true" aria-labelledby="create-title" onMouseDown={(event) => event.stopPropagation()}>
     <header className="drawer-header"><div><p className="eyebrow">{uiText.forms.createEyebrow}</p><h2 id="create-title">{definition.label}</h2></div><button className="icon-button" onClick={close} aria-label={uiText.forms.closeCreate}>×</button></header>
-    <div className="drawer-body"><p className="form-guidance">{uiText.forms.guidance}</p><div className="create-form">{definition.id === "evidencias" && <><label><span>{uiText.forms.uploadFile}</span><input type="file" onChange={(event) => setFile(event.target.files?.[0])}/></label><label><span>{uiText.forms.fileClassification}</span><select value={classification} onChange={(event) => setClassification(event.target.value)}><option value="">—</option>{["public", "internal", "confidential", "restricted"].map((value) => <option key={value} value={value}>{value}</option>)}</select></label><label><span>{uiText.forms.fileProvenance}</span><input value={sourceProvenance} onChange={(event) => setSourceProvenance(event.target.value)}/></label></>}{contract.fields.map((field) => definition.id === "controles" && field === "based_on_control_version_id" ? <ControlVersionSelect key={field} api={api} value={form[field] ?? ""} onChange={(value) => setForm((current) => ({ ...current, [field]: value }))}/> : definition.id === "controles" && field === "business_owner_subject_id" ? <SubjectSelect key={field} api={api} value={form[field] ?? ""} onChange={(value) => setForm((current) => ({ ...current, [field]: value }))}/> : <label key={field}><span>{fieldLabel(field)}</span>{definition.id === "cumplimiento" && field === "applicability_decision" ? <select aria-label={fieldLabel(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}><option value="">Selecciona una decisión</option><option value="applicable">Aplicable</option><option value="not_applicable">No aplica</option></select> : definition.id === "controles" && (field === "control_type" || field === "nature") ? <select aria-label={fieldLabel(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}><option value="">Selecciona una opción</option>{(field === "control_type" ? CONTROL_TYPES : CONTROL_NATURES).map((value) => <option value={value} key={value}>{displayValue(value)}</option>)}</select> : contract.jsonFields?.includes(field) ? <textarea aria-label={fieldLabel(field)} placeholder={fieldPlaceholder(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}/> : <input aria-label={fieldLabel(field)} placeholder={fieldPlaceholder(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}/>}</label>)}</div>{error && <p className="inline-feedback error" role="alert">{error}</p>}</div>
+    <div className="drawer-body"><p className="form-guidance">{uiText.forms.guidance}</p><div className="create-form">{definition.id === "evidencias" && <><label><span>{uiText.forms.uploadFile}</span><input type="file" onChange={(event) => setFile(event.target.files?.[0])}/></label><label><span>{uiText.forms.fileClassification}</span><select value={classification} onChange={(event) => setClassification(event.target.value)}><option value="">—</option>{["public", "internal", "confidential", "restricted"].map((value) => <option key={value} value={value}>{value}</option>)}</select></label><label><span>{uiText.forms.fileProvenance}</span><input value={sourceProvenance} onChange={(event) => setSourceProvenance(event.target.value)}/></label></>}{contract.fields.map((field) => field === "methodology_version_ref" ? <MethodologySelect key={field} api={api} domain={definition.id === "requisitos" ? "compliance" : "controls"} value={form[field] ?? ""} onChange={(value) => setForm((current) => ({ ...current, [field]: value }))}/> : definition.id === "controles" && field === "based_on_control_version_id" ? <ControlVersionSelect key={field} api={api} value={form[field] ?? ""} onChange={(value) => setForm((current) => ({ ...current, [field]: value }))}/> : definition.id === "controles" && field === "business_owner_subject_id" ? <SubjectSelect key={field} api={api} value={form[field] ?? ""} onChange={(value) => setForm((current) => ({ ...current, [field]: value }))}/> : <label key={field}><span>{fieldLabel(field)}</span>{definition.id === "cumplimiento" && field === "applicability_decision" ? <select aria-label={fieldLabel(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}><option value="">Selecciona una decisión</option><option value="applicable">Aplicable</option><option value="not_applicable">No aplica</option></select> : definition.id === "controles" && (field === "control_type" || field === "nature") ? <select aria-label={fieldLabel(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}><option value="">Selecciona una opción</option>{(field === "control_type" ? CONTROL_TYPES : CONTROL_NATURES).map((value) => <option value={value} key={value}>{displayValue(value)}</option>)}</select> : contract.jsonFields?.includes(field) ? <textarea aria-label={fieldLabel(field)} placeholder={fieldPlaceholder(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}/> : <input aria-label={fieldLabel(field)} placeholder={fieldPlaceholder(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}/>}</label>)}</div>{error && <p className="inline-feedback error" role="alert">{error}</p>}</div>
     <footer className="drawer-footer"><button className="button primary" disabled={busy} onClick={() => void submit()}>{busy ? uiText.actions.creating : uiText.actions.create}</button></footer>
   </aside></div>;
 }
@@ -406,11 +440,11 @@ function DetailDrawer({ api, definition, row: summary, close, completed }: { api
     } catch { setFeedback({ kind: "error", message: uiText.forms.fileError }); }
   };
   const submit = async (action: WorkflowAction) => {
-    const missing = (action.fields ?? []).find((field) => field !== "retest_reference" && !form[field]);
+    const missing = (action.fields ?? []).find((field) => !action.optionalFields?.includes(field) && !form[field]);
     if (missing) { setFeedback({ kind: "error", message: `${uiText.forms.requiredField} ${fieldLabel(missing)}` }); return; }
     const targetId = action.versionResource ? String(version?.evidence_version_id ?? "") : id;
     const targetPath = action.versionResource ? "/evidence-versions" : definition.path;
-    const body: Row = { expected_version: Number(version?.row_version ?? row.row_version), ...form };
+    const body: Row = { expected_version: Number(version?.row_version ?? row.row_version), ...Object.fromEntries((action.fields ?? []).filter((field) => form[field] !== undefined && form[field] !== "").map((field) => [field, form[field]])) };
     for (const field of ["coverage_percent", "design_effectiveness", "operating_effectiveness"]) if (body[field] !== undefined) body[field] = Number(body[field]);
     if (typeof body.samples === "string") { try { body.samples = JSON.parse(body.samples); } catch { setFeedback({ kind: "error", message: uiText.forms.invalidJson }); return; } }
     try {
@@ -520,8 +554,13 @@ function Dashboard({ api }: { api: ApiClient }) {
   </>;
 }
 
-function Sidebar({ active, open, close, platformAdmin, tenantAdmin, hasTenant }: { active: string; open: boolean; close(): void; platformAdmin: boolean; tenantAdmin: boolean; hasTenant: boolean }) {
-  return <aside className={`sidebar ${open ? "open" : ""}`}><div className="brand"><img src="/tecdex-logo-light.svg" alt="Tecdex"/><span>GRC</span></div><nav aria-label={uiText.navigation.mainAria}>{hasTenant && nav.map(([id, label, icon]) => <button key={id} className={active === id ? "active" : ""} onClick={() => { navigate(id); close(); }}><Icon name={icon}/><span>{label}</span></button>)}{(platformAdmin || tenantAdmin) && <><p className="sidebar-section-label">{uiText.navigation.settings}</p><button className={active === settingsRoutes.companies ? "active" : ""} onClick={() => { navigate(settingsRoutes.companies); close(); }}><Icon name="building"/><span>{uiText.navigation.companies}</span></button><button className={active === settingsRoutes.users ? "active" : ""} onClick={() => { navigate(settingsRoutes.users); close(); }}><Icon name="users"/><span>{uiText.navigation.users}</span></button></>}</nav><div className="sidebar-footer"><strong>TCDX GRC</strong><span>{uiText.shell.productContext}</span></div></aside>;
+function Sidebar({ active, open, close, platformAdmin, tenantAdmin, hasTenant, managedIdentity }: { active: string; open: boolean; close(): void; platformAdmin: boolean; tenantAdmin: boolean; hasTenant: boolean; managedIdentity: boolean }) {
+  return <aside className={`sidebar ${open ? "open" : ""}`}><div className="brand"><BrandLogo/><span>GRC</span></div><nav aria-label={uiText.navigation.mainAria}>
+    {hasTenant && nav.map(([id, label, icon]) => <button key={id} className={active === id ? "active" : ""} onClick={() => { navigate(id); close(); }}><Icon name={icon}/><span>{label}</span></button>)}
+    {(platformAdmin || tenantAdmin || managedIdentity) && <p className="sidebar-section-label">{uiText.navigation.settings}</p>}
+    {(platformAdmin || tenantAdmin) && <><button className={active === settingsRoutes.companies ? "active" : ""} onClick={() => { navigate(settingsRoutes.companies); close(); }}><Icon name="building"/><span>{uiText.navigation.companies}</span></button><button className={active === settingsRoutes.users ? "active" : ""} onClick={() => { navigate(settingsRoutes.users); close(); }}><Icon name="users"/><span>{uiText.navigation.users}</span></button></>}
+    {managedIdentity && <button className={active === settingsRoutes.managedIdentities ? "active" : ""} onClick={() => { navigate(settingsRoutes.managedIdentities); close(); }}><Icon name="shield"/><span>Identidades gestionadas</span></button>}
+  </nav><div className="sidebar-footer"><strong>{brandNames.product}</strong><span>{uiText.shell.productContext}</span></div></aside>;
 }
 
 const workspaceGroups: Readonly<Record<string, readonly string[]>> = {
@@ -938,40 +977,21 @@ function TenantCompany({ api, context }: { api: ApiClient; context: TenantContex
   return <><PageHeader title={uiText.navigation.companies}/><DataCard title={context.tenant_display_name}><ContractedPacks api={api} platform={false}/><ValidationPacks api={api} platform={false}/><SubjectsAdmin api={api}/></DataCard></>;
 }
 
-function CompaniesAdmin({ api }: { api: ApiClient }) {
+function CompaniesAdmin({ api, authorization, authorizeFresh }: { api: ApiClient; authorization: CurrentPrincipalAuthorization | null; authorizeFresh(code: string): Promise<boolean> }) {
   const [state, retry, loadMore] = useAdminPage(api, "/api/v1/platform/tenants", true);
   const [selectedId, setSelectedId] = useState<string>();
   const [detail, setDetail] = useState<Row>();
   const [detailError, setDetailError] = useState(false);
-  const [creating, setCreating] = useState(false);
-  const [form, setForm] = useState({ tenant_code: "", legal_name: "", display_name: "", default_timezone: "" });
-  const [busy, setBusy] = useState(false);
-  const [feedback, setFeedback] = useState<string>();
   useEffect(() => {
     if (!selectedId) { setDetail(undefined); return; }
     setDetail(undefined); setDetailError(false);
     void api.platformGet<Row>(`/api/v1/platform/tenants/${encodeURIComponent(selectedId)}`)
       .then(setDetail).catch(() => setDetailError(true));
   }, [api, selectedId]);
-  const submit = async () => {
-    setBusy(true); setFeedback(undefined);
-    try {
-      await api.platformPost("/api/v1/platform/tenants", form);
-      setCreating(false); setForm({ tenant_code: "", legal_name: "", display_name: "", default_timezone: "" });
-      setFeedback(uiText.administration.companyCreated); retry();
-    } catch { setFeedback(uiText.administration.createCompanyError); }
-    finally { setBusy(false); }
-  };
+  const refetch = async () => { await api.platformGet("/api/v1/platform/tenants"); retry(); };
   return <>
-    <div className="page-heading"><div><p className="eyebrow">{uiText.navigation.settings}</p><h1>{uiText.navigation.companies}</h1><p>{uiText.administration.companiesDetail}</p></div><button className="button primary" onClick={() => setCreating((value) => !value)}>{uiText.administration.createCompany}</button></div>
-    {feedback && <p className="inline-feedback" role="status">{feedback}</p>}
-    {creating && <DataCard title={uiText.administration.createCompany}><form className="admin-form" onSubmit={(event) => { event.preventDefault(); void submit(); }}>
-      {([
-        ["tenant_code", uiText.administration.companyCode], ["legal_name", uiText.administration.legalName],
-        ["display_name", uiText.administration.displayName], ["default_timezone", uiText.administration.timezone]
-      ] as const).map(([field, label]) => <label key={field}><span>{label}</span><input required maxLength={field === "tenant_code" || field === "default_timezone" ? 64 : undefined} value={form[field]} onChange={(event) => setForm((current) => ({ ...current, [field]: event.target.value }))}/></label>)}
-      <button className="button primary" disabled={busy} type="submit">{busy ? uiText.actions.creating : uiText.administration.createCompany}</button>
-    </form></DataCard>}
+    <div className="page-heading"><div><p className="eyebrow">{uiText.navigation.settings}</p><h1>{uiText.navigation.companies}</h1><p>{uiText.administration.companiesDetail}</p></div></div>
+    <InitialCompanyWizard api={api} permissions={new Set(authorization?.platform_permissions ?? [])} authorizeFresh={authorizeFresh} refetch={refetch}/>
     <AdminPageBody state={state} retry={retry} loadMore={loadMore}>{(items) => <TableShell label={uiText.navigation.companies}>{items.length === 0 ? <EmptyState/> : <div className="table-scroll"><table><thead><tr><th>{uiText.navigation.companies}</th><th>{uiText.common.status}</th><th>{uiText.administration.plan}</th><th><span className="sr-only">{uiText.common.actions}</span></th></tr></thead><tbody>{items.map((item) => {
       const subscription = item.current_subscription as Row | null;
       return <tr key={String(item.tenant_id)}><td><strong>{String(item.display_name)}</strong><small className="admin-secondary">{String(item.legal_name)}</small></td><td><StatusBadge value={item.lifecycle_state}/></td><td>{subscription ? `${String(subscription.plan_name)} · v${String(subscription.plan_version_number)}` : uiText.administration.noPlan}</td><td><button className="link-button" onClick={() => setSelectedId(String(item.tenant_id))}>{uiText.actions.viewDetail}</button></td></tr>;
@@ -980,15 +1000,17 @@ function CompaniesAdmin({ api }: { api: ApiClient }) {
   </>;
 }
 
-function UsersAdmin({ api, platformAdmin, context }: { api: ApiClient; platformAdmin: boolean; context?: TenantContext }) {
-  const tenantAdmin = Boolean(context?.effective_role_codes.includes("TENANT_ADMIN"));
+function UsersAdmin({ api, platformAdmin, context, authorization, authorizeTenantFresh, authorizePlatformFresh }: { api: ApiClient; platformAdmin: boolean; context?: TenantContext; authorization: CurrentPrincipalAuthorization | null; authorizeTenantFresh(codes: readonly string[]): Promise<boolean>; authorizePlatformFresh(code: string): Promise<boolean> }) {
   const [selectedTenantId, setSelectedTenantId] = useState(() => platformAdmin ? new URLSearchParams(window.location.search).get("tenant_id") ?? context?.tenant_id ?? "" : context?.tenant_id ?? "");
   const [companyState, retryCompanies, moreCompanies] = useAdminPage(api, "/api/v1/platform/tenants", true, platformAdmin);
-  const platformRead = platformAdmin;
+  const platformRead = platformAdmin && !!authorization?.platform_permissions.includes("platform.membership.read");
+  const platformRoleRead = platformAdmin && !!authorization?.platform_permissions.includes("platform.role.read");
   const tenantQuery = platformRead && selectedTenantId ? `?tenant_id=${encodeURIComponent(selectedTenantId)}` : "";
+  const membershipQuery = platformRead ? tenantQuery : "", roleQuery = platformRoleRead ? tenantQuery : "";
+  const ownContext = context?.tenant_id === selectedTenantId;
   const enabled = Boolean(selectedTenantId);
-  const [memberships, retryMemberships, moreMemberships] = useAdminPage(api, `/api/v1/memberships${tenantQuery}`, platformRead, enabled);
-  const [roles, retryRoles, moreRoles] = useAdminPage(api, `/api/v1/roles${tenantQuery}`, platformRead, enabled);
+  const [memberships, retryMemberships, moreMemberships] = useAdminPage(api, `/api/v1/memberships${membershipQuery}`, platformRead, enabled && (platformRead || (ownContext && tenantPresentationPermission(authorization, selectedTenantId, "platform.membership.read"))));
+  const [roles, retryRoles, moreRoles] = useAdminPage(api, `/api/v1/roles${roleQuery}`, platformRoleRead, enabled && (platformRoleRead || (ownContext && tenantPresentationPermission(authorization, selectedTenantId, "platform.role.read"))));
   const [invitations, retryInvitations, moreInvitations] = useAdminPage(api, `/api/v1/platform/membership-invitations${tenantQuery}`, true, platformAdmin && enabled);
   const [selectedMembershipId, setSelectedMembershipId] = useState<string>();
   const [selectedMembership, setSelectedMembership] = useState<Row>();
@@ -997,24 +1019,49 @@ function UsersAdmin({ api, platformAdmin, context }: { api: ApiClient; platformA
   const [roleRevokeBusy, setRoleRevokeBusy] = useState<string>();
   const [feedback, setFeedback] = useState<string>();
   const [revokeBusy, setRevokeBusy] = useState<string>();
-  const canAssign = tenantAdmin && context?.tenant_id === selectedTenantId;
-  const canRevokeRole = platformAdmin || canAssign;
+  const roleGuard = useRef(false), assignmentIntents = useRef(new Map<string, TenantUserIntent>());
+  const revokeIntents = useRef(new Map<string, { key: string; reason: string; etag: string }>());
+  const canAssign = tenantPresentationPermission(authorization, selectedTenantId, "platform.role.assign") && context?.tenant_id === selectedTenantId;
+  const platformRevoke = platformAdmin && !!authorization?.platform_permissions.includes("platform.role.assign");
+  const canRevokeRole = canAssign || platformRevoke;
+  const refetchUsers = async () => { await (platformRead ? api.platformGet(`/api/v1/memberships${membershipQuery}`) : api.request("/api/v1/memberships")); retryMemberships(); };
+  const closeMembership = () => { if (!roleGuard.current) setSelectedMembershipId(undefined); };
+  useEffect(() => {
+    if (!selectedMembershipId) return;
+    const previous = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const dialog = document.querySelector<HTMLElement>('[aria-labelledby="membership-detail-title"]');
+    dialog?.querySelector<HTMLButtonElement>('button')?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") { event.preventDefault(); closeMembership(); }
+      if (event.key !== "Tab" || !dialog) return;
+      const fields = [...dialog.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href]')];
+      const first = fields[0], last = fields.at(-1);
+      if (event.shiftKey && document.activeElement === first && last) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last && first) { event.preventDefault(); first.focus(); }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => { document.removeEventListener("keydown", onKey); if (previous?.isConnected) previous.focus(); };
+  }, [selectedMembershipId]);
   useEffect(() => { setSelectedMembershipId(undefined); setSelectedMembership(undefined); }, [selectedTenantId]);
   useEffect(() => {
     if (!selectedMembershipId) return;
-    const target = `/api/v1/memberships/${encodeURIComponent(selectedMembershipId)}${tenantQuery}`;
+    const target = `/api/v1/memberships/${encodeURIComponent(selectedMembershipId)}${membershipQuery}`;
     void (platformRead ? api.platformGet<Row>(target) : api.request<Row>(target)).then(setSelectedMembership).catch(() => setFeedback(uiText.administration.loadError));
-  }, [api, selectedMembershipId, tenantQuery, platformRead]);
+  }, [api, selectedMembershipId, membershipQuery, platformRead]);
   const assign = async () => {
-    if (!selectedMembershipId || !assignmentRoleId || !canAssign) return;
-    setAssignmentBusy(true); setFeedback(undefined);
+    if (roleGuard.current || !selectedMembershipId || !selectedMembership || typeof selectedMembership.user_identity_id !== "string" || !assignmentRoleId || !canAssign) return;
+    roleGuard.current = true; setAssignmentBusy(true); setFeedback(undefined);
     try {
-      await api.post(`/api/v1/memberships/${encodeURIComponent(selectedMembershipId)}/role-assignments`, { role_id: assignmentRoleId, scope_kind: "tenant" });
-      setAssignmentRoleId(""); setFeedback(uiText.administration.roleAssigned); retryMemberships();
-      const target = `/api/v1/memberships/${encodeURIComponent(selectedMembershipId)}${tenantQuery}`;
+      if (!await authorizeTenantFresh(["platform.role.assign"])) throw new Error("AUTHORIZATION_DENIED");
+      const intentId = `${selectedTenantId}:${selectedMembershipId}:${assignmentRoleId}`;
+      let intent = assignmentIntents.current.get(intentId);
+      if (!intent) { intent = new TenantUserIntent(selectedTenantId, { user_identity_id: selectedMembership.user_identity_id, existing_membership_id: selectedMembershipId, display_name: null, provider_display: null, lifecycle_state: "active" }, [assignmentRoleId]); assignmentIntents.current.set(intentId, intent); }
+      await intent.complete(api, refetchUsers);
+      const target = `/api/v1/memberships/${encodeURIComponent(selectedMembershipId)}${membershipQuery}`;
       setSelectedMembership(await (platformRead ? api.platformGet<Row>(target) : api.request<Row>(target)));
+      assignmentIntents.current.delete(intentId); setAssignmentRoleId(""); setFeedback(uiText.administration.roleAssigned);
     } catch { setFeedback(uiText.administration.roleAssignmentError); }
-    finally { setAssignmentBusy(false); }
+    finally { roleGuard.current = false; setAssignmentBusy(false); }
   };
   const revoke = async (invitation: Row) => {
     const id = String(invitation.tenant_membership_invitation_id);
@@ -1028,43 +1075,56 @@ function UsersAdmin({ api, platformAdmin, context }: { api: ApiClient; platformA
     finally { setRevokeBusy(undefined); }
   };
   const revokeRole = async (assignment: Row) => {
-    if (!selectedMembershipId || !selectedTenantId || !canRevokeRole) return;
-    const roleName = readableRole(assignment.role_code, assignment.role_name);
-    if (!window.confirm(`${uiText.administration.removeRoleConfirm} «${roleName}»?`)) return;
-    const reason = window.prompt(`${uiText.administration.removeRoleReason}: ${roleName}`)?.trim();
-    if (!reason) return;
+    if (roleGuard.current || !selectedMembershipId || !selectedTenantId || !canRevokeRole) return;
     const id = String(assignment.membership_role_id);
-    setRoleRevokeBusy(id); setFeedback(undefined);
+    let intent = revokeIntents.current.get(id);
+    const roleName = readableRole(assignment.role_code, assignment.role_name);
+    if (!intent) {
+      if (!window.confirm(`${uiText.administration.removeRoleConfirm} «${roleName}»?`)) return;
+      const reason = window.prompt(`${uiText.administration.removeRoleReason}: ${roleName}`)?.trim();
+      if (!reason) return;
+      intent = { key: crypto.randomUUID(), reason, etag: String(assignment.etag) }; revokeIntents.current.set(id, intent);
+    }
+    roleGuard.current = true; setRoleRevokeBusy(id); setFeedback(undefined);
     try {
-      await api.request(`/api/v1/role-assignments/${encodeURIComponent(id)}:revoke${platformAdmin ? tenantQuery : ""}`, {
-        method: "POST", headers: { "Idempotency-Key": crypto.randomUUID(), "If-Match": `"${String(assignment.etag)}"` },
-        body: JSON.stringify({ reason })
-      }, { tenantContext: platformAdmin ? "omit" : "required" });
-      setFeedback(uiText.administration.roleRemoved);
-      retryMemberships();
-      const target = `/api/v1/memberships/${encodeURIComponent(selectedMembershipId)}${tenantQuery}`;
-      setSelectedMembership(await (platformRead ? api.platformGet<Row>(target) : api.request<Row>(target)));
+      if (!await (platformRevoke ? authorizePlatformFresh("platform.role.assign") : authorizeTenantFresh(["platform.role.assign"]))) throw new Error("AUTHORIZATION_DENIED");
+      const target = `/api/v1/memberships/${encodeURIComponent(selectedMembershipId)}${membershipQuery}`;
+      let member = await (platformRead ? api.platformGet<Row>(target) : api.request<Row>(target));
+      if (member.tenant_id !== selectedTenantId || member.tenant_membership_id !== selectedMembershipId || !Array.isArray(member.roles)) throw new Error("INVALID_REVOKE_TARGET");
+      const current = (member.roles as Row[]).find(role => role.membership_role_id === id);
+      if (!current) throw new Error("MISSING_REVOKE_TARGET");
+      if (!["active", "ended"].includes(membershipRoleValidity(current, Date.now()))) throw new Error("INVALID_REVOKE_VALIDITY");
+      if (membershipRoleValidity(current, Date.now()) !== "ended") {
+        await api.request(`/api/v1/role-assignments/${encodeURIComponent(id)}:revoke${platformRevoke ? tenantQuery : ""}`, {
+          method: "POST", headers: { "Idempotency-Key": intent.key, "If-Match": `"${intent.etag}"` }, body: JSON.stringify({ reason: intent.reason })
+        }, { tenantContext: platformRevoke ? "omit" : "required" });
+        member = await (platformRead ? api.platformGet<Row>(target) : api.request<Row>(target));
+        if (member.tenant_id !== selectedTenantId || member.tenant_membership_id !== selectedMembershipId || !Array.isArray(member.roles) || !(member.roles as Row[]).some(role => role.membership_role_id === id && membershipRoleValidity(role, Date.now()) === "ended")) throw new Error("REVOKE_NOT_CONFIRMED_BY_SERVER");
+      }
+      setSelectedMembership(member); await refetchUsers(); revokeIntents.current.delete(id); setFeedback(uiText.administration.roleRemoved);
     } catch (error) {
       setFeedback(error instanceof ApiProblem ? `${uiText.administration.roleRemovalError} (${error.problem.code})` : uiText.administration.roleRemovalError);
-    } finally { setRoleRevokeBusy(undefined); }
+      await refetchUsers().catch(() => undefined);
+    } finally { roleGuard.current = false; setRoleRevokeBusy(undefined); }
   };
   const assigned = selectedMembership && Array.isArray(selectedMembership.roles) ? selectedMembership.roles as Row[] : [];
-  const roleOptions = roles.state === "ready" ? roles.page.items.filter((role) => role.ownership_class === "TENANT_OWNED" && role.lifecycle_state === "published" && !assigned.some((entry) => entry.role_id === role.role_id && ["active", "future"].includes(membershipRoleValidity(entry, Date.now())))) : [];
+  const roleOptions = roles.state === "ready" ? roles.page.items.filter((role) => role.tenant_id === selectedTenantId && role.ownership_class === "TENANT_OWNED" && role.lifecycle_state === "published" && !assigned.some((entry) => entry.role_id === role.role_id && ["active", "future"].includes(membershipRoleValidity(entry, Date.now())))) : [];
   return <>
-    <div className="page-heading"><div><p className="eyebrow">{uiText.navigation.settings}</p><h1>{uiText.navigation.users}</h1><p>{uiText.administration.usersDetail}</p></div>{platformAdmin && companyState.state === "ready" && <label className="admin-company-picker"><span>{uiText.shell.tenant}</span><select aria-label={uiText.administration.selectCompany} value={selectedTenantId} onChange={(event) => setSelectedTenantId(event.target.value)}><option value="">{uiText.administration.selectCompany}</option>{companyState.page.items.map((tenant) => <option key={String(tenant.tenant_id)} value={String(tenant.tenant_id)}>{String(tenant.display_name)}</option>)}</select></label>}</div>
+    <div className="page-heading"><div><p className="eyebrow">{uiText.navigation.settings}</p><h1>{uiText.navigation.users}</h1><p>{uiText.administration.usersDetail}</p></div>{platformAdmin && companyState.state === "ready" && <label className="admin-company-picker"><span>{uiText.shell.tenant}</span><select aria-label={uiText.administration.selectCompany} disabled={assignmentBusy || !!roleRevokeBusy} value={selectedTenantId} onChange={(event) => setSelectedTenantId(event.target.value)}><option value="">{uiText.administration.selectCompany}</option>{companyState.page.items.map((tenant) => <option key={String(tenant.tenant_id)} value={String(tenant.tenant_id)}>{String(tenant.display_name)}</option>)}</select></label>}</div>
     {platformAdmin && companyState.state === "error" && <ErrorState unauthorized={companyState.forbidden} retry={retryCompanies}/>}
     {platformAdmin && companyState.state === "ready" && companyState.page.page.has_more && <button className="link-button" onClick={moreCompanies}>{uiText.actions.loadMore}</button>}
     {!selectedTenantId ? <StatePanel kind="empty" detail={uiText.administration.selectCompany}/> : <>
+      {context?.tenant_id === selectedTenantId && <AddTenantUser key={selectedTenantId} api={api} tenantId={selectedTenantId} projection={authorization} authorizeFresh={authorizeTenantFresh} refetch={refetchUsers}/>}
       {feedback && <p className="inline-feedback" role="status">{feedback}</p>}
-      <DataCard title={uiText.administration.memberships} subtitle={uiText.administration.usersDetail} className="admin-section"><AdminPageBody state={memberships} retry={retryMemberships} loadMore={moreMemberships}>{(items) => items.length === 0 ? <EmptyState/> : <div className="table-scroll"><table><thead><tr><th>{uiText.administration.user}</th><th>{uiText.common.status}</th><th>{uiText.administration.roles}</th><th><span className="sr-only">{uiText.common.actions}</span></th></tr></thead><tbody>{items.map((membership) => {
+      <DataCard title={uiText.administration.memberships} subtitle={uiText.administration.usersDetail} className="admin-section"><AdminPageBody state={memberships} retry={retryMemberships} loadMore={moreMemberships}>{(items) => items.length === 0 ? <EmptyState/> : <div className="table-scroll"><table><thead><tr><th>{uiText.administration.user}</th><th>Identidad</th><th>Incorporación a la empresa</th><th>{uiText.administration.roles}</th><th><span className="sr-only">{uiText.common.actions}</span></th></tr></thead><tbody>{items.map((membership) => {
         const person = membership.user_identity as Row;
         const assignedRoles = Array.isArray(membership.roles)
           ? (membership.roles as Row[]).filter((entry) => membershipRoleValidity(entry, Date.now()) === "active") : [];
-        return <tr key={String(membership.tenant_membership_id)}><td><strong>{String(person.display_name || person.email_normalized || uiText.shell.authorizedUser)}</strong><small className="admin-secondary">{String(person.email_normalized ?? "")}</small></td><td><StatusBadge value={membership.membership_state}/></td><td>{assignedRoles.length ? assignedRoles.map((role) => readableRole(role.role_code, role.role_name)).join(" · ") : uiText.administration.noRoles}</td><td><button className="link-button" onClick={() => setSelectedMembershipId(String(membership.tenant_membership_id))}>{uiText.actions.viewDetail}</button></td></tr>;
+        return <tr key={String(membership.tenant_membership_id)}><td><strong>{String(person.display_name || person.email_normalized || uiText.shell.authorizedUser)}</strong><small className="admin-secondary">{String(person.email_normalized ?? "")}</small><small className="admin-secondary">{String(person.provider_display ?? "Proveedor no disponible")}</small></td><td><StatusBadge value={person.lifecycle_state}/></td><td><StatusBadge value={membership.membership_state}/></td><td>{assignedRoles.length ? assignedRoles.map((role) => readableRole(role.role_code, role.role_name)).join(" · ") : uiText.administration.noRoles}</td><td><button className="link-button" onClick={() => setSelectedMembershipId(String(membership.tenant_membership_id))}>{uiText.actions.viewDetail}</button></td></tr>;
       })}</tbody></table></div>}</AdminPageBody></DataCard>
       {platformAdmin && <><InvitationAdmin key={selectedTenantId} api={api} tenantId={selectedTenantId} created={retryInvitations}/><DataCard title={uiText.administration.invitations} className="admin-section"><AdminPageBody state={invitations} retry={retryInvitations} loadMore={moreInvitations}>{(items) => items.length === 0 ? <EmptyState/> : <div className="table-scroll"><table><thead><tr><th>{uiText.invitation.email}</th><th>{uiText.common.status}</th><th>{uiText.administration.expiry}</th><th><span className="sr-only">{uiText.common.actions}</span></th></tr></thead><tbody>{items.map((invitation) => <tr key={String(invitation.tenant_membership_invitation_id)}><td><strong>{String(invitation.invitee_email)}</strong></td><td><StatusBadge value={invitation.effective_state}/></td><td>{adminDate(invitation.expires_at)}</td><td>{invitation.effective_state === "pending" && <button className="link-button" disabled={revokeBusy === invitation.tenant_membership_invitation_id} onClick={() => void revoke(invitation)}>{uiText.administration.revoke}</button>}</td></tr>)}</tbody></table></div>}</AdminPageBody></DataCard></>}
     </>}
-    {selectedMembershipId && <div className="drawer-backdrop" role="presentation" onMouseDown={() => setSelectedMembershipId(undefined)}><aside className="drawer" role="dialog" aria-modal="true" aria-labelledby="membership-detail-title" onMouseDown={(event) => event.stopPropagation()}><header className="drawer-header"><div><p className="eyebrow">{uiText.navigation.users}</p><h2 id="membership-detail-title">{selectedMembership ? String((selectedMembership.user_identity as Row).display_name || (selectedMembership.user_identity as Row).email_normalized || uiText.shell.authorizedUser) : uiText.administration.user}</h2></div><button className="icon-button" onClick={() => setSelectedMembershipId(undefined)} aria-label={uiText.forms.closeDetail}>×</button></header><div className="drawer-body">{!selectedMembership ? <LoadingState/> : <><p><StatusBadge value={selectedMembership.membership_state}/></p><p>{uiText.administration.joined}: {adminDate(selectedMembership.joined_at)}</p><h3>{uiText.administration.roles}</h3>{assigned.length ? <ul className="admin-role-list">{assigned.map((entry) => { const validity = membershipRoleValidity(entry, Date.now()); return <li key={String(entry.membership_role_id)}><strong>{readableRole(entry.role_code, entry.role_name)}</strong><span>{validity === "ended" ? `${uiText.administration.roleValidityEnded} · ` : validity === "future" ? `${uiText.administration.roleValidityFuture} · ` : ""}{adminDate(entry.valid_from)} – {entry.valid_to ? adminDate(entry.valid_to) : uiText.common.noData}</span>{canRevokeRole && validity === "active" && <button className="link-button" disabled={roleRevokeBusy === entry.membership_role_id} onClick={() => void revokeRole(entry)}>{uiText.administration.removeRole}</button>}</li>; })}</ul> : <p className="form-guidance">{uiText.administration.noRoles}</p>}{canAssign && selectedMembership.membership_state === "active" && <div className="admin-form"><label><span>{uiText.administration.assignRole}</span><select aria-label={uiText.administration.selectRole} value={assignmentRoleId} onChange={(event) => setAssignmentRoleId(event.target.value)}><option value="">{uiText.administration.selectRole}</option>{roleOptions.map((role) => <option key={String(role.role_id)} value={String(role.role_id)}>{readableRole(role.role_code, role.name)}</option>)}</select></label><button className="button primary" disabled={!assignmentRoleId || assignmentBusy} onClick={() => void assign()}>{uiText.administration.assignRole}</button></div>}</>}</div></aside></div>}
+    {selectedMembershipId && <div className="drawer-backdrop" role="presentation" onMouseDown={closeMembership}><aside className="drawer" role="dialog" aria-modal="true" aria-labelledby="membership-detail-title" onMouseDown={(event) => event.stopPropagation()}><header className="drawer-header"><div><p className="eyebrow">{uiText.navigation.users}</p><h2 id="membership-detail-title">{selectedMembership ? String((selectedMembership.user_identity as Row).display_name || (selectedMembership.user_identity as Row).email_normalized || uiText.shell.authorizedUser) : uiText.administration.user}</h2></div><button className="icon-button" onClick={closeMembership} disabled={assignmentBusy || !!roleRevokeBusy} aria-label={uiText.forms.closeDetail}>×</button></header><div className="drawer-body">{!selectedMembership ? <LoadingState/> : <><p><StatusBadge value={selectedMembership.membership_state}/></p><p>{uiText.administration.joined}: {adminDate(selectedMembership.joined_at)}</p><h3>{uiText.administration.roles}</h3>{assigned.length ? <ul className="admin-role-list">{assigned.map((entry) => { const validity = membershipRoleValidity(entry, Date.now()); return <li key={String(entry.membership_role_id)}><strong>{readableRole(entry.role_code, entry.role_name)}</strong><span>{validity === "ended" ? `${uiText.administration.roleValidityEnded} · ` : validity === "future" ? `${uiText.administration.roleValidityFuture} · ` : ""}{adminDate(entry.valid_from)} – {entry.valid_to ? adminDate(entry.valid_to) : uiText.common.noData}</span>{canRevokeRole && validity === "active" && <button className="link-button" disabled={assignmentBusy || !!roleRevokeBusy} onClick={() => void revokeRole(entry)}>{uiText.administration.removeRole}</button>}</li>; })}</ul> : <p className="form-guidance">{uiText.administration.noRoles}</p>}{canAssign && selectedMembership.membership_state === "active" && <div className="admin-form"><label><span>{uiText.administration.assignRole}</span><select aria-label={uiText.administration.selectRole} disabled={assignmentBusy || !!roleRevokeBusy} value={assignmentRoleId} onChange={(event) => setAssignmentRoleId(event.target.value)}><option value="">{uiText.administration.selectRole}</option>{roleOptions.map((role) => <option key={String(role.role_id)} value={String(role.role_id)}>{readableRole(role.role_code, role.name)}</option>)}</select></label><button className="button primary" disabled={!assignmentRoleId || assignmentBusy} onClick={() => void assign()}>{uiText.administration.assignRole}</button></div>}</>}</div></aside></div>}
   </>;
 }
 
@@ -1074,7 +1134,41 @@ export function CoreGrcApp({ api, session, apiOrigin }: { api: ApiClient; sessio
   const [contextVersion, setContextVersion] = useState(0);
   const [invitationToken, setInvitationToken] = useState(() => invitationTokenFromLocation());
   const [access, setAccess] = useState<{ loading: boolean; value?: Access; error?: string; authenticating?: boolean }>({ loading: true });
+  const [authorization, setAuthorization] = useState<CurrentPrincipalAuthorization | null>(null);
+  const authorizationEpoch = useRef(0);
+  const selectedAuthorizationTenant = session.selectedTenant()?.tenantId ?? null;
+  const refreshAuthorization = async (requiredPermission?: string, epoch = authorizationEpoch.current): Promise<boolean> => {
+    const token = await session.getAccessToken();
+    if (!token) { if (epoch === authorizationEpoch.current) setAuthorization(null); return false; }
+    try {
+      const projection = parseCurrentAuthorization(await api.currentAuthorization(selectedAuthorizationTenant), selectedAuthorizationTenant);
+      if (!projection || epoch !== authorizationEpoch.current || token !== await session.getAccessToken()
+        || selectedAuthorizationTenant !== (session.selectedTenant()?.tenantId ?? null)) {
+        if (epoch === authorizationEpoch.current) setAuthorization(null);
+        return false;
+      }
+      setAuthorization(projection);
+      return requiredPermission ? projection.platform_permissions.includes(requiredPermission) : true;
+    } catch (error) {
+      if (epoch === authorizationEpoch.current) setAuthorization(null);
+      if (epoch === authorizationEpoch.current && error instanceof ApiProblem && error.status === 401) setAccess({ loading: false });
+      return false;
+    }
+  };
   useEffect(() => { const listener = () => setActive(route()); addEventListener("popstate", listener); return () => removeEventListener("popstate", listener); }, []);
+  useLayoutEffect(() => {
+    const epoch = ++authorizationEpoch.current;
+    if (!access.value) { setAuthorization(null); return; }
+    setAuthorization(null);
+    void refreshAuthorization(undefined, epoch);
+    const visible = () => { if (document.visibilityState === "visible") {
+      const visibleEpoch = ++authorizationEpoch.current;
+      setAuthorization(null);
+      void refreshAuthorization(undefined, visibleEpoch);
+    } };
+    document.addEventListener("visibilitychange", visible);
+    return () => { authorizationEpoch.current++; document.removeEventListener("visibilitychange", visible); };
+  }, [api, access.value, selectedAuthorizationTenant, active]);
   const applyAccess = (value: Access) => {
     const contexts = value.available_tenant_contexts;
     const current = session.selectedTenant()?.tenantId;
@@ -1087,10 +1181,10 @@ export function CoreGrcApp({ api, session, apiOrigin }: { api: ApiClient; sessio
     setAccess(problem?.status === 401 ? { loading: false } : { loading: false, error: uiText.states.unavailableTitle });
   });
   useEffect(() => { void loadAccess(); }, [api]);
-  const login = async () => {
+  const login = async (provider: "ZOHO" | "TCDX_MANAGED_IDENTITY") => {
     setAccess(({ error: _error, ...current }) => ({ ...current, authenticating: true }));
     try {
-      session.storeAccessToken(await receiveApplicationToken(apiOrigin));
+      session.storeAccessToken(await receiveApplicationToken(apiOrigin, undefined, provider === "ZOHO" ? "zoho" : "tcdx-managed-identity"));
       await loadAccess();
     } catch {
       setAccess({ loading: false, error: uiText.auth.loginError });
@@ -1108,23 +1202,39 @@ export function CoreGrcApp({ api, session, apiOrigin }: { api: ApiClient; sessio
     }
   };
   const logout = async () => {
+    authorizationEpoch.current++;
+    setAuthorization(null);
     await api.logout().catch(() => undefined);
     setAccess({ loading: false });
   };
   if (access.loading) return <main className="standalone-state"><LoadingState/></main>;
-  if (!access.value) return <main className="standalone-state"><section className="auth-card"><img src="/tecdex-logo-light.svg" alt="Tecdex"/><h1>{invitationToken ? uiText.invitation.acceptTitle : uiText.auth.title}</h1><p>{access.error ?? (invitationToken ? uiText.invitation.acceptDetail : uiText.auth.detail)}</p><button className="button primary" disabled={access.authenticating} onClick={() => void (invitationToken ? acceptInvitation() : login())}>{access.authenticating ? uiText.auth.connecting : invitationToken ? uiText.invitation.accept : uiText.auth.login}</button></section></main>;
+  if (!access.value) return invitationToken ? <main className="standalone-state"><section className="auth-card"><BrandLogo/><h1>{uiText.invitation.acceptTitle}</h1><p>{access.error ?? uiText.invitation.acceptDetail}</p><button className="button primary" disabled={access.authenticating} onClick={() => void acceptInvitation()}>{access.authenticating ? uiText.auth.connecting : uiText.invitation.accept}</button></section></main> :
+    <LoginEntry api={api} {...(access.error ? { error: access.error } : {})} authenticating={Boolean(access.authenticating)} onLogin={(provider) => void login(provider)}/>;
   const contexts = access.value.available_tenant_contexts;
   const selectedId = session.selectedTenant()?.tenantId;
   const context = contexts.find(({ tenant_id }) => tenant_id === selectedId);
-  const platformAdmin = access.value.effective_platform_role_codes.includes("PLATFORM_ADMIN");
-  const tenantAdmin = Boolean(context?.effective_role_codes.includes("TENANT_ADMIN"));
-  if (!context && !platformAdmin) return <main className="standalone-state"><section className="auth-card"><img src="/tecdex-logo-light.svg" alt="Tecdex"/><h1>{contexts.length ? uiText.tenant.selectTitle : uiText.tenant.noneTitle}</h1><p>{contexts.length ? uiText.tenant.selectDetail : uiText.tenant.noneDetail}</p>{contexts.length > 0 && <select className="tenant-select" aria-label={uiText.tenant.selectorLabel} defaultValue="" onChange={(event) => { session.selectTenant(event.target.value || null); setContextVersion((value) => value + 1); }}><option value="" disabled>{uiText.tenant.selectorPlaceholder}</option>{contexts.map((item) => <option value={item.tenant_id} key={item.tenant_id}>{item.tenant_display_name}</option>)}</select>}<button className="button secondary" onClick={() => void logout()}>{uiText.auth.logout}</button></section></main>;
+  const platformAdmin = !!authorization?.platform_permissions.includes("platform.tenant.read");
+  const tenantAdmin = tenantPresentationPermission(authorization, context?.tenant_id, "platform.membership.read");
+  const authorizeTenantFresh = async (codes: readonly string[]): Promise<boolean> => {
+    const tenantId = session.selectedTenant()?.tenantId ?? null;
+    const token = await session.getAccessToken();
+    if (!tenantId || !token || context?.tenant_id !== tenantId) return false;
+    try {
+      const next = parseCurrentAuthorization(await api.currentAuthorization(tenantId), tenantId);
+      if (!next || token !== await session.getAccessToken() || tenantId !== session.selectedTenant()?.tenantId) { setAuthorization(null); return false; }
+      setAuthorization(next); return codes.every(code => tenantPresentationPermission(next, tenantId, code));
+    } catch { setAuthorization(null); return false; }
+  };
+  const miPermissions = managedIdentityEligibility(authorization);
+  const managedIdentity = miPermissions.has("platform.managed_identity.read") || miPermissions.has("platform.managed_identity.create") || miPermissions.has("platform.managed_identity.administer");
+  if (!context && !platformAdmin && !managedIdentity) return <main className="standalone-state"><section className="auth-card"><BrandLogo/><h1>{contexts.length ? uiText.tenant.selectTitle : uiText.tenant.noneTitle}</h1><p>{contexts.length ? uiText.tenant.selectDetail : uiText.tenant.noneDetail}</p>{contexts.length > 0 && <select className="tenant-select" aria-label={uiText.tenant.selectorLabel} defaultValue="" onChange={(event) => { session.selectTenant(event.target.value || null); setContextVersion((value) => value + 1); }}><option value="" disabled>{uiText.tenant.selectorPlaceholder}</option>{contexts.map((item) => <option value={item.tenant_id} key={item.tenant_id}>{item.tenant_display_name}</option>)}</select>}<button className="button secondary" onClick={() => void logout()}>{uiText.auth.logout}</button></section></main>;
   const effectiveRoles = [...access.value.effective_platform_role_codes, ...(context?.effective_role_codes ?? [])];
   const roleSummary = effectiveRoles.map((role) => roleLabel(role)).join(" · ") || uiText.administration.noRoles;
-  const administrativePage = active === settingsRoutes.companies || active === settingsRoutes.users;
-  return <div className="app-shell"><Sidebar active={active} open={menu} close={() => setMenu(false)} platformAdmin={platformAdmin} tenantAdmin={tenantAdmin} hasTenant={Boolean(context)}/><div className="app-column"><header className="topbar"><button className="menu-button" aria-label={uiText.navigation.open} onClick={() => setMenu(!menu)}>☰</button><label className="search"><span className="sr-only">{uiText.shell.searchLabel}</span><input type="search" placeholder={uiText.shell.searchPlaceholder}/></label>{context ? <label className="tenant-context"><span>{uiText.shell.tenant}</span><select aria-label={uiText.tenant.selectorLabel} value={context.tenant_id} onChange={(event) => { session.selectTenant(event.target.value); setContextVersion((value) => value + 1); }}>{contexts.map((item) => <option value={item.tenant_id} key={item.tenant_id}>{item.tenant_display_name}</option>)}</select></label> : <span className="context-pill">{uiText.administration.platformContext}</span>}<div className="user-context"><span className="avatar">U</span><div><strong>{uiText.shell.authorizedUser}</strong><span className="user-role-summary" title={roleSummary}>{platformAdmin && `${uiText.administration.platformContext} · `}{context ? `${context.tenant_display_name} · ` : ""}{roleSummary}</span></div><button className="link-button" onClick={() => void logout()}>{uiText.auth.logout}</button></div></header><main className="workspace" key={`${context?.tenant_id ?? "platform"}:${contextVersion}`}>
-    {active === settingsRoutes.companies ? platformAdmin ? <CompaniesAdmin api={api}/> : tenantAdmin && context ? <TenantCompany api={api} context={context}/> : <StatePanel kind="permission-denied"/> :
-      active === settingsRoutes.users ? platformAdmin || tenantAdmin ? <UsersAdmin api={api} platformAdmin={platformAdmin} {...(context ? { context } : {})}/> : <StatePanel kind="permission-denied"/> :
+  const administrativePage = active === settingsRoutes.companies || active === settingsRoutes.users || active === settingsRoutes.managedIdentities;
+  return <div className="app-shell"><Sidebar active={active} open={menu} close={() => setMenu(false)} platformAdmin={platformAdmin} tenantAdmin={tenantAdmin} hasTenant={Boolean(context)} managedIdentity={managedIdentity}/><div className="app-column"><header className="topbar"><button className="menu-button" aria-label={uiText.navigation.open} onClick={() => setMenu(!menu)}>☰</button><label className="search"><span className="sr-only">{uiText.shell.searchLabel}</span><input type="search" placeholder={uiText.shell.searchPlaceholder}/></label>{context ? <label className="tenant-context"><span>{uiText.shell.tenant}</span><select aria-label={uiText.tenant.selectorLabel} value={context.tenant_id} onChange={(event) => { session.selectTenant(event.target.value); setContextVersion((value) => value + 1); }}>{contexts.map((item) => <option value={item.tenant_id} key={item.tenant_id}>{item.tenant_display_name}</option>)}</select></label> : <span className="context-pill">{uiText.administration.platformContext}</span>}<div className="user-context"><span className="avatar">U</span><div><strong>{uiText.shell.authorizedUser}</strong><span className="user-role-summary" title={roleSummary}>{platformAdmin && `${uiText.administration.platformContext} · `}{context ? `${context.tenant_display_name} · ` : ""}{roleSummary}</span></div><button className="link-button" onClick={() => void logout()}>{uiText.auth.logout}</button></div></header><main className="workspace" key={`${context?.tenant_id ?? "platform"}:${contextVersion}`}>
+    {active === settingsRoutes.managedIdentities ? managedIdentity ? <ManagedIdentityWorkspace api={api} permissions={new Set(authorization?.platform_permissions ?? [])} authorizeFresh={refreshAuthorization}/> : <StatePanel kind="permission-denied"/> :
+    active === settingsRoutes.companies ? platformAdmin ? <CompaniesAdmin api={api} authorization={authorization} authorizeFresh={refreshAuthorization}/> : tenantAdmin && context ? <TenantCompany api={api} context={context}/> : <StatePanel kind="permission-denied"/> :
+      active === settingsRoutes.users ? platformAdmin || tenantAdmin ? <UsersAdmin api={api} platformAdmin={platformAdmin} authorization={authorization} authorizeTenantFresh={authorizeTenantFresh} authorizePlatformFresh={refreshAuthorization} {...(context ? { context } : {})}/> : <StatePanel kind="permission-denied"/> :
       context ? active === "dashboard" ? <Dashboard api={api}/> : <ModuleWorkspace api={api} active={active}/> :
       <StatePanel kind={administrativePage ? "permission-denied" : "not-available"} detail={uiText.tenant.selectDetail}/>}
   </main></div>{menu && <button className="sidebar-scrim" aria-label={uiText.navigation.close} onClick={() => setMenu(false)}/>}</div>;

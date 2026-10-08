@@ -1,0 +1,43 @@
+{
+  "configurationProof": {
+    "runtimeConfigEquality": "PASS",
+    "runtimeFunctionalConfigComparison": "PASS",
+    "ociProvenanceAllowlist": [
+      "org.opencontainers.image.source"
+    ],
+    "ociProvenanceAllowlistMatch": true,
+    "ociSourceLabelDifference": "ALLOWED_PROVENANCE_METADATA",
+    "ociAllowedProvenanceDifferences": [
+      {
+        "key": "org.opencontainers.image.source",
+        "beforePresent": false,
+        "afterPresent": true,
+        "classification": "SAFE_PUBLIC_PROVENANCE",
+        "value": "https://github.com/Tecdex-SpA/tcdx-grc"
+      }
+    ],
+    "otherLabelDifferences": 0,
+    "otherLabelDifferenceKeys": [],
+    "unapprovedConfigDifferences": 0,
+    "unapprovedConfigDifferenceFields": [],
+    "allOtherLabelsComparedExactly": true,
+    "rawEnvironmentEqualInMemory": true,
+    "hostConfigurationExact": true,
+    "mountsExact": true,
+    "networkSemanticsExact": true,
+    "rawConfigurationPersisted": false
+  },
+  "state": {
+    "name": "tcdx-grc-frontend",
+    "containerId": "5b03cf40b375c2b6dfb7ae9826aa55f8877069e1922b41012b55f9a75e7c1eb1",
+    "imageId": "sha256:1d34a78b51eeed798620adc4375a39242d6d7009f4155e126de9850cf4de3973",
+    "imageRef": "sha256:1d34a78b51eeed798620adc4375a39242d6d7009f4155e126de9850cf4de3973",
+    "running": true,
+    "health": "healthy",
+    "restartCount": 0,
+    "startedAt": "2026-10-07T20:23:35.659002574Z",
+    "runtimeUid": 1000,
+    "mountMetadata": []
+  },
+  "rollbackStillRetained": true
+}

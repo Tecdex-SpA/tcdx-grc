@@ -312,9 +312,10 @@ describe("Phase 5 controlAssessmentSubmit", () => {
     const definition = mutations.get("controlAssessmentSubmit")!;
     let update: Query | undefined;
     const database = executor((query) => {
-      if (query.sql.includes("FROM controls.control_assessments t")) return { rows: [{ control_assessment_id: targetId, control_id: evidenceVersionId, row_version: 1, lifecycle_state: "in_progress", tenant_id: tenantId, created_at: new Date(), created_by_user_identity_id: actorId }] };
+      if (query.sql.includes("FROM controls.control_assessments t")) return { rows: [{ control_assessment_id: targetId, methodology_version_ref: targetId, control_id: evidenceVersionId, row_version: 1, lifecycle_state: "in_progress", tenant_id: tenantId, created_at: new Date(), created_by_user_identity_id: actorId }] };
+      if (query.sql.includes("FROM controls.control_effectiveness_methodologies")) return { rows: [{ methodology_version_ref: targetId, minimum_coverage: 80, version_number: 1 }] };
       if (query.sql.includes("current_edges")) return { rows: [{ to_state: "completed", audit_event_code: definition.auditEvent, sod_policy_ref: "contract:default-deny-sod:v1", scope_kind: "tenant" }] };
-      if (query.sql.startsWith("UPDATE controls.control_assessments")) { update = query; return { rows: [{ control_assessment_id: targetId, row_version: 2, lifecycle_state: "completed" }] }; }
+      if (query.sql.startsWith("UPDATE controls.control_assessments")) { update = query; return { rows: [{ control_assessment_id: targetId, methodology_version_ref: targetId, row_version: 2, lifecycle_state: "completed" }] }; }
       throw new Error(`Unexpected SQL: ${query.sql}`);
     });
     await definition.execute({ transaction: database, actor: actorFor(definition), targetId, body: { expected_version: 1, result_status: "valid", domain_conclusion: "partially_effective", design_effectiveness: 65, operating_effectiveness: 80, coverage_percent: 90 } });
@@ -333,7 +334,8 @@ describe("Phase 5 controlAssessmentSubmit", () => {
 
     let updated = false;
     const incomplete = executor((query) => {
-      if (query.sql.includes("FROM controls.control_assessments t")) return { rows: [{ control_assessment_id: targetId, row_version: 1, lifecycle_state: "in_progress", tenant_id: tenantId, created_at: new Date(), created_by_user_identity_id: actorId }] };
+      if (query.sql.includes("FROM controls.control_assessments t")) return { rows: [{ control_assessment_id: targetId, methodology_version_ref: targetId, row_version: 1, lifecycle_state: "in_progress", tenant_id: tenantId, created_at: new Date(), created_by_user_identity_id: actorId }] };
+      if (query.sql.includes("FROM controls.control_effectiveness_methodologies")) return { rows: [{ methodology_version_ref: targetId, minimum_coverage: 80, version_number: 1 }] };
       if (query.sql.includes("current_edges")) return { rows: [{ to_state: "completed", audit_event_code: definition.auditEvent, sod_policy_ref: "none", scope_kind: "tenant" }] };
       if (query.sql.startsWith("UPDATE")) updated = true;
       return { rows: [] };
@@ -350,7 +352,8 @@ describe("Phase 5 controlAssessmentSubmit", () => {
       .rejects.toSatisfy((error: unknown) => code(error) === "TCDX.RESOURCE.NOT_FOUND");
 
     const invalidState = executor((query) => {
-      if (query.sql.includes("FROM controls.control_assessments t")) return { rows: [{ control_assessment_id: targetId, row_version: 2, lifecycle_state: "completed", tenant_id: tenantId, created_at: new Date(), created_by_user_identity_id: actorId }] };
+      if (query.sql.includes("FROM controls.control_assessments t")) return { rows: [{ control_assessment_id: targetId, methodology_version_ref: targetId, row_version: 2, lifecycle_state: "completed", tenant_id: tenantId, created_at: new Date(), created_by_user_identity_id: actorId }] };
+      if (query.sql.includes("FROM controls.control_effectiveness_methodologies")) return { rows: [{ methodology_version_ref: targetId, minimum_coverage: 80, version_number: 1 }] };
       if (query.sql.includes("current_edges")) return { rows: [{ to_state: "completed", audit_event_code: definition.auditEvent, sod_policy_ref: "none", scope_kind: "tenant" }] };
       if (query.sql.startsWith("UPDATE controls.control_assessments")) return { rows: [] };
       if (query.sql.startsWith("SELECT row_version,lifecycle_state FROM controls.control_assessments")) return { rows: [{ row_version: 2, lifecycle_state: "completed" }] };

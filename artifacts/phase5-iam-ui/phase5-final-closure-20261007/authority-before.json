@@ -1,0 +1,1019 @@
+{
+  "extra": {
+    "ceremony": {
+      "configurationAudit": [
+        {
+          "id": "6c691f05-eeb5-493a-a61f-491217f713e7",
+          "operation_type": "UPDATE",
+          "resource_type": "AUTHENTICATOR_CONFIG",
+          "resource_path": "authentication/config/e4314ecd-37b9-460d-a398-cc94288d3bd8",
+          "occurred_at": "2026-10-07T21:31:05.014Z",
+          "error": null,
+          "representation_absent": true
+        },
+        {
+          "id": "b7e0bd48-8ef8-4723-82e4-ab4a0ecb0a95",
+          "operation_type": "UPDATE",
+          "resource_type": "AUTHENTICATOR_CONFIG",
+          "resource_path": "authentication/config/d9d5e547-7f43-4e7e-8087-755fd9486281",
+          "occurred_at": "2026-10-07T21:31:16.171Z",
+          "error": null,
+          "representation_absent": true
+        },
+        {
+          "id": "c14709a5-4f86-4432-b110-4a39ff7a7b3a",
+          "operation_type": "UPDATE",
+          "resource_type": "AUTHENTICATOR_CONFIG",
+          "resource_path": "authentication/config/d9d5e547-7f43-4e7e-8087-755fd9486281",
+          "occurred_at": "2026-10-07T21:31:39.367Z",
+          "error": null,
+          "representation_absent": true
+        },
+        {
+          "id": "581aa28a-c501-4a8d-85f8-db2ffa2896c6",
+          "operation_type": "UPDATE",
+          "resource_type": "AUTHENTICATOR_CONFIG",
+          "resource_path": "authentication/config/e4314ecd-37b9-460d-a398-cc94288d3bd8",
+          "occurred_at": "2026-10-07T21:31:43.772Z",
+          "error": null,
+          "representation_absent": true
+        }
+      ],
+      "technicalPrincipalState": [
+        {
+          "username": "andres.barouh",
+          "enabled": true,
+          "machine_principal": false
+        },
+        {
+          "username": "service-account-tcdx-grc-managed-identity-provisioner",
+          "enabled": true,
+          "machine_principal": true
+        },
+        {
+          "username": "tcdx-iam-bootstrap",
+          "enabled": false,
+          "machine_principal": false
+        }
+      ],
+      "technicalRoles": [
+        {
+          "username": "andres.barouh",
+          "name": "admin"
+        },
+        {
+          "username": "andres.barouh",
+          "name": "default-roles-master"
+        },
+        {
+          "username": "service-account-tcdx-grc-managed-identity-provisioner",
+          "name": "default-roles-tcdx-managed-identity"
+        },
+        {
+          "username": "service-account-tcdx-grc-managed-identity-provisioner",
+          "name": "query-users"
+        },
+        {
+          "username": "tcdx-iam-bootstrap",
+          "name": "admin"
+        },
+        {
+          "username": "tcdx-iam-bootstrap",
+          "name": "default-roles-master"
+        }
+      ],
+      "executionReferenceCheck": [
+        {
+          "authenticator": "auth-otp-form",
+          "amr_reference": "otp",
+          "verified_execution_present": true
+        },
+        {
+          "authenticator": "auth-username-password-form",
+          "amr_reference": "pwd",
+          "verified_execution_present": true
+        }
+      ],
+      "clientAttributesPublic": [],
+      "factorExecution": [
+        {
+          "completed_factor_references": "{\"3cfc23fa-5d4b-4e80-ac27-89b12b4957aa\":1791410927,\"7798570f-9c45-4840-93b6-1668b0fec195\":1791410949}",
+          "authentication_time": "1791410949"
+        }
+      ],
+      "safeClientNotes": [
+        {
+          "issuer": "https://iam.grc.tecdex.net/realms/tcdx-managed-identity",
+          "client_id": "d3c7bcb1-6b5f-4574-be1f-bacd230722b8",
+          "redirect_uri": "https://grc.tecdex.net/auth/callback",
+          "challenge_method": "S256",
+          "response_type": "code",
+          "nonce_present": true,
+          "state_present": true,
+          "challenge_present": true
+        }
+      ],
+      "authTimeMapper": [
+        {
+          "name": "auth_time",
+          "protocol_mapper_name": "oidc-usersessionmodel-note-mapper",
+          "config_name": "access.token.claim",
+          "value": "true"
+        },
+        {
+          "name": "auth_time",
+          "protocol_mapper_name": "oidc-usersessionmodel-note-mapper",
+          "config_name": "claim.name",
+          "value": "auth_time"
+        },
+        {
+          "name": "auth_time",
+          "protocol_mapper_name": "oidc-usersessionmodel-note-mapper",
+          "config_name": "id.token.claim",
+          "value": "true"
+        },
+        {
+          "name": "auth_time",
+          "protocol_mapper_name": "oidc-usersessionmodel-note-mapper",
+          "config_name": "introspection.token.claim",
+          "value": "true"
+        },
+        {
+          "name": "auth_time",
+          "protocol_mapper_name": "oidc-usersessionmodel-note-mapper",
+          "config_name": "jsonType.label",
+          "value": "long"
+        },
+        {
+          "name": "auth_time",
+          "protocol_mapper_name": "oidc-usersessionmodel-note-mapper",
+          "config_name": "user.session.note",
+          "value": "AUTH_TIME"
+        }
+      ],
+      "scopeLinks": [
+        {
+          "name": "acr",
+          "default_scope": true
+        },
+        {
+          "name": "address",
+          "default_scope": false
+        },
+        {
+          "name": "basic",
+          "default_scope": true
+        },
+        {
+          "name": "microprofile-jwt",
+          "default_scope": false
+        },
+        {
+          "name": "offline_access",
+          "default_scope": false
+        },
+        {
+          "name": "organization",
+          "default_scope": false
+        },
+        {
+          "name": "phone",
+          "default_scope": false
+        },
+        {
+          "name": "tcdx-managed-identity-amr",
+          "default_scope": true
+        }
+      ],
+      "userSessionMetadata": [
+        {
+          "created_on": 1791410949,
+          "last_session_refresh": 1791410949,
+          "offline_flag": "0",
+          "safe_top_level_keys": [
+            "notes",
+            "state",
+            "started",
+            "ipAddress",
+            "authMethod",
+            "rememberMe"
+          ],
+          "safe_note_keys": [
+            "AUTH_TIME",
+            "KC_DEVICE_NOTE",
+            "authenticators-completed"
+          ]
+        }
+      ],
+      "clientSessionMetadata": [
+        {
+          "offline_flag": "0",
+          "timestamp": 1791410949,
+          "safe_top_level_keys": [
+            "notes",
+            "authMethod",
+            "redirectUri"
+          ],
+          "safe_note_keys": [
+            "iss",
+            "nonce",
+            "scope",
+            "state",
+            "clientId",
+            "startedAt",
+            "redirect_uri",
+            "response_type",
+            "code_challenge",
+            "userSessionStartedAt",
+            "code_challenge_method",
+            "level-of-authentication"
+          ]
+        }
+      ],
+      "humanEvents": [
+        {
+          "id": "de71ea82-6069-4a78-b463-f371d5061c72",
+          "type": "UPDATE_TOTP",
+          "occurred_at": "2026-10-07T21:04:46.765Z",
+          "error": null,
+          "client_id": "tcdx-grc",
+          "auth_method": null,
+          "response_type": null,
+          "redirect_uri": null,
+          "grant_type": null
+        },
+        {
+          "id": "30ded678-1bc9-43cc-843f-b055235e5581",
+          "type": "UPDATE_CREDENTIAL",
+          "occurred_at": "2026-10-07T21:04:46.766Z",
+          "error": null,
+          "client_id": "tcdx-grc",
+          "auth_method": null,
+          "response_type": null,
+          "redirect_uri": null,
+          "grant_type": null
+        },
+        {
+          "id": "33f43ceb-6491-44c6-874c-1eba34584e0c",
+          "type": "UPDATE_PASSWORD",
+          "occurred_at": "2026-10-07T21:05:12.445Z",
+          "error": null,
+          "client_id": "tcdx-grc",
+          "auth_method": null,
+          "response_type": null,
+          "redirect_uri": null,
+          "grant_type": null
+        },
+        {
+          "id": "2550b8ca-4974-4815-b1bc-f00c6f11fa7f",
+          "type": "UPDATE_CREDENTIAL",
+          "occurred_at": "2026-10-07T21:05:12.446Z",
+          "error": null,
+          "client_id": "tcdx-grc",
+          "auth_method": null,
+          "response_type": null,
+          "redirect_uri": null,
+          "grant_type": null
+        },
+        {
+          "id": "b12cbbd9-a0a8-4c56-baf5-f1c68dbf61c9",
+          "type": "VERIFY_PROFILE",
+          "occurred_at": "2026-10-07T21:05:12.520Z",
+          "error": null,
+          "client_id": "tcdx-grc",
+          "auth_method": null,
+          "response_type": null,
+          "redirect_uri": null,
+          "grant_type": null
+        },
+        {
+          "id": "39483696-e74a-47ed-a097-1808e05239a0",
+          "type": "UPDATE_PROFILE",
+          "occurred_at": "2026-10-07T21:05:28.042Z",
+          "error": null,
+          "client_id": "tcdx-grc",
+          "auth_method": null,
+          "response_type": null,
+          "redirect_uri": null,
+          "grant_type": null
+        },
+        {
+          "id": "b36ab550-39de-4aa4-a687-1bb7421ae774",
+          "type": "LOGIN",
+          "occurred_at": "2026-10-07T21:05:28.110Z",
+          "error": null,
+          "client_id": "tcdx-grc",
+          "auth_method": null,
+          "response_type": null,
+          "redirect_uri": null,
+          "grant_type": null
+        },
+        {
+          "id": "06a71149-da54-4ff8-a1c4-ba40053ad281",
+          "type": "CODE_TO_TOKEN",
+          "occurred_at": "2026-10-07T21:05:28.499Z",
+          "error": null,
+          "client_id": "tcdx-grc",
+          "auth_method": null,
+          "response_type": null,
+          "redirect_uri": null,
+          "grant_type": null
+        },
+        {
+          "id": "d0390026-1df9-4cdd-9b3b-37b858eee22c",
+          "type": "LOGIN",
+          "occurred_at": "2026-10-07T21:06:07.685Z",
+          "error": null,
+          "client_id": "tcdx-grc",
+          "auth_method": null,
+          "response_type": null,
+          "redirect_uri": null,
+          "grant_type": null
+        },
+        {
+          "id": "6f55ec2d-a60d-40b6-a493-266d2a2a5ed7",
+          "type": "CODE_TO_TOKEN",
+          "occurred_at": "2026-10-07T21:06:07.895Z",
+          "error": null,
+          "client_id": "tcdx-grc",
+          "auth_method": null,
+          "response_type": null,
+          "redirect_uri": null,
+          "grant_type": null
+        },
+        {
+          "id": "4fb8e29c-1077-4bf2-9188-b2dbbd93167d",
+          "type": "LOGIN",
+          "occurred_at": "2026-10-07T22:09:09.030Z",
+          "error": null,
+          "client_id": "tcdx-grc",
+          "auth_method": null,
+          "response_type": null,
+          "redirect_uri": null,
+          "grant_type": null
+        },
+        {
+          "id": "881aebd2-9835-4371-a710-49bc11c1436e",
+          "type": "CODE_TO_TOKEN",
+          "occurred_at": "2026-10-07T22:09:09.091Z",
+          "error": null,
+          "client_id": "tcdx-grc",
+          "auth_method": null,
+          "response_type": null,
+          "redirect_uri": null,
+          "grant_type": null
+        }
+      ],
+      "metadataColumns": [
+        {
+          "table_name": "offline_client_session",
+          "column_name": "user_session_id",
+          "data_type": "character varying"
+        },
+        {
+          "table_name": "offline_client_session",
+          "column_name": "client_id",
+          "data_type": "character varying"
+        },
+        {
+          "table_name": "offline_client_session",
+          "column_name": "offline_flag",
+          "data_type": "character varying"
+        },
+        {
+          "table_name": "offline_client_session",
+          "column_name": "timestamp",
+          "data_type": "integer"
+        },
+        {
+          "table_name": "offline_client_session",
+          "column_name": "data",
+          "data_type": "text"
+        },
+        {
+          "table_name": "offline_client_session",
+          "column_name": "client_storage_provider",
+          "data_type": "character varying"
+        },
+        {
+          "table_name": "offline_client_session",
+          "column_name": "external_client_id",
+          "data_type": "character varying"
+        },
+        {
+          "table_name": "offline_client_session",
+          "column_name": "version",
+          "data_type": "integer"
+        },
+        {
+          "table_name": "offline_client_session",
+          "column_name": "realm_id",
+          "data_type": "character varying"
+        },
+        {
+          "table_name": "offline_user_session",
+          "column_name": "user_session_id",
+          "data_type": "character varying"
+        },
+        {
+          "table_name": "offline_user_session",
+          "column_name": "user_id",
+          "data_type": "character varying"
+        },
+        {
+          "table_name": "offline_user_session",
+          "column_name": "realm_id",
+          "data_type": "character varying"
+        },
+        {
+          "table_name": "offline_user_session",
+          "column_name": "created_on",
+          "data_type": "integer"
+        },
+        {
+          "table_name": "offline_user_session",
+          "column_name": "offline_flag",
+          "data_type": "character varying"
+        },
+        {
+          "table_name": "offline_user_session",
+          "column_name": "data",
+          "data_type": "text"
+        },
+        {
+          "table_name": "offline_user_session",
+          "column_name": "last_session_refresh",
+          "data_type": "integer"
+        },
+        {
+          "table_name": "offline_user_session",
+          "column_name": "broker_session_id",
+          "data_type": "character varying"
+        },
+        {
+          "table_name": "offline_user_session",
+          "column_name": "version",
+          "data_type": "integer"
+        },
+        {
+          "table_name": "offline_user_session",
+          "column_name": "remember_me",
+          "data_type": "boolean"
+        }
+      ],
+      "deniedAudits": [
+        {
+          "audit_event_id": "01a11869-cc11-719c-9f5d-2bfb322f3b82",
+          "event_code": "audit.iam.application_token.issue.v1",
+          "command_code": "oidc.session.establish",
+          "occurred_at": "2026-10-07T22:09:09.127Z",
+          "outcome": "success",
+          "correlation_id": "01a11869-cbc5-73ef-a79e-d826c70d1e9f"
+        }
+      ],
+      "currentActions": [],
+      "otp": 1,
+      "enabled": true,
+      "lastAuthenticated": "2026-10-07T22:09:09.127Z"
+    },
+    "humanTest": {
+      "username": "admin.acme",
+      "displayName": "Administrador Acme 2",
+      "keycloakExactlyOne": true,
+      "identityExactlyOne": true,
+      "issuerSubjectMappingExact": true,
+      "identityActive": true,
+      "enabled": true,
+      "canonicalIdentityId": "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+      "memberships": [
+        {
+          "tenant_membership_id": "01a11815-66e4-7334-96a8-2cf0a6b8c155",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "user_identity_id": "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+          "membership_state": "active",
+          "joined_at": "2026-10-07T20:36:58.210Z",
+          "ended_at": null,
+          "tenant_name": "TecDex",
+          "tenant_code": "TECDEX",
+          "tenant_state": "active"
+        },
+        {
+          "tenant_membership_id": "01a11820-b06a-714a-9d8c-ac3d982e492c",
+          "tenant_id": "01a11820-ae9f-7485-93e5-942eaec71121",
+          "user_identity_id": "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+          "membership_state": "active",
+          "joined_at": "2026-10-07T20:49:17.492Z",
+          "ended_at": null,
+          "tenant_name": "ACME 2",
+          "tenant_code": "ACME 2",
+          "tenant_state": "active"
+        }
+      ],
+      "roleAssignments": [
+        {
+          "membership_role_id": "01a11815-6721-7467-9a56-1270bb4c3c63",
+          "tenant_membership_id": "01a11815-66e4-7334-96a8-2cf0a6b8c155",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "role_id": "01a0cfc7-0ce2-7022-9af0-26c668c7c385",
+          "valid_from": "2026-10-07T20:36:58.271Z",
+          "valid_to": null,
+          "scope_kind": "tenant",
+          "role_code": "VIEWER",
+          "role_name": "Viewer",
+          "ownership_class": "TENANT_OWNED",
+          "lifecycle_state": "published",
+          "role_tenant": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9"
+        },
+        {
+          "membership_role_id": "01a11820-b06d-7245-8a85-36b4220124e5",
+          "tenant_membership_id": "01a11820-b06a-714a-9d8c-ac3d982e492c",
+          "tenant_id": "01a11820-ae9f-7485-93e5-942eaec71121",
+          "role_id": "01a11820-aee9-74e6-a214-7c70d71377d6",
+          "valid_from": "2026-10-07T20:49:17.492Z",
+          "valid_to": null,
+          "scope_kind": "tenant",
+          "role_code": "TENANT_ADMIN",
+          "role_name": "Tenant Admin",
+          "ownership_class": "TENANT_OWNED",
+          "lifecycle_state": "published",
+          "role_tenant": "01a11820-ae9f-7485-93e5-942eaec71121"
+        }
+      ],
+      "actorNoNewTenantAuthority": [
+        {
+          "n": 0
+        }
+      ],
+      "allHumanTestAudit": 13,
+      "acmeRow": [
+        {
+          "tenant_id": "01a1137a-1351-76b8-ac8a-0bb109ca8e22",
+          "nonsecret_row_fingerprint": "2245daa8a30ef2cd00db1e41a32e864f"
+        }
+      ],
+      "originalTenantFingerprint": [
+        {
+          "rows": 2,
+          "nonsecret_fingerprint": "8be8b8f429a947e820c3c63e19c02829"
+        }
+      ],
+      "platformAssignments": 0,
+      "audit": [
+        {
+          "audit_event_id": "01a117cf-4da7-776c-bae7-3e1cba32df1f",
+          "event_code": "audit.platform.managed_identity.provision.v1",
+          "command_code": "managedIdentityProvision",
+          "aggregate_type": "UserIdentity",
+          "aggregate_id": "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+          "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "tenant_id": null,
+          "ownership_class": "PLATFORM_CONTROL",
+          "correlation_id": "01a117cf-4a3b-7132-875e-f4196f2b0672",
+          "occurred_at": "2026-10-07T19:20:23.436Z",
+          "outcome": "success",
+          "target_tenant": null,
+          "target_identity": null
+        },
+        {
+          "audit_event_id": "01a11815-66e6-7200-97c6-69e5a452ac5f",
+          "event_code": "audit.platform.membership.create.v1",
+          "command_code": "tenantUserOnboardingCreate",
+          "aggregate_type": "TenantMembership",
+          "aggregate_id": "01a11815-66e4-7334-96a8-2cf0a6b8c155",
+          "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "ownership_class": "TENANT_OWNED",
+          "correlation_id": "01a11815-66cd-7201-866c-fb8a5100e400",
+          "occurred_at": "2026-10-07T20:36:58.195Z",
+          "outcome": "success",
+          "target_tenant": null,
+          "target_identity": "01a117cf-4da2-7075-a9b4-c05b8df90d1d"
+        },
+        {
+          "audit_event_id": "01a11815-6724-750d-b987-115668d72f38",
+          "event_code": "audit.platform.role.assign.v1",
+          "command_code": "tenantUserOnboardingCreate",
+          "aggregate_type": "MembershipRole",
+          "aggregate_id": "01a11815-6721-7467-9a56-1270bb4c3c63",
+          "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "ownership_class": "TENANT_OWNED",
+          "correlation_id": "01a11815-66cd-7201-866c-fb8a5100e400",
+          "occurred_at": "2026-10-07T20:36:58.256Z",
+          "outcome": "success",
+          "target_tenant": null,
+          "target_identity": null
+        },
+        {
+          "audit_event_id": "01a11815-675d-7386-9688-0b0ca5ad495c",
+          "event_code": "audit.platform.tenant_user.onboard.v1",
+          "command_code": "tenantUserOnboardingCreate",
+          "aggregate_type": "TenantMembership",
+          "aggregate_id": "01a11815-66e4-7334-96a8-2cf0a6b8c155",
+          "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "tenant_id": null,
+          "ownership_class": "PLATFORM_CONTROL",
+          "correlation_id": "01a11815-66cd-7201-866c-fb8a5100e400",
+          "occurred_at": "2026-10-07T20:36:58.317Z",
+          "outcome": "success",
+          "target_tenant": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "target_identity": "01a117cf-4da2-7075-a9b4-c05b8df90d1d"
+        },
+        {
+          "audit_event_id": "01a11815-675e-71dd-bf7c-7f4c5af82ba5",
+          "event_code": "audit.iam.application_token.privileged_use.v1",
+          "command_code": "tenantUserOnboardingCreate",
+          "aggregate_type": "TenantMembership",
+          "aggregate_id": "01a11815-66e4-7334-96a8-2cf0a6b8c155",
+          "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "tenant_id": null,
+          "ownership_class": "PLATFORM_CONTROL",
+          "correlation_id": "01a11815-66cd-7201-866c-fb8a5100e400",
+          "occurred_at": "2026-10-07T20:36:58.317Z",
+          "outcome": "success",
+          "target_tenant": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "target_identity": "01a117cf-4da2-7075-a9b4-c05b8df90d1d"
+        },
+        {
+          "audit_event_id": "01a11816-3d54-716c-bbe5-a0f405193672",
+          "event_code": "audit.platform.tenant_user.onboard.v1",
+          "command_code": "tenantUserOnboardingCreate",
+          "aggregate_type": "TenantMembership",
+          "aggregate_id": "01a11815-66e4-7334-96a8-2cf0a6b8c155",
+          "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "tenant_id": null,
+          "ownership_class": "PLATFORM_CONTROL",
+          "correlation_id": "01a11816-3cf7-7737-958f-a1d71fba9915",
+          "occurred_at": "2026-10-07T20:37:53.093Z",
+          "outcome": "success",
+          "target_tenant": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "target_identity": "01a117cf-4da2-7075-a9b4-c05b8df90d1d"
+        },
+        {
+          "audit_event_id": "01a11816-3d57-7772-95a3-65c415b8dd3b",
+          "event_code": "audit.iam.application_token.privileged_use.v1",
+          "command_code": "tenantUserOnboardingCreate",
+          "aggregate_type": "TenantMembership",
+          "aggregate_id": "01a11815-66e4-7334-96a8-2cf0a6b8c155",
+          "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "tenant_id": null,
+          "ownership_class": "PLATFORM_CONTROL",
+          "correlation_id": "01a11816-3cf7-7737-958f-a1d71fba9915",
+          "occurred_at": "2026-10-07T20:37:53.093Z",
+          "outcome": "success",
+          "target_tenant": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "target_identity": "01a117cf-4da2-7075-a9b4-c05b8df90d1d"
+        },
+        {
+          "audit_event_id": "01a11820-b070-7208-b4d5-29ed6feed4bf",
+          "event_code": "audit.platform.tenant_initial_onboarding.create.v1",
+          "command_code": "tenantInitialOnboardingCreate",
+          "aggregate_type": "Tenant",
+          "aggregate_id": "01a11820-ae9f-7485-93e5-942eaec71121",
+          "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "tenant_id": null,
+          "ownership_class": "PLATFORM_CONTROL",
+          "correlation_id": "01a11820-ae6f-767c-996e-003f7a4d3db3",
+          "occurred_at": "2026-10-07T20:49:17.492Z",
+          "outcome": "success",
+          "target_tenant": "01a11820-ae9f-7485-93e5-942eaec71121",
+          "target_identity": "01a117cf-4da2-7075-a9b4-c05b8df90d1d"
+        }
+      ],
+      "auditSecretFields": 0,
+      "keycloakAudit": [
+        {
+          "id": "cc2e8f6c-8928-469f-85ef-ffdbdc3b6925",
+          "operation_type": "CREATE",
+          "resource_type": "USER",
+          "resource_path": "users/d95851e5-f62c-4230-b827-9686f29f3379",
+          "occurred_at": "2026-10-07T19:20:23.693Z",
+          "error": null,
+          "representation_absent": true
+        },
+        {
+          "id": "d01e4019-fded-4382-a2b1-d36d5900c922",
+          "operation_type": "ACTION",
+          "resource_type": "USER",
+          "resource_path": "users/d95851e5-f62c-4230-b827-9686f29f3379/reset-password",
+          "occurred_at": "2026-10-07T19:20:24.198Z",
+          "error": null,
+          "representation_absent": true
+        },
+        {
+          "id": "359ca0f1-9cc0-4838-820a-5b10a87b61dc",
+          "operation_type": "ACTION",
+          "resource_type": "USER",
+          "resource_path": "users/d95851e5-f62c-4230-b827-9686f29f3379/logout",
+          "occurred_at": "2026-10-07T19:32:29.550Z",
+          "error": null,
+          "representation_absent": true
+        },
+        {
+          "id": "9027171c-959c-4f48-9986-0a097efecad3",
+          "operation_type": "UPDATE",
+          "resource_type": "USER",
+          "resource_path": "users/d95851e5-f62c-4230-b827-9686f29f3379",
+          "occurred_at": "2026-10-07T19:32:38.577Z",
+          "error": null,
+          "representation_absent": true
+        },
+        {
+          "id": "f1d7a681-7cb0-4af7-9d52-76c92bb0765d",
+          "operation_type": "ACTION",
+          "resource_type": "USER",
+          "resource_path": "users/d95851e5-f62c-4230-b827-9686f29f3379/logout",
+          "occurred_at": "2026-10-07T19:32:38.631Z",
+          "error": null,
+          "representation_absent": true
+        },
+        {
+          "id": "9f45fef3-27d3-4f43-83dd-a9ff7cdb8638",
+          "operation_type": "UPDATE",
+          "resource_type": "USER",
+          "resource_path": "users/d95851e5-f62c-4230-b827-9686f29f3379",
+          "occurred_at": "2026-10-07T20:36:48.191Z",
+          "error": null,
+          "representation_absent": true
+        }
+      ]
+    },
+    "iam": {
+      "mapperConfig": [
+        {
+          "name": "access.token.claim",
+          "value": "false"
+        },
+        {
+          "name": "id.token.claim",
+          "value": "true"
+        }
+      ],
+      "amrScope": [
+        {
+          "name": "tcdx-managed-identity-amr",
+          "default_scope": true
+        }
+      ],
+      "webOrigins": [],
+      "actorGrants": [
+        {
+          "n": 1
+        }
+      ],
+      "attributes": [
+        {
+          "n": 0
+        }
+      ],
+      "client": [
+        {
+          "id": "d3c7bcb1-6b5f-4574-be1f-bacd230722b8",
+          "client_id": "tcdx-grc",
+          "enabled": true,
+          "public_client": false,
+          "bearer_only": false,
+          "protocol": "openid-connect",
+          "service_accounts_enabled": false,
+          "client_authenticator_type": "client-secret",
+          "standard_flow_enabled": true,
+          "implicit_flow_enabled": false,
+          "direct_access_grants_enabled": false
+        }
+      ],
+      "clientAttrs": [
+        {
+          "name": "pkce.code.challenge.method",
+          "value": "S256"
+        }
+      ],
+      "redirects": [
+        {
+          "value": "https://grc.tecdex.net/auth/callback"
+        }
+      ],
+      "flow": [
+        {
+          "id": "6f55b0d7-7a37-4b0b-9f5c-9feceac3a914",
+          "alias": "tcdx-browser-password-totp"
+        }
+      ],
+      "executions": [
+        {
+          "flow_alias": "tcdx-browser-password-totp",
+          "depth": 0,
+          "authenticator": "auth-cookie",
+          "requirement": 3,
+          "priority": 10,
+          "authenticator_flow": false
+        },
+        {
+          "flow_alias": "tcdx-browser-password-totp",
+          "depth": 0,
+          "authenticator": "auth-spnego",
+          "requirement": 3,
+          "priority": 20,
+          "authenticator_flow": false
+        },
+        {
+          "flow_alias": "tcdx-browser-password-totp",
+          "depth": 0,
+          "authenticator": "identity-provider-redirector",
+          "requirement": 3,
+          "priority": 25,
+          "authenticator_flow": false
+        },
+        {
+          "flow_alias": "tcdx-browser-password-totp",
+          "depth": 0,
+          "authenticator": null,
+          "requirement": 3,
+          "priority": 26,
+          "authenticator_flow": true
+        },
+        {
+          "flow_alias": "tcdx-browser-password-totp",
+          "depth": 0,
+          "authenticator": null,
+          "requirement": 0,
+          "priority": 30,
+          "authenticator_flow": true
+        },
+        {
+          "flow_alias": "tcdx-browser-password-totp forms",
+          "depth": 1,
+          "authenticator": "auth-username-password-form",
+          "requirement": 0,
+          "priority": 10,
+          "authenticator_flow": false
+        },
+        {
+          "flow_alias": "tcdx-browser-password-totp forms",
+          "depth": 1,
+          "authenticator": null,
+          "requirement": 0,
+          "priority": 20,
+          "authenticator_flow": true
+        },
+        {
+          "flow_alias": "tcdx-browser-password-totp Browser - Conditional 2FA",
+          "depth": 2,
+          "authenticator": "conditional-user-configured",
+          "requirement": 3,
+          "priority": 10,
+          "authenticator_flow": false
+        },
+        {
+          "flow_alias": "tcdx-browser-password-totp Browser - Conditional 2FA",
+          "depth": 2,
+          "authenticator": "conditional-credential",
+          "requirement": 3,
+          "priority": 20,
+          "authenticator_flow": false
+        },
+        {
+          "flow_alias": "tcdx-browser-password-totp Browser - Conditional 2FA",
+          "depth": 2,
+          "authenticator": "auth-otp-form",
+          "requirement": 0,
+          "priority": 30,
+          "authenticator_flow": false
+        },
+        {
+          "flow_alias": "tcdx-browser-password-totp Browser - Conditional 2FA",
+          "depth": 2,
+          "authenticator": "webauthn-authenticator",
+          "requirement": 3,
+          "priority": 40,
+          "authenticator_flow": false
+        },
+        {
+          "flow_alias": "tcdx-browser-password-totp Browser - Conditional 2FA",
+          "depth": 2,
+          "authenticator": "auth-recovery-authn-code-form",
+          "requirement": 3,
+          "priority": 50,
+          "authenticator_flow": false
+        }
+      ],
+      "authConfig": [
+        {
+          "authenticator": "auth-username-password-form",
+          "name": "default.reference.maxAge",
+          "value": "600"
+        },
+        {
+          "authenticator": "auth-username-password-form",
+          "name": "default.reference.value",
+          "value": "pwd"
+        },
+        {
+          "authenticator": "conditional-credential",
+          "name": "credentials",
+          "value": "webauthn-passwordless"
+        },
+        {
+          "authenticator": "auth-otp-form",
+          "name": "default.reference.maxAge",
+          "value": "600"
+        },
+        {
+          "authenticator": "auth-otp-form",
+          "name": "default.reference.value",
+          "value": "otp"
+        }
+      ],
+      "mapper": [
+        {
+          "name": "address",
+          "protocol_mapper_name": "oidc-address-mapper"
+        },
+        {
+          "name": "phone number",
+          "protocol_mapper_name": "oidc-usermodel-attribute-mapper"
+        },
+        {
+          "name": "phone number verified",
+          "protocol_mapper_name": "oidc-usermodel-attribute-mapper"
+        },
+        {
+          "name": "upn",
+          "protocol_mapper_name": "oidc-usermodel-attribute-mapper"
+        },
+        {
+          "name": "groups",
+          "protocol_mapper_name": "oidc-usermodel-realm-role-mapper"
+        },
+        {
+          "name": "acr loa level",
+          "protocol_mapper_name": "oidc-acr-mapper"
+        },
+        {
+          "name": "auth_time",
+          "protocol_mapper_name": "oidc-usersessionmodel-note-mapper"
+        },
+        {
+          "name": "sub",
+          "protocol_mapper_name": "oidc-sub-mapper"
+        },
+        {
+          "name": "organization",
+          "protocol_mapper_name": "oidc-organization-membership-mapper"
+        },
+        {
+          "name": "tcdx-managed-identity-amr",
+          "protocol_mapper_name": "oidc-amr-mapper"
+        }
+      ],
+      "forbiddenRoles": [],
+      "userRoles": [
+        {
+          "name": "default-roles-tcdx-managed-identity",
+          "client_role": false
+        }
+      ]
+    }
+  },
+  "keycloakExactlyOne": true,
+  "grcIdentityExactlyOne": true,
+  "issuerSubjectMappingExact": true,
+  "realmSettings": [
+    {
+      "name": "master",
+      "enabled": true,
+      "login_theme": null,
+      "events_enabled": true,
+      "admin_events_enabled": true,
+      "admin_events_details_enabled": false
+    },
+    {
+      "name": "tcdx-managed-identity",
+      "enabled": true,
+      "login_theme": "tcdx-grc",
+      "events_enabled": true,
+      "admin_events_enabled": true,
+      "admin_events_details_enabled": false
+    }
+  ],
+  "capturedAt": "2026-10-07T22:27:34.027Z",
+  "exists": true,
+  "enabled": true,
+  "identityActive": true,
+  "platformAssignments": 1,
+  "activePlatformAdmin": 1,
+  "membership": 0,
+  "tenantRoles": 0,
+  "requiredActions": [],
+  "otp": 1,
+  "firstLoginRelatedEvents": 8,
+  "lastAuthenticatedNull": false,
+  "sessions": 1,
+  "readOnly": true,
+  "credentialContentsSelected": false,
+  "credentialHashesCaptured": false,
+  "preActivationPredicateMatched": false,
+  "pass": true,
+  "databaseConnection": "Existing IAM PostgreSQL principal over encrypted private SSH, READ ONLY transaction; no bearer token or human session",
+  "newAuthorityCreated": false,
+  "credentialValuesPrintedOrPersisted": false
+}

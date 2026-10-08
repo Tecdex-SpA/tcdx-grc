@@ -13,6 +13,7 @@ export interface ApplicationSessionStore {
   register(tokenId: string, principalId: string, expiresAt: Date): Promise<void>;
   isActive(tokenId: string, principalId: string, now: Date): Promise<boolean>;
   revoke(tokenId: string, principalId: string): Promise<void>;
+  revokePrincipal(principalId: string): Promise<void>;
 }
 
 /**
@@ -36,6 +37,10 @@ export class FailClosedMemorySessionStore implements ApplicationSessionStore {
     const session = this.sessions.get(tokenId);
     if (!session || session.principalId !== principalId) throw authenticationFailure();
     session.revoked = true;
+  }
+
+  async revokePrincipal(principalId: string): Promise<void> {
+    for (const session of this.sessions.values()) if (session.principalId === principalId) session.revoked = true;
   }
 }
 
@@ -120,5 +125,10 @@ export class ApplicationTokenService implements IdentityVerifier {
 
   async revoke(identity: VerifiedIdentity): Promise<void> {
     await this.sessions.revoke(identity.tokenId, identity.principalId);
+  }
+
+  async revokePrincipal(principalId: string): Promise<void> {
+    if (!validateUuid(principalId)) throw authenticationFailure();
+    await this.sessions.revokePrincipal(principalId);
   }
 }

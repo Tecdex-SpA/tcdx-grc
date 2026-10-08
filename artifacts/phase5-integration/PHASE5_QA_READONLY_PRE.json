@@ -1,0 +1,815 @@
+{
+  "capturedAt": "2026-10-08T11:48:48.267722+00:00",
+  "db": {
+    "identity": {
+      "database": "tcdx-grc",
+      "major": 16,
+      "read_only": "on",
+      "server": "192.168.2.40/32"
+    },
+    "migrations": 30,
+    "latest": "20261007000200",
+    "physicalTables": 237,
+    "publishedPermissions": 172,
+    "ledgerMatchesManifest": true,
+    "pendingIds": [],
+    "schemaSha256": "741f79e8aaefa0b8b0bb9080d6ddff2ace49ead11b00619f2008e8db53935080",
+    "schema": {
+      "schemas": {
+        "rows": 24,
+        "sha256": "ea3e7056d4f552b9919b9b4f1f628c0176644ff78cc407bb3aaa767e3ebbafd4"
+      },
+      "relations": {
+        "rows": 2422,
+        "sha256": "a8f77af2f5c10156e12abda2f6fb558a5ae53daaf32c6a8a10cf44dc6478753c"
+      },
+      "columns": {
+        "rows": 6426,
+        "sha256": "9678d73db61ac372cfbfc8db79752abbc4451f7525bc4344240917efd839eae6"
+      },
+      "constraints": {
+        "rows": 2782,
+        "sha256": "a2eece901d37ab1deb07ee27e237cb0db19759fd110e1e2fb29d5acc3a20e8a4"
+      },
+      "indexes": {
+        "rows": 2184,
+        "sha256": "5839fef6bc1f4cf39c45f42e94099831dec1178906af9f38de160366218d1cf7"
+      },
+      "sequences": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "functions": {
+        "rows": 204,
+        "sha256": "5f582cc1339b4fa90db8ef6b0545bf65fc3a27923d1d775c11cd2d5d36874308"
+      },
+      "triggers": {
+        "rows": 5372,
+        "sha256": "d94d0f2c45ee372813224a772b5d443a15326093a74f454e0fde3991bb091de0"
+      },
+      "views": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "policies": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "types": {
+        "rows": 488,
+        "sha256": "2c6c85e7c31ced70c29f66d96e60e646d7d1149c5c9d1a144c2698d8cc2658ee"
+      },
+      "enums": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    },
+    "ledger": [
+      {
+        "migration_id": "20260916000100",
+        "filename": "20260916000100_bootstrap_schemas_and_ledger.sql",
+        "content_sha256": "4f29910baacf82526fb06226c237024b7315038a4868baa7bbda56ced4779437",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260916000200",
+        "filename": "20260916000200_platform_iam_organization.sql",
+        "content_sha256": "08fce9d08e729f097095a10cfdfbf093c43f9d8cbfbee97d39594691f4ad8f29",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260916000300",
+        "filename": "20260916000300_normative_control_evidence.sql",
+        "content_sha256": "f300aac95b6fba36c09fc6ac77550bf574f953c0ee0ad374a8cbf6fdb338ef9f",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260916000400",
+        "filename": "20260916000400_risk_operations_privacy.sql",
+        "content_sha256": "a38d2a7babbe77d79783d66e8ce909916e967be739d3712f303e51883d85a81b",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260916000500",
+        "filename": "20260916000500_data_integration_reporting_ai.sql",
+        "content_sha256": "bac1e0a421a4d532eb2da27e4bc9453125cfa407a2e8da904c8749c726815764",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260916000600",
+        "filename": "20260916000600_constraints_and_uniqueness.sql",
+        "content_sha256": "7d079aa1234050b6dde06d9fb3cad939144fcbccdf287cc31bbe863c68899bf5",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260916000700",
+        "filename": "20260916000700_foreign_keys.sql",
+        "content_sha256": "d2112e4b402e8789312d5473969b615e6d7ab344a58a2211f790c4423dd4361f",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260916000800",
+        "filename": "20260916000800_required_indexes.sql",
+        "content_sha256": "d3502b9de76209b54b40497e6b9fdf94d463335d1f5441fb0fb924786648336e",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260916000900",
+        "filename": "20260916000900_canonical_seeds.sql",
+        "content_sha256": "94547ff1fa6a9accf56ff6f28be93afeb91b8c290ca9bb224667862c64c8c2e7",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260916001000",
+        "filename": "20260916001000_pre_f4_integrated_audit_model.sql",
+        "content_sha256": "c4247051c223960eb5ca817a0f85650dbc828a7864e48f66a1a73b1d298a224d",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260921000100",
+        "filename": "20260921000100_pre_f5c_executable_physical_reconciliation.sql",
+        "content_sha256": "1181d7ab26718927124de880e351fbaba3f2daaca41267a1ef66d28ac2021680",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260921000200",
+        "filename": "20260921000200_phase5_core_grc_runtime_permissions.sql",
+        "content_sha256": "8cc3d1b2a64a5b00ffd55f93ccfbcdfcde5406ffa9c1fa7f2d2055f505048eb0",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260923000100",
+        "filename": "20260923000100_pre_f5e_platform_authority.sql",
+        "content_sha256": "4ee0b3d24c7d7aa6ea87a8e9a6618cd2a7b164aedf1e3990590c3cf1b512ea82",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260923000200",
+        "filename": "20260923000200_phase5_final_closure.sql",
+        "content_sha256": "96a56b5669cd6e6fd0d751dc12526e3fe6ad2c612e77a8a7e144c847775be96c",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260924000100",
+        "filename": "20260924000100_phase5_subscription_create_catalog.sql",
+        "content_sha256": "a41efa51265d5f95a342674bdbac2faecf37ac31ac1c45aef47b394c7e380f2f",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260924000200",
+        "filename": "20260924000200_phase5_retention_policy_lifecycle.sql",
+        "content_sha256": "751ff47c9644b8d7134bb16148728a075e61af3057fa2a271e280a1fb1cd1728",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260924000300",
+        "filename": "20260924000300_phase5_membership_invitation.sql",
+        "content_sha256": "0942e5eb360f7157a444d7b04fbe7558312e8d782347e60a745a8d4365034806",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260925000100",
+        "filename": "20260925000100_phase5_membership_invitation_platform_authority_reconciliation.sql",
+        "content_sha256": "b66f88a19323d7a92465f6e61e762dffcf511eae55e53456d811c7912d3dad8a",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260928000100",
+        "filename": "20260928000100_phase5_administrative_read_permissions.sql",
+        "content_sha256": "d19c72ce5a0b9e5caa65d8b6b93daec1b2188dee54067551bb8ac3c8c7dcdd35",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260928000200",
+        "filename": "20260928000200_phase5_membership_role_revoke_platform_grant.sql",
+        "content_sha256": "d47e4fa07250092c5b8c063a60713528627acee864f93278b3c5f0ed5dd57cdc",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260928000300",
+        "filename": "20260928000300_phase5_control_assessment_start_tenant_scope.sql",
+        "content_sha256": "4e38ffe74d4c5324d16871228e65e800396d538f45aaf29b052d895bfb5cbe84",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260928000400",
+        "filename": "20260928000400_phase5_regulatory_catalog_contract_alignment.sql",
+        "content_sha256": "1d4e5a51372531a1a5645dd5152cd00742016a3e5a7f3c508193caa65afcb929",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260929000100",
+        "filename": "20260929000100_phase5_subscription_regulatory_pack_authority.sql",
+        "content_sha256": "58db95213900be09348312702659b292f53a5913fe03df99102c444320c70bbd",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260929000200",
+        "filename": "20260929000200_phase5_plus_permissions_applicability.sql",
+        "content_sha256": "58d52157c20f5daa95d533030fa0b2ed4f85d7faea1a0f256a167f608a23ea8d",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20260929000300",
+        "filename": "20260929000300_phase5_plus_subject_validation_access.sql",
+        "content_sha256": "5eb46ac182929c1649fed610a4d66cd92017ea07b473aba933e5c167f5e1dfdb",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20261001000100",
+        "filename": "20261001000100_managed_identity_permissions_publication.sql",
+        "content_sha256": "90503ed1cf626c7d8a3529d323670322e180efde90257ee8bb99efe2736eef07",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20261006000100",
+        "filename": "20261006000100_platform_role_administration_permission_publication.sql",
+        "content_sha256": "2a3c0d14748a9494d6ef60572802782eab2cdf3f4e60bef6026d73c48c1b6399",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20261006000200",
+        "filename": "20261006000200_user_identity_discovery_permission_publication.sql",
+        "content_sha256": "fa7d34a7f33044b8ee02478211c67a6c1c36ee64df0e0d2de57a60101d157c22",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20261007000100",
+        "filename": "20261007000100_platform_tenant_user_onboarding_permission_publication.sql",
+        "content_sha256": "4f91369da1908264eba937e5c9d760a34bcefe3d7de1d726ac558c3f9b138673",
+        "transactional": true,
+        "outcome": "applied"
+      },
+      {
+        "migration_id": "20261007000200",
+        "filename": "20261007000200_phase5_methodology_binding.sql",
+        "content_sha256": "fa178ad731d48045313a11b22f1bdf3c228be502dafa1883136162ad48127850",
+        "transactional": true,
+        "outcome": "applied"
+      }
+    ]
+  },
+  "runtime": {
+    "components": [
+      {
+        "name": "tcdx-grc-backend",
+        "containerId": "6acd160b09f89943bb0657ad04b47f39ff4ed37f9c40a79af8c40b5ba1a36ae3",
+        "imageId": "sha256:ab9902e4215289307992b9aa98421d5882a18b4236752948356b4fbe25829195",
+        "imageRef": "sha256:ab9902e4215289307992b9aa98421d5882a18b4236752948356b4fbe25829195",
+        "architecture": "linux/amd64",
+        "running": true,
+        "health": "healthy",
+        "restartCount": 0,
+        "startedAt": "2026-10-08T10:01:39.294414184Z",
+        "sanitizedRuntime": {
+          "environment": {
+            "OIDC_SCOPES": "[REDACTED_RUNTIME_VALUE]",
+            "OBJECT_STORAGE_ENDPOINT": "[REDACTED_RUNTIME_VALUE]",
+            "APP_JWT_ISSUER": "[REDACTED_RUNTIME_VALUE]",
+            "PORT": "4000",
+            "OBJECT_STORAGE_ENCRYPTION_KEY_REF": "[REDACTED_RUNTIME_VALUE]",
+            "OBJECT_STORAGE_BUCKET": "[REDACTED_RUNTIME_VALUE]",
+            "CLAMAV_PORT": "[REDACTED_RUNTIME_VALUE]",
+            "APP_JWT_PUBLIC_KEY_FILE": "/run/secrets/app_jwt_public_key",
+            "OBJECT_STORAGE_ACCESS_KEY_FILE": "/run/secrets/object_storage_access_key",
+            "DATABASE_PASSWORD": "[REDACTED_RUNTIME_VALUE]",
+            "OBJECT_STORAGE_MAX_UPLOAD_BYTES": "[REDACTED_RUNTIME_VALUE]",
+            "OBJECT_STORAGE_SECRET_KEY_HOST_FILE": "/home/tecdex/.secrets/tcdx-grc-qa/object-storage-secret-key",
+            "OIDC_REDIRECT_URI": "[REDACTED_RUNTIME_VALUE]",
+            "APP_JWT_CLOCK_TOLERANCE_SECONDS": "[REDACTED_RUNTIME_VALUE]",
+            "OIDC_ISSUER": "[REDACTED_RUNTIME_VALUE]",
+            "CLAMAV_TIMEOUT_MS": "[REDACTED_RUNTIME_VALUE]",
+            "OBJECT_STORAGE_KMS_KEY_HOST_FILE": "/home/tecdex/.secrets/tcdx-grc-qa/object-storage-kms-key",
+            "CLAMAV_HOST": "[REDACTED_RUNTIME_VALUE]",
+            "DATABASE_SSL_MODE": "disable",
+            "OBJECT_STORAGE_SIGNED_URL_TTL_SECONDS": "[REDACTED_RUNTIME_VALUE]",
+            "OBJECT_STORAGE_ALLOW_INSECURE_HTTP": "[REDACTED_RUNTIME_VALUE]",
+            "APP_JWT_MAX_LIFETIME_SECONDS": "[REDACTED_RUNTIME_VALUE]",
+            "DATABASE_USER": "[REDACTED_RUNTIME_VALUE]",
+            "APP_JWT_AUDIENCE": "[REDACTED_RUNTIME_VALUE]",
+            "OBJECT_STORAGE_SECRET_KEY_FILE": "/run/secrets/object_storage_secret_key",
+            "DATABASE_HOST": "192.168.2.40",
+            "APP_JWT_KEY_ID": "[REDACTED_RUNTIME_VALUE]",
+            "OIDC_TOKEN_ENDPOINT_AUTH_METHOD": "[REDACTED_RUNTIME_VALUE]",
+            "OBJECT_STORAGE_ACCESS_KEY_HOST_FILE": "/home/tecdex/.secrets/tcdx-grc-qa/object-storage-access-key",
+            "APP_JWT_ALGORITHM": "[REDACTED_RUNTIME_VALUE]",
+            "OIDC_CLIENT_SECRET": "[REDACTED_RUNTIME_VALUE]",
+            "OIDC_ALLOWED_ALGORITHMS": "[REDACTED_RUNTIME_VALUE]",
+            "APP_JWT_PRIVATE_KEY_FILE": "/run/secrets/app_jwt_private_key",
+            "FRONTEND_ORIGIN": "https://grc.tecdex.net",
+            "OBJECT_STORAGE_REGION": "[REDACTED_RUNTIME_VALUE]",
+            "NODE_ENV": "qa",
+            "DATABASE_NAME": "tcdx-grc",
+            "OIDC_CLIENT_ID": "[REDACTED_RUNTIME_VALUE]",
+            "DATABASE_PORT": "5432",
+            "PATH": "[REDACTED_RUNTIME_VALUE]",
+            "NODE_VERSION": "[REDACTED_RUNTIME_VALUE]",
+            "YARN_VERSION": "[REDACTED_RUNTIME_VALUE]",
+            "PNPM_HOME": "[REDACTED_RUNTIME_VALUE]",
+            "MANAGED_IDENTITY_OIDC_ISSUER": "https://iam.grc.tecdex.net/realms/tcdx-managed-identity",
+            "MANAGED_IDENTITY_OIDC_CLIENT_ID": "tcdx-grc",
+            "MANAGED_IDENTITY_OIDC_REDIRECT_URI": "https://grc.tecdex.net/auth/callback",
+            "MANAGED_IDENTITY_ADMIN_BASE_URL": "http://192.168.2.46:8180",
+            "MANAGED_IDENTITY_ADMIN_CLIENT_ID": "tcdx-grc-managed-identity-provisioner",
+            "MANAGED_IDENTITY_OIDC_CLIENT_SECRET_FILE": "/run/secrets/managed_identity_oidc_client_secret",
+            "MANAGED_IDENTITY_ADMIN_CLIENT_SECRET_FILE": "/run/secrets/managed_identity_admin_client_secret"
+          },
+          "entrypoint": [
+            "docker-entrypoint.sh"
+          ],
+          "command": [
+            "node",
+            "apps/backend/dist/server.js"
+          ],
+          "user": "node",
+          "workingDir": "/app",
+          "healthcheck": {
+            "Test": [
+              "CMD",
+              "node",
+              "-e",
+              "fetch('http://127.0.0.1:4000/health/ready').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"
+            ],
+            "Interval": 10000000000,
+            "Timeout": 5000000000,
+            "StartPeriod": 10000000000,
+            "Retries": 5
+          },
+          "mounts": [
+            {
+              "source": "/home/tecdex/.secrets/tcdx-grc-qa/managed-identity-oidc-client-secret",
+              "target": "/run/secrets/managed_identity_oidc_client_secret",
+              "type": "bind",
+              "readOnly": true,
+              "propagation": "rprivate"
+            },
+            {
+              "source": "/home/tecdex/.secrets/tcdx-grc-qa/managed-identity-admin-client-secret",
+              "target": "/run/secrets/managed_identity_admin_client_secret",
+              "type": "bind",
+              "readOnly": true,
+              "propagation": "rprivate"
+            },
+            {
+              "source": "/home/tecdex/.secrets/tcdx-grc-qa/object-storage-secret-key",
+              "target": "/run/secrets/object_storage_secret_key",
+              "type": "bind",
+              "readOnly": true,
+              "propagation": "rprivate"
+            },
+            {
+              "source": "/home/tecdex/.secrets/tcdx-grc-qa/application-private.pem",
+              "target": "/run/secrets/app_jwt_private_key",
+              "type": "bind",
+              "readOnly": true,
+              "propagation": "rprivate"
+            },
+            {
+              "source": "/home/tecdex/.secrets/tcdx-grc-qa/application-public.pem",
+              "target": "/run/secrets/app_jwt_public_key",
+              "type": "bind",
+              "readOnly": true,
+              "propagation": "rprivate"
+            },
+            {
+              "source": "/home/tecdex/.secrets/tcdx-grc-qa/object-storage-access-key",
+              "target": "/run/secrets/object_storage_access_key",
+              "type": "bind",
+              "readOnly": true,
+              "propagation": "rprivate"
+            }
+          ],
+          "networkMode": "qa_default",
+          "networks": {
+            "qa_default": {
+              "aliases": [
+                "tcdx-grc-backend",
+                "backend"
+              ],
+              "links": null,
+              "driverOpts": null,
+              "ipamConfig": null
+            }
+          },
+          "portBindings": {
+            "4000/tcp": [
+              {
+                "HostIp": "",
+                "HostPort": "4000"
+              }
+            ]
+          },
+          "restartPolicy": {
+            "Name": "unless-stopped",
+            "MaximumRetryCount": 0
+          },
+          "securityOpt": [
+            "no-new-privileges:true"
+          ],
+          "capDrop": null,
+          "capAdd": null,
+          "memory": 0,
+          "nanoCpus": 0,
+          "readonlyRootfs": false
+        },
+        "configurationFingerprint": "4ac4f3156518c89f3fc16387ec349d9645c3fd7d201e010a8f4a70433bd85879",
+        "secretMetadata": [
+          {
+            "path": "/home/tecdex/.secrets/tcdx-grc-qa/managed-identity-oidc-client-secret",
+            "uid": 1000,
+            "mode": "0400",
+            "regular": true,
+            "nonempty": true,
+            "contentsRead": false,
+            "readableByRuntime": true,
+            "parentMode": "0700",
+            "parentUid": 1000
+          },
+          {
+            "path": "/home/tecdex/.secrets/tcdx-grc-qa/managed-identity-admin-client-secret",
+            "uid": 1000,
+            "mode": "0400",
+            "regular": true,
+            "nonempty": true,
+            "contentsRead": false,
+            "readableByRuntime": true,
+            "parentMode": "0700",
+            "parentUid": 1000
+          }
+        ],
+        "imageAvailableForRollback": true,
+        "secretValuesCaptured": false,
+        "containerLabels": {
+          "com.docker.compose.config-hash": "f9b24d23f587c64a94843f01017ce8c83256f405f88e82c1bd3628af7158993c",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:f2128ee7a238cd4729c4f3be644fb9b2278b01030e820f12195db11bddf1f9e0",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "qa",
+          "com.docker.compose.project.config_files": "/home/tecdex/apps/tcdx-grc-phase5-role-revoke-20260928-r2/deploy/qa/docker-compose.yml,/tmp/tcdx-grc-step23k-backend.override.yml",
+          "com.docker.compose.project.working_dir": "/home/tecdex/apps/tcdx-grc-phase5-role-revoke-20260928-r2/deploy/qa",
+          "com.docker.compose.replace": "tcdx-grc-backend",
+          "com.docker.compose.service": "backend",
+          "com.docker.compose.version": "2.40.3",
+          "org.opencontainers.image.revision": "bbf4c8752ebcfa91a3215f7096c6df5b5a74d081",
+          "org.opencontainers.image.source": "https://github.com/Tecdex-SpA/tcdx-grc",
+          "org.opencontainers.image.source.tree": "4aaa36167744a6c6be62750748f53f8106f3c638"
+        },
+        "imageLabels": {
+          "org.opencontainers.image.source": "https://github.com/Tecdex-SpA/tcdx-grc"
+        },
+        "actualUid": "1000"
+      },
+      {
+        "name": "tcdx-grc-frontend",
+        "containerId": "31c3257ee28ffa0c03ae7791b178c089b2cfb118043e668270a15e09627e5080",
+        "imageId": "sha256:f31fd8a5b63003ba0973822854a94dc03b0b9753ec9dc165253418608c0f73ce",
+        "imageRef": "sha256:f31fd8a5b63003ba0973822854a94dc03b0b9753ec9dc165253418608c0f73ce",
+        "architecture": "linux/amd64",
+        "running": true,
+        "health": "healthy",
+        "restartCount": 0,
+        "startedAt": "2026-10-08T10:01:49.659877314Z",
+        "sanitizedRuntime": {
+          "environment": {
+            "PATH": "[REDACTED_RUNTIME_VALUE]",
+            "NODE_VERSION": "[REDACTED_RUNTIME_VALUE]",
+            "YARN_VERSION": "[REDACTED_RUNTIME_VALUE]",
+            "NODE_ENV": "qa",
+            "PORT": "8080"
+          },
+          "entrypoint": [
+            "docker-entrypoint.sh"
+          ],
+          "command": [
+            "node",
+            "static-server.mjs"
+          ],
+          "user": "node",
+          "workingDir": "/app/apps/frontend",
+          "healthcheck": {
+            "Test": [
+              "CMD",
+              "node",
+              "-e",
+              "fetch('http://127.0.0.1:8080/').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"
+            ],
+            "Interval": 10000000000,
+            "Timeout": 5000000000,
+            "StartPeriod": 10000000000,
+            "Retries": 5
+          },
+          "mounts": [],
+          "networkMode": "qa_default",
+          "networks": {
+            "qa_default": {
+              "aliases": [
+                "tcdx-grc-frontend",
+                "frontend"
+              ],
+              "links": null,
+              "driverOpts": null,
+              "ipamConfig": null
+            }
+          },
+          "portBindings": {
+            "8080/tcp": [
+              {
+                "HostIp": "",
+                "HostPort": "8080"
+              }
+            ]
+          },
+          "restartPolicy": {
+            "Name": "unless-stopped",
+            "MaximumRetryCount": 0
+          },
+          "securityOpt": [
+            "no-new-privileges:true"
+          ],
+          "capDrop": null,
+          "capAdd": null,
+          "memory": 0,
+          "nanoCpus": 0,
+          "readonlyRootfs": false
+        },
+        "configurationFingerprint": "750fe4bc72f07a9e361b562502a80893b468cef38b3ca063c2a926ae33ca0f69",
+        "secretMetadata": [],
+        "imageAvailableForRollback": true,
+        "secretValuesCaptured": false,
+        "containerLabels": {
+          "com.docker.compose.config-hash": "36bb99e8c364fa9b1bc31894f73ccc8597eab74fb78d8b80974d40b83bd8faf6",
+          "com.docker.compose.container-number": "1",
+          "com.docker.compose.depends_on": "",
+          "com.docker.compose.image": "sha256:8720ce0e5a1f5796473e2118d1825a942f8461d8333dd33458cda3f1140730d4",
+          "com.docker.compose.oneoff": "False",
+          "com.docker.compose.project": "qa",
+          "com.docker.compose.project.config_files": "/home/tecdex/apps/tcdx-grc-phase5-role-revoke-frontend-final-20260928/deploy/qa/docker-compose.frontend.yml,/tmp/tcdx-grc-step23l-p0r-frontend.override.yml",
+          "com.docker.compose.project.working_dir": "/home/tecdex/apps/tcdx-grc-phase5-role-revoke-frontend-final-20260928/deploy/qa",
+          "com.docker.compose.replace": "tcdx-grc-frontend",
+          "com.docker.compose.service": "frontend",
+          "com.docker.compose.version": "2.40.3",
+          "org.opencontainers.image.revision": "bbf4c8752ebcfa91a3215f7096c6df5b5a74d081",
+          "org.opencontainers.image.source": "https://github.com/Tecdex-SpA/tcdx-grc",
+          "org.opencontainers.image.source.tree": "4aaa36167744a6c6be62750748f53f8106f3c638"
+        },
+        "imageLabels": {
+          "org.opencontainers.image.source": "https://github.com/Tecdex-SpA/tcdx-grc"
+        },
+        "actualUid": "1000"
+      },
+      {
+        "name": "tcdx-managed-identity",
+        "containerId": "955d65f83d758cedde3ab8136a60807631a4bcd5fc40a87c028f50628386a53e",
+        "imageId": "sha256:4ef4f816c60d05c3867c1fce9092a3b0d1539bf22683d3e2742c6c1d7ce25ea4",
+        "imageRef": "sha256:4ef4f816c60d05c3867c1fce9092a3b0d1539bf22683d3e2742c6c1d7ce25ea4",
+        "architecture": "linux/amd64",
+        "running": true,
+        "health": "healthy",
+        "restartCount": 0,
+        "startedAt": "2026-10-06T21:48:59.461944021Z",
+        "sanitizedRuntime": {
+          "environment": {
+            "PATH": "[REDACTED_RUNTIME_VALUE]",
+            "LANG": "[REDACTED_RUNTIME_VALUE]",
+            "KC_RUN_IN_CONTAINER": "[REDACTED_RUNTIME_VALUE]"
+          },
+          "entrypoint": [
+            "/opt/keycloak/bin/kc.sh"
+          ],
+          "command": [
+            "start"
+          ],
+          "user": "1000",
+          "workingDir": "/",
+          "healthcheck": {
+            "Test": [
+              "CMD-SHELL",
+              "/opt/keycloak/healthcheck.sh"
+            ],
+            "Interval": 20000000000,
+            "Timeout": 5000000000,
+            "StartPeriod": 180000000000,
+            "Retries": 3
+          },
+          "mounts": [
+            {
+              "source": "/home/tecdex/.config/tcdx-keycloak/keycloak.conf",
+              "target": "/opt/keycloak/conf/keycloak.conf",
+              "type": "bind",
+              "readOnly": true,
+              "propagation": "rprivate"
+            },
+            {
+              "source": "/home/tecdex/.config/tcdx-keycloak/healthcheck.sh",
+              "target": "/opt/keycloak/healthcheck.sh",
+              "type": "bind",
+              "readOnly": true,
+              "propagation": "rprivate"
+            }
+          ],
+          "networkMode": "bridge",
+          "networks": {
+            "bridge": {
+              "aliases": null,
+              "links": null,
+              "driverOpts": null,
+              "ipamConfig": null
+            }
+          },
+          "portBindings": {
+            "8080/tcp": [
+              {
+                "HostIp": "192.168.2.46",
+                "HostPort": "8180"
+              }
+            ]
+          },
+          "restartPolicy": {
+            "Name": "unless-stopped",
+            "MaximumRetryCount": 0
+          },
+          "securityOpt": [
+            "no-new-privileges"
+          ],
+          "capDrop": [
+            "ALL"
+          ],
+          "capAdd": null,
+          "memory": 3221225472,
+          "nanoCpus": 2000000000,
+          "readonlyRootfs": false
+        },
+        "configurationFingerprint": "74d29592991916175014808126a72983590cc6961181bccb236fb5cab367f810",
+        "secretMetadata": [
+          {
+            "path": "/home/tecdex/.config/tcdx-keycloak/keycloak.conf",
+            "uid": 1000,
+            "mode": "0600",
+            "regular": true,
+            "nonempty": true,
+            "contentsCaptured": false
+          }
+        ],
+        "imageAvailableForRollback": true,
+        "secretValuesCaptured": false,
+        "containerLabels": {
+          "architecture": "x86_64",
+          "build-date": "2026-09-14T00:32:05Z",
+          "com.redhat.build-host": "",
+          "com.redhat.component": "",
+          "com.redhat.license_terms": "",
+          "cpe": "cpe:/a:redhat:enterprise_linux:9::appstream",
+          "description": "Keycloak Server Image",
+          "distribution-scope": "public",
+          "io.buildah.version": "1.44.0",
+          "io.k8s.description": "Keycloak Server Image",
+          "io.k8s.display-name": "Keycloak Server",
+          "io.openshift.expose-services": "",
+          "io.openshift.tags": "keycloak security identity",
+          "maintainer": "https://www.keycloak.org/",
+          "name": "keycloak",
+          "org.opencontainers.image.created": "2026-09-30T17:44:36.891Z",
+          "org.opencontainers.image.description": "",
+          "org.opencontainers.image.documentation": "https://www.keycloak.org/documentation",
+          "org.opencontainers.image.licenses": "Apache-2.0",
+          "org.opencontainers.image.revision": "df15afa5a3a8a2b10021f879ffa93b30fb36c73a",
+          "org.opencontainers.image.source": "https://github.com/keycloak-rel/keycloak-rel",
+          "org.opencontainers.image.title": "keycloak-rel",
+          "org.opencontainers.image.url": "https://github.com/keycloak-rel/keycloak-rel",
+          "org.opencontainers.image.version": "26.7.5",
+          "release": "",
+          "summary": "Keycloak Server Image",
+          "url": "https://www.keycloak.org/",
+          "vcs-ref": "",
+          "vcs-type": "git",
+          "vendor": "https://www.keycloak.org/",
+          "version": "26.7.5"
+        },
+        "imageLabels": {
+          "architecture": "x86_64",
+          "build-date": "2026-09-14T00:32:05Z",
+          "com.redhat.build-host": "",
+          "com.redhat.component": "",
+          "com.redhat.license_terms": "",
+          "cpe": "cpe:/a:redhat:enterprise_linux:9::appstream",
+          "description": "Keycloak Server Image",
+          "distribution-scope": "public",
+          "io.buildah.version": "1.44.0",
+          "io.k8s.description": "Keycloak Server Image",
+          "io.k8s.display-name": "Keycloak Server",
+          "io.openshift.expose-services": "",
+          "io.openshift.tags": "keycloak security identity",
+          "maintainer": "https://www.keycloak.org/",
+          "name": "keycloak",
+          "org.opencontainers.image.created": "2026-09-30T17:44:36.891Z",
+          "org.opencontainers.image.description": "",
+          "org.opencontainers.image.documentation": "https://www.keycloak.org/documentation",
+          "org.opencontainers.image.licenses": "Apache-2.0",
+          "org.opencontainers.image.revision": "d37f7b7430f333b11ddad47838069483c247e8bf8afaa4712fb7ae2a39bce43b",
+          "org.opencontainers.image.source": "https://github.com/keycloak-rel/keycloak-rel",
+          "org.opencontainers.image.title": "keycloak-rel",
+          "org.opencontainers.image.url": "https://github.com/keycloak-rel/keycloak-rel",
+          "org.opencontainers.image.version": "26.7.5",
+          "release": "",
+          "summary": "Keycloak Server Image",
+          "url": "https://www.keycloak.org/",
+          "vcs-ref": "",
+          "vcs-type": "git",
+          "vendor": "https://www.keycloak.org/",
+          "version": "26.7.5"
+        },
+        "actualUid": "1000"
+      }
+    ],
+    "secretValuesCaptured": false
+  },
+  "public": {
+    "grc": {
+      "status": 200,
+      "public_edge": "181.212.166.187",
+      "tls_verified": true,
+      "expectedStatus": true
+    },
+    "discovery": {
+      "status": 200,
+      "public_edge": "181.212.166.187",
+      "tls_verified": true,
+      "issuer": "https://iam.grc.tecdex.net/realms/tcdx-managed-identity",
+      "expectedStatus": true
+    },
+    "jwks": {
+      "status": 200,
+      "public_edge": "181.212.166.187",
+      "tls_verified": true,
+      "key_count": 2,
+      "expectedStatus": true
+    },
+    "admin_root": {
+      "status": 404,
+      "public_edge": "181.212.166.187",
+      "tls_verified": true,
+      "expectedStatus": true
+    },
+    "admin_console": {
+      "status": 404,
+      "public_edge": "181.212.166.187",
+      "tls_verified": true,
+      "expectedStatus": true
+    },
+    "admin_rest": {
+      "status": 404,
+      "public_edge": "181.212.166.187",
+      "tls_verified": true,
+      "expectedStatus": true
+    },
+    "master_root": {
+      "status": 404,
+      "public_edge": "181.212.166.187",
+      "tls_verified": true,
+      "expectedStatus": true
+    },
+    "master_discovery": {
+      "status": 404,
+      "public_edge": "181.212.166.187",
+      "tls_verified": true,
+      "expectedStatus": true
+    },
+    "master_auth": {
+      "status": 404,
+      "public_edge": "181.212.166.187",
+      "tls_verified": true,
+      "expectedStatus": true
+    }
+  },
+  "functionalSqlWrites": 0,
+  "iamMutations": 0
+}

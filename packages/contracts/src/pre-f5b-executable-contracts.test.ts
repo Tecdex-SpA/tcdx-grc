@@ -152,10 +152,10 @@ describe("PRE-F5B executable-contract closure", () => {
   it("keeps cumulative operation counts after the approved Phase 5 additions", () => {
     expect(operations.size).toBe(Number(matrix.match(/`CONTRACTUAL_OPERATIONS=(\d+)`/)?.[1]));
     expect([...operations.values()].filter(({ method }) => method === "get")).toHaveLength(Number(matrix.match(/`PUBLIC_READ_OPERATIONS=(\d+)`/)?.[1]));
-    expect([...operations.values()].filter(({ method }) => method === "post")).toHaveLength(94);
+    expect([...operations.values()].filter(({ method }) => method === "post")).toHaveLength(104);
     expect([...operations.values()].filter(({ method }) => method === "put")).toHaveLength(1);
     expect(matrix).toContain(`\`CONTRACTUAL_OPERATIONS=${operations.size}\``);
-    expect(matrix).toContain("`PUBLIC_MUTATING_OPERATIONS=95`");
+    expect(matrix).toContain("`PUBLIC_MUTATING_OPERATIONS=105`");
   });
 
   it("keeps every operation ID, method and path aligned between OpenAPI and the matrix", () => {
@@ -192,10 +192,25 @@ describe("PRE-F5B executable-contract closure", () => {
 
   it("keeps operation permission, audit, event and idempotency decisions internally closed", () => {
     for (const [operationId, operation] of operations) {
-      const permission = /x-tcdx-permission: "`([^`]+)`"/.exec(operation.block)?.[1];
-      if (operationId !== "accessGet") {
-        expect(permission, `${operationId} permission`).toBeDefined();
-        expect(permissions, `${operationId} permission catalog`).toContain(permission);
+      const permissionExpression = /x-tcdx-permission: "([^"\n]+)"/.exec(operation.block)?.[1] ?? "";
+      const requiredPermissions = [...permissionExpression.matchAll(/`([^`]+)`/g)].map((match) => match[1]!);
+      const contextAuthorities: Record<string, string> = {
+        accessGet: "authenticated context",
+        authenticationProviderList: "public authentication context",
+        currentPrincipalAuthorizationRead: "authenticated context"
+      };
+      const contextAuthority = contextAuthorities[operationId];
+      if (contextAuthority) {
+        expect(operation.block).toContain(`x-tcdx-permission: "${contextAuthority}"`);
+        expect(operation.method).toBe("get");
+        expect(operation.block).toContain('x-tcdx-transaction-boundary: "RO"');
+      } else {
+        expect(requiredPermissions.length, `${operationId} permission`).toBeGreaterThan(0);
+        for (const permission of requiredPermissions) expect(permissions, `${operationId} permission catalog`).toContain(permission);
+        if (operationId === "tenantInitialOnboardingCreate") {
+          expect(requiredPermissions).toEqual(["platform.tenant.create", "platform.user_identity.read"]);
+          expect(permissionExpression).toBe("`platform.tenant.create` AND `platform.user_identity.read`");
+        }
       }
       const audit = /x-tcdx-audit-event: "`([^`]+)`"/.exec(operation.block)?.[1];
       const event = /x-tcdx-domain-events: "`([^`]+)`"/.exec(operation.block)?.[1];
@@ -208,7 +223,10 @@ describe("PRE-F5B executable-contract closure", () => {
         expect(operation.block).toContain('x-tcdx-audit-event: "NONE; transport is accounted by uploadIntentCreate/uploadFinalize"');
       } else {
         expect(operation.block, `${operationId} idempotency`).toContain('x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"');
-        expect(operation.block, `${operationId} audit`).toContain('x-tcdx-audit-event: "NONE"');
+        if (operationId === "userIdentityDiscovery") {
+          expect(audit).toBe("audit.platform.user_identity.discover.v1");
+          expect(operation.block).toContain('x-tcdx-transaction-boundary: "RO_BUSINESS_PLUS_PRIVACY_AUDIT_APPEND"');
+        } else expect(operation.block, `${operationId} audit`).toContain('x-tcdx-audit-event: "NONE"');
       }
       if (event) expect(events, `${operationId} event catalog`).toContain(`\`${event}\``);
     }
@@ -278,7 +296,7 @@ describe("PRE-F5B executable-contract closure", () => {
 
   it("preserves PRE-F5B's historical no-runtime-seed claim within the cumulative table inventory", () => {
     const expectedSchema = JSON.parse(expectedSchemaSource) as { tables: Array<{ name: string }> };
-    expect(expectedSchema.tables).toHaveLength(235);
+    expect(expectedSchema.tables).toHaveLength(237);
     for (const table of ["evidence.file_objects", "evidence.evidences", "evidence.evidence_versions", "evidence.evidence_links"]) {
       expect(expectedSchema.tables.some(({ name }) => name === table), table).toBe(true);
     }

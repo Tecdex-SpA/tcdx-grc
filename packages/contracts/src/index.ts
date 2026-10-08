@@ -1,5 +1,12 @@
 export type FieldError = { field: string; code: string; message: string };
 
+export type {
+  AuthenticationProvider,
+  AuthenticationProviderAvailability,
+  CurrentPrincipalAuthorization,
+  TenantPermissionScope
+} from "./frontend-auth-projections.js";
+
 export type ProblemEnvelope = {
   code: string;
   message: string;

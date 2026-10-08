@@ -1,0 +1,15 @@
+# MI10 — cierre real de session-revoke
+
+PASS. Rector 09/21/22/25/42/43/46; contratos 21/22/23/24/26; master `TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23`. La revocación previa de PLATFORM_ADMIN fue una prueba humana autorizada, no un fallo del producto; su reasignación se verificó. Primera autenticación humana, sesión GRC y branding conservan el PASS autoritativo del operador.
+
+El comando canónico `managedIdentitySessionRevoke`, ruta de identidad `sessions:revoke`, devolvió 200 el 2026-10-08T00:25:47.684Z, con motivo exacto «MI10 Phase 5 final runtime session revocation validation». Replay con la misma clave devolvió 200 sin un segundo efecto. Audit `01a118e6-e5df-70ed-a8f1-6082454426df`, correlation `01a118e6-e45d-7441-99da-ae0f1209cd0c`, actor Baruj `01a0cfae-d860-730d-88b8-d8b1b3f5d7dc`, objeto andres.grc `01a11260-ac49-7432-a9fe-a04d546c1355`, outcome success, Platform ownership, tenant null. Keycloak registró LOGOUT sin representación ni error. Idempotency durable `01a118e6-e530-74ef-a554-33a55e93866b` contiene sólo presencia de hashes en esta evidencia, nunca clave ni hashes.
+
+Antes había tres sesiones IAM activas. La generación revocada quedó en cero; GRC rechazó su estado con GET /access/me 401/TCDX.AUTHENTICATION.INVALID a las 00:25:48.287Z, correlation 01a118e6-e857-73b1-959a-98ff2c222138. Las nuevas autenticaciones posteriores son generaciones distintas, necesarias para revisión QA autorizada; no invalidan esta prueba. En el snapshot final hay 0 sesión IAM posterior y cero sesiones de la generación revocada. No se exige otra revocación ni repetir el primer login.
+
+Identidad única activa, issuer+subject exactos, enabled sí, UPDATE_PASSWORD/CONFIGURE_TOTP no pendientes, OTP 1, PLATFORM_ADMIN activo 1. La decisión humana posterior autoriza Membership final 1 y roles tenant finales 0. Ocho asignaciones temporales de los lotes QA fueron revocadas; Baruj mantiene sus siete roles originales. Session-revoke no modifica autoridad, password, MFA ni enabled.
+
+Exactamente ocho operaciones siguen vigentes: list, read, provision, disable, enable, password-reset, mfa-reset, session-revoke. No delete/link/unlink/impersonation ni proxy genérico. Excepción MI6 conservada; Keycloak autentica y GRC autoriza. MaxAge 600 en ambos factores REQUIRED; Cookie deshabilitado. Firma/issuer/audience/nonce/PKCE y pwd+otp se comprueban también en el exacto backend desplegado: tres escenarios firmados y seis negativos PASS.
+
+Auditoría de provision/password-reset/authentication/platform-role/onboarding/session-revoke y eventos IAM seguros presentes. Campos secretos auditados recursivamente: cero; los eventos IAM omiten representaciones. MFA/password permanecen fuera de GRC DB. La proyección de permisos no sustituye autorización del endpoint. Plataforma no confiere tenant authority: andres termina con roles tenant 0.
+
+Prueba: MI10_SAFE_SERVER_PROOF.json, CANONICAL_API_RECEIPTS.json y FINAL_REGRESSION_REPORT.md. No cookies/tokens/credenciales/OTP/QR/semillas/identificadores de sesión fueron capturados.

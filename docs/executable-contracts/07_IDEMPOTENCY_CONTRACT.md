@@ -68,3 +68,18 @@ Canonical JSON uses UTF-8, sorted object keys, normalized numbers/strings and om
 - Retention/expiry remains policy-resolved (`expires_at` nullable); no universal TTL is invented.
 
 `IDEMPOTENCY_CONTRACT=PASS` as a Fase 2 contract candidate.
+
+## STEP 23L-MI10-P2A
+
+P2A platformRoleAssign and platformRoleRevoke require canonical Idempotency-Key and the exact v1 fingerprint/replay transaction contract in executable24. Synchronous completion stores original safe projection/status/hash; same-key replay has no material/audit side effects; changed payload409 IDEMPOTENCY. In-progress without safe result409 RESOURCE retryable=true.
+
+
+## STEP 23L-TENANT-ONBOARDING-D1-R
+
+userIdentityDiscovery is NATURALLY_IDEMPOTENT for business state and records each privacy access attempt; it creates no authority or domain outbox event.
+
+tenantInitialOnboardingCreate is KEY-required, Platform+actor+operation binding and fingerprint tenant input plus initial administrator. Existing result_ref holds safe references/checkpoints, never new business authority or credential. Its child tenantCreate uses the same opaque key under its different operation binding and fails closed on unrelated collision. Each checkpoint is atomic with its completed step; same-bound-intent pending replay reconciles/resumes only that operation's own tenant. Active locked attempt409RESOURCE; changed fingerprint409IDEMPOTENCY; completed safe replay no second material audit/event. No arbitrary target bootstrap/resume API. Bootstrap natural tenant/version/target identity guards remain; revoked/history does not reopen initial authority. MI provisioning is separate with unchanged MI6 replay/no-redisclosure semantics. See executable25§6; no physical state/schema change.
+
+## Managed Identity tenant onboarding E2E — 2026-10-07
+
+Executable26 tenantUserOnboardingCreate uses Platform actor/operation/key plus fingerprint of explicit tenant, canonical identity, sorted role codes and reason. Durable existing idempotency progress commits with Membership and each role child; same original intent resumes pending roles only. Completed hash-verified replay never regrants. Different payload409; no credential enters request/result.

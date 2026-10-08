@@ -5,7 +5,7 @@ import type { FoundationDatabase } from "../database.js";
 import { FoundationError } from "../errors.js";
 import type { PlatformActor } from "./platform-authority.js";
 import { membershipInvitationCreate, membershipInvitationRevoke } from "./platform-iam-service.js";
-import { acceptMembershipInvitation, type PostgresOidcIdentityResolver } from "./oidc-browser.js";
+import { acceptMembershipInvitation } from "./oidc-browser.js";
 
 type Query = { sql: string; parameters: readonly unknown[] };
 type QueryResult = { rows: Record<string, unknown>[]; numAffectedRows?: bigint };
@@ -158,7 +158,7 @@ describe("canonical membership invitations", () => {
       if (query.sql.includes("UPDATE iam.tenant_membership_invitations")) return { rows: [], numAffectedRows: 1n };
       return { rows: [] };
     });
-    const identities = { resolveOrCreate: async () => ({ userIdentityId: actorId }) } as PostgresOidcIdentityResolver;
+    const identities = { resolveOrCreate: async () => ({ userIdentityId: actorId }) };
     const identity = await acceptMembershipInvitation(transaction, identities, {
       issuer: "https://accounts.zoho.test", subject: "stable-subject", email: "reviewer@example.test", displayName: "Reviewer"
     }, { invitationId, tokenDigest: "a".repeat(64) }, correlationId);
@@ -175,7 +175,7 @@ describe("canonical membership invitations", () => {
       tenant_membership_invitation_id: invitationId, tenant_id: tenantId, invitee_email: "reviewer@example.test",
       authentication_method: "ZOHO", lifecycle_state: "pending", unexpired: true
     }] } : { rows: [] });
-    const identities = { resolveOrCreate: async () => { identityCalls += 1; return { userIdentityId: actorId }; } } as PostgresOidcIdentityResolver;
+    const identities = { resolveOrCreate: async () => { identityCalls += 1; return { userIdentityId: actorId }; } };
     await expect(acceptMembershipInvitation(transaction, identities, {
       issuer: "https://accounts.zoho.test", subject: "stable-subject", email: "other@example.test", displayName: "Reviewer"
     }, { invitationId, tokenDigest: "a".repeat(64) }, correlationId)).rejects.toSatisfy((error: unknown) => code(error) === "TCDX.AUTHENTICATION.INVALID");
@@ -192,7 +192,7 @@ describe("canonical membership invitations", () => {
         tenant_membership_invitation_id: invitationId, tenant_id: tenantId, invitee_email: "reviewer@example.test",
         authentication_method: "ZOHO", ...invitation
       }] } : { rows: [] });
-      const identities = { resolveOrCreate: async () => { identityCalls += 1; return { userIdentityId: actorId }; } } as PostgresOidcIdentityResolver;
+      const identities = { resolveOrCreate: async () => { identityCalls += 1; return { userIdentityId: actorId }; } };
       await expect(acceptMembershipInvitation(transaction, identities, {
         issuer: "https://accounts.zoho.test", subject: "stable-subject", email: "reviewer@example.test", displayName: "Reviewer"
       }, { invitationId, tokenDigest: "a".repeat(64) }, correlationId)).rejects.toSatisfy((error: unknown) => code(error) === "TCDX.AUTHENTICATION.INVALID");

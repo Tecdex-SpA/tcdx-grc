@@ -1,0 +1,180 @@
+{
+  "counts": {
+    "unit": 485,
+    "frontend": 81,
+    "postgres": 82,
+    "grc-e2e": 428,
+    "image-e2e": 428,
+    "iam-e2e": 21
+  },
+  "frontendIncludedInUnit": true,
+  "isolatedPostgresExecutedSeparatelyFromUnitSkip": true,
+  "imageE2eSame428CasesIndependentExecution": true,
+  "receipts": {
+    "unit": {
+      "gate": "methodology-unit",
+      "exitCode": 0,
+      "mode": "unit",
+      "log": "/tmp/tcdx-grc-phase5-final-methodology-unit.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY"
+    },
+    "frontend": {
+      "gate": "methodology-frontend",
+      "exitCode": 0,
+      "mode": "unit",
+      "log": "/tmp/tcdx-grc-phase5-final-methodology-frontend.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY"
+    },
+    "postgres": {
+      "gate": "methodology-postgres",
+      "exitCode": 0,
+      "mode": "isolated",
+      "log": "/tmp/tcdx-grc-phase5-final-methodology-postgres.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY"
+    },
+    "grc-e2e": {
+      "gate": "methodology-grc-e2e",
+      "exitCode": 0,
+      "mode": "e2e",
+      "log": "/tmp/tcdx-grc-phase5-final-methodology-grc-e2e.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY"
+    },
+    "image-e2e": {
+      "gate": "methodology-image-e2e",
+      "exitCode": 0,
+      "mode": "e2e",
+      "log": "/tmp/tcdx-grc-phase5-final-methodology-image-e2e.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY"
+    },
+    "iam-e2e": {
+      "gate": "methodology-iam-e2e",
+      "exitCode": 0,
+      "mode": "e2e",
+      "log": "/tmp/tcdx-grc-phase5-final-methodology-iam-e2e.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY"
+    },
+    "typecheck": {
+      "gate": "methodology-typecheck",
+      "exitCode": 0,
+      "mode": "static",
+      "log": "/tmp/tcdx-grc-phase5-final-methodology-typecheck.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY"
+    },
+    "lint": {
+      "gate": "methodology-lint",
+      "exitCode": 0,
+      "mode": "static",
+      "log": "/tmp/tcdx-grc-phase5-final-methodology-lint.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY"
+    },
+    "contracts": {
+      "gate": "methodology-contracts",
+      "exitCode": 0,
+      "mode": "static",
+      "log": "/tmp/tcdx-grc-phase5-final-methodology-contracts.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY"
+    },
+    "openapi": {
+      "gate": "methodology-openapi",
+      "exitCode": 0,
+      "mode": "static",
+      "log": "/tmp/tcdx-grc-phase5-final-methodology-openapi.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY"
+    },
+    "source-build": {
+      "gate": "methodology-source-build",
+      "exitCode": 0,
+      "mode": "static",
+      "log": "/tmp/tcdx-grc-phase5-final-methodology-source-build.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY"
+    },
+    "secret-scan": {
+      "gate": "methodology-secret-scan",
+      "exitCode": 0,
+      "mode": "static",
+      "log": "/tmp/tcdx-grc-phase5-final-methodology-secret-scan.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY"
+    },
+    "amr-callback": {
+      "gate": "methodology-amr-callback",
+      "exitCode": 0,
+      "mode": "e2e",
+      "log": "/tmp/tcdx-grc-phase5-final-methodology-amr-callback.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY"
+    },
+    "rebuild": {
+      "gate": "methodology-rebuild",
+      "exitCode": 0,
+      "mode": "isolated",
+      "log": "/tmp/tcdx-grc-phase5-final-methodology-rebuild.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY"
+    },
+    "catalog": {
+      "gate": "methodology-catalog",
+      "exitCode": 0,
+      "mode": "isolated",
+      "log": "/tmp/tcdx-grc-phase5-final-methodology-catalog.log",
+      "node": "22.23.2",
+      "qaSecretsInherited": false,
+      "mutationsTarget": "LOCAL_ONLY"
+    }
+  },
+  "compiledBackend": {
+    "healthLive": 200,
+    "healthReady": 200,
+    "userIdentityDiscoveryAnonymous": 401,
+    "tenantInitialOnboardingAnonymous": 401,
+    "bootstrapPublicRoute": "ABSENT",
+    "compiledOpenApiExpectedRoutes": 7,
+    "processStarted": true,
+    "routeRegistration": "PASS",
+    "platformRoleAssignmentListAnonymous": 401,
+    "platformRoleCatalogAnonymous": 401,
+    "platformRoleAssignAnonymous": 401,
+    "platformRoleRevokeAnonymous": 401,
+    "missingDbConfigurationRejected": true,
+    "missingManagedSecretRejected": true,
+    "providerProjection": "PASS_ALL_UNCONFIGURED",
+    "runtimeUid": 1000,
+    "qaDbConnection": false,
+    "qaSecretsUsed": false,
+    "identityCreated": false,
+    "assignmentCreated": false,
+    "compiledImageAuthorizationRegression": "PASS",
+    "compiledImagePostgresTestsPassed": 82,
+    "isolatedFixtureAuthority": true,
+    "humanTokensUsed": false,
+    "BACKEND_LOCAL_SMOKE": "PASS",
+    "network": "local-isolated-postgres-only",
+    "localSmokeContainerRemoved": true,
+    "startupFatalErrors": 0
+  }
+}

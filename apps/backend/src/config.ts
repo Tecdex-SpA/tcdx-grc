@@ -1,7 +1,23 @@
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
+import { readFileSync, statSync } from "node:fs";
 
 export type RuntimeEnvironment = Record<string, string | undefined>;
+
+const MANAGED_IDENTITY_ISSUER = "https://iam.grc.tecdex.net/realms/tcdx-managed-identity";
+const MANAGED_IDENTITY_CALLBACK = "https://grc.tecdex.net/auth/callback";
+
+type OidcProviderConfig = {
+  configured: boolean;
+  issuer?: string;
+  clientId?: string;
+  clientSecret?: string;
+  redirectUri?: string;
+  scopes?: string[];
+  allowedAlgorithms?: string[];
+  tokenEndpointAuthMethod?: "client_secret_basic" | "client_secret_post";
+  requiredAmr?: readonly string[];
+  identityResolution?: "resolve_or_create" | "existing_only";
+};
 
 export type BackendConfig = {
   nodeEnv: "development" | "test" | "qa" | "production";
@@ -14,15 +30,14 @@ export type BackendConfig = {
     password?: string;
     sslMode: "disable" | "require" | "no-verify";
   };
-  oidc: {
+  oidc: OidcProviderConfig;
+  managedIdentityOidc: OidcProviderConfig;
+  managedIdentityAdmin: {
     configured: boolean;
-    issuer?: string;
+    baseUrl?: URL;
     clientId?: string;
     clientSecret?: string;
-    redirectUri?: string;
-    scopes?: string[];
-    allowedAlgorithms?: string[];
-    tokenEndpointAuthMethod?: "client_secret_basic" | "client_secret_post";
+    issuer: string;
   };
   applicationJwt: {
     configured: boolean;
@@ -78,6 +93,21 @@ function secretValue(environment: RuntimeEnvironment, key: string): string | und
   }
 }
 
+function protectedSecretFile(environment: RuntimeEnvironment, key: string): string | undefined {
+  if (optionalRuntimeValue(environment, key)) throw new Error(`${key} must use ${key}_FILE`);
+  const path = optionalRuntimeValue(environment, `${key}_FILE`);
+  if (!path) return undefined;
+  try {
+    const stat = statSync(path);
+    if (!stat.isFile() || (stat.mode & 0o077) !== 0) throw new Error("unprotected");
+    const value = readFileSync(path, "utf8").trim();
+    if (!value) throw new Error("empty");
+    return value;
+  } catch {
+    throw new Error(`Unable to read protected secret-backed configuration: ${key}_FILE`);
+  }
+}
+
 function completeGroup(environment: RuntimeEnvironment, keys: readonly string[], label: string): Record<string, string> | null {
   const values = Object.fromEntries(keys.map((key) => [key, optionalRuntimeValue(environment, key)]));
   const present = keys.filter((key) => values[key] !== undefined);
@@ -119,10 +149,41 @@ export function loadConfig(environment: RuntimeEnvironment): BackendConfig {
   const sslMode = environment.DATABASE_SSL_MODE ?? "require";
   if (!["disable", "require", "no-verify"].includes(sslMode)) throw new Error("Invalid DATABASE_SSL_MODE");
   const oidcValues = completeGroup(environment, ["OIDC_ISSUER", "OIDC_CLIENT_ID", "OIDC_CLIENT_SECRET", "OIDC_REDIRECT_URI"], "OIDC");
+  const managedKeys = ["MANAGED_IDENTITY_OIDC_ISSUER", "MANAGED_IDENTITY_OIDC_CLIENT_ID", "MANAGED_IDENTITY_OIDC_REDIRECT_URI", "MANAGED_IDENTITY_OIDC_CLIENT_SECRET_FILE"] as const;
+  const managedPresent = managedKeys.some((key) => optionalRuntimeValue(environment, key) !== undefined);
+  if (optionalRuntimeValue(environment, "MANAGED_IDENTITY_OIDC_CLIENT_SECRET")) {
+    throw new Error("Managed Identity client secret must use MANAGED_IDENTITY_OIDC_CLIENT_SECRET_FILE");
+  }
+  const managedValues = managedPresent
+    ? completeGroup(environment, managedKeys, "Managed Identity OIDC")
+    : null;
+  if (managedPresent && !managedValues) throw new Error("Incomplete Managed Identity OIDC configuration");
+  if (managedValues && (managedValues.MANAGED_IDENTITY_OIDC_ISSUER !== MANAGED_IDENTITY_ISSUER
+    || managedValues.MANAGED_IDENTITY_OIDC_CLIENT_ID !== "tcdx-grc"
+    || managedValues.MANAGED_IDENTITY_OIDC_REDIRECT_URI !== MANAGED_IDENTITY_CALLBACK)) {
+    throw new Error("Managed Identity OIDC configuration must match the canonical issuer, client and callback");
+  }
+  const managedClientSecret = managedValues ? protectedSecretFile(environment, "MANAGED_IDENTITY_OIDC_CLIENT_SECRET") : undefined;
+  const adminKeys = ["MANAGED_IDENTITY_ADMIN_BASE_URL", "MANAGED_IDENTITY_ADMIN_CLIENT_ID", "MANAGED_IDENTITY_ADMIN_CLIENT_SECRET_FILE"] as const;
+  const adminPresent = adminKeys.some((key) => optionalRuntimeValue(environment, key) !== undefined);
+  const adminValues = adminPresent ? completeGroup(environment, adminKeys, "Managed Identity Admin") : null;
+  if (adminPresent && !adminValues) throw new Error("Incomplete Managed Identity Admin configuration");
+  const adminSecret = adminValues ? protectedSecretFile(environment, "MANAGED_IDENTITY_ADMIN_CLIENT_SECRET") : undefined;
+  let adminBaseUrl: URL | undefined;
+  if (adminValues) {
+    adminBaseUrl = new URL(adminValues.MANAGED_IDENTITY_ADMIN_BASE_URL!);
+    if (adminValues.MANAGED_IDENTITY_ADMIN_CLIENT_ID !== "tcdx-grc-managed-identity-provisioner"
+      || adminBaseUrl.protocol !== "http:"
+      || adminBaseUrl.hostname !== "192.168.2.46" || adminBaseUrl.port !== "8180"
+      || adminBaseUrl.pathname !== "/" || adminBaseUrl.search || adminBaseUrl.hash
+      || adminBaseUrl.username || adminBaseUrl.password) {
+      throw new Error("Managed Identity Admin endpoint/client must be the approved internal service");
+    }
+  }
   const privateKey = secretValue(environment, "APP_JWT_PRIVATE_KEY");
   const publicKey = secretValue(environment, "APP_JWT_PUBLIC_KEY");
   if (Boolean(privateKey) !== Boolean(publicKey)) throw new Error("Incomplete application JWT keypair configuration");
-  if (oidcValues && !privateKey) throw new Error("OIDC requires a complete TCDX application JWT configuration");
+  if ((oidcValues || managedValues) && !privateKey) throw new Error("OIDC requires a complete TCDX application JWT configuration");
   const databasePassword = optionalRuntimeValue(environment, "DATABASE_PASSWORD");
   const oidcAlgorithms = (optionalRuntimeValue(environment, "OIDC_ALLOWED_ALGORITHMS") ?? "RS256").split(",").map((value) => value.trim()).filter(Boolean);
   const oidcScopes = (optionalRuntimeValue(environment, "OIDC_SCOPES") ?? "openid profile email").split(/\s+/).filter(Boolean);
@@ -176,6 +237,29 @@ export function loadConfig(environment: RuntimeEnvironment): BackendConfig {
         scopes: oidcScopes!,
         allowedAlgorithms: oidcAlgorithms!,
         tokenEndpointAuthMethod: oidcTokenEndpointAuthMethod as "client_secret_basic" | "client_secret_post"
+      } : {})
+    },
+    managedIdentityOidc: {
+      configured: managedValues !== null,
+      ...(managedValues && managedClientSecret ? {
+        issuer: MANAGED_IDENTITY_ISSUER,
+        clientId: "tcdx-grc",
+        clientSecret: managedClientSecret,
+        redirectUri: MANAGED_IDENTITY_CALLBACK,
+        scopes: ["openid"],
+        allowedAlgorithms: ["RS256"],
+        tokenEndpointAuthMethod: "client_secret_post" as const,
+        requiredAmr: ["pwd", "otp"],
+        identityResolution: "existing_only" as const
+      } : {})
+    },
+    managedIdentityAdmin: {
+      configured: Boolean(adminValues && adminSecret && adminBaseUrl),
+      issuer: MANAGED_IDENTITY_ISSUER,
+      ...(adminValues && adminSecret && adminBaseUrl ? {
+        baseUrl: adminBaseUrl,
+        clientId: adminValues.MANAGED_IDENTITY_ADMIN_CLIENT_ID!,
+        clientSecret: adminSecret
       } : {})
     },
     applicationJwt: {

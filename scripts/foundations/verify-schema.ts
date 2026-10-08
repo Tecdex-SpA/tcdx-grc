@@ -52,7 +52,9 @@ expectedConstraints.delete("uq_normative_units__source_locator");
 expectedConstraints.delete("uq_requirement_control_mappings__ownership_class_tenan_0197a00d");
 expectedConstraints.delete("uq_normative_unit_control_mappings__mapping_version");
 expectedConstraints.delete("uq_subjects__tenant_id_canonical_key");
+for (const name of expectedNames(/CONSTRAINT "([^"]+)"/g, "database/migrations/20261007000200_phase5_methodology_binding.sql")) expectedConstraints.add(name);
 const expectedIndexes = new Set([
+  ...expectedNames(/CREATE (?:UNIQUE )?INDEX "([^"]+)"/g, "database/migrations/20261007000200_phase5_methodology_binding.sql"),
   ...expectedNames(/CREATE (?:UNIQUE )?INDEX "([^"]+)"/g, "database/migrations/20260916000800_required_indexes.sql"),
   ...expectedNames(/CREATE (?:UNIQUE )?INDEX "([^"]+)"/g, "database/migrations/20260916001000_pre_f4_integrated_audit_model.sql"),
   ...expectedNames(/CREATE (?:UNIQUE )?INDEX "([^"]+)"/g, "database/migrations/20260921000100_pre_f5c_executable_physical_reconciliation.sql"),

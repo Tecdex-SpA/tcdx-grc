@@ -1,0 +1,13 @@
+# Approved Phase 5 methodology binding
+
+Authority: [human decision](../governance/PHASE5_METHODOLOGY_BINDING_ARCHITECTURE_DECISION_20261007.md), approved with “Aprobar enmienda y ejecutar hasta cierre”. Immutable master remains v1.7.
+
+ComplianceMethodology and ControlEffectivenessMethodology are separate global, platform-owned, immutable versioned definitions. Assessment UUID references resolve the corresponding registry by validated FK; neither RiskMethodology, FormulaDefinition nor ConfigurationDefinition becomes a methodology identity. One row identifies one version; code/version is unique. Typed coverage (0..100) and Compliance partial factor (0..1), effective interval, publication, compatible formula and rector source/version preserve lineage. Published contents cannot be altered/deleted; only an effective end may be recorded, preserving historical assessment references. Compatible published formula contents are also immutable once referenced.
+
+GET /compliance-methodologies and GET /controls-methodologies are authenticated tenant reads with their own capability and read permission. Cursor paging binds the selected tenant and domain. Only published currently effective methods are selectable; unknown, wrong-domain, unpublished, future and expired references fail closed on assessment creation. Optional EffectiveConfiguration resolves within the assessment tenant and owner domain; no override is inferred. Platform authority supplies no tenant read or create access.
+
+Permission grants derive only from already published assessment-create role grants, retaining canonical role ownership; two new permissions, no individual grants. Newly created tenant role instances consume the same published template grants.
+
+Migration 20261007000200 guards the 29-migration/170-permission baseline and zero existing assessment rows, creates two tables and validated FKs, seeds two compatible FormulaDefinitions and initial rector methodologies, publishes two permissions and records two publication audit events. Governed migration is the system actor, identified by command, database execution actor, human approval and correlation; no synthetic human identity is introduced. Existing assessment commands retain human actor/tenant and include the immutable method reference in their audit snapshot. New totals: 30 migrations, 237 tables, 172 permissions. No Phase 6 source/schema is created.
+
+Traceability: rector 17/19/31/38/39 → explicit human amendment → physical migration/expected-schema → OpenAPI/matrix/permissions/seeds → core-grc methodologies/service/routes → existing CreateDrawer selector → unit/PostgreSQL/E2E → QA lifecycle receipts → final closure reports.

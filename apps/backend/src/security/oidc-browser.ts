@@ -13,7 +13,8 @@ const FLOW_COOKIE = "__Host-tcdx_oidc_flow";
 const FLOW_MAX_AGE_SECONDS = 600;
 const TOKEN_STORAGE_KEY = "tcdx.access_token";
 
-export type OidcConfig = Required<Omit<BackendConfig["oidc"], "configured">>;
+export type OidcConfig = Required<Omit<BackendConfig["oidc"], "configured" | "requiredAmr" | "identityResolution">>
+  & Pick<BackendConfig["oidc"], "requiredAmr" | "identityResolution">;
 type Executor = Kysely<FoundationDatabase> | Transaction<FoundationDatabase>;
 export type InvitationFlow = { invitationId: string; tokenDigest: string };
 type FlowState = { state: string; nonce: string; verifier: string; expiresAt: number; invitation?: InvitationFlow };
@@ -87,9 +88,20 @@ export async function verifyOidcIdentityProof(config: OidcConfig, idToken: strin
       issuer: config.issuer,
       audience: config.clientId,
       algorithms: config.allowedAlgorithms,
-      requiredClaims: ["iss", "aud", "sub", "iat", "exp", "nonce"]
+      requiredClaims: ["iss", "aud", "sub", "iat", "exp", "nonce", ...(config.requiredAmr?.length ? ["amr", "auth_time", "sid"] : [])]
     });
     if (payload.nonce !== nonce || !payload.iss || !payload.sub) throw authFailure();
+    if (config.requiredAmr?.length) {
+      const amr = payload.amr;
+      const exactAudience = payload.aud === config.clientId
+        || (Array.isArray(payload.aud) && payload.aud.length === 1 && payload.aud[0] === config.clientId);
+      if (!exactAudience || !Number.isSafeInteger(payload.iat) || !Number.isSafeInteger(payload.exp)
+        || payload.iat! > Math.floor(Date.now() / 1_000) + 5 || payload.exp! <= payload.iat!
+        || !Array.isArray(amr) || !amr.every((value) => typeof value === "string" && value.length > 0)
+        || !config.requiredAmr.every((value) => amr.includes(value))
+        || !Number.isSafeInteger(payload.auth_time) || typeof payload.iat !== "number"
+        || Number(payload.auth_time) > payload.iat || typeof payload.sid !== "string" || !payload.sid) throw authFailure();
+    }
     return {
       issuer: payload.iss,
       subject: payload.sub,
@@ -132,6 +144,21 @@ export class OidcFlowStore {
 }
 
 export class PostgresOidcIdentityResolver {
+  async resolveExisting(executor: Executor, claims: ExternalClaims): Promise<CanonicalIdentity> {
+    const identityKey = canonicalIdentityKey(claims.issuer, claims.subject);
+    const result = await sql<{ user_identity_id: string }>`
+      UPDATE iam.user_identities
+         SET last_authenticated_at=transaction_timestamp(),
+             updated_at=transaction_timestamp(),
+             updated_by_user_identity_id=user_identity_id,
+             row_version=row_version+1
+       WHERE identity_key=${identityKey} AND lifecycle_state='active'
+       RETURNING user_identity_id
+    `.execute(executor);
+    if (result.rows.length !== 1) throw authFailure();
+    return { userIdentityId: result.rows[0]!.user_identity_id };
+  }
+
   async resolveOrCreate(executor: Executor, claims: ExternalClaims): Promise<CanonicalIdentity> {
     const userIdentityId = newUuidV7();
     const identityKey = canonicalIdentityKey(claims.issuer, claims.subject);
@@ -157,7 +184,7 @@ export class PostgresOidcIdentityResolver {
 
 export async function acceptMembershipInvitation(
   transaction: Transaction<FoundationDatabase>,
-  identities: PostgresOidcIdentityResolver,
+  identities: Pick<PostgresOidcIdentityResolver, "resolveOrCreate">,
   claims: ExternalClaims,
   invitationFlow: InvitationFlow,
   correlationId: string
@@ -298,6 +325,7 @@ export class OidcBrowserClient {
   }
 
   async invitationAuthorizationRequest(invitationToken: string): Promise<{ url: string; flowId: string }> {
+    if (this.config.identityResolution === "existing_only") throw authFailure();
     if (!/^[A-Za-z0-9_-]{43}$/.test(invitationToken)) throw authFailure();
     const tokenDigest = createHash("sha256").update(invitationToken, "ascii").digest("hex");
     const result = await sql<{ tenant_membership_invitation_id: string }>`
@@ -346,7 +374,9 @@ export class OidcBrowserClient {
       return await this.database.transaction().execute(async (transaction) => {
         const identity = flow.invitation
           ? await acceptMembershipInvitation(transaction, this.identities, claims, flow.invitation, correlationId)
-          : await this.identities.resolveOrCreate(transaction, claims);
+          : this.config.identityResolution === "existing_only"
+            ? await this.identities.resolveExisting(transaction, claims)
+            : await this.identities.resolveOrCreate(transaction, claims);
         issued = await this.applicationTokens.issue(identity.userIdentityId, newUuidV7());
         await persistAuditEvent(transaction, {
           auditEventId: newUuidV7(), ownershipClass: "PLATFORM_CONTROL", tenantId: null,
@@ -400,11 +430,18 @@ function bearer(request: FastifyRequest): string {
   return value.slice(7);
 }
 
-export function registerOidcBrowserRoutes(app: FastifyInstance, client?: OidcBrowserClient): void {
-  app.get("/auth/login", async (_request, reply) => {
-    if (!client) throw new FoundationError("TCDX.AUTHENTICATION.NOT_CONFIGURED", "Authentication is not configured", 503);
-    const request = await client.authorizationRequest();
-    return reply.header("set-cookie", flowCookie(request.flowId, FLOW_MAX_AGE_SECONDS)).redirect(request.url, 302);
+const MANAGED_FLOW_PREFIX = "managed.";
+
+export function registerOidcBrowserRoutes(app: FastifyInstance, client?: OidcBrowserClient, managedClient?: OidcBrowserClient): void {
+  app.get("/auth/login", async (request: FastifyRequest<{ Querystring: { provider?: unknown } }>, reply) => {
+    const provider = request.query.provider;
+    if (provider !== undefined && provider !== "zoho" && provider !== "tcdx-managed-identity") throw authFailure();
+    const managed = provider === "tcdx-managed-identity";
+    const selected = managed ? managedClient : client;
+    if (!selected) throw new FoundationError("TCDX.AUTHENTICATION.NOT_CONFIGURED", "Authentication is not configured", 503);
+    const authorization = await selected.authorizationRequest();
+    const flowId = managed ? `${MANAGED_FLOW_PREFIX}${authorization.flowId}` : authorization.flowId;
+    return reply.header("set-cookie", flowCookie(flowId, FLOW_MAX_AGE_SECONDS)).redirect(authorization.url, 302);
   });
 
   app.post("/auth/invitations/accept", async (request: FastifyRequest<{ Body: { invitation_token?: unknown } }>, reply) => {
@@ -420,18 +457,23 @@ export function registerOidcBrowserRoutes(app: FastifyInstance, client?: OidcBro
 
   app.get("/auth/callback", async (request: FastifyRequest<{ Querystring: { code?: unknown; state?: unknown; error?: unknown } }>, reply) => {
     reply.header("set-cookie", flowCookie("", 0)).header("cache-control", "no-store").header("referrer-policy", "no-referrer");
-    if (!client) throw new FoundationError("TCDX.AUTHENTICATION.NOT_CONFIGURED", "Authentication is not configured", 503);
+    if (!client && !managedClient) throw new FoundationError("TCDX.AUTHENTICATION.NOT_CONFIGURED", "Authentication is not configured", 503);
     if (request.query.error || typeof request.query.code !== "string" || typeof request.query.state !== "string") throw authFailure();
-    const flowId = parseCookie(request.headers.cookie);
-    if (!flowId) throw authFailure();
-    const token = await client.complete(request.query.code, request.query.state, flowId, String(reply.getHeader("x-correlation-id")));
+    const cookie = parseCookie(request.headers.cookie);
+    if (!cookie) throw authFailure();
+    const managed = cookie.startsWith(MANAGED_FLOW_PREFIX);
+    const selected = managed ? managedClient : client;
+    const flowId = managed ? cookie.slice(MANAGED_FLOW_PREFIX.length) : cookie;
+    if (!selected || !flowId) throw authFailure();
+    const token = await selected.complete(request.query.code, request.query.state, flowId, String(reply.getHeader("x-correlation-id")));
     const nonce = base64url(24);
-    return secureHtml(reply, nonce).send(callbackHtml(token, client.frontendOrigin, nonce));
+    return secureHtml(reply, nonce).send(callbackHtml(token, selected.frontendOrigin, nonce));
   });
 
   app.post("/auth/logout", async (request, reply) => {
-    if (!client) throw new FoundationError("TCDX.AUTHENTICATION.NOT_CONFIGURED", "Authentication is not configured", 503);
-    await client.logout(bearer(request), String(reply.getHeader("x-correlation-id")));
+    const selected = client ?? managedClient;
+    if (!selected) throw new FoundationError("TCDX.AUTHENTICATION.NOT_CONFIGURED", "Authentication is not configured", 503);
+    await selected.logout(bearer(request), String(reply.getHeader("x-correlation-id")));
     return reply.code(204).send();
   });
 }

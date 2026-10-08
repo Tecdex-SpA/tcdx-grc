@@ -1,0 +1,84 @@
+{
+  "build": "PASS",
+  "imageId": "sha256:1d34a78b51eeed798620adc4375a39242d6d7009f4155e126de9850cf4de3973",
+  "tag": "tcdx-grc-frontend:mi-tenant-e2e-a910c94aa24e",
+  "architecture": "linux/amd64",
+  "base": "node:22.23.2-bookworm-slim@sha256:48e4b67d85f87bd551df43704e24d252f56cc5f8e9718841aace50f19948f0f9",
+  "baseLayerPrefixMatches": true,
+  "baseLayerCount": 5,
+  "buildSource": "/tmp/tcdx-grc-mi-tenant-e2e-source",
+  "sourceFingerprint": "a910c94aa24e291af9de66d90e8fa8a57bbe2d1d11e4216b76632782b3485c4b",
+  "buildSecrets": "NONE",
+  "componentsBuilt": [
+    "frontend"
+  ],
+  "ociSourceLabelSecurityClassification": "SAFE_PUBLIC_PROVENANCE",
+  "otherUnclassifiedNewLabels": 0,
+  "localSmoke": "PASS",
+  "localContainerId": "8fe9482fda4a1cb7945bdddcee993fd065976c5509802e44285615b011605c56",
+  "localContainerName": "tcdx-grc-mi-tenant-e2e-local-a910c94aa24e",
+  "localPort": 4197,
+  "runtimeUid": "1000",
+  "logoSha256": "215de8e5447f770649647d55556dceeed84f8f6e64393d618690ef0954246806",
+  "bundleAssets": [
+    "/assets/index-C1oKueIh.js",
+    "/assets/index-BmB4OoCc.css"
+  ],
+  "bundleRequiredFeaturesVerified": [
+    "Tecdex GRC",
+    "Tecdex Managed Identity",
+    "Agregar usuario",
+    "Administrador inicial",
+    "/api/v1/user-identities",
+    "/api/v1/platform/tenants:initial-onboarding",
+    "/api/v1/memberships",
+    "/api/v1/roles",
+    "https://grc.tecdex.net",
+    "Acceso a empresas",
+    "Roles de esta empresa",
+    "Sin asociar a empresa",
+    "users:onboard",
+    "Invitaci\u00f3n con identidad corporativa Zoho"
+  ],
+  "bundleSha256": "1a38b76a407ac5a3ff21bbc6cb43dda8684519c51dc516637d204310ad04b451",
+  "transportPath": "/tmp/tcdx-grc-mi-tenant-e2e-frontend-a910c94aa24e.tar",
+  "transportSha256": "1c3ebe7c7e7297acaac9f3170efcb21702bc0cba0303f63abda797b86509e8a5",
+  "transportVerify": "PASS",
+  "transportIdentity": {
+    "manifestConfigDigest": "sha256:2a2c0bab0191a9e7aeb8051b93276b3c0cc32d310efcf1971e6b0623b8f7d01e",
+    "engineImageId": "sha256:1d34a78b51eeed798620adc4375a39242d6d7009f4155e126de9850cf4de3973",
+    "manifest": {
+      "Config": "blobs/sha256/2a2c0bab0191a9e7aeb8051b93276b3c0cc32d310efcf1971e6b0623b8f7d01e",
+      "RepoTags": [
+        "tcdx-grc-frontend:mi-tenant-e2e-a910c94aa24e"
+      ],
+      "Layers": [
+        "blobs/sha256/774043ccc8ccd0d0833a9ee0792142ab7ad93df971e59dd248fbf82db16d0150",
+        "blobs/sha256/d456d1aa143e47912621240cd8e79286732dc069a35b0e02b03449f60df966df",
+        "blobs/sha256/60f37e2c93ec479af36bf1f7a41277e572d820f3b1abbea47d8073b1f01aa502",
+        "blobs/sha256/e53f92c42dd657487b7f7f027b206c996cd3760cda60adda79e44449b2753a29",
+        "blobs/sha256/b571db164614a1290b74286b3e4f7ad934430b830515f81e922b39c75cf1dc7e",
+        "blobs/sha256/7ca5212d1eb6f95fd674498d75643405a2264dfda637274dded7094ce890d90f",
+        "blobs/sha256/b81e6a1583bede4244b1f57c1da526ad94f3336220931c301062d8585d8c00bc",
+        "blobs/sha256/1afb9dce7aabd7e9c1757322b28dc96d8fc3e7edb6bb0165f61b2bc4b73458d6"
+      ]
+    },
+    "index": {
+      "schemaVersion": 2,
+      "mediaType": "application/vnd.oci.image.index.v1+json",
+      "manifests": [
+        {
+          "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+          "digest": "sha256:1d34a78b51eeed798620adc4375a39242d6d7009f4155e126de9850cf4de3973",
+          "size": 1876,
+          "annotations": {
+            "config.digest": "sha256:2a2c0bab0191a9e7aeb8051b93276b3c0cc32d310efcf1971e6b0623b8f7d01e",
+            "io.containerd.image.name": "docker.io/library/tcdx-grc-frontend:mi-tenant-e2e-a910c94aa24e",
+            "org.opencontainers.image.ref.name": "mi-tenant-e2e-a910c94aa24e"
+          }
+        }
+      ]
+    }
+  },
+  "qaDeployPerformed": false
+}

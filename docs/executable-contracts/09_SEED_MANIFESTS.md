@@ -172,3 +172,18 @@ H-006 freezes exactly two rows: `open -> dismissed` and `triaged -> dismissed`. 
 6. SEED-011 is an intentional empty value manifest because H-003 authorizes governance but supplies no configuration value/default to seed.
 
 `RUNTIME_PERMISSION_ROWS=154_AFTER_ADMINISTRATIVE_READ_RELEASE`; `PUBLISHED_LIFECYCLE_EDGES=103`; `RAW_LIFECYCLE_DEFINITION_ROWS=139`; `ISSUE_DISMISSED_EDGES=2`; `ISSUE_DISMISSED_SOURCES=open,triaged`. The RetentionPolicy migration is forward-only over the existing table and lifecycle registry; it adds no entity/table or permission. The membership-invitation migration grants its two Platform-scope permissions only to the single baseline PLATFORM_CONTROL `PLATFORM_ADMIN` role. The 2026-09-28 administrative-read migration adds four permissions with four Platform Admin grants, two global Tenant Admin template grants, and two grants per existing tenant-owned baseline Tenant Admin role; no direct identity grants.
+
+
+## STEP 23L-TENANT-ONBOARDING-D1-R
+
+The approved platform.user_identity.read definition is staged outside materialized seed data. Future separately authorized data-only publication must resolve Permission by canonical code, grant only the PLATFORM_ADMIN baseline and TENANT_ADMIN template, and materialize the grant only into each canonical tenant TENANT_ADMIN instance using existing ownership/tenant/RolePermission keys. No wildcard/custom/other-role grants; no hardcoded UUID, SQL/seed/manifest mutation or migration28 in D1-R.
+
+SEED010 remains the sole tenant base-role initialization mechanism invoked by internal TENANT_BOOTSTRAP through the bounded initial onboarding service. Same tenant/version/target replay converges without duplicate22roles/grants/Membership/initial TENANT_ADMIN. New-first requires zero active Tenant Admin tenant-wide and distinct actor/target; previous consumed bootstrap never reopens. No new template role set or public bootstrap endpoint. See executable25.
+
+## Managed Identity tenant onboarding E2E — 2026-10-07
+
+Central onboarding publication20261007000100 adds exactly platform.tenant_user.onboard and one canonical PLATFORM_ADMIN grant. No tenant template/instance, Support or user grant; no functional data or DDL. Generated tenantUserOnboardingPermission registry consumes executable26.
+
+## Approved Phase 5 methodology amendment
+
+See [27 — canonical methodology binding](27_PHASE5_METHODOLOGY_BINDING.md) and the explicit human architecture approval. Migration `20261007000200` produces 30 migrations / 237 physical tables / 172 permissions. Seeds: separate Compliance and Control Effectiveness version 1, two compatible FormulaDefinitions, two narrowly scoped read permissions; publication audit `audit.compliance.methodology.publish.v1` and `audit.controls.methodology.publish.v1`. No historical migration or immutable rector file is changed.

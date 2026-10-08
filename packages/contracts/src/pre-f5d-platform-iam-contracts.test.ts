@@ -127,8 +127,8 @@ describe("PRE-F5D Platform IAM contract reconciliation", () => {
   });
 
   it("preserves PRE-F5D's historical 229-table evidence while exposing the approved 233-table inventory", () => {
-    expect(expectedSchema.tableCount).toBe(235);
-    expect(expectedSchema.tables).toHaveLength(235);
+    expect(expectedSchema.tableCount).toBe(237);
+    expect(expectedSchema.tables).toHaveLength(237);
     expect(reconciliation).toContain("DATABASE_TABLES=229");
     expect(reconciliation).toContain("DATABASE_SCHEMA_CHANGED=0");
     expect(reconciliation).toContain("MIGRATION_CREATED=0");

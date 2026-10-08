@@ -8,6 +8,7 @@ type Phase5RuntimePermissions = {
 };
 
 type SeedManifest = {
+  phase5Methodologies?: { migrationId: string; permissionRows: number; permissionCodes: string[]; methodologyRows: number; formulaRows: number; methodologyIds: string[] };
   permissionRows: number;
   lifecycleEdges: number;
   rawLifecycleDefinitionRows: number;
@@ -43,6 +44,10 @@ type SeedManifest = {
     permissionCodes: string[];
   };
   phase5PlusValidation?: { migrationId: string; permissionRows: number; configurationDefaults: number; permissionCodes: string[] };
+  tenantUserOnboardingPermission?: { migrationId: string; permissionRows: number; platformAdminGrantRows: number; permissionCodes: string[] };
+  userIdentityDiscoveryPermission?: { migrationId: string; permissionRows: number; platformAdminGrantRows: number; tenantAdminTemplateGrantRows: number; tenantAdminGrantRowsPerTenant: number; permissionCodes: string[] };
+  platformRoleAdministrationPermission?: { migrationId: string; permissionRows: number; platformAdminGrantRows: number; permissionCodes: string[] };
+  managedIdentityPermissions?: { migrationId: string; permissionRows: number; platformAdminGrantRows: number; permissionCodes: string[] };
 };
 
 type MigrationManifest = {
@@ -69,6 +74,64 @@ try {
   const controlAssessmentStart = manifest.phase5ControlAssessmentStart;
   const phase5PlusPermissions = manifest.phase5PlusPermissions;
   const phase5PlusValidation = manifest.phase5PlusValidation;
+  const discoveryPermission = manifest.userIdentityDiscoveryPermission;
+  let discoveryPermissionApplied = false;
+  if (discoveryPermission) {
+    const ledger = await client.query<{ content_sha256: string; outcome: string }>("SELECT content_sha256,outcome FROM platform.schema_migrations WHERE migration_id=$1", [discoveryPermission.migrationId]);
+    const declared = migrationManifest.migrations.find(row => row.id === discoveryPermission.migrationId);
+    if (ledger.rows.length) {
+      discoveryPermissionApplied = ledger.rows[0]?.outcome === "applied";
+      if (!declared || ledger.rows[0]?.content_sha256 !== declared.sha256) failures.push("identity-discovery-permission-checksum");
+    }
+    const published = await scalar("SELECT count(*)::text AS count FROM iam.permissions WHERE permission_code='platform.user_identity.read' AND domain_code='platform' AND resource_code='user_identity' AND action_code='read' AND lifecycle_state='published'");
+    if (published !== (discoveryPermissionApplied ? 1 : 0)) failures.push("identity-discovery-permission-publication");
+    if (discoveryPermissionApplied) {
+      const drift = await scalar(`WITH expected AS (
+        SELECT r.role_id,r.ownership_class,r.tenant_id,p.permission_id FROM iam.roles r CROSS JOIN iam.permissions p
+         WHERE p.permission_code='platform.user_identity.read' AND r.is_baseline AND r.lifecycle_state='published'
+           AND ((r.role_code IN ('PLATFORM_ADMIN','TENANT_ADMIN') AND r.ownership_class='PLATFORM_CONTROL' AND r.tenant_id IS NULL)
+             OR (r.role_code='TENANT_ADMIN' AND r.ownership_class='TENANT_OWNED' AND r.tenant_id IS NOT NULL))
+      ), actual AS (
+        SELECT rp.role_id,rp.ownership_class,rp.tenant_id,rp.permission_id FROM iam.role_permissions rp JOIN iam.permissions p USING(permission_id)
+         WHERE p.permission_code='platform.user_identity.read'
+      ) SELECT count(*)::text AS count FROM ((SELECT * FROM expected EXCEPT SELECT * FROM actual)
+        UNION ALL (SELECT * FROM actual EXCEPT SELECT * FROM expected)) difference`);
+      if (drift !== 0) failures.push("identity-discovery-grant-drift");
+    }
+  }
+  const tenantUserOnboardingPermission = manifest.tenantUserOnboardingPermission;
+  let tenantUserOnboardingPermissionApplied = false;
+  if (tenantUserOnboardingPermission) {
+    const ledger = await client.query<{content_sha256: string; outcome: string}>("SELECT content_sha256,outcome FROM platform.schema_migrations WHERE migration_id=$1", [tenantUserOnboardingPermission.migrationId]);
+    const declared = migrationManifest.migrations.find(row => row.id === tenantUserOnboardingPermission.migrationId);
+    if (ledger.rows.length) {
+      tenantUserOnboardingPermissionApplied = ledger.rows[0]?.outcome === "applied";
+      if (!declared || ledger.rows[0]?.content_sha256 !== declared.sha256) failures.push("tenant-user-onboarding-permission-checksum");
+    }
+    const count = await scalar("SELECT count(*)::text AS count FROM iam.permissions WHERE permission_code=$1 AND lifecycle_state='published' AND domain_code='platform' AND resource_code='tenant_user' AND action_code='onboard'", ["platform.tenant_user.onboard"]);
+    if (count !== (tenantUserOnboardingPermissionApplied ? 1 : 0)) failures.push("tenant-user-onboarding-permission-publication");
+    if (tenantUserOnboardingPermissionApplied) {
+      const grants = await client.query<{role_code: string; ownership_class: string; tenant_id: string|null; is_baseline: boolean; lifecycle_state: string; role_ownership: string; role_tenant: string|null}>("SELECT r.role_code,rp.ownership_class,rp.tenant_id,r.is_baseline,r.lifecycle_state,r.ownership_class AS role_ownership,r.tenant_id AS role_tenant FROM iam.role_permissions rp JOIN iam.roles r USING(role_id) JOIN iam.permissions p USING(permission_id) WHERE p.permission_code=$1", ["platform.tenant_user.onboard"]);
+      if (grants.rows.length !== 1 || grants.rows.some(r => r.role_code !== "PLATFORM_ADMIN" || r.ownership_class !== "PLATFORM_CONTROL" || r.tenant_id !== null || !r.is_baseline || r.lifecycle_state !== "published" || r.role_ownership !== "PLATFORM_CONTROL" || r.role_tenant !== null)) failures.push("tenant-user-onboarding-permission-grants");
+    }
+  }
+  const platformRolePermission = manifest.platformRoleAdministrationPermission;
+  let platformRolePermissionApplied = false;
+  if (platformRolePermission) {
+    const ledger = await client.query<{content_sha256: string; outcome: string}>("SELECT content_sha256,outcome FROM platform.schema_migrations WHERE migration_id=$1", [platformRolePermission.migrationId]);
+    const declared = migrationManifest.migrations.find(row => row.id === platformRolePermission.migrationId);
+    if (ledger.rows.length) {
+      platformRolePermissionApplied = ledger.rows[0]?.outcome === "applied";
+      if (!declared || ledger.rows[0]?.content_sha256 !== declared.sha256) failures.push("platform-role-permission-checksum");
+    }
+    const count = await scalar("SELECT count(*)::text AS count FROM iam.permissions WHERE permission_code=$1 AND lifecycle_state='published' AND domain_code='platform' AND resource_code='role' AND action_code='administer'", ["platform.role.administer"]);
+    if (count !== (platformRolePermissionApplied ? 1 : 0)) failures.push("platform-role-permission-publication");
+    if (platformRolePermissionApplied) {
+      const grants = await client.query<{role_code: string; ownership_class: string; tenant_id: string|null; is_baseline: boolean; lifecycle_state: string; role_ownership: string; role_tenant: string|null}>("SELECT r.role_code,rp.ownership_class,rp.tenant_id,r.is_baseline,r.lifecycle_state,r.ownership_class AS role_ownership,r.tenant_id AS role_tenant FROM iam.role_permissions rp JOIN iam.roles r USING(role_id) JOIN iam.permissions p USING(permission_id) WHERE p.permission_code=$1", ["platform.role.administer"]);
+      if (grants.rows.length !== 1 || grants.rows.some(r => r.role_code !== "PLATFORM_ADMIN" || r.ownership_class !== "PLATFORM_CONTROL" || r.tenant_id !== null || !r.is_baseline || r.lifecycle_state !== "published" || r.role_ownership !== "PLATFORM_CONTROL" || r.role_tenant !== null)) failures.push("platform-role-permission-grants");
+    }
+  }
+  const managedIdentityPermissions = manifest.managedIdentityPermissions;
   let phase5Applied = false;
   let subscriptionPermissionApplied = false;
   let invitationPermissionsApplied = false;
@@ -76,6 +139,18 @@ try {
   let controlAssessmentStartApplied = false;
   let phase5PlusApplied = false;
   let phase5PlusValidationApplied = false;
+  let managedIdentityPermissionsApplied = false;
+
+  if (managedIdentityPermissions) {
+    const ledger = await client.query<{ content_sha256: string; outcome: string }>(
+      "SELECT content_sha256,outcome FROM platform.schema_migrations WHERE migration_id=$1", [managedIdentityPermissions.migrationId]);
+    if (ledger.rows.length > 0) {
+      managedIdentityPermissionsApplied = ledger.rows[0]?.outcome === "applied";
+      const declared = migrationManifest.migrations.find((migration) => migration.id === managedIdentityPermissions.migrationId);
+      if (!declared || ledger.rows[0]?.content_sha256 !== declared.sha256)
+        failures.push(`managed-identity-permissions-migration-checksum:${managedIdentityPermissions.migrationId}`);
+    }
+  }
 
   if (phase5PlusValidation) {
     const ledger = await client.query<{ content_sha256: string; outcome: string }>(
@@ -192,14 +267,27 @@ try {
     methodologies: await scalar("SELECT count(*)::text AS count FROM risk.risk_methodologies"),
   };
 
+  const methodologySeed = manifest.phase5Methodologies;
+  const methodologyApplied = methodologySeed ? await scalar("SELECT count(*)::text AS count FROM platform.schema_migrations WHERE migration_id=$1 AND outcome='applied'", [methodologySeed.migrationId]) === 1 : false;
+  if (methodologyApplied) {
+    for (const [table, id] of [["regulatory.compliance_methodologies", "compliance_methodology_id"], ["controls.control_effectiveness_methodologies", "control_effectiveness_methodology_id"]]) {
+      if (await scalar(`SELECT count(*)::text AS count FROM ${table} WHERE ${id}=ANY($1::uuid[]) AND lifecycle_state='published' AND ownership_class='PLATFORM_CONTROL' AND tenant_id IS NULL`, [methodologySeed!.methodologyIds]) !== 1) failures.push(`methodology-publication:${table}`);
+    }
+    if (await scalar("SELECT count(*)::text AS count FROM data.formula_definitions WHERE formula_code IN ('BASELINE_COMPLIANCE','BASELINE_CONTROL_EFFECTIVENESS') AND lifecycle_state='published'") !== 2) failures.push("methodology-formula-publication");
+  }
   const expectedPermissions =
     manifest.permissionRows
+    + (methodologyApplied && methodologySeed ? methodologySeed.permissionRows : 0)
     + (phase5Applied && phase5 ? phase5.permissionRows : 0)
     + (subscriptionPermissionApplied && subscriptionPermission ? subscriptionPermission.permissionRows : 0)
     + (invitationPermissionsApplied && invitationPermissions ? invitationPermissions.permissionRows : 0)
     + (administrativeReadPermissionsApplied && administrativeReadPermissions ? administrativeReadPermissions.permissionRows : 0)
     + (phase5PlusApplied && phase5PlusPermissions ? phase5PlusPermissions.permissionRows : 0)
-    + (phase5PlusValidationApplied && phase5PlusValidation ? phase5PlusValidation.permissionRows : 0);
+    + (phase5PlusValidationApplied && phase5PlusValidation ? phase5PlusValidation.permissionRows : 0)
+    + (managedIdentityPermissionsApplied && managedIdentityPermissions ? managedIdentityPermissions.permissionRows : 0)
+    + (platformRolePermissionApplied && platformRolePermission ? platformRolePermission.permissionRows : 0)
+    + (discoveryPermissionApplied && discoveryPermission ? discoveryPermission.permissionRows : 0)
+    + (tenantUserOnboardingPermissionApplied && tenantUserOnboardingPermission ? tenantUserOnboardingPermission.permissionRows : 0);
 
   // Regulatory versions are materialized by the governed importer after the seeds.
   // Every non-seed version must retain an ImportManifest; seed verification must
@@ -426,6 +514,30 @@ try {
       UNION ALL (SELECT * FROM actual EXCEPT SELECT * FROM expected)
     ) drift`,[phase5PlusValidation.permissionCodes]);
     if (grantDrift !== 0) failures.push(`phase5-plus-validation-grant-drift:${grantDrift}:0`);
+  }
+  if (managedIdentityPermissionsApplied && managedIdentityPermissions) {
+    const published = await scalar(
+      "SELECT count(*)::text AS count FROM iam.permissions WHERE lifecycle_state='published' AND domain_code='platform' AND resource_code='managed_identity' AND action_code=split_part(permission_code,'.',3) AND permission_code=ANY($1::text[])",
+      [managedIdentityPermissions.permissionCodes]);
+    if (published !== managedIdentityPermissions.permissionRows)
+      failures.push(`managed-identity-permission-codes:${published}:${managedIdentityPermissions.permissionRows}`);
+    const platformAdminGrants = await scalar(`SELECT count(*)::text AS count FROM iam.role_permissions rp
+      JOIN iam.roles r ON r.role_id=rp.role_id JOIN iam.permissions p ON p.permission_id=rp.permission_id
+      WHERE p.permission_code=ANY($1::text[]) AND r.role_code='PLATFORM_ADMIN'
+        AND r.ownership_class='PLATFORM_CONTROL' AND r.tenant_id IS NULL
+        AND r.is_baseline=TRUE AND r.lifecycle_state='published'
+        AND rp.ownership_class=r.ownership_class AND rp.tenant_id IS NOT DISTINCT FROM r.tenant_id`,
+      [managedIdentityPermissions.permissionCodes]);
+    if (platformAdminGrants !== managedIdentityPermissions.platformAdminGrantRows)
+      failures.push(`managed-identity-platform-admin-grants:${platformAdminGrants}:${managedIdentityPermissions.platformAdminGrantRows}`);
+    const unauthorizedGrants = await scalar(`SELECT count(*)::text AS count FROM iam.role_permissions rp
+      JOIN iam.roles r ON r.role_id=rp.role_id JOIN iam.permissions p ON p.permission_id=rp.permission_id
+      WHERE p.permission_code=ANY($1::text[]) AND NOT (r.role_code='PLATFORM_ADMIN'
+        AND r.ownership_class='PLATFORM_CONTROL' AND r.tenant_id IS NULL
+        AND r.is_baseline=TRUE AND r.lifecycle_state='published'
+        AND rp.ownership_class=r.ownership_class AND rp.tenant_id IS NOT DISTINCT FROM r.tenant_id)`,
+      [managedIdentityPermissions.permissionCodes]);
+    if (unauthorizedGrants !== 0) failures.push(`managed-identity-unauthorized-grants:${unauthorizedGrants}:0`);
   }
 
   const tenantBootstrapRows = await client.query<{ tenant_id: string; role_count: string }>(`

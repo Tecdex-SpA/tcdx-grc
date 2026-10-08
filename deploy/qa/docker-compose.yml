@@ -11,12 +11,21 @@ services:
       - .env
 
     environment:
+      MANAGED_IDENTITY_OIDC_ISSUER: ${MANAGED_IDENTITY_OIDC_ISSUER:?Required Managed Identity issuer}
+      MANAGED_IDENTITY_OIDC_CLIENT_ID: ${MANAGED_IDENTITY_OIDC_CLIENT_ID:?Required Managed Identity client}
+      MANAGED_IDENTITY_OIDC_REDIRECT_URI: ${MANAGED_IDENTITY_OIDC_REDIRECT_URI:?Required Managed Identity callback}
+      MANAGED_IDENTITY_ADMIN_BASE_URL: ${MANAGED_IDENTITY_ADMIN_BASE_URL:?Required internal provisioning endpoint}
+      MANAGED_IDENTITY_ADMIN_CLIENT_ID: ${MANAGED_IDENTITY_ADMIN_CLIENT_ID:?Required provisioning client}
+      MANAGED_IDENTITY_OIDC_CLIENT_SECRET_FILE: /run/secrets/managed_identity_oidc_client_secret
+      MANAGED_IDENTITY_ADMIN_CLIENT_SECRET_FILE: /run/secrets/managed_identity_admin_client_secret
       APP_JWT_PRIVATE_KEY_FILE: /run/secrets/app_jwt_private_key
       APP_JWT_PUBLIC_KEY_FILE: /run/secrets/app_jwt_public_key
       OBJECT_STORAGE_ACCESS_KEY_FILE: /run/secrets/object_storage_access_key
       OBJECT_STORAGE_SECRET_KEY_FILE: /run/secrets/object_storage_secret_key
 
     secrets:
+      - managed_identity_oidc_client_secret
+      - managed_identity_admin_client_secret
       - app_jwt_private_key
       - app_jwt_public_key
       - object_storage_access_key
@@ -127,6 +136,10 @@ services:
       - no-new-privileges:true
 
 secrets:
+  managed_identity_oidc_client_secret:
+    file: ${MANAGED_IDENTITY_OIDC_CLIENT_SECRET_HOST_FILE:?Required protected OIDC secret file}
+  managed_identity_admin_client_secret:
+    file: ${MANAGED_IDENTITY_ADMIN_CLIENT_SECRET_HOST_FILE:?Required protected provisioning secret file}
   app_jwt_private_key:
     file: ${APP_JWT_PRIVATE_KEY_FILE}
   app_jwt_public_key:

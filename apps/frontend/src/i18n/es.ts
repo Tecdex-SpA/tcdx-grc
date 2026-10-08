@@ -19,6 +19,7 @@ export const uiText = {
     create: "Crear registro",
     creating: "Creando…",
     execute: "Ejecutar",
+    fulfill: "Cumplir solicitud",
     publish: "Publicar",
     reject: "Rechazar",
     retry: "Reintentar",
@@ -161,7 +162,7 @@ export const uiText = {
     loginError: "No fue posible completar la autenticación. Inténtalo nuevamente."
   },
   invitation: {
-    adminTitle: "Invitaciones de membresía",
+    adminTitle: "Invitación con identidad corporativa Zoho",
     adminDetail: "Invita a una persona mediante su identidad corporativa Zoho. La invitación no asigna roles.",
     create: "Invitar usuario",
     email: "Correo de invitación",
@@ -190,7 +191,7 @@ export const uiText = {
     noPlan: "Sin suscripción vigente",
     viewUsers: "Administrar usuarios",
     memberships: "Usuarios y membresías",
-    invitations: "Invitaciones",
+    invitations: "Invitaciones con identidad corporativa Zoho",
     roles: "Roles asignados",
     assignRole: "Asignar rol",
     selectRole: "Selecciona un rol permitido",

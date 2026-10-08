@@ -68,3 +68,15 @@ Migration `20260925000100_phase5_membership_invitation_platform_authority_reconc
 ## Phase 5 administrative read catalog release
 
 Human decision 2026-09-28 authorizes the forward-only data-only migration `20260928000100_phase5_administrative_read_permissions.sql` after the exact applied `20260925000100` checksum. It preserves 232 domain tables, immutable predecessor bytes and every invitation lifecycle row. It publishes only `platform.tenant.read`, `platform.membership.read`, `platform.membership_invitation.read` and `platform.role.read`, with exact baseline Platform/Tenant Admin grants and zero direct UserIdentity grants. The runner applies it only after isolated PostgreSQL 16 rebuild, checksum/replay/concurrency/unknown-ledger gates, QA backup/read-only preflight and correct owner authority. QA is not considered applied merely because this migration is in the source manifest.
+
+## STEP 23L-MI10-P2A
+
+Human STEP 23L-MI10-P2A authorizes local preparation and isolated PostgreSQL application of DATA-ONLY migration20261006000100_platform_role_administration_permission_publication.sql. It publishes one platform.role.administer Permission and one canonical PLATFORM_ADMIN RolePermission, preserves235 tables and all existing migration bytes. QA publication/deployment remain separate gates; exact checksum and manifest accompany isolated proof. No new schema or personal assignment.
+
+## Managed Identity tenant onboarding E2E — 2026-10-07
+
+20261007000100_platform_tenant_user_onboarding_permission_publication.sql: DATA-ONLY, ledger28->29, permissions169->170,235tables unchanged, exactly one PLATFORM_ADMIN grant. Canonical runner only; executable26/human E2E packet authorizes QA after local gates and fresh exact preflight.
+
+## Approved Phase 5 methodology amendment
+
+See [27 — canonical methodology binding](27_PHASE5_METHODOLOGY_BINDING.md) and the explicit human architecture approval. Migration `20261007000200` produces 30 migrations / 237 physical tables / 172 permissions. Seeds: separate Compliance and Control Effectiveness version 1, two compatible FormulaDefinitions, two narrowly scoped read permissions; publication audit `audit.compliance.methodology.publish.v1` and `audit.controls.methodology.publish.v1`. No historical migration or immutable rector file is changed.

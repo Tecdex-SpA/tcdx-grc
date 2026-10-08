@@ -96,8 +96,8 @@ describe("PRE-F5C Phase 5 executability preflight", () => {
   const tables = new Map(expectedSchema.tables.map((table) => [table.name, table]));
 
   it("keeps PRE-F5C mutability intact in the approved cumulative table inventory", () => {
-    expect(expectedSchema.tableCount).toBe(235);
-    expect(expectedSchema.tables).toHaveLength(235);
+    expect(expectedSchema.tableCount).toBe(237);
+    expect(expectedSchema.tables).toHaveLength(237);
     expect(tables.has("evidence.file_upload_intents")).toBe(true);
     const mutable = [
       "regulatory.requirement_applicabilities",
@@ -142,7 +142,7 @@ describe("PRE-F5C Phase 5 executability preflight", () => {
     expect(openApiOperations.size).toBe(Number(matrixSource.match(/`CONTRACTUAL_OPERATIONS=(\d+)`/)?.[1]));
     expect(matrixOperations.size).toBe(openApiOperations.size);
     expect([...openApiOperations.values()].filter(({ method }) => method === "get")).toHaveLength(Number(matrixSource.match(/`PUBLIC_READ_OPERATIONS=(\d+)`/)?.[1]));
-    expect([...openApiOperations.values()].filter(({ method }) => method === "post")).toHaveLength(94);
+    expect([...openApiOperations.values()].filter(({ method }) => method === "post")).toHaveLength(104);
     expect([...openApiOperations.values()].filter(({ method }) => method === "put")).toHaveLength(1);
     for (const [id, operation] of openApiOperations) expect(matrixOperations.get(id), id).toMatchObject({ method: operation.method, path: operation.path });
     const required: Record<string, [string, string]> = {
@@ -252,8 +252,8 @@ describe("PRE-F5C Phase 5 executability preflight", () => {
     }
     const operationAudits = [...matrixOperations.values()].map(({ audit }) => audit).filter((audit) => audit !== "NONE");
     const uniqueAudits = new Set([...operationAudits, ...edges.map(({ audit }) => audit)]);
-    expect(operationAudits).toHaveLength(94);
-    expect(uniqueAudits.size).toBe(167);
+    expect(operationAudits).toHaveLength(105);
+    expect(uniqueAudits.size).toBe(178);
     expect(auditCatalog).toContain("PUBLISHED_AUDIT_EVENT_CODES=168");
     expect(auditCatalog).toContain("exactly one material AuditEvent");
   });

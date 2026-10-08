@@ -22,9 +22,11 @@ export class BrowserSession implements AccessTokenProvider {
   }
 }
 
-export function receiveApplicationToken(apiOrigin: string, openWindow: (url: string) => Window | null = (url) => window.open(url, "tcdx-oidc", "popup,width=620,height=760")): Promise<string> {
+export function receiveApplicationToken(apiOrigin: string, openWindow: (url: string) => Window | null = (url) => window.open(url, "tcdx-oidc", "popup,width=620,height=760"), provider?: "zoho" | "tcdx-managed-identity"): Promise<string> {
   const expectedOrigin = new URL(apiOrigin).origin;
-  const popup = openWindow(new URL("/auth/login", expectedOrigin).toString());
+  const loginUrl = new URL("/auth/login", expectedOrigin);
+  if (provider) loginUrl.searchParams.set("provider", provider);
+  const popup = openWindow(loginUrl.toString());
   if (!popup) return Promise.reject(new Error("LOGIN_POPUP_BLOCKED"));
   return new Promise((resolve, reject) => {
     let closedAt: number | undefined;

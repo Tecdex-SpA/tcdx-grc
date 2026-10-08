@@ -27,7 +27,7 @@ describe("Phase 5 RetentionPolicy forward-only contract", () => {
     expect(table?.columns.find(({ name }) => name === "effective_from")?.nullable).toBe(true);
     expect(table?.columns.find(({ name }) => name === "effective_to")?.nullable).toBe(true);
     expect(table?.columns.find(({ name }) => name === "row_version")).toMatchObject({ type: "bigint", nullable: false, default: "1" });
-    expect(expectedSchema.tableCount).toBe(235);
+    expect(expectedSchema.tableCount).toBe(237);
     expect(manifest.migrations.length).toBeGreaterThanOrEqual(21);
     expect(manifest.migrations.find(({ id }) => id === "20260924000200")).toMatchObject({ id: "20260924000200", filename: "20260924000200_phase5_retention_policy_lifecycle.sql" });
   });

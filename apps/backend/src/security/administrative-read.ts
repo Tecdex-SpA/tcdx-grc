@@ -7,6 +7,7 @@ import { FoundationError } from "../errors.js";
 import type { IdentityVerifier } from "./authentication.js";
 import { requirePlatformAccess, resolvePlatformActor } from "./platform-authority.js";
 import { requireAccess, resolveAuthenticatedIdentity, resolveCoreActor } from "../core-grc/security.js";
+import { platformRoleFamilyCodes } from "./platform-role-family.js";
 import { membershipRoleEtag } from "./membership-role-etag.js";
 
 type JsonRow = Record<string, unknown>;
@@ -206,7 +207,27 @@ export async function administrativeRead(
   const isList = operation.endsWith("List");
   const allowed = isList ? ["page[size]", "page[cursor]"] : [];
   if (!["tenantList", "tenantGet"].includes(operation)) allowed.push("tenant_id");
+  if (operation === "roleList") allowed.push("assignable_family");
   const query = administrativeQuery(request.query, allowed);
+  if (operation === "roleList" && query.assignable_family !== undefined) {
+    if (query.assignable_family !== "platform") invalid("assignable_family");
+    if (request.headers["x-tcdx-tenant-id"] !== undefined) denied();
+    if (Object.hasOwn(query, "tenant_id") || request.body !== undefined
+      || (request.headers["content-length"] !== undefined && request.headers["content-length"] !== "0")
+      || request.headers["transfer-encoding"] !== undefined) invalid("tenant_id/body");
+    return database.transaction().setIsolationLevel("repeatable read").execute(async transaction => {
+      await sql`SET TRANSACTION READ ONLY`.execute(transaction);
+      const readContext = await context(transaction, verifier, request, "platform.role.read", query, { platformOnly: true });
+      const spec = roleSpec(readContext);
+      spec.where += " AND r.is_baseline AND r.lifecycle_state='published' AND r.role_code=ANY($1::text[])";
+      spec.values = [[...platformRoleFamilyCodes]];
+      const ambiguity = await transaction.executeQuery(CompiledQuery.raw(
+        `SELECT r.role_code FROM iam.roles r WHERE ${spec.where} GROUP BY r.role_code HAVING count(*)>1`, spec.values
+      ));
+      if (ambiguity.rows.length) throw new FoundationError("TCDX.CONFLICT.RESOURCE", "Conflicting role catalog", 409);
+      return list(transaction, spec, query);
+    });
+  }
   const permission = operation.startsWith("tenant") ? "platform.tenant.read"
     : operation.startsWith("membershipInvitation") ? "platform.membership_invitation.read"
     : operation.startsWith("membershipRole") || operation.startsWith("membership") ? "platform.membership.read" : "platform.role.read";
@@ -226,4 +247,34 @@ export async function administrativeRead(
   else spec = roleSpec(readContext);
   if (isList) return list(database, spec, query);
   return get(database, spec, resourceId!);
+}
+
+// Executable26: target identity projection reuses canonical administrative pagination,
+// ownership joins and ETag; no provider metadata or new read permission.
+export async function userIdentityTenantAccessList(database: Kysely<FoundationDatabase>, identity: import("./authentication.js").VerifiedIdentity,
+  target: unknown, tenantHeader: unknown, queryInput: unknown, body: unknown): Promise<Page> {
+  if (tenantHeader !== undefined) denied();
+  if (body !== undefined) invalid("body");
+  const query = administrativeQuery(queryInput,["page[size]","page[cursor]"]);
+  const id = uuid(target,"user_identity_id");
+  return database.transaction().setIsolationLevel("repeatable read").execute(async tx => {
+    await sql`SET TRANSACTION READ ONLY`.execute(tx);
+    const actor = await resolvePlatformActor(tx,identity);
+    requirePlatformAccess(actor,"platform.membership.read",actor.roles.includes("PLATFORM_ADMIN"));
+    const user = await sql`SELECT 1 FROM iam.user_identities WHERE user_identity_id=${id}::uuid`.execute(tx);
+    if (user.rows.length !== 1) notFound();
+    return list(tx,{
+      select: `m.tenant_membership_id,m.tenant_id,m.user_identity_id,m.membership_state,m.joined_at,m.ended_at,m.created_at,
+        jsonb_build_object('display_name',t.display_name,'tenant_code',t.tenant_code,'lifecycle_state',t.lifecycle_state) AS tenant,
+        COALESCE((SELECT jsonb_agg(jsonb_build_object('membership_role_id',mr.membership_role_id,'role_id',r.role_id,
+          'role_code',r.role_code,'role_name',r.name,'scope_kind',mr.scope_kind,'valid_from',mr.valid_from,'valid_to',mr.valid_to)
+          ORDER BY r.name,mr.membership_role_id) FROM iam.membership_roles mr JOIN iam.roles r
+          ON r.role_id=mr.role_id AND r.tenant_id=mr.tenant_id AND r.ownership_class='TENANT_OWNED'
+          WHERE mr.tenant_id=m.tenant_id AND mr.tenant_membership_id=m.tenant_membership_id AND r.lifecycle_state='published'
+            AND r.role_code<>ALL(ARRAY[${platformRoleFamilyCodes.map(code => `'${code}'`).join(',')}])
+            AND mr.valid_from<=transaction_timestamp() AND (mr.valid_to IS NULL OR mr.valid_to>transaction_timestamp())),'[]'::jsonb) AS roles`,
+      from: "iam.tenant_memberships m JOIN platform.tenants t ON t.tenant_id=m.tenant_id",
+      where: "m.user_identity_id=$1::uuid",values: [id],id: "m.tenant_membership_id",createdAt: "m.created_at"
+    },query);
+  });
 }
