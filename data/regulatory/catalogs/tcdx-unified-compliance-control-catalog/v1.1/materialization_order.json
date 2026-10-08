@@ -1,0 +1,29 @@
+{
+  "materialization_order": [
+    "1 RegulatorySource",
+    "2 RegulatoryPack",
+    "3 RegulatoryPackVersion",
+    "4 Framework",
+    "5 FrameworkVersion",
+    "6 RegulatoryPackVersion<->FrameworkVersion association",
+    "7 NormativeUnit parents-before-children",
+    "8 Requirement",
+    "9 Control (regulatory_reference)",
+    "10 ControlVersion (regulatory_reference)",
+    "11 NormativeUnitControlMapping",
+    "12 Control (tcdx_baseline)",
+    "13 ControlVersion (tcdx_baseline)",
+    "14 RequirementControlMapping",
+    "15 FrameworkCrosswalk",
+    "16 NormativeUnitCrosswalkMapping",
+    "17 RequirementCrosswalkMapping",
+    "18 ControlCrosswalkMapping",
+    "19 RegulatoryCoverageManifest",
+    "20 RegulatoryImportManifest",
+    "21 canonical human review/publish transitions"
+  ],
+  "never_materialize": [
+    "quarantined_relations.csv"
+  ],
+  "idempotency": "Resolve by business key; existing row must match immutable identity/provenance expectations or fail closed. Do not create duplicates."
+}

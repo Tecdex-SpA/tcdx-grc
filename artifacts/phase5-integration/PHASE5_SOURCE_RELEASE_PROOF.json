@@ -1,0 +1,43 @@
+{
+  "sourceFingerprint": "ee6e4c359d701d2929aec649468b46e940451a8314ea06fb89574b49738faee7",
+  "freezeSha256": "6902129d3860cdaff29d9550fc3a734781b37a85d94f8d259e62b99e2cbcf8e3",
+  "policySource": "STEP_23L_MI8A_RELEASE_PACKAGING_CONTRACT; methodology-freeze.py; release manifest STATUS_APPEND=EXTERNAL_POST_FREEZE",
+  "comparedPaths": 785,
+  "materialDifferences": 0,
+  "missingPaths": 0,
+  "extraPaths": 0,
+  "differences": [
+    {
+      "path": "docs/governance/MASTER_EXECUTION_STATUS.md",
+      "classification": "APPROVED_POST_FREEZE_APPEND_ONLY_GOVERNANCE",
+      "frozenSha256": "9abb4c5e53847d618a4fb885321be606f16c9572d0aa2ed44e4ac7a2f0dbd4e7",
+      "currentSha256": "c1e2011be8ea2f302c18600b0eaae3b4b3bec26bf133cbf551caf185cadb8c5e"
+    },
+    {
+      "path": "iam/run-amr-callback-regression.mjs",
+      "classification": "INDIVIDUALLY_VERIFIED_TRAILING_WHITESPACE_ONLY",
+      "frozenSha256": "dea8c42bf8b9644387fb7e3987209fc771de817372c6a73c987d94eb7732132b",
+      "currentSha256": "2369f68efe7e8b82c7668f9b0e379421d8e72be3bb22cd2277e6bddb1289b519"
+    },
+    {
+      "path": "iam/theme.test.mjs",
+      "classification": "UNCHANGED_UPSTREAM_SHA256_ASSERTION_WITH_EXACT_INVERSE_FOUR_SPACE_RECONSTRUCTION",
+      "frozenSha256": "cdf238a4d4ce93422da3c6d70337c236c13bb7c2ba3871c8dc7a161704beec7a",
+      "currentSha256": "b5fc608a62c7b472d16aea20049975df4f86ddd95f4dba9b0beca845ace851f9"
+    },
+    {
+      "path": "iam/theme/tcdx-grc/login/field.ftl",
+      "classification": "INDIVIDUALLY_VERIFIED_TRAILING_WHITESPACE_ONLY",
+      "frozenSha256": "058f8097cc3413f31612f4c76102fc6b7062222c11b91c824ae65fd01f5ee332",
+      "currentSha256": "3d637a30f0e09b9f10f9256772c43e767f85b3b1bd37351d794cd181ba6484f4"
+    },
+    {
+      "path": "iam/theme/tcdx-grc/login/template.ftl",
+      "classification": "INDIVIDUALLY_VERIFIED_TRAILING_WHITESPACE_ONLY",
+      "frozenSha256": "f309f904da57f0fb11512fe002daaae576cb1617f187d196d55c41af3e4c73b1",
+      "currentSha256": "685948e2ba645f57f46a30d1c8b82ac87f087907d9ef8f9e7b21c983f1180d10"
+    }
+  ],
+  "twoIndependentArchivesVerified": true,
+  "originalFreezeAndPolicyUnchanged": true
+}

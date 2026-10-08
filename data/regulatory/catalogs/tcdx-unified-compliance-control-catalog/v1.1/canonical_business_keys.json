@@ -1,0 +1,71 @@
+{
+  "RegulatoryPack": [
+    "pack_code"
+  ],
+  "RegulatoryPackVersion": [
+    "pack_code",
+    "version_number"
+  ],
+  "Framework": [
+    "framework_code"
+  ],
+  "FrameworkVersion": [
+    "framework_code",
+    "version_number"
+  ],
+  "NormativeUnit": [
+    "framework_code",
+    "framework_version_number",
+    "source_locator"
+  ],
+  "Requirement": [
+    "framework_code",
+    "framework_version_number",
+    "requirement_code"
+  ],
+  "Control": [
+    "ownership_class",
+    "tenant_id",
+    "control_code"
+  ],
+  "ControlVersion": [
+    "ownership_class",
+    "tenant_id",
+    "control_code",
+    "version_number"
+  ],
+  "RequirementControlMapping": [
+    "requirement_code",
+    "control_code",
+    "control_version_number",
+    "mapping_type"
+  ],
+  "NormativeUnitControlMapping": [
+    "framework_code",
+    "framework_version_number",
+    "normative_unit_code",
+    "control_code",
+    "control_version_number"
+  ],
+  "FrameworkCrosswalk": [
+    "source_framework_code",
+    "source_framework_version_number",
+    "target_framework_code",
+    "target_framework_version_number"
+  ],
+  "NormativeUnitCrosswalkMapping": [
+    "source framework/version/unit",
+    "target framework/version/unit"
+  ],
+  "RequirementCrosswalkMapping": [
+    "crosswalk_code",
+    "source_requirement_code",
+    "target_requirement_code"
+  ],
+  "ControlCrosswalkMapping": [
+    "crosswalk_code",
+    "source_control_code/version",
+    "target_control_code/version"
+  ],
+  "uuid_policy": "Generate UUIDv7 only when business key does not already resolve. Never derive or hardcode UUIDs from catalog text."
+}

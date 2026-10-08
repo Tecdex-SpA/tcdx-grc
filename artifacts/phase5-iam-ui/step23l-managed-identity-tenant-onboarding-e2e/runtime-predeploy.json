@@ -1,0 +1,476 @@
+{
+  "components": [
+    {
+      "name": "tcdx-grc-backend",
+      "containerId": "74b941b2287c15f6206efc85401f7d2dd01733b44fc4c1e53d27e9b4b643f597",
+      "imageId": "sha256:798937c23bb25c99f45431536348c3271a6dfdab553c9f0624c524e644dcc67d",
+      "imageRef": "sha256:798937c23bb25c99f45431536348c3271a6dfdab553c9f0624c524e644dcc67d",
+      "architecture": "linux/amd64",
+      "running": true,
+      "health": "healthy",
+      "restartCount": 0,
+      "startedAt": "2026-10-07T16:01:36.24399805Z",
+      "sanitizedRuntime": {
+        "environment": {
+          "OIDC_SCOPES": "[REDACTED_RUNTIME_VALUE]",
+          "OBJECT_STORAGE_ENDPOINT": "[REDACTED_RUNTIME_VALUE]",
+          "APP_JWT_ISSUER": "[REDACTED_RUNTIME_VALUE]",
+          "PORT": "4000",
+          "OBJECT_STORAGE_ENCRYPTION_KEY_REF": "[REDACTED_RUNTIME_VALUE]",
+          "OBJECT_STORAGE_BUCKET": "[REDACTED_RUNTIME_VALUE]",
+          "CLAMAV_PORT": "[REDACTED_RUNTIME_VALUE]",
+          "APP_JWT_PUBLIC_KEY_FILE": "/run/secrets/app_jwt_public_key",
+          "OBJECT_STORAGE_ACCESS_KEY_FILE": "/run/secrets/object_storage_access_key",
+          "DATABASE_PASSWORD": "[REDACTED_RUNTIME_VALUE]",
+          "OBJECT_STORAGE_MAX_UPLOAD_BYTES": "[REDACTED_RUNTIME_VALUE]",
+          "OBJECT_STORAGE_SECRET_KEY_HOST_FILE": "/home/tecdex/.secrets/tcdx-grc-qa/object-storage-secret-key",
+          "OIDC_REDIRECT_URI": "[REDACTED_RUNTIME_VALUE]",
+          "APP_JWT_CLOCK_TOLERANCE_SECONDS": "[REDACTED_RUNTIME_VALUE]",
+          "OIDC_ISSUER": "[REDACTED_RUNTIME_VALUE]",
+          "CLAMAV_TIMEOUT_MS": "[REDACTED_RUNTIME_VALUE]",
+          "OBJECT_STORAGE_KMS_KEY_HOST_FILE": "/home/tecdex/.secrets/tcdx-grc-qa/object-storage-kms-key",
+          "CLAMAV_HOST": "[REDACTED_RUNTIME_VALUE]",
+          "DATABASE_SSL_MODE": "disable",
+          "OBJECT_STORAGE_SIGNED_URL_TTL_SECONDS": "[REDACTED_RUNTIME_VALUE]",
+          "OBJECT_STORAGE_ALLOW_INSECURE_HTTP": "[REDACTED_RUNTIME_VALUE]",
+          "APP_JWT_MAX_LIFETIME_SECONDS": "[REDACTED_RUNTIME_VALUE]",
+          "DATABASE_USER": "[REDACTED_RUNTIME_VALUE]",
+          "APP_JWT_AUDIENCE": "[REDACTED_RUNTIME_VALUE]",
+          "OBJECT_STORAGE_SECRET_KEY_FILE": "/run/secrets/object_storage_secret_key",
+          "DATABASE_HOST": "192.168.2.40",
+          "APP_JWT_KEY_ID": "[REDACTED_RUNTIME_VALUE]",
+          "OIDC_TOKEN_ENDPOINT_AUTH_METHOD": "[REDACTED_RUNTIME_VALUE]",
+          "OBJECT_STORAGE_ACCESS_KEY_HOST_FILE": "/home/tecdex/.secrets/tcdx-grc-qa/object-storage-access-key",
+          "APP_JWT_ALGORITHM": "[REDACTED_RUNTIME_VALUE]",
+          "OIDC_CLIENT_SECRET": "[REDACTED_RUNTIME_VALUE]",
+          "OIDC_ALLOWED_ALGORITHMS": "[REDACTED_RUNTIME_VALUE]",
+          "APP_JWT_PRIVATE_KEY_FILE": "/run/secrets/app_jwt_private_key",
+          "FRONTEND_ORIGIN": "https://grc.tecdex.net",
+          "OBJECT_STORAGE_REGION": "[REDACTED_RUNTIME_VALUE]",
+          "NODE_ENV": "qa",
+          "DATABASE_NAME": "tcdx-grc",
+          "OIDC_CLIENT_ID": "[REDACTED_RUNTIME_VALUE]",
+          "DATABASE_PORT": "5432",
+          "PATH": "[REDACTED_RUNTIME_VALUE]",
+          "NODE_VERSION": "[REDACTED_RUNTIME_VALUE]",
+          "YARN_VERSION": "[REDACTED_RUNTIME_VALUE]",
+          "PNPM_HOME": "[REDACTED_RUNTIME_VALUE]",
+          "MANAGED_IDENTITY_OIDC_ISSUER": "https://iam.grc.tecdex.net/realms/tcdx-managed-identity",
+          "MANAGED_IDENTITY_OIDC_CLIENT_ID": "tcdx-grc",
+          "MANAGED_IDENTITY_OIDC_REDIRECT_URI": "https://grc.tecdex.net/auth/callback",
+          "MANAGED_IDENTITY_ADMIN_BASE_URL": "http://192.168.2.46:8180",
+          "MANAGED_IDENTITY_ADMIN_CLIENT_ID": "tcdx-grc-managed-identity-provisioner",
+          "MANAGED_IDENTITY_OIDC_CLIENT_SECRET_FILE": "/run/secrets/managed_identity_oidc_client_secret",
+          "MANAGED_IDENTITY_ADMIN_CLIENT_SECRET_FILE": "/run/secrets/managed_identity_admin_client_secret"
+        },
+        "entrypoint": [
+          "docker-entrypoint.sh"
+        ],
+        "command": [
+          "node",
+          "apps/backend/dist/server.js"
+        ],
+        "user": "node",
+        "workingDir": "/app",
+        "healthcheck": {
+          "Test": [
+            "CMD",
+            "node",
+            "-e",
+            "fetch('http://127.0.0.1:4000/health/ready').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"
+          ],
+          "Interval": 10000000000,
+          "Timeout": 5000000000,
+          "StartPeriod": 10000000000,
+          "Retries": 5
+        },
+        "mounts": [
+          {
+            "source": "/home/tecdex/.secrets/tcdx-grc-qa/managed-identity-oidc-client-secret",
+            "target": "/run/secrets/managed_identity_oidc_client_secret",
+            "type": "bind",
+            "readOnly": true,
+            "propagation": "rprivate"
+          },
+          {
+            "source": "/home/tecdex/.secrets/tcdx-grc-qa/managed-identity-admin-client-secret",
+            "target": "/run/secrets/managed_identity_admin_client_secret",
+            "type": "bind",
+            "readOnly": true,
+            "propagation": "rprivate"
+          },
+          {
+            "source": "/home/tecdex/.secrets/tcdx-grc-qa/object-storage-secret-key",
+            "target": "/run/secrets/object_storage_secret_key",
+            "type": "bind",
+            "readOnly": true,
+            "propagation": "rprivate"
+          },
+          {
+            "source": "/home/tecdex/.secrets/tcdx-grc-qa/application-private.pem",
+            "target": "/run/secrets/app_jwt_private_key",
+            "type": "bind",
+            "readOnly": true,
+            "propagation": "rprivate"
+          },
+          {
+            "source": "/home/tecdex/.secrets/tcdx-grc-qa/application-public.pem",
+            "target": "/run/secrets/app_jwt_public_key",
+            "type": "bind",
+            "readOnly": true,
+            "propagation": "rprivate"
+          },
+          {
+            "source": "/home/tecdex/.secrets/tcdx-grc-qa/object-storage-access-key",
+            "target": "/run/secrets/object_storage_access_key",
+            "type": "bind",
+            "readOnly": true,
+            "propagation": "rprivate"
+          }
+        ],
+        "networkMode": "qa_default",
+        "networks": {
+          "qa_default": {
+            "aliases": [
+              "tcdx-grc-backend",
+              "backend"
+            ],
+            "links": null,
+            "driverOpts": null,
+            "ipamConfig": null
+          }
+        },
+        "portBindings": {
+          "4000/tcp": [
+            {
+              "HostIp": "",
+              "HostPort": "4000"
+            }
+          ]
+        },
+        "restartPolicy": {
+          "Name": "unless-stopped",
+          "MaximumRetryCount": 0
+        },
+        "securityOpt": [
+          "no-new-privileges:true"
+        ],
+        "capDrop": null,
+        "capAdd": null,
+        "memory": 0,
+        "nanoCpus": 0,
+        "readonlyRootfs": false
+      },
+      "configurationFingerprint": "d9626882668509d6903b6a73f0faebf0c7cf0c997b6df2230dd68604625b6e02",
+      "secretMetadata": [
+        {
+          "path": "/home/tecdex/.secrets/tcdx-grc-qa/managed-identity-oidc-client-secret",
+          "uid": 1000,
+          "mode": "0400",
+          "regular": true,
+          "nonempty": true,
+          "contentsRead": false,
+          "readableByRuntime": true,
+          "parentMode": "0700",
+          "parentUid": 1000
+        },
+        {
+          "path": "/home/tecdex/.secrets/tcdx-grc-qa/managed-identity-admin-client-secret",
+          "uid": 1000,
+          "mode": "0400",
+          "regular": true,
+          "nonempty": true,
+          "contentsRead": false,
+          "readableByRuntime": true,
+          "parentMode": "0700",
+          "parentUid": 1000
+        }
+      ],
+      "imageAvailableForRollback": true,
+      "secretValuesCaptured": false,
+      "containerLabels": {
+        "com.docker.compose.config-hash": "f9b24d23f587c64a94843f01017ce8c83256f405f88e82c1bd3628af7158993c",
+        "com.docker.compose.container-number": "1",
+        "com.docker.compose.depends_on": "",
+        "com.docker.compose.image": "sha256:f2128ee7a238cd4729c4f3be644fb9b2278b01030e820f12195db11bddf1f9e0",
+        "com.docker.compose.oneoff": "False",
+        "com.docker.compose.project": "qa",
+        "com.docker.compose.project.config_files": "/home/tecdex/apps/tcdx-grc-phase5-role-revoke-20260928-r2/deploy/qa/docker-compose.yml,/tmp/tcdx-grc-step23k-backend.override.yml",
+        "com.docker.compose.project.working_dir": "/home/tecdex/apps/tcdx-grc-phase5-role-revoke-20260928-r2/deploy/qa",
+        "com.docker.compose.replace": "tcdx-grc-backend",
+        "com.docker.compose.service": "backend",
+        "com.docker.compose.version": "2.40.3",
+        "org.opencontainers.image.revision": "bbf4c8752ebcfa91a3215f7096c6df5b5a74d081",
+        "org.opencontainers.image.source": "https://github.com/Tecdex-SpA/tcdx-grc",
+        "org.opencontainers.image.source.tree": "4aaa36167744a6c6be62750748f53f8106f3c638"
+      },
+      "imageLabels": {
+        "org.opencontainers.image.revision": "f65c821cfdda0644d977cba0ab574f985da76b43bccaeff44ec607f2a5d456d5",
+        "org.opencontainers.image.source": "https://github.com/Tecdex-SpA/tcdx-grc"
+      },
+      "actualUid": "1000"
+    },
+    {
+      "name": "tcdx-grc-frontend",
+      "containerId": "42ecba6bad16d4c3243592b50c5fddac88ef8aaa163fff05580d622f28c00cdf",
+      "imageId": "sha256:22997516450d50657e2501ca5412ff36828578ec7b3d473dd0f5e4643757da66",
+      "imageRef": "sha256:22997516450d50657e2501ca5412ff36828578ec7b3d473dd0f5e4643757da66",
+      "architecture": "linux/amd64",
+      "running": true,
+      "health": "healthy",
+      "restartCount": 0,
+      "startedAt": "2026-10-07T19:01:39.188874033Z",
+      "sanitizedRuntime": {
+        "environment": {
+          "PATH": "[REDACTED_RUNTIME_VALUE]",
+          "NODE_VERSION": "[REDACTED_RUNTIME_VALUE]",
+          "YARN_VERSION": "[REDACTED_RUNTIME_VALUE]",
+          "NODE_ENV": "qa",
+          "PORT": "8080"
+        },
+        "entrypoint": [
+          "docker-entrypoint.sh"
+        ],
+        "command": [
+          "node",
+          "static-server.mjs"
+        ],
+        "user": "node",
+        "workingDir": "/app/apps/frontend",
+        "healthcheck": {
+          "Test": [
+            "CMD",
+            "node",
+            "-e",
+            "fetch('http://127.0.0.1:8080/').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"
+          ],
+          "Interval": 10000000000,
+          "Timeout": 5000000000,
+          "StartPeriod": 10000000000,
+          "Retries": 5
+        },
+        "mounts": [],
+        "networkMode": "qa_default",
+        "networks": {
+          "qa_default": {
+            "aliases": [
+              "tcdx-grc-frontend",
+              "frontend"
+            ],
+            "links": null,
+            "driverOpts": null,
+            "ipamConfig": null
+          }
+        },
+        "portBindings": {
+          "8080/tcp": [
+            {
+              "HostIp": "",
+              "HostPort": "8080"
+            }
+          ]
+        },
+        "restartPolicy": {
+          "Name": "unless-stopped",
+          "MaximumRetryCount": 0
+        },
+        "securityOpt": [
+          "no-new-privileges:true"
+        ],
+        "capDrop": null,
+        "capAdd": null,
+        "memory": 0,
+        "nanoCpus": 0,
+        "readonlyRootfs": false
+      },
+      "configurationFingerprint": "603afda4977bd15056fffc2e2c081eeef87f459e5f246475055689eabff9bf4a",
+      "secretMetadata": [],
+      "imageAvailableForRollback": true,
+      "secretValuesCaptured": false,
+      "containerLabels": {
+        "com.docker.compose.config-hash": "36bb99e8c364fa9b1bc31894f73ccc8597eab74fb78d8b80974d40b83bd8faf6",
+        "com.docker.compose.container-number": "1",
+        "com.docker.compose.depends_on": "",
+        "com.docker.compose.image": "sha256:8720ce0e5a1f5796473e2118d1825a942f8461d8333dd33458cda3f1140730d4",
+        "com.docker.compose.oneoff": "False",
+        "com.docker.compose.project": "qa",
+        "com.docker.compose.project.config_files": "/home/tecdex/apps/tcdx-grc-phase5-role-revoke-frontend-final-20260928/deploy/qa/docker-compose.frontend.yml,/tmp/tcdx-grc-step23l-p0r-frontend.override.yml",
+        "com.docker.compose.project.working_dir": "/home/tecdex/apps/tcdx-grc-phase5-role-revoke-frontend-final-20260928/deploy/qa",
+        "com.docker.compose.replace": "tcdx-grc-frontend",
+        "com.docker.compose.service": "frontend",
+        "com.docker.compose.version": "2.40.3",
+        "org.opencontainers.image.revision": "bbf4c8752ebcfa91a3215f7096c6df5b5a74d081",
+        "org.opencontainers.image.source": "https://github.com/Tecdex-SpA/tcdx-grc",
+        "org.opencontainers.image.source.tree": "4aaa36167744a6c6be62750748f53f8106f3c638"
+      },
+      "imageLabels": {
+        "org.opencontainers.image.source": "https://github.com/Tecdex-SpA/tcdx-grc"
+      },
+      "actualUid": "1000"
+    },
+    {
+      "name": "tcdx-managed-identity",
+      "containerId": "955d65f83d758cedde3ab8136a60807631a4bcd5fc40a87c028f50628386a53e",
+      "imageId": "sha256:4ef4f816c60d05c3867c1fce9092a3b0d1539bf22683d3e2742c6c1d7ce25ea4",
+      "imageRef": "sha256:4ef4f816c60d05c3867c1fce9092a3b0d1539bf22683d3e2742c6c1d7ce25ea4",
+      "architecture": "linux/amd64",
+      "running": true,
+      "health": "healthy",
+      "restartCount": 0,
+      "startedAt": "2026-10-06T21:48:59.461944021Z",
+      "sanitizedRuntime": {
+        "environment": {
+          "PATH": "[REDACTED_RUNTIME_VALUE]",
+          "LANG": "[REDACTED_RUNTIME_VALUE]",
+          "KC_RUN_IN_CONTAINER": "[REDACTED_RUNTIME_VALUE]"
+        },
+        "entrypoint": [
+          "/opt/keycloak/bin/kc.sh"
+        ],
+        "command": [
+          "start"
+        ],
+        "user": "1000",
+        "workingDir": "/",
+        "healthcheck": {
+          "Test": [
+            "CMD-SHELL",
+            "/opt/keycloak/healthcheck.sh"
+          ],
+          "Interval": 20000000000,
+          "Timeout": 5000000000,
+          "StartPeriod": 180000000000,
+          "Retries": 3
+        },
+        "mounts": [
+          {
+            "source": "/home/tecdex/.config/tcdx-keycloak/keycloak.conf",
+            "target": "/opt/keycloak/conf/keycloak.conf",
+            "type": "bind",
+            "readOnly": true,
+            "propagation": "rprivate"
+          },
+          {
+            "source": "/home/tecdex/.config/tcdx-keycloak/healthcheck.sh",
+            "target": "/opt/keycloak/healthcheck.sh",
+            "type": "bind",
+            "readOnly": true,
+            "propagation": "rprivate"
+          }
+        ],
+        "networkMode": "bridge",
+        "networks": {
+          "bridge": {
+            "aliases": null,
+            "links": null,
+            "driverOpts": null,
+            "ipamConfig": null
+          }
+        },
+        "portBindings": {
+          "8080/tcp": [
+            {
+              "HostIp": "192.168.2.46",
+              "HostPort": "8180"
+            }
+          ]
+        },
+        "restartPolicy": {
+          "Name": "unless-stopped",
+          "MaximumRetryCount": 0
+        },
+        "securityOpt": [
+          "no-new-privileges"
+        ],
+        "capDrop": [
+          "ALL"
+        ],
+        "capAdd": null,
+        "memory": 3221225472,
+        "nanoCpus": 2000000000,
+        "readonlyRootfs": false
+      },
+      "configurationFingerprint": "74d29592991916175014808126a72983590cc6961181bccb236fb5cab367f810",
+      "secretMetadata": [
+        {
+          "path": "/home/tecdex/.config/tcdx-keycloak/keycloak.conf",
+          "uid": 1000,
+          "mode": "0600",
+          "regular": true,
+          "nonempty": true,
+          "contentsCaptured": false
+        }
+      ],
+      "imageAvailableForRollback": true,
+      "secretValuesCaptured": false,
+      "containerLabels": {
+        "architecture": "x86_64",
+        "build-date": "2026-09-14T00:32:05Z",
+        "com.redhat.build-host": "",
+        "com.redhat.component": "",
+        "com.redhat.license_terms": "",
+        "cpe": "cpe:/a:redhat:enterprise_linux:9::appstream",
+        "description": "Keycloak Server Image",
+        "distribution-scope": "public",
+        "io.buildah.version": "1.44.0",
+        "io.k8s.description": "Keycloak Server Image",
+        "io.k8s.display-name": "Keycloak Server",
+        "io.openshift.expose-services": "",
+        "io.openshift.tags": "keycloak security identity",
+        "maintainer": "https://www.keycloak.org/",
+        "name": "keycloak",
+        "org.opencontainers.image.created": "2026-09-30T17:44:36.891Z",
+        "org.opencontainers.image.description": "",
+        "org.opencontainers.image.documentation": "https://www.keycloak.org/documentation",
+        "org.opencontainers.image.licenses": "Apache-2.0",
+        "org.opencontainers.image.revision": "df15afa5a3a8a2b10021f879ffa93b30fb36c73a",
+        "org.opencontainers.image.source": "https://github.com/keycloak-rel/keycloak-rel",
+        "org.opencontainers.image.title": "keycloak-rel",
+        "org.opencontainers.image.url": "https://github.com/keycloak-rel/keycloak-rel",
+        "org.opencontainers.image.version": "26.7.5",
+        "release": "",
+        "summary": "Keycloak Server Image",
+        "url": "https://www.keycloak.org/",
+        "vcs-ref": "",
+        "vcs-type": "git",
+        "vendor": "https://www.keycloak.org/",
+        "version": "26.7.5"
+      },
+      "imageLabels": {
+        "architecture": "x86_64",
+        "build-date": "2026-09-14T00:32:05Z",
+        "com.redhat.build-host": "",
+        "com.redhat.component": "",
+        "com.redhat.license_terms": "",
+        "cpe": "cpe:/a:redhat:enterprise_linux:9::appstream",
+        "description": "Keycloak Server Image",
+        "distribution-scope": "public",
+        "io.buildah.version": "1.44.0",
+        "io.k8s.description": "Keycloak Server Image",
+        "io.k8s.display-name": "Keycloak Server",
+        "io.openshift.expose-services": "",
+        "io.openshift.tags": "keycloak security identity",
+        "maintainer": "https://www.keycloak.org/",
+        "name": "keycloak",
+        "org.opencontainers.image.created": "2026-09-30T17:44:36.891Z",
+        "org.opencontainers.image.description": "",
+        "org.opencontainers.image.documentation": "https://www.keycloak.org/documentation",
+        "org.opencontainers.image.licenses": "Apache-2.0",
+        "org.opencontainers.image.revision": "d37f7b7430f333b11ddad47838069483c247e8bf8afaa4712fb7ae2a39bce43b",
+        "org.opencontainers.image.source": "https://github.com/keycloak-rel/keycloak-rel",
+        "org.opencontainers.image.title": "keycloak-rel",
+        "org.opencontainers.image.url": "https://github.com/keycloak-rel/keycloak-rel",
+        "org.opencontainers.image.version": "26.7.5",
+        "release": "",
+        "summary": "Keycloak Server Image",
+        "url": "https://www.keycloak.org/",
+        "vcs-ref": "",
+        "vcs-type": "git",
+        "vendor": "https://www.keycloak.org/",
+        "version": "26.7.5"
+      },
+      "actualUid": "1000"
+    }
+  ],
+  "secretValuesCaptured": false
+}

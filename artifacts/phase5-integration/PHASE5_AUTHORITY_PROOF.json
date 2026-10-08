@@ -1,0 +1,207 @@
+{
+  "capturedAt": "2026-10-08T11:37:48.991Z",
+  "keycloakExactlyOne": true,
+  "grcIdentityExactlyOne": true,
+  "issuerSubjectMappingExact": true,
+  "enabled": true,
+  "identityActive": true,
+  "activePlatformAdmin": 1,
+  "membership": 1,
+  "tenantRoles": 0,
+  "otp": 1,
+  "requiredActions": [],
+  "sessions": 0,
+  "readOnly": true,
+  "membershipDetails": [
+    {
+      "tenant_membership_id": "01a118c3-b108-7636-abcf-7cb86725320e",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "tenant_code": "TECDEX",
+      "membership_state": "active",
+      "joined_at": "2026-10-07T23:47:20.469Z",
+      "ended_at": null,
+      "created_at": "2026-10-07T23:47:20.454Z",
+      "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+    }
+  ],
+  "membershipOriginAudits": [
+    {
+      "audit_event_id": "01a118c3-b10a-774f-893f-def4fd1febb8",
+      "event_code": "audit.platform.membership.create.v1",
+      "command_code": "tenantUserOnboardingCreate",
+      "aggregate_id": "01a118c3-b108-7636-abcf-7cb86725320e",
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "correlation_id": "01a118c3-b0f2-73fb-a8bd-24803faf7f6f",
+      "occurred_at": "2026-10-07T23:47:20.454Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a118c3-b18f-75c8-900f-ab1096ba144d",
+      "event_code": "audit.platform.tenant_user.onboard.v1",
+      "command_code": "tenantUserOnboardingCreate",
+      "aggregate_id": "01a118c3-b108-7636-abcf-7cb86725320e",
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_id": null,
+      "correlation_id": "01a118c3-b0f2-73fb-a8bd-24803faf7f6f",
+      "occurred_at": "2026-10-07T23:47:20.588Z",
+      "outcome": "success",
+      "reason": "QA Phase5 final recovery 20261007: principal revisor autorizado expresamente; Membership retenida y roles temporales revocados al finalizar"
+    },
+    {
+      "audit_event_id": "01a118c3-b190-72d9-bd2f-2a4280497db5",
+      "event_code": "audit.iam.application_token.privileged_use.v1",
+      "command_code": "tenantUserOnboardingCreate",
+      "aggregate_id": "01a118c3-b108-7636-abcf-7cb86725320e",
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_id": null,
+      "correlation_id": "01a118c3-b0f2-73fb-a8bd-24803faf7f6f",
+      "occurred_at": "2026-10-07T23:47:20.588Z",
+      "outcome": "success",
+      "reason": null
+    }
+  ],
+  "latestRevoke": {
+    "audit_event_id": "01a118e6-e5df-70ed-a8f1-6082454426df",
+    "event_code": "audit.platform.managed_identity.session_revoke.v1",
+    "command_code": "managedIdentitySessionRevoke",
+    "aggregate_type": "UserIdentity",
+    "aggregate_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+    "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+    "tenant_id": null,
+    "ownership_class": "PLATFORM_CONTROL",
+    "correlation_id": "01a118e6-e45d-7441-99da-ae0f1209cd0c",
+    "occurred_at": "2026-10-08T00:25:47.604Z",
+    "outcome": "success",
+    "reason": "MI10 Phase 5 final runtime session revocation validation"
+  },
+  "revokedGenerationSessions": 0,
+  "factorConfiguration": [
+    {
+      "authenticator": "auth-username-password-form",
+      "name": "default.reference.maxAge",
+      "value": "600"
+    },
+    {
+      "authenticator": "auth-username-password-form",
+      "name": "default.reference.value",
+      "value": "pwd"
+    },
+    {
+      "authenticator": "conditional-credential",
+      "name": "credentials",
+      "value": "webauthn-passwordless"
+    },
+    {
+      "authenticator": "auth-otp-form",
+      "name": "default.reference.maxAge",
+      "value": "600"
+    },
+    {
+      "authenticator": "auth-otp-form",
+      "name": "default.reference.value",
+      "value": "otp"
+    }
+  ],
+  "flowExecutions": [
+    {
+      "flow_alias": "tcdx-browser-password-totp",
+      "depth": 0,
+      "authenticator": "auth-cookie",
+      "requirement": 3,
+      "priority": 10,
+      "authenticator_flow": false
+    },
+    {
+      "flow_alias": "tcdx-browser-password-totp",
+      "depth": 0,
+      "authenticator": "auth-spnego",
+      "requirement": 3,
+      "priority": 20,
+      "authenticator_flow": false
+    },
+    {
+      "flow_alias": "tcdx-browser-password-totp",
+      "depth": 0,
+      "authenticator": "identity-provider-redirector",
+      "requirement": 3,
+      "priority": 25,
+      "authenticator_flow": false
+    },
+    {
+      "flow_alias": "tcdx-browser-password-totp",
+      "depth": 0,
+      "authenticator": null,
+      "requirement": 3,
+      "priority": 26,
+      "authenticator_flow": true
+    },
+    {
+      "flow_alias": "tcdx-browser-password-totp",
+      "depth": 0,
+      "authenticator": null,
+      "requirement": 0,
+      "priority": 30,
+      "authenticator_flow": true
+    },
+    {
+      "flow_alias": "tcdx-browser-password-totp forms",
+      "depth": 1,
+      "authenticator": "auth-username-password-form",
+      "requirement": 0,
+      "priority": 10,
+      "authenticator_flow": false
+    },
+    {
+      "flow_alias": "tcdx-browser-password-totp forms",
+      "depth": 1,
+      "authenticator": null,
+      "requirement": 0,
+      "priority": 20,
+      "authenticator_flow": true
+    },
+    {
+      "flow_alias": "tcdx-browser-password-totp Browser - Conditional 2FA",
+      "depth": 2,
+      "authenticator": "conditional-user-configured",
+      "requirement": 3,
+      "priority": 10,
+      "authenticator_flow": false
+    },
+    {
+      "flow_alias": "tcdx-browser-password-totp Browser - Conditional 2FA",
+      "depth": 2,
+      "authenticator": "conditional-credential",
+      "requirement": 3,
+      "priority": 20,
+      "authenticator_flow": false
+    },
+    {
+      "flow_alias": "tcdx-browser-password-totp Browser - Conditional 2FA",
+      "depth": 2,
+      "authenticator": "auth-otp-form",
+      "requirement": 0,
+      "priority": 30,
+      "authenticator_flow": false
+    },
+    {
+      "flow_alias": "tcdx-browser-password-totp Browser - Conditional 2FA",
+      "depth": 2,
+      "authenticator": "webauthn-authenticator",
+      "requirement": 3,
+      "priority": 40,
+      "authenticator_flow": false
+    },
+    {
+      "flow_alias": "tcdx-browser-password-totp Browser - Conditional 2FA",
+      "depth": 2,
+      "authenticator": "auth-recovery-authn-code-form",
+      "requirement": 3,
+      "priority": 50,
+      "authenticator_flow": false
+    }
+  ],
+  "classification": "AUTHORIZED_HUMAN_TENANT_MEMBERSHIP",
+  "sessionRevocationAuthoritySideEffects": 0
+}

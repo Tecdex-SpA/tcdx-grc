@@ -1,0 +1,2284 @@
+{
+  "phase": "before",
+  "capturedAt": "2026-10-07T22:32:14.978Z",
+  "identity": {
+    "database": "tcdx-grc",
+    "major": 16,
+    "read_only": "on",
+    "server": "192.168.2.40/32"
+  },
+  "migrations": 29,
+  "latest": "20261007000100",
+  "physicalTables": 235,
+  "publishedPermissions": 170,
+  "ledgerMatchesManifest": true,
+  "pendingIds": [],
+  "newPermission": [
+    {
+      "permission_id": "01a0da10-0000-73ac-8481-c6639cbb9d60",
+      "permission_code": "platform.tenant_user.onboard",
+      "domain_code": "platform",
+      "resource_code": "tenant_user",
+      "action_code": "onboard",
+      "lifecycle_state": "published"
+    }
+  ],
+  "newGrants": [
+    {
+      "role_permission_id": "01a0da11-0000-7ea6-87e6-b5983cd7c6de",
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_id": null,
+      "role_id": "01a0a783-6000-7d1c-83f2-cb773c0d1bbf",
+      "role_code": "PLATFORM_ADMIN",
+      "is_baseline": true,
+      "lifecycle_state": "published",
+      "role_ownership": "PLATFORM_CONTROL",
+      "role_tenant": null
+    }
+  ],
+  "permission": [
+    {
+      "permission_code": "platform.user_identity.read",
+      "domain_code": "platform",
+      "resource_code": "user_identity",
+      "action_code": "read",
+      "lifecycle_state": "published"
+    }
+  ],
+  "roles": [
+    {
+      "role_code": "PLATFORM_ADMIN",
+      "is_baseline": true,
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_null": true,
+      "lifecycle_state": "published",
+      "n": 1
+    },
+    {
+      "role_code": "TENANT_ADMIN",
+      "is_baseline": true,
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_null": true,
+      "lifecycle_state": "published",
+      "n": 1
+    },
+    {
+      "role_code": "TENANT_ADMIN",
+      "is_baseline": true,
+      "ownership_class": "TENANT_OWNED",
+      "tenant_null": false,
+      "lifecycle_state": "published",
+      "n": 2
+    }
+  ],
+  "grants": [
+    {
+      "role_code": "PLATFORM_ADMIN",
+      "is_baseline": true,
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_null": true,
+      "lifecycle_state": "published",
+      "grant_ownership": "PLATFORM_CONTROL",
+      "same_tenant": true,
+      "canonical": true,
+      "n": 1
+    },
+    {
+      "role_code": "TENANT_ADMIN",
+      "is_baseline": true,
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_null": true,
+      "lifecycle_state": "published",
+      "grant_ownership": "PLATFORM_CONTROL",
+      "same_tenant": true,
+      "canonical": true,
+      "n": 1
+    },
+    {
+      "role_code": "TENANT_ADMIN",
+      "is_baseline": true,
+      "ownership_class": "TENANT_OWNED",
+      "tenant_null": false,
+      "lifecycle_state": "published",
+      "grant_ownership": "TENANT_OWNED",
+      "same_tenant": true,
+      "canonical": true,
+      "n": 2
+    }
+  ],
+  "instanceMatch": {
+    "expected": 2,
+    "actual": 2
+  },
+  "priorPermission": [
+    {
+      "permission_code": "platform.role.administer",
+      "domain_code": "platform",
+      "resource_code": "role",
+      "action_code": "administer",
+      "lifecycle_state": "published"
+    }
+  ],
+  "priorGrants": [
+    {
+      "role_code": "PLATFORM_ADMIN",
+      "is_baseline": true,
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_null": true,
+      "lifecycle_state": "published",
+      "grant_ownership": "PLATFORM_CONTROL",
+      "grant_tenant_null": true,
+      "n": 1
+    }
+  ],
+  "acme": [
+    {
+      "tenant_code": "ACME-1",
+      "lifecycle_state": "active",
+      "roles": 0,
+      "memberships": 0,
+      "subscriptions": 0,
+      "active_initial_admins": 0
+    }
+  ],
+  "schema": {
+    "schemas": {
+      "rows": 24,
+      "sha256": "ea3e7056d4f552b9919b9b4f1f628c0176644ff78cc407bb3aaa767e3ebbafd4"
+    },
+    "relations": {
+      "rows": 2412,
+      "sha256": "240b203f71b822d1f67195b4cfbca3767b48f168ddb0944039c703b2b3947e44"
+    },
+    "columns": {
+      "rows": 6375,
+      "sha256": "82a2ed0e86d68761507966c31ea21e17f55557f04e3b6f8742d3b7f4a6743948"
+    },
+    "constraints": {
+      "rows": 2753,
+      "sha256": "82585ad80c6a68ade9084c523ae7f8ea4f9fdb3e629cdc3b05dd776fc5d68677"
+    },
+    "indexes": {
+      "rows": 2176,
+      "sha256": "9af39f70c189fa971a0055bbe548bf7dfd73a9a839085589b73141f08db906a0"
+    },
+    "sequences": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "functions": {
+      "rows": 201,
+      "sha256": "03f780608b9604be3cfb40d2aef6752d247430b6dcd0f6d49f5f327564371fd9"
+    },
+    "triggers": {
+      "rows": 5329,
+      "sha256": "446cbf22b1b1dc2bf3ae1c2cc9b0816c0ebf9d129186e29142c69535ddd9fb19"
+    },
+    "views": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "policies": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "types": {
+      "rows": 484,
+      "sha256": "1b9c468e645b81451cdb97f1b429266d6f3019fcd91aec25bdbba51382003adc"
+    },
+    "enums": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "schemaSha256": "b4030b993d44c5481c273e843e7717d7d53cd94dec9a22a425cea553e257e57b",
+  "preservedBaseData": {
+    "ai.ai_jobs": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "ai.ai_provenance_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "ai.ai_recommendations": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_agenda_item_scopes": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_agenda_item_team_assignments": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_agenda_item_tests": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_agenda_items": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_competencies": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_competency_requirements": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_competency_validations": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_criteria": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_objectives": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_programs": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_samples": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_scopes": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_team_assignments": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_test_control_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_test_evidence_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_test_requirement_assessment_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_test_requirement_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_tests": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_universe_items": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_workpapers": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.auditor_competency_assertions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audits": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "config.configuration_definition_scopes": {
+      "rows": 1,
+      "nonsecret_fingerprint": "301d2d4f3b32633fd4800f4dd94ece44"
+    },
+    "config.configuration_definitions": {
+      "rows": 1,
+      "nonsecret_fingerprint": "32a85ae18262eaeef4ea6a4ca7b5e3d2"
+    },
+    "config.configuration_overrides": {
+      "rows": 1,
+      "nonsecret_fingerprint": "f97e9aacbcbe9321620021d1e6048f1d"
+    },
+    "config.configuration_validation_rules": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "config.effective_configuration_layers": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "config.effective_configurations": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "controls.assurance_samples": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "controls.assurance_tests": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "controls.control_assessments": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "controls.control_exceptions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "controls.control_objectives": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "controls.control_scopes": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "controls.control_versions": {
+      "rows": 212,
+      "nonsecret_fingerprint": "4dfd84fe9a4a022b676684843a9b78c9"
+    },
+    "controls.controls": {
+      "rows": 212,
+      "nonsecret_fingerprint": "153d899e22a4e610ba70daaf444985d1"
+    },
+    "data.calculation_inputs": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.calculation_runs": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.data_lineage": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.data_quality_assessments": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.formula_definition_parameters": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.formula_definitions": {
+      "rows": 1,
+      "nonsecret_fingerprint": "177dff3009f0d1fb78df6daa6124dd5b"
+    },
+    "data.metric_definition_inputs": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.metric_definition_thresholds": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.metric_definitions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.metric_measurements": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.observation_type_source_types": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.observation_type_subject_types": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.observation_types": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.observations": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.snapshot_items": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.snapshots": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.source_precedence_policies": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.source_precedence_policy_key_fields": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.source_precedence_policy_sources": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.source_resolution_observations": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.source_resolutions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "evidence.document_versions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "evidence.documents": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "evidence.evidence_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "evidence.evidence_request_fulfillments": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "evidence.evidence_requests": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "evidence.evidence_reviews": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "evidence.evidence_versions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "evidence.evidences": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "evidence.file_objects": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "evidence.file_upload_intents": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "iam.impersonation_sessions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "iam.membership_roles": {
+      "rows": 13,
+      "nonsecret_fingerprint": "aefdf60564308896f1b00900834eb45c"
+    },
+    "iam.permissions": {
+      "rows": 169,
+      "nonsecret_fingerprint": "e4a26162fd2eec1cd174bd9790ecfe94"
+    },
+    "iam.platform_role_assignments": {
+      "rows": 2,
+      "nonsecret_fingerprint": "8b08b194688eb42a8228799ac8d6e272"
+    },
+    "iam.role_permissions": {
+      "rows": 1159,
+      "nonsecret_fingerprint": "1acdb135818aa7f155127f93ec42fbc9"
+    },
+    "iam.roles": {
+      "rows": 68,
+      "nonsecret_fingerprint": "bae4685b0d35fcdcd1ee61e3d35dc245"
+    },
+    "iam.service_principals": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "iam.tenant_membership_invitations": {
+      "rows": 3,
+      "nonsecret_fingerprint": "2006a23ce07e0724a29e1acf3e174d37"
+    },
+    "iam.tenant_memberships": {
+      "rows": 4,
+      "nonsecret_fingerprint": "488d6ec302ef25dc21d2c86d3cdf18e5"
+    },
+    "iam.user_identities": {
+      "rows": 4,
+      "nonsecret_fingerprint": "1ce743661a768537b85661f47842d77f"
+    },
+    "integration.checkpoints": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.connector_definitions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.connector_version_auth_scopes": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.connector_version_objects": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.connector_versions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.dead_letter_records": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.external_identity_bindings": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.external_schema_mappings": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.integration_credential_refs": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.integrations": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.raw_records": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.sync_runs": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.sync_schedules": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "knowledge.knowledge_items": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "knowledge.knowledge_sources": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "knowledge.knowledge_versions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "knowledge.regulatory_change_reviews": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "knowledge.regulatory_changes": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "notification.notification_deliveries": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "notification.notification_preferences": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "notification.notifications": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "operations.incident_subject_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "operations.incidents": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "operations.root_cause_records": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "ops_audit.audit_events": {
+      "rows": 140,
+      "nonsecret_fingerprint": "4d6039ca159b3b9c3efb2bba081c7951"
+    },
+    "ops_audit.idempotency_records": {
+      "rows": 31,
+      "nonsecret_fingerprint": "c80440059c4ff438c3cf37f2898e5b37"
+    },
+    "ops_audit.job_executions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "ops_audit.lifecycle_transition_definitions": {
+      "rows": 140,
+      "nonsecret_fingerprint": "fa5d4ccf72db22acacc288b0d6314695"
+    },
+    "ops_audit.lifecycle_transition_scopes": {
+      "rows": 240,
+      "nonsecret_fingerprint": "9a202ca44e05cd87fe40df16826a7494"
+    },
+    "ops_audit.lifecycle_transition_side_effects": {
+      "rows": 35,
+      "nonsecret_fingerprint": "7971d7705cee84e30d158d00b3f30a7c"
+    },
+    "ops_audit.outbox_events": {
+      "rows": 22,
+      "nonsecret_fingerprint": "8d9375ea1bcdb695a5236607915d281b"
+    },
+    "ops_audit.system_health_events": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.applications": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.assets": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.data_assets": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.dependencies": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.locations": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.organizational_unit_process_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.organizational_units": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.processes": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.resources": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.service_asset_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.services": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.subjects": {
+      "rows": 1,
+      "nonsecret_fingerprint": "59477dc3a2aa7375b2706989f05b4160"
+    },
+    "org.systems": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "platform.capabilities": {
+      "rows": 20,
+      "nonsecret_fingerprint": "75e828ccbdb8e0d0c6aa73048f3908d9"
+    },
+    "platform.entitlements": {
+      "rows": 36,
+      "nonsecret_fingerprint": "9306e2b382bf8ace69011ebe0ac4d4d7"
+    },
+    "platform.feature_flags": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "platform.organizations": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "platform.plan_versions": {
+      "rows": 3,
+      "nonsecret_fingerprint": "6ec0def20264e4f72aa1dd3846154b7d"
+    },
+    "platform.plans": {
+      "rows": 3,
+      "nonsecret_fingerprint": "6b265c103df6fef0f81b638bb2c68475"
+    },
+    "platform.regulatory_pack_validation_accesses": {
+      "rows": 1,
+      "nonsecret_fingerprint": "b0c89e16389710ba291f9d4b9d67895e"
+    },
+    "platform.subscription_regulatory_packs": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "platform.subscriptions": {
+      "rows": 1,
+      "nonsecret_fingerprint": "1ae3a651fe6ff8ae5e8e553483d78474"
+    },
+    "platform.tenants": {
+      "rows": 3,
+      "nonsecret_fingerprint": "867a35f84c44b8560b2c40e47c3451fa"
+    },
+    "platform.usage_limits": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.data_categories": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.data_recipients": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.data_subject_categories": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.data_subject_requests": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.dpias": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.erasure_execution_items": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.erasure_execution_records": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.international_transfers": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.legal_bases": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.privacy_breaches": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.privacy_processing_activities": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.processing_activity_data_categories": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.processing_activity_legal_bases": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.processing_activity_recipients": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.processing_activity_subject_categories": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.processing_activity_subjects": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.processing_activity_suppliers": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.retention_policies": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "regulatory.control_crosswalk_mappings": {
+      "rows": 278,
+      "nonsecret_fingerprint": "a85f3deedce1af1e657ffa4a0a176e58"
+    },
+    "regulatory.framework_crosswalks": {
+      "rows": 6,
+      "nonsecret_fingerprint": "2268cf4ac5fbd18ebc9ee18a1ed3946e"
+    },
+    "regulatory.framework_versions": {
+      "rows": 5,
+      "nonsecret_fingerprint": "b573146263fc12c0f501dc3a44fabe9d"
+    },
+    "regulatory.frameworks": {
+      "rows": 5,
+      "nonsecret_fingerprint": "8ea40cd9422b1f3108d44efa13bc8833"
+    },
+    "regulatory.normative_unit_control_mappings": {
+      "rows": 131,
+      "nonsecret_fingerprint": "df173182ac5d07897845e9cd9d41b4a3"
+    },
+    "regulatory.normative_unit_crosswalk_mappings": {
+      "rows": 28,
+      "nonsecret_fingerprint": "da739424a6599f623684de6ff6995b23"
+    },
+    "regulatory.normative_units": {
+      "rows": 260,
+      "nonsecret_fingerprint": "18475c777a5e72262e12e5c867c16612"
+    },
+    "regulatory.regulatory_coverage_manifests": {
+      "rows": 5,
+      "nonsecret_fingerprint": "f8c0e7fd839e41be247eadba0f4a25f7"
+    },
+    "regulatory.regulatory_import_manifests": {
+      "rows": 5,
+      "nonsecret_fingerprint": "1f6c1f1b515b309c814abf37df837393"
+    },
+    "regulatory.regulatory_pack_framework_versions": {
+      "rows": 5,
+      "nonsecret_fingerprint": "59f63bba9fd51b3b2f67d55959018c97"
+    },
+    "regulatory.regulatory_pack_validation_provenances": {
+      "rows": 1,
+      "nonsecret_fingerprint": "be60114d4156b3c0b96e97c5786a4bd7"
+    },
+    "regulatory.regulatory_pack_versions": {
+      "rows": 5,
+      "nonsecret_fingerprint": "ccd89cad879c905888c681e886afd289"
+    },
+    "regulatory.regulatory_packs": {
+      "rows": 5,
+      "nonsecret_fingerprint": "30b2272e61a47b946f18ed4d340c6277"
+    },
+    "regulatory.regulatory_sources": {
+      "rows": 9,
+      "nonsecret_fingerprint": "05e7564951ee358480888e4fe8f906a3"
+    },
+    "regulatory.requirement_applicabilities": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "regulatory.requirement_assessments": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "regulatory.requirement_control_mappings": {
+      "rows": 333,
+      "nonsecret_fingerprint": "32bcc372b681a81045c62910e80367c3"
+    },
+    "regulatory.requirement_crosswalk_mappings": {
+      "rows": 188,
+      "nonsecret_fingerprint": "bd09e9eb6db5f7d5be4f32cd39900b8f"
+    },
+    "regulatory.requirements": {
+      "rows": 118,
+      "nonsecret_fingerprint": "e3bba6bfd8975d85f13de2be58df6682"
+    },
+    "regulatory.statement_of_applicability_items": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "regulatory.statements_of_applicability": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "remediation.action_evidence_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "remediation.action_verifications": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "remediation.actions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "remediation.issue_origins": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "remediation.issues": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "reporting.dashboard_definitions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "reporting.dashboard_widgets": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "reporting.report_artifacts": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "reporting.report_definition_parameters": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "reporting.report_definitions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "reporting.report_run_snapshots": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "reporting.report_runs": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "reporting.report_templates": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "resilience.bia_versions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "resilience.bias": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "resilience.continuity_plan_versions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "resilience.continuity_plans": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "resilience.recovery_tests": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "resilience.resilience_exercises": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.impact_scale_definitions": {
+      "rows": 1,
+      "nonsecret_fingerprint": "f56cc70696c74e460d8cf0a7d9243bb4"
+    },
+    "risk.impact_scale_dimension_criteria": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.impact_scale_levels": {
+      "rows": 5,
+      "nonsecret_fingerprint": "10a60496fedbba827557e8ae77e601e5"
+    },
+    "risk.kris": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.likelihood_scale_definitions": {
+      "rows": 1,
+      "nonsecret_fingerprint": "92dacfbac029dbe929cc5e2e258a6ca1"
+    },
+    "risk.likelihood_scale_levels": {
+      "rows": 5,
+      "nonsecret_fingerprint": "357d8310e185af54c5146641d5c5aea4"
+    },
+    "risk.loss_event_incident_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.loss_event_risk_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.loss_events": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.loss_recoveries": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.risk_acceptances": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.risk_appetite_policies": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.risk_assessments": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.risk_control_mappings": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.risk_kri_mappings": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.risk_methodologies": {
+      "rows": 1,
+      "nonsecret_fingerprint": "79fa0848989b1e94d7749f0d17f5fd68"
+    },
+    "risk.risk_scopes": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.risk_taxonomies": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.risk_tolerance_policies": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.risk_treatments": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.risks": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "rules.automation_policies": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "rules.grc_impact_mappings": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "rules.grc_impacts": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "rules.rule_definition_inputs": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "rules.rule_definition_thresholds": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "rules.rule_definitions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "rules.rule_evaluation_inputs": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "rules.rule_evaluations": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "survey.survey_answers": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "survey.survey_campaigns": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "survey.survey_options": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "survey.survey_question_validation_rules": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "survey.survey_questions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "survey.survey_responses": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "survey.survey_versions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "survey.surveys": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "third_party.supplier_assessments": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "third_party.supplier_contracts": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "third_party.supplier_services": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "third_party.suppliers": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    }
+  },
+  "preservedData": {
+    "ai.ai_jobs": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "ai.ai_provenance_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "ai.ai_recommendations": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_agenda_item_scopes": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_agenda_item_team_assignments": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_agenda_item_tests": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_agenda_items": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_competencies": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_competency_requirements": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_competency_validations": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_criteria": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_objectives": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_programs": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_samples": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_scopes": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_team_assignments": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_test_control_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_test_evidence_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_test_requirement_assessment_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_test_requirement_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_tests": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_universe_items": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audit_workpapers": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.auditor_competency_assertions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "audit.audits": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "config.configuration_definition_scopes": {
+      "rows": 1,
+      "nonsecret_fingerprint": "301d2d4f3b32633fd4800f4dd94ece44"
+    },
+    "config.configuration_definitions": {
+      "rows": 1,
+      "nonsecret_fingerprint": "32a85ae18262eaeef4ea6a4ca7b5e3d2"
+    },
+    "config.configuration_overrides": {
+      "rows": 1,
+      "nonsecret_fingerprint": "f97e9aacbcbe9321620021d1e6048f1d"
+    },
+    "config.configuration_validation_rules": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "config.effective_configuration_layers": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "config.effective_configurations": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "controls.assurance_samples": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "controls.assurance_tests": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "controls.control_assessments": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "controls.control_exceptions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "controls.control_objectives": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "controls.control_scopes": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "controls.control_versions": {
+      "rows": 212,
+      "nonsecret_fingerprint": "4dfd84fe9a4a022b676684843a9b78c9"
+    },
+    "controls.controls": {
+      "rows": 212,
+      "nonsecret_fingerprint": "153d899e22a4e610ba70daaf444985d1"
+    },
+    "data.calculation_inputs": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.calculation_runs": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.data_lineage": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.data_quality_assessments": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.formula_definition_parameters": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.formula_definitions": {
+      "rows": 1,
+      "nonsecret_fingerprint": "177dff3009f0d1fb78df6daa6124dd5b"
+    },
+    "data.metric_definition_inputs": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.metric_definition_thresholds": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.metric_definitions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.metric_measurements": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.observation_type_source_types": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.observation_type_subject_types": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.observation_types": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.observations": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.snapshot_items": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.snapshots": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.source_precedence_policies": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.source_precedence_policy_key_fields": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.source_precedence_policy_sources": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.source_resolution_observations": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "data.source_resolutions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "evidence.document_versions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "evidence.documents": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "evidence.evidence_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "evidence.evidence_request_fulfillments": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "evidence.evidence_requests": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "evidence.evidence_reviews": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "evidence.evidence_versions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "evidence.evidences": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "evidence.file_objects": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "evidence.file_upload_intents": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "iam.impersonation_sessions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "iam.membership_roles": {
+      "rows": 13,
+      "nonsecret_fingerprint": "aefdf60564308896f1b00900834eb45c"
+    },
+    "iam.permissions": {
+      "rows": 170,
+      "nonsecret_fingerprint": "ef24b48188d86762b9df8e4fe3465263"
+    },
+    "iam.platform_role_assignments": {
+      "rows": 2,
+      "nonsecret_fingerprint": "8b08b194688eb42a8228799ac8d6e272"
+    },
+    "iam.role_permissions": {
+      "rows": 1160,
+      "nonsecret_fingerprint": "2c4587f3b0ae38374a273e423f6f0c29"
+    },
+    "iam.roles": {
+      "rows": 68,
+      "nonsecret_fingerprint": "bae4685b0d35fcdcd1ee61e3d35dc245"
+    },
+    "iam.service_principals": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "iam.tenant_membership_invitations": {
+      "rows": 3,
+      "nonsecret_fingerprint": "2006a23ce07e0724a29e1acf3e174d37"
+    },
+    "iam.tenant_memberships": {
+      "rows": 4,
+      "nonsecret_fingerprint": "488d6ec302ef25dc21d2c86d3cdf18e5"
+    },
+    "iam.user_identities": {
+      "rows": 4,
+      "nonsecret_fingerprint": "1ce743661a768537b85661f47842d77f"
+    },
+    "integration.checkpoints": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.connector_definitions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.connector_version_auth_scopes": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.connector_version_objects": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.connector_versions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.dead_letter_records": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.external_identity_bindings": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.external_schema_mappings": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.integration_credential_refs": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.integrations": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.raw_records": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.sync_runs": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "integration.sync_schedules": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "knowledge.knowledge_items": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "knowledge.knowledge_sources": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "knowledge.knowledge_versions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "knowledge.regulatory_change_reviews": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "knowledge.regulatory_changes": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "notification.notification_deliveries": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "notification.notification_preferences": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "notification.notifications": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "operations.incident_subject_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "operations.incidents": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "operations.root_cause_records": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "ops_audit.audit_events": {
+      "rows": 140,
+      "nonsecret_fingerprint": "4d6039ca159b3b9c3efb2bba081c7951"
+    },
+    "ops_audit.idempotency_records": {
+      "rows": 31,
+      "nonsecret_fingerprint": "c80440059c4ff438c3cf37f2898e5b37"
+    },
+    "ops_audit.job_executions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "ops_audit.lifecycle_transition_definitions": {
+      "rows": 140,
+      "nonsecret_fingerprint": "fa5d4ccf72db22acacc288b0d6314695"
+    },
+    "ops_audit.lifecycle_transition_scopes": {
+      "rows": 240,
+      "nonsecret_fingerprint": "9a202ca44e05cd87fe40df16826a7494"
+    },
+    "ops_audit.lifecycle_transition_side_effects": {
+      "rows": 35,
+      "nonsecret_fingerprint": "7971d7705cee84e30d158d00b3f30a7c"
+    },
+    "ops_audit.outbox_events": {
+      "rows": 22,
+      "nonsecret_fingerprint": "8d9375ea1bcdb695a5236607915d281b"
+    },
+    "ops_audit.system_health_events": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.applications": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.assets": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.data_assets": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.dependencies": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.locations": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.organizational_unit_process_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.organizational_units": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.processes": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.resources": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.service_asset_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.services": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "org.subjects": {
+      "rows": 1,
+      "nonsecret_fingerprint": "59477dc3a2aa7375b2706989f05b4160"
+    },
+    "org.systems": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "platform.capabilities": {
+      "rows": 20,
+      "nonsecret_fingerprint": "75e828ccbdb8e0d0c6aa73048f3908d9"
+    },
+    "platform.entitlements": {
+      "rows": 36,
+      "nonsecret_fingerprint": "9306e2b382bf8ace69011ebe0ac4d4d7"
+    },
+    "platform.feature_flags": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "platform.organizations": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "platform.plan_versions": {
+      "rows": 3,
+      "nonsecret_fingerprint": "6ec0def20264e4f72aa1dd3846154b7d"
+    },
+    "platform.plans": {
+      "rows": 3,
+      "nonsecret_fingerprint": "6b265c103df6fef0f81b638bb2c68475"
+    },
+    "platform.regulatory_pack_validation_accesses": {
+      "rows": 1,
+      "nonsecret_fingerprint": "b0c89e16389710ba291f9d4b9d67895e"
+    },
+    "platform.subscription_regulatory_packs": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "platform.subscriptions": {
+      "rows": 1,
+      "nonsecret_fingerprint": "1ae3a651fe6ff8ae5e8e553483d78474"
+    },
+    "platform.tenants": {
+      "rows": 3,
+      "nonsecret_fingerprint": "867a35f84c44b8560b2c40e47c3451fa"
+    },
+    "platform.usage_limits": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.data_categories": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.data_recipients": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.data_subject_categories": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.data_subject_requests": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.dpias": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.erasure_execution_items": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.erasure_execution_records": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.international_transfers": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.legal_bases": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.privacy_breaches": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.privacy_processing_activities": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.processing_activity_data_categories": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.processing_activity_legal_bases": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.processing_activity_recipients": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.processing_activity_subject_categories": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.processing_activity_subjects": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.processing_activity_suppliers": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "privacy.retention_policies": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "regulatory.control_crosswalk_mappings": {
+      "rows": 278,
+      "nonsecret_fingerprint": "a85f3deedce1af1e657ffa4a0a176e58"
+    },
+    "regulatory.framework_crosswalks": {
+      "rows": 6,
+      "nonsecret_fingerprint": "2268cf4ac5fbd18ebc9ee18a1ed3946e"
+    },
+    "regulatory.framework_versions": {
+      "rows": 5,
+      "nonsecret_fingerprint": "b573146263fc12c0f501dc3a44fabe9d"
+    },
+    "regulatory.frameworks": {
+      "rows": 5,
+      "nonsecret_fingerprint": "8ea40cd9422b1f3108d44efa13bc8833"
+    },
+    "regulatory.normative_unit_control_mappings": {
+      "rows": 131,
+      "nonsecret_fingerprint": "df173182ac5d07897845e9cd9d41b4a3"
+    },
+    "regulatory.normative_unit_crosswalk_mappings": {
+      "rows": 28,
+      "nonsecret_fingerprint": "da739424a6599f623684de6ff6995b23"
+    },
+    "regulatory.normative_units": {
+      "rows": 260,
+      "nonsecret_fingerprint": "18475c777a5e72262e12e5c867c16612"
+    },
+    "regulatory.regulatory_coverage_manifests": {
+      "rows": 5,
+      "nonsecret_fingerprint": "f8c0e7fd839e41be247eadba0f4a25f7"
+    },
+    "regulatory.regulatory_import_manifests": {
+      "rows": 5,
+      "nonsecret_fingerprint": "1f6c1f1b515b309c814abf37df837393"
+    },
+    "regulatory.regulatory_pack_framework_versions": {
+      "rows": 5,
+      "nonsecret_fingerprint": "59f63bba9fd51b3b2f67d55959018c97"
+    },
+    "regulatory.regulatory_pack_validation_provenances": {
+      "rows": 1,
+      "nonsecret_fingerprint": "be60114d4156b3c0b96e97c5786a4bd7"
+    },
+    "regulatory.regulatory_pack_versions": {
+      "rows": 5,
+      "nonsecret_fingerprint": "ccd89cad879c905888c681e886afd289"
+    },
+    "regulatory.regulatory_packs": {
+      "rows": 5,
+      "nonsecret_fingerprint": "30b2272e61a47b946f18ed4d340c6277"
+    },
+    "regulatory.regulatory_sources": {
+      "rows": 9,
+      "nonsecret_fingerprint": "05e7564951ee358480888e4fe8f906a3"
+    },
+    "regulatory.requirement_applicabilities": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "regulatory.requirement_assessments": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "regulatory.requirement_control_mappings": {
+      "rows": 333,
+      "nonsecret_fingerprint": "32bcc372b681a81045c62910e80367c3"
+    },
+    "regulatory.requirement_crosswalk_mappings": {
+      "rows": 188,
+      "nonsecret_fingerprint": "bd09e9eb6db5f7d5be4f32cd39900b8f"
+    },
+    "regulatory.requirements": {
+      "rows": 118,
+      "nonsecret_fingerprint": "e3bba6bfd8975d85f13de2be58df6682"
+    },
+    "regulatory.statement_of_applicability_items": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "regulatory.statements_of_applicability": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "remediation.action_evidence_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "remediation.action_verifications": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "remediation.actions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "remediation.issue_origins": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "remediation.issues": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "reporting.dashboard_definitions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "reporting.dashboard_widgets": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "reporting.report_artifacts": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "reporting.report_definition_parameters": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "reporting.report_definitions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "reporting.report_run_snapshots": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "reporting.report_runs": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "reporting.report_templates": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "resilience.bia_versions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "resilience.bias": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "resilience.continuity_plan_versions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "resilience.continuity_plans": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "resilience.recovery_tests": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "resilience.resilience_exercises": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.impact_scale_definitions": {
+      "rows": 1,
+      "nonsecret_fingerprint": "f56cc70696c74e460d8cf0a7d9243bb4"
+    },
+    "risk.impact_scale_dimension_criteria": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.impact_scale_levels": {
+      "rows": 5,
+      "nonsecret_fingerprint": "10a60496fedbba827557e8ae77e601e5"
+    },
+    "risk.kris": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.likelihood_scale_definitions": {
+      "rows": 1,
+      "nonsecret_fingerprint": "92dacfbac029dbe929cc5e2e258a6ca1"
+    },
+    "risk.likelihood_scale_levels": {
+      "rows": 5,
+      "nonsecret_fingerprint": "357d8310e185af54c5146641d5c5aea4"
+    },
+    "risk.loss_event_incident_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.loss_event_risk_links": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.loss_events": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.loss_recoveries": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.risk_acceptances": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.risk_appetite_policies": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.risk_assessments": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.risk_control_mappings": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.risk_kri_mappings": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.risk_methodologies": {
+      "rows": 1,
+      "nonsecret_fingerprint": "79fa0848989b1e94d7749f0d17f5fd68"
+    },
+    "risk.risk_scopes": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.risk_taxonomies": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.risk_tolerance_policies": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.risk_treatments": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "risk.risks": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "rules.automation_policies": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "rules.grc_impact_mappings": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "rules.grc_impacts": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "rules.rule_definition_inputs": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "rules.rule_definition_thresholds": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "rules.rule_definitions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "rules.rule_evaluation_inputs": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "rules.rule_evaluations": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "survey.survey_answers": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "survey.survey_campaigns": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "survey.survey_options": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "survey.survey_question_validation_rules": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "survey.survey_questions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "survey.survey_responses": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "survey.survey_versions": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "survey.surveys": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "third_party.supplier_assessments": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "third_party.supplier_contracts": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "third_party.supplier_services": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "third_party.suppliers": {
+      "rows": 0,
+      "nonsecret_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    }
+  },
+  "ledger": [
+    {
+      "migration_id": "20260916000100",
+      "filename": "20260916000100_bootstrap_schemas_and_ledger.sql",
+      "content_sha256": "4f29910baacf82526fb06226c237024b7315038a4868baa7bbda56ced4779437",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260916000200",
+      "filename": "20260916000200_platform_iam_organization.sql",
+      "content_sha256": "08fce9d08e729f097095a10cfdfbf093c43f9d8cbfbee97d39594691f4ad8f29",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260916000300",
+      "filename": "20260916000300_normative_control_evidence.sql",
+      "content_sha256": "f300aac95b6fba36c09fc6ac77550bf574f953c0ee0ad374a8cbf6fdb338ef9f",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260916000400",
+      "filename": "20260916000400_risk_operations_privacy.sql",
+      "content_sha256": "a38d2a7babbe77d79783d66e8ce909916e967be739d3712f303e51883d85a81b",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260916000500",
+      "filename": "20260916000500_data_integration_reporting_ai.sql",
+      "content_sha256": "bac1e0a421a4d532eb2da27e4bc9453125cfa407a2e8da904c8749c726815764",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260916000600",
+      "filename": "20260916000600_constraints_and_uniqueness.sql",
+      "content_sha256": "7d079aa1234050b6dde06d9fb3cad939144fcbccdf287cc31bbe863c68899bf5",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260916000700",
+      "filename": "20260916000700_foreign_keys.sql",
+      "content_sha256": "d2112e4b402e8789312d5473969b615e6d7ab344a58a2211f790c4423dd4361f",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260916000800",
+      "filename": "20260916000800_required_indexes.sql",
+      "content_sha256": "d3502b9de76209b54b40497e6b9fdf94d463335d1f5441fb0fb924786648336e",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260916000900",
+      "filename": "20260916000900_canonical_seeds.sql",
+      "content_sha256": "94547ff1fa6a9accf56ff6f28be93afeb91b8c290ca9bb224667862c64c8c2e7",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260916001000",
+      "filename": "20260916001000_pre_f4_integrated_audit_model.sql",
+      "content_sha256": "c4247051c223960eb5ca817a0f85650dbc828a7864e48f66a1a73b1d298a224d",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260921000100",
+      "filename": "20260921000100_pre_f5c_executable_physical_reconciliation.sql",
+      "content_sha256": "1181d7ab26718927124de880e351fbaba3f2daaca41267a1ef66d28ac2021680",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260921000200",
+      "filename": "20260921000200_phase5_core_grc_runtime_permissions.sql",
+      "content_sha256": "8cc3d1b2a64a5b00ffd55f93ccfbcdfcde5406ffa9c1fa7f2d2055f505048eb0",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260923000100",
+      "filename": "20260923000100_pre_f5e_platform_authority.sql",
+      "content_sha256": "4ee0b3d24c7d7aa6ea87a8e9a6618cd2a7b164aedf1e3990590c3cf1b512ea82",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260923000200",
+      "filename": "20260923000200_phase5_final_closure.sql",
+      "content_sha256": "96a56b5669cd6e6fd0d751dc12526e3fe6ad2c612e77a8a7e144c847775be96c",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260924000100",
+      "filename": "20260924000100_phase5_subscription_create_catalog.sql",
+      "content_sha256": "a41efa51265d5f95a342674bdbac2faecf37ac31ac1c45aef47b394c7e380f2f",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260924000200",
+      "filename": "20260924000200_phase5_retention_policy_lifecycle.sql",
+      "content_sha256": "751ff47c9644b8d7134bb16148728a075e61af3057fa2a271e280a1fb1cd1728",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260924000300",
+      "filename": "20260924000300_phase5_membership_invitation.sql",
+      "content_sha256": "0942e5eb360f7157a444d7b04fbe7558312e8d782347e60a745a8d4365034806",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260925000100",
+      "filename": "20260925000100_phase5_membership_invitation_platform_authority_reconciliation.sql",
+      "content_sha256": "b66f88a19323d7a92465f6e61e762dffcf511eae55e53456d811c7912d3dad8a",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260928000100",
+      "filename": "20260928000100_phase5_administrative_read_permissions.sql",
+      "content_sha256": "d19c72ce5a0b9e5caa65d8b6b93daec1b2188dee54067551bb8ac3c8c7dcdd35",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260928000200",
+      "filename": "20260928000200_phase5_membership_role_revoke_platform_grant.sql",
+      "content_sha256": "d47e4fa07250092c5b8c063a60713528627acee864f93278b3c5f0ed5dd57cdc",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260928000300",
+      "filename": "20260928000300_phase5_control_assessment_start_tenant_scope.sql",
+      "content_sha256": "4e38ffe74d4c5324d16871228e65e800396d538f45aaf29b052d895bfb5cbe84",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260928000400",
+      "filename": "20260928000400_phase5_regulatory_catalog_contract_alignment.sql",
+      "content_sha256": "1d4e5a51372531a1a5645dd5152cd00742016a3e5a7f3c508193caa65afcb929",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260929000100",
+      "filename": "20260929000100_phase5_subscription_regulatory_pack_authority.sql",
+      "content_sha256": "58db95213900be09348312702659b292f53a5913fe03df99102c444320c70bbd",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260929000200",
+      "filename": "20260929000200_phase5_plus_permissions_applicability.sql",
+      "content_sha256": "58d52157c20f5daa95d533030fa0b2ed4f85d7faea1a0f256a167f608a23ea8d",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20260929000300",
+      "filename": "20260929000300_phase5_plus_subject_validation_access.sql",
+      "content_sha256": "5eb46ac182929c1649fed610a4d66cd92017ea07b473aba933e5c167f5e1dfdb",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20261001000100",
+      "filename": "20261001000100_managed_identity_permissions_publication.sql",
+      "content_sha256": "90503ed1cf626c7d8a3529d323670322e180efde90257ee8bb99efe2736eef07",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20261006000100",
+      "filename": "20261006000100_platform_role_administration_permission_publication.sql",
+      "content_sha256": "2a3c0d14748a9494d6ef60572802782eab2cdf3f4e60bef6026d73c48c1b6399",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20261006000200",
+      "filename": "20261006000200_user_identity_discovery_permission_publication.sql",
+      "content_sha256": "fa7d34a7f33044b8ee02478211c67a6c1c36ee64df0e0d2de57a60101d157c22",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "migration_id": "20261007000100",
+      "filename": "20261007000100_platform_tenant_user_onboarding_permission_publication.sql",
+      "content_sha256": "4f91369da1908264eba937e5c9d760a34bcefe3d7de1d726ac558c3f9b138673",
+      "transactional": true,
+      "outcome": "applied"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+$ node --experimental-strip-types scripts/foundations/rebuild-test.ts
+{
+  "rebuildTest": "PASS",
+  "target": "127.0.0.1:55432/tcdx-grc",
+  "evidence": [
+    {
+      "gate": "migrations",
+      "status": "PASS",
+      "output": "20260916000100 applied\n20260916000200 applied\n20260916000300 applied\n20260916000400 applied\n20260916000500 applied\n20260916000600 applied\n20260916000700 applied\n20260916000800 applied\n20260916000900 applied\n20260916001000 applied\n20260921000100 applied\n20260921000200 applied\n20260923000100 applied\n20260923000200 applied\n20260924000100 applied\n20260924000200 applied\n20260924000300 applied\n20260925000100 applied\n20260928000100 applied\n20260928000200 applied\n20260928000300 applied\n20260928000400 applied\n20260929000100 applied\n20260929000200 applied\n20260929000300 applied\n20261001000100 applied\n20261006000100 applied\n20261006000200 applied\n20261007000100 applied\n20261007000200 applied"
+    },
+    {
+      "gate": "schema",
+      "status": "PASS",
+      "output": "{\n  \"database\": \"tcdx-grc\",\n  \"postgresMajor\": 16,\n  \"expectedPhysicalTables\": 237,\n  \"actualPhysicalTables\": 237,\n  \"expectedColumns\": 3534,\n  \"expectedConstraints\": 2533,\n  \"expectedRequiredIndexes\": 1520,\n  \"tenantScopedTables\": 213,\n  \"primaryKeys\": 238,\n  \"uniqueConstraints\": 421,\n  \"checkConstraints\": 782,\n  \"foreignKeys\": 1338,\n  \"compositeTenantForeignKeys\": 487,\n  \"tableOwners\": [\n    \"postgres\"\n  ],\n  \"forbiddenDeleteCascades\": 0,\n  \"schemaMismatches\": 0,\n  \"mismatches\": []\n}"
+    },
+    {
+      "gate": "seeds",
+      "status": "PASS",
+      "output": "{\n  \"counts\": {\n    \"plans\": 3,\n    \"capabilities\": 20,\n    \"entitlements\": 36,\n    \"roles\": 24,\n    \"tenantBaselineRoles\": 0,\n    \"permissions\": 172,\n    \"lifecycleDefinitionRows\": 140,\n    \"lifecycleEdges\": 103,\n    \"configurationDefaults\": 1,\n    \"regulatoryPackHeaders\": 5,\n    \"regulatoryPackVersions\": 0,\n    \"impactLevels\": 5,\n    \"likelihoodLevels\": 5,\n    \"methodologies\": 1\n  },\n  \"expectedPermissionRows\": 172,\n  \"phase5RuntimePermissionsApplied\": true,\n  \"phase5SubscriptionPermissionApplied\": true,\n  \"phase5MembershipInvitationPermissionsApplied\": true,\n  \"phase5AdministrativeReadPermissionsApplied\": true,\n  \"phase5ControlAssessmentStartApplied\": true,\n  \"tenantBootstrapMaterializations\": [],\n  \"issueDismissedSources\": [\n    \"open\",\n    \"triaged\"\n  ],\n  \"seedMismatches\": 0,\n  \"failures\": []\n}"
+    },
+    {
+      "gate": "seed-reapply",
+      "status": "PASS",
+      "output": "{\n  \"seedReapply\": \"PASS\",\n  \"checksum\": \"94547ff1fa6a9accf56ff6f28be93afeb91b8c290ca9bb224667862c64c8c2e7\",\n  \"before\": {\n    \"plans\": 3,\n    \"roles\": 24,\n    \"grants\": 417,\n    \"permissions\": 172,\n    \"capabilities\": 20,\n    \"entitlements\": 36,\n    \"impact_levels\": 5,\n    \"methodologies\": 1,\n    \"lifecycle_scopes\": 240,\n    \"likelihood_levels\": 5,\n    \"lifecycle_definitions\": 140,\n    \"configuration_defaults\": 1,\n    \"lifecycle_side_effects\": 35,\n    \"regulatory_pack_headers\": 5,\n    \"regulatory_pack_versions\": 0\n  },\n  \"after\": {\n    \"plans\": 3,\n    \"roles\": 24,\n    \"grants\": 417,\n    \"permissions\": 172,\n    \"capabilities\": 20,\n    \"entitlements\": 36,\n    \"impact_levels\": 5,\n    \"methodologies\": 1,\n    \"lifecycle_scopes\": 240,\n    \"likelihood_levels\": 5,\n    \"lifecycle_definitions\": 140,\n    \"configuration_defaults\": 1,\n    \"lifecycle_side_effects\": 35,\n    \"regulatory_pack_headers\": 5,\n    \"regulatory_pack_versions\": 0\n  }\n}"
+    },
+    {
+      "gate": "migration-reapply",
+      "status": "PASS",
+      "output": "20260916000100 already applied; checksum verified\n20260916000200 already applied; checksum verified\n20260916000300 already applied; checksum verified\n20260916000400 already applied; checksum verified\n20260916000500 already applied; checksum verified\n20260916000600 already applied; checksum verified\n20260916000700 already applied; checksum verified\n20260916000800 already applied; checksum verified\n20260916000900 already applied; checksum verified\n20260916001000 already applied; checksum verified\n20260921000100 already applied; checksum verified\n20260921000200 already applied; checksum verified\n20260923000100 already applied; checksum verified\n20260923000200 already applied; checksum verified\n20260924000100 already applied; checksum verified\n20260924000200 already applied; checksum verified\n20260924000300 already applied; checksum verified\n20260925000100 already applied; checksum verified\n20260928000100 already applied; checksum verified\n20260928000200 already applied; checksum verified\n20260928000300 already applied; checksum verified\n20260928000400 already applied; checksum verified\n20260929000100 already applied; checksum verified\n20260929000200 already applied; checksum verified\n20260929000300 already applied; checksum verified\n20261001000100 already applied; checksum verified\n20261006000100 already applied; checksum verified\n20261006000200 already applied; checksum verified\n20261007000100 already applied; checksum verified\n20261007000200 already applied; checksum verified"
+    },
+    {
+      "gate": "schema-after-reapply",
+      "status": "PASS",
+      "output": "{\n  \"database\": \"tcdx-grc\",\n  \"postgresMajor\": 16,\n  \"expectedPhysicalTables\": 237,\n  \"actualPhysicalTables\": 237,\n  \"expectedColumns\": 3534,\n  \"expectedConstraints\": 2533,\n  \"expectedRequiredIndexes\": 1520,\n  \"tenantScopedTables\": 213,\n  \"primaryKeys\": 238,\n  \"uniqueConstraints\": 421,\n  \"checkConstraints\": 782,\n  \"foreignKeys\": 1338,\n  \"compositeTenantForeignKeys\": 487,\n  \"tableOwners\": [\n    \"postgres\"\n  ],\n  \"forbiddenDeleteCascades\": 0,\n  \"schemaMismatches\": 0,\n  \"mismatches\": []\n}"
+    },
+    {
+      "gate": "seeds-after-reapply",
+      "status": "PASS",
+      "output": "{\n  \"counts\": {\n    \"plans\": 3,\n    \"capabilities\": 20,\n    \"entitlements\": 36,\n    \"roles\": 24,\n    \"tenantBaselineRoles\": 0,\n    \"permissions\": 172,\n    \"lifecycleDefinitionRows\": 140,\n    \"lifecycleEdges\": 103,\n    \"configurationDefaults\": 1,\n    \"regulatoryPackHeaders\": 5,\n    \"regulatoryPackVersions\": 0,\n    \"impactLevels\": 5,\n    \"likelihoodLevels\": 5,\n    \"methodologies\": 1\n  },\n  \"expectedPermissionRows\": 172,\n  \"phase5RuntimePermissionsApplied\": true,\n  \"phase5SubscriptionPermissionApplied\": true,\n  \"phase5MembershipInvitationPermissionsApplied\": true,\n  \"phase5AdministrativeReadPermissionsApplied\": true,\n  \"phase5ControlAssessmentStartApplied\": true,\n  \"tenantBootstrapMaterializations\": [],\n  \"issueDismissedSources\": [\n    \"open\",\n    \"triaged\"\n  ],\n  \"seedMismatches\": 0,\n  \"failures\": []\n}"
+    }
+  ]
+}

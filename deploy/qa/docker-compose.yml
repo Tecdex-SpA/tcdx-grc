@@ -3,12 +3,39 @@ services:
     build:
       context: ../..
       dockerfile: apps/backend/Dockerfile
-    image: tcdx-grc-backend:phase3
+    image: tcdx-grc-backend:phase5-v1.7
     container_name: tcdx-grc-backend
     restart: unless-stopped
 
     env_file:
       - .env
+
+    environment:
+      MANAGED_IDENTITY_OIDC_ISSUER: ${MANAGED_IDENTITY_OIDC_ISSUER:?Required Managed Identity issuer}
+      MANAGED_IDENTITY_OIDC_CLIENT_ID: ${MANAGED_IDENTITY_OIDC_CLIENT_ID:?Required Managed Identity client}
+      MANAGED_IDENTITY_OIDC_REDIRECT_URI: ${MANAGED_IDENTITY_OIDC_REDIRECT_URI:?Required Managed Identity callback}
+      MANAGED_IDENTITY_ADMIN_BASE_URL: ${MANAGED_IDENTITY_ADMIN_BASE_URL:?Required internal provisioning endpoint}
+      MANAGED_IDENTITY_ADMIN_CLIENT_ID: ${MANAGED_IDENTITY_ADMIN_CLIENT_ID:?Required provisioning client}
+      MANAGED_IDENTITY_OIDC_CLIENT_SECRET_FILE: /run/secrets/managed_identity_oidc_client_secret
+      MANAGED_IDENTITY_ADMIN_CLIENT_SECRET_FILE: /run/secrets/managed_identity_admin_client_secret
+      APP_JWT_PRIVATE_KEY_FILE: /run/secrets/app_jwt_private_key
+      APP_JWT_PUBLIC_KEY_FILE: /run/secrets/app_jwt_public_key
+      OBJECT_STORAGE_ACCESS_KEY_FILE: /run/secrets/object_storage_access_key
+      OBJECT_STORAGE_SECRET_KEY_FILE: /run/secrets/object_storage_secret_key
+
+    secrets:
+      - managed_identity_oidc_client_secret
+      - managed_identity_admin_client_secret
+      - app_jwt_private_key
+      - app_jwt_public_key
+      - object_storage_access_key
+      - object_storage_secret_key
+
+    depends_on:
+      object-storage-init:
+        condition: service_completed_successfully
+      clamav:
+        condition: service_healthy
 
     ports:
       - "4000:4000"
@@ -28,3 +55,102 @@ services:
 
     security_opt:
       - no-new-privileges:true
+
+  minio:
+    build:
+      context: ../..
+      dockerfile: deploy/qa/minio/Dockerfile
+      args:
+        MINIO_VERSION: RELEASE.2025-10-15T17-29-55Z
+    image: tcdx-grc-minio:RELEASE.2025-10-15T17-29-55Z
+    container_name: tcdx-grc-minio
+    restart: unless-stopped
+
+    secrets:
+      - object_storage_access_key
+      - object_storage_secret_key
+      - object_storage_kms_key
+
+    volumes:
+      - minio-data:/data
+
+    expose:
+      - "9000"
+
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:9000/minio/health/ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 18
+      start_period: 20s
+
+    security_opt:
+      - no-new-privileges:true
+
+  object-storage-init:
+    build:
+      context: ../..
+      dockerfile: apps/backend/Dockerfile
+    image: tcdx-grc-backend:phase5-v1.7
+    restart: "no"
+
+    env_file:
+      - .env
+
+    environment:
+      OBJECT_STORAGE_ACCESS_KEY_FILE: /run/secrets/object_storage_access_key
+      OBJECT_STORAGE_SECRET_KEY_FILE: /run/secrets/object_storage_secret_key
+
+    secrets:
+      - object_storage_access_key
+      - object_storage_secret_key
+
+    command: ["node", "apps/backend/dist/ports/minio-bootstrap.js"]
+
+    depends_on:
+      minio:
+        condition: service_healthy
+
+    security_opt:
+      - no-new-privileges:true
+
+  clamav:
+    image: clamav/clamav:1.5.4-debian13-slim@sha256:df80497be841a8ad57f95e04f978216241457f8f8ad608f1f682e3cd0fe63c45
+    container_name: tcdx-grc-clamav
+    restart: unless-stopped
+
+    volumes:
+      - clamav-signatures:/var/lib/clamav
+
+    expose:
+      - "3310"
+
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/clamdcheck.sh"]
+      interval: 15s
+      timeout: 10s
+      retries: 20
+      start_period: 300s
+
+    security_opt:
+      - no-new-privileges:true
+
+secrets:
+  managed_identity_oidc_client_secret:
+    file: ${MANAGED_IDENTITY_OIDC_CLIENT_SECRET_HOST_FILE:?Required protected OIDC secret file}
+  managed_identity_admin_client_secret:
+    file: ${MANAGED_IDENTITY_ADMIN_CLIENT_SECRET_HOST_FILE:?Required protected provisioning secret file}
+  app_jwt_private_key:
+    file: ${APP_JWT_PRIVATE_KEY_FILE}
+  app_jwt_public_key:
+    file: ${APP_JWT_PUBLIC_KEY_FILE}
+  object_storage_access_key:
+    file: ${OBJECT_STORAGE_ACCESS_KEY_HOST_FILE}
+  object_storage_secret_key:
+    file: ${OBJECT_STORAGE_SECRET_KEY_HOST_FILE}
+  object_storage_kms_key:
+    file: ${OBJECT_STORAGE_KMS_KEY_HOST_FILE}
+
+volumes:
+  minio-data:
+  clamav-signatures:

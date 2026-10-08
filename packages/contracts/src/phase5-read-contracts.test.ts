@@ -57,7 +57,7 @@ function parseOpenApiOperations(source: string): Map<string, { method: string; p
       currentMethod = "";
       continue;
     }
-    const methodMatch = /^    (get|post):$/.exec(line);
+    const methodMatch = /^    (get|post|put):$/.exec(line);
     if (methodMatch) {
       currentMethod = methodMatch[1] ?? "";
       continue;
@@ -67,7 +67,7 @@ function parseOpenApiOperations(source: string): Map<string, { method: string; p
     const blockLines: string[] = [];
     for (let cursor = index; cursor < lines.length; cursor += 1) {
       const candidate = lines[cursor] ?? "";
-      if (cursor > index && (/^    (get|post):$/.test(candidate) || /^  "[^"]+":$/.test(candidate) || candidate === "tags: []")) break;
+      if (cursor > index && (/^    (get|post|put):$/.test(candidate) || /^  "[^"]+":$/.test(candidate) || candidate === "tags: []")) break;
       blockLines.push(candidate);
     }
     operations.set(operationMatch[1] ?? "", { method: currentMethod, path: currentPath, block: blockLines.join("\n") });
@@ -78,9 +78,9 @@ function parseOpenApiOperations(source: string): Map<string, { method: string; p
 function parseMatrixOperations(source: string): Map<string, { method: string; path: string; row: string }> {
   const operations = new Map<string, { method: string; path: string; row: string }>();
   for (const row of source.split("\n")) {
-    if (!row.startsWith("| ") || !row.includes(" | GET `") && !row.includes(" | POST `")) continue;
+    if (!row.startsWith("| ") || !row.includes(" | GET `") && !row.includes(" | POST `") && !row.includes(" | PUT `")) continue;
     const cells = row.slice(2, -2).split(" | ");
-    const methodPath = /^(GET|POST) `([^`]+)`$/.exec(cells[1] ?? "");
+    const methodPath = /^(GET|POST|PUT) `([^`]+)`$/.exec(cells[1] ?? "");
     if (!methodPath || !cells[0]) continue;
     operations.set(cells[0], { method: methodPath[1]?.toLowerCase() ?? "", path: methodPath[2] ?? "", row });
   }
@@ -121,12 +121,14 @@ describe("PRE-F5 approved read-contract materialization", () => {
   });
 
   it("keeps cross-catalog operation counts and operation IDs unique", () => {
-    expect(openApiOperations.size).toBe(106);
-    expect(matrixOperations.size).toBe(106);
-    expect([...openApiOperations.values()].filter(({ method }) => method === "post")).toHaveLength(80);
-    expect([...openApiOperations.values()].filter(({ method }) => method === "get")).toHaveLength(26);
-    expect([...matrixOperations.values()].filter(({ method }) => method === "post")).toHaveLength(80);
-    expect([...matrixOperations.values()].filter(({ method }) => method === "get")).toHaveLength(26);
+    expect(openApiOperations.size).toBe(Number(matrix.match(/`CONTRACTUAL_OPERATIONS=(\d+)`/)?.[1]));
+    expect(matrixOperations.size).toBe(openApiOperations.size);
+    expect([...openApiOperations.values()].filter(({ method }) => method === "post")).toHaveLength(104);
+    expect([...openApiOperations.values()].filter(({ method }) => method === "put")).toHaveLength(1);
+    expect([...openApiOperations.values()].filter(({ method }) => method === "get")).toHaveLength(Number(matrix.match(/`PUBLIC_READ_OPERATIONS=(\d+)`/)?.[1]));
+    expect([...matrixOperations.values()].filter(({ method }) => method === "post")).toHaveLength(104);
+    expect([...matrixOperations.values()].filter(({ method }) => method === "put")).toHaveLength(1);
+    expect([...matrixOperations.values()].filter(({ method }) => method === "get")).toHaveLength(Number(matrix.match(/`PUBLIC_READ_OPERATIONS=(\d+)`/)?.[1]));
   });
 
   it("publishes exactly ten dedicated read permissions without reusing write authority", () => {
@@ -137,7 +139,7 @@ describe("PRE-F5 approved read-contract materialization", () => {
     }
     expect(permissions).toContain("PRE_F5_READ_PERMISSION_ADDITIONS=10");
     expect(permissions).toContain("PRE_F5B_PERMISSION_ADDITIONS=1");
-    expect(permissions).toContain("TOTAL_EXECUTABLE_PERMISSIONS=147");
+    expect(permissions).toContain("TOTAL_EXECUTABLE_PERMISSIONS=163");
     expect(permissions).toContain("DATABASE_CONTRACT_CHANGED=1");
   });
 

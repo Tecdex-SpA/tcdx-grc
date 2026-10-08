@@ -1,0 +1,1273 @@
+{
+  "capturedAt": "2026-10-08T11:10:35.921Z",
+  "identityExactlyOne": true,
+  "issuerSubjectMappingExact": true,
+  "enabled": true,
+  "identityActive": true,
+  "requiredActions": [],
+  "otpCredentialCount": 1,
+  "activePlatformAdmin": 1,
+  "membershipCount": 1,
+  "activeTenantRoleCount": 0,
+  "preRevoke": {
+    "capturedAt": "2026-10-08T00:25:09.713Z",
+    "activePlatformAdmin": 1,
+    "membership": 1,
+    "tenantRoles": 0,
+    "otp": 1,
+    "sessions": 3,
+    "enabled": true,
+    "identityActive": true
+  },
+  "currentIamSessionCount": 0,
+  "revokedGenerationSessionCount": 0,
+  "latestCanonicalRevoke": {
+    "audit_event_id": "01a118e6-e5df-70ed-a8f1-6082454426df",
+    "event_code": "audit.platform.managed_identity.session_revoke.v1",
+    "command_code": "managedIdentitySessionRevoke",
+    "aggregate_type": "UserIdentity",
+    "aggregate_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+    "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+    "tenant_id": null,
+    "ownership_class": "PLATFORM_CONTROL",
+    "correlation_id": "01a118e6-e45d-7441-99da-ae0f1209cd0c",
+    "occurred_at": "2026-10-08T00:25:47.604Z",
+    "outcome": "success",
+    "reason": "MI10 Phase 5 final runtime session revocation validation"
+  },
+  "grcRevokedStateDenied": [
+    {
+      "at": "2026-10-08T00:25:48.287Z",
+      "context": "platform",
+      "path": "/api/v1/access/me",
+      "method": "GET",
+      "status": 401,
+      "code": "TCDX.AUTHENTICATION.INVALID",
+      "correlation": "01a118e6-e857-73b1-959a-98ff2c222138"
+    }
+  ],
+  "revokeIdempotency": [
+    {
+      "idempotency_record_id": "01a117da-5e51-71e3-8ff8-3ca615c69d98",
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_id": null,
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "operation_code": "managedIdentitySessionRevoke",
+      "result_status_code": "completed",
+      "result_ref": "managed-identity:01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+      "created_at": "2026-10-07T19:32:29.390Z",
+      "first_seen_at": "2026-10-07T19:32:29.390Z",
+      "expires_at": null,
+      "request_hash_present": true,
+      "response_hash_present": true
+    },
+    {
+      "idempotency_record_id": "01a118b7-c5e5-7599-9838-6b49155316ae",
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_id": null,
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "operation_code": "managedIdentitySessionRevoke",
+      "result_status_code": "completed",
+      "result_ref": "managed-identity:01a11260-ac49-7432-a9fe-a04d546c1355",
+      "created_at": "2026-10-07T23:34:19.379Z",
+      "first_seen_at": "2026-10-07T23:34:19.379Z",
+      "expires_at": null,
+      "request_hash_present": true,
+      "response_hash_present": true
+    },
+    {
+      "idempotency_record_id": "01a118e6-e530-74ef-a554-33a55e93866b",
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_id": null,
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "operation_code": "managedIdentitySessionRevoke",
+      "result_status_code": "completed",
+      "result_ref": "managed-identity:01a11260-ac49-7432-a9fe-a04d546c1355",
+      "created_at": "2026-10-08T00:25:47.576Z",
+      "first_seen_at": "2026-10-08T00:25:47.576Z",
+      "expires_at": null,
+      "request_hash_present": true,
+      "response_hash_present": true
+    }
+  ],
+  "platformPermissions": [
+    {
+      "permission_code": "configuration.configuration_definition.approve"
+    },
+    {
+      "permission_code": "configuration.configuration_definition.archive"
+    },
+    {
+      "permission_code": "configuration.configuration_definition.create"
+    },
+    {
+      "permission_code": "configuration.configuration_definition.publish"
+    },
+    {
+      "permission_code": "configuration.configuration_definition.read"
+    },
+    {
+      "permission_code": "configuration.configuration_definition.review"
+    },
+    {
+      "permission_code": "configuration.configuration_definition.update"
+    },
+    {
+      "permission_code": "platform.impersonation_session.impersonate"
+    },
+    {
+      "permission_code": "platform.lifecycle_transition.administer"
+    },
+    {
+      "permission_code": "platform.lifecycle_transition.publish"
+    },
+    {
+      "permission_code": "platform.lifecycle_transition.read"
+    },
+    {
+      "permission_code": "platform.managed_identity.administer"
+    },
+    {
+      "permission_code": "platform.managed_identity.create"
+    },
+    {
+      "permission_code": "platform.managed_identity.read"
+    },
+    {
+      "permission_code": "platform.managed_identity.update"
+    },
+    {
+      "permission_code": "platform.membership.read"
+    },
+    {
+      "permission_code": "platform.membership_invitation.create"
+    },
+    {
+      "permission_code": "platform.membership_invitation.read"
+    },
+    {
+      "permission_code": "platform.membership_invitation.update"
+    },
+    {
+      "permission_code": "platform.regulatory_pack_validation_access.archive"
+    },
+    {
+      "permission_code": "platform.regulatory_pack_validation_access.create"
+    },
+    {
+      "permission_code": "platform.regulatory_pack_validation_access.read"
+    },
+    {
+      "permission_code": "platform.role.administer"
+    },
+    {
+      "permission_code": "platform.role.assign"
+    },
+    {
+      "permission_code": "platform.role.read"
+    },
+    {
+      "permission_code": "platform.subscription.create"
+    },
+    {
+      "permission_code": "platform.subscription_regulatory_pack.archive"
+    },
+    {
+      "permission_code": "platform.subscription_regulatory_pack.create"
+    },
+    {
+      "permission_code": "platform.subscription_regulatory_pack.read"
+    },
+    {
+      "permission_code": "platform.tenant.archive"
+    },
+    {
+      "permission_code": "platform.tenant.create"
+    },
+    {
+      "permission_code": "platform.tenant.read"
+    },
+    {
+      "permission_code": "platform.tenant_account_classification.update"
+    },
+    {
+      "permission_code": "platform.tenant_user.onboard"
+    },
+    {
+      "permission_code": "platform.user_identity.read"
+    }
+  ],
+  "auditSecretKeyScan": [
+    {
+      "forbidden_secret_keys": 0
+    }
+  ],
+  "identityAudit": [
+    {
+      "audit_event_id": "01a11260-ac4e-71fb-a9de-1b7e803b64ae",
+      "event_code": "audit.platform.managed_identity.provision.v1",
+      "command_code": "managedIdentityProvision",
+      "aggregate_type": "UserIdentity",
+      "aggregate_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a11260-a9cc-73ec-bf32-456770c34d5e",
+      "occurred_at": "2026-10-06T18:01:27.277Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a1134e-78be-71f9-99fe-e2b128799507",
+      "event_code": "audit.iam.platform_role_assignment.assign.v1",
+      "command_code": "platformRoleAssign",
+      "aggregate_type": "PlatformRoleAssignment",
+      "aggregate_id": "01a1134e-78bb-7577-8108-778b00c5aba6",
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a1134e-78a4-757d-b806-fa19a3468fbe",
+      "occurred_at": "2026-10-06T22:21:12.237Z",
+      "outcome": "success",
+      "reason": "Autorización humana STEP 23L-MI10-P1-R2 para cuenta nominal andres.grc"
+    },
+    {
+      "audit_event_id": "01a1134e-78c1-70cc-ab06-e7f649817309",
+      "event_code": "audit.iam.application_token.privileged_use.v1",
+      "command_code": "platformRoleAssign",
+      "aggregate_type": "PlatformRoleAssignment",
+      "aggregate_id": "01a1134e-78bb-7577-8108-778b00c5aba6",
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a1134e-78a4-757d-b806-fa19a3468fbe",
+      "occurred_at": "2026-10-06T22:21:12.237Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a11869-cc11-719c-9f5d-2bfb322f3b82",
+      "event_code": "audit.iam.application_token.issue.v1",
+      "command_code": "oidc.session.establish",
+      "aggregate_type": "UserIdentity",
+      "aggregate_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a11869-cbc5-73ef-a79e-d826c70d1e9f",
+      "occurred_at": "2026-10-07T22:09:09.127Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a1187c-4ae6-7675-a274-1a1c2fb4ae65",
+      "event_code": "audit.iam.application_token.issue.v1",
+      "command_code": "oidc.session.establish",
+      "aggregate_type": "UserIdentity",
+      "aggregate_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a1187c-4a3f-75dd-99b7-f55eafdbdabe",
+      "occurred_at": "2026-10-07T22:29:21.249Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a1187d-eea9-70eb-9fc2-731179b20e46",
+      "event_code": "audit.platform.tenant_user.onboard.v1",
+      "command_code": "tenantUserOnboardingCreate",
+      "aggregate_type": "UserIdentity",
+      "aggregate_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a1187d-ee93-77b8-b287-393d9a3c5799",
+      "occurred_at": "2026-10-07T22:31:08.724Z",
+      "outcome": "denied",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a1187d-f470-743d-99f8-143d12eddd0e",
+      "event_code": "audit.platform.tenant_user.onboard.v1",
+      "command_code": "tenantUserOnboardingCreate",
+      "aggregate_type": "UserIdentity",
+      "aggregate_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a1187d-f45f-75a7-a7e6-6ce9ca872da7",
+      "occurred_at": "2026-10-07T22:31:10.203Z",
+      "outcome": "denied",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a11880-1d57-750e-b880-5f1d34ab3f11",
+      "event_code": "audit.iam.platform_role_assignment.revoke.v1",
+      "command_code": "platformRoleRevoke",
+      "aggregate_type": "PlatformRoleAssignment",
+      "aggregate_id": "01a1134e-78bb-7577-8108-778b00c5aba6",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a11880-1d37-73f3-8619-bf2530701f02",
+      "occurred_at": "2026-10-07T22:33:31.723Z",
+      "outcome": "success",
+      "reason": "M10 Phase 5 final runtime session revocation validation\""
+    },
+    {
+      "audit_event_id": "01a11880-1d5a-77ac-ab6c-9229d38ff464",
+      "event_code": "audit.iam.application_token.privileged_use.v1",
+      "command_code": "platformRoleRevoke",
+      "aggregate_type": "PlatformRoleAssignment",
+      "aggregate_id": "01a1134e-78bb-7577-8108-778b00c5aba6",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a11880-1d37-73f3-8619-bf2530701f02",
+      "occurred_at": "2026-10-07T22:33:31.723Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a1188a-60bb-70a5-bef0-15dcf60d3a74",
+      "event_code": "audit.iam.platform_role_assignment.assign.v1",
+      "command_code": "platformRoleAssign",
+      "aggregate_type": "PlatformRoleAssignment",
+      "aggregate_id": "01a1188a-60ad-702f-8286-3345175a543a",
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a1188a-609b-7614-adb0-a582d3f0ad59",
+      "occurred_at": "2026-10-07T22:44:44.330Z",
+      "outcome": "success",
+      "reason": "twwt"
+    },
+    {
+      "audit_event_id": "01a1188a-60be-77e5-91b3-0e32fcb26c50",
+      "event_code": "audit.iam.application_token.privileged_use.v1",
+      "command_code": "platformRoleAssign",
+      "aggregate_type": "PlatformRoleAssignment",
+      "aggregate_id": "01a1188a-60ad-702f-8286-3345175a543a",
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a1188a-609b-7614-adb0-a582d3f0ad59",
+      "occurred_at": "2026-10-07T22:44:44.330Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a118b2-5b39-74a9-816e-cafd92adced1",
+      "event_code": "audit.iam.application_token.issue.v1",
+      "command_code": "oidc.session.establish",
+      "aggregate_type": "UserIdentity",
+      "aggregate_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a118b2-5af7-7236-bde7-ddec2fcfe17a",
+      "occurred_at": "2026-10-07T23:28:24.374Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a118b3-605f-709b-a0dd-1bb8b76a571a",
+      "event_code": "audit.platform.managed_identity.password_reset.v1",
+      "command_code": "managedIdentityPasswordReset",
+      "aggregate_type": "UserIdentity",
+      "aggregate_id": "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a118b3-5e44-72cd-bee2-bddf2776687a",
+      "occurred_at": "2026-10-07T23:29:30.927Z",
+      "outcome": "success",
+      "reason": "test"
+    },
+    {
+      "audit_event_id": "01a118b7-c68a-7540-8399-91383849cf1d",
+      "event_code": "audit.platform.managed_identity.session_revoke.v1",
+      "command_code": "managedIdentitySessionRevoke",
+      "aggregate_type": "UserIdentity",
+      "aggregate_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a118b7-c517-713f-852f-d696d2c0f805",
+      "occurred_at": "2026-10-07T23:34:19.400Z",
+      "outcome": "success",
+      "reason": "M10 Phase 5 final runtime session revocation validation"
+    },
+    {
+      "audit_event_id": "01a118bb-744e-7490-9184-2f33819edfe7",
+      "event_code": "audit.iam.application_token.issue.v1",
+      "command_code": "oidc.session.establish",
+      "aggregate_type": "UserIdentity",
+      "aggregate_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a118bb-73ce-73a4-abed-37e2af3ecd44",
+      "occurred_at": "2026-10-07T23:38:20.620Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a118c3-3daa-71d7-b50f-5f02c47df727",
+      "event_code": "audit.iam.application_token.issue.v1",
+      "command_code": "oidc.session.establish",
+      "aggregate_type": "UserIdentity",
+      "aggregate_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a118c3-3d64-70ec-9304-e2c88c535239",
+      "occurred_at": "2026-10-07T23:46:50.919Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a118c3-b10a-774f-893f-def4fd1febb8",
+      "event_code": "audit.platform.membership.create.v1",
+      "command_code": "tenantUserOnboardingCreate",
+      "aggregate_type": "TenantMembership",
+      "aggregate_id": "01a118c3-b108-7636-abcf-7cb86725320e",
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "ownership_class": "TENANT_OWNED",
+      "correlation_id": "01a118c3-b0f2-73fb-a8bd-24803faf7f6f",
+      "occurred_at": "2026-10-07T23:47:20.454Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a118c3-b18f-75c8-900f-ab1096ba144d",
+      "event_code": "audit.platform.tenant_user.onboard.v1",
+      "command_code": "tenantUserOnboardingCreate",
+      "aggregate_type": "TenantMembership",
+      "aggregate_id": "01a118c3-b108-7636-abcf-7cb86725320e",
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a118c3-b0f2-73fb-a8bd-24803faf7f6f",
+      "occurred_at": "2026-10-07T23:47:20.588Z",
+      "outcome": "success",
+      "reason": "QA Phase5 final recovery 20261007: principal revisor autorizado expresamente; Membership retenida y roles temporales revocados al finalizar"
+    },
+    {
+      "audit_event_id": "01a118c3-b190-72d9-bd2f-2a4280497db5",
+      "event_code": "audit.iam.application_token.privileged_use.v1",
+      "command_code": "tenantUserOnboardingCreate",
+      "aggregate_type": "TenantMembership",
+      "aggregate_id": "01a118c3-b108-7636-abcf-7cb86725320e",
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a118c3-b0f2-73fb-a8bd-24803faf7f6f",
+      "occurred_at": "2026-10-07T23:47:20.588Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a118c7-273f-74f9-9a8f-f1a0d19db1db",
+      "event_code": "audit.compliance.applicability.approve.v1",
+      "command_code": "applicabilityApprove",
+      "aggregate_type": "RequirementApplicability",
+      "aggregate_id": "01a118c4-0331-73a7-97cc-c2eadd006b98",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "ownership_class": "TENANT_OWNED",
+      "correlation_id": "01a118c7-2703-7751-9aed-e679a0157cb3",
+      "occurred_at": "2026-10-07T23:51:07.289Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a118c7-aec7-765b-a2ed-58111da359e6",
+      "event_code": "audit.privacy.retention_policy.approve.v1",
+      "command_code": "retentionPolicyApprove",
+      "aggregate_type": "RetentionPolicy",
+      "aggregate_id": "01a118bf-386d-76be-a26d-e7b322136302",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "ownership_class": "TENANT_OWNED",
+      "correlation_id": "01a118c7-aeb0-7340-bcdc-7caa32e6b483",
+      "occurred_at": "2026-10-07T23:51:42.022Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a118d1-9134-7543-bed9-87eb061bcf7c",
+      "event_code": "audit.iam.application_token.issue.v1",
+      "command_code": "oidc.session.establish",
+      "aggregate_type": "UserIdentity",
+      "aggregate_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a118d1-90ba-7648-a1b3-dc1b0295f9d9",
+      "occurred_at": "2026-10-08T00:02:29.809Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a118d5-feef-759f-8d68-3b8bc82d461c",
+      "event_code": "audit.iam.application_token.issue.v1",
+      "command_code": "oidc.session.establish",
+      "aggregate_type": "UserIdentity",
+      "aggregate_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a118d5-feb3-7790-ba0f-432848efe4bc",
+      "occurred_at": "2026-10-08T00:07:20.045Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a118da-77fe-73e0-b33d-7a6612181e02",
+      "event_code": "audit.controls.assurance_test.review.v1",
+      "command_code": "assuranceTestReview",
+      "aggregate_type": "AssuranceTest",
+      "aggregate_id": "01a118d7-e604-7298-bae3-8b9da3eb809d",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "ownership_class": "TENANT_OWNED",
+      "correlation_id": "01a118da-77dd-7316-a6d2-d5f53eebf5c7",
+      "occurred_at": "2026-10-08T00:12:13.175Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a118da-7919-7613-b5d4-5947d22cf6c0",
+      "event_code": "audit.compliance.soa.publish.v1",
+      "command_code": "soaPublish",
+      "aggregate_type": "StatementOfApplicability",
+      "aggregate_id": "01a118d9-f24c-7322-8e4e-6696516f0c56",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "ownership_class": "TENANT_OWNED",
+      "correlation_id": "01a118da-78e5-760d-a5e1-a2ff20e05a52",
+      "occurred_at": "2026-10-08T00:12:13.433Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a118dd-241d-7598-a892-08aa9fd1cf11",
+      "event_code": "audit.iam.application_token.issue.v1",
+      "command_code": "oidc.session.establish",
+      "aggregate_type": "UserIdentity",
+      "aggregate_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a118dd-23d3-7587-83d8-60c5870031da",
+      "occurred_at": "2026-10-08T00:15:08.313Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a118e2-f51d-74a2-bfd4-2c24556592a3",
+      "event_code": "audit.iam.application_token.issue.v1",
+      "command_code": "oidc.session.establish",
+      "aggregate_type": "UserIdentity",
+      "aggregate_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a118e2-f4a8-76c7-ae0f-64008931cf95",
+      "occurred_at": "2026-10-08T00:21:29.495Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a118e5-d707-73ac-85e4-f0f35d30b064",
+      "event_code": "audit.iam.application_token.issue.v1",
+      "command_code": "oidc.session.establish",
+      "aggregate_type": "UserIdentity",
+      "aggregate_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a118e5-d6ce-7143-94f8-1445b1e56527",
+      "occurred_at": "2026-10-08T00:24:38.399Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a118e6-0d7c-70d9-962e-d6e75c998576",
+      "event_code": "audit.evidence.evidence.start_review.v1",
+      "command_code": "evidenceReviewStart",
+      "aggregate_type": "EvidenceVersion",
+      "aggregate_id": "01a118e4-ba56-76e7-aa44-d03594933d9c",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "ownership_class": "TENANT_OWNED",
+      "correlation_id": "01a118e6-0d65-74c7-9121-7d4a6542ad8d",
+      "occurred_at": "2026-10-08T00:24:52.341Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a118e6-0e6f-70ee-af7c-65c190e4dd96",
+      "event_code": "audit.evidence.evidence.approve.v1",
+      "command_code": "evidenceApprove",
+      "aggregate_type": "EvidenceVersion",
+      "aggregate_id": "01a118e4-ba56-76e7-aa44-d03594933d9c",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "ownership_class": "TENANT_OWNED",
+      "correlation_id": "01a118e6-0e50-7055-8d3c-10f986b7dc2c",
+      "occurred_at": "2026-10-08T00:24:52.577Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a118e6-15d7-7334-b9d2-18a5a2ef0079",
+      "event_code": "audit.remediation.action.verify.v1",
+      "command_code": "actionVerify",
+      "aggregate_type": "Action",
+      "aggregate_id": "01a118d9-ef97-71be-9827-c9aec1d2b3ea",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "ownership_class": "TENANT_OWNED",
+      "correlation_id": "01a118e6-15b4-7000-b7ad-13d8a6e61737",
+      "occurred_at": "2026-10-08T00:24:54.467Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a118e6-1762-76df-9a81-9e46171422dc",
+      "event_code": "audit.remediation.issue.verify_close.v1",
+      "command_code": "issueVerifyClose",
+      "aggregate_type": "Issue",
+      "aggregate_id": "01a118d9-ecd9-756a-a189-8b36d6c4e8ba",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "ownership_class": "TENANT_OWNED",
+      "correlation_id": "01a118e6-174f-714c-a1fa-d3f762b7f21c",
+      "occurred_at": "2026-10-08T00:24:54.879Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a118e6-e5df-70ed-a8f1-6082454426df",
+      "event_code": "audit.platform.managed_identity.session_revoke.v1",
+      "command_code": "managedIdentitySessionRevoke",
+      "aggregate_type": "UserIdentity",
+      "aggregate_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a118e6-e45d-7441-99da-ae0f1209cd0c",
+      "occurred_at": "2026-10-08T00:25:47.604Z",
+      "outcome": "success",
+      "reason": "MI10 Phase 5 final runtime session revocation validation"
+    },
+    {
+      "audit_event_id": "01a118e7-9d13-7554-9216-eec95e6a0af6",
+      "event_code": "audit.iam.application_token.issue.v1",
+      "command_code": "oidc.session.establish",
+      "aggregate_type": "UserIdentity",
+      "aggregate_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a118e7-9cc0-755a-94b5-9a7a9ae7b960",
+      "occurred_at": "2026-10-08T00:26:34.634Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a11b02-84a3-7311-847c-bd6a28319ede",
+      "event_code": "audit.iam.application_token.issue.v1",
+      "command_code": "oidc.session.establish",
+      "aggregate_type": "UserIdentity",
+      "aggregate_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": null,
+      "ownership_class": "PLATFORM_CONTROL",
+      "correlation_id": "01a11b02-8412-7064-9f4f-a93702d5b864",
+      "occurred_at": "2026-10-08T10:15:12.279Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a11b03-9b0b-7783-8412-83e833a24bbb",
+      "event_code": "audit.compliance.requirement_assessment.approve.v1",
+      "command_code": "requirementAssessmentApprove",
+      "aggregate_type": "RequirementAssessment",
+      "aggregate_id": "01a11afc-7a61-743f-9add-fbd93a87ddd7",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "ownership_class": "TENANT_OWNED",
+      "correlation_id": "01a11b03-9ad4-73bf-ad11-e13362538449",
+      "occurred_at": "2026-10-08T10:16:23.522Z",
+      "outcome": "success",
+      "reason": null
+    },
+    {
+      "audit_event_id": "01a11b03-9c96-72a6-b9ac-0e0881def4c8",
+      "event_code": "audit.controls.control_assessment.review.v1",
+      "command_code": "controlAssessmentReview",
+      "aggregate_type": "ControlAssessment",
+      "aggregate_id": "01a11afc-7f48-701e-9c0b-c2bc01ba0a5e",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "ownership_class": "TENANT_OWNED",
+      "correlation_id": "01a11b03-9c86-7482-ba22-b4b98c273111",
+      "occurred_at": "2026-10-08T10:16:23.955Z",
+      "outcome": "success",
+      "reason": null
+    }
+  ],
+  "keycloakTargetAdminAudit": [
+    {
+      "id": "0a29fb1f-b12b-494d-ad5e-bfa44bdfd16b",
+      "operation_type": "CREATE",
+      "resource_type": "USER",
+      "occurred_at": "2026-10-06T18:01:27.535Z",
+      "error": null,
+      "representation_absent": true,
+      "target_kind": "TARGET_USER"
+    },
+    {
+      "id": "a0290d04-f864-4de6-960e-c6a933b80d19",
+      "operation_type": "ACTION",
+      "resource_type": "USER",
+      "occurred_at": "2026-10-06T18:01:27.866Z",
+      "error": null,
+      "representation_absent": true,
+      "target_kind": "TARGET_USER_SUBRESOURCE"
+    },
+    {
+      "id": "541d9c36-7ecc-4a01-ac19-f607891401bd",
+      "operation_type": "ACTION",
+      "resource_type": "USER",
+      "occurred_at": "2026-10-07T23:34:19.483Z",
+      "error": null,
+      "representation_absent": true,
+      "target_kind": "TARGET_LOGOUT"
+    },
+    {
+      "id": "469ee952-86fa-40fa-8aa4-a22596849b84",
+      "operation_type": "ACTION",
+      "resource_type": "USER",
+      "occurred_at": "2026-10-08T00:25:47.675Z",
+      "error": null,
+      "representation_absent": true,
+      "target_kind": "TARGET_LOGOUT"
+    }
+  ],
+  "factorConfiguration": [
+    {
+      "authenticator": "auth-username-password-form",
+      "name": "default.reference.maxAge",
+      "value": "600"
+    },
+    {
+      "authenticator": "auth-otp-form",
+      "name": "default.reference.maxAge",
+      "value": "600"
+    }
+  ],
+  "flowExecutions": [
+    {
+      "flow_alias": "tcdx-browser-password-totp",
+      "depth": 0,
+      "authenticator": "auth-cookie",
+      "requirement": 3,
+      "priority": 10,
+      "authenticator_flow": false
+    },
+    {
+      "flow_alias": "tcdx-browser-password-totp",
+      "depth": 0,
+      "authenticator": "auth-spnego",
+      "requirement": 3,
+      "priority": 20,
+      "authenticator_flow": false
+    },
+    {
+      "flow_alias": "tcdx-browser-password-totp",
+      "depth": 0,
+      "authenticator": "identity-provider-redirector",
+      "requirement": 3,
+      "priority": 25,
+      "authenticator_flow": false
+    },
+    {
+      "flow_alias": "tcdx-browser-password-totp",
+      "depth": 0,
+      "authenticator": null,
+      "requirement": 3,
+      "priority": 26,
+      "authenticator_flow": true
+    },
+    {
+      "flow_alias": "tcdx-browser-password-totp",
+      "depth": 0,
+      "authenticator": null,
+      "requirement": 0,
+      "priority": 30,
+      "authenticator_flow": true
+    },
+    {
+      "flow_alias": "tcdx-browser-password-totp forms",
+      "depth": 1,
+      "authenticator": "auth-username-password-form",
+      "requirement": 0,
+      "priority": 10,
+      "authenticator_flow": false
+    },
+    {
+      "flow_alias": "tcdx-browser-password-totp forms",
+      "depth": 1,
+      "authenticator": null,
+      "requirement": 0,
+      "priority": 20,
+      "authenticator_flow": true
+    },
+    {
+      "flow_alias": "tcdx-browser-password-totp Browser - Conditional 2FA",
+      "depth": 2,
+      "authenticator": "conditional-user-configured",
+      "requirement": 3,
+      "priority": 10,
+      "authenticator_flow": false
+    },
+    {
+      "flow_alias": "tcdx-browser-password-totp Browser - Conditional 2FA",
+      "depth": 2,
+      "authenticator": "conditional-credential",
+      "requirement": 3,
+      "priority": 20,
+      "authenticator_flow": false
+    },
+    {
+      "flow_alias": "tcdx-browser-password-totp Browser - Conditional 2FA",
+      "depth": 2,
+      "authenticator": "auth-otp-form",
+      "requirement": 0,
+      "priority": 30,
+      "authenticator_flow": false
+    },
+    {
+      "flow_alias": "tcdx-browser-password-totp Browser - Conditional 2FA",
+      "depth": 2,
+      "authenticator": "webauthn-authenticator",
+      "requirement": 3,
+      "priority": 40,
+      "authenticator_flow": false
+    },
+    {
+      "flow_alias": "tcdx-browser-password-totp Browser - Conditional 2FA",
+      "depth": 2,
+      "authenticator": "auth-recovery-authn-code-form",
+      "requirement": 3,
+      "priority": 50,
+      "authenticator_flow": false
+    }
+  ],
+  "humanAuthenticationEvents": [
+    {
+      "id": "de71ea82-6069-4a78-b463-f371d5061c72",
+      "type": "UPDATE_TOTP",
+      "occurred_at": "2026-10-07T21:04:46.765Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "30ded678-1bc9-43cc-843f-b055235e5581",
+      "type": "UPDATE_CREDENTIAL",
+      "occurred_at": "2026-10-07T21:04:46.766Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "33f43ceb-6491-44c6-874c-1eba34584e0c",
+      "type": "UPDATE_PASSWORD",
+      "occurred_at": "2026-10-07T21:05:12.445Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "2550b8ca-4974-4815-b1bc-f00c6f11fa7f",
+      "type": "UPDATE_CREDENTIAL",
+      "occurred_at": "2026-10-07T21:05:12.446Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "b12cbbd9-a0a8-4c56-baf5-f1c68dbf61c9",
+      "type": "VERIFY_PROFILE",
+      "occurred_at": "2026-10-07T21:05:12.520Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "39483696-e74a-47ed-a097-1808e05239a0",
+      "type": "UPDATE_PROFILE",
+      "occurred_at": "2026-10-07T21:05:28.042Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "b36ab550-39de-4aa4-a687-1bb7421ae774",
+      "type": "LOGIN",
+      "occurred_at": "2026-10-07T21:05:28.110Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "06a71149-da54-4ff8-a1c4-ba40053ad281",
+      "type": "CODE_TO_TOKEN",
+      "occurred_at": "2026-10-07T21:05:28.499Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "d0390026-1df9-4cdd-9b3b-37b858eee22c",
+      "type": "LOGIN",
+      "occurred_at": "2026-10-07T21:06:07.685Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "6f55ec2d-a60d-40b6-a493-266d2a2a5ed7",
+      "type": "CODE_TO_TOKEN",
+      "occurred_at": "2026-10-07T21:06:07.895Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "4fb8e29c-1077-4bf2-9188-b2dbbd93167d",
+      "type": "LOGIN",
+      "occurred_at": "2026-10-07T22:09:09.030Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "881aebd2-9835-4371-a710-49bc11c1436e",
+      "type": "CODE_TO_TOKEN",
+      "occurred_at": "2026-10-07T22:09:09.091Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "8f876dd4-d4a5-4a0f-8e51-b659653ede77",
+      "type": "LOGIN",
+      "occurred_at": "2026-10-07T22:29:21.053Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "25b31f27-f6a7-48b6-913c-824ce5bd0aa6",
+      "type": "CODE_TO_TOKEN",
+      "occurred_at": "2026-10-07T22:29:21.202Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "300c2473-d31d-4674-99b8-aaa3d61897f6",
+      "type": "LOGIN_ERROR",
+      "occurred_at": "2026-10-07T23:28:15.495Z",
+      "error": "invalid_user_credentials",
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "81e57aeb-9a7c-4257-b543-fce038a95f1e",
+      "type": "LOGIN",
+      "occurred_at": "2026-10-07T23:28:24.290Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "45d57b2c-ecae-415e-a369-7b7d08cf7fd5",
+      "type": "CODE_TO_TOKEN",
+      "occurred_at": "2026-10-07T23:28:24.343Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "dff38ccd-d4f7-4c6f-ae10-cb1e9146685d",
+      "type": "LOGIN",
+      "occurred_at": "2026-10-07T23:38:20.472Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "631e87e3-0b45-4a30-8904-12103ab4b4c3",
+      "type": "CODE_TO_TOKEN",
+      "occurred_at": "2026-10-07T23:38:20.599Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "e0a4aa25-3426-46ac-adb8-4bde2c8c6227",
+      "type": "LOGIN",
+      "occurred_at": "2026-10-07T23:46:50.831Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "a4acd3e2-b93e-4d36-8b28-d63b975ccd89",
+      "type": "CODE_TO_TOKEN",
+      "occurred_at": "2026-10-07T23:46:50.888Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "c9eb9c80-d2e9-4dbd-8a5f-e6ef6a02e696",
+      "type": "LOGIN",
+      "occurred_at": "2026-10-08T00:02:29.672Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "1edcde34-dd75-4d43-830e-0bcdc16a7856",
+      "type": "CODE_TO_TOKEN",
+      "occurred_at": "2026-10-08T00:02:29.781Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "0ca79f60-d223-4adf-968c-f6781080e05e",
+      "type": "LOGIN",
+      "occurred_at": "2026-10-08T00:07:19.967Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "1ade2578-15b6-4057-bd27-ae05003b2989",
+      "type": "CODE_TO_TOKEN",
+      "occurred_at": "2026-10-08T00:07:20.019Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "c4d5fe0e-2dc5-4732-bcfc-ed4554a9f6b9",
+      "type": "LOGIN",
+      "occurred_at": "2026-10-08T00:15:08.220Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "2280ec25-7043-40b1-b2ab-094226452c03",
+      "type": "CODE_TO_TOKEN",
+      "occurred_at": "2026-10-08T00:15:08.282Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "5d1d8999-a4ee-4bf4-8b9e-f23fca7701b8",
+      "type": "LOGIN",
+      "occurred_at": "2026-10-08T00:21:29.360Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "18a0688a-7660-4082-9312-8ecafcd2cdc2",
+      "type": "CODE_TO_TOKEN",
+      "occurred_at": "2026-10-08T00:21:29.473Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "46bbf884-a600-4b5a-adb2-d67702fff331",
+      "type": "LOGIN",
+      "occurred_at": "2026-10-08T00:24:38.327Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "2e6f0708-2d3c-494f-9d88-3d07ca2d9b64",
+      "type": "CODE_TO_TOKEN",
+      "occurred_at": "2026-10-08T00:24:38.379Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "f6518550-681a-4b8e-a280-d449c83d4f09",
+      "type": "LOGIN_ERROR",
+      "occurred_at": "2026-10-08T00:26:20.454Z",
+      "error": "invalid_user_credentials",
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "e0b4d6a0-3e53-4628-bc12-048f3a658d39",
+      "type": "LOGIN",
+      "occurred_at": "2026-10-08T00:26:34.539Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "9974d9c6-6eba-4e44-a14c-9e3c0ac8f5d1",
+      "type": "CODE_TO_TOKEN",
+      "occurred_at": "2026-10-08T00:26:34.608Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "aa68345a-39cb-43ea-bf26-c1aeed30c60b",
+      "type": "LOGIN",
+      "occurred_at": "2026-10-08T10:15:12.111Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    },
+    {
+      "id": "d1665c48-7a6a-4b3b-9f9d-5447dbd0530c",
+      "type": "CODE_TO_TOKEN",
+      "occurred_at": "2026-10-08T10:15:12.241Z",
+      "error": null,
+      "client_id": "tcdx-grc",
+      "auth_method": null,
+      "response_type": null,
+      "redirect_uri": null,
+      "grant_type": null
+    }
+  ],
+  "credentialsSelected": false,
+  "sessionIdentifiersCaptured": false
+}

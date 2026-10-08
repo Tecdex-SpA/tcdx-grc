@@ -1,0 +1,38 @@
+{
+  "IMAGE_CONTENT_CHECK": "PASS",
+  "verifiedPublicUpstreamTestFixtures": [
+    {
+      "path": "usr/lib/x86_64-linux-gnu/libgnutls.so.30.34.3",
+      "classification": "PINNED_BASE_PUBLIC_UPSTREAM_SELF_TEST_FIXTURE",
+      "source": "https://github.com/gnutls/gnutls/blob/3.7.9/lib/crypto-selftests-pk.c"
+    }
+  ],
+  "layersScanned": 16,
+  "regularFileEntriesScanned": 13611,
+  "qaSecretValuesInImage": 0,
+  "clientSecretValuesInImage": 0,
+  "passwordValuesInImage": 0,
+  "privateRuntimeFilesInImage": 0,
+  "privateKeyMaterialFindings": 0,
+  "activeBadDomainReferences": 0,
+  "releaseOwnedLiteralSecretFindings": 0,
+  "safeFindingPaths": {
+    "runtimeFiles": [],
+    "knownSecretLiteralFiles": [],
+    "privateKeyMaterial": [],
+    "badDomain": [],
+    "releaseOwnedSecretAssignments": []
+  },
+  "runtimeEnvNames": [
+    "PATH",
+    "NODE_VERSION",
+    "YARN_VERSION",
+    "NODE_ENV",
+    "PNPM_HOME"
+  ],
+  "scanPolicy": "All exported layers including deleted files: known secret-backed environment values, private files/complete encoded private-key blocks and wrong domains (bare parser/header/documentation strings are not credential material). Release-owned source/build files also checked for literal secret assignments. MI runtime credential files never read or provided as build inputs.",
+  "transportPath": "/tmp/tcdx-grc-mi-tenant-e2e-backend-a910c94aa24e.tar",
+  "transportSha256": "267d2d733defdfb4b82d91a6ef3056b8340c20fa4bb8b066e8319ce3fc352f80",
+  "transportBytes": 155977216,
+  "transportedToQa": false
+}

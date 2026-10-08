@@ -4,7 +4,7 @@ services:
       context: ../..
       dockerfile: apps/frontend/Dockerfile
       args:
-        VITE_API_ORIGIN: https://grc-bk.tcdx.int
+        VITE_API_ORIGIN: https://grc.tecdex.net
 
     image: tcdx-grc-frontend:phase3
     container_name: tcdx-grc-frontend

@@ -16,8 +16,8 @@
     "PRE-F5C-INCREMENTAL"
   ],
   "permissionRows": 136,
-  "lifecycleEdges": 100,
-  "rawLifecycleDefinitionRows": 134,
+  "lifecycleEdges": 103,
+  "rawLifecycleDefinitionRows": 139,
   "configurationDefaults": 0,
   "protectedRegulatoryContents": 0,
   "contentSha256": "94547ff1fa6a9accf56ff6f28be93afeb91b8c290ca9bb224667862c64c8c2e7",
@@ -39,6 +39,127 @@
       "remediation.issue.read",
       "remediation.action.read",
       "evidence.evidence.create"
+    ]
+  },
+  "phase5SubscriptionPermission": {
+    "migrationId": "20260924000100",
+    "permissionRows": 1,
+    "rolePermissionRows": 1,
+    "permissionCodes": [
+      "platform.subscription.create"
+    ]
+  },
+  "phase5RetentionPolicyLifecycle": {
+    "migrationId": "20260924000200",
+    "lifecycleEdges": 3,
+    "commands": [
+      "retention_policy.review",
+      "retention_policy.approve",
+      "retention_policy.publish"
+    ],
+    "rowVersionAuthority": "privacy.retention_policies.row_version"
+  },
+  "phase5MembershipInvitationPermissions": {
+    "migrationId": "20260924000300",
+    "authorityReconciliationMigrationId": "20260925000100",
+    "permissionRows": 2,
+    "rolePermissionRows": 2,
+    "rolePermissionPolicy": "PLATFORM_ADMIN_ONLY",
+    "permissionCodes": [
+      "platform.membership_invitation.create",
+      "platform.membership_invitation.update"
+    ]
+  },
+  "phase5AdministrativeReadPermissions": {
+    "migrationId": "20260928000100",
+    "permissionRows": 4,
+    "permissionCodes": [
+      "platform.tenant.read",
+      "platform.membership.read",
+      "platform.membership_invitation.read",
+      "platform.role.read"
+    ],
+    "platformAdminGrantRows": 4,
+    "tenantAdminTemplateGrantRows": 2,
+    "tenantAdminGrantRowsPerTenant": 2
+  },
+  "phase5ControlAssessmentStart": {
+    "migrationId": "20260928000300",
+    "lifecycleDefinitionDelta": 1,
+    "authoritativeScope": "tenant",
+    "permissionCode": "controls.control_assessment.update"
+  },
+  "phase5PlusPermissions": {
+    "migrationId": "20260929000200",
+    "permissionRows": 4,
+    "permissionCodes": [
+      "platform.subscription_regulatory_pack.read",
+      "platform.subscription_regulatory_pack.create",
+      "platform.subscription_regulatory_pack.archive",
+      "organization.subject.read"
+    ]
+  },
+  "phase5PlusValidation": {
+    "migrationId": "20260929000300",
+    "permissionRows": 5,
+    "configurationDefaults": 1,
+    "permissionCodes": [
+      "organization.subject.create",
+      "platform.regulatory_pack_validation_access.read",
+      "platform.regulatory_pack_validation_access.create",
+      "platform.regulatory_pack_validation_access.archive",
+      "platform.tenant_account_classification.update"
+    ]
+  },
+  "phase5Methodologies": {
+    "migrationId": "20261007000200",
+    "permissionRows": 2,
+    "permissionCodes": [
+      "compliance.methodology.read",
+      "controls.methodology.read"
+    ],
+    "methodologyRows": 2,
+    "formulaRows": 2,
+    "methodologyIds": [
+      "01a11900-0000-7001-8000-000000000001",
+      "01a11900-0000-7001-8000-000000000002"
+    ]
+  },
+  "tenantUserOnboardingPermission": {
+    "migrationId": "20261007000100",
+    "permissionRows": 1,
+    "platformAdminGrantRows": 1,
+    "permissionCodes": [
+      "platform.tenant_user.onboard"
+    ]
+  },
+  "userIdentityDiscoveryPermission": {
+    "migrationId": "20261006000200",
+    "permissionRows": 1,
+    "platformAdminGrantRows": 1,
+    "tenantAdminTemplateGrantRows": 1,
+    "tenantAdminGrantRowsPerTenant": 1,
+    "permissionCodes": [
+      "platform.user_identity.read"
+    ]
+  },
+  "platformRoleAdministrationPermission": {
+    "migrationId": "20261006000100",
+    "permissionRows": 1,
+    "platformAdminGrantRows": 1,
+    "permissionCodes": [
+      "platform.role.administer"
+    ]
+  },
+  "managedIdentityPermissions": {
+    "migrationId": "20261001000100",
+    "permissionRows": 4,
+    "platformAdminGrantRows": 4,
+    "permissionCodes": [
+      "platform.managed_identity.read",
+      "platform.managed_identity.create",
+      "platform.managed_identity.update",
+      "platform.managed_identity.administer"
     ]
   }
 }

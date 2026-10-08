@@ -2,9 +2,9 @@
 
 ## Decisión
 
-Se consolida como candidato definitivo `TCDX_GRC_MASTER_REGENT_BASELINE_v1.4_2026-09-15`, incorporando el cierre arquitectónico revisado y la reconciliación de infraestructura IA: TCDX GRC consume `ia2.tcdx.int` desde el backend y no crea una VM/runtime separado `ia-grc`.
+El 2026-09-23 la autoridad humana activó `TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23` como baseline rectora vigente sobre v1.6. La baseline v1.6 se preserva completa e inmutable bajo `docs/rector/history/TCDX_GRC_MASTER_REGENT_BASELINE_v1.6_2026-09-23/`.
 
-La solicitud humana de generar documentación definitiva para actuar como regente maestro constituye autorización para preparar este baseline como versión definitiva. La activación en repositorio debe registrar commit/PR/aprobador y sólo entonces establecer operativamente `RECTOR_BASELINE=PASS`.
+El amendment v1.7 incorpora exclusivamente `FileUploadIntent` como coordinación durable previa a `FileObject`; `audit.lifecycle.evidence_request.fulfill.v1` como único audit code de fulfillment; y `controlAssessmentSubmit` con `owned_object`/`tenant`, sin assignee ni ownership inferido. La aprobación autoriza la reconciliación rectora, física, contractual y runtime necesaria para cerrar Fase 5, incluida la migración forward-only `20260923000200_phase5_final_closure.sql`. No autoriza modificar migraciones aplicadas, commit, push, PR, merge, producción ni Fase 6.
 
 ## Estado de gates al publicar
 
@@ -13,10 +13,13 @@ La solicitud humana de generar documentación definitiva para actuar como regent
 - `UNRESOLVED_ARCHITECTURAL_FINDINGS=0`
 - `SCOPE_EXPANSIONS=0`
 - `CODEX_VARIATION_BUDGET=ZERO`
-- `PHYSICAL_MODEL_DESIGN=AUTHORIZED_AFTER_REPOSITORY_APPROVAL_RECORD`
-- `PHYSICAL_DATA_MODEL_REVIEW=PENDING`
-- `EXECUTABLE_CONTRACTS=PENDING`
-- `MIGRATIONS=BLOCKED`
-- `FUNCTIONAL_DEVELOPMENT=BLOCKED`
+- `RECTOR_BASELINE=PASS`
+- `RECTOR_V1_6_HISTORY=PROTECTED_IMMUTABLE`
+- `PHYSICAL_MODEL_AMENDMENT=AUTHORIZED_PHASE5_FINAL_CLOSURE_ONLY`
+- `EXECUTABLE_CONTRACTS=AUTHORIZED_PHASE5_FINAL_CLOSURE_ONLY`
+- `MIGRATIONS=AUTHORIZED_FORWARD_ONLY_20260923000200`
+- `FUNCTIONAL_DEVELOPMENT=AUTHORIZED_PHASE5_FINAL_CLOSURE_ONLY`
+- `PHASE_6=BLOCKED`
+- `COMMIT_PUSH_PR_MERGE_PRODUCTION=BLOCKED`
 
-La publicación del baseline no autoriza migraciones ni desarrollo funcional. Autoriza únicamente iniciar la Fase 1 de 43 una vez registrada la aprobación del baseline en el repositorio.
+Fuera de este cierre acotado aplica fail-closed y `CODEX_VARIATION_BUDGET=ZERO`. La revisión humana previa a commit sigue siendo el siguiente gate de integración.

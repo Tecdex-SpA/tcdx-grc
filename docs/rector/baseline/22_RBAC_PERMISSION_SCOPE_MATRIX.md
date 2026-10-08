@@ -2,11 +2,17 @@
 
 ## 1. Modelo
 
-Autorización efectiva:
+Autorización efectiva Platform:
 
-`identity -> active tenant membership -> commercial entitlement -> permission -> scope -> object policy -> SoD -> ALLOW/DENY`
+`authenticated UserIdentity -> active PlatformRoleAssignment -> Role(PLATFORM_CONTROL) -> Permission -> platform scope -> ObjectPolicy -> SoD -> ALLOW/DENY`
+
+Autorización efectiva tenant:
+
+`authenticated UserIdentity -> active TenantMembership -> commercial entitlement -> active MembershipRole -> Role -> Permission -> tenant/object scope -> ObjectPolicy -> SoD -> ALLOW/DENY`
 
 Default DENY.
+
+`PlatformRoleAssignment` y `MembershipRole` son relaciones de grant distintas dentro del mismo IAM. La primera no contiene ni requiere tenant/membership y sólo puede referenciar un `Role` cuya `ownership_class=PLATFORM_CONTROL`; la segunda requiere una `TenantMembership` activa y no puede otorgar scope `platform`. No existe grant por email, dominio, allowlist runtime, configuración externa o tenant ficticio.
 
 ## 2. Acciones canónicas
 
@@ -109,8 +115,26 @@ NormativeUnit y Requirement de packs globales publicados son de sólo lectura pa
 
 Todo objeto tenant-owned debe resolver scope desde relaciones canónicas, nunca desde parámetros aportados por el cliente. Si un objeto pertenece a múltiples scopes, la policy declara `ANY` o `ALL`; no se asume. Los exports heredan exactamente el scope de lectura de los objetos exportados.
 
+Para `controlAssessmentSubmit`, `owned_object` se resuelve exclusivamente desde ownership/responsabilidad canónica del `Control` padre. El creator de `ControlAssessment` no adquiere ownership. Mientras no exista una relación canónica entre el actor y el `Subject` owner, ese scope falla cerrado; sólo un grant publicado `tenant` puede autorizar el command. No se crea ni infiere assignee.
+
 ## 12. Operaciones sensibles
 
 `administer`, `approve`, `verify`, `publish`, `impersonate`, acceso a credenciales y cambios de methodology/rule/permission catalog requieren audit reforzado. Las credenciales secretas nunca son retornadas por permiso de lectura; sólo referencias y metadata no sensible.
 
 El command que inicia una `ImpersonationSession` requiere `platform.impersonation_session.impersonate` con scope `platform`, motivo obligatorio, duración limitada y actor Platform Admin autorizado. Platform Support no obtiene este permiso por rol base.
+
+## 13. First Platform Admin Bootstrap
+
+`FIRST_PLATFORM_ADMIN_BOOTSTRAP` es una ceremonia administrativa interna y one-time, no una operación pública ni un permiso reusable. Su autoridad es exclusivamente la decisión humana F5D-007 aplicada al estado inicial sin grants; no introduce una segunda ruta de autorización normal.
+
+Precondiciones conjuntas y fail-closed:
+
+- principal `HUMAN_INTERACTIVE` autenticado por OIDC y resuelto a una `UserIdentity` canónica existente;
+- exactamente un Role baseline publicado con `role_code=PLATFORM_ADMIN`, `ownership_class=PLATFORM_CONTROL` y `tenant_id IS NULL`;
+- `COUNT(active PlatformRoleAssignment)=0`, donde activo significa `valid_from <= transaction_timestamp()` y `valid_to IS NULL OR valid_to > transaction_timestamp()`;
+- no existe ninguna fila histórica en `iam.platform_role_assignments`, condición más fuerte que impide reabrir bootstrap después de revocación;
+- correlation ID y justificación operacional presentes conforme al contrato de auditoría.
+
+La transacción usa aislamiento `READ COMMITTED` y, antes de evaluar las dos condiciones de assignments, obtiene `SELECT ... FOR UPDATE` sobre la única fila canónica `PLATFORM_ADMIN`. Todos los intentos usan la misma fila de serialización. Después del lock, la transacción revalida identidad, catálogo y precondiciones, crea exactamente un assignment abierto con `valid_from=transaction_timestamp()` y emite `audit.iam.platform_role_assignment.bootstrap.v1` en la misma transacción. Si cualquier validación, insert o AuditEvent falla, todo se revierte. Dos intentos concurrentes no pueden observar ambos el estado inicial: el segundo espera el lock, reevalúa con una nueva snapshot `READ COMMITTED` y DENY.
+
+El target es la misma `UserIdentity` autenticada; el caller no aporta `role_id`, email, issuer/subject, tenant ni membership. El rol permitido es exclusivamente `PLATFORM_ADMIN`; `PLATFORM_SUPPORT`, cualquier otro `PLATFORM_CONTROL`, rol tenant o custom producen DENY. Tras el primer commit, todo intento posterior produce DENY, incluso si el grant fue luego revocado.

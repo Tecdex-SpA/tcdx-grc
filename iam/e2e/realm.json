@@ -1,0 +1,16 @@
+{
+  "realm": "tcdx-mi7-local",
+  "enabled": true,
+  "loginTheme": "tcdx-grc",
+  "displayName": "Tecdex GRC",
+  "internationalizationEnabled": true,
+  "supportedLocales": ["es", "en"],
+  "defaultLocale": "es",
+  "clients": [{
+    "clientId": "tcdx-mi7-local-browser",
+    "enabled": true,
+    "publicClient": true,
+    "standardFlowEnabled": true,
+    "redirectUris": ["http://127.0.0.1:4899/callback"]
+  }]
+}

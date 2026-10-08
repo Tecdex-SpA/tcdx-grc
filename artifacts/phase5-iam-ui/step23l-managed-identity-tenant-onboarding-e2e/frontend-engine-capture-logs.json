@@ -1,0 +1,117 @@
+{
+  "candidateLogs": {
+    "policy": "MANDATORY",
+    "phase": "COMPLETE_POSTCHECK_WINDOW",
+    "candidateContainerId": "5b03cf40b375c2b6dfb7ae9826aa55f8877069e1922b41012b55f9a75e7c1eb1",
+    "imageId": "sha256:1d34a78b51eeed798620adc4375a39242d6d7009f4155e126de9850cf4de3973",
+    "windowStart": "2026-10-07T20:23:33.272369+00:00",
+    "windowEnd": "2026-10-07T20:23:55.620466+00:00",
+    "startedAt": "2026-10-07T20:23:35.659002574Z",
+    "stoppedAt": "0001-01-01T00:00:00Z",
+    "health": "healthy",
+    "healthChecks": [
+      {
+        "Start": "2026-10-07T20:23:41.595593564Z",
+        "End": "2026-10-07T20:23:41.898206104Z",
+        "ExitCode": 0
+      },
+      {
+        "Start": "2026-10-07T20:23:51.899577969Z",
+        "End": "2026-10-07T20:23:52.193957768Z",
+        "ExitCode": 0
+      }
+    ],
+    "events": [
+      {
+        "action": "create",
+        "timeNano": 1791404615436532553,
+        "containerId": "5b03cf40b375c2b6dfb7ae9826aa55f8877069e1922b41012b55f9a75e7c1eb1"
+      },
+      {
+        "action": "start",
+        "timeNano": 1791404616595184610,
+        "containerId": "5b03cf40b375c2b6dfb7ae9826aa55f8877069e1922b41012b55f9a75e7c1eb1"
+      },
+      {
+        "action": "exec_create",
+        "timeNano": 1791404621595737023,
+        "containerId": "5b03cf40b375c2b6dfb7ae9826aa55f8877069e1922b41012b55f9a75e7c1eb1"
+      },
+      {
+        "action": "exec_start",
+        "timeNano": 1791404621595810991,
+        "containerId": "5b03cf40b375c2b6dfb7ae9826aa55f8877069e1922b41012b55f9a75e7c1eb1"
+      },
+      {
+        "action": "exec_die",
+        "timeNano": 1791404621898155864,
+        "containerId": "5b03cf40b375c2b6dfb7ae9826aa55f8877069e1922b41012b55f9a75e7c1eb1"
+      },
+      {
+        "action": "health_status: healthy",
+        "timeNano": 1791404621899109457,
+        "containerId": "5b03cf40b375c2b6dfb7ae9826aa55f8877069e1922b41012b55f9a75e7c1eb1"
+      },
+      {
+        "action": "exec_create",
+        "timeNano": 1791404622639420767,
+        "containerId": "5b03cf40b375c2b6dfb7ae9826aa55f8877069e1922b41012b55f9a75e7c1eb1"
+      },
+      {
+        "action": "exec_start",
+        "timeNano": 1791404622640504721,
+        "containerId": "5b03cf40b375c2b6dfb7ae9826aa55f8877069e1922b41012b55f9a75e7c1eb1"
+      },
+      {
+        "action": "exec_die",
+        "timeNano": 1791404622737674141,
+        "containerId": "5b03cf40b375c2b6dfb7ae9826aa55f8877069e1922b41012b55f9a75e7c1eb1"
+      },
+      {
+        "action": "exec_create",
+        "timeNano": 1791404631899651256,
+        "containerId": "5b03cf40b375c2b6dfb7ae9826aa55f8877069e1922b41012b55f9a75e7c1eb1"
+      },
+      {
+        "action": "exec_start",
+        "timeNano": 1791404631899781275,
+        "containerId": "5b03cf40b375c2b6dfb7ae9826aa55f8877069e1922b41012b55f9a75e7c1eb1"
+      },
+      {
+        "action": "exec_die",
+        "timeNano": 1791404632193899947,
+        "containerId": "5b03cf40b375c2b6dfb7ae9826aa55f8877069e1922b41012b55f9a75e7c1eb1"
+      },
+      {
+        "action": "exec_create",
+        "timeNano": 1791404632967255890,
+        "containerId": "5b03cf40b375c2b6dfb7ae9826aa55f8877069e1922b41012b55f9a75e7c1eb1"
+      },
+      {
+        "action": "exec_start",
+        "timeNano": 1791404632968396586,
+        "containerId": "5b03cf40b375c2b6dfb7ae9826aa55f8877069e1922b41012b55f9a75e7c1eb1"
+      },
+      {
+        "action": "exec_die",
+        "timeNano": 1791404633061925859,
+        "containerId": "5b03cf40b375c2b6dfb7ae9826aa55f8877069e1922b41012b55f9a75e7c1eb1"
+      }
+    ],
+    "restartCount": 0,
+    "sanitizedStdoutStderr": [
+      "2026-10-07T20:23:36.497883617Z TCDX GRC frontend foundation listening on 0.0.0.0:8080"
+    ],
+    "nonemptyLogLines": 1,
+    "warnings": 0,
+    "runtimeErrorRecords": 0,
+    "http5xxUnexpected": 0,
+    "sqlErrorsUnexpected": 0,
+    "fatalErrors": 0,
+    "secretFindings": 0,
+    "rawLogsPersisted": false,
+    "captureComplete": true,
+    "capturedBeforeRemoval": true,
+    "durableRemoteEvidencePath": "/tmp/tcdx-grc-mi-tenant-e2e-candidate-logs-5b03cf40b375c2b6dfb7ae9826aa55f8877069e1922b41012b55f9a75e7c1eb1.json"
+  }
+}

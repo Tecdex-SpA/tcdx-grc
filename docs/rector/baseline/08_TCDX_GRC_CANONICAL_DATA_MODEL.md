@@ -10,7 +10,7 @@ Núcleo transversal mínimo:
 - Organization: Subject, Resource, OrganizationalUnit, Process, Service, Asset, System, Application, DataAsset.
 - Regulatory: RegulatoryPack/Version, RegulatorySource, RegulatoryImportManifest, RegulatoryCoverageManifest, FrameworkVersion, NormativeUnit, Requirement, RequirementApplicability, RequirementAssessment, StatementOfApplicability, StatementOfApplicabilityItem, FrameworkCrosswalk, NormativeUnitCrosswalkMapping, RequirementCrosswalkMapping, ControlCrosswalkMapping, RequirementControlMapping, NormativeUnitControlMapping.
 - Controls: Control/Version, ControlAssessment, AssuranceTest.
-- Evidence: Document/Version, Evidence/Version, EvidenceRequest, EvidenceReview, FileObject.
+- Evidence: Document/Version, Evidence/Version, EvidenceRequest, EvidenceReview, FileUploadIntent, FileObject.
 - Risk: RiskMethodology, ImpactScaleDefinition, LikelihoodScaleDefinition, Risk, RiskAssessment, RiskTreatment, RiskAcceptance, RiskAppetitePolicy, RiskTolerancePolicy, KRI, LossEvent.
 - Remediation: Issue, Action, ActionVerification.
 - Third Parties: Supplier, SupplierService, SupplierContract, SupplierAssessment.

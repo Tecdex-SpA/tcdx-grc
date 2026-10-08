@@ -1,0 +1,217 @@
+{
+  "unit": {
+    "gate": "pre-unit",
+    "exitCode": 0,
+    "mode": "unit",
+    "log": "/tmp/tcdx-grc-phase5-integration-pre-unit.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY",
+    "evidenceLog": "PRE_UNIT.txt"
+  },
+  "frontend": {
+    "gate": "pre-frontend",
+    "exitCode": 0,
+    "mode": "unit",
+    "log": "/tmp/tcdx-grc-phase5-integration-pre-frontend.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY",
+    "evidenceLog": "PRE_FRONTEND.txt"
+  },
+  "postgres-retry": {
+    "gate": "pre-postgres-retry",
+    "exitCode": 0,
+    "mode": "isolated",
+    "log": "/tmp/tcdx-grc-phase5-integration-pre-postgres-retry.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY",
+    "evidenceLog": "PRE_POSTGRES_RETRY.txt"
+  },
+  "grc-e2e": {
+    "gate": "pre-grc-e2e",
+    "exitCode": 0,
+    "mode": "e2e",
+    "log": "/tmp/tcdx-grc-phase5-integration-pre-grc-e2e.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY",
+    "evidenceLog": "PRE_GRC_E2E.txt"
+  },
+  "iam-e2e": {
+    "gate": "pre-iam-e2e",
+    "exitCode": 0,
+    "mode": "e2e",
+    "log": "/tmp/tcdx-grc-phase5-integration-pre-iam-e2e.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY",
+    "evidenceLog": "PRE_IAM_E2E.txt"
+  },
+  "iam-theme": {
+    "gate": "pre-iam-theme",
+    "exitCode": 0,
+    "mode": "unit",
+    "log": "/tmp/tcdx-grc-phase5-integration-pre-iam-theme.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY",
+    "evidenceLog": "PRE_IAM_THEME.txt"
+  },
+  "amr-callback": {
+    "gate": "pre-amr-callback",
+    "exitCode": 0,
+    "mode": "e2e",
+    "log": "/tmp/tcdx-grc-phase5-integration-pre-amr-callback.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY",
+    "evidenceLog": "PRE_AMR_CALLBACK.txt"
+  },
+  "typecheck": {
+    "gate": "pre-typecheck",
+    "exitCode": 0,
+    "mode": "static",
+    "log": "/tmp/tcdx-grc-phase5-integration-pre-typecheck.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY",
+    "evidenceLog": "PRE_TYPECHECK.txt"
+  },
+  "lint": {
+    "gate": "pre-lint",
+    "exitCode": 0,
+    "mode": "static",
+    "log": "/tmp/tcdx-grc-phase5-integration-pre-lint.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY",
+    "evidenceLog": "PRE_LINT.txt"
+  },
+  "contracts": {
+    "gate": "pre-contracts",
+    "exitCode": 0,
+    "mode": "static",
+    "log": "/tmp/tcdx-grc-phase5-integration-pre-contracts.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY",
+    "evidenceLog": "PRE_CONTRACTS.txt"
+  },
+  "source-build": {
+    "gate": "pre-source-build",
+    "exitCode": 0,
+    "mode": "static",
+    "log": "/tmp/tcdx-grc-phase5-integration-pre-source-build.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY",
+    "evidenceLog": "PRE_SOURCE_BUILD.txt"
+  },
+  "openapi": {
+    "gate": "pre-openapi",
+    "exitCode": 0,
+    "mode": "static",
+    "log": "/tmp/tcdx-grc-phase5-integration-pre-openapi.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY",
+    "evidenceLog": "PRE_OPENAPI.txt"
+  },
+  "secrets": {
+    "gate": "pre-secrets",
+    "exitCode": 0,
+    "mode": "static",
+    "log": "/tmp/tcdx-grc-phase5-integration-pre-secrets.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY",
+    "evidenceLog": "PRE_SECRETS.txt"
+  },
+  "rebuild": {
+    "gate": "pre-rebuild",
+    "exitCode": 0,
+    "mode": "isolated",
+    "log": "/tmp/tcdx-grc-phase5-integration-pre-rebuild.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY",
+    "evidenceLog": "PRE_REBUILD.txt"
+  },
+  "catalog": {
+    "gate": "pre-catalog",
+    "exitCode": 0,
+    "mode": "isolated",
+    "log": "/tmp/tcdx-grc-phase5-integration-pre-catalog.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY",
+    "evidenceLog": "PRE_CATALOG.txt"
+  },
+  "parity": {
+    "gate": "pre-parity",
+    "exitCode": 0,
+    "mode": "static",
+    "log": "/tmp/tcdx-grc-phase5-integration-pre-parity.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY",
+    "evidenceLog": "PRE_PARITY.txt"
+  },
+  "assets": {
+    "gate": "pre-assets",
+    "exitCode": 0,
+    "mode": "static",
+    "log": "/tmp/tcdx-grc-phase5-integration-pre-assets.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY",
+    "evidenceLog": "PRE_ASSETS.txt"
+  },
+  "pre-format-iam-built-e2e": {
+    "gate": "pre-format-iam-built-e2e",
+    "exitCode": 0,
+    "mode": "e2e",
+    "log": "/tmp/tcdx-grc-phase5-integration-pre-format-iam-built-e2e.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY"
+  },
+  "pre-format-iam-theme-final": {
+    "gate": "pre-format-iam-theme-final",
+    "exitCode": 0,
+    "mode": "unit",
+    "log": "/tmp/tcdx-grc-phase5-integration-pre-format-iam-theme-final.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY"
+  },
+  "pre-format-amr-callback": {
+    "gate": "pre-format-amr-callback",
+    "exitCode": 0,
+    "mode": "e2e",
+    "log": "/tmp/tcdx-grc-phase5-integration-pre-format-amr-callback.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY"
+  },
+  "pre-format-rector": {
+    "gate": "pre-format-rector",
+    "exitCode": 0,
+    "mode": "static",
+    "log": "/tmp/tcdx-grc-phase5-integration-pre-format-rector.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY"
+  },
+  "pre-format-secrets": {
+    "gate": "pre-format-secrets",
+    "exitCode": 0,
+    "mode": "static",
+    "log": "/tmp/tcdx-grc-phase5-integration-pre-format-secrets.log",
+    "node": "22.23.2",
+    "qaSecretsInherited": false,
+    "mutationsTarget": "LOCAL_ONLY"
+  }
+}

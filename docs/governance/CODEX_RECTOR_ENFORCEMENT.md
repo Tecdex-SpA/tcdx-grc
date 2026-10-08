@@ -4,21 +4,21 @@
 
 This contract converts the rector documentation into an operational development gate. It applies to Codex and to any contributor working in this repository.
 
-## Current bootstrap state
+## Current governed state
 
-The authoritative rector baseline is under external review and is not yet committed here. Therefore the repository operates in `BOOTSTRAP_GOVERNED` mode.
+The authoritative rector baseline is `TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23` and `docs/rector/BASELINE_STATUS` is `ACTIVE`. The 2026-09-23 human approval authorizes only the v1.7 reconciliation and Phase 5 closure recorded in the mutable execution status; it does not authorize commit, push, PR, merge, production or Phase 6.
 
-While `docs/rector/BASELINE_STATUS` is `PENDING`, only governance, documentation, CI controls and neutral repository scaffolding are allowed. Functional implementation is blocked.
+Historical baseline v1.6 remains immutable under `docs/rector/history/` and is verified independently from the active v1.7 manifest.
 
 ## Activation conditions
 
 The rector baseline may become `ACTIVE` only when all of the following are true:
 
-1. The approved rector documents are committed under `docs/rector/baseline/`.
+1. The human-approved rector documents are present under `docs/rector/baseline/`.
 2. A manifest of approved files and SHA-256 hashes exists at `docs/rector/RECTOR_MANIFEST.sha256`.
 3. `./scripts/verify-rector-governance.sh` validates every manifest entry.
 4. The baseline version is recorded in `docs/rector/BASELINE_ID`.
-5. The activation change passes the mandatory GitHub CI checks.
+5. Before integration into `main`, the activation change passes the mandatory GitHub CI checks and human review.
 
 Changing `BASELINE_STATUS` alone does not authorize development if the manifest or integrity checks fail.
 

@@ -43,9 +43,11 @@ The first successful logical command stores mutation, AuditEvent, OutboxEvent an
 
 Artifact 03 is authoritative for the assignment. All 26 published GET operations are `NATURALLY_IDEMPOTENT`: the five original reads (`accessGet, normativeUnitList, requirementList, snapshotGet, effectiveConfigurationGet`) plus the exact 21 PRE-F5 Core GRC reads approved by `DR-PHASE5-API-READ-2026-09-17-002`.
 
-All 80 published POST operations are `IDEMPOTENCY_KEY_REQUIRED`. This includes the nine PRE-F5C create/transition operations, upload finalization, `evidenceCreate`, `actionSubmitForReview`, async job requests, configuration/registry publication and controlled erasure: a durable PostgreSQL command/job record is created before any object-store/provider/worker/per-object erasure effect. No published operation is `NON_RETRYABLE_WITHOUT_RECONCILIATION`; that class is reserved for a future approved operation whose external effect cannot be placed behind a durable keyed command. Such an operation cannot be added silently.
+All 94 published POST operations are `IDEMPOTENCY_KEY_REQUIRED`. This includes `subjectCreate`, `tenantAccountClassificationSet`, `validationProvenanceCreate`, `validationAccessCreate`, `validationAccessRevoke`, `subscriptionRegulatoryPackActivate` and `subscriptionRegulatoryPackRevoke`, `membershipInvitationCreate`, `membershipInvitationRevoke`, the RetentionPolicy create/review/approve/publish path, the nine PRE-F5C create/transition operations, `subscriptionCreate`, upload finalization, `evidenceCreate`, `actionSubmitForReview`, async job requests, configuration/registry publication and controlled erasure. The internal `MEMBERSHIP_INVITATION_ACCEPT` ceremony is outside the public operation matrix; it is governed by one-time token consumption plus OIDC-state and invitation-row locking and intentionally accepts no pre-membership idempotency actor binding. No published operation is `NON_RETRYABLE_WITHOUT_RECONCILIATION`.
 
-All 100 authoritative lifecycle command edges published in SEED-007 are also `IDEMPOTENCY_KEY_REQUIRED`, tenant/actor/command/aggregate bound, fingerprinted with the target row's explicit `row_version` and persisted atomically with the single required audit and any required outbox event. The two `Issue -> dismissed` rows bind the source state in the fingerprint and cannot replay across `open` and `triaged`.
+All 103 authoritative lifecycle command edges published in SEED-007 are also `IDEMPOTENCY_KEY_REQUIRED`, tenant/actor/command/aggregate bound, fingerprinted with the target row's explicit `row_version` and persisted atomically with the single required audit and any required outbox event. RetentionPolicy transition fingerprints use the server-normalized strong `If-Match` row version and never accept a second body concurrency value. The two `Issue -> dismissed` rows bind the source state in the fingerprint and cannot replay across `open` and `triaged`.
+
+`membershipInvitationCreate` and `membershipInvitationRevoke` are `IDEMPOTENCY_KEY_REQUIRED`. Create fingerprints normalized email plus `ZOHO`; its replay returns the persisted projection but never replays the clear token (`invitation_token=null`). Revoke also binds invitation ID, reason and strong `If-Match`. `MEMBERSHIP_INVITATION_ACCEPT` is a one-time concurrent-safe ceremony: the OIDC flow state holds only invitation ID and digest, the callback locks the invitation, and every replay/expired/revoked/consumed attempt fails closed without a second membership, audit or event.
 
 ## Canonical fingerprint profiles
 
@@ -66,3 +68,18 @@ Canonical JSON uses UTF-8, sorted object keys, normalized numbers/strings and om
 - Retention/expiry remains policy-resolved (`expires_at` nullable); no universal TTL is invented.
 
 `IDEMPOTENCY_CONTRACT=PASS` as a Fase 2 contract candidate.
+
+## STEP 23L-MI10-P2A
+
+P2A platformRoleAssign and platformRoleRevoke require canonical Idempotency-Key and the exact v1 fingerprint/replay transaction contract in executable24. Synchronous completion stores original safe projection/status/hash; same-key replay has no material/audit side effects; changed payload409 IDEMPOTENCY. In-progress without safe result409 RESOURCE retryable=true.
+
+
+## STEP 23L-TENANT-ONBOARDING-D1-R
+
+userIdentityDiscovery is NATURALLY_IDEMPOTENT for business state and records each privacy access attempt; it creates no authority or domain outbox event.
+
+tenantInitialOnboardingCreate is KEY-required, Platform+actor+operation binding and fingerprint tenant input plus initial administrator. Existing result_ref holds safe references/checkpoints, never new business authority or credential. Its child tenantCreate uses the same opaque key under its different operation binding and fails closed on unrelated collision. Each checkpoint is atomic with its completed step; same-bound-intent pending replay reconciles/resumes only that operation's own tenant. Active locked attempt409RESOURCE; changed fingerprint409IDEMPOTENCY; completed safe replay no second material audit/event. No arbitrary target bootstrap/resume API. Bootstrap natural tenant/version/target identity guards remain; revoked/history does not reopen initial authority. MI provisioning is separate with unchanged MI6 replay/no-redisclosure semantics. See executable25§6; no physical state/schema change.
+
+## Managed Identity tenant onboarding E2E — 2026-10-07
+
+Executable26 tenantUserOnboardingCreate uses Platform actor/operation/key plus fingerprint of explicit tenant, canonical identity, sorted role codes and reason. Durable existing idempotency progress commits with Membership and each role child; same original intent resumes pending roles only. Completed hash-verified replay never regrants. Different payload409; no credential enters request/result.

@@ -4,7 +4,7 @@
 |---|---|
 | Contract owner | Architecture Owner |
 | Approving human roles | listed per decision |
-| Status | `CLOSED_FOR_HUMAN_GATE_REVIEW` |
+| Status | `PRE_F5E_PASS` |
 
 ## Resolved continuation blockers
 
@@ -38,3 +38,72 @@ OPEN_BLOCKERS=0
 ```
 
 Provider/model/DPA, concrete IdP values, alert routing, signed-URL TTL and licensed regulatory contents are explicit later runtime/security/content gates. They do not alter the generic Phase 2 contract and are not counted as Phase 2 blockers.
+
+## PRE-F5D post-implementation reconciliation blockers
+
+The historical Phase 2 closure above remains unchanged. Runtime integration exposed the following narrower PRE-F5D gaps between published concepts, the frozen physical model and executable wire contracts. None is closed by inference, environment configuration, a tenant-shaped workaround or implementation code.
+
+| blocker_id | unresolved decision | exact evidence | affected contract | required human owners | status |
+|---|---|---|---|---|---|
+| F5D-001 | Physical binding from a canonical `UserIdentity` to a platform `Role` with platform scope | `iam.roles` and `iam.role_permissions` can be `PLATFORM_CONTROL`, but the only human role assignment is tenant-owned `iam.membership_roles(tenant_id, tenant_membership_id, role_id, ...)`; no approved UserIdentity-to-Role relation exists | Platform Admin principal resolution, grant, revocation and bootstrap | Data Model Owner, Architecture Owner, Security & Privacy Reviewer | `BLOCKED_MODEL_GAP` |
+| F5D-002 | Exact `TenantCreateRequest` and `Tenant` response | `platform.tenants` requires `tenant_code`, names, timezone, lifecycle and classification, but no authority decides initial lifecycle/classification vocabulary or client-supplied versus server-derived fields; response projection is absent | `tenantCreate` | Product Owner, Architecture Owner, Backend Owner, Security & Privacy Reviewer | `BLOCKED_EXECUTABLE_CONTRACT` |
+| F5D-003 | Exact `MembershipCreateRequest` and `Membership` response | tenant comes from authenticated context and `iam.tenant_memberships` requires identity, state and joined time, but invitation/materialization semantics, initial state/time authority and response projection are absent | `membershipCreate` | Product Owner, Architecture Owner, Backend Owner, Security & Privacy Reviewer | `BLOCKED_EXECUTABLE_CONTRACT` |
+| F5D-004 | Exact `MembershipRoleAssignRequest` and `RoleAssignment` response | membership comes from path and tenant from authenticated context; physical assignment additionally requires role, scope and validity, but the wire union, validity-time authority and response projection are absent | `membershipRoleAssign` | Product Owner, Architecture Owner, Backend Owner, Security & Privacy Reviewer | `BLOCKED_EXECUTABLE_CONTRACT` |
+| F5D-005 | Authenticated-user tenant-context discovery | `accessGet` is published only as `AccessQuery -> EffectiveAccess`; no authorized membership-discovery path/operationId, dedicated permission, response projection or pagination decision exists | membership/context discovery | Product Owner, Architecture Owner, Backend Owner, Security & Privacy Reviewer | `BLOCKED_EXECUTABLE_CONTRACT` |
+| F5D-006 | TCDX application-token issuance after external OIDC authentication | artifact 13 requires the protected-API access token itself to be JWT, but no internal issuer/audience, asymmetric signing/key rotation, subject binding, lifetime, session/revocation, delivery endpoint or audit contract is published | browser authentication to protected API boundary | Architecture Owner, Security & Privacy Reviewer, Backend Owner | `BLOCKED_PENDING_ARCHITECTURE_DECISION` |
+
+```text
+PRE_F5D_OPEN_BLOCKERS=6
+PLATFORM_ADMIN_PHYSICAL_BINDING=BLOCKED_MODEL_GAP
+TENANT_CONTEXT_DISCOVERY=BLOCKED_EXECUTABLE_CONTRACT
+APPLICATION_TOKEN_ISSUANCE=BLOCKED_PENDING_ARCHITECTURE_DECISION
+```
+
+These blockers do not authorize a new table, column, FK, fake/platform tenant, provider allowlist, email-based privilege, local credential store, opaque-token acceptance or `id_token` use as an API bearer. External human identity remains keyed by provider issuer plus stable subject; email is an attribute only. A future TCDX Managed Identity is an external OIDC boundary and adds no password, hash or MFA-secret field to the GRC database.
+
+## PRE-F5E blocker ledger — 2026-09-23 activated reconciliation
+
+The PRE-F5D table above and its original prohibitions are preserved as historical discovery evidence. On 2026-09-23 the human project authority approved the missing F5D-001/002/003 semantics, F5D-007 and activation of rector baseline v1.6. The physical migration remains a local candidate pending a separate environment authorization.
+
+| blocker_id | PRE-F5E decision and reconciliation | current evidence | status |
+|---|---|---|---|
+| F5D-001 | Platform authority is a separate persisted IAM grant path, never a runtime allowlist or TenantMembership | active rector v1.6 adds `PlatformRoleAssignment`; physical candidate `iam.platform_role_assignments` has no tenant/membership and enforces `PLATFORM_CONTROL` through check + composite Role FK | `CLOSED` |
+| F5D-002 | caller supplies only `tenant_code`, `legal_name`, `display_name`, IANA `default_timezone`; server owns ID, active lifecycle, confidential initial classification and technical metadata | artifact 02 `TenantCreateRequest`/`TenantProjection`; migration candidate sets defaults and closed classification check | `CLOSED_BY_HUMAN_DECISION_PRE_F5E` |
+| F5D-003 | materialize active membership for existing canonical `user_identity_id`; tenant/ID/times server-owned; no invite/email/identity/credential/role side effect | artifact 02 `MembershipCreateRequest`/`TenantMembershipProjection`; migration candidate sets active membership default | `CLOSED_BY_HUMAN_DECISION_PRE_F5E` |
+| F5D-004 | exact same-tenant role/scope assignment using existing MembershipRole discriminants; server-time `valid_from`; optional canonical `valid_to`; no PLATFORM_CONTROL role | artifact 02 `MembershipRoleAssignRequest` and `MembershipRoleAssignmentProjection`; artifact 03 row | `CLOSED_BY_HUMAN_DECISION_PRE_F5E` |
+| F5D-005 | expand `accessGet` with active own-membership contexts before tenant selection | artifact 02 `EffectiveAccess.available_tenant_contexts`; complete bounded deterministic collection; no tenant header/global enumeration | `CLOSED_BY_HUMAN_DECISION_PRE_F5E` |
+| F5D-006 | external proof -> canonical UserIdentity -> TCDX short-lived asymmetric application JWT -> API | artifacts 13/21 close claims, issuer/audience, keys, browser delivery, revocation and audit; external/ID/opaque tokens prohibited as bearer | `CLOSED_BY_HUMAN_DECISION_PRE_F5E` |
+| F5D-007 | internal one-time bootstrap for the first Platform Admin over the already authenticated canonical UserIdentity | rector v1.6 candidate 09/22/39 and artifacts 08/10/13/18/21 require exact PLATFORM_ADMIN resolution, common role-row lock, zero active plus zero historical assignments, atomic reinforced audit and permanent second-use DENY; no public endpoint/table/allowlist/seed | `CLOSED_BY_HUMAN_DECISION_PRE_F5E` |
+
+```text
+PRE_F5E=PASS
+PRE_F5E_OPEN_BLOCKERS=0
+PRE_F5E_HUMAN_ACTIVATION_PENDING=0
+F5D_001_PLATFORM_AUTHORITY=CLOSED
+F5D_002_TENANT_CREATE=CLOSED
+F5D_003_MEMBERSHIP_CREATE=CLOSED
+F5D_004_MEMBERSHIP_ROLE_ASSIGN=CLOSED
+F5D_005_TENANT_CONTEXT_DISCOVERY=CLOSED
+F5D_006_APPLICATION_TOKEN=CLOSED
+F5D_007_FIRST_PLATFORM_ADMIN_BOOTSTRAP=CLOSED
+F5D_007_RUNTIME_CEREMONY=DEFERRED_TO_NEXT_AUTHORIZED_RUNTIME_STAGE
+```
+
+## Phase 5 canonical tenant-user enrollment decision — 2026-09-24
+
+`MISSING_CANONICAL_USER_ENROLLMENT` is contractually closed by `DR-PHASE5-CANONICAL-TENANT-USER-ENROLLMENT-2026-09-24` for QA/Phase 5 only. The decision authorizes `TenantMembershipInvitation`, Platform-scoped create/revoke permissions granted only to the base `PLATFORM_ADMIN` role, and the narrowly bounded Zoho `MEMBERSHIP_INVITATION_ACCEPT` ceremony. Acceptance neither requires nor grants Platform authority. It does not authorize Entra, Google Workspace, LOCAL password/MFA, commercial user administration, PRE-6 or Phase 6. Runtime completion remains gated on the forward-only migration, applicable local gates, QA deployment and a real second human's Zoho login; no fictitious identity, SQL fixture or out-of-band UUID may satisfy it.
+
+## Phase 5 isolated lifecycle findings — 2026-09-28
+
+The isolated PostgreSQL 16 integration proves RetentionPolicy creation/review/distinct-actor approval/publication, storage persistence and malware rejection, Evidence approval/fulfillment and `controlAssessmentSubmit`; it rolls back every synthetic business row. It does not constitute a QA smoke or human SoD acceptance.
+
+| blocker_id | evidence | exact missing decision or implementation | independent work allowed |
+|---|---|---|---|
+| F5-CONTROL-START-001 | Human Phase 5 decision 2026-09-28 authorizes tenant scope for CONTROL_OWNER using the existing `controls.control_assessment.update` permission; no assignee or creator-based ownership model | `CLOSED_LOCAL_CANDIDATE`: executable contracts and backend align; migration `20260928000300` publishes immutable v3 Start with tenant scope; isolated PostgreSQL 16 lifecycle test exercises Start then Submit | QA backup, canonical migration runner and candidate deploy remain owner gates; no QA mutation in this execution |
+| F5-ROLE-REVOKE-001 | Human Phase 5 decision 2026-09-28 closes the operation on existing temporal `iam.membership_roles.valid_to` and reuses the published `platform.role.assign` permission. A forward-only Platform Admin grant, explicit Platform tenant selection, strong validity ETag, idempotency, audit/outbox and UI confirmation are the approved implementation | `CLOSED_BY_HUMAN_DECISION`; QA remains pending until the new grant migration and candidate runtime deploy pass | Tenant and Platform revoke use separate authority paths; no PlatformRoleAssignment mutation |
+
+These are Phase 5 slice decisions, not changes to the historical Phase 2 or PRE-F5E blocker counts above. Neither authorizes a SQL business fixture in QA or a creator-as-owner shortcut. Browser file transport through GRC HTTPS and RetentionPolicy read/update were human-approved on 2026-09-28 as local candidates; QA runtime and real-human ceremonies remain pending.
+
+## Phase 5+ human closure — 2026-09-29
+
+The human resolution closes the three precheck decisions: dedicated `platform.subscription_regulatory_pack.read/create/archive` with exact Platform/Tenant grants, existing physical `org.subjects` exposed through the single new `organization.subject.read` authority, and exact persisted RequirementApplicability decisions `applicable|not_applicable`. The forward-only implementation is local only. No new rector contradiction is identified; QA apply, real actor ceremonies and human UI review remain separate gates. No Phase 6 work is authorized by this closure.

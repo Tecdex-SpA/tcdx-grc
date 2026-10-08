@@ -8,7 +8,8 @@
     "dev": "vite --config vite.config.ts",
     "build": "tsc -b && vite build --config vite.config.ts",
     "lint": "tsc -b --pretty false",
-    "typecheck": "tsc -b --pretty false"
+    "typecheck": "tsc -b --pretty false",
+    "test": "pnpm -C ../.. exec vitest run apps/frontend/src"
   },
   "dependencies": {
     "@tcdx-grc/contracts": "workspace:*",

@@ -29,6 +29,8 @@ const FIELD_LABELS: Readonly<Record<string, string>> = {
   result_status: "Estado del resultado",
   domain_conclusion: "Conclusión",
   coverage_percent: "Cobertura (%)",
+  design_effectiveness: "Efectividad de diseño",
+  operating_effectiveness: "Efectividad operativa",
   title: "Título",
   name: "Nombre",
   items: "Elementos",
@@ -84,6 +86,23 @@ const FIELD_LABELS: Readonly<Record<string, string>> = {
 
 const VALUE_LABELS: Readonly<Record<string, string>> = {
   ...STATUS_LABELS,
+  PLATFORM_CONTROL: "Control base TCDX",
+  GLOBAL_REFERENCE: "Control de referencia",
+  TENANT_OWNED: "Control de la organización",
+  NOT_YET_LICENSED: "Contenido aún no licenciado",
+  non_authoritative_test_pack: "Paquete de prueba no autoritativo",
+  NON_AUTHORITATIVE_TEST_PACK: "Paquete de prueba no autoritativo",
+  provisional_supporting_reference: "Referencia provisional de apoyo",
+  supporting_reference: "Referencia de apoyo",
+  test_data_source: "Fuente de datos de prueba",
+  LICENSED: "Contenido licenciado",
+  preventive: "Preventivo",
+  detective: "Detectivo",
+  corrective: "Correctivo",
+  directive: "Directivo",
+  manual: "Manual",
+  automated: "Automatizado",
+  hybrid: "Híbrido",
   applicable: "Aplicable",
   not_applicable: "No aplicable",
   partially_applicable: "Aplicable parcialmente",
@@ -108,6 +127,11 @@ const VALUE_LABELS: Readonly<Record<string, string>> = {
 };
 
 const ROLE_LABELS: Readonly<Record<string, string>> = {
+  PLATFORM_ADMIN: "Administrador de Platform",
+  PLATFORM_SUPPORT: "Soporte Platform",
+  TENANT_ADMIN: "Administrador del tenant",
+  PRIVACY_MANAGER: "Responsable de privacidad",
+  LEGAL_REVIEWER: "Revisor legal",
   "GRC Manager": "Responsable GRC",
   GRC_MANAGER: "Responsable GRC",
   COMPLIANCE_MANAGER: "Responsable de cumplimiento",
@@ -120,7 +144,7 @@ const ROLE_LABELS: Readonly<Record<string, string>> = {
 };
 
 export function fieldLabel(field: string): string {
-  return FIELD_LABELS[field] ?? "Campo contractual";
+  return FIELD_LABELS[field] ?? field.replaceAll("_", " ").replace(/^./, (letter) => letter.toUpperCase());
 }
 
 export function displayValue(value: unknown): string {
@@ -128,7 +152,7 @@ export function displayValue(value: unknown): string {
   if (typeof value === "boolean") return value ? "Sí" : "No";
   if (typeof value === "string") {
     if (VALUE_LABELS[value]) return VALUE_LABELS[value];
-    if (/^[a-z][a-z0-9_]+$/.test(value) && value.includes("_")) return "Valor contractual";
+    if (/^[a-z][a-z0-9_]+$/.test(value) && value.includes("_")) return value.replaceAll("_", " ");
     return value;
   }
   return String(value);
@@ -136,7 +160,7 @@ export function displayValue(value: unknown): string {
 
 export function roleLabel(value: string | undefined): string {
   if (!value) return "Rol autorizado";
-  return ROLE_LABELS[value] ?? "Rol autorizado";
+  return ROLE_LABELS[value] ?? "Rol personalizado";
 }
 
 export function fieldPlaceholder(field: string): string {

@@ -1,0 +1,58 @@
+{
+  "publicBundles": [
+    {
+      "path": "/assets/index-C1oKueIh.js",
+      "sha256": "ef9fcd0a760f808ec8b7b752e0c62da5d22f67a22135d6be344a4c3e97c5b712",
+      "bytes": 387526,
+      "mime": "text/javascript; charset=utf-8"
+    }
+  ],
+  "publicBundlesMatchExactDeployedContainer": true,
+  "publicLogoSha256": "215de8e5447f770649647d55556dceeed84f8f6e64393d618690ef0954246806",
+  "logoMatchesApprovedAsset": true,
+  "uiStringsPresent": {
+    "Acceso a empresas": true,
+    "Roles de plataforma": true,
+    "Agregar acceso a empresa": true,
+    "Tecdex GRC": true,
+    "Tecdex Managed Identity": true,
+    "Invitaci\u00f3n con identidad corporativa Zoho": true,
+    "Agregar usuario": true
+  },
+  "activeBadDomainReferences": 0,
+  "badProductBranding": 0,
+  "backendGetProbes": {
+    "live": {
+      "status": 200
+    },
+    "ready": {
+      "status": 200
+    },
+    "providers": {
+      "status": 200,
+      "projection": {
+        "providers": [
+          {
+            "provider": "ZOHO",
+            "available": true
+          },
+          {
+            "provider": "MICROSOFT_ENTRA_ID",
+            "available": false
+          },
+          {
+            "provider": "GOOGLE_WORKSPACE",
+            "available": false
+          },
+          {
+            "provider": "TCDX_MANAGED_IDENTITY",
+            "available": true
+          }
+        ]
+      },
+      "noStore": true
+    }
+  },
+  "authorizationFlowInitiated": false,
+  "humanBrowserUsed": false
+}

@@ -1,4 +1,4 @@
-FROM node:22.23.2-bookworm-slim AS build
+FROM node:22.23.2-bookworm-slim@sha256:48e4b67d85f87bd551df43704e24d252f56cc5f8e9718841aace50f19948f0f9 AS build
 
 ENV PNPM_HOME=/pnpm
 ENV PATH=$PNPM_HOME:$PATH
@@ -18,14 +18,15 @@ RUN pnpm install --frozen-lockfile
 COPY apps/frontend apps/frontend
 COPY packages/contracts packages/contracts
 COPY packages/shared-types packages/shared-types
+COPY docs/ui/assets/brand docs/ui/assets/brand
 
-ARG VITE_API_ORIGIN=https://grc-bk.tcdx.int
+ARG VITE_API_ORIGIN=https://grc.tecdex.net
 ENV VITE_API_ORIGIN=$VITE_API_ORIGIN
 
 RUN pnpm --filter @tcdx-grc/frontend build
 
 
-FROM node:22.23.2-bookworm-slim AS runtime
+FROM node:22.23.2-bookworm-slim@sha256:48e4b67d85f87bd551df43704e24d252f56cc5f8e9718841aace50f19948f0f9 AS runtime
 
 ENV NODE_ENV=qa
 ENV PORT=8080

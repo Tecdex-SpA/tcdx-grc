@@ -36,15 +36,33 @@ const expectedConstraints = new Set([
   ...expectedNames(/ADD CONSTRAINT "([^"]+)" (?:CHECK|UNIQUE|FOREIGN KEY)/g, "database/migrations/20260916000600_constraints_and_uniqueness.sql"),
   ...expectedNames(/ADD CONSTRAINT "([^"]+)" (?:CHECK|UNIQUE|FOREIGN KEY)/g, "database/migrations/20260916000700_foreign_keys.sql"),
   ...expectedNames(/ADD CONSTRAINT "([^"]+)" (?:CHECK|UNIQUE|FOREIGN KEY)/g, "database/migrations/20260916001000_pre_f4_integrated_audit_model.sql"),
-  ...expectedNames(/ADD CONSTRAINT "([^"]+)" (?:CHECK|UNIQUE|FOREIGN KEY)/g, "database/migrations/20260921000100_pre_f5c_executable_physical_reconciliation.sql")
+  ...expectedNames(/ADD CONSTRAINT "([^"]+)" (?:CHECK|UNIQUE|FOREIGN KEY)/g, "database/migrations/20260921000100_pre_f5c_executable_physical_reconciliation.sql"),
+  ...expectedNames(/(?:ADD CONSTRAINT|CONSTRAINT) "([^"]+)" (?:CHECK|UNIQUE|FOREIGN KEY|PRIMARY KEY)/g, "database/migrations/20260923000100_pre_f5e_platform_authority.sql"),
+  ...expectedNames(/(?:ADD CONSTRAINT|CONSTRAINT) "([^"]+)" (?:CHECK|UNIQUE|FOREIGN KEY|PRIMARY KEY)/g, "database/migrations/20260923000200_phase5_final_closure.sql"),
+  ...expectedNames(/ADD CONSTRAINT ([a-z0-9_]+)\s+(?:CHECK|UNIQUE|FOREIGN KEY)/g, "database/migrations/20260924000200_phase5_retention_policy_lifecycle.sql"),
+  ...expectedNames(/(?:ADD CONSTRAINT|CONSTRAINT) ([a-z0-9_]+)\s+(?:CHECK|UNIQUE|FOREIGN KEY|PRIMARY KEY)/g, "database/migrations/20260924000300_phase5_membership_invitation.sql"),
+  ...expectedNames(/ADD CONSTRAINT ([a-z0-9_]+)\s+(?:CHECK|UNIQUE|FOREIGN KEY)/g, "database/migrations/20260928000400_phase5_regulatory_catalog_contract_alignment.sql"),
+  ...expectedNames(/CONSTRAINT ([a-z0-9_]+) (?:CHECK|UNIQUE|FOREIGN KEY|PRIMARY KEY|EXCLUDE)/g, "database/migrations/20260929000100_phase5_subscription_regulatory_pack_authority.sql")
+  ,...expectedNames(/CONSTRAINT ([a-z0-9_]+)\s+(?:CHECK|UNIQUE|FOREIGN KEY|PRIMARY KEY|EXCLUDE)/g, "database/migrations/20260929000300_phase5_plus_subject_validation_access.sql")
 ]);
 expectedConstraints.delete("fk_audits__lead_membership_id");
 expectedConstraints.delete("uq_requirement_applicabilities__tenant_id_requirement__c645d089");
 expectedConstraints.delete("uq_statements_of_applicability__tenant_id_soa_version");
+expectedConstraints.delete("uq_normative_units__source_locator");
+expectedConstraints.delete("uq_requirement_control_mappings__ownership_class_tenan_0197a00d");
+expectedConstraints.delete("uq_normative_unit_control_mappings__mapping_version");
+expectedConstraints.delete("uq_subjects__tenant_id_canonical_key");
+for (const name of expectedNames(/CONSTRAINT "([^"]+)"/g, "database/migrations/20261007000200_phase5_methodology_binding.sql")) expectedConstraints.add(name);
 const expectedIndexes = new Set([
+  ...expectedNames(/CREATE (?:UNIQUE )?INDEX "([^"]+)"/g, "database/migrations/20261007000200_phase5_methodology_binding.sql"),
   ...expectedNames(/CREATE (?:UNIQUE )?INDEX "([^"]+)"/g, "database/migrations/20260916000800_required_indexes.sql"),
   ...expectedNames(/CREATE (?:UNIQUE )?INDEX "([^"]+)"/g, "database/migrations/20260916001000_pre_f4_integrated_audit_model.sql"),
-  ...expectedNames(/CREATE (?:UNIQUE )?INDEX "([^"]+)"/g, "database/migrations/20260921000100_pre_f5c_executable_physical_reconciliation.sql")
+  ...expectedNames(/CREATE (?:UNIQUE )?INDEX "([^"]+)"/g, "database/migrations/20260921000100_pre_f5c_executable_physical_reconciliation.sql"),
+  ...expectedNames(/CREATE (?:UNIQUE )?INDEX "([^"]+)"/g, "database/migrations/20260923000100_pre_f5e_platform_authority.sql"),
+  ...expectedNames(/CREATE (?:UNIQUE )?INDEX "([^"]+)"/g, "database/migrations/20260923000200_phase5_final_closure.sql"),
+  ...expectedNames(/CREATE (?:UNIQUE )?INDEX ([a-z0-9_]+)/g, "database/migrations/20260924000300_phase5_membership_invitation.sql"),
+  ...expectedNames(/CREATE (?:UNIQUE )?INDEX ([a-z0-9_]+)/g, "database/migrations/20260929000100_phase5_subscription_regulatory_pack_authority.sql")
+  ,...expectedNames(/CREATE (?:UNIQUE )?INDEX ([a-z0-9_]+)/g, "database/migrations/20260929000300_phase5_plus_subject_validation_access.sql")
 ]);
 expectedIndexes.delete("ix_audits__lead_membership_id");
 

@@ -7,8 +7,8 @@ import matrixSource from "../../../docs/executable-contracts/03_API_RESOURCE_OPE
 import openApi from "../../../docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml?raw";
 import permissionCatalog from "../../../docs/executable-contracts/05_PERMISSION_CATALOG.md?raw";
 
-type OpenApiOperation = { method: "get" | "post"; path: string; block: string };
-type MatrixOperation = { method: "get" | "post"; path: string; audit: string; row: string };
+type OpenApiOperation = { method: "get" | "post" | "put"; path: string; block: string };
+type MatrixOperation = { method: "get" | "post" | "put"; path: string; audit: string; row: string };
 type Edge = { entity: string; from: string; to: string; command: string; permission: string; audit: string };
 type ExpectedTable = {
   name: string;
@@ -23,7 +23,7 @@ function parseOpenApiOperations(source: string): Map<string, OpenApiOperation> {
   const lines = source.split("\n");
   const operations = new Map<string, OpenApiOperation>();
   let path = "";
-  let method: "get" | "post" | "" = "";
+  let method: "get" | "post" | "put" | "" = "";
   for (let index = 0; index < lines.length; index += 1) {
     const line = lines[index] ?? "";
     const pathMatch = /^  "([^"]+)":$/.exec(line);
@@ -32,9 +32,9 @@ function parseOpenApiOperations(source: string): Map<string, OpenApiOperation> {
       method = "";
       continue;
     }
-    const methodMatch = /^    (get|post):$/.exec(line);
+    const methodMatch = /^    (get|post|put):$/.exec(line);
     if (methodMatch) {
-      method = methodMatch[1] as "get" | "post";
+      method = methodMatch[1] as "get" | "post" | "put";
       continue;
     }
     const operationMatch = /^      operationId: ([A-Za-z0-9]+)$/.exec(line);
@@ -42,7 +42,7 @@ function parseOpenApiOperations(source: string): Map<string, OpenApiOperation> {
     const block: string[] = [];
     for (let cursor = index; cursor < lines.length; cursor += 1) {
       const candidate = lines[cursor] ?? "";
-      if (cursor > index && (/^    (get|post):$/.test(candidate) || /^  "[^"]+":$/.test(candidate) || candidate === "tags: []")) break;
+      if (cursor > index && (/^    (get|post|put):$/.test(candidate) || /^  "[^"]+":$/.test(candidate) || candidate === "tags: []")) break;
       block.push(candidate);
     }
     const id = operationMatch[1] ?? "";
@@ -56,10 +56,10 @@ function parseMatrix(source: string): Map<string, MatrixOperation> {
   const operations = new Map<string, MatrixOperation>();
   for (const row of source.split("\n")) {
     const cells = row.startsWith("| ") ? row.slice(2, -2).split(" | ") : [];
-    const methodPath = /^(GET|POST) `([^`]+)`$/.exec(cells[1] ?? "");
+    const methodPath = /^(GET|POST|PUT) `([^`]+)`$/.exec(cells[1] ?? "");
     if (!methodPath || !/^[a-z][A-Za-z0-9]+$/.test(cells[0] ?? "")) continue;
     const audit = /audit\.[a-z0-9_.]+\.v1/.exec(cells[8] ?? "")?.[0] ?? "NONE";
-    operations.set(cells[0]!, { method: methodPath[1]!.toLowerCase() as "get" | "post", path: methodPath[2]!, audit, row });
+    operations.set(cells[0]!, { method: methodPath[1]!.toLowerCase() as "get" | "post" | "put", path: methodPath[2]!, audit, row });
   }
   return operations;
 }
@@ -95,9 +95,10 @@ describe("PRE-F5C Phase 5 executability preflight", () => {
   const edges = parseLifecycle(lifecycleSource);
   const tables = new Map(expectedSchema.tables.map((table) => [table.name, table]));
 
-  it("keeps exactly 229 tables and gives every same-row F5 workflow target the canonical mutable columns", () => {
-    expect(expectedSchema.tableCount).toBe(229);
-    expect(expectedSchema.tables).toHaveLength(229);
+  it("keeps PRE-F5C mutability intact in the approved cumulative table inventory", () => {
+    expect(expectedSchema.tableCount).toBe(237);
+    expect(expectedSchema.tables).toHaveLength(237);
+    expect(tables.has("evidence.file_upload_intents")).toBe(true);
     const mutable = [
       "regulatory.requirement_applicabilities",
       "regulatory.requirement_assessments",
@@ -137,11 +138,12 @@ describe("PRE-F5C Phase 5 executability preflight", () => {
     expect(migration).toContain('FOREIGN KEY ("tenant_id", "superseded_by_id") REFERENCES "regulatory"."requirement_applicabilities" ("tenant_id", "requirement_applicability_id")');
   });
 
-  it("keeps all 106 OpenAPI operations aligned with the matrix and adds exactly the nine authorized operations", () => {
-    expect(openApiOperations.size).toBe(106);
-    expect(matrixOperations.size).toBe(106);
-    expect([...openApiOperations.values()].filter(({ method }) => method === "get")).toHaveLength(26);
-    expect([...openApiOperations.values()].filter(({ method }) => method === "post")).toHaveLength(80);
+  it("keeps all OpenAPI operations aligned with the matrix and includes the RetentionPolicy lifecycle", () => {
+    expect(openApiOperations.size).toBe(Number(matrixSource.match(/`CONTRACTUAL_OPERATIONS=(\d+)`/)?.[1]));
+    expect(matrixOperations.size).toBe(openApiOperations.size);
+    expect([...openApiOperations.values()].filter(({ method }) => method === "get")).toHaveLength(Number(matrixSource.match(/`PUBLIC_READ_OPERATIONS=(\d+)`/)?.[1]));
+    expect([...openApiOperations.values()].filter(({ method }) => method === "post")).toHaveLength(104);
+    expect([...openApiOperations.values()].filter(({ method }) => method === "put")).toHaveLength(1);
     for (const [id, operation] of openApiOperations) expect(matrixOperations.get(id), id).toMatchObject({ method: operation.method, path: operation.path });
     const required: Record<string, [string, string]> = {
       soaCreate: ["post", "/statements-of-applicability"],
@@ -156,6 +158,10 @@ describe("PRE-F5C Phase 5 executability preflight", () => {
     };
     expect(Object.keys(required)).toHaveLength(9);
     for (const [id, [method, path]] of Object.entries(required)) expect(openApiOperations.get(id), id).toMatchObject({ method, path });
+    expect(openApiOperations.get("subscriptionCreate")).toMatchObject({ method: "post", path: "/platform/subscriptions" });
+    expect(openApiOperations.get("retentionPolicyCreate")).toMatchObject({ method: "post", path: "/retention-policies" });
+    expect(openApiOperations.get("retentionPolicyReview")).toMatchObject({ method: "post", path: "/retention-policies/{id}:review" });
+    expect(openApiOperations.get("retentionPolicyApprove")).toMatchObject({ method: "post", path: "/retention-policies/{id}:approve" });
     expect([...openApiOperations.keys()].filter((id) => /updateStatus/i.test(id))).toHaveLength(0);
     expect([...matrixOperations.values()].some(({ row }) => /update_status/i.test(row))).toBe(false);
   });
@@ -180,11 +186,11 @@ describe("PRE-F5C Phase 5 executability preflight", () => {
       if (contract.stateful) expect(schema).toContain("required: [expected_version");
       expect(openApiOperations.get(id)?.block, id).not.toContain("#/components/parameters/IfMatch");
     }
-    expect(openApi).toContain("must equal the target row's explicit `row_version`");
+    expect(openApi).toContain("same target `row_version`");
   });
 
-  it("publishes exactly 100 authoritative edges and proves every mandated lifecycle path without a skipped state", () => {
-    expect(edges).toHaveLength(100);
+  it("publishes exactly 103 authoritative edges and proves every mandated lifecycle path without a skipped state", () => {
+    expect(edges).toHaveLength(103);
     const graphs: Array<[string, string[]]> = [
       ["RequirementApplicability", ["draft", "submitted", "approved"]],
       ["RequirementAssessment", ["not_assessed", "in_progress", "assessed", "approved"]],
@@ -193,7 +199,8 @@ describe("PRE-F5C Phase 5 executability preflight", () => {
       ["AssuranceTest", ["planned", "in_progress", "completed", "reviewed", "approved"]],
       ["EvidenceVersion", ["draft", "submitted", "under_review", "approved"]],
       ["Issue", ["open", "triaged", "remediation_in_progress", "pending_verification", "verified_closed"]],
-      ["Action", ["pending", "in_progress", "in_review", "completed", "verified"]]
+      ["Action", ["pending", "in_progress", "in_review", "completed", "verified"]],
+      ["RetentionPolicy", ["draft", "under_review", "approved", "published"]]
     ];
     for (const [entity, states] of graphs) expect(canReach(edges, entity, states), entity).toBe(true);
     expect(edges.some(({ command }) => command === "assurance_test.complete")).toBe(false);
@@ -228,9 +235,12 @@ describe("PRE-F5C Phase 5 executability preflight", () => {
       actionStart: ["Action", "action.start"],
       actionSubmitForReview: ["Action", "action.submit_review"],
       actionComplete: ["Action", "action.complete"],
-      actionVerify: ["Action", "action.verify"]
+      actionVerify: ["Action", "action.verify"],
+      retentionPolicyReview: ["RetentionPolicy", "retention_policy.review"],
+      retentionPolicyApprove: ["RetentionPolicy", "retention_policy.approve"],
+      retentionPolicyPublish: ["RetentionPolicy", "retention_policy.publish"]
     };
-    expect(Object.keys(mappings)).toHaveLength(26);
+    expect(Object.keys(mappings)).toHaveLength(29);
     for (const [operationId, [entity, command]] of Object.entries(mappings)) {
       const matches = edges.filter((edge) => edge.entity === entity && edge.command === command);
       expect(matches, `${entity}.${command}`).toHaveLength(1);
@@ -242,15 +252,15 @@ describe("PRE-F5C Phase 5 executability preflight", () => {
     }
     const operationAudits = [...matrixOperations.values()].map(({ audit }) => audit).filter((audit) => audit !== "NONE");
     const uniqueAudits = new Set([...operationAudits, ...edges.map(({ audit }) => audit)]);
-    expect(operationAudits).toHaveLength(80);
-    expect(uniqueAudits.size).toBe(154);
-    expect(auditCatalog).toContain("PUBLISHED_AUDIT_EVENT_CODES=154");
+    expect(operationAudits).toHaveLength(105);
+    expect(uniqueAudits.size).toBe(178);
+    expect(auditCatalog).toContain("PUBLISHED_AUDIT_EVENT_CODES=168");
     expect(auditCatalog).toContain("exactly one material AuditEvent");
   });
 
   it("adds only the two authorized permissions and resolves their role grants by code", () => {
     expect(permissionCatalog).toContain("PRE_F5C_PERMISSION_ADDITIONS=2");
-    expect(permissionCatalog).toContain("TOTAL_EXECUTABLE_PERMISSIONS=147");
+    expect(permissionCatalog).toContain("TOTAL_EXECUTABLE_PERMISSIONS=163");
     expect(permissionCatalog).toContain("<code>compliance.soa.create</code>");
     expect(permissionCatalog).toContain("<code>controls.assurance_test.create</code>");
     expect(migration.match(/INSERT INTO iam\.permissions /g)).toHaveLength(2);

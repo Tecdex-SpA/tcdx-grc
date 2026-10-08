@@ -51,6 +51,7 @@ const server = createServer(async (request, response) => {
 
     response.writeHead(200, {
       "Content-Type": mimeTypes[extname(file)] ?? "application/octet-stream",
+      "Content-Security-Policy": "default-src 'self'; connect-src 'self' https://grc.tecdex.net; img-src 'self'; style-src 'self'; script-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
       "X-Content-Type-Options": "nosniff",
       "X-Frame-Options": "DENY",
       "Referrer-Policy": "no-referrer"

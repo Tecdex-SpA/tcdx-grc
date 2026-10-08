@@ -1,0 +1,56 @@
+TAP version 13
+# Subtest: theme inherits Keycloak 26.7.5 login templates and packages approved local brand
+ok 1 - theme inherits Keycloak 26.7.5 login templates and packages approved local brand
+  ---
+  duration_ms: 10.94475
+  type: 'test'
+  ...
+# Subtest: end-user message bundles carry Tecdex GRC branding across login and required actions
+ok 2 - end-user message bundles carry Tecdex GRC branding across login and required actions
+  ---
+  duration_ms: 3.236541
+  type: 'test'
+  ...
+# Subtest: versioned overrides preserve upstream form, action and session logic
+not ok 3 - versioned overrides preserve upstream form, action and session logic
+  ---
+  duration_ms: 4.155375
+  type: 'test'
+  location: '/Users/andresbarouh/repos/tcdx-grc/iam/theme.test.mjs:43:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    template.ftl
+    + actual - expected
+
+    + '9d080d7eb38b307ca99dc989034b9f454c251e611484266b30cb9abd63c6834c'
+    - '6221a3176c73a3fd67abc97076deb9cef112378ce157735a78bd865800315b37'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '6221a3176c73a3fd67abc97076deb9cef112378ce157735a78bd865800315b37'
+  actual: '9d080d7eb38b307ca99dc989034b9f454c251e611484266b30cb9abd63c6834c'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/andresbarouh/repos/tcdx-grc/iam/theme.test.mjs:59:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: theme text, primary-button states and focus use contrasting approved tokens
+ok 4 - theme text, primary-button states and focus use contrasting approved tokens
+  ---
+  duration_ms: 0.635792
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 3
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 96.320417

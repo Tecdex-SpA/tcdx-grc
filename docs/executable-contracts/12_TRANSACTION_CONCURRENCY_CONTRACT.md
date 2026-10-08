@@ -16,11 +16,13 @@
 ## Concurrency mechanisms
 
 - Mutable profiles use positive monotonic `row_version`; API exposes strong ETag and requires `If-Match` for critical updates.
+- RetentionPolicy review/approve/publish uses one concurrency authority at the API boundary: a strong quoted `If-Match` value. The backend translates it to the target row's `row_version`; a body `expected_version`, weak ETag, `xmin`, timestamp or business `version_number` is rejected.
 - Stale version produces concurrency conflict and no mutation/event.
 - Published versions, observations, snapshots, audit, source resolutions and other append-only records are never updated to resolve a conflict.
 - Idempotency uniqueness is ownership/tenant/actor/operation/key; same key/different hash fails.
 - Worker claims, schedules, outbox delivery and job retries require a database locking/claim strategy selected in implementation without changing business semantics. Exact SQL is Fase 3.
 - Multi-row invariants identified as TX in physical model 03 are checked under a transaction/lock level sufficient to prevent write skew; the Fase 3 implementation must document the lock set and isolation proof per invariant.
+- Membership invitation acceptance locks the digest-bound invitation row before UserIdentity resolution and membership mutation, revalidates `pending` and server expiry under that lock, relies on canonical uniqueness for `(tenant_id,user_identity_id)`, consumes the invitation and writes accept audit/outbox plus conditional membership event in one transaction. Revoke uses the same row lock and strong `If-Match`; only one accept/revoke contender can win.
 
 ## Critical TX invariants
 
@@ -35,3 +37,12 @@ Use deterministic lock ordering per aggregate contract. Database serialization/d
 Upload uses pre-authorized quarantine. Object-store success alone does not commit Evidence. Finalization verifies metadata/checksum/scan and commits PostgreSQL authority; orphan quarantine cleanup is an observable idempotent job, never evidence creation.
 
 `TRANSACTION_CONCURRENCY_CONTRACT=PASS` as a Phase 2 contract candidate.
+
+
+## STEP 23L-TENANT-ONBOARDING-D1-R
+
+Executable25's initial onboarding service uses canonical commands and internal bootstrap; no generic transaction API. Tenant creation/checkpoint and bootstrap/its result are separately truthful GRC step transactions, serialized through existing idempotency claim and canonical tenant locks. No Keycloak call/credential in those transactions. Safe child references/checkpoints are persisted atomically with each step in existing result_ref; D2 must prove crash/retry/lock boundaries without new entity, lease table or weakened invariant. Catalog22roles+Membership+first TENANT_ADMIN+bootstrap audit is one ACID transaction. Role-assignment failures in subsequent onboarding do not roll back prior Membership/identity. See25 for bounded replay and partial errors.
+
+## Managed Identity tenant onboarding E2E — 2026-10-07
+
+Executable26 central onboarding has separately committed Membership and role child transactions with durable safe progress, same-intent nonblocking advisory serialization, target-tenant lock and fresh authority/entitlement predicates in every child. Child audit/outbox/progress is ACID. Failure retains prior children; only pending roles resume. No distributed transaction or identity rollback.

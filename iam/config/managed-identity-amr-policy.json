@@ -1,0 +1,11 @@
+{
+  "realm": "tcdx-managed-identity",
+  "browserFlow": "tcdx-browser-password-totp",
+  "authenticationTransactionMaxAgeSeconds": 600,
+  "cookieAuthentication": "DISABLED",
+  "idTokenRequiredAmr": ["pwd", "otp"],
+  "executions": [
+    { "authenticator": "auth-username-password-form", "requirement": "REQUIRED", "config": { "default.reference.value": "pwd", "default.reference.maxAge": "600" } },
+    { "authenticator": "auth-otp-form", "requirement": "REQUIRED", "config": { "default.reference.value": "otp", "default.reference.maxAge": "600" } }
+  ]
+}

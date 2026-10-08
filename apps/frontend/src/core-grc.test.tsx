@@ -1,7 +1,7 @@
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { availableWorkflowActions, canCreate, DataCard, distributionFromRows, KpiCard, modules, StackedDistribution, StatePanel, StatusBadge, TableShell, type Access } from "./core-grc.js";
+import { availableWorkflowActions, canCreate, DataCard, distributionFromRows, KpiCard, modules, StackedDistribution, StatePanel, StatusBadge, TableShell } from "./core-grc.js";
 import { displayValue, fieldLabel, roleLabel } from "./i18n/display-text.js";
 import { moduleLabels, uiText } from "./i18n/es.js";
 import { STATUS_LABELS, statusLabel } from "./i18n/status-labels.js";
@@ -10,7 +10,7 @@ describe("Core GRC UI contract", () => {
   it("publishes only the authorized Phase 5 resource modules", () => {
     expect(modules.map(({ path }) => path)).toEqual([
       "/requirement-applicabilities", "/requirement-assessments", "/statements-of-applicability", "/controls",
-      "/control-assessments", "/assurance-tests", "/evidence-requests", "/evidence", "/issues", "/actions"
+      "/control-assessments", "/assurance-tests", "/evidence-requests", "/evidence", "/retention-policies", "/issues", "/actions"
     ]);
     expect(JSON.stringify(modules)).not.toMatch(/risk|incident|supplier|third.part/i);
   });
@@ -21,29 +21,24 @@ describe("Core GRC UI contract", () => {
     expect(markup).toContain("class=\"status info\"");
   });
 
-  it("shows lifecycle actions only with the exact permission and state", () => {
+  it("renders lifecycle candidates by state while leaving authorization to the backend", () => {
     const definition = modules.find(({ id }) => id === "acciones")!;
-    const base: Access = { tenant_id: "tenant", membership_id: "membership", permissions: [], scopes: ["tenant"], capability_groups: ["ISSUES_ACTIONS"], roles: [] };
     const row = { lifecycle_state: "in_progress", row_version: 2 };
-    expect(availableWorkflowActions(definition, row, base)).toHaveLength(0);
-    const permitted = { ...base, permissions: ["remediation.action.transition"], scopes: ["assigned_object"] };
-    expect(availableWorkflowActions(definition, row, permitted).map(({ suffix }) => suffix)).toEqual(["submit-for-review"]);
-    expect(availableWorkflowActions(definition, row, { ...permitted, scopes: ["tenant"] })).toHaveLength(0);
-    expect(availableWorkflowActions(definition, { ...row, lifecycle_state: "verified" }, permitted)).toHaveLength(0);
+    expect(availableWorkflowActions(definition, row).map(({ suffix }) => suffix)).toEqual(["submit-for-review"]);
+    expect(availableWorkflowActions(definition, { ...row, lifecycle_state: "verified" })).toHaveLength(0);
+    expect(JSON.stringify(availableWorkflowActions(definition, row))).not.toMatch(/permission|scope/);
   });
 
-  it("never exposes the contract-blocked evidence-request fulfillment action", () => {
+  it("offers canonical evidence-request fulfillment only from the open state", () => {
     const definition = modules.find(({ id }) => id === "solicitudes-evidencia")!;
-    const access: Access = { tenant_id: "tenant", membership_id: "membership", permissions: ["evidence.evidence_request.submit"], scopes: ["tenant"], capability_groups: ["EVIDENCE_DOCUMENTS"], roles: [] };
-    expect(availableWorkflowActions(definition, { lifecycle_state: "open", row_version: 1 }, access)).toHaveLength(0);
+    expect(availableWorkflowActions(definition, { lifecycle_state: "open", row_version: 1 }).map(({ suffix }) => suffix)).toEqual(["fulfill"]);
+    for (const state of ["fulfilled", "cancelled", "expired"]) expect(availableWorkflowActions(definition, { lifecycle_state: state })).toHaveLength(0);
   });
 
-  it("gates create surfaces by capability and exact permission", () => {
+  it("does not use browser permissions or scopes as authorization authority", () => {
     const definition = modules.find(({ id }) => id === "cumplimiento")!;
-    const access: Access = { tenant_id: "tenant", membership_id: "membership", permissions: ["compliance.applicability.create"], scopes: ["tenant"], capability_groups: ["ISO_COMPLIANCE"], roles: [] };
-    expect(canCreate(definition, access)).toBe(true);
-    expect(canCreate(definition, { ...access, permissions: [] })).toBe(false);
-    expect(canCreate(definition, { ...access, capability_groups: [] })).toBe(false);
+    expect(canCreate(definition)).toBe(true);
+    expect(JSON.stringify(modules)).not.toMatch(/permission|scope|capability_group/);
   });
 
   it("UI_SPANISH_CONSISTENCY centralizes Spanish navigation, modules, states and roles", () => {
@@ -62,7 +57,7 @@ describe("Core GRC UI contract", () => {
       expect(markup).not.toContain("_");
     }
     expect(displayValue("insufficient_evidence")).toBe("Evidencia insuficiente");
-    expect(displayValue("unpublished_internal_code")).toBe("Valor contractual");
+    expect(displayValue("unpublished_internal_code")).toBe("unpublished internal code");
   });
 
   it("VISUAL_COMPONENT_CONSISTENCY reuses the approved component language", () => {

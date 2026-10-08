@@ -1,0 +1,37 @@
+{
+  "migration": {
+    "id": "20261007000200",
+    "filename": "20261007000200_phase5_methodology_binding.sql",
+    "sha256": "fa178ad731d48045313a11b22f1bdf3c228be502dafa1883136162ad48127850",
+    "transactional": true,
+    "preconditions": [
+      "database_name=tcdx-grc",
+      "postgres_major=16",
+      "ledger_count=29",
+      "latest_migration=20261007000100",
+      "physical_tables=235",
+      "published_permissions=170",
+      "assessment_rows=0"
+    ],
+    "postconditions": [
+      "ledger_outcome=applied",
+      "physical_tables=237",
+      "published_permissions=172",
+      "methodologies=two_separate_published_versions",
+      "assessment_methodology_fks=validated"
+    ]
+  },
+  "canonicalTables": [
+    "regulatory.compliance_methodologies",
+    "controls.control_effectiveness_methodologies"
+  ],
+  "canonicalPermissions": [
+    "compliance.methodology.read",
+    "controls.methodology.read"
+  ],
+  "historicalLedgerUnchanged": true,
+  "qaLedgerMatchesManifest": true,
+  "schemaDrift": 0,
+  "qaMigrationExecuted": false,
+  "ddlTablesAdded": 2
+}

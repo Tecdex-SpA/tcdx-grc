@@ -34,6 +34,7 @@ Codes are namespaced `TCDX.<CLASS>.<SPECIFIC>`, uppercase ASCII and immutable on
 | CONFLICT | `TCDX.CONFLICT.RESOURCE` | 409 | false | uniqueness/current-state conflict not covered by concurrency/idempotency |
 | CONCURRENCY_CONFLICT | `TCDX.CONFLICT.CONCURRENCY` | 409 | true | stale `If-Match`/row_version; refetch and reconcile |
 | IDEMPOTENCY_CONFLICT | `TCDX.CONFLICT.IDEMPOTENCY` | 409 | false | same bound key with a different canonical request fingerprint; no mutation |
+| MANAGED_IDENTITY_RECOVERY_REQUIRED | `TCDX.CONFLICT.RECOVERY_REQUIRED` | 409 | false | MI6 Provision/PasswordReset outcome uncertain; no secret disclosure or automatic retry; authorized recovery uses a new command/key after safe reconciliation |
 | INSUFFICIENT_DATA | `TCDX.RESULT.INSUFFICIENT_DATA` | 422 | false | an operation demanding an official result cannot meet rector sufficiency; exact `result_status` is allowlisted in details |
 | INVALID_STATE_TRANSITION | `TCDX.LIFECYCLE.TRANSITION_DENIED` | 409 | false | edge absent, source state mismatch or published precondition failed |
 | INVARIANT_VIOLATION | `TCDX.INVARIANT.VIOLATION` | 422 | false | syntactically valid command violates domain/physical invariant |
@@ -57,3 +58,14 @@ Codes are namespaced `TCDX.<CLASS>.<SPECIFIC>`, uppercase ASCII and immutable on
 For a guessed foreign-tenant or out-of-scope identifier, return `TCDX.RESOURCE.NOT_FOUND` regardless of whether the UUID exists. Use `TCDX.AUTHORIZATION.DENIED` only when revealing the resource/context is already authorized. Timing, field errors and details must not distinguish the hidden cases.
 
 `ERROR_MODEL=PASS` as a Fase 2 contract candidate; human gate approval remains external.
+
+## STEP 23L-MI10-P2A
+
+P2A platform role administration uses only the existing canonical taxonomy, with the exact condition/status mapping in executable24; last-admin and duplicate conflicts are RESOURCE409, state rejection TRANSITION_DENIED409. No new error namespace.
+
+
+## STEP 23L-TENANT-ONBOARDING-D1-R
+
+Executable25 freezes tenant identity lookup no-match/hidden/inactive/ambiguous responses as identical200 empty items/meta; lookup is never run on401/403. Invalid exact/pagination/mode shape400, missing/forbidden context403, audit/dependency uncertainty503,429 only approved rate policy. No new error code. Raw lookup value omitted from errors/logs/audit.
+
+Initial onboarding preserves06 failure statuses; details.onboarding_progress is the only additional allowlisted object, per OpenAPI TenantInitialOnboardingProgress, with authorized safe references and completed/pending step names. Never201 for pending admin. Same-key changed input409IDEMPOTENCY; locked in-progress409RESOURCE retryable. No arbitrary existing tenant or secret in details.
