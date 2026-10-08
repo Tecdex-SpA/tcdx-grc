@@ -4,6 +4,23 @@ import subprocess, json, sys, concurrent.futures
 T=Path('/private/tmp')
 N='tcdx-grc-phase5-integration'
 phase=sys.argv[1]
+if phase=='inspect':
+ import datetime
+ stamp=json.loads((T/(N+'-pre-db.json')).read_text())['capturedAt']
+ base=(T/(N+'-authority.mjs')).read_text()
+ query=' const concurrentAudit=await gq(`SELECT audit_event_id,event_code,command_code,aggregate_id,actor_user_identity_id,tenant_id,correlation_id,occurred_at,outcome,after_payload->>\'issuer\' AS issuer,after_payload->>\'provider\' AS provider FROM ops_audit.audit_events WHERE occurred_at>$1::timestamptz ORDER BY occurred_at`,['+json.dumps(stamp)+']);\n const concurrentIdentities=await gq(`SELECT user_identity_id,lifecycle_state,last_authenticated_at,updated_at,row_version FROM iam.user_identities ORDER BY user_identity_id`);\n'
+ query += ' const priorLogin=await gq(`SELECT max(occurred_at) AS previous_at FROM ops_audit.audit_events WHERE command_code=\'oidc.session.establish\' AND actor_user_identity_id=\'01a0cfae-d860-730d-88b8-d8b1b3f5d7dc\' AND occurred_at<=$1::timestamptz`,['+json.dumps(stamp)+']);\n'
+ query += ''' const authColumns=(await gq("SELECT column_name FROM information_schema.columns WHERE table_schema='iam' AND table_name='user_identities'")).filter(x=>/password|secret|token|credential|identity_key|request_hash|response_hash|idempotency_key|payload|nonce|verifier|session/i.test(x.column_name)).map(x=>x.column_name);
+ const auditColumns=(await gq("SELECT column_name FROM information_schema.columns WHERE table_schema='ops_audit' AND table_name='audit_events'")).filter(x=>/password|secret|token|credential|identity_key|request_hash|response_hash|idempotency_key|payload|nonce|verifier|session/i.test(x.column_name)).map(x=>x.column_name);
+ const priorIdentityFingerprint=await gq(`WITH rows AS(SELECT CASE WHEN user_identity_id='01a0cfae-d860-730d-88b8-d8b1b3f5d7dc' THEN to_jsonb(t)||jsonb_build_object('last_authenticated_at',$2::timestamptz,'updated_at',$2::timestamptz,'row_version',row_version-1) ELSE to_jsonb(t) END-$1::text[] AS row FROM iam.user_identities t) SELECT count(*)::int AS rows,md5(coalesce(string_agg(md5(row::text),'' ORDER BY md5(row::text)),'')) AS nonsecret_fingerprint FROM rows`,[authColumns,priorLogin[0].previous_at]);
+ const priorAuditFingerprint=await gq(`SELECT count(*)::int AS rows,md5(coalesce(string_agg(md5((to_jsonb(t)-$1::text[])::text),'' ORDER BY md5((to_jsonb(t)-$1::text[])::text)),'')) AS nonsecret_fingerprint FROM ops_audit.audit_events t WHERE occurred_at<=$2::timestamptz`,[auditColumns,''' +json.dumps(stamp)+''']);\n'''
+ base=base.replace(' const result={membershipDetails',query+' const result={priorIdentityFingerprint,priorAuditFingerprint,priorLogin,concurrentAudit,concurrentIdentities,membershipDetails')
+ (T/(N+'-inspection.mjs')).write_text(base)
+ py=(T/(N+'-authority.py')).read_text().replace(N+'-authority.mjs',N+'-inspection.mjs').replace(N+'-authority-',N+'-inspection-')
+ (T/(N+'-inspection.py')).write_text(py)
+ subprocess.run(['python3',str(T/(N+'-inspection.py')),'readonly'],check=True)
+ result=json.loads((T/(N+'-inspection-readonly.json')).read_text())
+ print(json.dumps({k:result[k] for k in ['concurrentAudit','concurrentIdentities']}));sys.exit()
 assert phase in ['pre','post']
 for source,target in [
  ('tcdx-grc-phase5-final-authority.py',N+'-authority.py'),

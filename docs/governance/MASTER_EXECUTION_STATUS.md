@@ -4920,3 +4920,29 @@ Fresh precommit485 unit/contract (81 frontend included),82 isolated PostgreSQL,4
 Evidence: artifacts/phase5-integration/PHASE5_INTEGRATION_REPORT.md and companion canonical/authority/source-release/Git/traceability reports, logs, inventories and result. Commit/main/remote/postregression state will be appended only after execution. Phase6 READY, PHASE_6_STARTED=0.
 
 STEP23M pre-staging cosmetic reconciliation: full cached diff-check exposed trailing spaces in three previously untracked IAM source files and machine logs. Three IAM source paths are formatted with no token/structure/behavior change, individually reconciled against the frozen originals and freshly regressed. Historical raw evidence remains byte-identical and is versioned through ORIGINAL_WHITESPACE_EVIDENCE.tar; no historical PASS or original log is changed. Release freeze/policy unchanged; material source difference0.
+
+
+## 2026-10-08 — STEP 23M actual main integration and postintegration regression closure
+
+MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23
+RECTOR_GATE=PASS
+UNRESOLVED_RECTOR_CONFLICTS=0
+STEP_23M_PHASE5_GIT_INTEGRATION=PASS
+PHASE_5_INTEGRATION=PASS
+PHASE_5_INTEGRATION_PENDING=NO
+PHASE_5=PASS
+PHASE_5_CLOSED=YES
+CORE_GRC_SLICE=PASS
+STEP_23L=PASS
+MAIN_INTEGRATION=PASS
+PUSH_ORIGIN_MAIN=PASS
+REMOTE_MAIN_COMMIT_VERIFIED=YES
+POST_INTEGRATION_REGRESSION=PASS
+PHASE_6=READY
+PHASE_6_STARTED=0
+QA_DEPLOY_PERFORMED=NO
+QA_FUNCTIONAL_MUTATIONS=0
+IAM_MUTATIONS=0
+NEXT_REQUIRED_ACTION=REQUEST_EXPLICIT_PHASE6_START_AUTHORIZATION
+
+Actual feature commit ae051f81d429a5eba371972b1e958976fa7f8857, tree 080a19db19ccf9246b7fee1799135577a5b335bc,531 exact manifest paths. Protected PR18 merged with required rector CI to main 3735794392b663ed3ce9e39bee248b2937ee7158; history preserved, local fast-forward, normal main push and fetched remote ancestry/tree verification PASS. Fresh main485 unit/contract,81 frontend,82 isolated PostgreSQL,428 GRC E2E,21 IAM E2E plus strict upstream provenance/native callback/static/contracts/rector/security/domain/Git PASS. Disposable IAM startup timeout resolved inline by unchanged full rerun after load drains; failure retained. QA exact images/schema30/237/172 remain unchanged, Core GRC records/audits preserved and authorized andres.grc1/1/0 untouched. A concurrent ordinary Baruj authentication explains the sole nonauthority UserIdentity/audit metadata drift;235 table fingerprints unchanged and no agent QA write/authentication flow. Evidence: artifacts/phase5-integration/PHASE5_POSTINTEGRATION_REPORT.md and structured result/proofs. Documentation-only governed followup publishes actual completion evidence, with all functional blobs identical to the tested main tree. No historical PASS is overwritten, no new human visual approval is invented, no Phase6 action.
