@@ -32,6 +32,8 @@ El esquema físico existente ya ofrece `starts_at`, `ends_at`, `cancelled_at`, `
 
 La autorización de migraciones del usuario permite preparación y ejecución solo tras preflight completo y gates aplicables. El encabezado de `20261009000200` conserva la restricción histórica de no ejecución en QA sin autorización específica; la autorización actual cubre migraciones rectoras pero no sustituye la comprobación de gate, respaldo/restauración y compatibilidad con la pareja desplegada. No se ejecutó ninguna migración en este corte.
 
+Preflight QA de solo lectura posterior al commit `bed3f3e`: conexión backend→PostgreSQL `TLSv1.3`, `ssl=true`, servidor `192.168.2.40`, base `tcdx-grc`, `transaction_read_only=on`; ledger 30/última `20261007000200`; 172 permisos publicados. Las tres constraints fuente de `20261009000100` coincidieron en nombre, tipo, validación y definición. Los ocho predicados de datos de su preflight dieron falso: duplicados de EffectiveConfiguration/layer, default cardinalidad/tipo inválidos, referencias raíz/layer inválidas, hash inválido y constraints fuente sin validar. **PREMIGRATION=PARTIAL**: faltan respaldo consistente y restauración probada, adopción competente del mapeo `value_type` señalada en la migración, gate rector operativo y evaluación de compatibilidad de QA32. No se infiere GO de estos resultados.
+
 ## Matriz mínima por módulo
 
 | Módulo | UI → API → servicio → persistencia | Permiso/tenant y prueba disponible | QA real y bloqueo |
