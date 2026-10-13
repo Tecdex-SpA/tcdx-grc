@@ -660,16 +660,19 @@ export async function subscriptionCreate(transaction: Transaction<FoundationData
   `.execute(transaction);
   if (tenant.rows.length !== 1) throw new FoundationError("TCDX.RESOURCE.NOT_FOUND", "Resource not found", 404);
 
-  const planVersion = await sql<{ plan_version_id: string; plan_state: string; version_state: string }>`
-    SELECT pv.plan_version_id,p.lifecycle_state AS plan_state,pv.lifecycle_state AS version_state
+  const planVersion = await sql<{ plan_version_id: string; plan_state: string; version_state: string; currently_effective: boolean }>`
+    SELECT pv.plan_version_id,p.lifecycle_state AS plan_state,pv.lifecycle_state AS version_state,
+           (pv.effective_from IS NULL OR pv.effective_from<=transaction_timestamp())
+             AND (pv.effective_to IS NULL OR pv.effective_to>transaction_timestamp()) AS currently_effective
       FROM platform.plan_versions pv
       JOIN platform.plans p ON p.plan_id=pv.plan_id
      WHERE pv.plan_version_id=${planVersionId}::uuid
      FOR SHARE OF p,pv
   `.execute(transaction);
   if (planVersion.rows.length !== 1) throw new FoundationError("TCDX.RESOURCE.NOT_FOUND", "Resource not found", 404);
-  if (planVersion.rows[0]?.plan_state !== "published" || planVersion.rows[0]?.version_state !== "published") {
-    throw new FoundationError("TCDX.INVARIANT.VIOLATION", "PlanVersion is not published", 422);
+  if (planVersion.rows[0]?.plan_state !== "published" || planVersion.rows[0]?.version_state !== "published"
+      || planVersion.rows[0]?.currently_effective !== true) {
+    throw new FoundationError("TCDX.INVARIANT.VIOLATION", "PlanVersion is not published and currently effective", 422);
   }
 
   const active = await sql<{ subscription_id: string }>`

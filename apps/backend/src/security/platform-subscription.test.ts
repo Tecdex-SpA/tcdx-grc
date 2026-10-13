@@ -64,7 +64,7 @@ describe("subscriptionCreate", () => {
       statements.push(query.sql);
       if (query.sql.includes("INSERT INTO ops_audit.idempotency_records")) return { rows: [{ idempotency_record_id: subscriptionId }] };
       if (query.sql.includes("FROM platform.tenants")) return { rows: [{ tenant_id: tenantId }] };
-      if (query.sql.includes("FROM platform.plan_versions")) return { rows: [{ plan_version_id: planVersionId, plan_state: "published", version_state: "published" }] };
+      if (query.sql.includes("FROM platform.plan_versions")) return { rows: [{ plan_version_id: planVersionId, plan_state: "published", version_state: "published", currently_effective: true }] };
       if (query.sql.includes("FROM platform.subscriptions") && query.sql.includes("FOR UPDATE")) return { rows: [] };
       if (query.sql.includes("SELECT subscription_id,tenant_id")) return { rows: [projection()] };
       if (query.sql.includes("UPDATE ops_audit.idempotency_records")) return { rows: [], numAffectedRows: 1n };
@@ -129,7 +129,8 @@ describe("subscriptionCreate", () => {
 
   it.each([
     [[], "TCDX.RESOURCE.NOT_FOUND"],
-    [[{ plan_version_id: planVersionId, plan_state: "published", version_state: "draft" }], "TCDX.INVARIANT.VIOLATION"]
+    [[{ plan_version_id: planVersionId, plan_state: "published", version_state: "draft", currently_effective: true }], "TCDX.INVARIANT.VIOLATION"],
+    [[{ plan_version_id: planVersionId, plan_state: "published", version_state: "published", currently_effective: false }], "TCDX.INVARIANT.VIOLATION"]
   ] as const)("fails closed for an unavailable PlanVersion", async (planRows, expectedCode) => {
     const transaction = executor((query) => {
       if (query.sql.includes("INSERT INTO ops_audit.idempotency_records")) return { rows: [{ idempotency_record_id: subscriptionId }] };
@@ -144,7 +145,7 @@ describe("subscriptionCreate", () => {
     const transaction = executor((query) => {
       if (query.sql.includes("INSERT INTO ops_audit.idempotency_records")) return { rows: [{ idempotency_record_id: subscriptionId }] };
       if (query.sql.includes("FROM platform.tenants")) return { rows: [{ tenant_id: tenantId }] };
-      if (query.sql.includes("FROM platform.plan_versions")) return { rows: [{ plan_version_id: planVersionId, plan_state: "published", version_state: "published" }] };
+      if (query.sql.includes("FROM platform.plan_versions")) return { rows: [{ plan_version_id: planVersionId, plan_state: "published", version_state: "published", currently_effective: true }] };
       if (query.sql.includes("FROM platform.subscriptions") && query.sql.includes("FOR UPDATE")) return { rows: [{ subscription_id: subscriptionId }] };
       return { rows: [] };
     });
