@@ -1,0 +1,32 @@
+{
+  "probe": {
+    "result": "PASS_VERIFIED_AUTHENTICATED_BACKEND_DRIVER",
+    "ssl": true,
+    "version": "TLSv1.3",
+    "cipher": "TLS_AES_256_GCM_SHA384",
+    "database": "tcdx-grc",
+    "server": "192.168.2.40",
+    "read_only": "on",
+    "databaseModuleSHA": "865b2d8b1b8ce87790059abb70b1af021aebbc06640ad5f85ab4c37a6fb17a61",
+    "pgVersion": "8.23.0",
+    "sslMode": "require",
+    "rejectUnauthorized": true,
+    "nodeExtraCaPresent": true,
+    "secretsExported": false,
+    "DDL": 0,
+    "DML": 0
+  },
+  "exactCandidateDatabaseSubsystem": "PASS_IDENTICAL_MODULE_AND_PG_VERSION",
+  "previousContainerUnchanged": true,
+  "newRuntimeTLSConfig": {
+    "DATABASE_HOST": "db-tecdex",
+    "DATABASE_SSL_MODE": "require",
+    "NODE_EXTRA_CA_CERTS": "/run/config/qa-db-public.pem",
+    "extraHosts": [
+      "db-tecdex:192.168.2.40"
+    ],
+    "CA_SHA256": "0a99469321c1117cdf3154a7e5c5e50dd42f719af7b8b1a647fa0bb55179519b"
+  },
+  "baselineConfigurationFingerprint": "4ac4f3156518c89f3fc16387ec349d9645c3fd7d201e010a8f4a70433bd85879",
+  "rollbackImageAvailable": true
+}

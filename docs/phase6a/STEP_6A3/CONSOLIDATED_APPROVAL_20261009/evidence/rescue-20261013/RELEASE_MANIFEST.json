@@ -123,6 +123,21 @@
     "RECTOR_GATE": "BLOCKED",
     "HUMAN_UI_REVIEW": "NOT_APPROVED"
   },
-  "qa_deploy": "NOT_EXECUTED; TLS repair and exact operational GO pending",
-  "provenance": "Inherited test results retained; no historical full-suite rerun claimed"
+  "qa_deploy": "NOT_DEPLOYED_REQUIRES_EXACT_GO",
+  "provenance": "Inherited test results retained; no historical full-suite rerun claimed",
+  "release_branch": "release/iana-v2-qa30-20261013",
+  "release_commit": "7dfb176843b968aad4be56d2149bde0e5dfc4b70",
+  "gates": {
+    "QA30_COMPATIBILITY": "PASS",
+    "BACKEND_IMAGE_READY": "PASS_LOCAL",
+    "FRONTEND_IMAGE_READY": "PASS_LOCAL",
+    "TLS_BACKEND_TO_DB": "PASS_VERIFIED",
+    "ROLLBACK_READY": "PASS",
+    "QA_DEPLOY_AUTHORIZATION": "REQUIRES_EXACT_GO",
+    "QA_DEPLOY_STATUS": "NOT_DEPLOYED",
+    "HUMAN_UI_ACCEPTANCE": "PENDING"
+  },
+  "TLS_evidence": "Exact candidate TLS1.3 verified hostname handshake; authenticated read-only createDatabase tested inside backend Docker using identical database.js SHA and pg8.23.0; live backend remains untouched until GO.",
+  "driver_sha256": "553d6a6765617cfcd66cce7a7bf05f96c4587654337e3b20a2282c66643f1c28",
+  "operations": "promote-qa30.py requires real exact GO receipt and adopted SHA; rollback-pair.py restores current retained backend then frontend"
 }

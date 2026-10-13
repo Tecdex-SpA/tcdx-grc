@@ -1,0 +1,19 @@
+{
+  "result": "PASS",
+  "checks": [
+    "exact_tls_delta_accepted",
+    "unrelated_config_preserved",
+    "unexpected_env_rejected",
+    "missing_ca_rejected",
+    "wrong_db_address_rejected",
+    "restore_same_as_validated_recovery",
+    "wait_healthy_same_as_validated_recovery",
+    "deploy_requires_exact_GO",
+    "rollback_requires_exact_GO",
+    "park_requires_exact_GO",
+    "pair_barrier_order_park_then_backend_then_frontend"
+  ],
+  "count": 11,
+  "historicalRecoveryReused": "12 directed + 5 local Engine recovery PASS; functions unchanged",
+  "QA_mutations": 0
+}
