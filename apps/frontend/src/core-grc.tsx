@@ -1,3 +1,4 @@
+import { TenantTimezoneContext, TenantInstantPreview, normalizeSamplePeriods, selectedTenantTimezone, explicitUtcInstant } from "./tenant-timezone.js";
 import { AddTenantUser, InitialCompanyWizard, TenantUserIntent, tenantPresentationPermission } from "./tenant-onboarding.js";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { CONTROL_NATURES, CONTROL_TYPES } from "@tcdx-grc/shared-types";
@@ -413,6 +414,7 @@ function ControlDetailContent({ row }: { row: Row }) {
 }
 
 function DetailDrawer({ api, definition, row: summary, close, completed }: { api: ApiClient; definition: ModuleDefinition; row: Row; close(): void; completed(): void }) {
+  const timezone = React.useContext(TenantTimezoneContext);
   const [detail, setDetail] = useState<{ loading: boolean; row: Row; error?: string }>({ loading: true, row: summary });
   const [form, setForm] = useState<Record<string, string>>({});
   const [feedback, setFeedback] = useState<{ kind: "error" | "success"; message: string }>();
@@ -446,7 +448,7 @@ function DetailDrawer({ api, definition, row: summary, close, completed }: { api
     const targetPath = action.versionResource ? "/evidence-versions" : definition.path;
     const body: Row = { expected_version: Number(version?.row_version ?? row.row_version), ...Object.fromEntries((action.fields ?? []).filter((field) => form[field] !== undefined && form[field] !== "").map((field) => [field, form[field]])) };
     for (const field of ["coverage_percent", "design_effectiveness", "operating_effectiveness"]) if (body[field] !== undefined) body[field] = Number(body[field]);
-    if (typeof body.samples === "string") { try { body.samples = JSON.parse(body.samples); } catch { setFeedback({ kind: "error", message: uiText.forms.invalidJson }); return; } }
+    if (typeof body.samples === "string") { try { body.samples = normalizeSamplePeriods(JSON.parse(body.samples), timezone); } catch { setFeedback({ kind: "error", message: uiText.temporal.invalidInstant }); return; } }
     try {
       if (definition.id === "retencion") {
         const payload = action.suffix === "update" ? { retention_seconds: Number(form.retention_seconds), is_mandatory: form.is_mandatory === "true" } : {};
@@ -460,7 +462,7 @@ function DetailDrawer({ api, definition, row: summary, close, completed }: { api
   };
   return <div className="drawer-backdrop" role="presentation" onMouseDown={close}><aside className="drawer" role="dialog" aria-modal="true" aria-labelledby="detail-title" onMouseDown={(event) => event.stopPropagation()}>
     <header className="drawer-header"><div><p className="eyebrow">{uiText.forms.detailEyebrow}</p><h2 id="detail-title">{displayValue(row[definition.titleField] ?? definition.label)}</h2></div><button className="icon-button" onClick={close} aria-label={uiText.forms.closeDetail}>×</button></header>
-    <div className="drawer-body">{detail.loading ? <LoadingState/> : <>{definition.id === "controles" ? <ControlDetailContent row={row}/> : <><StatusBadge value={state}/><dl>{Object.entries(row).filter(([, value]) => !Array.isArray(value) && typeof value !== "object").map(([key, value]) => <React.Fragment key={key}><dt>{fieldLabel(key)}</dt><dd>{displayValue(value)}</dd></React.Fragment>)}</dl></>}{detail.error && <p className="inline-feedback error" role="alert">{detail.error}</p>}{typeof version?.file_object_id === "string" && <button className="button secondary" onClick={() => void download()}>{uiText.forms.downloadFile}</button>}{actions.map((action) => <section className="workflow-action" key={action.suffix}><h3>{action.label}</h3>{action.fields?.map((field) => <label key={field}><span>{fieldLabel(field)}</span><input aria-label={fieldLabel(field)} placeholder={fieldPlaceholder(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}/></label>)}<button className="button primary" onClick={() => void submit(action)}>{action.label}</button></section>)}{actions.length === 0 && <p className="read-only-note">{uiText.forms.noActions}</p>}{feedback && <p className={`inline-feedback ${feedback.kind}`} role={feedback.kind === "error" ? "alert" : "status"}>{feedback.message}</p>}</>}</div>
+    <div className="drawer-body">{detail.loading ? <LoadingState/> : <>{definition.id === "controles" ? <ControlDetailContent row={row}/> : <><StatusBadge value={state}/><dl>{Object.entries(row).filter(([, value]) => !Array.isArray(value) && typeof value !== "object").map(([key, value]) => <React.Fragment key={key}><dt>{fieldLabel(key)}</dt><dd>{typeof value === "string" && /^\d{4}-\d{2}-\d{2}T.*Z$/.test(value) ? <TenantInstantPreview value={value}/> : displayValue(value)}</dd></React.Fragment>)}</dl></>}{detail.error && <p className="inline-feedback error" role="alert">{detail.error}</p>}{typeof version?.file_object_id === "string" && <button className="button secondary" onClick={() => void download()}>{uiText.forms.downloadFile}</button>}{actions.map((action) => <section className="workflow-action" key={action.suffix}><h3>{action.label}</h3>{action.fields?.map((field) => <label key={field}><span>{fieldLabel(field)}</span><input aria-label={fieldLabel(field)} placeholder={fieldPlaceholder(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}/></label>)}<button className="button primary" onClick={() => void submit(action)}>{action.label}</button></section>)}{actions.length === 0 && <p className="read-only-note">{uiText.forms.noActions}</p>}{feedback && <p className={`inline-feedback ${feedback.kind}`} role={feedback.kind === "error" ? "alert" : "status"}>{feedback.message}</p>}</>}</div>
   </aside></div>;
 }
 
@@ -665,9 +667,9 @@ function AdminPageBody({ state, retry, loadMore, children }: { state: AdminPageS
   return <>{children(state.page.items)}{state.page.page.has_more && <div className="pagination"><button className="button secondary" onClick={loadMore}>{uiText.actions.loadMore}</button></div>}</>;
 }
 
-function adminDate(value: unknown): string {
+function adminDate(value: unknown): React.ReactNode {
   if (typeof value !== "string" || Number.isNaN(Date.parse(value))) return uiText.common.noData;
-  return new Intl.DateTimeFormat("es-CL", { dateStyle: "medium", timeStyle: "short" }).format(new Date(value));
+  return <TenantInstantPreview value={value}/>;
 }
 
 function readableRole(code: unknown, name?: unknown): string {
@@ -697,7 +699,9 @@ function ContractedPacks({ api, subscriptionId, platform }: { api: ApiClient; su
   const activate = async () => {
     if (!versionId || !effectiveFrom || !subscriptionId) { setFeedback("Selecciona una versión y fecha de inicio."); return; }
     try {
-      await api.platformPost(path, { regulatory_pack_version_id: versionId, effective_from: new Date(effectiveFrom).toISOString() });
+      const instant = explicitUtcInstant(effectiveFrom);
+      if (!instant) { setFeedback(uiText.temporal.invalidInstant); return; }
+      await api.platformPost(path, { regulatory_pack_version_id: versionId, effective_from: instant });
       setFeedback("Marco activado."); setNonce((value) => value + 1);
     } catch { setFeedback("No fue posible activar el marco."); }
   };
@@ -723,7 +727,7 @@ function ContractedPacks({ api, subscriptionId, platform }: { api: ApiClient; su
     {feedback && <p className="inline-feedback" role="status">{feedback}</p>}
     {items.length === 0 ? <p>Sin marcos contratados.</p> : <div className="table-scroll"><table><thead><tr><th>Pack</th><th>Edición</th><th>Licencia</th><th>Contrato</th><th>Vigencia</th><th>Desde</th><th>Hasta</th>{platform && <th>Acción</th>}</tr></thead><tbody>{items.map((item) => <tr key={String(item.subscription_regulatory_pack_id)}><td><strong>{String(item.name)}</strong><small className="admin-secondary">{String(item.pack_code)}</small></td><td>{String(item.edition)}</td><td>{displayValue(item.license_classification)}</td><td><StatusBadge value={item.lifecycle_state}/></td><td><StatusBadge value={item.effective_state}/></td><td>{adminDate(item.effective_from)}</td><td>{item.effective_to ? adminDate(item.effective_to) : "—"}</td>{platform && <td>{item.effective_state === "effective" && <button className="link-button" onClick={() => void revoke(item)}>Revocar</button>}</td>}</tr>)}</tbody></table></div>}
     {page.has_more && <button className="button secondary" onClick={() => void loadMore()}>{uiText.actions.loadMore}</button>}
-    {platform && subscriptionId && <form className="admin-form" onSubmit={(event) => { event.preventDefault(); void activate(); }}><label><span>Versión del marco</span><select value={versionId} onChange={(event) => setVersionId(event.target.value)}><option value="">Selecciona una versión publicada</option>{versions.map((version) => <option key={String(version.regulatory_pack_version_id)} value={String(version.regulatory_pack_version_id)}>{String(version.name)} · {String(version.edition)}</option>)}</select></label><label><span>Vigente desde</span><input type="datetime-local" value={effectiveFrom} onChange={(event) => setEffectiveFrom(event.target.value)}/></label><button className="button primary" type="submit">Activar marco</button></form>}
+    {platform && subscriptionId && <form className="admin-form" onSubmit={(event) => { event.preventDefault(); void activate(); }}><label><span>Versión del marco</span><select value={versionId} onChange={(event) => setVersionId(event.target.value)}><option value="">Selecciona una versión publicada</option>{versions.map((version) => <option key={String(version.regulatory_pack_version_id)} value={String(version.regulatory_pack_version_id)}>{String(version.name)} · {String(version.edition)}</option>)}</select></label><label><span>Vigente desde</span><input type="text" placeholder="AAAA-MM-DDTHH:mm:ssZ" value={effectiveFrom} onChange={(event) => setEffectiveFrom(event.target.value)}/></label><button className="button primary" type="submit">Activar marco</button></form>}
   </DataCard>;
 }
 
@@ -747,9 +751,7 @@ type CandidateState = { state: "loading" } | { state: "error" } |
   { state: "ready"; items: ValidationCandidate[]; page: PageMeta; loadingMore?: boolean };
 
 function accessInstant(value: string): string | undefined {
-  if (!value) return undefined;
-  const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? undefined : date.toISOString();
+  return explicitUtcInstant(value);
 }
 
 function validationCreateError(cause: unknown): string {
@@ -894,9 +896,9 @@ function ValidationPacks({ api, tenantId, platform }: { api: ApiClient; tenantId
     {feedback && <p className={`inline-feedback ${feedback.kind}`} role={feedback.kind === "error" ? "alert" : "status"}>{feedback.message}</p>}
     {platform && tenantId && creating && <form className="admin-form" onSubmit={(event) => { event.preventDefault(); void create(); }}>
       <p className="form-guidance" role="note">{uiText.validation.nonAuthoritativeDetail}</p>
-      <label><span>{uiText.validation.requestedFrom}</span><input type="datetime-local" required value={accessFrom}
+      <label><span>{uiText.validation.requestedFrom}</span><input type="text" placeholder="AAAA-MM-DDTHH:mm:ssZ" required value={accessFrom}
         onChange={(event) => setAccessFrom(event.target.value)}/></label>
-      <label><span>{uiText.validation.requestedTo}</span><input type="datetime-local" value={accessTo}
+      <label><span>{uiText.validation.requestedTo}</span><input type="text" placeholder="AAAA-MM-DDTHH:mm:ssZ" value={accessTo}
         onChange={(event) => setAccessTo(event.target.value)}/></label>
       {candidateState.state === "loading" ? <StatePanel kind="loading" detail={uiText.validation.loadingCandidates}/> :
         candidateState.state === "error" ? <StatePanel kind="error" detail={uiText.validation.candidatesError}
@@ -1235,7 +1237,7 @@ export function CoreGrcApp({ api, session, apiOrigin }: { api: ApiClient; sessio
     {active === settingsRoutes.managedIdentities ? managedIdentity ? <ManagedIdentityWorkspace api={api} permissions={new Set(authorization?.platform_permissions ?? [])} authorizeFresh={refreshAuthorization}/> : <StatePanel kind="permission-denied"/> :
     active === settingsRoutes.companies ? platformAdmin ? <CompaniesAdmin api={api} authorization={authorization} authorizeFresh={refreshAuthorization}/> : tenantAdmin && context ? <TenantCompany api={api} context={context}/> : <StatePanel kind="permission-denied"/> :
       active === settingsRoutes.users ? platformAdmin || tenantAdmin ? <UsersAdmin api={api} platformAdmin={platformAdmin} authorization={authorization} authorizeTenantFresh={authorizeTenantFresh} authorizePlatformFresh={refreshAuthorization} {...(context ? { context } : {})}/> : <StatePanel kind="permission-denied"/> :
-      context ? active === "dashboard" ? <Dashboard api={api}/> : <ModuleWorkspace api={api} active={active}/> :
+      context ? <TenantTimezoneContext.Provider value={selectedTenantTimezone(authorization, selectedId ?? null)}>{active === "dashboard" ? <Dashboard api={api}/> : <ModuleWorkspace api={api} active={active}/>}</TenantTimezoneContext.Provider> :
       <StatePanel kind={administrativePage ? "permission-denied" : "not-available"} detail={uiText.tenant.selectDetail}/>}
   </main></div>{menu && <button className="sidebar-scrim" aria-label={uiText.navigation.close} onClick={() => setMenu(false)}/>}</div>;
 }

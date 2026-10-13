@@ -21,3 +21,5 @@ export type ReadinessResult = {
   state: HealthState;
   dependencies: Record<string, HealthState>;
 };
+
+export { isIanaTimezone } from "./iana-timezone.js";

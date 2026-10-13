@@ -146,7 +146,7 @@ describe("MI7A schema-first frontend projections (no runtime implementation)", (
   it("keeps denied platform access separate from tenant permission grants and preserves scope references", () => {
     expect(authorizationValidator(authorizationFixture())).toBe(true);
     const scopes: TenantPermissionScope[] = [{ scope_kind: "tenant" }, { scope_kind: "organizational_unit", organizational_unit_id: tenantId }, { scope_kind: "process", process_id: tenantId }, { scope_kind: "service", service_id: tenantId }, { scope_kind: "audit_engagement", audit_id: tenantId }, { scope_kind: "assigned_object" }, { scope_kind: "owned_object" }];
-    const tenantOnly: CurrentPrincipalAuthorization = { ...authorizationFixture(), tenant_permissions: { tenant_id: tenantId, permissions: { "controls.control.read": scopes } } };
+    const tenantOnly: CurrentPrincipalAuthorization = { ...authorizationFixture(), tenant_permissions: { tenant_id: tenantId, default_timezone: "UTC", permissions: { "controls.control.read": scopes } } };
     expect(authorizationValidator(tenantOnly)).toBe(true);
     expect(tenantOnly.platform_permissions).toEqual([]);
     expect(authorizationValidator({ ...authorizationFixture(), platform_permissions: miPermissions })).toBe(true);

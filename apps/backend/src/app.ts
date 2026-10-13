@@ -27,7 +27,7 @@ export function buildApp(
   app.addContentTypeParser("application/octet-stream", (_request, payload, done) => done(null, payload as Readable));
 
   app.addHook("onRequest", async (request, reply) => {
-    if (request.url.startsWith("/api/v1/auth/providers") || request.url.startsWith("/api/v1/auth/me/authorization")
+    if (request.url.startsWith("/api/v1/auth/providers") || request.url.startsWith("/api/v2/auth/me/authorization")
       || request.url.startsWith("/api/v1/platform/user-identities/")
       || request.url.startsWith("/api/v1/user-identities")
       || request.url.startsWith("/api/v1/platform/tenants:initial-onboarding")
@@ -37,7 +37,7 @@ export function buildApp(
       || (request.method === "POST" && request.url.startsWith("/api/v1/platform/managed-identities"))) {
       reply.header("cache-control", "no-store").header("pragma", "no-cache");
     }
-    const authorizationProjection = request.url.startsWith("/api/v1/auth/me/authorization");
+    const authorizationProjection = request.url.startsWith("/api/v2/auth/me/authorization");
     if (authorizationProjection) reply.header("vary", "Authorization, X-TCDX-Tenant-Id");
     const requestedCorrelation = request.headers["x-correlation-id"];
     const correlationId = typeof requestedCorrelation === "string" && validateUuid(requestedCorrelation)
@@ -62,6 +62,7 @@ export function buildApp(
   app.setErrorHandler((error, request, reply) => {
     const correlation = String(reply.getHeader("x-correlation-id") ?? request.id);
     const problem = problemFromError(error, correlation);
+    if (problem.statusCode === 401) reply.header("www-authenticate", "Bearer");
     void reply.code(problem.statusCode).type("application/problem+json").send(problem.body);
   });
 

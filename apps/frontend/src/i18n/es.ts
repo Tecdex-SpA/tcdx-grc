@@ -13,6 +13,12 @@ export const moduleLabels = {
 } as const;
 
 export const uiText = {
+  temporal: {
+    contextPending: "pendiente de contexto de zona horaria de la empresa.",
+    instantPlaceholder: "AAAA-MM-DDTHH:mm:ss±HH:mm",
+    instantGuidance: "Indica fecha, hora y desfase explícito válido para la zona de la empresa, o un instante UTC terminado en Z.",
+    invalidInstant: "La fecha y hora necesitan un instante inequívoco válido. Revisa el desfase y la transición de horario de verano."
+  },
   actions: {
     approve: "Aprobar",
     complete: "Completar",

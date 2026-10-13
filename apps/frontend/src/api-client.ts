@@ -48,7 +48,7 @@ export class ApiClient {
   }
 
   currentAuthorization(tenantId: string | null, signal?: AbortSignal): Promise<CurrentPrincipalAuthorization> {
-    return this.request<CurrentPrincipalAuthorization>("/api/v1/auth/me/authorization", {
+    return this.request<CurrentPrincipalAuthorization>("/api/v2/auth/me/authorization", {
       headers: tenantId ? { "X-TCDX-Tenant-Id": tenantId } : {}, cache: "no-store", ...(signal ? { signal } : {})
     }, { tenantContext: "omit" });
   }

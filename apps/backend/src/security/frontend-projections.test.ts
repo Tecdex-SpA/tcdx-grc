@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { buildApp } from "../app.js";
 import { UnavailableFileStoragePort } from "../ports/file-storage.js";
+import { tenantCreate } from "./platform-iam-service.js";
+import type { PlatformActor } from "./platform-authority.js";
 
 const providers = ["ZOHO", "MICROSOFT_ENTRA_ID", "GOOGLE_WORKSPACE", "TCDX_MANAGED_IDENTITY"];
 
@@ -56,6 +58,23 @@ describe("MI7A public authentication provider projection", () => {
 });
 
 describe("MI7A current principal authorization boundary", () => {
+  it.each(["+02:00", "-05:00", "Invalid/Timezone"])("rejects non-IANA creation value %s before persistence", async zone => {
+    // Shape-only unit actor; never an operational identity or grant.
+    const actor: PlatformActor = { identity: { principalClass: "HUMAN_INTERACTIVE", principalId: "01900000-0000-7000-8000-000000000001",
+      tokenId: "shape-only", expiresAt: new Date(Date.now()+60_000) }, roles: [], permissions: new Set(["platform.tenant.create"]) };
+    await expect(tenantCreate({} as never, actor, { body: { tenant_code: "SHAPE_ONLY", legal_name: "Shape", display_name: "Shape", default_timezone: zone }, correlationId: "shape-only" }))
+      .rejects.toMatchObject({ code: "TCDX.VALIDATION.FAILED", statusCode: 400 });
+  });
+  it("retires the v1 self projection without a redirect or compatibility endpoint", async () => {
+    const app = buildApp(async () => true, { database: {} as never, identityVerifier: { verifyBearerToken: async () => { throw new Error("unused"); } }, fileStorage: new UnavailableFileStoragePort() });
+    try {
+      const old = await app.inject("/api/v1/auth/me/authorization");
+      expect(old.statusCode).toBe(404);
+      expect(old.headers.location).toBeUndefined();
+      expect((await app.inject("/api/v2/auth/me/authorization")).statusCode).toBe(401);
+      expect((await app.inject("/api/v1/auth/providers")).statusCode).toBe(200);
+    } finally { await app.close(); }
+  });
   it("requires an application session and rejects incompatible principals", async () => {
     const app = buildApp(async () => true, {
       database: {} as never,
@@ -64,14 +83,14 @@ describe("MI7A current principal authorization boundary", () => {
       fileStorage: new UnavailableFileStoragePort()
     });
     try {
-      const missing = await app.inject("/api/v1/auth/me/authorization");
+      const missing = await app.inject("/api/v2/auth/me/authorization");
       expect(missing.statusCode).toBe(401);
       expect(missing.headers["cache-control"]).toBe("no-store");
       expect(missing.headers.vary).toContain("Authorization");
-      const incompatible = await app.inject({ url: "/api/v1/auth/me/authorization", headers: { authorization: "Bearer application-token" } });
+      const incompatible = await app.inject({ url: "/api/v2/auth/me/authorization", headers: { authorization: "Bearer application-token" } });
       expect(incompatible.statusCode).toBe(403);
-      expect((await app.inject({ url: "/api/v1/auth/me/authorization?user_id=someone", headers: { authorization: "Bearer application-token" } })).statusCode).toBe(400);
-      expect((await app.inject({ url: "/api/v1/auth/me/authorization", headers: { authorization: "Bearer application-token", "x-tcdx-tenant-id": "invalid" } })).statusCode).toBe(400);
+      expect((await app.inject({ url: "/api/v2/auth/me/authorization?user_id=someone", headers: { authorization: "Bearer application-token" } })).statusCode).toBe(400);
+      expect((await app.inject({ url: "/api/v2/auth/me/authorization", headers: { authorization: "Bearer application-token", "x-tcdx-tenant-id": "invalid" } })).statusCode).toBe(400);
     } finally { await app.close(); }
   });
 });

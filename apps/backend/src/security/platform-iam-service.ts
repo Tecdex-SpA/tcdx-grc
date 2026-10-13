@@ -1,3 +1,4 @@
+import { isIanaTimezone } from "@tcdx-grc/contracts";
 import { createHash, randomBytes } from "node:crypto";
 import { sql, type Kysely, type Transaction } from "kysely";
 import { validate as validateUuid } from "uuid";
@@ -577,7 +578,7 @@ export async function tenantCreate(transaction: Transaction<FoundationDatabase>,
   const legalName = text(input.body, "legal_name");
   const displayName = text(input.body, "display_name");
   const timezone = text(input.body, "default_timezone", 64);
-  try { new Intl.DateTimeFormat("en", { timeZone: timezone }).format(); } catch {
+  if (!isIanaTimezone(timezone)) {
     throw new FoundationError("TCDX.VALIDATION.FAILED", "Invalid IANA timezone", 400, false, { field: "default_timezone" });
   }
   const key = idempotencyKey(input.key);
