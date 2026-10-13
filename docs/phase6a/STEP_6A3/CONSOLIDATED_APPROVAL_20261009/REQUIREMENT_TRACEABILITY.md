@@ -978,3 +978,11 @@ Cada ID consume íntegramente acción/prueba/dependencia/criterio de su grupo ys
 6. Verificar esquema/grants/publicaciones ycompatibilidadtotal; promover pareja completa preparada con todos losdeltas preservados, retenerIANApareja para recuperación deaplicación. Si hayDDL, no usar down: recuperaciónDB sólo por procedimiento autorizado/forward. Cerrar12cláusulas y6A.3 sólo con evidencia literal;6A.4 sigueNOT_STARTED. ZIPincoming reservado después6A.4/antes6A.5.
 
 No hay cambios olvidados; sí hay gates/sourcebindings externos explícitos. No se presentaIANA como cierre del conjunto.
+
+### Ejecución de resguardo y promoción IANA QA30 — 2026-10-13
+
+Mandato ejecutivo PO de esta sesión: publicación de resguardo completa autorizada y GO operacional exacto recibido. Los 816 paths iniciales están contabilizados: 815 publicados (78 tracked +737 nuevos), 1 archivo browser generado conservado con checksum fuera del commit, 0 sensibles y0 sin resolver. Rama `rescue/step6a3-integral-20261013`; commit inicial `57a6c2905031f6d15e19dc13ec82574cd708b812`. Fuente reproducible QA30: rama `release/iana-v2-qa30-20261013`, commit `7dfb176843b968aad4be56d2149bde0e5dfc4b70`, 183 inputs verificados y24 deltas.
+
+Se transportó la pareja final y el backend QA30 quedó healthy con TLS verificado. El driver R1 falló en la precondición de health del frontend detenido y en el contador reiniciado al recuperar el backend. La pareja anterior fue recuperada efectivamente, mismos IDs/images/fingerprints, ambos healthy; contador real backend0. `QA_IANA_VISIBLE=FAIL`, `QA_DEPLOY_STATUS=ROLLED_BACK`; smoke público de recuperación200 y capturas desktop/móvil PASS. No DDL/DML/grants/IAM/Caddy/DNS. R2 corrige únicamente esas precondiciones,10 tests dirigidos PASS; su nuevo hash aún requiere adopción PO, no se reutiliza el recibo R1.
+
+Evidencia única de ejecución: `evidence/rescue-20261013/RELEASE_MANIFEST.json`, `QA_ATTEMPT_RESULT.json`, `qa-recovery-readonly.json` y `NEXT_EXACT_GO.txt`. `RECTOR_GATE=BLOCKED`,36/48 cláusulas cerradas localmente/12 pendientes;6A.3PARTIAL_BLOCKED,6A.4NOT_STARTED;HUMAN_UI_ACCEPTANCE=PENDING. Ningún cierre comercial ni gate humano autoaprobado.

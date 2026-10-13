@@ -1,0 +1,42 @@
+{
+  "status": "CORRECTED_DRAFT_REQUIRES_NEW_EXACT_HASH_ADOPTION",
+  "specs": {
+    "tcdx-grc-backend": {
+      "component": "backend",
+      "host": "tecdex@192.168.2.45",
+      "name": "tcdx-grc-backend",
+      "containerId": "6acd160b09f89943bb0657ad04b47f39ff4ed37f9c40a79af8c40b5ba1a36ae3",
+      "oldImage": "sha256:ab9902e4215289307992b9aa98421d5882a18b4236752948356b4fbe25829195",
+      "configurationFingerprint": "4ac4f3156518c89f3fc16387ec349d9645c3fd7d201e010a8f4a70433bd85879",
+      "baselineRestartCount": 0,
+      "imageId": "sha256:3be791953c806bbb24556526f06adfa73b364f374856a4f8102e5db9521d3cee",
+      "tag": "tcdx-grc-backend:iana-v2-qa30-240063fbc85b",
+      "sourceFingerprint": "240063fbc85b1f356b13bbf8acfb92978d3866822d5673b368e19a3ba7761657",
+      "tlsRepair": {
+        "caHostFile": "/home/tecdex/.config/tcdx-grc/qa-db-public-20261013.pem",
+        "caContainerFile": "/run/config/qa-db-public.pem",
+        "caSHA256": "0a99469321c1117cdf3154a7e5c5e50dd42f719af7b8b1a647fa0bb55179519b",
+        "databaseHost": "db-tecdex",
+        "databaseAddress": "192.168.2.40",
+        "databaseSSLMode": "require"
+      }
+    },
+    "tcdx-grc-frontend": {
+      "component": "frontend",
+      "host": "tecdex@192.168.2.46",
+      "name": "tcdx-grc-frontend",
+      "containerId": "31c3257ee28ffa0c03ae7791b178c089b2cfb118043e668270a15e09627e5080",
+      "oldImage": "sha256:f31fd8a5b63003ba0973822854a94dc03b0b9753ec9dc165253418608c0f73ce",
+      "configurationFingerprint": "750fe4bc72f07a9e361b562502a80893b468cef38b3ca063c2a926ae33ca0f69",
+      "baselineRestartCount": 0,
+      "imageId": "sha256:2936ac99ed0fea65354f4e55f2b9f3d0fe431ab72a5a4f47c97bc31fc0768ab1",
+      "tag": "tcdx-grc-frontend:iana-v2-qa30-79f2e9b39f22",
+      "sourceFingerprint": "79f2e9b39f22f8e8f68dfbf10ec95f6b1c4a7c4bac5de774e846f9f9c0791bec",
+      "pairBarrier": true
+    }
+  },
+  "driver_sha256": "e1678c292a076ec81afb9c32bdff9cf23fe25c1659785244f6e5387519a5fd49",
+  "window": "15 minutes starting at actual human GO; per-component health timeout 240s",
+  "QA_DEPLOY_GO": "NOT_GRANTED_FOR_R2_HASH",
+  "recovery_reference": "Current application container/image pair retained; 12 directed rollback tests and 5 local Engine recovery checks; no DB mutation or data restore dependency"
+}
