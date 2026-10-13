@@ -38,6 +38,8 @@ Preflight QA de solo lectura posterior al commit `bed3f3e`: conexión backend→
 
 Consulta adicional `READ ONLY` del 2026-10-13: `regulatory.regulatory_packs` contiene cinco raíces; cuatro son `standard` con los cuatro códigos ISO del rector 41 y una es `law` con el código de la ley inicial. La consulta acredita inventario, no un atributo/relación de familia ni la autorización de transferir packs. La conexión siguió en `TLSv1.3` y `transaction_read_only=on`; sin DDL/DML.
 
+El mismo preflight encontró **cero** filas de `platform.usage_limits` cuyo `limit_code` contenga `pack`, y los seeds/contratos no publican ese código. Tampoco hay relación PlanVersion↔familia. La enmienda DRAFT registra ambos bindings pendientes para que la elegibilidad y el máximo de packs sean datos comerciales gobernados, sin condicionales por `plan_code` ni límites implícitos en backend.
+
 ## Matriz mínima por módulo
 
 | Módulo | UI → API → servicio → persistencia | Permiso/tenant y prueba disponible | QA real y bloqueo |
