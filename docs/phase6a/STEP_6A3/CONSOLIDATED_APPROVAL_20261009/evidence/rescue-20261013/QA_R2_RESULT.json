@@ -1,0 +1,43 @@
+{
+  "at": "2026-10-13T18:59:40.137063+00:00",
+  "QA_IANA_VISIBLE": "PASS",
+  "QA_DEPLOY_STATUS": "DEPLOYED",
+  "QA_DEPLOY_AUTHORIZATION": "VALID_EXACT_R2_GO_EXECUTED_WITHIN_WINDOW",
+  "driver_sha256": "e1678c292a076ec81afb9c32bdff9cf23fe25c1659785244f6e5387519a5fd49",
+  "driver_changed": false,
+  "backend": {
+    "containerId": "88d54bee4116a182c41d080ec1bf88f9d58e262056af5715f8c643f0846b6062",
+    "imageId": "sha256:3be791953c806bbb24556526f06adfa73b364f374856a4f8102e5db9521d3cee",
+    "health": "healthy",
+    "restartCount": 0
+  },
+  "frontend": {
+    "containerId": "91dd4933c972f0cdf6107a7f643d179f02d2e420fe7f13187d4b07de2c67765c",
+    "imageId": "sha256:2936ac99ed0fea65354f4e55f2b9f3d0fe431ab72a5a4f47c97bc31fc0768ab1",
+    "health": "healthy",
+    "restartCount": 0
+  },
+  "public_url": "https://grc.tecdex.net/",
+  "HTTP_ROOT": 200,
+  "v1_self": 404,
+  "v2_self_without_session": 401,
+  "frontend_public_assets": "PASS_EXACT_HASHES",
+  "TLS_BACKEND_TO_DB": "PASS_VERIFIED_ACTUAL_RUNTIME_TLSv1.3_HOSTNAME_CERTIFICATE",
+  "QA_SMOKE": "PASS_PUBLIC_AND_DIRECTED_READ_ONLY",
+  "HUMAN_UI_ACCEPTANCE": "PENDING",
+  "authenticated_tenant_flow": "HUMAN_VALIDATION_PENDING_NO_SESSION_CREATED",
+  "QA_DDL_DML_GRANTS_IAM_DNS_CADDY": 0,
+  "rollback": "Original backend/frontend containers and images retained; exact R2 restore mechanism",
+  "execution_procedure": "Exact R2 deploy actions coordinated from both healthy originals; optional separate park action not used because precheck performs docker exec",
+  "RECTOR_GATE": "BLOCKED_GLOBAL_12_CLAUSES_REMAIN",
+  "master_regent": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09",
+  "STEP_6A3": "PARTIAL_BLOCKED",
+  "STEP_6A4": "NOT_STARTED",
+  "evidence": [
+    "EXACT_GO_RECEIPT_R2.json",
+    "qa-execution-r2.json",
+    "qa-actual-backend-tls.json",
+    "qa-public-v2-r2.json",
+    "qa-public-visual-smoke.json"
+  ]
+}

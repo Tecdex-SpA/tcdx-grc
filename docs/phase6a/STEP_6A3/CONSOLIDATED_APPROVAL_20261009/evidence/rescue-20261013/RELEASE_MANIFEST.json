@@ -123,7 +123,7 @@
     "RECTOR_GATE": "BLOCKED",
     "HUMAN_UI_REVIEW": "NOT_APPROVED"
   },
-  "qa_deploy": "R1_BACKEND_DEPLOYED_HEALTHY_TLS_THEN_PAIRED_RECOVERY_AFTER_FRONTEND_PARK_PRECHECK_FAILURE",
+  "qa_deploy": "DEPLOYED_EXACT_QA30_IMAGES_VIA_UNMODIFIED_R2_DRIVER",
   "provenance": "Inherited test results retained; no historical full-suite rerun claimed",
   "release_branch": "release/iana-v2-qa30-20261013",
   "release_commit": "7dfb176843b968aad4be56d2149bde0e5dfc4b70",
@@ -131,25 +131,27 @@
     "QA30_COMPATIBILITY": "PASS",
     "BACKEND_IMAGE_READY": "PASS_LOCAL",
     "FRONTEND_IMAGE_READY": "PASS_LOCAL",
-    "TLS_BACKEND_TO_DB": "PASS_VERIFIED",
+    "TLS_BACKEND_TO_DB": "PASS_VERIFIED_ACTUAL_RUNTIME",
     "ROLLBACK_READY": "PASS",
-    "QA_DEPLOY_AUTHORIZATION": "REQUIRES_EXACT_GO_FOR_CORRECTED_R2",
-    "QA_DEPLOY_STATUS": "ROLLED_BACK",
+    "QA_DEPLOY_AUTHORIZATION": "VALID_EXACT_R2_GO",
+    "QA_DEPLOY_STATUS": "DEPLOYED",
     "HUMAN_UI_ACCEPTANCE": "PENDING",
-    "QA_IANA_VISIBLE": "FAIL"
+    "QA_IANA_VISIBLE": "PASS",
+    "QA_SMOKE": "PASS"
   },
   "TLS_evidence": "Exact candidate TLS1.3 verified hostname handshake; authenticated read-only createDatabase tested inside backend Docker using identical database.js SHA and pg8.23.0; live backend remains untouched until GO.",
   "driver_sha256": "553d6a6765617cfcd66cce7a7bf05f96c4587654337e3b20a2282c66643f1c28",
   "operations": "promote-qa30.py requires real exact GO receipt and adopted SHA; rollback-pair.py restores current retained backend then frontend",
   "qa_attempt_evidence": "QA_ATTEMPT_RESULT.json",
-  "pending_driver_r2_sha256": "e1678c292a076ec81afb9c32bdff9cf23fe25c1659785244f6e5387519a5fd49",
   "transport_custody_on_QA": "Both exact final images and verified tars loaded/staged; prior images and stopped failed backend object retained, no prune",
   "changes_this_execution": {
     "database_structure": false,
     "executable_product_contracts": false,
     "backend_frontend_product_source": false,
     "deployment": true,
-    "runtime_TLS_configuration": "applied to candidate backend, then original restored per GO",
+    "runtime_TLS_configuration": "Active candidate backend uses verified TLS; original prior configuration retained for rollback",
     "governance_baseline": "unchanged_after_inherited_preservation"
-  }
+  },
+  "latest_qa_evidence": "QA_R2_RESULT.json",
+  "current_QA_TLS": "db-tecdex require verified public CA TLSv1.3"
 }
