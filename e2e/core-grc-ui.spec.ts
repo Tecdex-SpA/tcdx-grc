@@ -39,7 +39,7 @@ async function mockRuntime(page: Page, roles: string[] = ["GRC_MANAGER"], platfo
       return;
     }
     if (url.pathname === "/api/v2/auth/me/authorization") {
-      await route.fulfill({ json: { evaluated_at: new Date().toISOString(), platform_permissions: platformRoles.includes("PLATFORM_ADMIN") ? ["platform.tenant.read", "platform.tenant.create", "platform.subscription.create", "platform.user_identity.read", "platform.membership.read", "platform.membership_invitation.read", "platform.membership_invitation.create", "platform.membership_invitation.update", "platform.role.read", "platform.role.assign"] : [],
+      await route.fulfill({ json: { evaluated_at: new Date().toISOString(), platform_permissions: platformRoles.includes("PLATFORM_ADMIN") ? ["platform.tenant.read", "platform.tenant.create", "platform.subscription.create", "platform.subscription_regulatory_pack.read", "platform.subscription_regulatory_pack.create", "platform.subscription_regulatory_pack.archive", "platform.user_identity.read", "platform.membership.read", "platform.membership_invitation.read", "platform.membership_invitation.create", "platform.membership_invitation.update", "platform.role.read", "platform.role.assign"] : [],
         tenant_permissions: { tenant_id: tenantId, default_timezone: "Europe/Berlin", permissions: roles.includes("TENANT_ADMIN") ? Object.fromEntries(["platform.membership.read", "platform.membership.create", "platform.role.read", "platform.role.assign", "platform.user_identity.read"].map(code => [code, [{scope_kind:"tenant"}]])) : {} } } });
       return;
     }
@@ -177,6 +177,56 @@ test("Platform Admin assigns a published plan and immediately reaches contracted
   await expect(page.getByRole("dialog")).toContainText("GRC · v1");
   expect(creates).toBe(1);
   await page.screenshot({ path: `${process.env.TCDX_UI_EVIDENCE_DIR ?? "/tmp"}/plan-assignment-${testInfo.project.name}.png`, fullPage: true });
+});
+
+test("Normas navigates published framework content without creating records", async ({ page }, testInfo) => {
+  await mockRuntime(page);
+  const frameworkId = "018f47f2-6170-7bd0-9d43-12f644a2b132";
+  await page.route("**/api/v2/auth/me/authorization", route => route.fulfill({ json: {
+    evaluated_at: new Date().toISOString(), platform_permissions: [], tenant_permissions: { tenant_id: tenantId,
+      default_timezone: "Europe/Berlin", permissions: {
+        "compliance.framework.read": [{ scope_kind: "tenant" }],
+        "compliance.normative_unit.read": [{ scope_kind: "tenant" }],
+        "compliance.requirement.read": [{ scope_kind: "tenant" }]
+      } }
+  } }));
+  await page.route("**/api/v1/framework-version-references?**", route => {
+    expect(route.request().headers()["x-tcdx-tenant-id"]).toBe(tenantId);
+    return route.fulfill({ json: { items: [{ framework_version_id: frameworkId, framework_code: "ISO",
+      framework_name: "Norma publicada", edition: "2022", version_number: 1, selectable: true }],
+      page: { has_more: false, next_cursor: null } } });
+  });
+  await page.route(url => url.pathname.startsWith(`/api/v1/framework-versions/${frameworkId}/`), route => {
+    expect(route.request().headers()["x-tcdx-tenant-id"]).toBe(tenantId);
+    const units = new URL(route.request().url()).pathname.endsWith("normative-units");
+    return route.fulfill({ json: { items: units
+      ? [{ normative_unit_id: memberId, unit_code: "4.1", title: "Contexto de la organización", source_locator: "4.1", access_mode: "official" }]
+      : [{ requirement_id: roleId, requirement_code: "4.1.a", editorial_summary: "Requisito publicado", access_mode: "official" }],
+      page: { has_more: false, next_cursor: null } } });
+  });
+  await page.goto("/dashboard");
+  if (testInfo.project.name.includes("narrow")) await page.getByRole("button", { name: "Abrir navegación" }).click();
+  await page.getByRole("button", { name: "Normas" }).click();
+  await page.getByLabel("Norma o marco publicado").selectOption(frameworkId);
+  await expect(page.getByRole("heading", { name: "Unidades normativas" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Requisitos de la norma" })).toBeVisible();
+  await expect(page.getByText("Contexto de la organización")).toBeVisible();
+  await expect(page.getByText("Requisito publicado")).toBeVisible();
+  await page.getByText("Ver detalle").first().click();
+  await expect(page.getByText("4.1", { exact: true }).first()).toBeVisible();
+  await page.screenshot({ path: `${process.env.TCDX_UI_EVIDENCE_DIR ?? "/tmp"}/norms-${testInfo.project.name}.png`, fullPage: true });
+});
+
+test("failed detail read cannot expose lifecycle commands from a summary", async ({ page }) => {
+  await mockRuntime(page);
+  await page.route(`**/api/v1/actions/${tenantId}`, route => route.fulfill({ status: 503, json: {
+    code: "TCDX.DEPENDENCY.UNAVAILABLE", message: "Unavailable", correlation_id: tenantId, retryable: true
+  } }));
+  await page.goto("/acciones");
+  await page.getByRole("tab", { name: "Acciones" }).click();
+  await page.getByRole("button", { name: "Ver detalle" }).first().click();
+  await expect(page.getByRole("dialog")).toContainText("El detalle no está disponible.");
+  await expect(page.getByRole("dialog").getByRole("button", { name: "Completar" })).toHaveCount(0);
 });
 
 test("D3 IANA rejects a DST gap and serializes an explicit overlapping instant in UTC", async ({ page }) => {

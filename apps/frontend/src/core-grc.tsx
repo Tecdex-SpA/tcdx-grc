@@ -127,7 +127,7 @@ export const modules: ModuleDefinition[] = [
 ];
 
 const nav = [
-  ["dashboard", uiText.navigation.dashboard, "grid"], ["cumplimiento", uiText.navigation.compliance, "check"], ["requisitos", uiText.navigation.requirements, "list"],
+  ["dashboard", uiText.navigation.dashboard, "grid"], ["normas", uiText.navigation.norms, "list"], ["cumplimiento", uiText.navigation.compliance, "check"], ["requisitos", uiText.navigation.requirements, "list"],
   ["controles", uiText.navigation.controls, "shield"], ["evidencias", uiText.navigation.evidence, "file"], ["acciones", uiText.navigation.actions, "task"]
 ] as const;
 
@@ -370,7 +370,7 @@ function DetailDrawer({ api, definition, row: summary, close, completed }: { api
     if (field.endsWith("_id") || field === "methodology_version_ref") return "Referencia vinculada";
     return displayValue(value);
   };
-  const actions = availableWorkflowActions(definition, row);
+  const actions = detail.error ? [] : availableWorkflowActions(definition, row);
   const version = definition.id === "evidencias" && Array.isArray(row.versions) ? row.versions[0] as Row | undefined : undefined;
   const state = version?.lifecycle_state ?? row[definition.stateField];
   const download = async () => {
@@ -506,9 +506,9 @@ function Dashboard({ api }: { api: ApiClient }) {
   </>;
 }
 
-function Sidebar({ active, open, close, platformAdmin, tenantAdmin, hasTenant, managedIdentity }: { active: string; open: boolean; close(): void; platformAdmin: boolean; tenantAdmin: boolean; hasTenant: boolean; managedIdentity: boolean }) {
+function Sidebar({ active, open, close, platformAdmin, tenantAdmin, hasTenant, managedIdentity, normsAvailable }: { active: string; open: boolean; close(): void; platformAdmin: boolean; tenantAdmin: boolean; hasTenant: boolean; managedIdentity: boolean; normsAvailable: boolean }) {
   return <aside className={`sidebar ${open ? "open" : ""}`}><div className="brand"><BrandLogo/><span>GRC</span></div><nav aria-label={uiText.navigation.mainAria}>
-    {hasTenant && nav.map(([id, label, icon]) => <button key={id} className={active === id ? "active" : ""} onClick={() => { navigate(id); close(); }}><Icon name={icon}/><span>{label}</span></button>)}
+    {hasTenant && nav.filter(([id]) => id !== "normas" || normsAvailable).map(([id, label, icon]) => <button key={id} className={active === id ? "active" : ""} onClick={() => { navigate(id); close(); }}><Icon name={icon}/><span>{label}</span></button>)}
     {(platformAdmin || tenantAdmin || managedIdentity) && <p className="sidebar-section-label">{uiText.navigation.settings}</p>}
     {(platformAdmin || tenantAdmin) && <><button className={active === settingsRoutes.companies ? "active" : ""} onClick={() => { navigate(settingsRoutes.companies); close(); }}><Icon name="building"/><span>{uiText.navigation.companies}</span></button><button className={active === settingsRoutes.users ? "active" : ""} onClick={() => { navigate(settingsRoutes.users); close(); }}><Icon name="users"/><span>{uiText.navigation.users}</span></button></>}
     {managedIdentity && <button className={active === settingsRoutes.managedIdentities ? "active" : ""} onClick={() => { navigate(settingsRoutes.managedIdentities); close(); }}><Icon name="shield"/><span>Identidades gestionadas</span></button>}
@@ -519,6 +519,49 @@ const workspaceGroups: Readonly<Record<string, readonly string[]>> = {
   cumplimiento: ["cumplimiento", "soa"], requisitos: ["requisitos"], controles: ["controles", "evaluaciones-control", "pruebas"],
   evidencias: ["solicitudes-evidencia", "evidencias", "retencion"], acciones: ["issues", "acciones"]
 };
+
+function NormativeContent({ api, frameworkId, kind, title }: { api: ApiClient; frameworkId: string; kind: "normative-units" | "requirements"; title: string }) {
+  const [state, setState] = useState<"loading" | "ready" | "denied" | "error">("loading");
+  const [items, setItems] = useState<Row[]>([]);
+  const [cursor, setCursor] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const path = `/api/v1/framework-versions/${encodeURIComponent(frameworkId)}/${kind}`;
+  const load = async (next?: string, signal?: AbortSignal) => {
+    const query = new URLSearchParams({ "page[size]": "100" });
+    if (next) query.set("page[cursor]", next);
+    const page = await api.request<Page>(`${path}?${query}`, signal ? { signal } : {});
+    setItems((current) => next ? [...current, ...page.items] : page.items);
+    setCursor(page.page.next_cursor);
+    setState("ready");
+  };
+  useEffect(() => {
+    const controller = new AbortController();
+    setState("loading"); setItems([]); setCursor(null);
+    void load(undefined, controller.signal).catch((error: unknown) => {
+      if (!controller.signal.aborted) setState(error instanceof ApiProblem && [401, 403].includes(error.status) ? "denied" : "error");
+    });
+    return () => controller.abort();
+  }, [api, path]);
+  return <DataCard title={title} className="admin-section">
+    {state === "loading" ? <LoadingState/> : state === "denied" ? <StatePanel kind="permission-denied"/> :
+      state === "error" ? <StatePanel kind="error" detail={`No fue posible consultar ${title.toLowerCase()}.`} retry={() => { setState("loading"); void load().catch(() => setState("error")); }}/> :
+      items.length === 0 ? <StatePanel kind="empty" detail="No hay contenido normativo publicado y habilitado para esta versión. Comprueba la publicación y contratación del marco."/> :
+      <><div className="table-scroll"><table><thead><tr><th>Código</th><th>Contenido</th><th><span className="sr-only">Detalle</span></th></tr></thead><tbody>{items.map((item) => {
+        const id = String(item[kind === "requirements" ? "requirement_id" : "normative_unit_id"]);
+        const code = String(item[kind === "requirements" ? "requirement_code" : "unit_code"] ?? "");
+        const name = String(item[kind === "requirements" ? "editorial_summary" : "title"] ?? "");
+        return <tr key={id}><td>{code}</td><td>{name}</td><td><details><summary>Ver detalle</summary><dl>{Object.entries(item).filter(([field, value]) => value != null && !field.endsWith("_id") && !["unit_code", "requirement_code", "title", "editorial_summary"].includes(field)).map(([field, value]) => <React.Fragment key={field}><dt>{fieldLabel(field)}</dt><dd>{displayValue(value)}</dd></React.Fragment>)}</dl></details></td></tr>;
+      })}</tbody></table></div>{cursor && <button className="button secondary" disabled={busy} onClick={() => { setBusy(true); void load(cursor).catch(() => setState("error")).finally(() => setBusy(false)); }}>{busy ? uiText.actions.loadingMore : uiText.actions.loadMore}</button>}</>}
+  </DataCard>;
+}
+
+function NormsWorkspace({ api }: { api: ApiClient }) {
+  const [frameworkId, setFrameworkId] = useState("");
+  return <><PageHeader title={uiText.navigation.norms}/><DataCard title="Marcos normativos habilitados" className="admin-section">
+    <BusinessReferenceSelect api={api} label="Norma o marco publicado" context={{ kind: "framework", purpose: "select" }} value={frameworkId} onChange={setFrameworkId}/>
+    <p className="form-guidance">Se muestran únicamente versiones publicadas y disponibles para la empresa seleccionada.</p>
+  </DataCard>{frameworkId ? <><NormativeContent key={`${frameworkId}:units`} api={api} frameworkId={frameworkId} kind="normative-units" title="Unidades normativas"/><NormativeContent key={`${frameworkId}:requirements`} api={api} frameworkId={frameworkId} kind="requirements" title="Requisitos de la norma"/></> : null}</>;
+}
 
 function ModuleWorkspace({ api, active }: { api: ApiClient; active: string }) {
   const choices = (workspaceGroups[active] ?? [active])
@@ -627,10 +670,11 @@ function readableRole(code: unknown, name?: unknown): string {
   return localized === "Rol personalizado" && typeof name === "string" && name.trim() ? name : localized;
 }
 
-function ContractedPacks({ api, subscriptionId, platform }: { api: ApiClient; subscriptionId?: string; platform: boolean }) {
+function ContractedPacks({ api, subscriptionId, platform, canActivate = false, canRevoke = false }: { api: ApiClient; subscriptionId?: string; platform: boolean; canActivate?: boolean; canRevoke?: boolean }) {
   const [items, setItems] = useState<Row[]>([]);
   const [page, setPage] = useState<PageMeta>({ has_more: false, next_cursor: null });
   const [versions, setVersions] = useState<Row[]>([]);
+  const [catalogState, setCatalogState] = useState<"loading" | "ready" | "denied" | "error">("loading");
   const [versionId, setVersionId] = useState("");
   const [effectiveFrom, setEffectiveFrom] = useState("");
   const [feedback, setFeedback] = useState("");
@@ -642,10 +686,10 @@ function ContractedPacks({ api, subscriptionId, platform }: { api: ApiClient; su
     const controller = new AbortController();
     void (platform ? api.platformGet<Page>(path, { signal: controller.signal }) : api.request<Page>(path, { signal: controller.signal }))
       .then((result) => { setItems(result.items); setPage(result.page); }).catch(() => { if (!controller.signal.aborted) setFeedback("No fue posible cargar los marcos contratados."); });
-    if (platform) void api.platformGet<Page>("/api/v1/platform/regulatory-pack-versions", { signal: controller.signal })
-      .then((page) => setVersions(page.items)).catch(() => { if (!controller.signal.aborted) setFeedback("No fue posible cargar versiones disponibles."); });
+    if (platform && canActivate) void api.platformGet<Page>("/api/v1/platform/regulatory-pack-versions", { signal: controller.signal })
+      .then((page) => { setVersions(page.items); setCatalogState("ready"); }).catch((error: unknown) => { if (!controller.signal.aborted) setCatalogState(error instanceof ApiProblem && [401, 403].includes(error.status) ? "denied" : "error"); });
     return () => controller.abort();
-  }, [api, path, platform, subscriptionId, nonce]);
+  }, [api, path, platform, subscriptionId, canActivate, nonce]);
   const activate = async () => {
     if (!versionId || !effectiveFrom || !subscriptionId) { setFeedback("Selecciona una versión y fecha de inicio."); return; }
     try {
@@ -653,7 +697,10 @@ function ContractedPacks({ api, subscriptionId, platform }: { api: ApiClient; su
       if (!instant) { setFeedback(uiText.temporal.invalidInstant); return; }
       await api.platformPost(path, { regulatory_pack_version_id: versionId, effective_from: instant });
       setFeedback("Marco activado."); setNonce((value) => value + 1);
-    } catch { setFeedback("No fue posible activar el marco."); }
+    } catch (error) {
+      const status = error instanceof ApiProblem ? error.status : 0;
+      setFeedback(status === 403 ? "No tienes autorización para activar este marco." : status === 404 ? "La suscripción o versión del marco ya no está disponible." : status === 409 ? "El marco ya está contratado o la vigencia entra en conflicto." : "No fue posible activar el marco.");
+    }
   };
   const loadMore = async () => {
     if (!page.next_cursor) return;
@@ -675,9 +722,9 @@ function ContractedPacks({ api, subscriptionId, platform }: { api: ApiClient; su
   };
   return <DataCard title="Marcos contratados" className="admin-section">
     {feedback && <p className="inline-feedback" role="status">{feedback}</p>}
-    {items.length === 0 ? <p>Sin marcos contratados.</p> : <div className="table-scroll"><table><thead><tr><th>Pack</th><th>Edición</th><th>Licencia</th><th>Contrato</th><th>Vigencia</th><th>Desde</th><th>Hasta</th>{platform && <th>Acción</th>}</tr></thead><tbody>{items.map((item) => <tr key={String(item.subscription_regulatory_pack_id)}><td><strong>{String(item.name)}</strong><small className="admin-secondary">{String(item.pack_code)}</small></td><td>{String(item.edition)}</td><td>{displayValue(item.license_classification)}</td><td><StatusBadge value={item.lifecycle_state}/></td><td><StatusBadge value={item.effective_state}/></td><td>{adminDate(item.effective_from)}</td><td>{item.effective_to ? adminDate(item.effective_to) : "—"}</td>{platform && <td>{item.effective_state === "effective" && <button className="link-button" onClick={() => void revoke(item)}>Revocar</button>}</td>}</tr>)}</tbody></table></div>}
+    {items.length === 0 ? <p>Sin marcos contratados.</p> : <div className="table-scroll"><table><thead><tr><th>Pack</th><th>Edición</th><th>Licencia</th><th>Contrato</th><th>Vigencia</th><th>Desde</th><th>Hasta</th>{platform && <th>Acción</th>}</tr></thead><tbody>{items.map((item) => <tr key={String(item.subscription_regulatory_pack_id)}><td><strong>{String(item.name)}</strong><small className="admin-secondary">{String(item.pack_code)}</small></td><td>{String(item.edition)}</td><td>{displayValue(item.license_classification)}</td><td><StatusBadge value={item.lifecycle_state}/></td><td><StatusBadge value={item.effective_state}/></td><td>{adminDate(item.effective_from)}</td><td>{item.effective_to ? adminDate(item.effective_to) : "—"}</td>{platform && <td>{canRevoke && item.effective_state === "effective" && <button className="link-button" onClick={() => void revoke(item)}>Revocar</button>}</td>}</tr>)}</tbody></table></div>}
     {page.has_more && <button className="button secondary" onClick={() => void loadMore()}>{uiText.actions.loadMore}</button>}
-    {platform && subscriptionId && <form className="admin-form" onSubmit={(event) => { event.preventDefault(); void activate(); }}><label><span>Versión del marco</span><select value={versionId} onChange={(event) => setVersionId(event.target.value)}><option value="">Selecciona una versión publicada</option>{versions.map((version) => <option key={String(version.regulatory_pack_version_id)} value={String(version.regulatory_pack_version_id)}>{String(version.name)} · {String(version.edition)}</option>)}</select></label><label><span>Vigente desde</span><input type="text" placeholder="AAAA-MM-DDTHH:mm:ssZ" value={effectiveFrom} onChange={(event) => setEffectiveFrom(event.target.value)}/></label><button className="button primary" type="submit">Activar marco</button></form>}
+    {platform && subscriptionId && canActivate && (catalogState === "loading" ? <LoadingState/> : catalogState === "denied" ? <StatePanel kind="permission-denied" detail="No tienes acceso al catálogo de marcos publicables."/> : catalogState === "error" ? <StatePanel kind="error" detail="No fue posible consultar los marcos publicables."/> : versions.length === 0 ? <StatePanel kind="empty" detail="No hay versiones de marco publicadas y vigentes para contratar. Solicita la publicación oficial del catálogo."/> : <form className="admin-form" onSubmit={(event) => { event.preventDefault(); void activate(); }}><label><span>Versión del marco</span><select value={versionId} onChange={(event) => setVersionId(event.target.value)}><option value="">Selecciona una versión publicada</option>{versions.map((version) => <option key={String(version.regulatory_pack_version_id)} value={String(version.regulatory_pack_version_id)}>{String(version.name)} · {String(version.edition)}</option>)}</select></label><label><span>Vigente desde</span><input type="text" placeholder="AAAA-MM-DDTHH:mm:ssZ" value={effectiveFrom} onChange={(event) => setEffectiveFrom(event.target.value)}/></label><button className="button primary" type="submit">Activar marco</button></form>)}
   </DataCard>;
 }
 
@@ -1009,7 +1056,7 @@ function CompaniesAdmin({ api, authorization, authorizeFresh }: { api: ApiClient
       const subscription = item.current_subscription as Row | null;
       return <tr key={String(item.tenant_id)}><td><strong>{String(item.display_name)}</strong><small className="admin-secondary">{String(item.legal_name)}</small></td><td><StatusBadge value={item.lifecycle_state}/></td><td>{subscription ? `${String(subscription.plan_name)} · v${String(subscription.plan_version_number)}` : uiText.administration.noPlan}</td><td><button className="link-button" onClick={() => setSelectedId(String(item.tenant_id))}>{uiText.actions.viewDetail}</button></td></tr>;
     })}</tbody></table></div>}</TableShell>}</AdminPageBody>
-    {selectedId && <div className="drawer-backdrop" role="presentation" onMouseDown={() => setSelectedId(undefined)}><aside className="drawer" role="dialog" aria-modal="true" aria-labelledby="company-detail-title" onMouseDown={(event) => event.stopPropagation()}><header className="drawer-header"><div><p className="eyebrow">{uiText.navigation.settings}</p><h2 id="company-detail-title">{detail ? String(detail.display_name) : uiText.navigation.companies}</h2></div><button className="icon-button" onClick={() => setSelectedId(undefined)} aria-label={uiText.forms.closeDetail}>×</button></header><div className="drawer-body">{detailError ? <StatePanel kind="error" detail={uiText.administration.loadError} retry={refreshDetail}/> : !detail ? <LoadingState/> : <><p>{String(detail.legal_name)}</p><p><StatusBadge value={detail.lifecycle_state}/></p><p>{uiText.administration.companyCode}: {String(detail.tenant_code)}</p><p>{uiText.administration.timezone}: {String(detail.default_timezone)}</p><p>{uiText.administration.plan}: {detail.current_subscription ? `${String((detail.current_subscription as Row).plan_name)} · v${String((detail.current_subscription as Row).plan_version_number)}` : uiText.administration.noPlan}</p>{detail.current_subscription ? <ContractedPacks key={String((detail.current_subscription as Row).subscription_id)} api={api} platform subscriptionId={String((detail.current_subscription as Row).subscription_id)}/> : authorization?.platform_permissions.includes("platform.subscription.create") ? <PlanAssignment key={selectedId} api={api} tenantId={selectedId} authorizeFresh={authorizeFresh} created={refreshDetail}/> : <StatePanel kind="permission-denied" detail="Se requiere autorización de plataforma para asignar un plan."/>}<ValidationPacks key={selectedId} api={api} platform tenantId={selectedId}/><button className="button secondary" onClick={() => { navigate(`${settingsRoutes.users}?tenant_id=${encodeURIComponent(selectedId)}`); setSelectedId(undefined); }}>{uiText.administration.viewUsers}</button></>}</div></aside></div>}
+    {selectedId && <div className="drawer-backdrop" role="presentation" onMouseDown={() => setSelectedId(undefined)}><aside className="drawer" role="dialog" aria-modal="true" aria-labelledby="company-detail-title" onMouseDown={(event) => event.stopPropagation()}><header className="drawer-header"><div><p className="eyebrow">{uiText.navigation.settings}</p><h2 id="company-detail-title">{detail ? String(detail.display_name) : uiText.navigation.companies}</h2></div><button className="icon-button" onClick={() => setSelectedId(undefined)} aria-label={uiText.forms.closeDetail}>×</button></header><div className="drawer-body">{detailError ? <StatePanel kind="error" detail={uiText.administration.loadError} retry={refreshDetail}/> : !detail ? <LoadingState/> : <><p>{String(detail.legal_name)}</p><p><StatusBadge value={detail.lifecycle_state}/></p><p>{uiText.administration.companyCode}: {String(detail.tenant_code)}</p><p>{uiText.administration.timezone}: {String(detail.default_timezone)}</p><p>{uiText.administration.plan}: {detail.current_subscription ? `${String((detail.current_subscription as Row).plan_name)} · v${String((detail.current_subscription as Row).plan_version_number)}` : uiText.administration.noPlan}</p>{detail.current_subscription ? <ContractedPacks key={String((detail.current_subscription as Row).subscription_id)} api={api} platform subscriptionId={String((detail.current_subscription as Row).subscription_id)} canActivate={Boolean(authorization?.platform_permissions.includes("platform.subscription_regulatory_pack.create"))} canRevoke={Boolean(authorization?.platform_permissions.includes("platform.subscription_regulatory_pack.archive"))}/> : authorization?.platform_permissions.includes("platform.subscription.create") ? <PlanAssignment key={selectedId} api={api} tenantId={selectedId} authorizeFresh={authorizeFresh} created={refreshDetail}/> : <StatePanel kind="permission-denied" detail="Se requiere autorización de plataforma para asignar un plan."/>}<ValidationPacks key={selectedId} api={api} platform tenantId={selectedId}/><button className="button secondary" onClick={() => { navigate(`${settingsRoutes.users}?tenant_id=${encodeURIComponent(selectedId)}`); setSelectedId(undefined); }}>{uiText.administration.viewUsers}</button></>}</div></aside></div>}
   </>;
 }
 
@@ -1244,11 +1291,12 @@ export function CoreGrcApp({ api, session, apiOrigin }: { api: ApiClient; sessio
   const effectiveRoles = [...access.value.effective_platform_role_codes, ...(context?.effective_role_codes ?? [])];
   const roleSummary = effectiveRoles.map((role) => roleLabel(role)).join(" · ") || uiText.administration.noRoles;
   const administrativePage = active === settingsRoutes.companies || active === settingsRoutes.users || active === settingsRoutes.managedIdentities;
-  return <div className="app-shell"><Sidebar active={active} open={menu} close={() => setMenu(false)} platformAdmin={platformAdmin} tenantAdmin={tenantAdmin} hasTenant={Boolean(context)} managedIdentity={managedIdentity}/><div className="app-column"><header className="topbar"><button className="menu-button" aria-label={uiText.navigation.open} onClick={() => setMenu(!menu)}>☰</button><label className="search"><span className="sr-only">{uiText.shell.searchLabel}</span><input type="search" placeholder={uiText.shell.searchPlaceholder}/></label>{context ? <label className="tenant-context"><span>{uiText.shell.tenant}</span><select aria-label={uiText.tenant.selectorLabel} value={context.tenant_id} onChange={(event) => { session.selectTenant(event.target.value); setContextVersion((value) => value + 1); }}>{contexts.map((item) => <option value={item.tenant_id} key={item.tenant_id}>{item.tenant_display_name}</option>)}</select></label> : <span className="context-pill">{uiText.administration.platformContext}</span>}<div className="user-context"><span className="avatar">U</span><div><strong>{uiText.shell.authorizedUser}</strong><span className="user-role-summary" title={roleSummary}>{platformAdmin && `${uiText.administration.platformContext} · `}{context ? `${context.tenant_display_name} · ` : ""}{roleSummary}</span></div><button className="link-button" onClick={() => void logout()}>{uiText.auth.logout}</button></div></header><main className="workspace" key={`${context?.tenant_id ?? "platform"}:${contextVersion}`}>
+  const normsAvailable = Boolean(authorization?.tenant_permissions && Object.hasOwn(authorization.tenant_permissions.permissions, "compliance.framework.read"));
+  return <div className="app-shell"><Sidebar active={active} open={menu} close={() => setMenu(false)} platformAdmin={platformAdmin} tenantAdmin={tenantAdmin} hasTenant={Boolean(context)} managedIdentity={managedIdentity} normsAvailable={normsAvailable}/><div className="app-column"><header className="topbar"><button className="menu-button" aria-label={uiText.navigation.open} onClick={() => setMenu(!menu)}>☰</button><label className="search"><span className="sr-only">{uiText.shell.searchLabel}</span><input type="search" placeholder={uiText.shell.searchPlaceholder}/></label>{context ? <label className="tenant-context"><span>{uiText.shell.tenant}</span><select aria-label={uiText.tenant.selectorLabel} value={context.tenant_id} onChange={(event) => { session.selectTenant(event.target.value); setContextVersion((value) => value + 1); }}>{contexts.map((item) => <option value={item.tenant_id} key={item.tenant_id}>{item.tenant_display_name}</option>)}</select></label> : <span className="context-pill">{uiText.administration.platformContext}</span>}<div className="user-context"><span className="avatar">U</span><div><strong>{uiText.shell.authorizedUser}</strong><span className="user-role-summary" title={roleSummary}>{platformAdmin ? `${uiText.administration.platformContext} · ` : ""}{context ? `${context.tenant_display_name} · ` : ""}{roleSummary}</span></div><button className="link-button" onClick={() => void logout()}>{uiText.auth.logout}</button></div></header><main className="workspace" key={`${context?.tenant_id ?? "platform"}:${contextVersion}`}>
     {active === settingsRoutes.managedIdentities ? managedIdentity ? <ManagedIdentityWorkspace api={api} permissions={new Set(authorization?.platform_permissions ?? [])} authorizeFresh={refreshAuthorization}/> : <StatePanel kind="permission-denied"/> :
     active === settingsRoutes.companies ? platformAdmin ? <CompaniesAdmin api={api} authorization={authorization} authorizeFresh={refreshAuthorization}/> : tenantAdmin && context ? <TenantCompany api={api} context={context}/> : <StatePanel kind="permission-denied"/> :
       active === settingsRoutes.users ? platformAdmin || tenantAdmin ? <UsersAdmin api={api} platformAdmin={platformAdmin} authorization={authorization} authorizeTenantFresh={authorizeTenantFresh} authorizePlatformFresh={refreshAuthorization} {...(context ? { context } : {})}/> : <StatePanel kind="permission-denied"/> :
-      context ? <TenantTimezoneContext.Provider value={selectedTenantTimezone(authorization, selectedId ?? null)}>{active === "dashboard" ? <Dashboard api={api}/> : <ModuleWorkspace api={api} active={active}/>}</TenantTimezoneContext.Provider> :
+      context ? <TenantTimezoneContext.Provider value={selectedTenantTimezone(authorization, selectedId ?? null)}>{active === "dashboard" ? <Dashboard api={api}/> : active === "normas" ? normsAvailable ? <NormsWorkspace api={api}/> : <StatePanel kind="permission-denied"/> : <ModuleWorkspace api={api} active={active}/>}</TenantTimezoneContext.Provider> :
       <StatePanel kind={administrativePage ? "permission-denied" : "not-available"} detail={uiText.tenant.selectDetail}/>}
   </main></div>{menu && <button className="sidebar-scrim" aria-label={uiText.navigation.close} onClick={() => setMenu(false)}/>}</div>;
 }

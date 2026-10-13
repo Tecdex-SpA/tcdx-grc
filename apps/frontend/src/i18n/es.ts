@@ -78,6 +78,7 @@ export const uiText = {
     dashboard: "Panel principal",
     compliance: "Cumplimiento",
     requirements: "Requisitos",
+    norms: "Normas",
     controls: "Controles",
     evidence: "Evidencias",
     actions: "Acciones",
