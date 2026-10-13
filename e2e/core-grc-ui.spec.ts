@@ -143,7 +143,8 @@ test("Platform Admin assigns a published plan and immediately reaches contracted
   let subscribed = false;
   let creates = 0;
   const planVersionId = "018f47f2-6170-7bd0-9d43-12f644a2b131";
-  const subscription = { subscription_id: tenantId, subscription_code: "TECDEX-QA", lifecycle_state: "active",
+  const subscriptionId = "018f47f2-6170-7bd0-9d43-12f644a2b199";
+  const subscription = { subscription_id: subscriptionId, subscription_code: "TECDEX-QA", lifecycle_state: "active",
     plan_code: "GRC", plan_name: "GRC", plan_version_number: 1 };
   await page.route(url => ["/api/v1/platform/tenants", `/api/v1/platform/tenants/${tenantId}`].includes(url.pathname), route => {
     expect(route.request().headers()["x-tcdx-tenant-id"]).toBeUndefined();
@@ -158,13 +159,17 @@ test("Platform Admin assigns a published plan and immediately reaches contracted
     return route.fulfill({ json: { items: [{ plan_version_id: planVersionId, plan_code: "GRC", plan_name: "GRC",
       version_number: 1, display_name: "GRC v1" }], page: { has_more: false, next_cursor: null } } });
   });
+  await page.route(`**/api/v1/subscriptions/${subscriptionId}/regulatory-packs`, route => {
+    expect(route.request().headers()["x-tcdx-tenant-id"]).toBeUndefined();
+    return route.fulfill({ json: { items: [], page: { has_more: false, next_cursor: null } } });
+  });
   await page.route("**/api/v1/platform/subscriptions", route => {
     creates++;
     expect(route.request().headers()["x-tcdx-tenant-id"]).toBeUndefined();
     expect(route.request().headers()["idempotency-key"]).toBeTruthy();
     expect(route.request().postDataJSON()).toEqual({ tenant_id: tenantId, plan_version_id: planVersionId, subscription_code: "TECDEX-QA" });
     subscribed = true;
-    return route.fulfill({ status: 202, json: { operation_id: "subscriptionCreate", status: "completed", resource_id: tenantId } });
+    return route.fulfill({ status: 202, json: { operation_id: "subscriptionCreate", status: "completed", resource_id: subscriptionId } });
   });
   await page.goto("/configuraciones/empresas");
   await page.getByRole("button", { name: "Ver detalle" }).click();
@@ -175,6 +180,8 @@ test("Platform Admin assigns a published plan and immediately reaches contracted
   await expect(page.getByRole("heading", { name: "Marcos contratados" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Asignar plan" })).toHaveCount(0);
   await expect(page.getByRole("dialog")).toContainText("GRC · v1");
+  await expect(page.getByRole("dialog")).toContainText("Código de suscripción: TECDEX-QA");
+  await expect(page.getByRole("dialog")).toContainText("Estado de suscripción: Activo");
   expect(creates).toBe(1);
   await page.screenshot({ path: `${process.env.TCDX_UI_EVIDENCE_DIR ?? "/tmp"}/plan-assignment-${testInfo.project.name}.png`, fullPage: true });
 });
