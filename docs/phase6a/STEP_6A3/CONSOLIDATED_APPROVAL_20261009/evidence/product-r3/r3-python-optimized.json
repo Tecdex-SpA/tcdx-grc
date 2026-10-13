@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-O",
+    "scripts/verify-internal-governance.py"
+  ],
+  "result": "PASS_EXPECTED_FAIL_CLOSED",
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/Users/andresbarouh/repos/tcdx-grc/scripts/verify-internal-governance.py\", line 15, in <module>\n    raise RuntimeError(\"Governance verification requires Python assertion checks; optimization is forbidden\")\nRuntimeError: Governance verification requires Python assertion checks; optimization is forbidden\n"
+}

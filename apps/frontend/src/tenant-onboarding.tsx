@@ -1,5 +1,6 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import type { CurrentPrincipalAuthorization } from "@tcdx-grc/contracts";
+import { isIanaTimezone } from "@tcdx-grc/contracts";
 import { ApiClient, ApiProblem } from "./api-client.js";
 import { ManagedIdentityWorkspace } from "./managed-identity.js";
 
@@ -166,7 +167,7 @@ export function InitialCompanyWizard({ api, permissions, authorizeFresh, refetch
     {open && <section className="data-card onboarding-wizard" aria-labelledby="onboarding-title">
       <h2 ref={title} tabIndex={-1} id="onboarding-title">{["Datos de empresa", "Administrador inicial", "Resumen", "Resultado"][step]}</h2>
       <ol className="onboarding-steps" aria-label="Pasos de creación"><li aria-current={step === 0 ? "step" : undefined}>Datos de empresa</li><li aria-current={step === 1 ? "step" : undefined}>Administrador inicial</li><li aria-current={step === 2 ? "step" : undefined}>Resumen</li><li aria-current={step === 3 ? "step" : undefined}>Resultado</li></ol>
-      {step === 0 && <form className="admin-form" onSubmit={e => { e.preventDefault(); try { new Intl.DateTimeFormat("es", { timeZone: company.default_timezone }); setMessage(""); setStep(1); } catch { setMessage("Ingresa una zona horaria IANA válida."); } }} aria-describedby={message ? "onboarding-feedback" : undefined}>
+      {step === 0 && <form className="admin-form" onSubmit={e => { e.preventDefault(); if (isIanaTimezone(company.default_timezone)) { setMessage(""); setStep(1); } else { setMessage("Ingresa una zona horaria IANA válida."); } }} aria-describedby={message ? "onboarding-feedback" : undefined}>
         {([["tenant_code", "Código de empresa"], ["legal_name", "Razón social"], ["display_name", "Nombre visible de empresa"], ["default_timezone", "Zona horaria IANA"]] as const).map(([field, label]) => <label key={field}>{label}<input required value={company[field]} maxLength={field === "tenant_code" || field === "default_timezone" ? 64 : undefined} onChange={e => setCompany(current => ({ ...current, [field]: e.target.value }))}/></label>)}
         <button className="button primary" type="submit">Continuar</button>
       </form>}

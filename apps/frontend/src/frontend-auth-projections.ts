@@ -1,4 +1,5 @@
 import type { AuthenticationProvider, AuthenticationProviderAvailability, CurrentPrincipalAuthorization } from "@tcdx-grc/contracts";
+import { isIanaTimezone } from "@tcdx-grc/contracts";
 import { brandNames } from "./branding.js";
 
 export const providerLabels: Readonly<Record<AuthenticationProvider, string>> = {
@@ -45,7 +46,8 @@ export function parseCurrentAuthorization(value: unknown, expectedTenant: string
   } else {
     if (!tenant || typeof tenant !== "object" || Array.isArray(tenant)) return null;
     const projection = tenant as Record<string, unknown>;
-    if (Object.keys(projection).sort().join(",") !== "permissions,tenant_id" || projection.tenant_id !== expectedTenant
+    if (Object.keys(projection).sort().join(",") !== "default_timezone,permissions,tenant_id" || projection.tenant_id !== expectedTenant
+      || !isIanaTimezone(projection.default_timezone)
       || !projection.permissions || typeof projection.permissions !== "object" || Array.isArray(projection.permissions)) return null;
     if (Object.keys(projection.permissions).some((code) => managedCodes.has(code))) return null;
   }

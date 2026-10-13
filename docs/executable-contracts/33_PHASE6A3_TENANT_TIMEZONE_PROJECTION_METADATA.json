@@ -1,0 +1,75 @@
+{
+  "version": "R6_NEXT",
+  "api_major_version": 2,
+  "status": "PUBLISHED_LOCAL_API_V2",
+  "published_at": "2026-10-13T14:03:13.790937+00:00",
+  "publication_scope": "LOCAL_ONLY; NOT_QA_NOT_RUNTIME_EXTERNAL",
+  "manifest_path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/R6_V2_APPROVAL_MANIFEST.json",
+  "manifest_sha256": "88e8a56c0d4939e257cd3ab70c21df96ef0ebee5105ea2990036ca83888a0397",
+  "receipt_path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/R6_NEXT_V2_APPROVAL_RECEIPT.json",
+  "receipt_sha256": "9ccac3c6ae82cdca1cfb670d2f3a17517953892926b32750ed7389aa905d39bb",
+  "semantic_text_sha256": "6205faaafa3cb0cbd4d0cf34cd9c8343ccca64392e638a833e10fa7db8c73375",
+  "operation_id": "currentPrincipalAuthorizationRead",
+  "method": "GET",
+  "route": "/api/v2/auth/me/authorization",
+  "retired_route": "/api/v1/auth/me/authorization",
+  "retired_route_result": "404; not registered; no redirect/fallback/coexistence",
+  "other_v1_routes": "UNCHANGED",
+  "sources": [
+    {
+      "path": "docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml",
+      "sha256": "81743f6a81cfa86fe9a10dd52ad4da30161452aefa3fc599d7402ff6edf2b776"
+    },
+    {
+      "path": "docs/executable-contracts/23_FRONTEND_AUTHENTICATION_AUTHORIZATION_PROJECTIONS.md",
+      "sha256": "6f0234e24524201f99137f09ba3a4ffebaf57fd84373803c400651f857881bb7"
+    },
+    {
+      "path": "docs/executable-contracts/33_PHASE6A3_TENANT_TIMEZONE_PROJECTION.md",
+      "sha256": "b6cf8eaff2963157ed35438813ce60021ad16a39c90da31f1eb69ad17f23b329"
+    }
+  ],
+  "publication_precedence": "This receipt/metadata records actual acceptance and effective local publication of exact previously DRAFT candidate bytes; historical draft annotations and preparation manifest remain byte-identical evidence, not current activation state. All unaffected contract23 semantics remain.",
+  "physical_changes": false,
+  "migrations": [],
+  "permissions_or_grants_added": [],
+  "audit_command_or_domain_events": "NONE_ADDED",
+  "tests": {
+    "872_unit_postgresql": "Previously PASS and exact production source/build match; not rerun for metadata-only publication",
+    "browser_unique_cases": 468,
+    "browser_basis": "one full467PASS/1FAIL followed by20affectedPASS, reconciled by file/title/project",
+    "external_e2e": "NOT_RUN",
+    "human_product_UI": "NOT_RUN; narrow context switch programmatic only"
+  },
+  "gate_evidence": [
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/final-check-summary.json",
+      "sha256": "dbe4314d3a7d2ca98508b1a5e5c9db591486e403fd5df08f4888e0c8d481b4b9"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/final-browser-coverage.json",
+      "sha256": "9fd79a548a564da988facab77a22b7d6278966302fa61e8a9985ce7a563df7f5"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/current-source-and-build-match.json",
+      "sha256": "507d601587cbc0a3cd8e92ed80ff5885d65e8565c0b500885edb8a25d539ee13"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/rector-final.log",
+      "sha256": "be827f42eb6ea9aa9359e7f5e925cc56b81bf1dbc9f7f0b6337292b1c38192ff"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/rector-status-final.log",
+      "sha256": "4a950b39b20f2de1440a2b45b243b63df607fa3ede7f7e32e9f7e9da71864597"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/browser-test-typecheck-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "QA": "NOT_RUN",
+  "IAM_REAL": "NOT_RUN",
+  "DEPLOY": 0,
+  "RLS": "NOT_IMPLEMENTED",
+  "STEP6A3": "PARTIAL_BLOCKED"
+}

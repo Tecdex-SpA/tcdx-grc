@@ -80,6 +80,10 @@ Codex puede calcular evidencia y estado propuesto, pero los siguientes PASS requ
 
 Sin identidad del aprobador, rol ejercido, fecha y evidencia, el estado permanece `PENDING_REVIEW` aunque las pruebas estén verdes.
 
+### 6.1. Funciones humanas acumuladas
+
+Para revisión y publicación editorial/metodológica interna aplica 49. Una sola persona humana puede ejercer varias funciones con decisión expresa trazable; no se inventan firmas independientes. Se mantienen los gates técnicos, las aprobaciones exactas de artefactos, las separaciones operacionales y obligaciones superiores. La autorización funcional no publica hashes aún no aprobados.
+
 ## 7. Reglas específicas por fase
 
 - Fase 1: ante más de una representación física válida, Codex no elige. El diseño permanece DRAFT hasta decisión del Data Model Owner y Architecture Owner.

@@ -10,7 +10,7 @@ fail() {
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$root"
 
-MASTER_ID="TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23"
+MASTER_ID="TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09"
 BASELINE_DIR="docs/rector/baseline"
 HISTORICAL_V1_6_DIR="docs/rector/history/TCDX_GRC_MASTER_REGENT_BASELINE_v1.6_2026-09-23"
 HISTORICAL_V1_5_DIR="docs/rector/history/TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16"
@@ -22,6 +22,8 @@ required=(
   "docs/governance/CODEX_RECTOR_ENFORCEMENT.md"
   "docs/rector/BASELINE_STATUS"
   "docs/rector/BASELINE_ID"
+  "docs/rector/RECTOR_MANIFEST.sha256"
+  "docs/rector/ACTIVE_ACTIVATION.json"
   "$MASTER_STATUS"
 )
 
@@ -168,6 +170,8 @@ else
   fail "no SHA-256 verification tool available"
 fi
 
+python3 scripts/verify-internal-governance.py || fail "v1.8 activation/history/scope validation failed"
+
 # Current authorized phase is physical model DESIGN only. Migrations and
 # functional implementation remain blocked until their human-approved gates pass.
 if grep -q '^`MIGRATIONS=BLOCKED`$' "$MASTER_STATUS" 2>/dev/null || grep -q 'MIGRATIONS=BLOCKED' "$MASTER_STATUS"; then
@@ -219,3 +223,6 @@ echo "PROTECTED_V1_6_INTEGRITY=PASS"
 echo "CODEX_VARIATION_BUDGET=ZERO"
 echo "EXECUTION_STATUS_SOURCE=$MASTER_STATUS"
 printf '%s\n' "$current_phase_status"
+
+# The scoped STEP6A.3 ledger supersedes its own historical snapshots only.
+python3 scripts/verify-phase6a3-current.py || fail "current STEP6A3 ledger is inconsistent"

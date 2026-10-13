@@ -65,7 +65,7 @@ grep -Fxq "EXECUTION_STATUS_SOURCE=$MASTER_STATUS" <<< "$output" \
 
 for required in \
   "BASELINE_STATUS=ACTIVE" \
-  "BASELINE_ID=TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23" \
+  "BASELINE_ID=TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09" \
   "PROTECTED_V1_5_INTEGRITY=PASS" \
   "PROTECTED_V1_6_INTEGRITY=PASS" \
   "PRE_F5C_QA_MIGRATION_EXECUTED=1" \
@@ -175,5 +175,10 @@ while read -r hash file; do
   [[ "$(sha256_file "$CANDIDATE_DIR/$file")" == "$hash" ]] \
     || fail "v1.6 candidate entry changed: $file"
 done < "$CANDIDATE_DIR/CANDIDATE_MANIFEST.sha256"
+
+current_step6a3="$(python3 scripts/verify-phase6a3-current.py)" || fail "STEP6A3 current ledger rejected"
+while IFS= read -r line; do
+  grep -Fxq "$line" <<< "$output" || fail "STEP6A3 current ledger consumer missing: $line"
+done <<< "$current_step6a3"
 
 echo "RECTOR_STATUS_TEST=PASS"

@@ -1,7 +1,10 @@
+import {captureVocabularyWrites,buildVocabularyProvenance} from "./vocabulary-provenance.js";
 import { createHash } from "node:crypto";
 import { CompiledQuery, sql, type Transaction } from "kysely";
 import { validate as validateUuid } from "uuid";
 import { CONTROL_NATURES, CONTROL_TYPES, type ScopeKind } from "@tcdx-grc/shared-types";
+import { REQUEST_VOCABULARIES } from "@tcdx-grc/contracts";
+import { assertAssignableMembership, assertSelectableFramework } from "./reference-reads.js";
 import { newUuidV7 } from "../uuid.js";
 import type { FoundationDatabase } from "../database.js";
 import { FoundationError } from "../errors.js";
@@ -48,6 +51,15 @@ export type MutationDefinition = {
   replay?(context: MutationContext, result: { resource: ResourceKey; id: string }): Promise<{ response: Record<string, unknown>; afterCommit?: () => Promise<void> }>;
 };
 
+export function validatePublishedVocabulary(operationId: string, body: Body): void {
+ const fields=(REQUEST_VOCABULARIES as Readonly<Record<string,Readonly<Record<string,readonly string[]>>>>)[operationId];
+ for(const [path,values] of Object.entries(fields??{})) {
+  const [field,nested]=path.split("[].");
+  if(nested) {const array=body[field!]; if(array===undefined) continue; if(!Array.isArray(array)) invalidField(field!); for(const item of array) {if(!item || typeof item!=="object" || Array.isArray(item) || !values.includes(item[nested])) invalidField(path);}}
+  else if(Object.hasOwn(body,path) && (typeof body[path]!=="string" || !values.includes(body[path] as string))) invalidField(path);
+ }
+}
+
 function canonical(value: unknown): string {
   if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
   if (value && typeof value === "object") return `{${Object.entries(value as Body).sort(([a], [b]) => a.localeCompare(b)).map(([key, item]) => `${JSON.stringify(key)}:${canonical(item)}`).join(",")}}`;
@@ -92,6 +104,7 @@ function validateClosedBody(definition: MutationDefinition, body: Body): void {
   const unknown = Object.keys(body).find((key) => !allowed.has(key));
   const missing = definition.requiredFields.find((key) => body[key] === undefined || body[key] === null || body[key] === "");
   if (unknown || missing) throw new FoundationError("TCDX.VALIDATION.FAILED", "Validation failed", 400, false, { field: unknown ?? missing });
+  validatePublishedVocabulary(definition.operationId, body);
   for (const [field, value] of Object.entries(body)) validateField(field, value);
   if (definition.operationId === "soaCreate") validateObjectArray(body.items, "items", soaItemFields, ["reference_control_version_id", "applicability_decision", "justification", "implementation_state"]);
   if (definition.operationId === "applicabilityCreate") {
@@ -202,7 +215,7 @@ async function assertSelectableSubject(tx: Transaction<FoundationDatabase>, subj
 }
 
 async function assertTenantMembership(tx: Transaction<FoundationDatabase>, membershipId: string, tenantId: string): Promise<void> {
-  await referenceExists(tx, "iam.tenant_memberships", "tenant_membership_id", membershipId, tenantId);
+  await assertAssignableMembership(tx, tenantId, membershipId);
 }
 
 async function assertControlVersion(tx: Transaction<FoundationDatabase>, controlId: string, controlVersionId: string, tenantId: string): Promise<void> {
@@ -263,7 +276,26 @@ async function createApplicability({ transaction: tx, actor, body }: MutationCon
 async function assertAssessmentConfiguration(tx: Transaction<FoundationDatabase>, actor: CoreActor, body: Body, domain: string): Promise<void> {
   const id = optionalString(body, "effective_configuration_id");
   if (!id) return;
-  const result = await tx.executeQuery(CompiledQuery.raw(`SELECT ec.effective_configuration_id FROM config.effective_configurations ec JOIN config.configuration_definitions cd ON cd.configuration_definition_id=ec.configuration_definition_id WHERE ec.effective_configuration_id=$1::uuid AND ec.tenant_id=$2::uuid AND cd.owner_domain=$3 AND cd.lifecycle_state='published'`, [id, actor.tenantId, domain]));
+  const result = await tx.executeQuery(CompiledQuery.raw(`SELECT ec.effective_configuration_id
+    FROM config.effective_configurations ec
+    JOIN config.configuration_definitions cd ON cd.configuration_definition_id=ec.configuration_definition_id
+    WHERE ec.effective_configuration_id=$1::uuid AND ec.tenant_id=$2::uuid
+      AND cd.owner_domain=$3 AND cd.lifecycle_state='published'
+      AND NOT EXISTS (SELECT 1 FROM config.effective_configuration_layers layer
+        WHERE layer.effective_configuration_id=ec.effective_configuration_id
+          AND layer.tenant_id <> ec.tenant_id)
+      AND (cd.tenant_id IS NULL OR cd.tenant_id=ec.tenant_id)
+      AND NOT EXISTS (SELECT 1 FROM config.effective_configuration_layers layer
+        LEFT JOIN config.configuration_definitions ld ON ld.configuration_definition_id=layer.configuration_definition_id
+        LEFT JOIN config.configuration_overrides lo ON lo.configuration_override_id=layer.configuration_override_id
+        LEFT JOIN config.configuration_definitions od ON od.configuration_definition_id=lo.configuration_definition_id
+        WHERE layer.effective_configuration_id=ec.effective_configuration_id
+          AND (ld.configuration_definition_id IS NULL
+            OR (ld.tenant_id IS NOT NULL AND ld.tenant_id <> ec.tenant_id)
+            OR (layer.configuration_override_id IS NOT NULL AND lo.configuration_override_id IS NULL)
+            OR (lo.tenant_id IS NOT NULL AND lo.tenant_id <> ec.tenant_id)
+            OR (layer.configuration_override_id IS NOT NULL AND od.configuration_definition_id IS NULL)
+            OR (od.tenant_id IS NOT NULL AND od.tenant_id <> ec.tenant_id)))`, [id, actor.tenantId, domain]));
   if (!result.rows.length) throw new FoundationError("TCDX.VALIDATION.FAILED", "Configuration is not compatible with this tenant assessment", 400, false, { field: "effective_configuration_id" });
 }
 
@@ -279,7 +311,7 @@ async function createRequirementAssessment({ transaction: tx, actor, body }: Mut
 
 async function createSoa({ transaction: tx, actor, body }: MutationContext): Promise<MutationResult> {
   const framework = string(body, "framework_version_id");
-  await referenceExists(tx, "regulatory.framework_versions", "framework_version_id", framework, actor.tenantId, true, actor.runtimeEnvironment);
+  await assertSelectableFramework(tx, actor, framework);
   if (!Array.isArray(body.items) || body.items.length === 0) throw new FoundationError("TCDX.VALIDATION.FAILED", "Validation failed", 400, false, { field: "items" });
   const max = await sql<{ next_version: string }>`SELECT COALESCE(MAX(soa_version),0)+1 AS next_version FROM regulatory.statements_of_applicability WHERE tenant_id=${actor.tenantId}::uuid AND framework_version_id=${framework}::uuid`.execute(tx);
   const id = newUuidV7();
@@ -916,9 +948,14 @@ export async function executeMutation(transaction: Transaction<FoundationDatabas
   };
   let result: MutationResult | undefined;
   try {
-    result = await definition.execute(context);
+    const capture = await captureVocabularyWrites(()=>definition.execute(context));
+    result = capture.result;
     const response = result.response ?? await detailResource(transaction, actor, resources[result.resource], result.id, definition.permission);
-    await persistAuditEvent(transaction, { auditEventId: newUuidV7(), ownershipClass: "TENANT_OWNED", tenantId: actor.tenantId, actor: { userIdentityId: actor.userIdentityId }, correlationId: input.correlationId, eventCode: definition.auditEvent, aggregateType: resources[result.resource].name, aggregateId: result.id, commandCode: definition.operationId, outcome: result.auditOutcome ?? "success", classification: "internal", after: result.auditAfter ?? response });
+    const resourceDefinition=resources[result.resource];
+    const profile=buildVocabularyProvenance(definition.operationId,input.body,capture.writes,{table:resourceDefinition.table,entity:resourceDefinition.name,idColumn:resourceDefinition.idColumn,row:capture.writes.find(w=>w.table===resourceDefinition.table)?.row??response});
+    const auditAfter={...(result.auditAfter??response),...(profile?{contract_provenance:profile}:{})};
+    if(profile)response.contract_provenance=[...(Array.isArray(response.contract_provenance)?response.contract_provenance:[]),profile];
+    await persistAuditEvent(transaction, { auditEventId: newUuidV7(), ownershipClass: "TENANT_OWNED", tenantId: actor.tenantId, actor: { userIdentityId: actor.userIdentityId }, correlationId: input.correlationId, eventCode: definition.auditEvent, aggregateType: resources[result.resource].name, aggregateId: result.id, commandCode: definition.operationId, outcome: result.auditOutcome ?? "success", classification: "internal", after: auditAfter });
     if (definition.domainEvent && !result.deferredError) await persistOutboxEvent(transaction, { outboxEventId: newUuidV7(), eventId: newUuidV7(), ownershipClass: "TENANT_OWNED", tenantId: actor.tenantId, actor: { userIdentityId: actor.userIdentityId }, correlationId: input.correlationId, eventType: definition.domainEvent, aggregateType: resources[result.resource].name, aggregateId: result.id, classification: "internal", payload: { aggregate_id: result.id, row_version: response.row_version } });
     await completeIdempotency(transaction, { idempotencyRecordId: claim.idempotencyRecordId, requestHash, resultStatusCode: result.deferredError ? "failed" : "completed", resultRef: `${result.resource}:${result.id}`, responseHash: hash(response) });
     return {

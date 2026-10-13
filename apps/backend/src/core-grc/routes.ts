@@ -1,12 +1,13 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { validate as validateUuid } from "uuid";
+import { parseReferenceQuery, readReferencePage, type ReferenceKind } from "./reference-reads.js";
 import { sql } from "kysely";
 import type { Readable } from "node:stream";
 import { FoundationError } from "../errors.js";
 import type { CoreGrcDependencies, ResourceKey } from "./model.js";
 import { resources } from "./model.js";
 import { detailResource, getResource, listResource } from "./repository.js";
-import { availablePlatformRoleCodes, availableTenantContexts, grantedScopes, requireAccess, resolveAuthenticatedIdentity, resolveCoreActor } from "./security.js";
+import { availablePlatformRoleCodes, availableTenantContexts, grantedScopes, requireAccess, resolveAuthenticatedIdentity, resolveCoreActor, resolveTenantActor } from "./security.js";
 import type { AuthorizedFileAccess } from "../ports/file-storage.js";
 import { executeMutation, mutations } from "./service.js";
 import { membershipCreate, membershipInvitationCreate, membershipInvitationRevoke, membershipRoleAssign, membershipRoleRevoke, subscriptionCreate, tenantCreate } from "../security/platform-iam-service.js";
@@ -15,6 +16,7 @@ import { administrativeRead } from "../security/administrative-read.js";
 import { listTenantNormativeContent } from "../regulatory/tenant-read.js";
 import { listValidationAccessCandidates } from "../regulatory/validation-candidates.js";
 import { listMethodologies } from "./methodologies.js";
+import { readEffectiveConfiguration } from "../configuration/effective-read.js";
 import { listSelectableSubjects } from "./subject-read.js";
 import { subjectCreate } from "./subject-create.js";
 import { activatePack, listPackAssignments, packAssignmentDetail, packUuid, revokePack } from "../regulatory/pack-contract.js";
@@ -121,6 +123,24 @@ export const coreGrcCommandRoutes: Array<[string, string, "target" | "parent" | 
 ];
 
 export function registerCoreGrcRoutes(app: FastifyInstance, dependencies: CoreGrcDependencies): void {
+  for (const [kind, path] of [["framework", "framework-version-references"], ["membership", "membership-references"], ["retention", "retention-policy-references"]] as const) {
+    app.get(`/api/v1/${path}`, async (request, reply) => {
+      reply.header("cache-control", "no-store").header("vary", "Authorization, X-TCDX-Tenant-Id");
+      const identity = await resolveAuthenticatedIdentity(dependencies.identityVerifier, request);
+      const query = parseReferenceQuery(kind as ReferenceKind, request.raw.url ?? request.url);
+      const actor = await resolveTenantActor(dependencies.database, identity, request.headers["x-tcdx-tenant-id"]);
+      return readReferencePage(dependencies.database, actor, kind, query, dependencies.referenceCursor);
+    });
+  }
+  app.get("/api/v1/effective-configurations/:id", async (request: FastifyRequest<{ Params: Params; Querystring: Record<string, unknown> }>, reply) => {
+    reply.header("cache-control", "no-store").header("vary", "Authorization, X-TCDX-Tenant-Id");
+    const identity = await resolveAuthenticatedIdentity(dependencies.identityVerifier, request);
+    const id = validId(request.params.id);
+    if (Object.keys(request.query).length) throw new FoundationError("TCDX.VALIDATION.FAILED", "Unsupported query", 400);
+    const actor = await resolveTenantActor(dependencies.database, identity, request.headers["x-tcdx-tenant-id"]);
+    const result = await readEffectiveConfiguration(dependencies.database, actor, id);
+    return { operation_id: "effectiveConfigurationGet", status: "completed", correlation_id: correlation(reply), result };
+  });
   for (const domain of ["compliance", "controls"] as const) {
     app.get(`/api/v1/${domain}-methodologies`, async (request: FastifyRequest<{ Querystring: Record<string, unknown> }>) => {
       const actor = await resolveCoreActor(dependencies.database, dependencies.identityVerifier, request);

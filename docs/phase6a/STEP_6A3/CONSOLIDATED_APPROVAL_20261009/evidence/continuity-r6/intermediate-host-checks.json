@@ -1,0 +1,139 @@
+[
+  {
+    "gate": "typecheck",
+    "command": [
+      "pnpm",
+      "typecheck"
+    ],
+    "at": "2026-10-13T12:20:33.433979+00:00",
+    "duration": 1.662,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/typecheck.log",
+    "sha256": "75392e5f0a2222f90dad20884dcfbd52c94389949636e3bc34de6a7ed2d64246"
+  },
+  {
+    "gate": "lint",
+    "command": [
+      "pnpm",
+      "lint"
+    ],
+    "at": "2026-10-13T12:20:35.097728+00:00",
+    "duration": 1.353,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/lint.log",
+    "sha256": "ee0ccd4ec2121decde2f45b9fc4e39aa4fd4e6d5ca4253e04748c3e7b9450c2b"
+  },
+  {
+    "gate": "build",
+    "command": [
+      "pnpm",
+      "build"
+    ],
+    "at": "2026-10-13T12:20:36.451897+00:00",
+    "duration": 1.584,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/build.log",
+    "sha256": "c1a8db8248247326c48520dd39a84c45afa2c562c7c97a8c43d2cb32919047a5"
+  },
+  {
+    "gate": "contract-assets",
+    "command": [
+      "node",
+      "scripts/foundations/generate-contract-assets.mjs",
+      "--check"
+    ],
+    "at": "2026-10-13T12:20:38.036660+00:00",
+    "duration": 0.083,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/contract-assets.log",
+    "sha256": "6b23028285d3508b88246bfaf068d1c124204ef566bf5065a39cdcf841fc8976"
+  },
+  {
+    "gate": "vocabulary",
+    "command": [
+      "node",
+      "scripts/foundations/generate-phase6a-vocabularies.mjs",
+      "--check"
+    ],
+    "at": "2026-10-13T12:20:38.121030+00:00",
+    "duration": 0.211,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/vocabulary.log",
+    "sha256": "712684f1e3b9a46e0b8fb6e9333573ec75e4a38f571ca1a587fbba6126af6001"
+  },
+  {
+    "gate": "secret-scan",
+    "command": [
+      "node",
+      "scripts/foundations/secret-scan.mjs"
+    ],
+    "at": "2026-10-13T12:20:38.333183+00:00",
+    "duration": 2.038,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/secret-scan.log",
+    "sha256": "785afde26b815831ebbe2ea9b6a7125f5b49cdf400b3697f50d456a5337f0f2d"
+  },
+  {
+    "gate": "rector",
+    "command": [
+      "bash",
+      "scripts/verify-rector-governance.sh"
+    ],
+    "at": "2026-10-13T12:20:40.373490+00:00",
+    "duration": 0.283,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/rector.log",
+    "sha256": "be827f42eb6ea9aa9359e7f5e925cc56b81bf1dbc9f7f0b6337292b1c38192ff"
+  },
+  {
+    "gate": "rector-status",
+    "command": [
+      "bash",
+      "scripts/test-rector-governance-status.sh"
+    ],
+    "at": "2026-10-13T12:20:40.657018+00:00",
+    "duration": 1.427,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/rector-status.log",
+    "sha256": "4a950b39b20f2de1440a2b45b243b63df607fa3ede7f7e32e9f7e9da71864597"
+  },
+  {
+    "gate": "whitespace",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "at": "2026-10-13T12:20:42.085406+00:00",
+    "duration": 0.144,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/whitespace.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "gate": "browser-simulated",
+    "command": [
+      "pnpm",
+      "exec",
+      "playwright",
+      "test",
+      "e2e/core-grc-ui.spec.ts",
+      "--reporter=json"
+    ],
+    "at": "2026-10-13T12:20:42.230972+00:00",
+    "duration": 52.627,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/browser-simulated.log",
+    "sha256": "83f81429205013f9ca9136dca10e8071407cf9561dd964f3595f0d3f68048334"
+  }
+]

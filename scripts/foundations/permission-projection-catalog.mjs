@@ -19,7 +19,7 @@ for (const line of readFileSync(source, "utf8").split("\n")) {
   rows.set(code, { capabilities, scopes });
 }
 
-if (rows.size !== 166) throw new Error(`Expected 166 pre-MI plus approved P2A/methodology permission bindings, got ${rows.size}`);
+if (rows.size !== 169) throw new Error(`Expected 169 pre-MI plus approved P2A/methodology/STEP6A3 permission bindings, got ${rows.size}`);
 const approvedDiscovery = readFileSync(source, "utf8").split("\n").find((line) => line.startsWith("| platform.user_identity.read |"));
 if (!approvedDiscovery || !approvedDiscovery.includes("| CORE_PLATFORM | platform, tenant |")) throw new Error("D1-R discovery binding missing");
 rows.set("platform.user_identity.read", { capabilities: ["CORE_PLATFORM"], scopes: ["platform", "tenant"] });

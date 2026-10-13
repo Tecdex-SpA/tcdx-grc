@@ -1,0 +1,181 @@
+--- historical-v1.1/22_RBAC_PERMISSION_SCOPE_MATRIX.md
++++ active-v1.8/22_RBAC_PERMISSION_SCOPE_MATRIX.md
+@@ -2,11 +2,17 @@
+ 
+ ## 1. Modelo
+ 
+-Autorización efectiva:
++Autorización efectiva Platform:
+ 
+-`identity -> active tenant membership -> commercial entitlement -> permission -> scope -> object policy -> SoD -> ALLOW/DENY`
++`authenticated UserIdentity -> active PlatformRoleAssignment -> Role(PLATFORM_CONTROL) -> Permission -> platform scope -> ObjectPolicy -> SoD -> ALLOW/DENY`
++
++Autorización efectiva tenant:
++
++`authenticated UserIdentity -> active TenantMembership -> commercial entitlement -> active MembershipRole -> Role -> Permission -> tenant/object scope -> ObjectPolicy -> SoD -> ALLOW/DENY`
+ 
+ Default DENY.
++
++`PlatformRoleAssignment` y `MembershipRole` son relaciones de grant distintas dentro del mismo IAM. La primera no contiene ni requiere tenant/membership y sólo puede referenciar un `Role` cuya `ownership_class=PLATFORM_CONTROL`; la segunda requiere una `TenantMembership` activa y no puede otorgar scope `platform`. No existe grant por email, dominio, allowlist runtime, configuración externa o tenant ficticio.
+ 
+ ## 2. Acciones canónicas
+ 
+@@ -61,10 +67,10 @@
+ - complete + verify la misma Action;
+ - execute AuditTest + approve final conclusion si el tenant exige independencia;
+ - request risk acceptance + approve la misma aceptación;
+-- author + approve una metodología/regla global;
++- author + approve una metodología/regla global en actos operacionales del producto; el gobierno editorial/metodológico interno del texto se rige por 49 y admite aprobación humana unipersonal expresa;
+ - configure connector + approve privileged credential access cuando política reforzada esté activa.
+ 
+-Excepción requiere policy explícita, motivo y AuditEvent.
++Excepción operacional requiere policy explícita, motivo y AuditEvent. La adopción editorial/metodológica interna conforme a 49 no concede una excepción operacional ni permisos a usuarios de GRC.
+ 
+ ## 7. Machine identities
+ 
+@@ -109,8 +115,26 @@
+ 
+ Todo objeto tenant-owned debe resolver scope desde relaciones canónicas, nunca desde parámetros aportados por el cliente. Si un objeto pertenece a múltiples scopes, la policy declara `ANY` o `ALL`; no se asume. Los exports heredan exactamente el scope de lectura de los objetos exportados.
+ 
++Para `controlAssessmentSubmit`, `owned_object` se resuelve exclusivamente desde ownership/responsabilidad canónica del `Control` padre. El creator de `ControlAssessment` no adquiere ownership. Mientras no exista una relación canónica entre el actor y el `Subject` owner, ese scope falla cerrado; sólo un grant publicado `tenant` puede autorizar el command. No se crea ni infiere assignee.
++
+ ## 12. Operaciones sensibles
+ 
+ `administer`, `approve`, `verify`, `publish`, `impersonate`, acceso a credenciales y cambios de methodology/rule/permission catalog requieren audit reforzado. Las credenciales secretas nunca son retornadas por permiso de lectura; sólo referencias y metadata no sensible.
+ 
+ El command que inicia una `ImpersonationSession` requiere `platform.impersonation_session.impersonate` con scope `platform`, motivo obligatorio, duración limitada y actor Platform Admin autorizado. Platform Support no obtiene este permiso por rol base.
++
++## 13. First Platform Admin Bootstrap
++
++`FIRST_PLATFORM_ADMIN_BOOTSTRAP` es una ceremonia administrativa interna y one-time, no una operación pública ni un permiso reusable. Su autoridad es exclusivamente la decisión humana F5D-007 aplicada al estado inicial sin grants; no introduce una segunda ruta de autorización normal.
++
++Precondiciones conjuntas y fail-closed:
++
++- principal `HUMAN_INTERACTIVE` autenticado por OIDC y resuelto a una `UserIdentity` canónica existente;
++- exactamente un Role baseline publicado con `role_code=PLATFORM_ADMIN`, `ownership_class=PLATFORM_CONTROL` y `tenant_id IS NULL`;
++- `COUNT(active PlatformRoleAssignment)=0`, donde activo significa `valid_from <= transaction_timestamp()` y `valid_to IS NULL OR valid_to > transaction_timestamp()`;
++- no existe ninguna fila histórica en `iam.platform_role_assignments`, condición más fuerte que impide reabrir bootstrap después de revocación;
++- correlation ID y justificación operacional presentes conforme al contrato de auditoría.
++
++La transacción usa aislamiento `READ COMMITTED` y, antes de evaluar las dos condiciones de assignments, obtiene `SELECT ... FOR UPDATE` sobre la única fila canónica `PLATFORM_ADMIN`. Todos los intentos usan la misma fila de serialización. Después del lock, la transacción revalida identidad, catálogo y precondiciones, crea exactamente un assignment abierto con `valid_from=transaction_timestamp()` y emite `audit.iam.platform_role_assignment.bootstrap.v1` en la misma transacción. Si cualquier validación, insert o AuditEvent falla, todo se revierte. Dos intentos concurrentes no pueden observar ambos el estado inicial: el segundo espera el lock, reevalúa con una nueva snapshot `READ COMMITTED` y DENY.
++
++El target es la misma `UserIdentity` autenticada; el caller no aporta `role_id`, email, issuer/subject, tenant ni membership. El rol permitido es exclusivamente `PLATFORM_ADMIN`; `PLATFORM_SUPPORT`, cualquier otro `PLATFORM_CONTROL`, rol tenant o custom producen DENY. Tras el primer commit, todo intento posterior produce DENY, incluso si el grant fue luego revocado.
+--- historical-v1.1/43_PLAN_MAESTRO_RECTOR_DISENO_Y_DESARROLLO.md
++++ active-v1.8/43_PLAN_MAESTRO_RECTOR_DISENO_Y_DESARROLLO.md
+@@ -1,4 +1,7 @@
+-# 43 — Plan maestro rector de diseño y desarrollo
++# 43 — Plan maestro rector de diseño y desarrollo — v1.8
++
++> Active baseline: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09`.
++> Status: `ACTIVE`; human approval recorded in `docs/governance/amendments/INTERNAL_REVIEW_v1.8_20261009/HUMAN_AUTHORIZATION.md`; las aprobaciones históricas se preservan en history.
+ 
+ ## 1. Autoridad
+ 
+@@ -13,10 +16,10 @@
+ - Binarios: almacenamiento S3-compatible; MinIO en infraestructura Tecdex, metadata y permisos en PostgreSQL.
+ - Secretos: referencias de secretos; Docker secrets en QA y Vault en producción. Nunca valores secretos en BD, repo, logs o frontend.
+ - Observabilidad: OpenTelemetry, Prometheus, Grafana y Loki; correlation IDs end-to-end.
+-- IA: `ia-grc` consume `ia2.tcdx.int`; salidas con provenance y aprobación según 36.
+-- Despliegue inicial: contenedores Linux separados para `bk-grc`, `www-grc` e `ia-grc`; la creación de VMs ocurre en la fase de infraestructura, no antes.
++- IA: el backend GRC consume el servicio existente `ia2.tcdx.int` mediante integración gobernada; salidas con provenance y aprobación según 36. No se crea una VM o runtime GRC separado denominado `ia-grc`.
++- Despliegue inicial: backend en `192.168.2.45` / `grc-bk.tcdx.int` y frontend en `192.168.2.46` / `grc-www.tcdx.int`; PostgreSQL `tcdx-grc` reside en `192.168.2.40`. El backend consume `ia2.tcdx.int`. No se autoriza una tercera VM GRC para IA salvo ADR rector posterior.
+ 
+-Estas elecciones sólo cambian mediante ADR aprobado y actualización previa de esta base rectora. No quedan decisiones tecnológicas abiertas para iniciar.
++Estas elecciones sólo cambian mediante ADR humano aprobado y actualización previa de esta base rectora. El stack de plataforma queda cerrado; versiones exactas de paquetes, package manager, librería de SQL tipado, framework de pruebas, layout de repositorio y convenciones de generación deben congelarse en un `IMPLEMENTATION_DECISION_MANIFEST` durante Fase 2. Su ausencia no bloquea el diseño físico, pero sí `EXECUTABLE_CONTRACTS=PASS` y todo desarrollo funcional. Codex no elige esos elementos por defecto.
+ 
+ ## 3. Objetivos no funcionales cerrados
+ 
+@@ -33,17 +36,17 @@
+ 
+ ### Fase 0 — Baseline rector
+ 
+-Salida: baseline `TCDX_GRC_RECTOR_BASELINE_v1.1_2026-09-15`, documentos 00–44, sin auxiliares ni históricos normativos. Gate: `RECTOR_BASELINE=PASS`.
++Salida: baseline `TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23`, documentos 00–48 aplicables, con v1.4, v1.5 y v1.6 preservados como históricos verificables. Gate: `RECTOR_BASELINE=PASS`.
+ 
+ ### Fase 1 — Modelo físico definitivo
+ 
+-Derivar todas las entidades de 33 y las adiciones 41–44: tablas, columnas, UUIDv7, PK/FK, ownership, uniques, checks, índices, partición, temporalidad, versionado, retención, audit y lineage. El diseño debe demostrar expresamente `FrameworkVersion → NormativeUnit → Requirement`, ambos mappings normativos, controles globales/tenant y la imposibilidad de evaluar una NormativeUnit como Requirement. Entregables: diccionario, ERD, matriz Entity→Physical, matriz de invariantes y DDL propuesto sin ejecutar.
++Derivar todas las entidades de 33 y las adiciones 41–44: tablas, columnas, UUIDv7, PK/FK, ownership, uniques, checks, índices, partición, temporalidad, versionado, retención, audit y lineage. El diseño debe demostrar expresamente `FrameworkVersion → NormativeUnit → Requirement`, ambos mappings normativos, controles globales/tenant, RequirementApplicability tenant-wide/Subject-scoped, EvidenceLink/EvidenceRequest tipados, IssueOrigin tipado, contexto ownership_class/tenant de eventos y la imposibilidad de evaluar una NormativeUnit como Requirement. Entregables: diccionario, ERD, matriz Entity→Physical, matriz de invariantes y DDL propuesto sin ejecutar.
+ 
+ Gate: `PHYSICAL_DATA_MODEL_REVIEW=PASS`.
+ 
+ ### Fase 2 — Contratos ejecutables
+ 
+-Congelar OpenAPI base, event catalog, permission catalog, error model, idempotency, audit events, seed manifests, test contracts y migration plan. Gate: `EXECUTABLE_CONTRACTS=PASS`.
++Congelar OpenAPI base, event catalog, permission catalog, error model, idempotency, audit events, seed manifests, test contracts, migration plan e `IMPLEMENTATION_DECISION_MANIFEST`. Cada artefacto debe identificar owner y aprobación humana. Gate: `EXECUTABLE_CONTRACTS=PASS`.
+ 
+ ### Fase 3 — Creación definitiva de base y foundations
+ 
+@@ -55,7 +58,7 @@
+ 
+ Importar desde fuentes autorizadas el 100% de ISO 9001:2015, ISO 9001:2026 cuando esté publicada, ISO/IEC 27001:2022, ISO/IEC 42001:2023 y Ley 21.719; crear NormativeUnit, Requirements, controles de referencia/base, mappings, crosswalks y manifiestos conforme a 44.
+ 
+-Cada pack posee gate individual `REGULATORY_PACK_<CODE>=PASS`. La falta de texto licenciado, publicación definitiva o aprobación de un pack bloquea exclusivamente su selección y uso oficial. No bloquea las Fases 5–10 ni la implementación de otros packs/capacidades. Una funcionalidad que dependa específicamente de ese pack sí permanece bloqueada.
++Cada pack posee gate individual `REGULATORY_PACK_<CODE>=PASS`. La falta de texto licenciado, publicación definitiva o aprobación de un pack bloquea exclusivamente su selección, uso oficial y evidencia runtime dependiente. No bloquea la construcción genérica de motores ni otros packs/capacidades independientes. Un gate de slice o release sólo puede pasar si un `RELEASE_DEPENDENCY_MANIFEST` aprobado enumera sus capabilities/packs y todos los `REGULATORY_PACK_<CODE>` declarados como dependencias están en PASS.
+ 
+ ### Fase 5 — Slice Compliance + Controls + Evidence + Actions
+ 
+@@ -65,9 +68,15 @@
+ 
+ Taxonomías, metodología, inherente/residual, controles, apetito/tolerancia, KRI, tratamientos, incidentes y pérdidas. Gate: `RISK_RUNTIME=PASS`.
+ 
+-### Fase 7 — Audit + Third Parties + Resilience + Privacy
++### Fase 7 — Integrated Audit + Third Parties + Resilience + Privacy
+ 
+-Cada dominio se entrega como slice completo con RBAC, eventos, reportes y E2E. Gate: `ASSURANCE_OPERATIONS=PASS`.
++Audit se entrega como módulo integrado multi-norma alineado al contrato 48. Una Audit selecciona entre una y tres FrameworkVersion, conserva objetivos, criterios, scopes tipados por FrameworkVersion+Subject, equipo, lead/auditor/technical expert, competencias validadas y agenda integrada.
++
++AuditTest puede cubrir múltiples Requirements sólo mediante links tipados. Si los Requirements pertenecen a FrameworkVersion distintas, toda agrupación adicional debe citar un RequirementCrosswalkMapping aprobado, efectivo y con relationship_type `equivalent | partially_equivalent | overlaps | supports`. Coincidencia de numeración HLS nunca basta. Cada Requirement conserva identity, applicability, RequirementAssessment, result_status, domain_conclusion y lineage independientes.
++
++AuditTest puede vincular Control o ControlAssessment tenant y RequirementAssessment mediante FKs tipadas. Evidence, Issue y Action continúan bajo sus autoridades existentes; Audit no crea copias ni motores paralelos. Agenda enlaza tests, scopes y AuditTeamAssignment.
++
++Third Parties, Resilience y Privacy mantienen sus contratos v1.4. Cada dominio se entrega como slice completo con persistence, domain, API, RBAC, audit, UI, tests, E2E, runtime y traceability. Gate: `ASSURANCE_OPERATIONS=PASS`; para Audit requiere previamente `AUDIT_MODEL_AMENDMENT_REVIEW=PASS` y migración incremental aprobada/materializada.
+ 
+ ### Fase 8 — Data/Integration/Rules/Impact
+ 
+@@ -89,6 +98,9 @@
+ 4. Toda excepción requiere ADR, owner, fecha de expiración y plan de eliminación; nunca crea una vía paralela.
+ 5. No se hacen commit, merge ni deploy si el gate aplicable a ese artefacto o capacidad está FAIL.
+ 6. El estado de cada fase se registra en un único `MASTER_EXECUTION_STATUS.md` generado en el repositorio de desarrollo, no dentro de esta base rectora.
++7. Codex aplica 45. Si una tarea permite más de una solución material, detiene esa parte y solicita un Decision Record humano; no selecciona por conveniencia.
++8. Los owners humanos aprueban gates y ADR. Codex puede preparar evidencia y propuestas DRAFT, pero no autoaprobarlas.
++9. Todo task packet material declara alcance, fuentes, archivos permitidos, contratos afectados, criterios de aceptación, pruebas y acciones prohibidas. La omisión material produce BLOCKED.
+ 
+ ## 6. Responsables del desarrollo
+ 
+@@ -101,4 +113,4 @@
+ - QA/Release Owner: test contracts, evidencia runtime y release gates.
+ - Regulatory Content Owners: roles especializados definidos en 41.
+ 
+-Una persona puede ocupar varios roles en un equipo pequeño, pero debe registrarse el sombrero usado en cada aprobación y respetar las segregaciones obligatorias.
++Una persona puede ocupar varios roles: se registran las funciones ejercidas en cada aprobación. Para gobierno editorial/metodológico interno se aplica 49: no se exige segunda persona por defecto; sí cuando el PO lo ordene específicamente o una obligación superior aplicable lo imponga. Se respetan íntegramente las segregaciones operacionales de usuarios GRC y las obligaciones externas.
+--- historical-v1.1/44_CONTRATO_ESTRUCTURA_NORMATIVA_REQUISITOS_CONTROLES.md
++++ active-v1.8/44_CONTRATO_ESTRUCTURA_NORMATIVA_REQUISITOS_CONTROLES.md
+@@ -122,13 +122,13 @@
+ ## 8. Assessments, gaps y evidencia
+ 
+ - Applicability y compliance outcome existen sólo en `RequirementApplicability` y `RequirementAssessment`.
+-- Gap, non-conformity, finding y exception existen como `Issue` con `IssueOrigin` al RequirementAssessment, ControlAssessment, AssuranceTest o auditoría correspondiente.
+-- Evidence se vincula mediante `EvidenceLink` a Requirement, Control/ControlVersion, RequirementAssessment, ControlAssessment o AssuranceTest. No se vincula directamente a NormativeUnit como prueba de cumplimiento.
++- Gap, non-conformity, finding y exception existen como `Issue` con `IssueOrigin` tipado. Orígenes permitidos: RequirementAssessment, ControlAssessment, AssuranceTest, AuditTest, Risk, Incident o SupplierAssessment. No existe origen genérico sin FK/integridad.
++- Evidence se vincula mediante `EvidenceLink` a Requirement, Control, ControlVersion, RequirementAssessment, ControlAssessment o AssuranceTest. `Control` representa la implementación tenant; `ControlVersion` representa la versión de referencia o concreta según el caso. Evidence que pretende demostrar implementación de un tenant debe enlazar al Control tenant correspondiente. No se vincula directamente a NormativeUnit como prueba de cumplimiento.
+ - La consulta por NormativeUnit recorre descendientes y muestra Requirements, mappings, controles tenant, evidencia vigente, assessments, Issues y Actions con lineage completo.
+ - KPI/KRI/KCI/KQI son MetricDefinition/MetricMeasurement relacionados; no atributos libres incrustados en Control.
+ - Tareas de remediación son Action; no se modelan como Control.
+ 
+-`RequirementApplicability` decide si una obligación aplica a un tenant/scope. Para normas que exigen Statement of Applicability, `StatementOfApplicability` posee líneas `StatementOfApplicabilityItem` tenant-owned. Cada línea referencia un ControlVersion de referencia, decisión de aplicabilidad, justificación, implementation state y, cuando exista, el Control/ControlVersion tenant que lo implementa. RequirementApplicability y StatementOfApplicabilityItem no se reemplazan entre sí.
++`RequirementApplicability` decide si una obligación aplica a un tenant/scope. El scope es tenant-wide o un `Subject` del mismo tenant; `scope_subject_id=NULL` significa tenant-wide. Si una obligación debe evaluarse en varios Subjects, existen applicabilities separadas por scope, versionables/effective-dated. No se usa `organization_id` como sustituto universal de scope ni referencias `(type,id)` genéricas. Para normas que exigen Statement of Applicability, `StatementOfApplicability` posee líneas `StatementOfApplicabilityItem` tenant-owned. Cada línea referencia un ControlVersion de referencia, decisión de aplicabilidad, justificación, implementation state y, cuando exista, el Control/ControlVersion tenant que lo implementa. RequirementApplicability y StatementOfApplicabilityItem no se reemplazan entre sí.
+ 
+ ## 9. Cobertura y publicación
+ 
+@@ -168,6 +168,10 @@
+ - Ningún cambio de edición modifica contenido publicado ni historia de assessments.
+ - Crosswalks tipados no mezclan unidades, Requirements ni ControlVersion y preservan dirección/provenance.
+ - RequirementApplicability y StatementOfApplicabilityItem permanecen separados y tenant-scoped.
++- RequirementApplicability conserva `tenant_id` como ownership y usa `scope_subject_id` opcional sólo para alcance; el Subject debe pertenecer al mismo tenant.
++- EvidenceLink distingue Control tenant de ControlVersion y conserva FKs tipadas.
++- EvidenceRequest sólo puede targetear Requirement, Control, RequirementAssessment, ControlAssessment o AssuranceTest mediante integridad referencial verificable.
++- IssueOrigin sólo puede originarse en RequirementAssessment, ControlAssessment, AssuranceTest, AuditTest, Risk, Incident o SupplierAssessment mediante integridad referencial verificable.
+ 
+ ## 12. Gate
+ 

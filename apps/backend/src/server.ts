@@ -44,6 +44,7 @@ const app = buildApp(() => databaseReady(database), {
   database,
   identityVerifier,
   fileStorage,
+  ...(applicationTokens ? { referenceCursor: applicationTokens } : {}),
   runtimeEnvironment: config.nodeEnv
 }, oidcBrowser, config.frontendOrigin, managedIdentityBrowser, managedIdentityService,
 { zohoConfigured: config.oidc.configured, managedConfigured: config.managedIdentityOidc.configured });

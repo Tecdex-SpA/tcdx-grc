@@ -1,0 +1,192 @@
+--- a/e2e/tenant-onboarding-ui.spec.ts
++++ b/e2e/tenant-onboarding-ui.spec.ts
+@@ -17,7 +17,7 @@
+   let companyCreated = false, partial = !!options.partial, rolePartial = !!options.rolePartial, refetchFailure = !!options.refetchFailure, unconfirmedRole = !!options.unconfirmedRole;
+   function makeMember() { return { tenant_membership_id: memberId, tenant_id: tenantId, user_identity_id: personId, membership_state: "active", joined_at: "2026-01-01T00:00:00Z", ended_at: null, user_identity: { display_name: identity.display_name, email_normalized: null, lifecycle_state: "active", last_authenticated_at: null }, roles: options.assigned ? [{ membership_role_id: roleIds[0], role_id: roleIds[0], role_name: "Responsable del servidor", scope_kind: "tenant", valid_from: "2020-01-01T00:00:00Z", valid_to: null, etag: "a".repeat(64) }] as Record<string, unknown>[] : [] as Record<string, unknown>[] }; }
+   const credential = `local-fixture-${crypto.randomUUID()}`;
+-  await page.route("**/api/v1/**", async route => {
++  await page.route(url => url.pathname.startsWith("/api/v1/") || url.pathname === "/api/v2/auth/me/authorization", async route => {
+     const request = route.request(), url = new URL(request.url()), path = url.pathname, method = request.method();
+     requests.push({ path, method, query: url.search, tenant: request.headers()["x-tcdx-tenant-id"], etag: request.headers()["if-match"], body: request.postData() ? request.postDataJSON() : undefined, ...(request.headers()["idempotency-key"] ? { key: request.headers()["idempotency-key"] } : {}) });
+     const deny = (status: number, details?: unknown) => route.fulfill({ status, json: { code: status === 403 ? "TCDX.AUTHORIZATION.DENIED" : "TCDX.DEPENDENCY.UNAVAILABLE", message: "internal-unsafe-details", correlation_id: tenantId, retryable: status >= 500, ...(details ? { details } : {}) } });
+@@ -82,10 +82,10 @@
+   await page.getByRole("checkbox", { name: "Responsable del servidor" }).check();
+ }
+ async function screenshot(page: Page, name: string, project: string) {
+-  await mkdir("/tmp/tcdx-grc-step23l-tenant-onboarding-d3-r-ui", { recursive: true });
++  await mkdir(`${process.env.TCDX_UI_EVIDENCE_DIR ?? "/tmp"}/tcdx-grc-step23l-tenant-onboarding-d3-r-ui`, { recursive: true });
+   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBe(true);
+   await page.evaluate(() => window.scrollTo(0, 0));
+-  await page.screenshot({ path: `/tmp/tcdx-grc-step23l-tenant-onboarding-d3-r-ui/${name}-${project}.png`, fullPage: true, mask: [page.getByLabel("Credencial temporal emitida")] });
++  await page.screenshot({ path: `${process.env.TCDX_UI_EVIDENCE_DIR ?? "/tmp"}/tcdx-grc-step23l-tenant-onboarding-d3-r-ui/${name}-${project}.png`, fullPage: true, mask: [page.getByLabel("Credencial temporal emitida")] });
+ }
+ test("A: company with existing identity uses exact onboarding boundary, refetch and no manual IDs", async ({ page }, info) => {
+   const r = await runtime(page, { platform: true }); await companyFields(page); await existingIdentity(page);
+--- a/e2e/managed-identity-ui.spec.ts
++++ b/e2e/managed-identity-ui.spec.ts
+@@ -2,7 +2,7 @@
+ import { mkdir } from "node:fs/promises";
+ 
+ test.use({ screenshot: "off", trace: "off" });
+-const visualDirectory = "/tmp/tcdx-grc-step23l-mi7-r-ui";
++const visualDirectory = `${process.env.TCDX_UI_EVIDENCE_DIR ?? "/tmp"}/tcdx-grc-step23l-mi7-r-ui`;
+ test.beforeAll(async () => { await mkdir(visualDirectory, { recursive: true }); });
+ 
+ const id = "018f47f2-6170-7bd0-9d43-12f644a2b311";
+--- a/e2e/platform-role-ui.spec.ts
++++ b/e2e/platform-role-ui.spec.ts
+@@ -9,7 +9,7 @@
+ async function fixture(page:Page,options:{permissions?:string[];active?:boolean;readError?:number;catalogError?:number;mutationError?:number;uncertain?:boolean;refreshError?:boolean}={}){
+   const state={items:options.active?[assignment]:[],reads:0,catalogReads:0,posts:[] as {path:string;body:Record<string,unknown>;key:string}[],permissions:options.permissions??all,authorizations:0};
+   await page.addInitScript(()=>sessionStorage.setItem('tcdx.access_token','p2d-r-synthetic-session'));
+-  await page.route('**/api/v1/**',async route=>{
++  await page.route(url => url.pathname.startsWith("/api/v1/") || url.pathname === "/api/v2/auth/me/authorization",async route=>{
+     const request=route.request(),url=new URL(request.url()),path=url.pathname;
+     const problem=async(status:number)=>route.fulfill({status,contentType:'application/problem+json',body:JSON.stringify({code:status===409?'TCDX.CONFLICT.RESOURCE':status===404?'TCDX.RESOURCE.NOT_FOUND':status===403?'TCDX.AUTHORIZATION.DENIED':status===401?'TCDX.AUTHENTICATION.REQUIRED':'TCDX.VALIDATION.FAILED',message:'Internal error detail must not be displayed',correlation_id:assignmentId,retryable:false})});
+     if(path==='/api/v1/access/me')return route.fulfill({json:{available_tenant_contexts:[{tenant_id:tenant,tenant_display_name:'Empresa sintética',tenant_membership_id:tenant,membership_state:'active',effective_role_codes:['TENANT_ADMIN']}],effective_platform_role_codes:['PLATFORM_ADMIN']}});
+@@ -80,7 +80,7 @@
+   await expect(page.getByRole('dialog')).not.toContainText(assignmentId);
+   await expect(page.getByRole('button',{name:'Actualizar roles de plataforma'})).toBeFocused();
+   expect(await page.evaluate(()=>Array.from(document.querySelectorAll<HTMLElement>('body *')).filter(element=>element.getBoundingClientRect().right>innerWidth+1).map(element=>({tag:element.tagName,class:element.className,right:element.getBoundingClientRect().right}))), 'Responsive elements must fit the viewport').toEqual([]);
+-  await page.screenshot({path:`/tmp/tcdx-grc-mi10-p2d-r-roles-${info.project.name}.png`,fullPage:true});
++  await page.screenshot({path:`${process.env.TCDX_UI_EVIDENCE_DIR ?? "/tmp"}/tcdx-grc-mi10-p2d-r-roles-${info.project.name}.png`,fullPage:true});
+   await page.getByRole('button',{name:`Revocar rol ${assignment.role_name}`}).click();
+   await expect(page.getByLabel('Motivo del cambio de rol')).toBeFocused();
+   await page.getByLabel('Motivo del cambio de rol').fill('Revocación sintética explícita');
+--- a/e2e/branding.spec.ts
++++ b/e2e/branding.spec.ts
+@@ -15,7 +15,7 @@
+   const canonical = await readFile("docs/ui/assets/brand/tecdex-logo-light.svg");
+   const hash = (bytes: Buffer) => createHash("sha256").update(bytes).digest("hex");
+   expect(hash(await response.body())).toBe(hash(canonical));
+-  expect(await page.locator("img").evaluateAll((images) => images.some((image) => !image.complete || image.naturalWidth === 0))).toBe(false);
++  expect(await page.locator("img").evaluateAll((images) => images.some((image) => !(image as HTMLImageElement).complete || (image as HTMLImageElement).naturalWidth === 0))).toBe(false);
+   expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
+ }
+ 
+@@ -37,17 +37,17 @@
+   await method.focus();
+   await expect(method).toBeFocused();
+   expect(await method.evaluate((element) => getComputedStyle(element).outlineStyle)).not.toBe("none");
+-  await page.screenshot({ path: `/tmp/tcdx-grc-mi10-p2d-branding-${info.project.name}-login.png`, fullPage: true });
++  await page.screenshot({ path: `${process.env.TCDX_UI_EVIDENCE_DIR ?? "/tmp"}/tcdx-grc-mi10-p2d-branding-${info.project.name}-login.png`, fullPage: true });
+ });
+ 
+ test("dashboard branding uses the same logo with responsive navigation", async ({ page }, info) => {
+   await page.addInitScript(() => sessionStorage.setItem("tcdx.access_token", "p2d-local-browser-fixture"));
+-  await page.route("**/api/v1/**", (route) => {
++  await page.route(url => url.pathname.startsWith("/api/v1/") || url.pathname === "/api/v2/auth/me/authorization", (route) => {
+     const pathname = new URL(route.request().url()).pathname;
+     if (pathname.endsWith("/access/me")) return route.fulfill({ json: {
+       available_tenant_contexts: [], effective_platform_role_codes: ["PLATFORM_ADMIN"]
+     } });
+-    if (pathname.endsWith("/auth/me/authorization")) return route.fulfill({ json: {
++    if (pathname === "/api/v2/auth/me/authorization") return route.fulfill({ json: {
+       evaluated_at: new Date().toISOString(), platform_permissions: ["platform.managed_identity.read"], tenant_permissions: null
+     } });
+     return route.fulfill({ json: { items: [], page: { has_more: false, next_cursor: null } } });
+@@ -63,7 +63,7 @@
+   }
+   await expect(page.locator(".brand img")).toBeVisible();
+   await expect(page.locator("body")).not.toContainText(/TCDX GRC|TCDX Managed Identity/);
+-  await page.screenshot({ path: `/tmp/tcdx-grc-mi10-p2d-branding-${info.project.name}-dashboard.png`, fullPage: true });
++  await page.screenshot({ path: `${process.env.TCDX_UI_EVIDENCE_DIR ?? "/tmp"}/tcdx-grc-mi10-p2d-branding-${info.project.name}-dashboard.png`, fullPage: true });
+   await page.reload();
+   await healthyLogo(page);
+ });
+--- a/e2e/managed-identity-tenant-access.spec.ts
++++ b/e2e/managed-identity-tenant-access.spec.ts
+@@ -12,7 +12,7 @@
+   const state={permissions:options.noOnboard?permissions.filter(p=>p!=='platform.tenant_user.onboard'):[...permissions],provisions:0,posts:[] as {body:Record<string,unknown>;key:string}[],reads:0,roleReads:0,revokePosts:0,assigned:options.existing?[0]:[] as number[],hasMember:!!options.existing,partial:!!options.partial,readFailure:!!options.readFailure};
+   const credential=`local-fixture-${crypto.randomUUID()}`;
+   await page.addInitScript(()=>sessionStorage.setItem('tcdx.access_token','central-isolated-session'));
+-  await page.route('**/api/v1/**',async route=>{
++  await page.route(url => url.pathname.startsWith("/api/v1/") || url.pathname === "/api/v2/auth/me/authorization",async route=>{
+     const request=route.request(),url=new URL(request.url()),path=url.pathname,method=request.method();
+     const problem=(status:number,details?:unknown)=>route.fulfill({status,json:{code:status===403?'TCDX.AUTHORIZATION.DENIED':'TCDX.DEPENDENCY.UNAVAILABLE',message:'Unsafe internal detail',correlation_id:person,retryable:status>=500,...(details?{details}:{})}});
+     const progress=(pending:string[]=[])=>({tenant_id:tenant,user_identity_id:person,membership_id:member,completed_roles:state.assigned.map(i=>({role_code:roleCodes[i],membership_role_id:roleIds[i]})),pending_role_codes:pending});
+@@ -73,7 +73,7 @@
+   await expect(page.getByRole('option',{name:'Empresa local · LOCAL'})).toHaveCount(1);await expect(page.getByRole('checkbox',{name:/PLATFORM/})).toHaveCount(0);
+   await page.getByRole('button',{name:'Incorporar a empresa',exact:true}).dblclick();await expect(page.getByRole('list',{name:'Empresas de esta identidad'})).toContainText(names[0]!);await expect(page.getByRole('alert',{name:'Resultado de acceso a empresas'})).toContainText('confirmados desde el servidor');
+   expect(state.posts).toHaveLength(1);expect(state.reads).toBeGreaterThan(1);expect(state.provisions).toBe(1);
+-  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);await page.screenshot({path:`/tmp/tcdx-grc-mi-tenant-e2e-provision-${chosen.length}-${info.project.name}.png`,fullPage:true,mask:[page.getByLabel('Credencial temporal emitida')]});
++  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);await page.screenshot({path:`${process.env.TCDX_UI_EVIDENCE_DIR ?? "/tmp"}/tcdx-grc-mi-tenant-e2e-provision-${chosen.length}-${info.project.name}.png`,fullPage:true,mask:[page.getByLabel('Credencial temporal emitida')]});
+ });
+ test('D existing identity adds company access without reprovision or UUID labels',async({page})=>{const {state}=await fixture(page);await open(page);await association(page);await page.getByRole('button',{name:'Incorporar a empresa',exact:true}).click();
+   await expect(page.getByRole('list',{name:'Empresas de esta identidad'})).toContainText('Membresía activa');expect(state.provisions).toBe(0);await expect(page.getByRole('dialog')).not.toContainText(tenant);await expect(page.getByRole('dialog')).not.toContainText(member);
+@@ -108,5 +108,5 @@
+ test('M/N/O separated access sections preserve branding, responsive containment and keyboard focus',async({page},info)=>{await fixture(page,{existing:true});await open(page);await expect(page.getByRole('heading',{name:'Roles de plataforma',exact:true})).toBeVisible();await expect(page.getByRole('dialog')).not.toContainText('Keycloak');await expect(page.getByRole('dialog')).not.toContainText('TCDX Managed Identity');
+   await page.getByRole('button',{name:'Agregar acceso a empresa'}).click();await expect(page.getByLabel('Empresa',{exact:true})).toBeFocused();await page.keyboard.press('Tab');await expect(page.getByLabel('Motivo de incorporación')).toBeFocused();
+   await page.getByRole('button',{name:'Cerrar acceso a empresa'}).click();await expect(page.getByRole('button',{name:'Agregar acceso a empresa'})).toBeFocused();
+-  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);await page.screenshot({path:`/tmp/tcdx-grc-mi-tenant-e2e-detail-${info.project.name}.png`,fullPage:true});await page.keyboard.press('Escape');await expect(page.getByRole('dialog')).toHaveCount(0);await expect(page.getByRole('button',{name:'Ver detalle'})).toBeFocused();
++  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);await page.screenshot({path:`${process.env.TCDX_UI_EVIDENCE_DIR ?? "/tmp"}/tcdx-grc-mi-tenant-e2e-detail-${info.project.name}.png`,fullPage:true});await page.keyboard.press('Escape');await expect(page.getByRole('dialog')).toHaveCount(0);await expect(page.getByRole('button',{name:'Ver detalle'})).toBeFocused();
+ });
+--- a/e2e/core-grc-ui.spec.ts
++++ b/e2e/core-grc-ui.spec.ts
+@@ -31,14 +31,14 @@
+ async function mockRuntime(page: Page, roles: string[] = ["GRC_MANAGER"], platformRoles: string[] = []): Promise<void> {
+   const assignedRoles: Record<string, unknown>[] = [];
+   await page.addInitScript(() => { sessionStorage.setItem("tcdx.access_token", "contractual-test-token"); });
+-  await page.route("**/api/v1/**", async (route: Route) => {
++  await page.route(url => url.pathname.startsWith("/api/v1/") || url.pathname === "/api/v2/auth/me/authorization", async (route: Route) => {
+     const url = new URL(route.request().url());
+     if (url.pathname.endsWith("/access/me")) {
+       expect(route.request().headers()["x-tcdx-tenant-id"]).toBeUndefined();
+       await route.fulfill({ json: { available_tenant_contexts: [{ tenant_id: tenantId, tenant_display_name: "Tenant no normativo", tenant_membership_id: tenantId, membership_state: "active", effective_role_codes: roles }], effective_platform_role_codes: platformRoles } });
+       return;
+     }
+-    if (url.pathname.endsWith("/auth/me/authorization")) {
++    if (url.pathname === "/api/v2/auth/me/authorization") {
+       await route.fulfill({ json: { evaluated_at: new Date().toISOString(), platform_permissions: platformRoles.includes("PLATFORM_ADMIN") ? ["platform.tenant.read", "platform.tenant.create", "platform.user_identity.read", "platform.membership.read", "platform.membership_invitation.read", "platform.membership_invitation.create", "platform.membership_invitation.update", "platform.role.read", "platform.role.assign"] : [],
+         tenant_permissions: { tenant_id: tenantId, default_timezone: "Europe/Berlin", permissions: roles.includes("TENANT_ADMIN") ? Object.fromEntries(["platform.membership.read", "platform.membership.create", "platform.role.read", "platform.role.assign", "platform.user_identity.read"].map(code => [code, [{scope_kind:"tenant"}]])) : {} } } });
+       return;
+@@ -166,6 +166,49 @@
+   await page.getByRole("button", { name: "Ejecutar", exact: true }).click();
+   await expect.poll(() => body).toBeDefined();
+   expect((body!.samples as Array<Record<string, unknown>>)[0]!.sample_period_start).toBe("2026-10-25T00:30:00Z");
++});
++
++test("D3 IANA changes tenant context without retaining the prior zone", async ({ page }) => {
++  await mockRuntime(page);
++  const tenantB = "018f47f2-6170-7bd0-9d43-12f644a2b121";
++  const requests: string[] = [];
++  await page.route("**/api/v1/access/me", route => route.fulfill({ json: {
++    available_tenant_contexts: [tenantId, tenantB].map((id, index) => ({ tenant_id: id,
++      tenant_display_name: index ? "Empresa B simulada" : "Empresa A simulada",
++      tenant_membership_id: id, membership_state: "active", effective_role_codes: ["GRC_MANAGER"] })), effective_platform_role_codes: []
++  } }));
++  await page.route("**/api/v2/auth/me/authorization", route => {
++    const selected = route.request().headers()["x-tcdx-tenant-id"];
++    expect([undefined, tenantId, tenantB]).toContain(selected);
++    requests.push(selected ?? "none");
++    return route.fulfill({ json: { evaluated_at: new Date().toISOString(), platform_permissions: [],
++      tenant_permissions: selected ? { tenant_id: selected, default_timezone: selected === tenantB ? "Asia/Tokyo" : "Europe/Berlin", permissions: {} } : null } });
++  });
++  // Existing generic fixture is completed; this temporal edit case requires an in-progress test.
++  await page.route("**/api/v1/assurance-tests**", route => route.fulfill({ json:
++    new URL(route.request().url()).pathname === "/api/v1/assurance-tests"
++      ? { items: [{ assurance_test_id: tenantId, row_version: 2, test_code: "ZONE-SWITCH-SIMULATED", lifecycle_state: "in_progress" }], page: { has_more: false, next_cursor: null } }
++      : { assurance_test_id: tenantId, row_version: 2, test_code: "ZONE-SWITCH-SIMULATED", lifecycle_state: "in_progress" }
++  }));
++  await page.goto("/pruebas");
++  const selector = page.getByLabel("Empresa activa", { exact: true });
++  await selector.selectOption(tenantId);
++  await page.getByRole("button", { name: "Ver detalle" }).click();
++  await page.getByRole("button", { name: "Agregar elemento" }).click();
++  await expect(page.getByText(/Europe\/Berlin/).first()).toBeVisible();
++  await page.keyboard.press("Escape");
++  if (await selector.isVisible()) await selector.selectOption(tenantB);
++  else {
++    // The current narrow shell hides this picker. Test context invalidation programmatically;
++    // this does not certify that manual narrow-screen context switching is available.
++    await expect(selector).toBeHidden();
++    await selector.selectOption(tenantB, { force: true });
++  }
++  await expect.poll(() => requests.at(-1)).toBe(tenantB);
++  await page.getByRole("button", { name: "Ver detalle" }).click();
++  await page.getByRole("button", { name: "Agregar elemento" }).click();
++  await expect(page.getByText(/Asia\/Tokyo/).first()).toBeVisible();
++  await expect(page.getByText(/Europe\/Berlin/)).toHaveCount(0);
+ });
+ 
+ test("Control base selector resolves an authorized ControlVersion without a human UUID field", async ({ page }) => {

@@ -31,16 +31,16 @@ const rows: Record<string, Record<string, unknown>[]> = {
 async function mockRuntime(page: Page, roles: string[] = ["GRC_MANAGER"], platformRoles: string[] = []): Promise<void> {
   const assignedRoles: Record<string, unknown>[] = [];
   await page.addInitScript(() => { sessionStorage.setItem("tcdx.access_token", "contractual-test-token"); });
-  await page.route("**/api/v1/**", async (route: Route) => {
+  await page.route(url => url.pathname.startsWith("/api/v1/") || url.pathname === "/api/v2/auth/me/authorization", async (route: Route) => {
     const url = new URL(route.request().url());
     if (url.pathname.endsWith("/access/me")) {
       expect(route.request().headers()["x-tcdx-tenant-id"]).toBeUndefined();
       await route.fulfill({ json: { available_tenant_contexts: [{ tenant_id: tenantId, tenant_display_name: "Tenant no normativo", tenant_membership_id: tenantId, membership_state: "active", effective_role_codes: roles }], effective_platform_role_codes: platformRoles } });
       return;
     }
-    if (url.pathname.endsWith("/auth/me/authorization")) {
+    if (url.pathname === "/api/v2/auth/me/authorization") {
       await route.fulfill({ json: { evaluated_at: new Date().toISOString(), platform_permissions: platformRoles.includes("PLATFORM_ADMIN") ? ["platform.tenant.read", "platform.tenant.create", "platform.user_identity.read", "platform.membership.read", "platform.membership_invitation.read", "platform.membership_invitation.create", "platform.membership_invitation.update", "platform.role.read", "platform.role.assign"] : [],
-        tenant_permissions: { tenant_id: tenantId, permissions: roles.includes("TENANT_ADMIN") ? Object.fromEntries(["platform.membership.read", "platform.membership.create", "platform.role.read", "platform.role.assign", "platform.user_identity.read"].map(code => [code, [{scope_kind:"tenant"}]])) : {} } } });
+        tenant_permissions: { tenant_id: tenantId, default_timezone: "Europe/Berlin", permissions: roles.includes("TENANT_ADMIN") ? Object.fromEntries(["platform.membership.read", "platform.membership.create", "platform.role.read", "platform.role.assign", "platform.user_identity.read"].map(code => [code, [{scope_kind:"tenant"}]])) : {} } } });
       return;
     }
     if (route.request().method() === "POST") {
@@ -136,6 +136,80 @@ async function mockRuntime(page: Page, roles: string[] = ["GRC_MANAGER"], platfo
 const evidenceDirectory = process.env.TCDX_UI_EVIDENCE_DIR ?? "artifacts/phase5-iam-ui/local-playwright";
 
 test.beforeAll(async () => { await mkdir(evidenceDirectory, { recursive: true }); });
+test.beforeEach(({page})=>{page.on("pageerror",error=>console.error("BROWSER_ERROR",error.message));});
+
+test("D3 IANA rejects a DST gap and serializes an explicit overlapping instant in UTC", async ({ page }) => {
+  await mockRuntime(page);
+  const item = { assurance_test_id: tenantId, row_version: 2, test_code: "IANA-LOCAL-SIMULATED", lifecycle_state: "in_progress" };
+  let body: Record<string, unknown> | undefined;
+  await page.route("**/api/v1/assurance-tests**", async route => {
+    if (route.request().method() === "POST") {
+      body = route.request().postDataJSON();
+      await route.fulfill({ status: 202, json: { operation_id: "assuranceTestExecute", status: "completed", result: {} } });
+    } else await route.fulfill({ json: new URL(route.request().url()).pathname === "/api/v1/assurance-tests" ? { items: [item], page: { has_more: false, next_cursor: null } } : item });
+  });
+  await page.goto("/pruebas");
+  await page.getByRole("button", { name: "Ver detalle" }).click();
+  await page.getByRole("button", { name: "Agregar elemento" }).click();
+  const period = page.getByLabel(/^Inicio del período de muestra/);
+  await expect(period).toBeVisible();
+  await period.fill("2026-03-29T02:30:00+01:00");
+  await expect(period).toHaveAttribute("aria-invalid", "true");
+  await period.fill("2026-10-25T02:30:00+02:00");
+  await expect(period).not.toHaveAttribute("aria-invalid", "true");
+  await expect(page.getByText(/Europe\/Berlin/).first()).toBeVisible();
+  await page.getByLabel("Código de muestra", { exact: true }).fill("SIMULATED-SHAPE");
+  await page.getByLabel("Tamaño de la muestra", { exact: true }).fill("1");
+  await page.getByLabel("Método de selección", { exact: true }).selectOption({ index: 1 });
+  for (const select of await page.locator('.workflow-action > label select').all()) await select.selectOption({ index: 1 });
+  await page.screenshot({ path: `${evidenceDirectory}/r6-iana-${test.info().project.name}.png`, fullPage: true });
+  await page.getByRole("button", { name: "Ejecutar", exact: true }).click();
+  await expect.poll(() => body).toBeDefined();
+  expect((body!.samples as Array<Record<string, unknown>>)[0]!.sample_period_start).toBe("2026-10-25T00:30:00Z");
+});
+
+test("D3 IANA changes tenant context without retaining the prior zone", async ({ page }) => {
+  await mockRuntime(page);
+  const tenantB = "018f47f2-6170-7bd0-9d43-12f644a2b121";
+  const requests: string[] = [];
+  await page.route("**/api/v1/access/me", route => route.fulfill({ json: {
+    available_tenant_contexts: [tenantId, tenantB].map((id, index) => ({ tenant_id: id,
+      tenant_display_name: index ? "Empresa B simulada" : "Empresa A simulada",
+      tenant_membership_id: id, membership_state: "active", effective_role_codes: ["GRC_MANAGER"] })), effective_platform_role_codes: []
+  } }));
+  await page.route("**/api/v2/auth/me/authorization", route => {
+    const selected = route.request().headers()["x-tcdx-tenant-id"];
+    expect([undefined, tenantId, tenantB]).toContain(selected);
+    requests.push(selected ?? "none");
+    return route.fulfill({ json: { evaluated_at: new Date().toISOString(), platform_permissions: [],
+      tenant_permissions: selected ? { tenant_id: selected, default_timezone: selected === tenantB ? "Asia/Tokyo" : "Europe/Berlin", permissions: {} } : null } });
+  });
+  // Existing generic fixture is completed; this temporal edit case requires an in-progress test.
+  await page.route("**/api/v1/assurance-tests**", route => route.fulfill({ json:
+    new URL(route.request().url()).pathname === "/api/v1/assurance-tests"
+      ? { items: [{ assurance_test_id: tenantId, row_version: 2, test_code: "ZONE-SWITCH-SIMULATED", lifecycle_state: "in_progress" }], page: { has_more: false, next_cursor: null } }
+      : { assurance_test_id: tenantId, row_version: 2, test_code: "ZONE-SWITCH-SIMULATED", lifecycle_state: "in_progress" }
+  }));
+  await page.goto("/pruebas");
+  const selector = page.getByLabel("Empresa activa", { exact: true });
+  await selector.selectOption(tenantId);
+  await page.getByRole("button", { name: "Ver detalle" }).click();
+  await page.getByRole("button", { name: "Agregar elemento" }).click();
+  await expect(page.getByText(/Europe\/Berlin/).first()).toBeVisible();
+  await page.keyboard.press("Escape");
+  if (await selector.isVisible()) await selector.selectOption(tenantB);
+  else {
+    // The current narrow shell hides this picker. Test context invalidation programmatically;
+    // this does not certify that manual narrow-screen context switching is available.
+    await expect(selector).toBeHidden();
+    await selector.selectOption(tenantB, { force: true });
+  }
+  await expect.poll(() => requests.at(-1)).toBe(tenantB);
+  await page.getByRole("button", { name: "Ver detalle" }).click();
+  await page.getByRole("button", { name: "Agregar elemento" }).click();
+  await expect(page.getByText(/Asia\/Tokyo/).first()).toBeVisible();
+  await expect(page.getByText(/Europe\/Berlin/)).toHaveCount(0);
+});
 
 test("Control base selector resolves an authorized ControlVersion without a human UUID field", async ({ page }) => {
   await mockRuntime(page);
@@ -154,9 +228,9 @@ test("Control base selector resolves an authorized ControlVersion without a huma
   await expect(page.getByRole("option", { name: /BASE-001.*Marco autorizado/ })).toBeAttached();
   await page.getByLabel("Control base autorizado").selectOption(tenantId);
   await expect(page.getByRole("dialog")).toBeVisible();
-  await expect(page.getByLabel("Responsable de negocio")).toBeVisible();
+  await expect(page.getByLabel("Responsable de negocio", { exact: true })).toBeVisible();
   await expect(page.getByLabel("ID del responsable de negocio")).toHaveCount(0);
-  await expect(page.getByRole("option", { name: /Operaciones.*process.*operaciones/ })).toBeAttached();
+  await expect(page.getByRole("option", { name: /Operaciones.*Proceso/ })).toBeAttached();
 });
 
 test("Control catalog filters by an effective contracted framework", async ({ page }) => {
@@ -183,7 +257,7 @@ test("Applicability offers only the approved decisions and requires a No aplica 
   const decision = page.getByLabel("Decisión de aplicabilidad");
   await expect(decision.locator("option")).toHaveCount(3);
   await expect(decision.locator('option[value="applicable"]')).toHaveText("Aplicable");
-  await expect(decision.locator('option[value="not_applicable"]')).toHaveText("No aplica");
+  await expect(decision.locator('option[value="not_applicable"]')).toHaveText("No aplicable");
   await decision.selectOption("not_applicable");
   await page.getByRole("button", { name: "Crear registro" }).click();
   await expect(page.getByRole("alert")).toContainText("justificación");
@@ -458,6 +532,8 @@ test("Tenant Admin creates a canonical Subject in company settings", async ({ pa
 
 test("QA validation content displays its condition and keeps filters tenant-scoped", async ({ page }, testInfo) => {
   await mockRuntime(page, ["TENANT_ADMIN", "CONTROL_OWNER"]);
+  const controlQueries: URL[] = [];
+  page.on("request", request => { const url = new URL(request.url()); if (url.pathname === "/api/v1/controls") controlQueries.push(url); });
   await page.route("**/api/v1/regulatory-pack-validation-accesses/current", (route) => route.fulfill({ json: {
     items: [{ regulatory_pack_validation_access_id: memberId, regulatory_pack_version_id: roleId,
       pack_code: "ISO-QA", name: "Marco ISO de validación", edition: "2022", license_classification: "NOT_YET_LICENSED",
@@ -479,8 +555,23 @@ test("QA validation content displays its condition and keeps filters tenant-scop
   await page.goto("/controles");
   await expect(page.getByText("QA-C-001")).toBeVisible();
   await expect(page.getByText(/Contenido provisional\/no autoritativo para validación/)).toBeVisible();
-  await expect(page.getByLabel("Filtrar por aplicabilidad")).toBeVisible();
-  await expect(page.getByLabel("Filtrar por implementación")).toBeVisible();
+  await expect(page.getByLabel("Filtrar por aplicabilidad")).toHaveCount(0);
+  await expect(page.getByLabel("Filtrar por implementación")).toHaveCount(0);
+  await expect(page.getByRole("columnheader", { name: "Aplicabilidad", exact: true })).toBeVisible();
+  await expect(page.getByRole("columnheader", { name: "Implementación", exact: true })).toBeVisible();
+  const status = page.getByLabel("Filtrar por estado", { exact: true });
+  await expect(status).toBeDisabled();
+  await expect(status.locator("option")).toHaveCount(1);
+  await expect(page.getByText("El filtro por estado no está disponible: el catálogo completo de estados de controles aún no está publicado.", { exact: true })).toBeVisible();
+  await page.getByLabel("Buscar controles por nombre, código o referencia normativa").fill("Control");
+  await page.getByRole("button", { name: "Buscar", exact: true }).click();
+  await expect(page.getByText("QA-C-001")).toBeVisible();
+  await expect.poll(() => controlQueries.some(url => url.searchParams.get("filter[query]") === "Control")).toBe(true);
+  for (const url of controlQueries) {
+    expect(url.searchParams.has("filter[applicability]")).toBe(false);
+    expect(url.searchParams.has("filter[implementation]")).toBe(false);
+    expect(url.searchParams.has("filter[lifecycle_state]")).toBe(false);
+  }
   await page.screenshot({ path: `${evidenceDirectory}/validation-catalog-${testInfo.project.name}.png`, fullPage: true });
 });
 
@@ -536,7 +627,7 @@ test("Platform companies and tenant users expose the canonical administrative fl
   await expect(page.getByRole("heading", { name: "Empresas" })).toBeVisible();
   await expect(page.getByText("TecDex SpA")).toBeVisible();
   await expect(page.getByText("GRC · v1")).toBeVisible();
-  await expect(page.locator(".user-role-summary")).toContainText("Administrador de Platform · Administrador del tenant · Responsable de evidencia · Responsable de control");
+  await expect(page.locator(".user-role-summary")).toContainText("Administrador de la plataforma · Administrador de la empresa · Responsable de evidencia · Responsable de control");
   await page.getByRole("button", { name: "Ver detalle" }).click();
   await expect(page.getByRole("dialog")).toContainText("TecDex SpA");
   await expect(page.getByRole("dialog")).toContainText("Marcos contratados");
@@ -613,7 +704,7 @@ test("dashboard visual contract, drill-down and accessibility", async ({ page },
   await expect.poll(() => page.locator(".brand img").evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
   await expect(page.getByRole("heading", { name: /Hola/ })).toBeVisible();
   await expect(page.locator(".kpi-card")).toHaveCount(4);
-  await expect(page.getByText("Registros visibles del tenant")).toBeVisible();
+  await expect(page.getByText("Registros visibles de la empresa")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Estado de requisitos" })).toBeVisible();
   await expect(page.getByText("Sobre registros visibles · 2").first()).toBeVisible();
   await expect(page.getByText("Válido", { exact: true })).toBeVisible();
@@ -689,9 +780,9 @@ for (const result of ["valid", "no_data"] as const) {
     });
     await page.goto("/evaluaciones-control");
     await page.getByRole("button", { name: "Ver detalle" }).click();
-    await page.getByLabel("Estado del resultado", { exact: true }).fill(result);
+    await page.getByLabel("Estado del resultado", { exact: true }).selectOption(result);
     if (result === "valid") {
-      await page.getByLabel("Conclusión", { exact: true }).fill("effective");
+      await page.getByLabel("Conclusión", { exact: true }).selectOption("effective");
       await page.getByLabel("Efectividad de diseño", { exact: true }).fill("90");
       await page.getByLabel("Efectividad operativa", { exact: true }).fill("80");
       await page.getByLabel("Cobertura (%)", { exact: true }).fill("100");
@@ -723,12 +814,16 @@ test("Evidence request keeps backend denial and refetches successful fulfillment
       }
       return;
     }
-    const row = { evidence_request_id: tenantId, request_code: "QA-REQUEST", row_version: state === "open" ? 1 : 2, lifecycle_state: state };
+    const row = { evidence_request_id: tenantId, control_id:roleId, request_code: "QA-REQUEST", row_version: state === "open" ? 1 : 2, lifecycle_state: state };
     await route.fulfill({ json: new URL(route.request().url()).pathname.endsWith(tenantId) ? row : { items: [row], page: { has_more: false, next_cursor: null } } });
   });
+  await page.route("**/api/v1/evidence/**",route=>route.fulfill({json:{evidence_id:tenantId,evidence_code:"Evidencia aprobada",versions:[{evidence_version_id:memberId,version_number:1,lifecycle_state:"approved",file_object_id:roleId}]}}));
+  await page.route("**/api/v1/file-objects/**",route=>route.fulfill({json:{file_object_id:roleId,scan_status:"passed"}}));
+  await page.route("**/api/v1/evidence-versions/**",route=>route.fulfill({json:{evidence_version_id:memberId,evidence_id:tenantId,version_number:1,lifecycle_state:"approved",links:[{control_id:roleId}]}}));
   await page.goto("/solicitudes-evidencia");
   await page.getByRole("button", { name: "Ver detalle" }).click();
-  await page.getByLabel("ID de versión de evidencia", { exact: true }).fill(memberId);
+  await page.getByLabel("Evidencia",{exact:true}).selectOption(tenantId);
+  await page.getByLabel("Versión de evidencia aprobada",{exact:true}).selectOption(memberId);
   await page.getByRole("dialog").getByRole("button", { name: "Cumplir solicitud", exact: true }).click();
   await expect(page.getByRole("dialog").getByRole("alert")).toBeVisible();
   await expect(page.getByRole("dialog")).toBeVisible();
@@ -750,6 +845,7 @@ for (const [module, domain, entityField] of [["requisitos", "compliance", "requi
       expect(route.request().headers()["x-tcdx-tenant-id"]).toBe(tenantId);
       submitted = true; await route.fulfill({ status: 201, json: { operation_id: "assessmentCreate", status: "completed", result: {} } });
     });
+    if(domain==="controls") await page.route("**/api/v1/controls/**",route=>route.fulfill({json:{control_id:tenantId,ownership_class:"TENANT_OWNED",name:"Control local",versions:[{control_version_id:memberId,version_number:1,lifecycle_state:"published"}]}}));
     await page.goto(`/${module}`);
     await page.getByRole("button", { name: "Nuevo registro", exact: true }).click();
     const dialog = page.getByRole("dialog");
@@ -757,8 +853,8 @@ for (const [module, domain, entityField] of [["requisitos", "compliance", "requi
     await expect(selector).toHaveValue("");
     await expect(selector.getByRole("option", { name: "Metodología publicada QA · v2" })).toHaveCount(1);
     await selector.selectOption(roleId);
-    await dialog.getByLabel(domain === "compliance" ? "ID de aplicabilidad" : "ID de control", { exact: true }).fill(tenantId);
-    if (domain === "controls") await dialog.getByLabel("ID de versión del control", { exact: true }).fill(memberId);
+    await dialog.getByLabel(domain === "compliance" ? "ID de aplicabilidad" : "ID de control", { exact: true }).selectOption(tenantId);
+    if (domain === "controls") await dialog.getByLabel("Versión de control", { exact: true }).selectOption(memberId);
     await dialog.getByRole("button", { name: "Crear registro", exact: true }).click();
     await expect.poll(() => submitted).toBe(true);
   });
@@ -767,8 +863,109 @@ for (const [module, domain, entityField] of [["requisitos", "compliance", "requi
     await page.route(`**/api/v1/${domain}-methodologies**`, route => route.fulfill({ status: 403, json: { code: "TCDX.AUTHORIZATION.DENIED" } }));
     await page.goto(`/${module}`); await page.getByRole("button", { name: "Nuevo registro", exact: true }).click();
     const dialog = page.getByRole("dialog");
-    await expect(dialog.getByRole("alert")).toContainText("No fue posible cargar metodologías autorizadas.");
+    await expect(dialog.getByRole("alert")).toContainText("No tienes acceso a estas opciones en la empresa seleccionada.");
     await expect(dialog.getByLabel("Referencia metodológica", { exact: true })).toBeDisabled();
     await expect(dialog.locator('input[aria-label="Referencia metodológica"]')).toHaveCount(0);
   });
 }
+
+test("Phase6A Subject picker pages authorized records, searches and invalidates stale selection", async ({ page }, info) => {
+  await mockRuntime(page);
+  await page.route("**/api/v1/subjects?**", async route => {
+    const url = new URL(route.request().url());
+    expect(route.request().headers()["x-tcdx-tenant-id"]).toBe(tenantId);
+    if (url.searchParams.get("filter[query]")) { await route.fulfill({ json: { items: [], page: { has_more: false, next_cursor: null } } }); return; }
+    const more = !!url.searchParams.get("page[cursor]");
+    await route.fulfill({ json: { items: [{ subject_id: more ? memberId : roleId, display_name: more ? "Responsable adicional" : "Responsable inicial", subject_type: "process", canonical_key: more ? "responsable-adicional" : "responsable-inicial" }], page: { has_more: !more, next_cursor: more ? null : "opaque-subject-cursor" } } });
+  });
+  await page.goto("/controles"); await page.getByRole("button", { name: "Nuevo registro", exact: true }).click();
+  const dialog = page.getByRole("dialog"); const owner = dialog.getByLabel("Responsable de negocio", { exact: true });
+  await expect(owner.getByRole("option", { name: /Responsable inicial/ })).toHaveCount(1);
+  await dialog.getByRole("button", { name: "Cargar más opciones", exact: true }).click();
+  await expect(owner.getByRole("option", { name: /Responsable adicional/ })).toHaveCount(1); await owner.selectOption(memberId);
+  await expect(owner).toHaveValue(memberId);
+  await dialog.getByLabel("Buscar Responsable de negocio", { exact: true }).fill("inexistente");
+  await dialog.getByLabel("Buscar Responsable de negocio", { exact: true }).locator("..").locator("..").getByRole("button", { name: "Buscar", exact: true }).click();
+  await expect(owner).toHaveValue(""); await expect(owner.locator("..").getByText("No hay registros disponibles en este contexto.", { exact: true })).toBeVisible();
+  await expect(dialog.locator("form form")).toHaveCount(0);
+  expect(await dialog.locator(".drawer-body").evaluate(element => element.scrollWidth <= element.clientWidth + 1)).toBe(true);
+  await dialog.screenshot({ path: `${evidenceDirectory}/phase6a3-selector-${info.project.name}.png` });
+});
+
+test("Phase6A control versions require an explicit choice and retain native keyboard labels", async ({ page }) => {
+  await mockRuntime(page);
+  await page.route("**/api/v1/controls**", route => {
+    const detail = new URL(route.request().url()).pathname.endsWith(tenantId);
+    return route.fulfill({ json: detail ? { control_id: tenantId, ownership_class: "GLOBAL_REFERENCE", control_code: "BASE-001", name: "Base", versions: [{ control_version_id: memberId, version_number: 2 }, { control_version_id: roleId, version_number: 1 }] } : { items: [{ control_id: tenantId, ownership_class: "GLOBAL_REFERENCE", control_code: "BASE-001", name: "Base" }], page: { has_more: false, next_cursor: null } } });
+  });
+  await page.goto("/controles"); await page.getByRole("button", { name: "Nuevo registro", exact: true }).click();
+  const dialog = page.getByRole("dialog"); await dialog.getByLabel("Control base autorizado", { exact: true }).selectOption(tenantId);
+  const version = dialog.getByLabel("Versión de control", { exact: true });
+  await expect(version.getByRole("option")).toHaveCount(3); await expect(version).toHaveValue("");
+  await version.focus(); await expect(version).toBeFocused(); await version.press("Tab"); await expect(dialog.getByLabel("Código de control", { exact: true })).toBeFocused(); await version.selectOption(memberId);
+  await expect(version).not.toHaveValue("");
+  await dialog.getByLabel("Control base autorizado", { exact: true }).selectOption(""); await expect(version).toHaveValue(""); await expect(version).toBeDisabled();
+  expect((await dialog.innerText()).includes(tenantId)).toBe(false);
+});
+
+test("Phase6A selector failures retry without exposing technical error content", async ({ page }) => {
+  await mockRuntime(page); let attempts = 0;
+  await page.route("**/api/v1/subjects?**", route => { attempts++; return attempts === 1 ? route.fulfill({ status: 503, json: { code: "TCDX.SERVICE.UNAVAILABLE", message: "SQL secret internal_table", retryable: true } }) : route.fulfill({ json: { items: [{ subject_id: memberId, display_name: "Responsable autorizado", subject_type: "process", canonical_key: "responsable" }], page: { has_more: false, next_cursor: null } } }); });
+  await page.goto("/controles"); await page.getByRole("button", { name: "Nuevo registro", exact: true }).click(); const dialog = page.getByRole("dialog");
+  await expect(dialog.getByRole("alert")).toContainText("No pudimos cargar las opciones"); await expect(dialog).not.toContainText("internal_table");
+  await dialog.getByRole("button", { name: "Reintentar", exact: true }).click(); await expect(dialog.getByLabel("Responsable de negocio", { exact: true }).getByRole("option", { name: /Responsable autorizado/ })).toHaveCount(1);
+});
+
+test("Phase6A permission revocation during pagination removes cached choices and selection", async ({ page }) => {
+  await mockRuntime(page);
+  await page.route("**/api/v1/subjects?**", route => {
+    const more = new URL(route.request().url()).searchParams.has("page[cursor]");
+    return more ? route.fulfill({ status: 403, json: { code: "TCDX.AUTHORIZATION.DENIED", message: "private tenant SQL" } }) : route.fulfill({ json: { items: [{ subject_id: memberId, display_name: "Responsable revocado", subject_type: "process", canonical_key: "revocado" }], page: { has_more: true, next_cursor: "restricted-next" } } });
+  });
+  await page.goto("/controles"); await page.getByRole("button", { name: "Nuevo registro", exact: true }).click();
+  const dialog = page.getByRole("dialog"); const owner = dialog.getByLabel("Responsable de negocio", { exact: true });
+  await owner.selectOption(memberId); await expect(owner).toHaveValue(memberId);
+  await dialog.getByRole("button", { name: "Cargar más opciones", exact: true }).click();
+  await expect(owner).toBeDisabled(); await expect(owner).toHaveValue("");
+  await expect(owner.getByRole("option", { name: /Responsable revocado/ })).toHaveCount(0);
+  await expect(dialog.getByRole("alert")).toContainText("No tienes acceso"); await expect(dialog).not.toContainText("private tenant SQL");
+});
+
+test("Phase6A selectors fail closed in Spanish when an operational translation is unavailable", async ({ page }) => {
+  await mockRuntime(page);
+  await page.route("**/api/v1/subjects?**", route => route.fulfill({ json: {
+    items: [{ subject_id: memberId, display_name: "Objeto autorizado", subject_type: "untranslated_extension" }],
+    page: { has_more: false, next_cursor: null }
+  } }));
+  await page.goto("/controles"); await page.getByRole("button", { name: "Nuevo registro", exact: true }).click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog.getByText("No hay una traducción disponible para estas opciones. La selección no está habilitada.", { exact: true })).toBeVisible();
+  await expect(dialog.getByLabel("Responsable de negocio", { exact: true })).toBeDisabled();
+  await expect(dialog).not.toContainText("untranslated_extension");
+  await expect(dialog).not.toContainText(memberId);
+});
+
+test("Macro R1 framework and SoA items use authorized business selectors without UUID/JSON input",async({page},info)=>{
+ await mockRuntime(page);
+ await page.route("**/api/v1/framework-version-references?**",route=>{const u=new URL(route.request().url());expect(u.searchParams.get('purpose')).toBe('select');return route.fulfill({json:{items:[{framework_version_id:roleId,framework_code:'NORMA',framework_name:'Marco autorizado',edition:'v1',version_number:1,lifecycle_state:'published',selectable:true}],page:{has_more:false,next_cursor:null}}});});
+ await page.goto('/soa');await page.getByRole('button',{name:'Nuevo registro',exact:true}).click();const dialog=page.getByRole('dialog');
+ await dialog.getByLabel('Versión normativa',{exact:true}).selectOption(roleId);await dialog.getByRole('button',{name:'Agregar elemento',exact:true}).click();
+ await expect(dialog.getByLabel('Estado de implementación',{exact:true})).toBeVisible();
+ await expect(dialog.getByLabel('Estado de implementación',{exact:true}).getByRole('option',{name:'Implementado',exact:true})).toHaveCount(1);
+ await expect(dialog.locator('textarea[placeholder*="JSON"],input[value="'+roleId+'"]')).toHaveCount(0);
+ await expect(dialog).not.toContainText(roleId);await dialog.screenshot({path:`/tmp/tcdx-step6a3-macro-soa-${info.project.name}.png`});
+});
+test("Macro R1 responsible selection binds purpose and selected Issue; vocabulary labels are Spanish",async({page},info)=>{
+ await mockRuntime(page);let read=false;
+ await page.route('**/api/v1/membership-references?**',route=>{const u=new URL(route.request().url());expect(u.searchParams.get('purpose')).toBe('action-assignment');expect(u.searchParams.get('issue_id')).toBe(tenantId);read=true;return route.fulfill({json:{items:[{tenant_membership_id:memberId,display_name:'Responsable autorizado',joined_at:'2026-10-09T00:00:00Z',selectable:true}],page:{has_more:false,next_cursor:null}}});});
+ await page.goto('/acciones');await page.getByRole('tab',{name:'Acciones',exact:true}).click();await page.getByRole('button',{name:'Nuevo registro',exact:true}).click();const dialog=page.getByRole('dialog');
+ await expect(dialog.getByLabel('Responsable',{exact:true})).toBeDisabled();await dialog.getByLabel('Hallazgo',{exact:true}).selectOption(tenantId);await dialog.getByLabel('Responsable',{exact:true}).selectOption(memberId);
+ await expect.poll(()=>read).toBe(true);await dialog.getByLabel('Prioridad',{exact:true}).selectOption('normal');await expect(dialog.getByLabel('Prioridad',{exact:true}).getByRole('option',{name:'Normal',exact:true})).toHaveCount(1);
+ await expect(dialog).not.toContainText(memberId);await dialog.screenshot({path:`/tmp/tcdx-step6a3-macro-responsable-${info.project.name}.png`});
+});
+test("Macro R1 retention remains explicitly pending on missing legal binding; no fabricated option",async({page},info)=>{
+ await mockRuntime(page,['EVIDENCE_OWNER']);await page.route('**/api/v1/retention-policy-references?**',route=>route.fulfill({status:422,json:{code:'TCDX.INVARIANT.VIOLATION',message:'Policy is not eligible',correlation_id:tenantId,retryable:false}}));
+ await page.goto('/evidencias');await page.getByRole('tab',{name:'Evidencias',exact:true}).click();await page.getByRole('button',{name:'Nuevo registro',exact:true}).click();const dialog=page.getByRole('dialog');
+ await expect(dialog.getByText('La política está pendiente de aplicabilidad jurídica.',{exact:false})).toBeVisible();await expect(dialog.getByLabel('Política de retención',{exact:true}).locator('option')).toHaveCount(1);
+ await expect(dialog.locator('input[aria-label="ID de política de retención"]')).toHaveCount(0);await dialog.screenshot({path:`/tmp/tcdx-step6a3-macro-retencion-${info.project.name}.png`});
+});

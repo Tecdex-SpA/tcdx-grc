@@ -1,0 +1,871 @@
+{
+  "original_report_sha256": "ee0ec905019bcbdfc3ab81bc216b1ac99c0d9830b26e387649f689aae135c8a4",
+  "root_cause": "Exact v2 self-read not matched by five v1-only browser interceptors; presentation authorization consequently unavailable. No production change to satisfy fixtures. Common cause observed statically; smoke/full validate repair, original failures retained.",
+  "groups": [
+    {
+      "suite": "branding.spec.ts",
+      "count": 3,
+      "cases": [
+        {
+          "title": "dashboard branding uses the same logo with responsive navigation",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.sidebar-footer strong')\nExpected: \u001b[32m\"Tecdex GRC\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" locator('.sidebar-footer strong') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.sidebar-footer strong')\u001b[22m\n\n\n  54 |   });\n  55 |   await page.goto(\"/dashboard\");\n> 56 |   await expect(page.locator(\".sidebar-footer strong\")).toHaveText(\"Tecdex GRC\");\n     |                                                        ^\n  57 |   await healthyLogo(page);\n  58 |   const menu = page.getByRole(\"button\", { name: \"Abrir navegaci\u00f3n\" });\n  59 |   if (await menu.isVisible()) {\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/branding.spec.ts:56:56"
+          ]
+        },
+        {
+          "title": "dashboard branding uses the same logo with responsive navigation",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.sidebar-footer strong')\nExpected: \u001b[32m\"Tecdex GRC\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" locator('.sidebar-footer strong') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.sidebar-footer strong')\u001b[22m\n\n\n  54 |   });\n  55 |   await page.goto(\"/dashboard\");\n> 56 |   await expect(page.locator(\".sidebar-footer strong\")).toHaveText(\"Tecdex GRC\");\n     |                                                        ^\n  57 |   await healthyLogo(page);\n  58 |   const menu = page.getByRole(\"button\", { name: \"Abrir navegaci\u00f3n\" });\n  59 |   if (await menu.isVisible()) {\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/branding.spec.ts:56:56"
+          ]
+        },
+        {
+          "title": "dashboard branding uses the same logo with responsive navigation",
+          "project": "chromium-tablet",
+          "status": "FAIL",
+          "original_errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.sidebar-footer strong')\nExpected: \u001b[32m\"Tecdex GRC\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" locator('.sidebar-footer strong') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.sidebar-footer strong')\u001b[22m\n\n\n  54 |   });\n  55 |   await page.goto(\"/dashboard\");\n> 56 |   await expect(page.locator(\".sidebar-footer strong\")).toHaveText(\"Tecdex GRC\");\n     |                                                        ^\n  57 |   await healthyLogo(page);\n  58 |   const menu = page.getByRole(\"button\", { name: \"Abrir navegaci\u00f3n\" });\n  59 |   if (await menu.isVisible()) {\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/branding.spec.ts:56:56"
+          ]
+        }
+      ]
+    },
+    {
+      "suite": "core-grc-ui.spec.ts",
+      "count": 23,
+      "cases": [
+        {
+          "title": "D3 IANA rejects a DST gap and serializes an explicit overlapping instant in UTC",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByLabel(/^Inicio del per\u00edodo de muestra/)\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByLabel(/^Inicio del per\u00edodo de muestra/) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByLabel(/^Inicio del per\u00edodo de muestra/)\u001b[22m\n\n\n  153 |   await page.getByRole(\"button\", { name: \"Agregar elemento\" }).click();\n  154 |   const period = page.getByLabel(/^Inicio del per\u00edodo de muestra/);\n> 155 |   await expect(period).toBeVisible();\n      |                        ^\n  156 |   await period.fill(\"2026-03-29T02:30:00+01:00\");\n  157 |   await expect(period).toHaveAttribute(\"aria-invalid\", \"true\");\n  158 |   await period.fill(\"2026-10-25T02:30:00+02:00\");\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:155:24"
+          ]
+        },
+        {
+          "title": "Tenant Admin sees own contracted frameworks without commercial commands",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'Marcos contratados' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('heading', { name: 'Marcos contratados' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'Marcos contratados' })\u001b[22m\n\n\n  224 |   await mockRuntime(page, [\"TENANT_ADMIN\"]);\n  225 |   await page.goto(\"/configuraciones/empresas\");\n> 226 |   await expect(page.getByRole(\"heading\", { name: \"Marcos contratados\" })).toBeVisible();\n      |                                                                           ^\n  227 |   await expect(page.getByText(\"Marco contractual A\")).toBeVisible();\n  228 |   await expect(page.getByRole(\"button\", { name: \"Activar marco\" })).toHaveCount(0);\n  229 |   await expect(page.getByRole(\"button\", { name: \"Revocar\" })).toHaveCount(0);\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:226:75"
+          ]
+        },
+        {
+          "title": "Tenant Admin reads validation access without platform actions",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.admin-section').filter({ has: getByRole('heading', { name: 'Accesos de validaci\u00f3n' }) })\nExpected substring: \u001b[32m\"Marco de validaci\u00f3n\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" locator('.admin-section').filter({ has: getByRole('heading', { name: 'Accesos de validaci\u00f3n' }) }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.admin-section').filter({ has: getByRole('heading', { name: 'Accesos de validaci\u00f3n' }) })\u001b[22m\n\n\n  244 |   await page.goto(\"/configuraciones/empresas\");\n  245 |   const validation = page.locator(\".admin-section\").filter({ has: page.getByRole(\"heading\", { name: \"Accesos de validaci\u00f3n\" }) });\n> 246 |   await expect(validation).toContainText(\"Marco de validaci\u00f3n\");\n      |                            ^\n  247 |   await expect(validation.getByRole(\"button\", { name: /Revocar|Conceder|Crear acceso/ })).toHaveCount(0);\n  248 |   await expect(validation.getByRole(\"columnheader\", { name: \"Acci\u00f3n\" })).toHaveCount(0);\n  249 |   expect(candidateCalls).toBe(0);\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:246:28"
+          ]
+        },
+        {
+          "title": "Platform Admin creates exact non-authoritative access from canonical candidates",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  297 |   });\n  298 |   await page.goto(\"/configuraciones/empresas\");\n> 299 |   await page.getByRole(\"button\", { name: \"Ver detalle\" }).click();\n      |                                                           ^\n  300 |   const validation = page.locator(\".admin-section\").filter({ has: page.getByRole(\"heading\", { name: \"Accesos de validaci\u00f3n\" }) });\n  301 |   await validation.getByRole(\"button\", { name: \"Conceder acceso de validaci\u00f3n\" }).click();\n  302 |   await expect(validation.getByLabel(\"Versi\u00f3n para validaci\u00f3n\")).toBeVisible();\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:299:59"
+          ]
+        },
+        {
+          "title": "Candidate empty and error states have no manual ID fallback",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  334 |     : route.fulfill({ json: { items: [], page: { has_more: false, next_cursor: null } } }));\n  335 |   await page.goto(\"/configuraciones/empresas\");\n> 336 |   await page.getByRole(\"button\", { name: \"Ver detalle\" }).click();\n      |                                                           ^\n  337 |   const validation = page.locator(\".admin-section\").filter({ has: page.getByRole(\"heading\", { name: \"Accesos de validaci\u00f3n\" }) });\n  338 |   await validation.getByRole(\"button\", { name: \"Conceder acceso de validaci\u00f3n\" }).click();\n  339 |   await expect(validation).toContainText(\"No hay versiones de validaci\u00f3n disponibles actualmente.\");\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:336:59"
+          ]
+        },
+        {
+          "title": "Validation CREATE 400 displays the canonical denial and preserves list authority",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  363 |       json: { code: \"TCDX.CONFLICT\", message: \"Internal detail\", correlation_id: memberId, retryable: false } }));\n  364 |     await page.goto(\"/configuraciones/empresas\");\n> 365 |     await page.getByRole(\"button\", { name: \"Ver detalle\" }).click();\n      |                                                             ^\n  366 |     const validation = page.locator(\".admin-section\").filter({ has: page.getByRole(\"heading\", { name: \"Accesos de validaci\u00f3n\" }) });\n  367 |     await validation.getByRole(\"button\", { name: \"Conceder acceso de validaci\u00f3n\" }).click();\n  368 |     await validation.getByLabel(\"Inicio solicitado del acceso\").fill(\"2026-10-01T09:00\");\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:365:61"
+          ]
+        },
+        {
+          "title": "Validation CREATE 401 displays the canonical denial and preserves list authority",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  363 |       json: { code: \"TCDX.CONFLICT\", message: \"Internal detail\", correlation_id: memberId, retryable: false } }));\n  364 |     await page.goto(\"/configuraciones/empresas\");\n> 365 |     await page.getByRole(\"button\", { name: \"Ver detalle\" }).click();\n      |                                                             ^\n  366 |     const validation = page.locator(\".admin-section\").filter({ has: page.getByRole(\"heading\", { name: \"Accesos de validaci\u00f3n\" }) });\n  367 |     await validation.getByRole(\"button\", { name: \"Conceder acceso de validaci\u00f3n\" }).click();\n  368 |     await validation.getByLabel(\"Inicio solicitado del acceso\").fill(\"2026-10-01T09:00\");\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:365:61"
+          ]
+        },
+        {
+          "title": "Validation CREATE 403 displays the canonical denial and preserves list authority",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  363 |       json: { code: \"TCDX.CONFLICT\", message: \"Internal detail\", correlation_id: memberId, retryable: false } }));\n  364 |     await page.goto(\"/configuraciones/empresas\");\n> 365 |     await page.getByRole(\"button\", { name: \"Ver detalle\" }).click();\n      |                                                             ^\n  366 |     const validation = page.locator(\".admin-section\").filter({ has: page.getByRole(\"heading\", { name: \"Accesos de validaci\u00f3n\" }) });\n  367 |     await validation.getByRole(\"button\", { name: \"Conceder acceso de validaci\u00f3n\" }).click();\n  368 |     await validation.getByLabel(\"Inicio solicitado del acceso\").fill(\"2026-10-01T09:00\");\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:365:61"
+          ]
+        },
+        {
+          "title": "Validation CREATE 404 displays the canonical denial and preserves list authority",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  363 |       json: { code: \"TCDX.CONFLICT\", message: \"Internal detail\", correlation_id: memberId, retryable: false } }));\n  364 |     await page.goto(\"/configuraciones/empresas\");\n> 365 |     await page.getByRole(\"button\", { name: \"Ver detalle\" }).click();\n      |                                                             ^\n  366 |     const validation = page.locator(\".admin-section\").filter({ has: page.getByRole(\"heading\", { name: \"Accesos de validaci\u00f3n\" }) });\n  367 |     await validation.getByRole(\"button\", { name: \"Conceder acceso de validaci\u00f3n\" }).click();\n  368 |     await validation.getByLabel(\"Inicio solicitado del acceso\").fill(\"2026-10-01T09:00\");\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:365:61"
+          ]
+        },
+        {
+          "title": "Validation CREATE 409 displays the canonical denial and preserves list authority",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  363 |       json: { code: \"TCDX.CONFLICT\", message: \"Internal detail\", correlation_id: memberId, retryable: false } }));\n  364 |     await page.goto(\"/configuraciones/empresas\");\n> 365 |     await page.getByRole(\"button\", { name: \"Ver detalle\" }).click();\n      |                                                             ^\n  366 |     const validation = page.locator(\".admin-section\").filter({ has: page.getByRole(\"heading\", { name: \"Accesos de validaci\u00f3n\" }) });\n  367 |     await validation.getByRole(\"button\", { name: \"Conceder acceso de validaci\u00f3n\" }).click();\n  368 |     await validation.getByLabel(\"Inicio solicitado del acceso\").fill(\"2026-10-01T09:00\");\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:365:61"
+          ]
+        },
+        {
+          "title": "Validation CREATE ignores a repeated click while the POST is pending",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  396 |   });\n  397 |   await page.goto(\"/configuraciones/empresas\");\n> 398 |   await page.getByRole(\"button\", { name: \"Ver detalle\" }).click();\n      |                                                           ^\n  399 |   const validation = page.locator(\".admin-section\").filter({ has: page.getByRole(\"heading\", { name: \"Accesos de validaci\u00f3n\" }) });\n  400 |   await validation.getByRole(\"button\", { name: \"Conceder acceso de validaci\u00f3n\" }).click();\n  401 |   await validation.getByLabel(\"Inicio solicitado del acceso\").fill(\"2026-10-01T09:00\");\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:398:59"
+          ]
+        },
+        {
+          "title": "Platform Admin revokes validation access with reason, CAS and a local refresh",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  434 |   });\n  435 |   await page.goto(\"/configuraciones/empresas\");\n> 436 |   await page.getByRole(\"button\", { name: \"Ver detalle\" }).click();\n      |                                                           ^\n  437 |   const validation = page.locator(\".admin-section\").filter({ has: page.getByRole(\"heading\", { name: \"Accesos de validaci\u00f3n\" }) });\n  438 |   await expect(validation).toContainText(\"Marco de validaci\u00f3n\");\n  439 |   await expect(validation.getByRole(\"button\", { name: \"Conceder acceso de validaci\u00f3n\" })).toBeVisible();\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:436:59"
+          ]
+        },
+        {
+          "title": "Platform Admin sees a validation access conflict without a false success",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  466 |   }));\n  467 |   await page.goto(\"/configuraciones/empresas\");\n> 468 |   await page.getByRole(\"button\", { name: \"Ver detalle\" }).click();\n      |                                                           ^\n  469 |   const validation = page.locator(\".admin-section\").filter({ has: page.getByRole(\"heading\", { name: \"Accesos de validaci\u00f3n\" }) });\n  470 |   await expect(validation.getByRole(\"button\", { name: \"Revocar acceso de validaci\u00f3n\" })).toBeVisible();\n  471 |   page.once(\"dialog\", (dialog) => dialog.accept(\"Revisi\u00f3n de acceso\"));\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:468:59"
+          ]
+        },
+        {
+          "title": "Tenant Admin creates a canonical Subject in company settings",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'Subjects de la empresa' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('heading', { name: 'Subjects de la empresa' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'Subjects de la empresa' })\u001b[22m\n\n\n  479 |   await mockRuntime(page, [\"TENANT_ADMIN\"]);\n  480 |   await page.goto(\"/configuraciones/empresas\");\n> 481 |   await expect(page.getByRole(\"heading\", { name: \"Subjects de la empresa\" })).toBeVisible();\n      |                                                                               ^\n  482 |   await page.getByLabel(\"Clave can\u00f3nica\").fill(\"qa-core-process\");\n  483 |   await page.getByLabel(\"Nombre\", { exact: true }).fill(\"Proceso QA\");\n  484 |   await page.getByRole(\"button\", { name: \"Crear Subject\" }).click();\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:481:79"
+          ]
+        },
+        {
+          "title": "QA validation content displays its condition and keeps filters tenant-scoped",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Marco ISO de validaci\u00f3n')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('Marco ISO de validaci\u00f3n') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Marco ISO de validaci\u00f3n')\u001b[22m\n\n\n  499 |   } }));\n  500 |   await page.goto(\"/configuraciones/empresas\");\n> 501 |   await expect(page.getByText(\"Marco ISO de validaci\u00f3n\")).toBeVisible();\n      |                                                           ^\n  502 |   await expect(page.getByText(\"Contenido provisional/no autoritativo para validaci\u00f3n.\")).toBeVisible();\n  503 |   await page.route(\"**/api/v1/controls**\", (route) => route.fulfill({ json: {\n  504 |     items: [{ control_id: tenantId, control_code: \"QA-C-001\", name: \"Control compartido\", ownership_class: \"GLOBAL_REFERENCE\",\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:501:59"
+          ]
+        },
+        {
+          "title": "platform admin can generate a Zoho invitation without automatic roles",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Usuarios' })\u001b[22m\n\n\n  567 |     await page.getByRole(\"button\", { name: \"Abrir navegaci\u00f3n\" }).click();\n  568 |   }\n> 569 |   await page.getByRole(\"button\", { name: \"Usuarios\" }).click();\n      |                                                        ^\n  570 |   await expect(page.getByRole(\"heading\", { name: \"Invitaci\u00f3n con identidad corporativa Zoho\" })).toBeVisible();\n  571 |   await page.getByRole(\"button\", { name: \"Invitar usuario\" }).click();\n  572 |   await page.getByLabel(\"Correo de invitaci\u00f3n\").fill(\"reviewer@example.test\");\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:569:56"
+          ]
+        },
+        {
+          "title": "Platform companies and tenant users expose the canonical administrative flow",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'Empresas' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('heading', { name: 'Empresas' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'Empresas' })\u001b[22m\n\n\n  582 |   await mockRuntime(page, [\"TENANT_ADMIN\", \"EVIDENCE_OWNER\", \"CONTROL_OWNER\"], [\"PLATFORM_ADMIN\"]);\n  583 |   await page.goto(\"/configuraciones/empresas\");\n> 584 |   await expect(page.getByRole(\"heading\", { name: \"Empresas\" })).toBeVisible();\n      |                                                                 ^\n  585 |   await expect(page.getByText(\"TecDex SpA\")).toBeVisible();\n  586 |   await expect(page.getByText(\"GRC \u00b7 v1\")).toBeVisible();\n  587 |   await expect(page.locator(\".user-role-summary\")).toContainText(\"Administrador de la plataforma \u00b7 Administrador de la empresa \u00b7 Responsable de evidencia \u00b7 Responsable de control\");\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:584:65"
+          ]
+        },
+        {
+          "title": "removing one tenant role requires human confirmation and preserves the other",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('row', { name: /Mario de prueba/ })\nExpected substring: \u001b[32m\"Responsable de control \u00b7 Responsable de evidencia\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('row', { name: /Mario de prueba/ }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('row', { name: /Mario de prueba/ })\u001b[22m\n\n\n  634 |   });\n  635 |   await page.goto(`/configuraciones/usuarios?tenant_id=${tenantId}`);\n> 636 |   await expect(page.getByRole(\"row\", { name: /Mario de prueba/ })).toContainText(\"Responsable de control \u00b7 Responsable de evidencia\");\n      |                                                                    ^\n  637 |   await expect(page.getByRole(\"row\", { name: /Mario de prueba/ })).not.toContainText(\"Revisor legal\");\n  638 |   await page.getByRole(\"button\", { name: \"Ver detalle\" }).click();\n  639 |   await expect(page.getByRole(\"dialog\")).toContainText(\"Responsable de control\");\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:636:68"
+          ]
+        },
+        {
+          "title": "D3 IANA rejects a DST gap and serializes an explicit overlapping instant in UTC",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByLabel(/^Inicio del per\u00edodo de muestra/)\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByLabel(/^Inicio del per\u00edodo de muestra/) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByLabel(/^Inicio del per\u00edodo de muestra/)\u001b[22m\n\n\n  153 |   await page.getByRole(\"button\", { name: \"Agregar elemento\" }).click();\n  154 |   const period = page.getByLabel(/^Inicio del per\u00edodo de muestra/);\n> 155 |   await expect(period).toBeVisible();\n      |                        ^\n  156 |   await period.fill(\"2026-03-29T02:30:00+01:00\");\n  157 |   await expect(period).toHaveAttribute(\"aria-invalid\", \"true\");\n  158 |   await period.fill(\"2026-10-25T02:30:00+02:00\");\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:155:24"
+          ]
+        },
+        {
+          "title": "Tenant Admin sees own contracted frameworks without commercial commands",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'Marcos contratados' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('heading', { name: 'Marcos contratados' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'Marcos contratados' })\u001b[22m\n\n\n  224 |   await mockRuntime(page, [\"TENANT_ADMIN\"]);\n  225 |   await page.goto(\"/configuraciones/empresas\");\n> 226 |   await expect(page.getByRole(\"heading\", { name: \"Marcos contratados\" })).toBeVisible();\n      |                                                                           ^\n  227 |   await expect(page.getByText(\"Marco contractual A\")).toBeVisible();\n  228 |   await expect(page.getByRole(\"button\", { name: \"Activar marco\" })).toHaveCount(0);\n  229 |   await expect(page.getByRole(\"button\", { name: \"Revocar\" })).toHaveCount(0);\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:226:75"
+          ]
+        },
+        {
+          "title": "Tenant Admin reads validation access without platform actions",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.admin-section').filter({ has: getByRole('heading', { name: 'Accesos de validaci\u00f3n' }) })\nExpected substring: \u001b[32m\"Marco de validaci\u00f3n\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" locator('.admin-section').filter({ has: getByRole('heading', { name: 'Accesos de validaci\u00f3n' }) }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.admin-section').filter({ has: getByRole('heading', { name: 'Accesos de validaci\u00f3n' }) })\u001b[22m\n\n\n  244 |   await page.goto(\"/configuraciones/empresas\");\n  245 |   const validation = page.locator(\".admin-section\").filter({ has: page.getByRole(\"heading\", { name: \"Accesos de validaci\u00f3n\" }) });\n> 246 |   await expect(validation).toContainText(\"Marco de validaci\u00f3n\");\n      |                            ^\n  247 |   await expect(validation.getByRole(\"button\", { name: /Revocar|Conceder|Crear acceso/ })).toHaveCount(0);\n  248 |   await expect(validation.getByRole(\"columnheader\", { name: \"Acci\u00f3n\" })).toHaveCount(0);\n  249 |   expect(candidateCalls).toBe(0);\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:246:28"
+          ]
+        },
+        {
+          "title": "Platform Admin creates exact non-authoritative access from canonical candidates",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  297 |   });\n  298 |   await page.goto(\"/configuraciones/empresas\");\n> 299 |   await page.getByRole(\"button\", { name: \"Ver detalle\" }).click();\n      |                                                           ^\n  300 |   const validation = page.locator(\".admin-section\").filter({ has: page.getByRole(\"heading\", { name: \"Accesos de validaci\u00f3n\" }) });\n  301 |   await validation.getByRole(\"button\", { name: \"Conceder acceso de validaci\u00f3n\" }).click();\n  302 |   await expect(validation.getByLabel(\"Versi\u00f3n para validaci\u00f3n\")).toBeVisible();\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:299:59"
+          ]
+        },
+        {
+          "title": "Candidate empty and error states have no manual ID fallback",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  334 |     : route.fulfill({ json: { items: [], page: { has_more: false, next_cursor: null } } }));\n  335 |   await page.goto(\"/configuraciones/empresas\");\n> 336 |   await page.getByRole(\"button\", { name: \"Ver detalle\" }).click();\n      |                                                           ^\n  337 |   const validation = page.locator(\".admin-section\").filter({ has: page.getByRole(\"heading\", { name: \"Accesos de validaci\u00f3n\" }) });\n  338 |   await validation.getByRole(\"button\", { name: \"Conceder acceso de validaci\u00f3n\" }).click();\n  339 |   await expect(validation).toContainText(\"No hay versiones de validaci\u00f3n disponibles actualmente.\");\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:336:59"
+          ]
+        }
+      ]
+    },
+    {
+      "suite": "managed-identity-tenant-access.spec.ts",
+      "count": 31,
+      "cases": [
+        {
+          "title": "A identity-only provisioning is optional and never rediscloses its credential",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Provisionar identidad', exact: true })\u001b[22m\n\n\n  58 | }\n  59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n> 60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n     |                                                                                                                                                                          ^\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n  63 | async function association(page:Page,codes=[0]){await page.getByRole('button',{name:'Agregar acceso a empresa',exact:true}).click();await expect(page.getByLabel('Empresa',{exact:true})).toBeFocused();\n    at provision (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:60:170)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:66:147"
+          ]
+        },
+        {
+          "title": "B/C provision plus 1 runtime tenant roles, server refetch and duplicate click",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Provisionar identidad', exact: true })\u001b[22m\n\n\n  58 | }\n  59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n> 60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n     |                                                                                                                                                                          ^\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n  63 | async function association(page:Page,codes=[0]){await page.getByRole('button',{name:'Agregar acceso a empresa',exact:true}).click();await expect(page.getByLabel('Empresa',{exact:true})).toBeFocused();\n    at provision (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:60:170)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:72:188"
+          ]
+        },
+        {
+          "title": "B/C provision plus 2 runtime tenant roles, server refetch and duplicate click",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Provisionar identidad', exact: true })\u001b[22m\n\n\n  58 | }\n  59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n> 60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n     |                                                                                                                                                                          ^\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n  63 | async function association(page:Page,codes=[0]){await page.getByRole('button',{name:'Agregar acceso a empresa',exact:true}).click();await expect(page.getByLabel('Empresa',{exact:true})).toBeFocused();\n    at provision (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:60:170)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:72:188"
+          ]
+        },
+        {
+          "title": "D existing identity adds company access without reprovision or UUID labels",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  57 |   });return {state,credential};\n  58 | }\n> 59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n     |                                                                                                                                                ^\n  60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:59:144)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:78:133"
+          ]
+        },
+        {
+          "title": "E existing Membership displays current roles and adds roles without duplication",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  57 |   });return {state,credential};\n  58 | }\n> 59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n     |                                                                                                                                                ^\n  60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:59:144)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:81:154"
+          ]
+        },
+        {
+          "title": "F/G platform selector remains Platform-only and tenant catalog is loaded only for the selected company",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  57 |   });return {state,credential};\n  58 | }\n> 59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n     |                                                                                                                                                ^\n  60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:59:144)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:86:161"
+          ]
+        },
+        {
+          "title": "J partial role failure retains identity and Membership, retry reuses exactly the original body/key",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Provisionar identidad', exact: true })\u001b[22m\n\n\n  58 | }\n  59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n> 60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n     |                                                                                                                                                                          ^\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n  63 | async function association(page:Page,codes=[0]){await page.getByRole('button',{name:'Agregar acceso a empresa',exact:true}).click();await expect(page.getByLabel('Empresa',{exact:true})).toBeFocused();\n    at provision (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:60:170)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:90:172"
+          ]
+        },
+        {
+          "title": "K subscription denial explains the pending association and preserves the provisioned identity",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Provisionar identidad', exact: true })\u001b[22m\n\n\n  58 | }\n  59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n> 60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n     |                                                                                                                                                                          ^\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n  63 | async function association(page:Page,codes=[0]){await page.getByRole('button',{name:'Agregar acceso a empresa',exact:true}).click();await expect(page.getByLabel('Empresa',{exact:true})).toBeFocused();\n    at provision (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:60:170)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:94:164"
+          ]
+        },
+        {
+          "title": "server-read failure after success permits refresh without repeating a mutation",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  57 |   });return {state,credential};\n  58 | }\n> 59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n     |                                                                                                                                                ^\n  60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:59:144)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:97:156"
+          ]
+        },
+        {
+          "title": "effective permission revocation prevents the central POST without relying on role names",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  57 |   });return {state,credential};\n  58 | }\n> 59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n     |                                                                                                                                                ^\n  60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:59:144)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:100:146"
+          ]
+        },
+        {
+          "title": "missing effective central permission exposes reads but never onboarding actions",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  57 |   });return {state,credential};\n  58 | }\n> 59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n     |                                                                                                                                                ^\n  60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:59:144)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:102:169"
+          ]
+        },
+        {
+          "title": "tenant catalog contamination fails closed without a usable role or submit control",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  57 |   });return {state,credential};\n  58 | }\n> 59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n     |                                                                                                                                                ^\n  60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:59:144)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:104:146"
+          ]
+        },
+        {
+          "title": "governed tenant role revocation uses explicit target, ETag, reason, idempotency and canonical refetch",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  57 |   });return {state,credential};\n  58 | }\n> 59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n     |                                                                                                                                                ^\n  60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:59:144)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:106:176"
+          ]
+        },
+        {
+          "title": "M/N/O separated access sections preserve branding, responsive containment and keyboard focus",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  57 |   });return {state,credential};\n  58 | }\n> 59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n     |                                                                                                                                                ^\n  60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:59:144)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:108:158"
+          ]
+        },
+        {
+          "title": "A identity-only provisioning is optional and never rediscloses its credential",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Provisionar identidad', exact: true })\u001b[22m\n\n\n  58 | }\n  59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n> 60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n     |                                                                                                                                                                          ^\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n  63 | async function association(page:Page,codes=[0]){await page.getByRole('button',{name:'Agregar acceso a empresa',exact:true}).click();await expect(page.getByLabel('Empresa',{exact:true})).toBeFocused();\n    at provision (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:60:170)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:66:147"
+          ]
+        },
+        {
+          "title": "B/C provision plus 1 runtime tenant roles, server refetch and duplicate click",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Provisionar identidad', exact: true })\u001b[22m\n\n\n  58 | }\n  59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n> 60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n     |                                                                                                                                                                          ^\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n  63 | async function association(page:Page,codes=[0]){await page.getByRole('button',{name:'Agregar acceso a empresa',exact:true}).click();await expect(page.getByLabel('Empresa',{exact:true})).toBeFocused();\n    at provision (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:60:170)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:72:188"
+          ]
+        },
+        {
+          "title": "B/C provision plus 2 runtime tenant roles, server refetch and duplicate click",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Provisionar identidad', exact: true })\u001b[22m\n\n\n  58 | }\n  59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n> 60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n     |                                                                                                                                                                          ^\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n  63 | async function association(page:Page,codes=[0]){await page.getByRole('button',{name:'Agregar acceso a empresa',exact:true}).click();await expect(page.getByLabel('Empresa',{exact:true})).toBeFocused();\n    at provision (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:60:170)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:72:188"
+          ]
+        },
+        {
+          "title": "D existing identity adds company access without reprovision or UUID labels",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  57 |   });return {state,credential};\n  58 | }\n> 59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n     |                                                                                                                                                ^\n  60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:59:144)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:78:133"
+          ]
+        },
+        {
+          "title": "E existing Membership displays current roles and adds roles without duplication",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  57 |   });return {state,credential};\n  58 | }\n> 59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n     |                                                                                                                                                ^\n  60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:59:144)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:81:154"
+          ]
+        },
+        {
+          "title": "F/G platform selector remains Platform-only and tenant catalog is loaded only for the selected company",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  57 |   });return {state,credential};\n  58 | }\n> 59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n     |                                                                                                                                                ^\n  60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:59:144)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:86:161"
+          ]
+        },
+        {
+          "title": "J partial role failure retains identity and Membership, retry reuses exactly the original body/key",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Provisionar identidad', exact: true })\u001b[22m\n\n\n  58 | }\n  59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n> 60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n     |                                                                                                                                                                          ^\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n  63 | async function association(page:Page,codes=[0]){await page.getByRole('button',{name:'Agregar acceso a empresa',exact:true}).click();await expect(page.getByLabel('Empresa',{exact:true})).toBeFocused();\n    at provision (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:60:170)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:90:172"
+          ]
+        },
+        {
+          "title": "K subscription denial explains the pending association and preserves the provisioned identity",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Provisionar identidad', exact: true })\u001b[22m\n\n\n  58 | }\n  59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n> 60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n     |                                                                                                                                                                          ^\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n  63 | async function association(page:Page,codes=[0]){await page.getByRole('button',{name:'Agregar acceso a empresa',exact:true}).click();await expect(page.getByLabel('Empresa',{exact:true})).toBeFocused();\n    at provision (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:60:170)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:94:164"
+          ]
+        },
+        {
+          "title": "server-read failure after success permits refresh without repeating a mutation",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  57 |   });return {state,credential};\n  58 | }\n> 59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n     |                                                                                                                                                ^\n  60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:59:144)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:97:156"
+          ]
+        },
+        {
+          "title": "effective permission revocation prevents the central POST without relying on role names",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  57 |   });return {state,credential};\n  58 | }\n> 59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n     |                                                                                                                                                ^\n  60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:59:144)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:100:146"
+          ]
+        },
+        {
+          "title": "missing effective central permission exposes reads but never onboarding actions",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  57 |   });return {state,credential};\n  58 | }\n> 59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n     |                                                                                                                                                ^\n  60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:59:144)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:102:169"
+          ]
+        },
+        {
+          "title": "tenant catalog contamination fails closed without a usable role or submit control",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  57 |   });return {state,credential};\n  58 | }\n> 59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n     |                                                                                                                                                ^\n  60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:59:144)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:104:146"
+          ]
+        },
+        {
+          "title": "governed tenant role revocation uses explicit target, ETag, reason, idempotency and canonical refetch",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  57 |   });return {state,credential};\n  58 | }\n> 59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n     |                                                                                                                                                ^\n  60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:59:144)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:106:176"
+          ]
+        },
+        {
+          "title": "M/N/O separated access sections preserve branding, responsive containment and keyboard focus",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  57 |   });return {state,credential};\n  58 | }\n> 59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n     |                                                                                                                                                ^\n  60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:59:144)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:108:158"
+          ]
+        },
+        {
+          "title": "A identity-only provisioning is optional and never rediscloses its credential",
+          "project": "chromium-tablet",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Provisionar identidad', exact: true })\u001b[22m\n\n\n  58 | }\n  59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n> 60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n     |                                                                                                                                                                          ^\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n  63 | async function association(page:Page,codes=[0]){await page.getByRole('button',{name:'Agregar acceso a empresa',exact:true}).click();await expect(page.getByLabel('Empresa',{exact:true})).toBeFocused();\n    at provision (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:60:170)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:66:147"
+          ]
+        },
+        {
+          "title": "B/C provision plus 1 runtime tenant roles, server refetch and duplicate click",
+          "project": "chromium-tablet",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Provisionar identidad', exact: true })\u001b[22m\n\n\n  58 | }\n  59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n> 60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n     |                                                                                                                                                                          ^\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n  63 | async function association(page:Page,codes=[0]){await page.getByRole('button',{name:'Agregar acceso a empresa',exact:true}).click();await expect(page.getByLabel('Empresa',{exact:true})).toBeFocused();\n    at provision (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:60:170)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:72:188"
+          ]
+        },
+        {
+          "title": "B/C provision plus 2 runtime tenant roles, server refetch and duplicate click",
+          "project": "chromium-tablet",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Provisionar identidad', exact: true })\u001b[22m\n\n\n  58 | }\n  59 | async function open(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Ver detalle'}).click();await expect(page.getByRole('heading',{name:'Acceso a empresas',exact:true})).toBeVisible();}\n> 60 | async function provision(page:Page){await page.goto('/configuraciones/identidades-gestionadas');await page.getByRole('button',{name:'Provisionar identidad',exact:true}).click();\n     |                                                                                                                                                                          ^\n  61 |   await page.getByLabel('Nombre visible',{exact:true}).fill(identity.display_name);await page.getByLabel('Nombre de usuario',{exact:true}).fill(identity.username);await page.getByLabel('Referencia de verificaci\u00f3n de persona').fill('Verificaci\u00f3n local');\n  62 |   await page.getByRole('button',{name:'Confirmar provisi\u00f3n'}).click();await expect(page.getByLabel('Credencial temporal emitida')).toBeVisible();}\n  63 | async function association(page:Page,codes=[0]){await page.getByRole('button',{name:'Agregar acceso a empresa',exact:true}).click();await expect(page.getByLabel('Empresa',{exact:true})).toBeFocused();\n    at provision (/Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:60:170)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/managed-identity-tenant-access.spec.ts:72:188"
+          ]
+        }
+      ]
+    },
+    {
+      "suite": "platform-role-ui.spec.ts",
+      "count": 17,
+      "cases": [
+        {
+          "title": "navigation, identity selection, empty state and catalog remain distinct from tenant roles",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  45 | async function open(page:Page){\n  46 |   await page.goto('/configuraciones/identidades-gestionadas');\n> 47 |   await page.getByRole('button',{name:'Ver detalle'}).click();\n     |                                                       ^\n  48 |   await expect(page.getByRole('heading',{name:'Roles de plataforma',exact:true})).toBeVisible();\n  49 | }\n  50 | async function assignForm(page:Page){\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:47:55)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:59:35"
+          ]
+        },
+        {
+          "title": "assign and revoke send exact IDs/payloads/fresh keys and refetch server state without optimistic authority",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  45 | async function open(page:Page){\n  46 |   await page.goto('/configuraciones/identidades-gestionadas');\n> 47 |   await page.getByRole('button',{name:'Ver detalle'}).click();\n     |                                                       ^\n  48 |   await expect(page.getByRole('heading',{name:'Roles de plataforma',exact:true})).toBeVisible();\n  49 | }\n  50 | async function assignForm(page:Page){\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:47:55)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:75:35"
+          ]
+        },
+        {
+          "title": "role-name and tenant grants cannot expose admin actions without effective platform permission",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  45 | async function open(page:Page){\n  46 |   await page.goto('/configuraciones/identidades-gestionadas');\n> 47 |   await page.getByRole('button',{name:'Ver detalle'}).click();\n     |                                                       ^\n  48 |   await expect(page.getByRole('heading',{name:'Roles de plataforma',exact:true})).toBeVisible();\n  49 | }\n  50 | async function assignForm(page:Page){\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:47:55)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:96:105"
+          ]
+        },
+        {
+          "title": "missing catalog permission never supplies a hardcoded option while revoke remains independent",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  45 | async function open(page:Page){\n  46 |   await page.goto('/configuraciones/identidades-gestionadas');\n> 47 |   await page.getByRole('button',{name:'Ver detalle'}).click();\n     |                                                       ^\n  48 |   await expect(page.getByRole('heading',{name:'Roles de plataforma',exact:true})).toBeVisible();\n  49 | }\n  50 | async function assignForm(page:Page){\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:47:55)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:101:123"
+          ]
+        },
+        {
+          "title": "fresh permission revocation prevents POST even after opening the confirmation",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  45 | async function open(page:Page){\n  46 |   await page.goto('/configuraciones/identidades-gestionadas');\n> 47 |   await page.getByRole('button',{name:'Ver detalle'}).click();\n     |                                                       ^\n  48 |   await expect(page.getByRole('heading',{name:'Roles de plataforma',exact:true})).toBeVisible();\n  49 | }\n  50 | async function assignForm(page:Page){\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:47:55)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:107:35"
+          ]
+        },
+        {
+          "title": "assignment read 400 is an error rather than an empty collection",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  45 | async function open(page:Page){\n  46 |   await page.goto('/configuraciones/identidades-gestionadas');\n> 47 |   await page.getByRole('button',{name:'Ver detalle'}).click();\n     |                                                       ^\n  48 |   await expect(page.getByRole('heading',{name:'Roles de plataforma',exact:true})).toBeVisible();\n  49 | }\n  50 | async function assignForm(page:Page){\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:47:55)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:113:42"
+          ]
+        },
+        {
+          "title": "assignment read 401 is an error rather than an empty collection",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  45 | async function open(page:Page){\n  46 |   await page.goto('/configuraciones/identidades-gestionadas');\n> 47 |   await page.getByRole('button',{name:'Ver detalle'}).click();\n     |                                                       ^\n  48 |   await expect(page.getByRole('heading',{name:'Roles de plataforma',exact:true})).toBeVisible();\n  49 | }\n  50 | async function assignForm(page:Page){\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:47:55)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:113:42"
+          ]
+        },
+        {
+          "title": "assignment read 403 is an error rather than an empty collection",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  45 | async function open(page:Page){\n  46 |   await page.goto('/configuraciones/identidades-gestionadas');\n> 47 |   await page.getByRole('button',{name:'Ver detalle'}).click();\n     |                                                       ^\n  48 |   await expect(page.getByRole('heading',{name:'Roles de plataforma',exact:true})).toBeVisible();\n  49 | }\n  50 | async function assignForm(page:Page){\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:47:55)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:113:42"
+          ]
+        },
+        {
+          "title": "assignment read 404 is an error rather than an empty collection",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  45 | async function open(page:Page){\n  46 |   await page.goto('/configuraciones/identidades-gestionadas');\n> 47 |   await page.getByRole('button',{name:'Ver detalle'}).click();\n     |                                                       ^\n  48 |   await expect(page.getByRole('heading',{name:'Roles de plataforma',exact:true})).toBeVisible();\n  49 | }\n  50 | async function assignForm(page:Page){\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:47:55)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:113:42"
+          ]
+        },
+        {
+          "title": "assignment read 409 is an error rather than an empty collection",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  45 | async function open(page:Page){\n  46 |   await page.goto('/configuraciones/identidades-gestionadas');\n> 47 |   await page.getByRole('button',{name:'Ver detalle'}).click();\n     |                                                       ^\n  48 |   await expect(page.getByRole('heading',{name:'Roles de plataforma',exact:true})).toBeVisible();\n  49 | }\n  50 | async function assignForm(page:Page){\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:47:55)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:113:42"
+          ]
+        },
+        {
+          "title": "catalog failure stays unavailable and does not fabricate options",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  45 | async function open(page:Page){\n  46 |   await page.goto('/configuraciones/identidades-gestionadas');\n> 47 |   await page.getByRole('button',{name:'Ver detalle'}).click();\n     |                                                       ^\n  48 |   await expect(page.getByRole('heading',{name:'Roles de plataforma',exact:true})).toBeVisible();\n  49 | }\n  50 | async function assignForm(page:Page){\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:47:55)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:119:42"
+          ]
+        },
+        {
+          "title": "last platform administrator conflict preserves the exact server-rendered assignment",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  45 | async function open(page:Page){\n  46 |   await page.goto('/configuraciones/identidades-gestionadas');\n> 47 |   await page.getByRole('button',{name:'Ver detalle'}).click();\n     |                                                       ^\n  48 |   await expect(page.getByRole('heading',{name:'Roles de plataforma',exact:true})).toBeVisible();\n  49 | }\n  50 | async function assignForm(page:Page){\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:47:55)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:123:67"
+          ]
+        },
+        {
+          "title": "uncertain transport result blocks retries until explicit server read and a new intention",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  45 | async function open(page:Page){\n  46 |   await page.goto('/configuraciones/identidades-gestionadas');\n> 47 |   await page.getByRole('button',{name:'Ver detalle'}).click();\n     |                                                       ^\n  48 |   await expect(page.getByRole('heading',{name:'Roles de plataforma',exact:true})).toBeVisible();\n  49 | }\n  50 | async function assignForm(page:Page){\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:47:55)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:131:52"
+          ]
+        },
+        {
+          "title": "successful POST with failed refetch never inserts authoritative optimistic state",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  45 | async function open(page:Page){\n  46 |   await page.goto('/configuraciones/identidades-gestionadas');\n> 47 |   await page.getByRole('button',{name:'Ver detalle'}).click();\n     |                                                       ^\n  48 |   await expect(page.getByRole('heading',{name:'Roles de plataforma',exact:true})).toBeVisible();\n  49 | }\n  50 | async function assignForm(page:Page){\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:47:55)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:142:55"
+          ]
+        },
+        {
+          "title": "navigation, identity selection, empty state and catalog remain distinct from tenant roles",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  45 | async function open(page:Page){\n  46 |   await page.goto('/configuraciones/identidades-gestionadas');\n> 47 |   await page.getByRole('button',{name:'Ver detalle'}).click();\n     |                                                       ^\n  48 |   await expect(page.getByRole('heading',{name:'Roles de plataforma',exact:true})).toBeVisible();\n  49 | }\n  50 | async function assignForm(page:Page){\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:47:55)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:59:35"
+          ]
+        },
+        {
+          "title": "assign and revoke send exact IDs/payloads/fresh keys and refetch server state without optimistic authority",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  45 | async function open(page:Page){\n  46 |   await page.goto('/configuraciones/identidades-gestionadas');\n> 47 |   await page.getByRole('button',{name:'Ver detalle'}).click();\n     |                                                       ^\n  48 |   await expect(page.getByRole('heading',{name:'Roles de plataforma',exact:true})).toBeVisible();\n  49 | }\n  50 | async function assignForm(page:Page){\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:47:55)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:75:35"
+          ]
+        },
+        {
+          "title": "role-name and tenant grants cannot expose admin actions without effective platform permission",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle' })\u001b[22m\n\n\n  45 | async function open(page:Page){\n  46 |   await page.goto('/configuraciones/identidades-gestionadas');\n> 47 |   await page.getByRole('button',{name:'Ver detalle'}).click();\n     |                                                       ^\n  48 |   await expect(page.getByRole('heading',{name:'Roles de plataforma',exact:true})).toBeVisible();\n  49 | }\n  50 | async function assignForm(page:Page){\n    at open (/Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:47:55)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/platform-role-ui.spec.ts:96:105"
+          ]
+        }
+      ]
+    },
+    {
+      "suite": "tenant-onboarding-ui.spec.ts",
+      "count": 20,
+      "cases": [
+        {
+          "title": "A: company with existing identity uses exact onboarding boundary, refetch and no manual IDs",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Crear empresa', exact: true })\u001b[22m\n\n\n  67 | }\n  68 | async function companyFields(page: Page) {\n> 69 |   await page.goto(\"/configuraciones/empresas\"); await page.getByRole(\"button\", { name: \"Crear empresa\", exact: true }).click();\n     |                                                                                                                        ^\n  70 |   await expect(page.getByRole(\"heading\", { name: \"Datos de empresa\" })).toBeFocused();\n  71 |   await page.getByLabel(\"C\u00f3digo de empresa\", { exact: true }).fill(\"LOCAL\"); await page.getByLabel(\"Raz\u00f3n social\", { exact: true }).fill(company.legal_name);\n  72 |   await page.getByLabel(\"Nombre visible de empresa\").fill(company.display_name); await page.getByLabel(\"Zona horaria IANA\").fill(\"America/Santiago\");\n    at companyFields (/Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:69:120)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:91:54"
+          ]
+        },
+        {
+          "title": "B: MI provisioning reuses one-time disclosure across summary, partial failure and same-key recovery",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Crear empresa', exact: true })\u001b[22m\n\n\n  67 | }\n  68 | async function companyFields(page: Page) {\n> 69 |   await page.goto(\"/configuraciones/empresas\"); await page.getByRole(\"button\", { name: \"Crear empresa\", exact: true }).click();\n     |                                                                                                                        ^\n  70 |   await expect(page.getByRole(\"heading\", { name: \"Datos de empresa\" })).toBeFocused();\n  71 |   await page.getByLabel(\"C\u00f3digo de empresa\", { exact: true }).fill(\"LOCAL\"); await page.getByLabel(\"Raz\u00f3n social\", { exact: true }).fill(company.legal_name);\n  72 |   await page.getByLabel(\"Nombre visible de empresa\").fill(company.display_name); await page.getByLabel(\"Zona horaria IANA\").fill(\"America/Santiago\");\n    at companyFields (/Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:69:120)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:101:3"
+          ]
+        },
+        {
+          "title": "C: tenant explicit lookup, runtime role catalog, membership and server refetch",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Agregar usuario', exact: true })\u001b[22m\n\n\n  78 | }\n  79 | async function tenantSelect(page: Page) {\n> 80 |   await page.goto(`/configuraciones/usuarios?tenant_id=${tenantId}`); await page.getByRole(\"button\", { name: \"Agregar usuario\", exact: true }).click();\n     |                                                                                                                                                ^\n  81 |   await page.getByLabel(\"Correo completo\").fill(\"persona@example.test\"); await page.getByRole(\"button\", { name: \"Buscar\", exact: true }).click(); await page.getByRole(\"radio\", { name: /Persona controlada/ }).check();\n  82 |   await page.getByRole(\"checkbox\", { name: \"Responsable del servidor\" }).check();\n  83 | }\n    at tenantSelect (/Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:80:144)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:114:34"
+          ]
+        },
+        {
+          "title": "D: tenant new Managed Identity is handoff, never credential provisioning",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Agregar usuario' })\u001b[22m\n\n\n  120 | });\n  121 | test(\"D: tenant new Managed Identity is handoff, never credential provisioning\", async ({ page }, info) => {\n> 122 |   const r = await runtime(page); await page.goto(\"/configuraciones/usuarios\"); await page.getByRole(\"button\", { name: \"Agregar usuario\" }).click(); await page.getByRole(\"radio\", { name: \"Nueva Tecdex Managed Identity\" }).check();\n      |                                                                                                                                            ^\n  123 |   await expect(page.getByText(/Solicita a un administrador de plataforma/)).toBeVisible(); await expect(page.getByRole(\"button\", { name: \"Confirmar provisi\u00f3n\" })).toHaveCount(0);\n  124 |   await expect(page.getByRole(\"link\", { name: \"Ir a Identidades gestionadas\" })).toHaveCount(0); expect(r.requests.some(r => r.method === \"POST\")).toBe(false); await screenshot(page, \"tenant-handoff\", info.project.name);\n  125 | });\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:122:140"
+          ]
+        },
+        {
+          "title": "E: partial roles recover only failed assignment with stable key and no repeated Membership",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Agregar usuario', exact: true })\u001b[22m\n\n\n  78 | }\n  79 | async function tenantSelect(page: Page) {\n> 80 |   await page.goto(`/configuraciones/usuarios?tenant_id=${tenantId}`); await page.getByRole(\"button\", { name: \"Agregar usuario\", exact: true }).click();\n     |                                                                                                                                                ^\n  81 |   await page.getByLabel(\"Correo completo\").fill(\"persona@example.test\"); await page.getByRole(\"button\", { name: \"Buscar\", exact: true }).click(); await page.getByRole(\"radio\", { name: /Persona controlada/ }).check();\n  82 |   await page.getByRole(\"checkbox\", { name: \"Responsable del servidor\" }).check();\n  83 | }\n    at tenantSelect (/Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:80:144)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:127:57"
+          ]
+        },
+        {
+          "title": "F: tenant privacy has explicit lookup only, no typing requests, wildcard or global list",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Agregar usuario' })\u001b[22m\n\n\n  131 | });\n  132 | test(\"F: tenant privacy has explicit lookup only, no typing requests, wildcard or global list\", async ({ page }) => {\n> 133 |   const r = await runtime(page, { empty: true }); await page.goto(\"/configuraciones/usuarios\"); await page.getByRole(\"button\", { name: \"Agregar usuario\" }).click();\n      |                                                                                                                                                             ^\n  134 |   await page.getByLabel(\"Correo completo\").fill(\"hidden@example.test\"); expect(r.requests.filter(r => r.path === \"/api/v1/user-identities\")).toHaveLength(0);\n  135 |   await expect(page.getByLabel(\"Correo completo\")).toHaveAttribute(\"autocomplete\", \"off\"); await expect(page.getByRole(\"combobox\", { name: \"Criterio de b\u00fasqueda\", exact: true }).getByRole(\"option\", { name: \"Nombre\", exact: true })).toHaveCount(0);\n  136 |   await page.getByRole(\"button\", { name: \"Buscar\", exact: true }).click(); await expect(page.getByText(\"No hay una identidad elegible para incorporar con ese criterio.\")).toBeVisible();\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:133:157"
+          ]
+        },
+        {
+          "title": "existing active Membership is reused and its roles assigned independently",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Agregar usuario', exact: true })\u001b[22m\n\n\n  78 | }\n  79 | async function tenantSelect(page: Page) {\n> 80 |   await page.goto(`/configuraciones/usuarios?tenant_id=${tenantId}`); await page.getByRole(\"button\", { name: \"Agregar usuario\", exact: true }).click();\n     |                                                                                                                                                ^\n  81 |   await page.getByLabel(\"Correo completo\").fill(\"persona@example.test\"); await page.getByRole(\"button\", { name: \"Buscar\", exact: true }).click(); await page.getByRole(\"radio\", { name: /Persona controlada/ }).check();\n  82 |   await page.getByRole(\"checkbox\", { name: \"Responsable del servidor\" }).check();\n  83 | }\n    at tenantSelect (/Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:80:144)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:141:54"
+          ]
+        },
+        {
+          "title": "company required fields, timezone error and back navigation keep business inputs",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Crear empresa' })\u001b[22m\n\n\n  146 | });\n  147 | test(\"company required fields, timezone error and back navigation keep business inputs\", async ({ page }) => {\n> 148 |   await runtime(page, { platform: true }); await page.goto(\"/configuraciones/empresas\"); await page.getByRole(\"button\", { name: \"Crear empresa\" }).click(); await page.getByRole(\"button\", { name: \"Continuar\", exact: true }).click(); await expect(page.getByRole(\"heading\", { name: \"Datos de empresa\" })).toBeVisible();\n      |                                                                                                                                                    ^\n  149 |   await page.getByLabel(\"C\u00f3digo de empresa\", { exact: true }).fill(\"LOCAL\"); await page.getByLabel(\"Raz\u00f3n social\", { exact: true }).fill(company.legal_name); await page.getByLabel(\"Nombre visible de empresa\").fill(company.display_name); await page.getByLabel(\"Zona horaria IANA\").fill(\"invalid-zone\"); await page.getByRole(\"button\", { name: \"Continuar\", exact: true }).click(); await expect(page.getByRole(\"alert\")).toContainText(\"IANA\");\n  150 |   await page.getByLabel(\"Zona horaria IANA\").fill(\"America/Santiago\"); await page.getByRole(\"button\", { name: \"Continuar\", exact: true }).click(); await page.getByRole(\"button\", { name: \"Anterior\" }).click(); await expect(page.getByLabel(\"C\u00f3digo de empresa\", { exact: true })).toHaveValue(\"LOCAL\");\n  151 | });\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:148:148"
+          ]
+        },
+        {
+          "title": "G: dual platform and own-tenant authority supports both operations with distinct contexts",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Crear empresa', exact: true })\u001b[22m\n\n\n  67 | }\n  68 | async function companyFields(page: Page) {\n> 69 |   await page.goto(\"/configuraciones/empresas\"); await page.getByRole(\"button\", { name: \"Crear empresa\", exact: true }).click();\n     |                                                                                                                        ^\n  70 |   await expect(page.getByRole(\"heading\", { name: \"Datos de empresa\" })).toBeFocused();\n  71 |   await page.getByLabel(\"C\u00f3digo de empresa\", { exact: true }).fill(\"LOCAL\"); await page.getByLabel(\"Raz\u00f3n social\", { exact: true }).fill(company.legal_name);\n  72 |   await page.getByLabel(\"Nombre visible de empresa\").fill(company.display_name); await page.getByLabel(\"Zona horaria IANA\").fill(\"America/Santiago\");\n    at companyFields (/Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:69:120)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:154:66"
+          ]
+        },
+        {
+          "title": "H: platform-only projection includes role permission but never enables tenant assign",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle', exact: true })\u001b[22m\n\n\n  161 |   const r = await runtime(page, { platform: true, existing: true, assigned: true }); await page.goto(`/configuraciones/usuarios?tenant_id=${tenantId}`);\n  162 |   await expect(page.getByRole(\"button\", { name: \"Agregar usuario\", exact: true })).toHaveCount(0);\n> 163 |   await page.getByRole(\"button\", { name: \"Ver detalle\", exact: true }).click();\n      |                                                                        ^\n  164 |   await expect(page.getByRole(\"dialog\").getByRole(\"button\", { name: \"Asignar rol\", exact: true })).toHaveCount(0);\n  165 |   await expect(page.getByRole(\"dialog\").getByRole(\"combobox\", { name: \"Selecciona un rol permitido\" })).toHaveCount(0);\n  166 |   expect(r.requests.some(r => r.method === \"POST\")).toBe(false);\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:163:72"
+          ]
+        },
+        {
+          "title": "tenant own-context revoke preserves reason, CAS, idempotency and server refresh",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle', exact: true })\u001b[22m\n\n\n  173 | for (const platform of [false, true]) test(`${platform ? \"platform explicit target\" : \"tenant own-context\"} revoke preserves reason, CAS, idempotency and server refresh`, async ({ page }) => {\n  174 |   const r = await runtime(page, { platform, existing: true, assigned: true }); await page.goto(`/configuraciones/usuarios?tenant_id=${tenantId}`);\n> 175 |   await page.getByRole(\"button\", { name: \"Ver detalle\", exact: true }).click();\n      |                                                                        ^\n  176 |   page.on(\"dialog\", async d => { await d.accept(d.type() === \"prompt\" ? \"Revisi\u00f3n controlada\" : undefined); });\n  177 |   await page.getByRole(\"dialog\").getByRole(\"button\", { name: \"Quitar rol\", exact: true }).click();\n  178 |   await expect(page.getByText(\"Rol revocado y auditado. Los dem\u00e1s roles se conservaron.\")).toBeVisible();\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:175:72"
+          ]
+        },
+        {
+          "title": "platform explicit target revoke preserves reason, CAS, idempotency and server refresh",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Ver detalle', exact: true })\u001b[22m\n\n\n  173 | for (const platform of [false, true]) test(`${platform ? \"platform explicit target\" : \"tenant own-context\"} revoke preserves reason, CAS, idempotency and server refresh`, async ({ page }) => {\n  174 |   const r = await runtime(page, { platform, existing: true, assigned: true }); await page.goto(`/configuraciones/usuarios?tenant_id=${tenantId}`);\n> 175 |   await page.getByRole(\"button\", { name: \"Ver detalle\", exact: true }).click();\n      |                                                                        ^\n  176 |   page.on(\"dialog\", async d => { await d.accept(d.type() === \"prompt\" ? \"Revisi\u00f3n controlada\" : undefined); });\n  177 |   await page.getByRole(\"dialog\").getByRole(\"button\", { name: \"Quitar rol\", exact: true }).click();\n  178 |   await expect(page.getByText(\"Rol revocado y auditado. Los dem\u00e1s roles se conservaron.\")).toBeVisible();\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:175:72"
+          ]
+        },
+        {
+          "title": "server receipt remains truthful if list refresh fails and is reconciled without another onboarding",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Crear empresa', exact: true })\u001b[22m\n\n\n  67 | }\n  68 | async function companyFields(page: Page) {\n> 69 |   await page.goto(\"/configuraciones/empresas\"); await page.getByRole(\"button\", { name: \"Crear empresa\", exact: true }).click();\n     |                                                                                                                        ^\n  70 |   await expect(page.getByRole(\"heading\", { name: \"Datos de empresa\" })).toBeFocused();\n  71 |   await page.getByLabel(\"C\u00f3digo de empresa\", { exact: true }).fill(\"LOCAL\"); await page.getByLabel(\"Raz\u00f3n social\", { exact: true }).fill(company.legal_name);\n  72 |   await page.getByLabel(\"Nombre visible de empresa\").fill(company.display_name); await page.getByLabel(\"Zona horaria IANA\").fill(\"America/Santiago\");\n    at companyFields (/Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:69:120)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:183:76"
+          ]
+        },
+        {
+          "title": "accepted role response without server assignment stays pending, then retries same intent",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Agregar usuario', exact: true })\u001b[22m\n\n\n  78 | }\n  79 | async function tenantSelect(page: Page) {\n> 80 |   await page.goto(`/configuraciones/usuarios?tenant_id=${tenantId}`); await page.getByRole(\"button\", { name: \"Agregar usuario\", exact: true }).click();\n     |                                                                                                                                                ^\n  81 |   await page.getByLabel(\"Correo completo\").fill(\"persona@example.test\"); await page.getByRole(\"button\", { name: \"Buscar\", exact: true }).click(); await page.getByRole(\"radio\", { name: /Persona controlada/ }).check();\n  82 |   await page.getByRole(\"checkbox\", { name: \"Responsable del servidor\" }).check();\n  83 | }\n    at tenantSelect (/Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:80:144)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:191:61"
+          ]
+        },
+        {
+          "title": "closing provisioned identity before onboarding retains identity and destroys credential disclosure",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Crear empresa', exact: true })\u001b[22m\n\n\n  67 | }\n  68 | async function companyFields(page: Page) {\n> 69 |   await page.goto(\"/configuraciones/empresas\"); await page.getByRole(\"button\", { name: \"Crear empresa\", exact: true }).click();\n     |                                                                                                                        ^\n  70 |   await expect(page.getByRole(\"heading\", { name: \"Datos de empresa\" })).toBeFocused();\n  71 |   await page.getByLabel(\"C\u00f3digo de empresa\", { exact: true }).fill(\"LOCAL\"); await page.getByLabel(\"Raz\u00f3n social\", { exact: true }).fill(company.legal_name);\n  72 |   await page.getByLabel(\"Nombre visible de empresa\").fill(company.display_name); await page.getByLabel(\"Zona horaria IANA\").fill(\"America/Santiago\");\n    at companyFields (/Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:69:120)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:199:54"
+          ]
+        },
+        {
+          "title": "onboarding 403 shows safe business error and keeps the original retry key",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Crear empresa', exact: true })\u001b[22m\n\n\n  67 | }\n  68 | async function companyFields(page: Page) {\n> 69 |   await page.goto(\"/configuraciones/empresas\"); await page.getByRole(\"button\", { name: \"Crear empresa\", exact: true }).click();\n     |                                                                                                                        ^\n  70 |   await expect(page.getByRole(\"heading\", { name: \"Datos de empresa\" })).toBeFocused();\n  71 |   await page.getByLabel(\"C\u00f3digo de empresa\", { exact: true }).fill(\"LOCAL\"); await page.getByLabel(\"Raz\u00f3n social\", { exact: true }).fill(company.legal_name);\n  72 |   await page.getByLabel(\"Nombre visible de empresa\").fill(company.display_name); await page.getByLabel(\"Zona horaria IANA\").fill(\"America/Santiago\");\n    at companyFields (/Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:69:120)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:209:68"
+          ]
+        },
+        {
+          "title": "onboarding 409 shows safe business error and keeps the original retry key",
+          "project": "chromium-desktop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Crear empresa', exact: true })\u001b[22m\n\n\n  67 | }\n  68 | async function companyFields(page: Page) {\n> 69 |   await page.goto(\"/configuraciones/empresas\"); await page.getByRole(\"button\", { name: \"Crear empresa\", exact: true }).click();\n     |                                                                                                                        ^\n  70 |   await expect(page.getByRole(\"heading\", { name: \"Datos de empresa\" })).toBeFocused();\n  71 |   await page.getByLabel(\"C\u00f3digo de empresa\", { exact: true }).fill(\"LOCAL\"); await page.getByLabel(\"Raz\u00f3n social\", { exact: true }).fill(company.legal_name);\n  72 |   await page.getByLabel(\"Nombre visible de empresa\").fill(company.display_name); await page.getByLabel(\"Zona horaria IANA\").fill(\"America/Santiago\");\n    at companyFields (/Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:69:120)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:209:68"
+          ]
+        },
+        {
+          "title": "A: company with existing identity uses exact onboarding boundary, refetch and no manual IDs",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Crear empresa', exact: true })\u001b[22m\n\n\n  67 | }\n  68 | async function companyFields(page: Page) {\n> 69 |   await page.goto(\"/configuraciones/empresas\"); await page.getByRole(\"button\", { name: \"Crear empresa\", exact: true }).click();\n     |                                                                                                                        ^\n  70 |   await expect(page.getByRole(\"heading\", { name: \"Datos de empresa\" })).toBeFocused();\n  71 |   await page.getByLabel(\"C\u00f3digo de empresa\", { exact: true }).fill(\"LOCAL\"); await page.getByLabel(\"Raz\u00f3n social\", { exact: true }).fill(company.legal_name);\n  72 |   await page.getByLabel(\"Nombre visible de empresa\").fill(company.display_name); await page.getByLabel(\"Zona horaria IANA\").fill(\"America/Santiago\");\n    at companyFields (/Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:69:120)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:91:54"
+          ]
+        },
+        {
+          "title": "B: MI provisioning reuses one-time disclosure across summary, partial failure and same-key recovery",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Crear empresa', exact: true })\u001b[22m\n\n\n  67 | }\n  68 | async function companyFields(page: Page) {\n> 69 |   await page.goto(\"/configuraciones/empresas\"); await page.getByRole(\"button\", { name: \"Crear empresa\", exact: true }).click();\n     |                                                                                                                        ^\n  70 |   await expect(page.getByRole(\"heading\", { name: \"Datos de empresa\" })).toBeFocused();\n  71 |   await page.getByLabel(\"C\u00f3digo de empresa\", { exact: true }).fill(\"LOCAL\"); await page.getByLabel(\"Raz\u00f3n social\", { exact: true }).fill(company.legal_name);\n  72 |   await page.getByLabel(\"Nombre visible de empresa\").fill(company.display_name); await page.getByLabel(\"Zona horaria IANA\").fill(\"America/Santiago\");\n    at companyFields (/Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:69:120)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:101:3"
+          ]
+        },
+        {
+          "title": "C: tenant explicit lookup, runtime role catalog, membership and server refetch",
+          "project": "chromium-laptop",
+          "status": "FAIL",
+          "original_errors": [
+            "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+            "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Agregar usuario', exact: true })\u001b[22m\n\n\n  78 | }\n  79 | async function tenantSelect(page: Page) {\n> 80 |   await page.goto(`/configuraciones/usuarios?tenant_id=${tenantId}`); await page.getByRole(\"button\", { name: \"Agregar usuario\", exact: true }).click();\n     |                                                                                                                                                ^\n  81 |   await page.getByLabel(\"Correo completo\").fill(\"persona@example.test\"); await page.getByRole(\"button\", { name: \"Buscar\", exact: true }).click(); await page.getByRole(\"radio\", { name: /Persona controlada/ }).check();\n  82 |   await page.getByRole(\"checkbox\", { name: \"Responsable del servidor\" }).check();\n  83 | }\n    at tenantSelect (/Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:80:144)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/tenant-onboarding-ui.spec.ts:114:34"
+          ]
+        }
+      ]
+    }
+  ],
+  "not_completed": 308,
+  "already_passed": 62
+}

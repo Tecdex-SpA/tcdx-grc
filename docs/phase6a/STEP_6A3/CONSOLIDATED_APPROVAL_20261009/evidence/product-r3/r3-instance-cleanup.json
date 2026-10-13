@@ -1,0 +1,67 @@
+{
+  "status": "PASS_OWN_CONTAINERS_REMOVED_TMPFS_DESTROYED_FOREIGN_UNCHANGED",
+  "at": "2026-10-09T21:40:38.600294+00:00",
+  "removed_ids": [
+    "03b75e591afd7a6d1c9d954089680e37a11cd4aaa1afc4559d34050d8d9a34c1",
+    "60906c8a477e3c8659f058a97ee831d8014e654856943fe9688c2832e09186e9"
+  ],
+  "removed_names": [
+    "/tcdx-step6a3-v18-runner2-20261009",
+    "/tcdx-step6a3-v18-pg-20261009"
+  ],
+  "database_system_identifier": "7694735811590922280",
+  "database_storage": "tmpfs /var/lib/postgresql/data destroyed with own container; no named volume or bind database",
+  "sixteen_sql_test_persistent_writes": 0,
+  "r3_dml_tests_transaction_end": "ROLLBACK",
+  "r3_dml_test_persistent_writes": 0,
+  "separate_disposable_setup": "32 approved local migrations, existing catalog test fixtures, testServicePrincipal and44 adoption audit fixtures existed only in discarded tmpfs; not QA or real IAM/publication",
+  "foreign_before": {
+    "a6ab5d94c87dbf91c7ed879fe256ef1c3bec0dded4d191c5d8897664491c481f": {
+      "name": "/tcdx-grc-phase5-methodology-release-local-ee6e4c359d70",
+      "running": true,
+      "started_at": "2026-10-08T09:52:09.604586011Z"
+    },
+    "bd9b26ea5229fc184c4a258bfb36dba27489addb78f12f47316cbaf4c0495c05": {
+      "name": "/tcdx-grc-phase5-recovery-release-local-6671b742e278",
+      "running": true,
+      "started_at": "2026-10-08T00:02:41.994660553Z"
+    },
+    "8fe9482fda4a1cb7945bdddcee993fd065976c5509802e44285615b011605c56": {
+      "name": "/tcdx-grc-mi-tenant-e2e-local-a910c94aa24e",
+      "running": true,
+      "started_at": "2026-10-07T20:17:34.156850678Z"
+    },
+    "bcd266af8fda6b551a51dc31231364067a8f013ddf67e92a77e04c06e9c3e6b7": {
+      "name": "/tcdx-grc-phase3-postgres-16",
+      "running": true,
+      "started_at": "2026-09-16T09:39:10.495671013Z"
+    }
+  },
+  "foreign_after": {
+    "a6ab5d94c87dbf91c7ed879fe256ef1c3bec0dded4d191c5d8897664491c481f": {
+      "name": "/tcdx-grc-phase5-methodology-release-local-ee6e4c359d70",
+      "running": true,
+      "started_at": "2026-10-08T09:52:09.604586011Z"
+    },
+    "bd9b26ea5229fc184c4a258bfb36dba27489addb78f12f47316cbaf4c0495c05": {
+      "name": "/tcdx-grc-phase5-recovery-release-local-6671b742e278",
+      "running": true,
+      "started_at": "2026-10-08T00:02:41.994660553Z"
+    },
+    "8fe9482fda4a1cb7945bdddcee993fd065976c5509802e44285615b011605c56": {
+      "name": "/tcdx-grc-mi-tenant-e2e-local-a910c94aa24e",
+      "running": true,
+      "started_at": "2026-10-07T20:17:34.156850678Z"
+    },
+    "bcd266af8fda6b551a51dc31231364067a8f013ddf67e92a77e04c06e9c3e6b7": {
+      "name": "/tcdx-grc-phase3-postgres-16",
+      "running": true,
+      "started_at": "2026-09-16T09:39:10.495671013Z"
+    }
+  },
+  "foreign_stop_config_or_db_operations": 0,
+  "global_or_foreign_ipc_operations": 0,
+  "QA": 0,
+  "IAM_REAL": 0,
+  "DEPLOY": 0
+}

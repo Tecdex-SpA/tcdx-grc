@@ -126,8 +126,8 @@ describe("PRE-F5E canonical Platform IAM materialization", () => {
     expect(preF5eContract).toContain("creates no bootstrap table, enabled flag, personal seed, environment allowlist, second authority or public endpoint");
   });
 
-  it("keeps the exact v1.6 candidate evidence while selecting the activated v1.7 baseline", () => {
-    expect(activeBaselineId.trim()).toBe("TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23");
+  it("keeps the exact v1.6 candidate evidence while selecting the activated v1.8 baseline", () => {
+    expect(activeBaselineId.trim()).toBe("TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09");
     expect(activeBaselineStatus.trim()).toBe("ACTIVE");
     const entries = candidateManifest.trim().split("\n");
     expect(entries).toHaveLength(10);

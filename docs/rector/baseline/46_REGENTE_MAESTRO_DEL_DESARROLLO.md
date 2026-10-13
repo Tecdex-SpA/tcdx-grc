@@ -2,13 +2,15 @@
 
 ## 1. Autoridad y vigencia
 
-Este documento es el punto de entrada obligatorio y la constitución operativa maestra del desarrollo TCDX GRC. Integra y gobierna los documentos 00–48 aplicables de este baseline. No reemplaza sus contratos especializados: fija cómo deben ser interpretados, ejecutados y verificados durante todo el ciclo hasta `MARKET_RELEASE_READY=PASS`.
+Este documento es el punto de entrada obligatorio y la constitución operativa maestra del desarrollo TCDX GRC. Integra y gobierna los documentos 00–49 aplicables de este baseline. No reemplaza sus contratos especializados: fija cómo deben ser interpretados, ejecutados y verificados durante todo el ciclo hasta `MARKET_RELEASE_READY=PASS`.
 
-`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23`
+`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09`
 
 `CODEX_VARIATION_BUDGET=ZERO`
 
 Toda implementación, revisión, migración, API, backend, frontend, integración, IA, prueba, despliegue y release debe demostrar trazabilidad a este baseline. Código, tests, mocks, documentación histórica, convenciones de framework o decisiones de agentes no son fuente de autoridad.
+
+49 gobierna exclusivamente revisión/publicación editorial y metodológica interna y delimita la acumulación humana de funciones. No altera SoD operacional, datos, permisos, fases ni obligaciones superiores. La historia v1.7 permanece inmutable.
 
 ## 2. Producto y criterio de terminación
 

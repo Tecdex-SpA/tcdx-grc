@@ -1,0 +1,674 @@
+{
+  "version": "STEP6A3_VOCABULARIES_v1",
+  "status": "PUBLISHED_LOCAL_V1",
+  "effective_from": "2026-10-09T18:58:05.431882+00:00",
+  "effective_to": null,
+  "authority_receipt": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/MACRO_APPROVAL_RECEIPT_R1.json",
+  "macro_sha256": "5b8c02385615fe6b5c825b18619d0cf1d493b7b7880e47530cc02893b3c953c4",
+  "source_sha256": "5106f98f64a950ed7dddb5618f14a11864b166421be1dac7613682863492dc5e",
+  "families": [
+    {
+      "id": "CV-01",
+      "schemas": [
+        "FileClassification"
+      ],
+      "max_length": 32,
+      "owner": "Evidence + Security & Privacy Reviewer",
+      "occurrences": [
+        "F-0223"
+      ],
+      "values": [
+        {
+          "code": "public",
+          "label_es": "Pública",
+          "definition_es": "Información autorizada expresamente para difusión pública; un archivo público sigue requiriendo acceso GRC autorizado.",
+          "restrictions_es": "No crea bucket público ni omite RBAC",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 2
+        },
+        {
+          "code": "internal",
+          "label_es": "Interna",
+          "definition_es": "Información destinada al uso interno de la organización.",
+          "restrictions_es": "No equivale a cualquier tenant ni permite compartir entre tenants",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 3
+        },
+        {
+          "code": "confidential",
+          "label_es": "Confidencial",
+          "definition_es": "Información cuya divulgación se restringe a personas autorizadas por su función.",
+          "restrictions_es": "No se hereda automáticamente de Tenant.data_classification",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 4
+        },
+        {
+          "code": "restricted",
+          "label_es": "Restringida",
+          "definition_es": "Información sometida al nivel más estricto de acceso y divulgación de esta escala.",
+          "restrictions_es": "El nivel no concede acceso; policy y permisos siguen obligatorios",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 5
+        }
+      ]
+    },
+    {
+      "id": "CV-02",
+      "schemas": [
+        "EvidenceType"
+      ],
+      "max_length": 64,
+      "owner": "Evidence Domain Owner",
+      "occurrences": [
+        "F-0208",
+        "F-0234"
+      ],
+      "values": [
+        {
+          "code": "document",
+          "label_es": "Documento",
+          "definition_es": "Documento que presenta información probatoria sobre un claim definido.",
+          "restrictions_es": "Requiere FileObject elegible; no acredita aprobación",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 6
+        },
+        {
+          "code": "record",
+          "label_es": "Registro",
+          "definition_es": "Registro de una actividad o evento cuya trazabilidad sustenta el claim.",
+          "restrictions_es": "Origen y período verificables; no crea Observation",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 7
+        },
+        {
+          "code": "image",
+          "label_es": "Imagen",
+          "definition_es": "Representación visual de un hecho relevante para el claim.",
+          "restrictions_es": "Un archivo de imagen no acredita por sí solo el claim",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 8
+        },
+        {
+          "code": "report",
+          "label_es": "Informe",
+          "definition_es": "Informe de resultados o revisión que sustenta un claim.",
+          "restrictions_es": "No crea ReportArtifact ni estado published",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 9
+        }
+      ]
+    },
+    {
+      "id": "CV-03",
+      "schemas": [
+        "ControlFrequency"
+      ],
+      "max_length": 64,
+      "owner": "Controls Domain Owner",
+      "occurrences": [
+        "F-0075",
+        "F-0090"
+      ],
+      "values": [
+        {
+          "code": "continuous",
+          "label_es": "Continua",
+          "definition_es": "El mecanismo de control se mantiene operando durante su intervalo efectivo.",
+          "restrictions_es": "No significa verificación continua ni evidencia automática",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 10
+        },
+        {
+          "code": "daily",
+          "label_es": "Diaria",
+          "definition_es": "Una ejecución por día calendario en la zona horaria declarada del control o tenant.",
+          "restrictions_es": "Horario concreto se documenta en execution_method; sin scheduler nuevo",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 11
+        },
+        {
+          "code": "weekly",
+          "label_es": "Semanal",
+          "definition_es": "Una ejecución por semana ISO de lunes a domingo en la zona horaria contractual.",
+          "restrictions_es": "Sin sustitución por cada168horas; definir horario en execution_method",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 12
+        },
+        {
+          "code": "monthly",
+          "label_es": "Mensual",
+          "definition_es": "Una ejecución por mes calendario en la zona horaria contractual.",
+          "restrictions_es": "No se sustituye por30días",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 13
+        },
+        {
+          "code": "quarterly",
+          "label_es": "Trimestral",
+          "definition_es": "Una ejecución por trimestre calendario: enero-marzo; abril-junio; julio-septiembre; octubre-diciembre.",
+          "restrictions_es": "No se deduce trimestre fiscal",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 14
+        },
+        {
+          "code": "semiannual",
+          "label_es": "Semestral",
+          "definition_es": "Una ejecución por semestre calendario: enero-junio o julio-diciembre.",
+          "restrictions_es": "No equivale a cada180días",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 15
+        },
+        {
+          "code": "annual",
+          "label_es": "Anual",
+          "definition_es": "Una ejecución por año calendario en la zona horaria contractual.",
+          "restrictions_es": "No equivale a365días ni crea fecha por defecto",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 16
+        },
+        {
+          "code": "event_driven",
+          "label_es": "Ante un evento",
+          "definition_es": "Ejecución al ocurrir el evento empresarial expresamente descrito en execution_method.",
+          "restrictions_es": "Sin trigger inequívoco no elegible; no inferir evento ni automatizar",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 17
+        }
+      ]
+    },
+    {
+      "id": "CV-04",
+      "schemas": [
+        "SoAApplicabilityDecision"
+      ],
+      "max_length": 32,
+      "owner": "Compliance Domain Owner",
+      "occurrences": [
+        "F-0341"
+      ],
+      "values": [
+        {
+          "code": "applicable",
+          "label_es": "Aplicable",
+          "definition_es": "El ControlVersion de referencia se considera aplicable al alcance declarado de esta SoA.",
+          "restrictions_es": "Decisión sobre ControlVersion; no crea RequirementApplicability",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 18
+        },
+        {
+          "code": "not_applicable",
+          "label_es": "No aplicable",
+          "definition_es": "El ControlVersion de referencia se excluye justificadamente del alcance de esta SoA.",
+          "restrictions_es": "justification obligatorio existente; no fuerza assessment ni score",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 19
+        }
+      ]
+    },
+    {
+      "id": "CV-05",
+      "schemas": [
+        "SoAImplementationState"
+      ],
+      "max_length": 32,
+      "owner": "Compliance + Controls Domain Owners",
+      "occurrences": [
+        "F-0343"
+      ],
+      "values": [
+        {
+          "code": "not_implemented",
+          "label_es": "Sin implementar",
+          "definition_es": "No se declara implementación tenant del control en el alcance de la SoA.",
+          "restrictions_es": "No cambia lifecycle del Control",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 20
+        },
+        {
+          "code": "partially_implemented",
+          "label_es": "Implementado parcialmente",
+          "definition_es": "Existe implementación incompleta respecto del alcance declarado.",
+          "restrictions_es": "No produce porcentaje de cumplimiento ni effectiveness",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 21
+        },
+        {
+          "code": "implemented",
+          "label_es": "Implementado",
+          "definition_es": "Se declara implementación completa para el alcance de esta SoA.",
+          "restrictions_es": "No implica efectividad probada; referencias tenant control/version coherentes",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 22
+        },
+        {
+          "code": "not_applicable",
+          "label_es": "No corresponde implementar",
+          "definition_es": "El ítem fue declarado no aplicable en esta SoA.",
+          "restrictions_es": "Sólo compatible con applicability_decision=not_applicable; regla nueva propuesta",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 23
+        }
+      ]
+    },
+    {
+      "id": "CV-06",
+      "schemas": [
+        "ActionEvidenceLinkRole"
+      ],
+      "max_length": 32,
+      "owner": "Actions + Evidence Domain Owners",
+      "occurrences": [
+        "F-0318"
+      ],
+      "values": [
+        {
+          "code": "closure",
+          "label_es": "Soporte de finalización",
+          "definition_es": "La EvidenceVersion aporta prueba de ejecución de la acción que pasa a completed.",
+          "restrictions_es": "No equivale a verified ni otorga rol; versión elegible same-tenant",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 24
+        }
+      ]
+    },
+    {
+      "id": "CV-07",
+      "schemas": [
+        "IssueOriginRole"
+      ],
+      "max_length": 32,
+      "owner": "Actions Domain Owner",
+      "occurrences": [
+        "F-0285"
+      ],
+      "values": [
+        {
+          "code": "trigger",
+          "label_es": "Origen desencadenante",
+          "definition_es": "La evaluación o prueba referenciada motivó la apertura del Issue.",
+          "restrictions_es": "Una FK fuente exacta; no crea regla automática ni transforma conclusión",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 25
+        }
+      ]
+    },
+    {
+      "id": "CV-08",
+      "schemas": [
+        "IssuePriority",
+        "ActionPriority"
+      ],
+      "max_length": 32,
+      "owner": "Actions Domain Owner",
+      "occurrences": [
+        "F-0279",
+        "F-0287",
+        "F-0300",
+        "F-0314",
+        "F-0329"
+      ],
+      "values": [
+        {
+          "code": "urgent",
+          "label_es": "Urgente",
+          "definition_es": "La atención debe preceder al resto de prioridades y requiere coordinación inmediata del owner.",
+          "restrictions_es": "Sin SLA numérico ni due_date automático",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 26
+        },
+        {
+          "code": "high",
+          "label_es": "Alta",
+          "definition_es": "La atención tiene precedencia sobre trabajo normal o de menor prioridad.",
+          "restrictions_es": "No se deriva de severity ni Risk level",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 27
+        },
+        {
+          "code": "normal",
+          "label_es": "Normal",
+          "definition_es": "Se atiende dentro de la planificación ordinaria aprobada.",
+          "restrictions_es": "No valor por defecto",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 28
+        },
+        {
+          "code": "low",
+          "label_es": "Baja",
+          "definition_es": "Puede planificarse después de las prioridades superiores manteniendo las obligaciones vigentes.",
+          "restrictions_es": "No autoriza incumplir vencimientos",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 29
+        }
+      ]
+    },
+    {
+      "id": "CV-09",
+      "schemas": [
+        "EvidenceRelevance"
+      ],
+      "max_length": 32,
+      "owner": "Evidence Domain Owner",
+      "occurrences": [
+        "F-0226",
+        "F-0229"
+      ],
+      "values": [
+        {
+          "code": "relevant",
+          "label_es": "Pertinente",
+          "definition_es": "La evidencia corresponde al claim; objeto; alcance y período que se revisan.",
+          "restrictions_es": "Requiere rationale; no suficiente automáticamente",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 30
+        },
+        {
+          "code": "partially_relevant",
+          "label_es": "Pertinente parcialmente",
+          "definition_es": "La evidencia cubre sólo parte del objeto; alcance o período del claim.",
+          "restrictions_es": "Describir límites en rationale; no ratio ni score implícito",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 31
+        },
+        {
+          "code": "not_relevant",
+          "label_es": "No pertinente",
+          "definition_es": "La evidencia no sustenta el claim en su objeto; alcance o período.",
+          "restrictions_es": "No reasignar a otro claim; decisión de rechazo separada",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 32
+        }
+      ]
+    },
+    {
+      "id": "CV-10",
+      "schemas": [
+        "AssuranceSelectionMethod"
+      ],
+      "max_length": 64,
+      "owner": "Assurance Domain Owner",
+      "occurrences": [
+        "F-0358"
+      ],
+      "values": [
+        {
+          "code": "census",
+          "label_es": "Censo",
+          "definition_es": "Se examinan todos los elementos de la población delimitada.",
+          "restrictions_es": "population_count conocido y sample_count=population_count; regla propuesta",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 33
+        },
+        {
+          "code": "random",
+          "label_es": "Aleatoria",
+          "definition_es": "Se selecciona mediante procedimiento aleatorio documentado con población identificada.",
+          "restrictions_es": "Registrar procedimiento y reproducibilidad en soporte autorizado del test",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 34
+        },
+        {
+          "code": "stratified_random",
+          "label_es": "Aleatoria estratificada",
+          "definition_es": "Se separa la población en estratos definidos y se selecciona aleatoriamente en cada estrato.",
+          "restrictions_es": "Documentar estratos y asignación; no deducirlos del código",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 35
+        },
+        {
+          "code": "systematic",
+          "label_es": "Sistemática",
+          "definition_es": "Se seleccionan elementos por intervalo fijo de una población ordenada; inicio documentado.",
+          "restrictions_es": "Documentar orden; inicio e intervalo; sin parámetros ficticios",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 36
+        },
+        {
+          "code": "judgmental",
+          "label_es": "Por juicio profesional",
+          "definition_es": "El tester selecciona por criterios profesionales explícitos pertinentes al objetivo de la prueba.",
+          "restrictions_es": "Documentar criterios; no implica representatividad estadística",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 37
+        }
+      ]
+    },
+    {
+      "id": "CV-11",
+      "schemas": [
+        "IssueSeverity"
+      ],
+      "max_length": 32,
+      "owner": "Actions / Finding Domain Owner",
+      "occurrences": [
+        "F-0278",
+        "F-0286",
+        "F-0299"
+      ],
+      "values": [
+        {
+          "code": "critical",
+          "label_es": "Crítica",
+          "definition_es": "La desviación compromete de forma fundamental el objetivo u obligación evaluados.",
+          "restrictions_es": "Justificar alcance; sin escala Risk; sin umbral económico implícito",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 38
+        },
+        {
+          "code": "major",
+          "label_es": "Mayor",
+          "definition_es": "La desviación impide sustancialmente satisfacer el objetivo u obligación en el alcance evaluado.",
+          "restrictions_es": "Criterio propio de hallazgo; no transforma en Risk",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 39
+        },
+        {
+          "code": "moderate",
+          "label_es": "Moderada",
+          "definition_es": "La desviación limita parcialmente el objetivo u obligación y requiere corrección identificable.",
+          "restrictions_es": "Sin relación automática con prioridad",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 40
+        },
+        {
+          "code": "minor",
+          "label_es": "Menor",
+          "definition_es": "La desviación es acotada y conserva capacidad sustancial de satisfacer el objetivo u obligación.",
+          "restrictions_es": "No significa conforme ni permite omitir remediación",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 41
+        }
+      ]
+    },
+    {
+      "id": "CV-12",
+      "schemas": [
+        "EvidenceSourceKind"
+      ],
+      "max_length": 32,
+      "owner": "Evidence Domain Owner",
+      "occurrences": [
+        "F-0213",
+        "F-0240"
+      ],
+      "values": [
+        {
+          "code": "uploaded",
+          "label_es": "Archivo aportado",
+          "definition_es": "La evidencia procede de un archivo aportado por una persona mediante el pipeline gobernado.",
+          "restrictions_es": "No convertir silenciosamente upload en uploaded; legacy mapping requiere decisión",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 42
+        },
+        {
+          "code": "system_record",
+          "label_es": "Registro de sistema",
+          "definition_es": "La evidencia representa un registro originado por un sistema identificado en provenance_ref.",
+          "restrictions_es": "FileObject exigido por evidenciaCreate vigente; no habilita conector",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 43
+        },
+        {
+          "code": "human_observation",
+          "label_es": "Observación humana",
+          "definition_es": "La evidencia documenta una observación realizada por una persona identificable en su provenance.",
+          "restrictions_es": "No es Observation canónica; exige soporte archivo por contrato vigente",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 44
+        },
+        {
+          "code": "external_record",
+          "label_es": "Registro externo",
+          "definition_es": "La evidencia procede de una fuente externa identificada y preservada en su provenance.",
+          "restrictions_es": "No acredita licencia ni importa norma; mismo pipeline archivo",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 45
+        }
+      ]
+    },
+    {
+      "id": "CV-13",
+      "schemas": [
+        "EvidenceSufficiency"
+      ],
+      "max_length": 32,
+      "owner": "Evidence Domain Owner",
+      "occurrences": [
+        "F-0225",
+        "F-0228"
+      ],
+      "values": [
+        {
+          "code": "sufficient",
+          "label_es": "Suficiente",
+          "definition_es": "La cantidad; cobertura y calidad de la evidencia bastan para fundamentar el claim delimitado.",
+          "restrictions_es": "Criterios y límites en rationale; no publica result_status",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 46
+        },
+        {
+          "code": "partially_sufficient",
+          "label_es": "Suficiente parcialmente",
+          "definition_es": "La evidencia fundamenta sólo parte del claim y las carencias se describen.",
+          "restrictions_es": "No factor0.50 ni inferencia desde Compliance",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 47
+        },
+        {
+          "code": "insufficient",
+          "label_es": "Insuficiente",
+          "definition_es": "La evidencia no basta para fundamentar el claim delimitado.",
+          "restrictions_es": "No transforma automáticamente en non_compliant ni cambia decision",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 48
+        }
+      ]
+    },
+    {
+      "id": "CV-14",
+      "schemas": [
+        "SuggestedBusinessOwnerRole"
+      ],
+      "max_length": 96,
+      "owner": "Controls Domain Owner + Security Reviewer",
+      "occurrences": [
+        "F-0079",
+        "F-0094"
+      ],
+      "values": [
+        {
+          "code": "COMPLIANCE_MANAGER",
+          "label_es": "Responsable de cumplimiento",
+          "definition_es": "Función empresarial sugerida para coordinar el control desde cumplimiento.",
+          "restrictions_es": "Sólo sugerencia; no RoleAssignment; no lookup de personas por rol",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 49
+        },
+        {
+          "code": "CONTROL_OWNER",
+          "label_es": "Responsable del control",
+          "definition_es": "Función empresarial sugerida de responsabilidad sobre la ejecución y mantenimiento del control.",
+          "restrictions_es": "No otorga controls.* ni resuelve autoridad owned_object",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 50
+        },
+        {
+          "code": "PROCESS_OWNER",
+          "label_es": "Responsable del proceso",
+          "definition_es": "Función empresarial sugerida para controlar una actividad del proceso bajo su responsabilidad.",
+          "restrictions_es": "No deriva Subject ni asigna memberships",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 51
+        },
+        {
+          "code": "QUALITY_MANAGER",
+          "label_es": "Responsable de calidad",
+          "definition_es": "Función empresarial sugerida para controles del sistema de calidad.",
+          "restrictions_es": "No convierte permiso IAM en selección empresarial",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 52
+        },
+        {
+          "code": "CISO_SECURITY_MANAGER",
+          "label_es": "Responsable de seguridad",
+          "definition_es": "Función empresarial sugerida para controles de seguridad de la información.",
+          "restrictions_es": "Código existente IAM sólo reutilizable tras mapping explícito de Domain/Security",
+          "state": "active",
+          "selectable": true,
+          "source_csv_line": 53
+        }
+      ]
+    }
+  ]
+}

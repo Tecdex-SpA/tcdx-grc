@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { parseDocument } from "yaml";
-import { Ajv2020, type AnySchemaObject } from "ajv/dist/2020.js";
-import addFormats from "ajv-formats";
+import type { AnySchemaObject } from "ajv";
+import { contractSchemaValidator } from "./testing/schema-validator.js";
 import openApiSource from "../../../docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml?raw";
 import matrix from "../../../docs/executable-contracts/03_API_RESOURCE_OPERATION_MATRIX.md?raw";
 import permissionCatalog from "../../../docs/executable-contracts/05_PERMISSION_CATALOG.md?raw";
@@ -28,12 +28,7 @@ type Api = {
 
 const document = parseDocument(openApiSource, { uniqueKeys: true });
 const api = document.toJS() as Api;
-const ajv = new Ajv2020({ strict: false, allErrors: true });
-// Formats come from the existing locked validator package, not custom approximations.
-const installFormats = addFormats as unknown as (instance: Ajv2020) => void;
-installFormats(ajv);
-ajv.addSchema({ $id: "urn:tcdx:mi7a:openapi", components: api.components });
-const validator = (name: string) => ajv.compile({ $ref: `urn:tcdx:mi7a:openapi#/components/schemas/${name}` });
+const { compilerFor: schemaCompiler, compile: validator } = contractSchemaValidator(api.components.schemas);
 const providerValidator = validator("AuthenticationProviderAvailability");
 const authorizationValidator = validator("CurrentPrincipalAuthorization");
 const scopeValidator = validator("TenantPermissionScope");
@@ -59,6 +54,69 @@ function visitReferences(value: unknown): void {
 }
 
 describe("MI7A schema-first frontend projections (no runtime implementation)", () => {
+  it("enforces dialect-specific keywords and rejects malformed schemas in both dialects", () => {
+    // Synthetic validator probes only; no published Schema Object is modified.
+    const probes = contractSchemaValidator({
+      legacy: { $schema: "http://json-schema.org/draft-07/schema#", type: "object", dependencies: { a: ["b"] } },
+      modern: { $schema: "https://json-schema.org/draft/2020-12/schema", type: "array", prefixItems: [{ type: "integer" }], items: false },
+      malformedLegacy: { $schema: "http://json-schema.org/draft-07/schema#", type: "invalid-type" },
+      malformedModern: { $schema: "https://json-schema.org/draft/2020-12/schema", type: "invalid-type" },
+      unsupported: { $schema: "urn:unsupported:dialect", type: "object" }
+    });
+    const legacy = probes.compile("legacy");
+    expect(legacy({ a: 1, b: 2 })).toBe(true);
+    expect(legacy({ a: 1 })).toBe(false);
+    const modern = probes.compile("modern");
+    expect(modern([1])).toBe(true);
+    expect(modern(["1"])).toBe(false);
+    expect(modern([1, 2])).toBe(false);
+    for (const name of ["malformedLegacy", "malformedModern"]) {
+      expect(probes.compilerFor(name).validateSchema({ type: "invalid-type" })).toBe(false);
+      expect(() => probes.compile(name)).toThrow();
+    }
+    expect(() => probes.compile("unsupported")).toThrow("Unsupported published JSON Schema dialect");
+    expect(() => probes.compile("absent")).toThrow("Unknown contract schema");
+  });
+
+  it.each([
+    ["numeric int64", { configuration_definition: { version_number: 1 } }],
+    ["zero version", { configuration_definition: { version_number: "0" } }],
+    ["leading zero", { configuration_definition: { version_number: "01" } }],
+    ["int64 overflow", { configuration_definition: { version_number: "9223372036854775808" } }],
+    ["missing required fields", {}],
+    ["unexpected property", { secret_value: "fixture" }],
+    ["invalid UUID", { effective_configuration_id: "invalid" }],
+    ["invalid timestamp", { effective_at: "invalid" }],
+    ["timestamp outside UTC", { effective_at: "2026-10-09T01:00:00+01:00" }],
+    ["invalid hash", { input_hash: "invalid" }],
+    ["zero ordinal", { layers: [{ ordinal: 0 }] }],
+    ["non-boolean selection", { layers: [{ was_selected: 1 }] }]
+  ])("rejects invalid published EC data with its declared dialect: %s", (_case, defect) => {
+    const validate = validator("EffectiveConfigurationDetailReadResult");
+    const fixture = {
+      operation_id: "effectiveConfigurationGet", status: "completed", correlation_id: tenantId,
+      result: {
+        effective_configuration_id: tenantId,
+        configuration_definition: { configuration_definition_id: tenantId, configuration_code: "fixture", version_number: "9223372036854775807" },
+        resolved_for_subject_id: null, effective_at: "2026-10-09T00:00:00Z", resolved_at: "2026-10-09T00:00:00Z",
+        resolution_status: "fixture", input_hash: "a".repeat(64),
+        layers: [{ configuration_definition_id: tenantId, configuration_override_id: null, precedence_level: "fixture", ordinal: 1, was_selected: true }]
+      }
+    };
+    expect(validate(fixture)).toBe(true);
+    const invalid = structuredClone(fixture);
+    if (_case === "missing required fields") {
+      delete (invalid.result as Partial<typeof fixture.result>).layers;
+    } else if ("configuration_definition" in defect) {
+      Object.assign(invalid.result.configuration_definition, defect.configuration_definition);
+    } else if ("layers" in defect) {
+      Object.assign(invalid.result.layers[0]!, defect.layers[0]);
+    } else {
+      Object.assign(invalid.result, defect);
+    }
+    expect(validate(invalid)).toBe(false);
+  });
+
   it("validates complete OpenAPI YAML, local references and every component JSON schema", () => {
     expect(document.errors).toEqual([]);
     expect(api.openapi).toBe("3.1.0");
@@ -67,7 +125,8 @@ describe("MI7A schema-first frontend projections (no runtime implementation)", (
     expect(api.servers.map(({ url }) => url)).toContain("/api/v1");
     visitReferences(api);
     for (const [name, schema] of Object.entries(api.components.schemas)) {
-      expect(ajv.validateSchema(schema), `${name}: ${ajv.errorsText()}`).toBe(true);
+      const compiler = schemaCompiler(name);
+      expect(compiler.validateSchema(schema), `${name}: ${compiler.errorsText()}`).toBe(true);
       expect(() => validator(name), name).not.toThrow();
     }
   });
@@ -75,10 +134,10 @@ describe("MI7A schema-first frontend projections (no runtime implementation)", (
   it("retains exact operation/path/method parity, traceability and mutation counts", () => {
     const operations = Object.entries(api.paths).flatMap(([path, methods]) => Object.entries(methods).filter(([method]) => ["get", "post", "put"].includes(method)).map(([method, operation]) => ({ path, method, operation })));
     const rows = matrix.split("\n").filter((row) => /^\| \w+ \| (GET|POST|PUT) `/.test(row));
-    expect(operations).toHaveLength(161);
+    expect(operations).toHaveLength(164);
     expect(rows).toHaveLength(operations.length);
     expect(new Set(operations.map(({ operation }) => operation.operationId)).size).toBe(operations.length);
-    expect(operations.filter(({ method }) => method === "get")).toHaveLength(56);
+    expect(operations.filter(({ method }) => method === "get")).toHaveLength(59);
     expect(operations.filter(({ method }) => method !== "get")).toHaveLength(105);
     for (const { method, path, operation } of operations) {
       expect(rows.filter((row) => row.startsWith(`| ${operation.operationId} | ${method.toUpperCase()} \`${path}\``))).toHaveLength(1);
@@ -146,7 +205,7 @@ describe("MI7A schema-first frontend projections (no runtime implementation)", (
   it("keeps denied platform access separate from tenant permission grants and preserves scope references", () => {
     expect(authorizationValidator(authorizationFixture())).toBe(true);
     const scopes: TenantPermissionScope[] = [{ scope_kind: "tenant" }, { scope_kind: "organizational_unit", organizational_unit_id: tenantId }, { scope_kind: "process", process_id: tenantId }, { scope_kind: "service", service_id: tenantId }, { scope_kind: "audit_engagement", audit_id: tenantId }, { scope_kind: "assigned_object" }, { scope_kind: "owned_object" }];
-    const tenantOnly: CurrentPrincipalAuthorization = { ...authorizationFixture(), tenant_permissions: { tenant_id: tenantId, permissions: { "controls.control.read": scopes } } };
+    const tenantOnly: CurrentPrincipalAuthorization = { ...authorizationFixture(), tenant_permissions: { tenant_id: tenantId, default_timezone: "Europe/Berlin", permissions: { "controls.control.read": scopes } } };
     expect(authorizationValidator(tenantOnly)).toBe(true);
     expect(tenantOnly.platform_permissions).toEqual([]);
     expect(authorizationValidator({ ...authorizationFixture(), platform_permissions: miPermissions })).toBe(true);
@@ -154,7 +213,7 @@ describe("MI7A schema-first frontend projections (no runtime implementation)", (
   });
 
   it.each(miPermissions)("rejects platform-only MI permission %s in a tenant projection", (permission) => {
-    expect(authorizationValidator({ ...authorizationFixture(), tenant_permissions: { tenant_id: tenantId, permissions: { [permission]: [{ scope_kind: "tenant" }] } } })).toBe(false);
+    expect(authorizationValidator({ ...authorizationFixture(), tenant_permissions: { tenant_id: tenantId, default_timezone: "Europe/Berlin", permissions: { [permission]: [{ scope_kind: "tenant" }] } } })).toBe(false);
   });
 
   it("rejects scope widening, missing/foreign fields, duplicate/empty scopes and role names as permissions", () => {
@@ -165,7 +224,7 @@ describe("MI7A schema-first frontend projections (no runtime implementation)", (
     expect(scopeValidator({ scope_kind: "owned_object", object_id: tenantId })).toBe(false);
     expect(scopeValidator({ scope_kind: "service", service_id: "invalid" })).toBe(false);
     for (const permissions of [{ "controls.control.read": [] }, { "controls.control.read": [{ scope_kind: "tenant" }, { scope_kind: "tenant" }] }, { PLATFORM_ADMIN: [{ scope_kind: "tenant" }] }]) {
-      expect(authorizationValidator({ ...authorizationFixture(), tenant_permissions: { tenant_id: tenantId, permissions } })).toBe(false);
+      expect(authorizationValidator({ ...authorizationFixture(), tenant_permissions: { tenant_id: tenantId, default_timezone: "Europe/Berlin", permissions } })).toBe(false);
     }
     expect(authorizationValidator({ ...authorizationFixture(), platform_permissions: [miPermissions[0], miPermissions[0]] })).toBe(false);
     expect(authorizationValidator({ ...authorizationFixture(), platform_permissions: ["PLATFORM_ADMIN"] })).toBe(false);
@@ -184,7 +243,7 @@ describe("MI7A schema-first frontend projections (no runtime implementation)", (
   it("preserves MI permission scopes and follows approved P2A local publication continuity", () => {
     const seeds = JSON.parse(seedSource) as { permissionRows: number; [key: string]: unknown };
     const extraRows = Object.values(seeds).filter((value): value is { permissionRows: number } => !!value && typeof value === "object" && "permissionRows" in value);
-    expect(seeds.permissionRows + extraRows.reduce((sum, value) => sum + value.permissionRows, 0)).toBe(172);
+    expect(seeds.permissionRows + extraRows.reduce((sum, value) => sum + value.permissionRows, 0)).toBe(175);
     const mi = seeds.managedIdentityPermissions as { permissionCodes: string[] };
     expect(mi.permissionCodes).toEqual(miPermissions);
     for (const code of mi.permissionCodes) expect(permissionCatalog).toContain(code);
@@ -192,7 +251,7 @@ describe("MI7A schema-first frontend projections (no runtime implementation)", (
     expect(permissionCatalog).not.toContain("currentPrincipalAuthorizationRead");
     expect(permissionCatalog).not.toContain("authenticationProviderList");
     const migrations = JSON.parse(migrationSource) as { migrations: Array<{ id: string }> };
-    expect(migrations.migrations).toHaveLength(30);
+    expect(migrations.migrations).toHaveLength(32);
     expect(migrations.migrations[27]?.id).toBe("20261006000200");
     const physical = JSON.parse(schemaSource) as { tableCount: number; tables: Array<{ name: string }> };
     expect(physical.tableCount).toBe(237);

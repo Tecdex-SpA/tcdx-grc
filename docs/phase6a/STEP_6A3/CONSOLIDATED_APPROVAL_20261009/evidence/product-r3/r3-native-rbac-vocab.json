@@ -1,0 +1,2441 @@
+{
+  "status": "PASS_LOCAL_PUBLICATION_RECONCILIATION",
+  "inventory": [
+    {
+      "column": "controls.control_versions.frequency_code",
+      "values": [
+        {
+          "code": "continuous",
+          "count": "212"
+        }
+      ],
+      "historical_action": "PRESERVE; NO_ALIAS_OR_BACKFILL"
+    },
+    {
+      "column": "controls.control_versions.suggested_owner_role_code",
+      "values": [
+        {
+          "code": "COMPLIANCE_MANAGER",
+          "count": "212"
+        }
+      ],
+      "historical_action": "PRESERVE; NO_ALIAS_OR_BACKFILL"
+    },
+    {
+      "column": "evidence.evidences.evidence_type",
+      "values": [],
+      "historical_action": "PRESERVE; NO_ALIAS_OR_BACKFILL"
+    },
+    {
+      "column": "evidence.evidences.source_kind",
+      "values": [],
+      "historical_action": "PRESERVE; NO_ALIAS_OR_BACKFILL"
+    },
+    {
+      "column": "evidence.file_upload_intents.classification",
+      "values": [],
+      "historical_action": "PRESERVE; NO_ALIAS_OR_BACKFILL"
+    },
+    {
+      "column": "evidence.file_objects.classification",
+      "values": [],
+      "historical_action": "PRESERVE; NO_ALIAS_OR_BACKFILL"
+    },
+    {
+      "column": "evidence.evidence_reviews.sufficiency",
+      "values": [],
+      "historical_action": "PRESERVE; NO_ALIAS_OR_BACKFILL"
+    },
+    {
+      "column": "evidence.evidence_reviews.relevance",
+      "values": [],
+      "historical_action": "PRESERVE; NO_ALIAS_OR_BACKFILL"
+    },
+    {
+      "column": "remediation.issues.severity",
+      "values": [],
+      "historical_action": "PRESERVE; NO_ALIAS_OR_BACKFILL"
+    },
+    {
+      "column": "remediation.issues.priority",
+      "values": [],
+      "historical_action": "PRESERVE; NO_ALIAS_OR_BACKFILL"
+    },
+    {
+      "column": "remediation.actions.priority",
+      "values": [],
+      "historical_action": "PRESERVE; NO_ALIAS_OR_BACKFILL"
+    },
+    {
+      "column": "remediation.issue_origins.origin_role",
+      "values": [],
+      "historical_action": "PRESERVE; NO_ALIAS_OR_BACKFILL"
+    },
+    {
+      "column": "remediation.action_evidence_links.link_role",
+      "values": [],
+      "historical_action": "PRESERVE; NO_ALIAS_OR_BACKFILL"
+    },
+    {
+      "column": "regulatory.statement_of_applicability_items.applicability_decision",
+      "values": [],
+      "historical_action": "PRESERVE; NO_ALIAS_OR_BACKFILL"
+    },
+    {
+      "column": "regulatory.statement_of_applicability_items.implementation_state",
+      "values": [],
+      "historical_action": "PRESERVE; NO_ALIAS_OR_BACKFILL"
+    },
+    {
+      "column": "controls.assurance_samples.selection_method",
+      "values": [],
+      "historical_action": "PRESERVE; NO_ALIAS_OR_BACKFILL"
+    }
+  ],
+  "read_only": true,
+  "transaction_end": "ROLLBACK",
+  "pairs": [
+    {
+      "role_code": "EXECUTIVE_BOARD_VIEWER",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F read; M/R sólo history parent autorizado",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:104",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:69",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:59",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "EXECUTIVE_BOARD_VIEWER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F read; M/R sólo history parent autorizado",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:104",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:69",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "EXECUTIVE_BOARD_VIEWER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F read; M/R sólo history parent autorizado",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:104",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:69",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "GRC_MANAGER",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F; M request/action; R sólo history salvo command grant independiente",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:105",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:70",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:59",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "GRC_MANAGER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F; M request/action; R sólo history salvo command grant independiente",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:105",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:70",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "GRC_MANAGER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F; M request/action; R sólo history salvo command grant independiente",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:105",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:70",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "QUALITY_MANAGER",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F; M action; R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:106",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:71",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:59",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "QUALITY_MANAGER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F; M action; R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:106",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:71",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "QUALITY_MANAGER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F; M action; R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:106",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:71",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F; M request/action; R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:107",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:72",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:59",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F; M request/action; R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:107",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:72",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F; M request/action; R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:107",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:72",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "RISK_MANAGER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "M action/history Action; no Risk runtime nuevo",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:108",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:73",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:109",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:74",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:59",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:109",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:74",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:109",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:74",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:110",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:75",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:59",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:110",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:75",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:110",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:75",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "PRIVACY_MANAGER",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F; M/R history; retención admin conserva PRIVACY",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:111",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:76",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:59",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "PRIVACY_MANAGER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F; M/R history; retención admin conserva PRIVACY",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:111",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:76",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "PRIVACY_MANAGER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F; M/R history; retención admin conserva PRIVACY",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:111",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:76",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "LEGAL_REVIEWER",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F; M/R history; ninguna aprobación automática",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:112",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:77",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:59",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "LEGAL_REVIEWER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F; M/R history; ninguna aprobación automática",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:112",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:77",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "LEGAL_REVIEWER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F; M/R history; ninguna aprobación automática",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:112",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:77",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "AUDITOR_LEAD",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F; M request/action; R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:113",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:78",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "AUDITOR_LEAD",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F; M request/action; R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:113",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:78",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "AUDITOR_LEAD",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F; M request/action; R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:113",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:78",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "AUDITOR",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F; M request; R upload por document.create; M action DENY por RBAC-D01",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:114",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:79",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "AUDITOR",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F; M request; R upload por document.create; M action DENY por RBAC-D01",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:114",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:79",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "AUDITOR",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F; M request; R upload por document.create; M action DENY por RBAC-D01",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:114",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:79",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:76"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "PROCESS_OWNER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "M sólo history de Action/Assurance autorizado",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:115",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:80",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "CONTROL_OWNER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "M request; R upload; history sólo parent permitido",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:116",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:81",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "CONTROL_OWNER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "M request; R upload; history sólo parent permitido",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:116",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:81",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:76"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "EVIDENCE_OWNER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "M history; R upload/evidence; sin autoaprobar",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:117",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:82",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "EVIDENCE_OWNER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "M history; R upload/evidence; sin autoaprobar",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:117",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:82",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:76",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:141"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "ACTION_OWNER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "M history Action; sin create/verificación implícita",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:118",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:83",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "REGULATORY_CONTENT_STEWARD",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F read, sin publicación editorial",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:121",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:86",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:59"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "REPORT_VIEWER",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F read; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:123",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:88",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:59",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "REPORT_VIEWER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F read; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:123",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:88",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "REPORT_VIEWER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F read; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:123",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:88",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "VIEWER",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F read; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:124",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:89",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:59",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "VIEWER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F read; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:124",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:89",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    },
+    {
+      "role_code": "VIEWER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "authority": "TENANT_CONTEXT_REQUIRED; TEMPLATE_PLATFORM_CONTROL_IS_NOT_PLATFORM_ACTOR_AUTHORITY",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F read; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:124",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:89",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131"
+      ],
+      "broader_than_purpose_union": false,
+      "role_verified": true,
+      "permission_exists": true,
+      "before_native": 0,
+      "after_native": 1
+    }
+  ],
+  "vocabulary": [
+    {
+      "decision_id": "CV-01",
+      "value": "public",
+      "label_es": "Pública",
+      "physical": [
+        {
+          "field": "F-0223",
+          "physical_column": "evidence.file_upload_intents.classification",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0223",
+          "physical_column": "evidence.file_objects.classification",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-01",
+      "value": "internal",
+      "label_es": "Interna",
+      "physical": [
+        {
+          "field": "F-0223",
+          "physical_column": "evidence.file_upload_intents.classification",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0223",
+          "physical_column": "evidence.file_objects.classification",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-01",
+      "value": "confidential",
+      "label_es": "Confidencial",
+      "physical": [
+        {
+          "field": "F-0223",
+          "physical_column": "evidence.file_upload_intents.classification",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0223",
+          "physical_column": "evidence.file_objects.classification",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-01",
+      "value": "restricted",
+      "label_es": "Restringida",
+      "physical": [
+        {
+          "field": "F-0223",
+          "physical_column": "evidence.file_upload_intents.classification",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0223",
+          "physical_column": "evidence.file_objects.classification",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-02",
+      "value": "document",
+      "label_es": "Documento",
+      "physical": [
+        {
+          "field": "F-0208",
+          "physical_column": "evidence.evidences.evidence_type",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0234",
+          "physical_column": "evidence.evidences.evidence_type",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-02",
+      "value": "record",
+      "label_es": "Registro",
+      "physical": [
+        {
+          "field": "F-0208",
+          "physical_column": "evidence.evidences.evidence_type",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0234",
+          "physical_column": "evidence.evidences.evidence_type",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-02",
+      "value": "image",
+      "label_es": "Imagen",
+      "physical": [
+        {
+          "field": "F-0208",
+          "physical_column": "evidence.evidences.evidence_type",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0234",
+          "physical_column": "evidence.evidences.evidence_type",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-02",
+      "value": "report",
+      "label_es": "Informe",
+      "physical": [
+        {
+          "field": "F-0208",
+          "physical_column": "evidence.evidences.evidence_type",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0234",
+          "physical_column": "evidence.evidences.evidence_type",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-03",
+      "value": "continuous",
+      "label_es": "Continua",
+      "physical": [
+        {
+          "field": "F-0075",
+          "physical_column": "controls.control_versions.frequency_code",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0090",
+          "physical_column": "controls.control_versions.frequency_code",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-03",
+      "value": "daily",
+      "label_es": "Diaria",
+      "physical": [
+        {
+          "field": "F-0075",
+          "physical_column": "controls.control_versions.frequency_code",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0090",
+          "physical_column": "controls.control_versions.frequency_code",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-03",
+      "value": "weekly",
+      "label_es": "Semanal",
+      "physical": [
+        {
+          "field": "F-0075",
+          "physical_column": "controls.control_versions.frequency_code",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0090",
+          "physical_column": "controls.control_versions.frequency_code",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-03",
+      "value": "monthly",
+      "label_es": "Mensual",
+      "physical": [
+        {
+          "field": "F-0075",
+          "physical_column": "controls.control_versions.frequency_code",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0090",
+          "physical_column": "controls.control_versions.frequency_code",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-03",
+      "value": "quarterly",
+      "label_es": "Trimestral",
+      "physical": [
+        {
+          "field": "F-0075",
+          "physical_column": "controls.control_versions.frequency_code",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0090",
+          "physical_column": "controls.control_versions.frequency_code",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-03",
+      "value": "semiannual",
+      "label_es": "Semestral",
+      "physical": [
+        {
+          "field": "F-0075",
+          "physical_column": "controls.control_versions.frequency_code",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0090",
+          "physical_column": "controls.control_versions.frequency_code",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-03",
+      "value": "annual",
+      "label_es": "Anual",
+      "physical": [
+        {
+          "field": "F-0075",
+          "physical_column": "controls.control_versions.frequency_code",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0090",
+          "physical_column": "controls.control_versions.frequency_code",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-03",
+      "value": "event_driven",
+      "label_es": "Ante un evento",
+      "physical": [
+        {
+          "field": "F-0075",
+          "physical_column": "controls.control_versions.frequency_code",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0090",
+          "physical_column": "controls.control_versions.frequency_code",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-04",
+      "value": "applicable",
+      "label_es": "Aplicable",
+      "physical": [
+        {
+          "field": "F-0341",
+          "physical_column": "regulatory.statement_of_applicability_items.applicability_decision",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-04",
+      "value": "not_applicable",
+      "label_es": "No aplicable",
+      "physical": [
+        {
+          "field": "F-0341",
+          "physical_column": "regulatory.statement_of_applicability_items.applicability_decision",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-05",
+      "value": "not_implemented",
+      "label_es": "Sin implementar",
+      "physical": [
+        {
+          "field": "F-0343",
+          "physical_column": "regulatory.statement_of_applicability_items.implementation_state",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-05",
+      "value": "partially_implemented",
+      "label_es": "Implementado parcialmente",
+      "physical": [
+        {
+          "field": "F-0343",
+          "physical_column": "regulatory.statement_of_applicability_items.implementation_state",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-05",
+      "value": "implemented",
+      "label_es": "Implementado",
+      "physical": [
+        {
+          "field": "F-0343",
+          "physical_column": "regulatory.statement_of_applicability_items.implementation_state",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-05",
+      "value": "not_applicable",
+      "label_es": "No corresponde implementar",
+      "physical": [
+        {
+          "field": "F-0343",
+          "physical_column": "regulatory.statement_of_applicability_items.implementation_state",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-06",
+      "value": "closure",
+      "label_es": "Soporte de finalización",
+      "physical": [
+        {
+          "field": "F-0318",
+          "physical_column": "remediation.action_evidence_links.link_role",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-07",
+      "value": "trigger",
+      "label_es": "Origen desencadenante",
+      "physical": [
+        {
+          "field": "F-0285",
+          "physical_column": "remediation.issue_origins.origin_role",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-08",
+      "value": "urgent",
+      "label_es": "Urgente",
+      "physical": [
+        {
+          "field": "F-0279",
+          "physical_column": "remediation.issues.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0279",
+          "physical_column": "remediation.actions.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0287",
+          "physical_column": "remediation.issues.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0287",
+          "physical_column": "remediation.actions.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0300",
+          "physical_column": "remediation.issues.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0300",
+          "physical_column": "remediation.actions.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0314",
+          "physical_column": "remediation.issues.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0314",
+          "physical_column": "remediation.actions.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0329",
+          "physical_column": "remediation.issues.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0329",
+          "physical_column": "remediation.actions.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-08",
+      "value": "high",
+      "label_es": "Alta",
+      "physical": [
+        {
+          "field": "F-0279",
+          "physical_column": "remediation.issues.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0279",
+          "physical_column": "remediation.actions.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0287",
+          "physical_column": "remediation.issues.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0287",
+          "physical_column": "remediation.actions.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0300",
+          "physical_column": "remediation.issues.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0300",
+          "physical_column": "remediation.actions.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0314",
+          "physical_column": "remediation.issues.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0314",
+          "physical_column": "remediation.actions.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0329",
+          "physical_column": "remediation.issues.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0329",
+          "physical_column": "remediation.actions.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-08",
+      "value": "normal",
+      "label_es": "Normal",
+      "physical": [
+        {
+          "field": "F-0279",
+          "physical_column": "remediation.issues.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0279",
+          "physical_column": "remediation.actions.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0287",
+          "physical_column": "remediation.issues.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0287",
+          "physical_column": "remediation.actions.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0300",
+          "physical_column": "remediation.issues.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0300",
+          "physical_column": "remediation.actions.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0314",
+          "physical_column": "remediation.issues.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0314",
+          "physical_column": "remediation.actions.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0329",
+          "physical_column": "remediation.issues.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0329",
+          "physical_column": "remediation.actions.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-08",
+      "value": "low",
+      "label_es": "Baja",
+      "physical": [
+        {
+          "field": "F-0279",
+          "physical_column": "remediation.issues.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0279",
+          "physical_column": "remediation.actions.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0287",
+          "physical_column": "remediation.issues.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0287",
+          "physical_column": "remediation.actions.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0300",
+          "physical_column": "remediation.issues.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0300",
+          "physical_column": "remediation.actions.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0314",
+          "physical_column": "remediation.issues.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0314",
+          "physical_column": "remediation.actions.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0329",
+          "physical_column": "remediation.issues.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0329",
+          "physical_column": "remediation.actions.priority",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-09",
+      "value": "relevant",
+      "label_es": "Pertinente",
+      "physical": [
+        {
+          "field": "F-0226",
+          "physical_column": "evidence.evidence_reviews.relevance",
+          "physical_max_length": 32,
+          "physical_nullable": "YES"
+        },
+        {
+          "field": "F-0229",
+          "physical_column": "evidence.evidence_reviews.relevance",
+          "physical_max_length": 32,
+          "physical_nullable": "YES"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-09",
+      "value": "partially_relevant",
+      "label_es": "Pertinente parcialmente",
+      "physical": [
+        {
+          "field": "F-0226",
+          "physical_column": "evidence.evidence_reviews.relevance",
+          "physical_max_length": 32,
+          "physical_nullable": "YES"
+        },
+        {
+          "field": "F-0229",
+          "physical_column": "evidence.evidence_reviews.relevance",
+          "physical_max_length": 32,
+          "physical_nullable": "YES"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-09",
+      "value": "not_relevant",
+      "label_es": "No pertinente",
+      "physical": [
+        {
+          "field": "F-0226",
+          "physical_column": "evidence.evidence_reviews.relevance",
+          "physical_max_length": 32,
+          "physical_nullable": "YES"
+        },
+        {
+          "field": "F-0229",
+          "physical_column": "evidence.evidence_reviews.relevance",
+          "physical_max_length": 32,
+          "physical_nullable": "YES"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-10",
+      "value": "census",
+      "label_es": "Censo",
+      "physical": [
+        {
+          "field": "F-0358",
+          "physical_column": "controls.assurance_samples.selection_method",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-10",
+      "value": "random",
+      "label_es": "Aleatoria",
+      "physical": [
+        {
+          "field": "F-0358",
+          "physical_column": "controls.assurance_samples.selection_method",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-10",
+      "value": "stratified_random",
+      "label_es": "Aleatoria estratificada",
+      "physical": [
+        {
+          "field": "F-0358",
+          "physical_column": "controls.assurance_samples.selection_method",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-10",
+      "value": "systematic",
+      "label_es": "Sistemática",
+      "physical": [
+        {
+          "field": "F-0358",
+          "physical_column": "controls.assurance_samples.selection_method",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-10",
+      "value": "judgmental",
+      "label_es": "Por juicio profesional",
+      "physical": [
+        {
+          "field": "F-0358",
+          "physical_column": "controls.assurance_samples.selection_method",
+          "physical_max_length": 64,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-11",
+      "value": "critical",
+      "label_es": "Crítica",
+      "physical": [
+        {
+          "field": "F-0278",
+          "physical_column": "remediation.issues.severity",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0286",
+          "physical_column": "remediation.issues.severity",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0299",
+          "physical_column": "remediation.issues.severity",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-11",
+      "value": "major",
+      "label_es": "Mayor",
+      "physical": [
+        {
+          "field": "F-0278",
+          "physical_column": "remediation.issues.severity",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0286",
+          "physical_column": "remediation.issues.severity",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0299",
+          "physical_column": "remediation.issues.severity",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-11",
+      "value": "moderate",
+      "label_es": "Moderada",
+      "physical": [
+        {
+          "field": "F-0278",
+          "physical_column": "remediation.issues.severity",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0286",
+          "physical_column": "remediation.issues.severity",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0299",
+          "physical_column": "remediation.issues.severity",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-11",
+      "value": "minor",
+      "label_es": "Menor",
+      "physical": [
+        {
+          "field": "F-0278",
+          "physical_column": "remediation.issues.severity",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0286",
+          "physical_column": "remediation.issues.severity",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0299",
+          "physical_column": "remediation.issues.severity",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-12",
+      "value": "uploaded",
+      "label_es": "Archivo aportado",
+      "physical": [
+        {
+          "field": "F-0213",
+          "physical_column": "evidence.evidences.source_kind",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0240",
+          "physical_column": "evidence.evidences.source_kind",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-12",
+      "value": "system_record",
+      "label_es": "Registro de sistema",
+      "physical": [
+        {
+          "field": "F-0213",
+          "physical_column": "evidence.evidences.source_kind",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0240",
+          "physical_column": "evidence.evidences.source_kind",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-12",
+      "value": "human_observation",
+      "label_es": "Observación humana",
+      "physical": [
+        {
+          "field": "F-0213",
+          "physical_column": "evidence.evidences.source_kind",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0240",
+          "physical_column": "evidence.evidences.source_kind",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-12",
+      "value": "external_record",
+      "label_es": "Registro externo",
+      "physical": [
+        {
+          "field": "F-0213",
+          "physical_column": "evidence.evidences.source_kind",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        },
+        {
+          "field": "F-0240",
+          "physical_column": "evidence.evidences.source_kind",
+          "physical_max_length": 32,
+          "physical_nullable": "NO"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-13",
+      "value": "sufficient",
+      "label_es": "Suficiente",
+      "physical": [
+        {
+          "field": "F-0225",
+          "physical_column": "evidence.evidence_reviews.sufficiency",
+          "physical_max_length": 32,
+          "physical_nullable": "YES"
+        },
+        {
+          "field": "F-0228",
+          "physical_column": "evidence.evidence_reviews.sufficiency",
+          "physical_max_length": 32,
+          "physical_nullable": "YES"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-13",
+      "value": "partially_sufficient",
+      "label_es": "Suficiente parcialmente",
+      "physical": [
+        {
+          "field": "F-0225",
+          "physical_column": "evidence.evidence_reviews.sufficiency",
+          "physical_max_length": 32,
+          "physical_nullable": "YES"
+        },
+        {
+          "field": "F-0228",
+          "physical_column": "evidence.evidence_reviews.sufficiency",
+          "physical_max_length": 32,
+          "physical_nullable": "YES"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-13",
+      "value": "insufficient",
+      "label_es": "Insuficiente",
+      "physical": [
+        {
+          "field": "F-0225",
+          "physical_column": "evidence.evidence_reviews.sufficiency",
+          "physical_max_length": 32,
+          "physical_nullable": "YES"
+        },
+        {
+          "field": "F-0228",
+          "physical_column": "evidence.evidence_reviews.sufficiency",
+          "physical_max_length": 32,
+          "physical_nullable": "YES"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-14",
+      "value": "COMPLIANCE_MANAGER",
+      "label_es": "Responsable de cumplimiento",
+      "physical": [
+        {
+          "field": "F-0079",
+          "physical_column": "controls.control_versions.suggested_owner_role_code",
+          "physical_max_length": 96,
+          "physical_nullable": "YES"
+        },
+        {
+          "field": "F-0094",
+          "physical_column": "controls.control_versions.suggested_owner_role_code",
+          "physical_max_length": 96,
+          "physical_nullable": "YES"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-14",
+      "value": "CONTROL_OWNER",
+      "label_es": "Responsable del control",
+      "physical": [
+        {
+          "field": "F-0079",
+          "physical_column": "controls.control_versions.suggested_owner_role_code",
+          "physical_max_length": 96,
+          "physical_nullable": "YES"
+        },
+        {
+          "field": "F-0094",
+          "physical_column": "controls.control_versions.suggested_owner_role_code",
+          "physical_max_length": 96,
+          "physical_nullable": "YES"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-14",
+      "value": "PROCESS_OWNER",
+      "label_es": "Responsable del proceso",
+      "physical": [
+        {
+          "field": "F-0079",
+          "physical_column": "controls.control_versions.suggested_owner_role_code",
+          "physical_max_length": 96,
+          "physical_nullable": "YES"
+        },
+        {
+          "field": "F-0094",
+          "physical_column": "controls.control_versions.suggested_owner_role_code",
+          "physical_max_length": 96,
+          "physical_nullable": "YES"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-14",
+      "value": "QUALITY_MANAGER",
+      "label_es": "Responsable de calidad",
+      "physical": [
+        {
+          "field": "F-0079",
+          "physical_column": "controls.control_versions.suggested_owner_role_code",
+          "physical_max_length": 96,
+          "physical_nullable": "YES"
+        },
+        {
+          "field": "F-0094",
+          "physical_column": "controls.control_versions.suggested_owner_role_code",
+          "physical_max_length": 96,
+          "physical_nullable": "YES"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    },
+    {
+      "decision_id": "CV-14",
+      "value": "CISO_SECURITY_MANAGER",
+      "label_es": "Responsable de seguridad",
+      "physical": [
+        {
+          "field": "F-0079",
+          "physical_column": "controls.control_versions.suggested_owner_role_code",
+          "physical_max_length": 96,
+          "physical_nullable": "YES"
+        },
+        {
+          "field": "F-0094",
+          "physical_column": "controls.control_versions.suggested_owner_role_code",
+          "physical_max_length": 96,
+          "physical_nullable": "YES"
+        }
+      ],
+      "publication_state": "PUBLISHED_LOCAL_V1",
+      "compatibility": "PASS_LENGTH_AND_PHYSICAL_TYPE_ONLY; NO_NEW_ENUM_OR_ALIAS"
+    }
+  ],
+  "discrepancies": {
+    "auditor_action_create": 1,
+    "requirement_read_grants": 0
+  },
+  "counts": {
+    "pairs": 44,
+    "vocabulary": 52,
+    "families": 14,
+    "occurrences": 26
+  },
+  "actual_permissions": 175,
+  "permissions_published_by_this_execution": 3,
+  "template_grants_published_by_this_execution": 44,
+  "instance_system_identifier": "7694735811590922280"
+}

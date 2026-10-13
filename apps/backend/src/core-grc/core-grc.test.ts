@@ -283,7 +283,8 @@ describe("Core GRC lifecycle, SoD and optimistic concurrency", () => {
     const database = executor((query) => {
       if (query.sql.includes("FROM remediation.actions")) return { rows: [{ action_id: resourceId, row_version: 1, lifecycle_state: "pending", created_at: new Date(), created_by_user_identity_id: actorId }] };
       if (query.sql.includes("current_edges")) return { rows: [] };
-      throw new Error(`Unexpected SQL: ${query.sql}`);
+      if(query.sql.includes("after_payload->'contract_provenance'"))return {rows:[]};
+    throw new Error(`Unexpected SQL: ${query.sql}`);
     });
     await expect(definition.execute({ transaction: database, actor, body: { expected_version: 1 }, targetId: resourceId }))
       .rejects.toSatisfy((error: unknown) => code(error) === "TCDX.LIFECYCLE.TRANSITION_DENIED");
@@ -296,7 +297,8 @@ describe("Core GRC lifecycle, SoD and optimistic concurrency", () => {
       if (query.sql.includes("prior_actor")) return { rows: [{ prior_actor: actorId }] };
       if (query.sql.includes("FROM regulatory.requirement_applicabilities")) return { rows: [{ requirement_applicability_id: resourceId, row_version: 1, lifecycle_state: "submitted", created_at: new Date(), created_by_user_identity_id: actorId }] };
       if (query.sql.includes("current_edges")) return { rows: [{ to_state: "approved", audit_event_code: definition.auditEvent, sod_policy_ref: "distinct_actor", scope_kind: "tenant" }] };
-      throw new Error(`Unexpected SQL: ${query.sql}`);
+      if(query.sql.includes("after_payload->'contract_provenance'"))return {rows:[]};
+    throw new Error(`Unexpected SQL: ${query.sql}`);
     });
     const approvingActor = { ...actor, permissions: new Set([definition.permission]), permissionScopes: new Map([[definition.permission, new Set(["tenant"] as const)]]), capabilityGroups: new Set([definition.capability]) };
     await expect(definition.execute({ transaction: database, actor: approvingActor, body: { expected_version: 1 }, targetId: resourceId }))
@@ -383,7 +385,8 @@ describe("Core GRC lifecycle, SoD and optimistic concurrency", () => {
       if (query.sql.includes("FROM remediation.actions")) return { rows: [{ action_id: resourceId, row_version: 1, lifecycle_state: "in_review", created_at: new Date(), created_by_user_identity_id: actorId }] };
       if (query.sql.includes("current_edges")) return { rows: [{ to_state: "completed", audit_event_code: definition.auditEvent, sod_policy_ref: "none", scope_kind: "owned_object" }] };
       if (query.sql.includes("FROM evidence.evidence_versions")) return { rows: [{ lifecycle_state: "submitted", scan_status: "passed" }] };
-      throw new Error(`Unexpected SQL: ${query.sql}`);
+      if(query.sql.includes("after_payload->'contract_provenance'"))return {rows:[]};
+    throw new Error(`Unexpected SQL: ${query.sql}`);
     });
     await expect(definition.execute({ transaction: database, actor: owningActor, body: { expected_version: 1, evidence_version_id: correlationId, link_role: "closure" }, targetId: resourceId }))
       .rejects.toSatisfy((error: unknown) => code(error) === "TCDX.INVARIANT.VIOLATION");
@@ -468,7 +471,8 @@ describe("Core GRC idempotency, audit and outbox", () => {
       }
       if (query.sql.includes("FROM remediation.actions")) return { rows: [{ action_id: resourceId, row_version: 2, lifecycle_state: "in_progress", created_at: new Date(), created_by_user_identity_id: actorId }] };
       if (query.sql.includes("FROM remediation.action_evidence_links") || query.sql.includes("FROM remediation.action_verifications")) return { rows: [] };
-      throw new Error(`Unexpected SQL: ${query.sql}`);
+      if(query.sql.includes("after_payload->'contract_provenance'"))return {rows:[]};
+    throw new Error(`Unexpected SQL: ${query.sql}`);
     });
     const definition: MutationDefinition = {
       operationId: "testReplay",
@@ -482,7 +486,7 @@ describe("Core GRC idempotency, audit and outbox", () => {
     const result = await executeMutation(database, actor, definition, { body: {}, idempotencyKey: "same-key", correlationId });
     expect(result.replayed).toBe(true);
     expect(executed).toBe(0);
-    expect(sql.some((value) => value.includes("audit_events"))).toBe(false);
+    expect(sql.some((value) => value.includes("INSERT INTO ops_audit.audit_events"))).toBe(false);
     expect(sql.some((value) => value.includes("outbox_events"))).toBe(false);
   });
 
@@ -495,7 +499,8 @@ describe("Core GRC idempotency, audit and outbox", () => {
       if (query.sql.includes("FROM ops_audit.idempotency_records")) {
         return { rows: [{ idempotency_record_id: resourceId, request_hash: "0".repeat(64), result_status_code: "completed", result_ref: `action:${resourceId}`, response_hash: "1".repeat(64) }] };
       }
-      throw new Error(`Unexpected SQL: ${query.sql}`);
+      if(query.sql.includes("after_payload->'contract_provenance'"))return {rows:[]};
+    throw new Error(`Unexpected SQL: ${query.sql}`);
     });
     const definition: MutationDefinition = {
       operationId: "testConflict", permission: "remediation.action.transition", capability: "ISSUES_ACTIONS", scopes: ["tenant"],

@@ -20,7 +20,7 @@ describe.skipIf(process.env.TCDX_SECURITY_INTEGRATION !== "true")("D3-A actual g
   const headers = (actor: string, tenant?: string) => ({ authorization: `Bearer ${actor}`,
     ...(tenant ? { "x-tcdx-tenant-id": tenant } : {}) });
   const projection = (actor: string, tenant?: string) => app.inject({
-    url: "/api/v1/auth/me/authorization", headers: headers(actor, tenant) });
+    url: "/api/v2/auth/me/authorization", headers: headers(actor, tenant) });
   const assign = (actor: string, tenant?: string, membership = ids.membership, role = ids.assignRole, key = newUuidV7()) =>
     app.inject({ method: "POST", url: `/api/v1/memberships/${membership}/role-assignments`,
       headers: { ...headers(actor, tenant), "idempotency-key": key }, payload: { role_id: role, scope_kind: "tenant" } });
@@ -115,7 +115,7 @@ describe.skipIf(process.env.TCDX_SECURITY_INTEGRATION !== "true")("D3-A actual g
     const result = await projection(ids.admin, ids.tenant);
     expect(result.statusCode).toBe(200);
     expect(result.json().platform_permissions).toEqual([]);
-    expect(result.json().tenant_permissions).toEqual({ tenant_id: ids.tenant,
+    expect(result.json().tenant_permissions).toEqual({ tenant_id: ids.tenant, default_timezone: "UTC",
       permissions: { "platform.role.assign": [{ scope_kind: "tenant" }] } });
     expect((await projection(ids.admin, ids.foreign)).statusCode).toBe(404);
     expect((await assign(ids.admin, ids.foreign)).statusCode).toBe(404);

@@ -18352,7 +18352,7 @@
         "tenant_ownership",
         "effective_from_effective_to",
         "default_duration_seconds_value_nonnegative",
-        "default_value_count"
+        "typed_default"
       ],
       "uniqueConstraints": [
         [
@@ -18856,7 +18856,11 @@
           "effective_configuration_id"
         ],
         [
-          "tenant_id"
+          "tenant_id",
+          "configuration_definition_id",
+          "resolved_for_subject_id",
+          "effective_at",
+          "input_hash"
         ]
       ]
     },
@@ -18943,6 +18947,8 @@
           "effective_configuration_layer_id"
         ],
         [
+          "effective_configuration_id",
+          "precedence_level",
           "ordinal"
         ]
       ]
@@ -26709,5 +26715,6 @@
       ]
     }
   ],
-  "methodologyAmendment": "PHASE5_METHODOLOGY_BINDING_ARCHITECTURE_DECISION_20261007"
+  "methodologyAmendment": "PHASE5_METHODOLOGY_BINDING_ARCHITECTURE_DECISION_20261007",
+  "phase6a3Amendment": "MACRO-STEP6A3-20261009-R1"
 }

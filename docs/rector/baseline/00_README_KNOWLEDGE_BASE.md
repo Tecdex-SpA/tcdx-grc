@@ -4,7 +4,7 @@
 
 Este paquete constituye la base contractual, funcional y de ingeniería para el nuevo desarrollo **TCDX GRC**.
 
-Baseline ID: `TCDX_GRC_RECTOR_BASELINE_v1.3_2026-09-15`.
+Baseline vigente: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09`. Las referencias v1.3 siguientes documentan historia semántica; no sustituyen 46/47/49 ni el manifest vigente.
 
 No contiene prompts a ejecutar individualmente. Sus archivos son **fuentes de conocimiento y alineamiento** que deben ser leídas y respetadas por ChatGPT, Codex y desarrolladores antes de diseñar o implementar componentes.
 
@@ -127,3 +127,7 @@ La topología distingue de forma expresa nombre lógico de componente, FQDN e IP
 ## Estado del baseline
 
 Sólo los archivos `.md` enumerados 00–45, `PRE_IMPLEMENTATION_GATE_REPORT.md` y `SHA256SUMS.txt` integran el paquete. El verificador exige inventario exacto y rechaza archivos normativos adicionales, ausentes o enlaces simbólicos. Hallazgos, cruces, borradores, archivos adjuntos individualmente y revisiones históricas quedan excluidos y no son normativos. La autoridad corresponde exclusivamente a los archivos extraídos del ZIP cuyo checksum coincide con este manifiesto.
+
+## Enmienda interna v1.8
+
+49_GOBIERNO_INTERNO_Y_REVISION_UNIPERSONAL.md es fuente vinculante exclusivamente para aprobación interna por funciones acumuladas. No deroga SoD operacional ni obligaciones externas. Activación y alcance en 47; historia v1.7 protegida.

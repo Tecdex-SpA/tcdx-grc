@@ -1,0 +1,1956 @@
+{
+  "id": "QA-STEP6A3-OPERATIONAL-PREPARATION-20261009-R2",
+  "status": "PREPARED_NOT_READY_NOT_AUTHORIZED_NOT_EXECUTED",
+  "created_at": "2026-10-09T21:15:39.205073+00:00",
+  "rector": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09",
+  "approvals": "R1/R2 already approved for closed local deltas only; C13 requires later specific actualQA/IAM plan",
+  "canonical_hosts": {
+    "database": "192.168.2.40",
+    "backend": "192.168.2.45",
+    "frontend": "192.168.2.46",
+    "public_url": "https://grc.tecdex.net/"
+  },
+  "connection_attempted": false,
+  "actor_plan": {
+    "existing_real_service_principal_id": null,
+    "requirement": "Existing active PLATFORM_CONTROL actor with explicit execution authority for33, no seed/credential creation; actor identity must be presented and verified under approved operationalplan",
+    "local_fixture_is_not_real_actor": true,
+    "DBA_execution_identity": null,
+    "real_tenant_memberships_and_entitlements": null
+  },
+  "artifacts": [
+    {
+      "path": "database/migrations/20261009000100_phase6a3_configuration_integrity.sql",
+      "sha256": "b717f0c91f88a4079f791fd68cc08ff5202ef7f0dda6c7cf85ea37cb23441722",
+      "operation": "PUBLISHED_LOCAL_OR_GENERATED_LOCAL"
+    },
+    {
+      "path": "database/migrations/20261009000200_phase6a3_reference_read_permissions.sql",
+      "sha256": "920ececb9d28e3821a9faf9d2c754db481a26c0e33c53ae0f94b3a0535885ed8",
+      "operation": "PUBLISHED_LOCAL_OR_GENERATED_LOCAL"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/rbac-publication/20261009000300_phase6a3_role_permission_publication.sql",
+      "sha256": "7a7c6db089cfac1adbd6b30207b5207882bd5ca6eda459d17a766d9193d96579",
+      "operation": "PREPARED_ONLY"
+    },
+    {
+      "path": "database/migrations/manifest.json",
+      "sha256": "f10105381a492feabf7f39ae92329c49bc7f357f3b5aee06b4ef279b983801b9",
+      "operation": "PUBLISHED_LOCAL_OR_GENERATED_LOCAL"
+    },
+    {
+      "path": "database/expected-schema.json",
+      "sha256": "f920bf882a8b7ab0e91e2d43929bb161ca0ffeab100f0b640cf621a70ec2d7d3",
+      "operation": "PUBLISHED_LOCAL_OR_GENERATED_LOCAL"
+    },
+    {
+      "path": "docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml",
+      "sha256": "739ba3c21aaa58f892e95c69fe3c8415dbf46798ebf07cc61753660479d2ac67",
+      "operation": "PUBLISHED_LOCAL_OR_GENERATED_LOCAL"
+    },
+    {
+      "path": "docs/executable-contracts/29_PHASE6A3_RBAC_MANIFEST.json",
+      "sha256": "7462a780d4e0afe23c812983b762685e6f1aa8944ddef85afc50ca2c6d01cd72",
+      "operation": "PUBLISHED_LOCAL_OR_GENERATED_LOCAL"
+    },
+    {
+      "path": "docs/executable-contracts/30_PHASE6A3_VOCABULARIES_MANIFEST.json",
+      "sha256": "81e559c96f687c319d415bb57b97187f17f91d884b35594b4ce0db7b68862b83",
+      "operation": "PUBLISHED_LOCAL_OR_GENERATED_LOCAL"
+    },
+    {
+      "path": "docs/executable-contracts/31_PHASE6A3_PUBLICATION_METADATA.json",
+      "sha256": "fe06a7aa26c18ae6a6f94c30b035ea90c47847610e15f4ee5695cebb89019321",
+      "operation": "PUBLISHED_LOCAL_OR_GENERATED_LOCAL"
+    },
+    {
+      "path": "docs/executable-contracts/31_VOCABULARY_PROVENANCE_SCHEMA.json",
+      "sha256": "a959b241bc390f0a9468e28cd2b0bd75d03ef0b7df3f0b0d979df6296ba519b6",
+      "operation": "PUBLISHED_LOCAL_OR_GENERATED_LOCAL"
+    },
+    {
+      "path": "docs/rector/ACTIVE_ACTIVATION.json",
+      "sha256": "6c3396ed9bd37e70f79d18c77cfd7421999114ab1aa20b6ea943df7c859b284a",
+      "operation": "PUBLISHED_LOCAL_OR_GENERATED_LOCAL"
+    }
+  ],
+  "build_transport_manifest": [
+    {
+      "path": "apps/backend/dist/app.d.ts",
+      "sha256": "2215fcf53c9478f9e7a2f504032b96ca4d4021c95d1d9573a06e0541bdcb2fa7"
+    },
+    {
+      "path": "apps/backend/dist/app.js",
+      "sha256": "e269e06a048f0bf4b8d7ec5d2820275f00bd30dd09e9e5f4e90244647e6dd7cc"
+    },
+    {
+      "path": "apps/backend/dist/app.js.map",
+      "sha256": "616f7319e5f19c987b11474740fc0fab38a8a83dc709f4f3ef240cc28ba35655"
+    },
+    {
+      "path": "apps/backend/dist/app.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/app.test.js",
+      "sha256": "8bca85125b863e9db1216eb23c2859de7b9fedf637bc1bedc58ae23af51cdd1b"
+    },
+    {
+      "path": "apps/backend/dist/app.test.js.map",
+      "sha256": "4bba223a554dd5db971a3955e5181a5421e3f951d8d31e02771f2bcda0ff7dd4"
+    },
+    {
+      "path": "apps/backend/dist/config.d.ts",
+      "sha256": "bd2d673f0ac3a26e36bb30bcecb30ccaa92c154e4b111b589a52827b90e2cba1"
+    },
+    {
+      "path": "apps/backend/dist/config.js",
+      "sha256": "a496be22d867b3db02e169432bd716c6c412e2ae1cd3377c2d8e9d3849e1c0b4"
+    },
+    {
+      "path": "apps/backend/dist/config.js.map",
+      "sha256": "0ba998b7930a3af9b918a716920a1612d505e3caefd5ac276cf668b9f095b77b"
+    },
+    {
+      "path": "apps/backend/dist/config.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/config.test.js",
+      "sha256": "a8f70ad876c09afe3eaa88e39b2bea49c9ae110b908bbde434fb18e8d73b8c2c"
+    },
+    {
+      "path": "apps/backend/dist/config.test.js.map",
+      "sha256": "2f24452582d30f91a439db2501278658c2bfb71eae234fd9c1029a6ffa330d1b"
+    },
+    {
+      "path": "apps/backend/dist/configuration/effective-read.d.ts",
+      "sha256": "d583f578dcfd1bc2814a6d55019c3d838855f1eaf5d2948f110e3ec876ded7d1"
+    },
+    {
+      "path": "apps/backend/dist/configuration/effective-read.js",
+      "sha256": "868e231d8a83282f4cce1b71acb8ba3767b131d56ba1226dd682223ea0e0319b"
+    },
+    {
+      "path": "apps/backend/dist/configuration/effective-read.js.map",
+      "sha256": "571bd6c97959f2598d61578ce37003993c732ed3452e5aa4c2608ff892146bab"
+    },
+    {
+      "path": "apps/backend/dist/configuration/effective-read.postgres.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/configuration/effective-read.postgres.test.js",
+      "sha256": "2b279dd7ebcce252858972ebb4ecf20f562f01eb79f25f6fc9304ddba8f32d78"
+    },
+    {
+      "path": "apps/backend/dist/configuration/effective-read.postgres.test.js.map",
+      "sha256": "735adaaf0af0d88d1833a5ca3e5785f7e5aebd84a1555fba4fed486bff8a2d5f"
+    },
+    {
+      "path": "apps/backend/dist/configuration/effective-read.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/configuration/effective-read.test.js",
+      "sha256": "0a35f182b9d4458f11ee2ccb7c51f33e4890b4e60229b1ebe92224006c364b5a"
+    },
+    {
+      "path": "apps/backend/dist/configuration/effective-read.test.js.map",
+      "sha256": "e929865736304b8abe2725d34fe41593e06095f37e245a50ee5632c565a5b266"
+    },
+    {
+      "path": "apps/backend/dist/configuration/resolver.d.ts",
+      "sha256": "7d75011ceb55019a490e65a6b8e3133cdb23d9c380a5b97b5ad0a337c266e033"
+    },
+    {
+      "path": "apps/backend/dist/configuration/resolver.js",
+      "sha256": "cd68f497029ce2713fe9197021aab94705877ea109bc749e0e65afafc0996e30"
+    },
+    {
+      "path": "apps/backend/dist/configuration/resolver.js.map",
+      "sha256": "8b4b755d4809e4f26bba308d0800c7165a156109d2afc3731cf61c6e246b4af7"
+    },
+    {
+      "path": "apps/backend/dist/configuration/resolver.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/configuration/resolver.test.js",
+      "sha256": "3d89759f55bdc636011a4a80624f0a0847770180e813d3cd8b9b94e40e616de1"
+    },
+    {
+      "path": "apps/backend/dist/configuration/resolver.test.js.map",
+      "sha256": "02b6b40999e11f97b20043b23418177bcaeafc78f76cd730113bd9176ee1f077"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/browser-file-routes.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/browser-file-routes.test.js",
+      "sha256": "bb5f09a34d33d6c3aeac274460dfcdc8d39320f5989a2cd22afa7337e1a97bc9"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/browser-file-routes.test.js.map",
+      "sha256": "894038dd3e2dcc3c9a1f0b3dfa0f6be9af76193757d3b56320f934a47f73af08"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/core-grc.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/core-grc.test.js",
+      "sha256": "bfd5177701c43c7dab6e038fdfee65e4ccf0508be6f845ac346ab0aa15ce4b10"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/core-grc.test.js.map",
+      "sha256": "403f21b14c5b9933f5798c3bfacf28508e64977c7dba5fe4a104ce9d33bbf688"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/methodologies.d.ts",
+      "sha256": "ca94c47fbd93c15b97c9f58e3d59c528e2519491723f40b6443276c36014fe1e"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/methodologies.js",
+      "sha256": "e5916576dedbf7608dda1dfc88ae27353e640c87912defdb1a1e175595ecaf7e"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/methodologies.js.map",
+      "sha256": "07a2ea68e788e97d1716f2ce82e5aeee41a47b0a1c32cb8c6740a05b6d65db5e"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/methodologies.postgres.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/methodologies.postgres.test.js",
+      "sha256": "a0bad577cff19c49e76a608fd18ba46ae6c3cb5831ff786d7950f78c14722c74"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/methodologies.postgres.test.js.map",
+      "sha256": "0362a88336d05d75d64169d7f3d68b436e43d438b5c627091d739deacadf62fd"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/model.d.ts",
+      "sha256": "d321ed0ed4942c7157bf4e5ed961e140edc0f7aa0e716d1756fba526903519bd"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/model.js",
+      "sha256": "c91d79443f226cceddea5d76efa8bbd8581455b15ad64f025798c1efd9a7d85f"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/model.js.map",
+      "sha256": "429ed870714d49a4bdd625f4fc4677657b802cffd4ba350caf163f2f2211843e"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/phase5-final-closure.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/phase5-final-closure.test.js",
+      "sha256": "ee44ad702e4100ca1473f982f65f13b773e3d20e31bf62f12fc0c30d9c662c34"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/phase5-final-closure.test.js.map",
+      "sha256": "766c996fffcc33b1dbda21d1ea51eae18d7cbae0e9078e380550bae3541e04ef"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/phase5-lifecycle.postgres.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/phase5-lifecycle.postgres.test.js",
+      "sha256": "db95b277e90a8ff2c92c687cb89266dfdd734728706134e61435e81b37f9f63d"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/phase5-lifecycle.postgres.test.js.map",
+      "sha256": "69b2986dbfe17c2f105aafd68bb6cb2cd67fd7c1750f8ee95aae7d31227380e5"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/phase6a-configuration-integrity.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/phase6a-configuration-integrity.test.js",
+      "sha256": "573192513b3bb9f529b7133013aa040595212527b1aedb8c485c1b747c702bef"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/phase6a-configuration-integrity.test.js.map",
+      "sha256": "1c243cce4635ee5cc7e763c753f57b6df22ae3df1f4dacb3e3d43ca5eb45cd52"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/phase6a-configuration-reference-integrity.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/phase6a-configuration-reference-integrity.test.js",
+      "sha256": "c15cd2b0cff545677bb52573bd678b732103df389c94e7cf1a4e46742d1e08b6"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/phase6a-configuration-reference-integrity.test.js.map",
+      "sha256": "538a3668d721f34924170d84d9e37652f8b156d0479ead3bd73c3475b5878062"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/phase6a-methodology-boundaries.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/phase6a-methodology-boundaries.test.js",
+      "sha256": "62b829dbd2269090683ac8725974c76797944c373d2d88913f822f33a4c25624"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/phase6a-methodology-boundaries.test.js.map",
+      "sha256": "e21080fae46ea7872e4f027374bc944d13d47d7cf55216fa50e7d13f90a40ef5"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/reference-reads.d.ts",
+      "sha256": "e30b1461368aec5b905a64829e738834d841670b6d946e9a233446d34220e6d9"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/reference-reads.js",
+      "sha256": "65e4e812cbc0d58ab7690e7ceb893aac554090765eb3f2ca2a7efeef25f6e4d5"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/reference-reads.js.map",
+      "sha256": "5d73c15d02d2fbf601a46fa1c6c0371c30ac50786e601042dbc7476b980a137c"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/reference-reads.postgres.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/reference-reads.postgres.test.js",
+      "sha256": "2f9bb5b7023e132cb3be5510d2eac27cdfb1dcdcb8a4d0c6f8f4a6f9cbc3e197"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/reference-reads.postgres.test.js.map",
+      "sha256": "0e721d271c223bb457bf9cc2849c806ecf1484afadc10e5c1bce5df0e6365ce3"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/reference-reads.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/reference-reads.test.js",
+      "sha256": "334eee3b806d7fafd972a3765f8d3927e92a5b737a699949d828024c99df2171"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/reference-reads.test.js.map",
+      "sha256": "0ebd111a5638ee070cbb5051c80b98a6446dfdc952c88991162d9362ea66c158"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/repository.d.ts",
+      "sha256": "ecdd5ca6bc996f588e8305e79bea8d4dd0f86a5a46ee892f6339c5547cad1eee"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/repository.js",
+      "sha256": "fc6bda041398d6ef327d72e0438c79722da68ddcab9d120bd96ca0c3dc380be6"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/repository.js.map",
+      "sha256": "f112c9b9404d89eba34f4e8e9f07aa4e21e0112c983ed53de64a019ab984337b"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/retention-policy.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/retention-policy.test.js",
+      "sha256": "dd76f7834376d696143a094a21a6dce7c3c1afa0eac6f44e1280e1cfd183974d"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/retention-policy.test.js.map",
+      "sha256": "b3b49e9a228b7a3ef718781708117b23888b57218ae54bb4cd953d93bad6c6ad"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/routes.d.ts",
+      "sha256": "6e53108b64d05953940871b30046288146a946e5764351242af1120c5b501880"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/routes.js",
+      "sha256": "ea211915a110d95e505e9a470b85727d5e757e8934e066c38e905a638c6b989f"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/routes.js.map",
+      "sha256": "77b67bd61fadda2585f3dbd0957c3e7ba1127eeda8ecf5896ef9f0d9f87e1dc3"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/routes.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/routes.test.js",
+      "sha256": "d290502a024d3f6c57f661179905878cfc9b9d59a1b6a723e68d2c87c7aa7370"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/routes.test.js.map",
+      "sha256": "bb9e7caec956a6e45edfba985438be1627f6d9a0e2b127cb3b956331a9a3f16b"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/security.d.ts",
+      "sha256": "1a324f67ea71e1b665fe1349d760dd2c08cd3ab00ca9c9fba5c52976321969ad"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/security.js",
+      "sha256": "edeef5f61694bd3229a07e651f7ead7ccb81797bb7882f97f3a74ca884e916aa"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/security.js.map",
+      "sha256": "9b22b5268a1a54f37034701a465e6e8c7cd6091e18da218d1843e09c95f057ff"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/service.d.ts",
+      "sha256": "8f3777b97984c416a070662c8e6ba35777b6d5e5c7c42ed291d2297b1ad301d0"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/service.js",
+      "sha256": "27fe0e02173dbf8a484b1367896c2354a6b317202e294ddd50d50e19053c8bde"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/service.js.map",
+      "sha256": "46e4f8f0e0ed64d1da7d130916d58ed64dcdb4dbe323635bfb4a0725d71170b7"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/subject-create.d.ts",
+      "sha256": "2ef752c633a20c10683ffaed7a3b65fa8585ad2204b8d3147c934c2e2e46eec8"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/subject-create.js",
+      "sha256": "3135c04f186d6011361ca5d594ea111a796a533745f4e7bc90d1c28530b4be62"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/subject-create.js.map",
+      "sha256": "d84b1e0ba77136b9c10ba50c9cd658ba0d0845fb3e6b1058f806cd967d0b12b2"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/subject-read.d.ts",
+      "sha256": "2d536eefb9fc64dab2b9e5096db5f1721fbc9f8a907e793dbd38667dea97d694"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/subject-read.js",
+      "sha256": "c5c8dbc73d6d1e49833e5393b933f3d1e34b51c7dccdccd7ae31e613368005fd"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/subject-read.js.map",
+      "sha256": "633000b218f3fc57d85f1f8fbd7fe3832a7a0a75570f9d603e8ba05e3a37bd54"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/vocabulary-provenance.d.ts",
+      "sha256": "31840860950f59c96e57ef8e229a12ef5105e9462ab059b95466649c4b1328f2"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/vocabulary-provenance.js",
+      "sha256": "bd057d8b066c8895d4630daa2036e49f5b0398cc392fb79d32c8e214d04b06c9"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/vocabulary-provenance.js.map",
+      "sha256": "38f87363ade14cd882fca6ef37bbabd36088b1adfa9c026aad9f6d2c406a2730"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/vocabulary-provenance.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/vocabulary-provenance.test.js",
+      "sha256": "8c7d2cac1eab2b3ae10d73c3e679abdc963c73de8a3a3752f318fa0c42474518"
+    },
+    {
+      "path": "apps/backend/dist/core-grc/vocabulary-provenance.test.js.map",
+      "sha256": "cb628d4bd14371cb4f4ce0832943981024f79b66fcf8e1cb54129690c94cc717"
+    },
+    {
+      "path": "apps/backend/dist/database.d.ts",
+      "sha256": "a18c2df86848e6ecee246f9f854db877283bedcecab0eddf41fcedac961bf988"
+    },
+    {
+      "path": "apps/backend/dist/database.js",
+      "sha256": "865b2d8b1b8ce87790059abb70b1af021aebbc06640ad5f85ab4c37a6fb17a61"
+    },
+    {
+      "path": "apps/backend/dist/database.js.map",
+      "sha256": "3fcd08586fdc0a54adb919467c1db6af929f9d781e576bb348a02170c28763c8"
+    },
+    {
+      "path": "apps/backend/dist/errors.d.ts",
+      "sha256": "91d9d39fa1360c30fd50baea7c0d09d13a73d549095f617d1f01f2e7a2b1ccfc"
+    },
+    {
+      "path": "apps/backend/dist/errors.js",
+      "sha256": "bef9d534754be3c836bb450ad144596d31dc16454bc5480beffc624994b140bb"
+    },
+    {
+      "path": "apps/backend/dist/errors.js.map",
+      "sha256": "46836a9aaf0531d3b952e347279ca6378e4c3c4bd4a2bfcbe18a2493d87d1b7d"
+    },
+    {
+      "path": "apps/backend/dist/index.d.ts",
+      "sha256": "57b02256a5b74352885b74054694955fce0de453dadc44571f2d051d0b2ccd91"
+    },
+    {
+      "path": "apps/backend/dist/index.js",
+      "sha256": "6c6cd60609a4cea3952d59181712c77f71cdcab69c1be1b397936f43b618b0e7"
+    },
+    {
+      "path": "apps/backend/dist/index.js.map",
+      "sha256": "876f19cf20be923e6e5be7dbd3b50a7c869d05518978b77a99ab0d1a50a5d664"
+    },
+    {
+      "path": "apps/backend/dist/managed-identity-config-preflight.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/managed-identity-config-preflight.js",
+      "sha256": "e79b97e21564a6017a2d9eb1c8efd1aceee268bc33bd4db0c6a3f6e49b0bfe6b"
+    },
+    {
+      "path": "apps/backend/dist/managed-identity-config-preflight.js.map",
+      "sha256": "22134d7ab4ab91255d7862a0c8fcbd75113d12dd4aae4717566822ef1b8fa1fb"
+    },
+    {
+      "path": "apps/backend/dist/persistence/foundation-records.d.ts",
+      "sha256": "3b1454b265ae841b7ef7a9f5d0ce75222e7966923a75c04974cbc5ff628b15d6"
+    },
+    {
+      "path": "apps/backend/dist/persistence/foundation-records.js",
+      "sha256": "98e75c5432e040c58a44e6af82c1a44046790a1b500132094f3f465a47458526"
+    },
+    {
+      "path": "apps/backend/dist/persistence/foundation-records.js.map",
+      "sha256": "b0c48f6ec714f7215db8bcffd79e50c372fe884cc6510ba9ceac41c0adb7c42d"
+    },
+    {
+      "path": "apps/backend/dist/persistence/outbox-worker.d.ts",
+      "sha256": "c525f1c172cbaa5397f8c47bcfedb3a84086777158b9efd2663336a0a58692c9"
+    },
+    {
+      "path": "apps/backend/dist/persistence/outbox-worker.js",
+      "sha256": "78ed1802c7826281282d4a449adab807d65d2e8a729a7c1456d1038e7c2e0abd"
+    },
+    {
+      "path": "apps/backend/dist/persistence/outbox-worker.js.map",
+      "sha256": "6aa0b2dc8e21af25179a0ebc7d98a4d935ed5d0399f1de22e3da9e8e8312fe24"
+    },
+    {
+      "path": "apps/backend/dist/persistence/outbox-worker.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/persistence/outbox-worker.test.js",
+      "sha256": "83ea805c47910228cb1c0c9fb99fa5797a990942e3e568939f9465ad91cbbceb"
+    },
+    {
+      "path": "apps/backend/dist/persistence/outbox-worker.test.js.map",
+      "sha256": "933f7c63f964cfe3e646654a96fc7d92a653b9f5aa3c3afc1652af8d270e373e"
+    },
+    {
+      "path": "apps/backend/dist/ports/ai-service.d.ts",
+      "sha256": "24b4d5817974a49e41eb63491591b414977061b98dac6bc32302f52ff48b55e5"
+    },
+    {
+      "path": "apps/backend/dist/ports/ai-service.js",
+      "sha256": "046bca64835dc183409ae0509660410ceae6b4731e10b59c88c0aa35cc3f3945"
+    },
+    {
+      "path": "apps/backend/dist/ports/ai-service.js.map",
+      "sha256": "eb42756f6fa53d69f88ac28f1a0c6e7d0219aa1282f643db276fac55802a69cb"
+    },
+    {
+      "path": "apps/backend/dist/ports/boundaries.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/ports/boundaries.test.js",
+      "sha256": "b804a85f3fcd8402989165195ea0e4104a4651acb50112bb767779d9cdac0b13"
+    },
+    {
+      "path": "apps/backend/dist/ports/boundaries.test.js.map",
+      "sha256": "4236db851f899b5ea6d905188289bfb5ec335fe303c8b312586e16d1c89c7325"
+    },
+    {
+      "path": "apps/backend/dist/ports/file-storage.d.ts",
+      "sha256": "55a79aa0bfe2b590efb1db86031195db18b802fb1db22f42b160a368d8312328"
+    },
+    {
+      "path": "apps/backend/dist/ports/file-storage.js",
+      "sha256": "3d1c4825e0aa078b1bc9cef660453c8a1900e2e64f3a44f98cbbc5b07d4d2653"
+    },
+    {
+      "path": "apps/backend/dist/ports/file-storage.js.map",
+      "sha256": "ee85f8ab4fea31e44d6edaeec8ea78301ab6796d4825f29a879781b90ca3f4aa"
+    },
+    {
+      "path": "apps/backend/dist/ports/minio-bootstrap.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/ports/minio-bootstrap.js",
+      "sha256": "bd8a62167ed8016c018afc0dbec8762df8481cb86577926925e5fb5a444e5ddd"
+    },
+    {
+      "path": "apps/backend/dist/ports/minio-bootstrap.js.map",
+      "sha256": "03690f269d02478af4cd4da0d9c63c8e84cb59293bbbce1978094c09ad65628b"
+    },
+    {
+      "path": "apps/backend/dist/ports/minio-file-storage.d.ts",
+      "sha256": "8ab61db4118f08c5de79bac61a9085e56197cfc88e175d9cf841a4d9a938c2dd"
+    },
+    {
+      "path": "apps/backend/dist/ports/minio-file-storage.js",
+      "sha256": "dbe19b6c3efaf5e2b7cc3e5716cd7350009ebbd7d43193860ad09d6f4d390e71"
+    },
+    {
+      "path": "apps/backend/dist/ports/minio-file-storage.js.map",
+      "sha256": "dedc26355040142758ee2d4cf9c9c8607cc3d1cfe1680e61cf19bfc14540586f"
+    },
+    {
+      "path": "apps/backend/dist/ports/minio-file-storage.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/ports/minio-file-storage.test.js",
+      "sha256": "11bdbcb3521bfebaf8108d3dfac56f32615a3e3bb0731e5194a3e712c07b4a59"
+    },
+    {
+      "path": "apps/backend/dist/ports/minio-file-storage.test.js.map",
+      "sha256": "23cd053c129a110bae75222b08eef01008fb0d3c56c2abc88319394525675308"
+    },
+    {
+      "path": "apps/backend/dist/ports/observability.d.ts",
+      "sha256": "1dd83d2b592c437a132d4edf56a8ed2e875f686186f6463fd7b5c5e1c991ef60"
+    },
+    {
+      "path": "apps/backend/dist/ports/observability.js",
+      "sha256": "05a1260a3da17cc5ff77deed6d7de1fa79d1f8ba57079af523073a4cd0d2d502"
+    },
+    {
+      "path": "apps/backend/dist/ports/observability.js.map",
+      "sha256": "b9f6d2f0ddf67117878cca8dc721de4c19354d5e6f51fc1b27fd57434e75357e"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/catalog-v1.1.d.ts",
+      "sha256": "c35e8f05db632afc44ddceaa079f295d2cb1a9b97117cfef2fa5ec46fb26f29a"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/catalog-v1.1.js",
+      "sha256": "1a152b7c05c6d848e162b98a258de1ddfe0c2f9416ad41d2e9afbc2903bb56e6"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/catalog-v1.1.js.map",
+      "sha256": "f499ffa8b41cef0757cb3466057dedbbc66e2355b89ae5ea48bcfc0d92f1f366"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/catalog-v1.1.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/catalog-v1.1.test.js",
+      "sha256": "387db326a4b7ddff0b0f856046314ab42469289a58feb28aecad4e75ff7d3fd4"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/catalog-v1.1.test.js.map",
+      "sha256": "743311d08aaf70db82e2687927cac52930c718e7860ad016bc8093bc6e132aa5"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/coverage.d.ts",
+      "sha256": "eaa4e12d1b6844100e0656719896c1eb48f10af8d1c82aeb2445ceeb03563c34"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/coverage.js",
+      "sha256": "c24fe970729375e7769d4f4f942b9225b1b2dbde32b170b4c4f0ca8445f15fef"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/coverage.js.map",
+      "sha256": "ea7ce7618b651f7233aae09074a9686c63e96d09b9bb5e88478ccca93465da3d"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/hash.d.ts",
+      "sha256": "95470a0578fd90bbb38ecf3c09df016f4b866b4ca630856cfedd7804523681e2"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/hash.js",
+      "sha256": "eef328f5931720d5f8d64e766c6ecd858c3a1ec7e602a179d0ab4bcc3b209ddf"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/hash.js.map",
+      "sha256": "63b6a7a4a0eda13848b92ec5b9ce7139dc5a1f34243915bdc6f7766dc3dec98f"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/memory-repository.d.ts",
+      "sha256": "bd4ee8db01b729f18eb1cdb5417f7471e05db8699dd31c0c0cf2cfe3459fbcd3"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/memory-repository.js",
+      "sha256": "0f052cb38cbaf53319b15ae83a5f890971bec6197e2cb0c96bf4048291092201"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/memory-repository.js.map",
+      "sha256": "c5e9161a17303e0cbe3e239dcd690c4436ed97b9151258427ee3d42018507bc5"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/model.d.ts",
+      "sha256": "2e401bb725632e0cd05dc0c77d3721bda5143b894bb34696a89ab998fa1f7032"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/model.js",
+      "sha256": "c79fbd123dc1d8580bda3c5bf9cba5cfb65db67f71c95fcfe2527ddad1f2ac9d"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/model.js.map",
+      "sha256": "4ab7703bc3b3191c85a99c4c96126e84469fe7f985375fa71333674e30fff064"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/pack-contract-routes.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/pack-contract-routes.test.js",
+      "sha256": "40f122d1c30cccc11238e57e9e1d13abe77f78ca1e1ab2ff1843486379326a87"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/pack-contract-routes.test.js.map",
+      "sha256": "0025a1606f78c5c2096af20e20e940be47e1a0b6b8c45698f8127d8edc9fcf5d"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/pack-contract.d.ts",
+      "sha256": "d2298a0ada9c449c599010bbcebb0b17f99432eab8277c488ecbf9441e12868a"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/pack-contract.js",
+      "sha256": "93665b8ea50e93ee0c56cc893ce2793e8acbc1aff7635a81caad5ac7f3382209"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/pack-contract.js.map",
+      "sha256": "e36d5d58172a19f621e0dfd93cf544d2de596738c3841e9ca5cf925cb59f4bcd"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/pack-entitlement.d.ts",
+      "sha256": "ce666415ab78ddffd0c35fe8b8e79a57abdfc40f4ba965986cff58aa476c9f56"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/pack-entitlement.js",
+      "sha256": "233e87ce05c8ed097b73672d62f4dfe0f2516ce367efa1315f2fd32ce4344f3d"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/pack-entitlement.js.map",
+      "sha256": "1dfae7d40eb3b3390b7d2af95b5345ce1a108571f0ba682df2a1ebb95b10e546"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/pack-entitlement.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/pack-entitlement.test.js",
+      "sha256": "6fb2bccebac2aa52e7e54bd7c3400dddc19bfa06e094d06d215caed7faa7104a"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/pack-entitlement.test.js.map",
+      "sha256": "6d72428255937a82d3a354d7a1ad073cb85357bbb47fc3caee3eee5d363ef49f"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/pack-temporal.postgres.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/pack-temporal.postgres.test.js",
+      "sha256": "7533544c8136d061f515aa40c6a0cdca8911fcfdbbb2dc7418ddc4924e5fd127"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/pack-temporal.postgres.test.js.map",
+      "sha256": "72496fc4a1bc3b64e07c52b466c7dd96f4a8f6645bd45bf926347aec42ef9d4e"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/phase5-plus-validation.postgres.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/phase5-plus-validation.postgres.test.js",
+      "sha256": "bdab996490a84ca9f46a654a50232d4720b2dd39afa8b17d58d68a695e92fb25"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/phase5-plus-validation.postgres.test.js.map",
+      "sha256": "2e8e36d48440fd6f90bd44cbecd82dd973291c9f6e1b4507ff1f6c34d239d19e"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/pipeline.d.ts",
+      "sha256": "44ad5b281e5d1028afe2928652e62be133337533371d13eedae84997f0555b25"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/pipeline.js",
+      "sha256": "37a420273980d303d174ac98ce16dacd0d0fae42c07152e1b6db4acf745d6a06"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/pipeline.js.map",
+      "sha256": "e8d30548a95ad19810daf4ed631304365acbb786278723bc896c83dc92ab731e"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/pipeline.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/pipeline.test.js",
+      "sha256": "bbda46a1ac1abcfc181ec412360232a81d82355e02eff7721d8250f98690cd81"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/pipeline.test.js.map",
+      "sha256": "88314db79ea42f0939973870e356d7b16251f15a237c25e9d905a94e5bb906f5"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/postgres-repository.d.ts",
+      "sha256": "179fa3cd7fa0e5085208916d8948d2cae14f9f9f863f9bcb8fb052d5421e92f7"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/postgres-repository.js",
+      "sha256": "30317da3f08a64e85b6634a5ab86ce8f9876074b28bc0fc2f7558dd7e9579c85"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/postgres-repository.js.map",
+      "sha256": "f2cd6931b793d19bb2775f3a5494f815d97e435ac12f85977dae1fcd1422b9a0"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/repository.d.ts",
+      "sha256": "6db3dffd744eb0dbb3de0fdd7cbb26240c85f381112557badad70b0edce48a43"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/repository.js",
+      "sha256": "610ec0813848b022d425a527cb50ed46fc568b817eabe37ddb2cc952f01e1f4f"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/repository.js.map",
+      "sha256": "70818e38798118d3de189c5b5eb899b35e55c5f536fe609cca5a2cd7b81e34a5"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/tenant-classification.d.ts",
+      "sha256": "257993ecd706fcaa5eeeac7e2f5c4443bc1fcbbe11c96ef0974afe6674db60bc"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/tenant-classification.js",
+      "sha256": "8f7daba2d2cb02f7252df863eadef989b90aca02a91d6364253f5f0c953cf29f"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/tenant-classification.js.map",
+      "sha256": "07a445079add0f26e68f92cf57c566e620af0cc6df5329c1040c96bcb2fe24a4"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/tenant-read.d.ts",
+      "sha256": "b7d85d90b983d863e0c12d3eee3693ce870699ff2b458f85e598cfab2004f887"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/tenant-read.js",
+      "sha256": "eef9811542fef241fe7db5fd8a901840d9ef65669204aa967f92f19de62a2f4e"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/tenant-read.js.map",
+      "sha256": "353f5a4d22a32292c8759aeb3d91bc5212443ed390d31ef3f337481bb3fc0942"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/validation-access.d.ts",
+      "sha256": "9afa7886c19ff89d4feb6686c35cd15fd90ec53c5ac5caab8ada31d7246a6696"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/validation-access.js",
+      "sha256": "109ae8731ea4a7d40abd931b3a49647c47d56de61d55f80ed342176a54cac957"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/validation-access.js.map",
+      "sha256": "0a7ed9553773f775eee2f5d7709c55a859860b0a9c1299328c50ea0033dbabab"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/validation-candidates-routes.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/validation-candidates-routes.test.js",
+      "sha256": "09d79a7d2cef95d5cc50e6c883fa813417237f566ff6c358479a52711afc9382"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/validation-candidates-routes.test.js.map",
+      "sha256": "d7887233f7c42b48f3b7cb64fa36ed00bb31e1fe724d90ec3dcfa5e1fc365556"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/validation-candidates.d.ts",
+      "sha256": "a4f95e5bfaa7f97540d3d1df841c9950713fcaa1d818a18dea8a33f2bcb5c4a7"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/validation-candidates.js",
+      "sha256": "54d2793bee955c834f613aecd5e5b6a4ddb4d84a54571a084c391484d313706a"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/validation-candidates.js.map",
+      "sha256": "9aeb174fc9b6fd29ae2337abfe1b57301225311defadd394989cf9ef45fb199b"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/validation-candidates.postgres.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/validation-candidates.postgres.test.js",
+      "sha256": "17cb3a5acd0f661b805668f07fb7f3229cc4f38b9786aa2dcc1da3e440207b23"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/validation-candidates.postgres.test.js.map",
+      "sha256": "7ce0fbc3fb768f48630aba421431ee477bf1e49ee1c64800c8425f3affc638c0"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/validator.d.ts",
+      "sha256": "6a10c9fa3aad1b9912a92b7030ecc44e6385ae59ebd4916d89096c83de9bcb61"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/validator.js",
+      "sha256": "ca6901da337ab7e476062d1c15600ab56083fdd83d91cc352b96e3257a1b7645"
+    },
+    {
+      "path": "apps/backend/dist/regulatory/validator.js.map",
+      "sha256": "4ecad932ba49278bb49a1cc2090aa46e4775237cb98c1edec025760d9c726218"
+    },
+    {
+      "path": "apps/backend/dist/security/administrative-read.d.ts",
+      "sha256": "2dded673655859e60a79893be7146bd3f4486e728b0af25ae842fe9b9299cea0"
+    },
+    {
+      "path": "apps/backend/dist/security/administrative-read.js",
+      "sha256": "d3035fb2e0990bdfe791aefef77a4604a50f5290300195c4d3b65899e59beeed"
+    },
+    {
+      "path": "apps/backend/dist/security/administrative-read.js.map",
+      "sha256": "11b832c9757bb9f3b4c89cf6dc394047165f99246f8e0e36341097aa9f0f59bf"
+    },
+    {
+      "path": "apps/backend/dist/security/application-token.d.ts",
+      "sha256": "b555fb9f975576ac6b68a2aa475a2280007204dae4bce4193ed10495cb56cd5a"
+    },
+    {
+      "path": "apps/backend/dist/security/application-token.js",
+      "sha256": "531002f64545c99f814753e72c03bbabf7cf78e35d6f3cb223c8fcfb96cba517"
+    },
+    {
+      "path": "apps/backend/dist/security/application-token.js.map",
+      "sha256": "dfda8d6a763bf121e817a73a2e65123f0f81f9f9b047bd84e15114fa8f854e05"
+    },
+    {
+      "path": "apps/backend/dist/security/authentication.d.ts",
+      "sha256": "6de7b6af68a7317fd3842e62bd344989beaef5dd454b7491f884f5da55e4fcff"
+    },
+    {
+      "path": "apps/backend/dist/security/authentication.js",
+      "sha256": "90d1c774bddb4380c0aecb059059587ccb6dfdbce4e70b0f2141ac6058b20c22"
+    },
+    {
+      "path": "apps/backend/dist/security/authentication.js.map",
+      "sha256": "43144163a30ebec53c78c9a0947a2a5157379a5b0c887007673ee45da4428b09"
+    },
+    {
+      "path": "apps/backend/dist/security/authentication.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/authentication.test.js",
+      "sha256": "58adeb51906d474bacd6fa2427ebbfc56a4ed03efa6aca28dcdfd4d4372ecf33"
+    },
+    {
+      "path": "apps/backend/dist/security/authentication.test.js.map",
+      "sha256": "fb2d2b938cfcca8515c6678ed4ee087b0dfe0f1c73db6e9dbbca7d79a76071c8"
+    },
+    {
+      "path": "apps/backend/dist/security/authorization.d.ts",
+      "sha256": "409a4b1a1d5e5bc49c06058dc99a7743101e3e93373900773080af32a5f0f45c"
+    },
+    {
+      "path": "apps/backend/dist/security/authorization.js",
+      "sha256": "e95df4de5045aa8bd8033f6df1a61d62c4cf929b3574df7cadc5926e292664fb"
+    },
+    {
+      "path": "apps/backend/dist/security/authorization.js.map",
+      "sha256": "00632c6ac60d381e4971125e02202a6aa9bedcf91f95508bd490881eee675556"
+    },
+    {
+      "path": "apps/backend/dist/security/authorization.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/authorization.test.js",
+      "sha256": "bc7faf17b27fafa35ebc28f4eadbe42ac3ee35f7ad0becf529b14d879df9a5f9"
+    },
+    {
+      "path": "apps/backend/dist/security/authorization.test.js.map",
+      "sha256": "5ae1ec2f108d240f5e9e1add7c3630f46e7a6682a209024d22045800dcecc8c2"
+    },
+    {
+      "path": "apps/backend/dist/security/frontend-projections.d.ts",
+      "sha256": "8ee727a94b7419c23976d0d949dc5a2dda583c6cfb0b75343825551e92403258"
+    },
+    {
+      "path": "apps/backend/dist/security/frontend-projections.js",
+      "sha256": "0f07ce2dd6d839c3b522594db1c14be717728102e80537d20cd3b94183a7e403"
+    },
+    {
+      "path": "apps/backend/dist/security/frontend-projections.js.map",
+      "sha256": "0f8e4eda73e08ab3ec9caf005a4c87b0bb3193a709642c75e3624f697ba1c5bf"
+    },
+    {
+      "path": "apps/backend/dist/security/frontend-projections.postgres.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/frontend-projections.postgres.test.js",
+      "sha256": "f8685d1987873687d1aadc2b6183594579fc32ddcc481b484fa9d8ff57a13a09"
+    },
+    {
+      "path": "apps/backend/dist/security/frontend-projections.postgres.test.js.map",
+      "sha256": "703d760fd70e65f17794d87eae9f3de895ad8cec3335fbc34af38953d08164cb"
+    },
+    {
+      "path": "apps/backend/dist/security/frontend-projections.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/frontend-projections.test.js",
+      "sha256": "dd5bb5ba4ecdd422265833c1d36017a11bf7afee142f72eac62e2fe30b6af6ba"
+    },
+    {
+      "path": "apps/backend/dist/security/frontend-projections.test.js.map",
+      "sha256": "a268f2c8603fd03dbc61e279545459fba59c9eba6324389266ee361759a7ad49"
+    },
+    {
+      "path": "apps/backend/dist/security/keycloak-managed-user-adapter.d.ts",
+      "sha256": "2ce234623417c9e5df242af5654912116ad5e27067e857405e135defc1fa4694"
+    },
+    {
+      "path": "apps/backend/dist/security/keycloak-managed-user-adapter.js",
+      "sha256": "1a73c98cc92a89f264f8db188070a98a15d5d7749e289ce1f729947bb44b0108"
+    },
+    {
+      "path": "apps/backend/dist/security/keycloak-managed-user-adapter.js.map",
+      "sha256": "e4a0569e3a2f4b9239490fbf93bbf2e051ce63c4ad08971e436205096b3063bb"
+    },
+    {
+      "path": "apps/backend/dist/security/keycloak-managed-user-adapter.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/keycloak-managed-user-adapter.test.js",
+      "sha256": "4151a48483cd5e6dcd8a62c069a3376c9b64760438759a5057273fa58f7b195f"
+    },
+    {
+      "path": "apps/backend/dist/security/keycloak-managed-user-adapter.test.js.map",
+      "sha256": "f79dc1e8716436fdd0550604245a573dd72a431d5038647072f41e12014dd30c"
+    },
+    {
+      "path": "apps/backend/dist/security/managed-identity-routes.d.ts",
+      "sha256": "1cdd7e542c3a2711d8228e497183d4bd2c051175174bca40aae7529a13c4f3b8"
+    },
+    {
+      "path": "apps/backend/dist/security/managed-identity-routes.js",
+      "sha256": "4897cc460bee3d54653c77391dfe46a211092ff4cfa67c9706b4e5505425159f"
+    },
+    {
+      "path": "apps/backend/dist/security/managed-identity-routes.js.map",
+      "sha256": "b8c713215d052ad6b0b3c4f2a24b5dc27ecd509075618c5b3a844b20788f1c52"
+    },
+    {
+      "path": "apps/backend/dist/security/managed-identity-routes.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/managed-identity-routes.test.js",
+      "sha256": "d5049eb00d3da740f857117507b505ba341417f71808da0d3aa5f3fdcfc32b76"
+    },
+    {
+      "path": "apps/backend/dist/security/managed-identity-routes.test.js.map",
+      "sha256": "9bf1d7553b65c1c35a6a2521ed7948b20876fabf21c8c966ff76e643ef82e2cd"
+    },
+    {
+      "path": "apps/backend/dist/security/managed-identity-service.d.ts",
+      "sha256": "9044cebb326f628dbfeb8eab1696b0d0a68a6a0b4a4832d55f221ee7eefde98d"
+    },
+    {
+      "path": "apps/backend/dist/security/managed-identity-service.js",
+      "sha256": "d115cb96d0aab30ad8441278c9296062264ca0520a4ab0fc2f248e51764da010"
+    },
+    {
+      "path": "apps/backend/dist/security/managed-identity-service.js.map",
+      "sha256": "ca753002ce65988b831305861e2788189ece060016cebebd9335bcccb2f38dcf"
+    },
+    {
+      "path": "apps/backend/dist/security/managed-identity-service.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/managed-identity-service.test.js",
+      "sha256": "6b203d4de0e94f195c596fa4fefe1c7798a442877c7f945ce204509efa687a31"
+    },
+    {
+      "path": "apps/backend/dist/security/managed-identity-service.test.js.map",
+      "sha256": "0de1109df89af12478b63e8ff39e9649e7a506969a6e722b0cea025938029a63"
+    },
+    {
+      "path": "apps/backend/dist/security/managed-identity.postgres.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/managed-identity.postgres.test.js",
+      "sha256": "e1ce438a0896f83442ac675534fe42f5eea31546d4a06b68a8033367f352887e"
+    },
+    {
+      "path": "apps/backend/dist/security/managed-identity.postgres.test.js.map",
+      "sha256": "3ff203d076dc9e72a0518730b1793eb0f506df10450c199968f9f7f18dbf1cf9"
+    },
+    {
+      "path": "apps/backend/dist/security/membership-invitation.postgres.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/membership-invitation.postgres.test.js",
+      "sha256": "b459f8adcbbea296fdf6e1512a6f91f1c105f5b650c43c7195f965383261d155"
+    },
+    {
+      "path": "apps/backend/dist/security/membership-invitation.postgres.test.js.map",
+      "sha256": "c07210206febbceb0c837b61cb6324294af0fa0aab057c98d849fabc3e93e61f"
+    },
+    {
+      "path": "apps/backend/dist/security/membership-invitation.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/membership-invitation.test.js",
+      "sha256": "5024290d74606774eb00be538547c2bccb7208a5d3464d2f8a0dbf3f3ae017f4"
+    },
+    {
+      "path": "apps/backend/dist/security/membership-invitation.test.js.map",
+      "sha256": "8e1a0941384e0064f756a977e178f8d1e15f966a21b9b1e1005ee0219d523dba"
+    },
+    {
+      "path": "apps/backend/dist/security/membership-role-etag.d.ts",
+      "sha256": "5c1d2ea24b71a1af2373a5cd1d0f6d2e73e7752303e9ca4d63f7baf8f69acfd3"
+    },
+    {
+      "path": "apps/backend/dist/security/membership-role-etag.js",
+      "sha256": "91a07812a90f24735ad3abae6952c91663ef6a6e34ec2f86d858d3e096edced6"
+    },
+    {
+      "path": "apps/backend/dist/security/membership-role-etag.js.map",
+      "sha256": "7da611acd7cc1b18c42a81a7a60f93393bb8259ed740509589e74fe1b84c8588"
+    },
+    {
+      "path": "apps/backend/dist/security/membership-role-revoke-route.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/membership-role-revoke-route.test.js",
+      "sha256": "4984c9b46d7604a0fcc270d761c1f47f0d4719a4b09386883a1b31481b339104"
+    },
+    {
+      "path": "apps/backend/dist/security/membership-role-revoke-route.test.js.map",
+      "sha256": "cd841d0a254eca5eb26d4653303979d5729eca2b91754c3bdc1333013e18d94e"
+    },
+    {
+      "path": "apps/backend/dist/security/membership-role-revoke.postgres.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/membership-role-revoke.postgres.test.js",
+      "sha256": "436ff1ecd31e3c0f1c5109c3598f33818561a1015384800a8742861cc5a48ac2"
+    },
+    {
+      "path": "apps/backend/dist/security/membership-role-revoke.postgres.test.js.map",
+      "sha256": "e80ab0b9d5f5af7d622b6147e3e6752a59eaed45add2e815f24a085397bd0ee2"
+    },
+    {
+      "path": "apps/backend/dist/security/membership-role-revoke.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/membership-role-revoke.test.js",
+      "sha256": "79ab6df5831837061c1a801fdcdeb769289ccb7efdfb59a3b0e6e7645f2f2be7"
+    },
+    {
+      "path": "apps/backend/dist/security/membership-role-revoke.test.js.map",
+      "sha256": "9a8d654ca7bf5be42dbfc41ef1025201a353cec2189f1fd5992bc779b175f9e9"
+    },
+    {
+      "path": "apps/backend/dist/security/methodology-predecessor-fixture.d.ts",
+      "sha256": "3dcced668b0e983b20abbb6e3311eb891c8cb3d7ffbe7e7f219275799f9a9264"
+    },
+    {
+      "path": "apps/backend/dist/security/methodology-predecessor-fixture.js",
+      "sha256": "d7ccb0ab555e299f18df25f820f66cf9dc2d73f31fca0a7da69be4ec588c1f88"
+    },
+    {
+      "path": "apps/backend/dist/security/methodology-predecessor-fixture.js.map",
+      "sha256": "589a0f82d104550a81455351cb5615beb32d0b82f58cc03d3d47f6f51232099f"
+    },
+    {
+      "path": "apps/backend/dist/security/oidc-browser-routes.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/oidc-browser-routes.test.js",
+      "sha256": "f87a62d7caf4aacaae675c006e8be06383f6b9a3703f4d5e181d6ae9ebeda64e"
+    },
+    {
+      "path": "apps/backend/dist/security/oidc-browser-routes.test.js.map",
+      "sha256": "ea2a98b7be85ec13b365f5a6f74eef8a29887831c923c05e14ad98d2f45418b2"
+    },
+    {
+      "path": "apps/backend/dist/security/oidc-browser.d.ts",
+      "sha256": "808010f45be45180e6611c887847e1ac954f110e572a06f35f5546e0a936d7b4"
+    },
+    {
+      "path": "apps/backend/dist/security/oidc-browser.js",
+      "sha256": "73443a7c69672daba346b4c2b667a01a9046c01646612fbff662dc80bde5c613"
+    },
+    {
+      "path": "apps/backend/dist/security/oidc-browser.js.map",
+      "sha256": "1cb1413fcbcb0d808412526dfe2214c3e47e908d12fbdd4432a7de827477f5ca"
+    },
+    {
+      "path": "apps/backend/dist/security/oidc-browser.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/oidc-browser.test.js",
+      "sha256": "5990a65da51f9dbf6d67b3086722f9027e6fb1d26e9017ae0827802c7cafb3b1"
+    },
+    {
+      "path": "apps/backend/dist/security/oidc-browser.test.js.map",
+      "sha256": "a8b3226d848bddf1326f93beb237239c816657e1bdeadb18166d839845c32b02"
+    },
+    {
+      "path": "apps/backend/dist/security/ownership.d.ts",
+      "sha256": "bc000a9399ee436e0ad3d6c68c28733229b0cbccadaae20c3e0f52cb03c27ce3"
+    },
+    {
+      "path": "apps/backend/dist/security/ownership.js",
+      "sha256": "a7c481b33dbf6a23dafd1970cade9906eaecf50faa983d85ace9a836dcd3382f"
+    },
+    {
+      "path": "apps/backend/dist/security/ownership.js.map",
+      "sha256": "c620c076a3a9f43aa5638e01132d8b3ba4965d6e3475a1aeb636d8808d723a7d"
+    },
+    {
+      "path": "apps/backend/dist/security/permission-projection-catalog.generated.d.ts",
+      "sha256": "04002071c7704cf884fd3acbe451bdd5ba0322e83e05ecd4822d2e512bd59943"
+    },
+    {
+      "path": "apps/backend/dist/security/permission-projection-catalog.generated.js",
+      "sha256": "0f56b07617841cbe6709f67ecdc0c244f2605ee27f3a3629e2f26242fd456965"
+    },
+    {
+      "path": "apps/backend/dist/security/permission-projection-catalog.generated.js.map",
+      "sha256": "c12033e63be233de3f53e492b3a3288e2f9169d1e639e6fcbff95713f055da87"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-authority.d.ts",
+      "sha256": "e074b067d0d2ab50674bb81dd40e599d9b759472c265da59f6eef8992fefcedf"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-authority.js",
+      "sha256": "4160744138c58b52912412011a9ef94cd334d46d352d010d5e6933bc9aaf239a"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-authority.js.map",
+      "sha256": "781bc0c4f26d7578718b8d81207f0eff49a2160756244eca868538dfe88589db"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-iam-service.d.ts",
+      "sha256": "bc9707010b5432ba8a6f0fba662a4d466ffde7543b04f4c80386a2873d66d86c"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-iam-service.js",
+      "sha256": "811b0fac7cff60f85db56b812e172effcea877dab17cc43ed0be84e42cbed4de"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-iam-service.js.map",
+      "sha256": "d63396bae42584479779c21ef5fcaeedd740723291eb70ec3a8e0fd932e2c7ad"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-family.d.ts",
+      "sha256": "9afc967aedce87588426b2e0c9515f75a1c0b5be373df7159cd60f07f2d38edf"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-family.js",
+      "sha256": "8877ad5d0a9cb09abae30eec65750cf5415124c035e9ea5f66fe8a386252a913"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-family.js.map",
+      "sha256": "35b36fbb8c9cb6149aa75049a3d3262368b8ec087d273f2bcd6b52dbddd58e9a"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-read.d.ts",
+      "sha256": "de577ddc2cf58aef2685dbff164ecf5a217608241a4e94281db8a63d9fc90eb6"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-read.js",
+      "sha256": "50deaeecf1c0e13b8696dff61a18184d52ae3ccb7eb431a4d34dadd2b2e8f57d"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-read.js.map",
+      "sha256": "11dbf452fe12f71d510e390a700e30585a348150fe518dd136b4a024c514c6ae"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-read.postgres.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-read.postgres.test.js",
+      "sha256": "351657226ed4bb0082750faf3d16d89725ce024ef18576fa27293483a45edc7d"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-read.postgres.test.js.map",
+      "sha256": "b2757b08eb9ba59d0d00047fb089139caf8c73d18759dde6d556f34d44be8c54"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-read.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-read.test.js",
+      "sha256": "12599dbd704f30f661b44a0d35e5905e577f0876a07a6db82854d53a444c866d"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-read.test.js.map",
+      "sha256": "39d87212f663097729ed47d423912edef05082946ae808be2bd5851a7c1c1acc"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-routes.d.ts",
+      "sha256": "566a4019e9937b216b72abbc29791682ac5cdd2e3e26b3e343d0287431aa0d83"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-routes.js",
+      "sha256": "a25aa801d1be3af8cc2bd407ea14e0a4bfd050faa60117a20880882794bae6c8"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-routes.js.map",
+      "sha256": "98f3f67319da6327701761729f1c59abbde2113380469a1f19fc028560e78991"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-service.d.ts",
+      "sha256": "bc30cde8beca29ebc621ba08a4c3befb50da465c247af7492ba4ff7d91f9bbd9"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-service.js",
+      "sha256": "54fe338c93ba6908f8957e313ff964ab4bb47f6b1323addaedeea2a3a2d8f64a"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-service.js.map",
+      "sha256": "a8e9d67126de1da96172e67351aee3fe02f5a8bb2771f8aa095fe099c83656c1"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-service.postgres.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-service.postgres.test.js",
+      "sha256": "cd27b72e639cc0cff9634289d84f56cf32a6b65ae373dd6a3f8ecaa4d831d5db"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-service.postgres.test.js.map",
+      "sha256": "267baf2d1b5ca1442f1c064fddcd0a3c8178e01f09c8ebfa404ac006ce426437"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-service.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-service.test.js",
+      "sha256": "12af8d265a18aedc2cab0c3c74c649b31dc297166d41a1de2df46e9b3ac22dcf"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-role-service.test.js.map",
+      "sha256": "c6f84032cd09f0e37c774d5451563b3b5c4a607cd970991e885124785f9098db"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-subscription.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-subscription.test.js",
+      "sha256": "8bebed5d52810a8399cdde9c05de035f433144f75bd9d6176fe9fab6aa5c2ed3"
+    },
+    {
+      "path": "apps/backend/dist/security/platform-subscription.test.js.map",
+      "sha256": "794fe93abaf6303a699a34ec7741d7434a3dc5dbf57f5d8bfbe0aa7e59f8fa08"
+    },
+    {
+      "path": "apps/backend/dist/security/reference-publication.d.ts",
+      "sha256": "b1c847d13327b7a9e373122eb999f315197b2d8ac2f7d85afda8fc8b5322ec87"
+    },
+    {
+      "path": "apps/backend/dist/security/reference-publication.js",
+      "sha256": "21e36db242e3fbeb451cde29a0ee4d0d44114503016aaf295af2612ff35b851f"
+    },
+    {
+      "path": "apps/backend/dist/security/reference-publication.js.map",
+      "sha256": "06bdad9e05ec4c308ee96ec7d8885ffafbcd9d57435cfdf5b4d2f9e95c6c020e"
+    },
+    {
+      "path": "apps/backend/dist/security/role-assign-projection-scope.postgres.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/role-assign-projection-scope.postgres.test.js",
+      "sha256": "160a18f191110de26a544e6b09aceb793b780327fbbe1f3b485e601419428716"
+    },
+    {
+      "path": "apps/backend/dist/security/role-assign-projection-scope.postgres.test.js.map",
+      "sha256": "f23472ccd85b582327a10ce9de188a0fbcf0b6f83c9f4ec4bacaf98e84bdbd3a"
+    },
+    {
+      "path": "apps/backend/dist/security/runtime-security.postgres.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/runtime-security.postgres.test.js",
+      "sha256": "23d61e6cd55608b0246ae492f4d8caef55da7a17556a110d8d986c940789c83d"
+    },
+    {
+      "path": "apps/backend/dist/security/runtime-security.postgres.test.js.map",
+      "sha256": "7505719c16e1eebec58831a8e2683f5f15a2a4b29a2c7c6efbb45df310ad8ffe"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-context.d.ts",
+      "sha256": "20b568dd6725be95fdb102aae371741ba92620ce0c061342bd3a85608af5b872"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-context.js",
+      "sha256": "ae75d09f462039b1b7577c781feab22eb4210236330b2f3bbb5cf94eb4abcd31"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-context.js.map",
+      "sha256": "7b5caef6eb65cc1f9b0c4862ffe984bd39fc4a5cfb7aa3ee2c4ddcb38d11ceeb"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-context.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-context.test.js",
+      "sha256": "f458803bbf06191fb73fbe9542d77d23c5b1647afe24b0a087534dfedca73030"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-context.test.js.map",
+      "sha256": "7a0a4ca2f4007504225dcf613d71d455fa35fe674a889146258f1b63d5e4fb14"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-initial-onboarding.d.ts",
+      "sha256": "791be9c6ff8ce95466712b4dea6f6c898e507a16159f955107c608fe77221d52"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-initial-onboarding.js",
+      "sha256": "246affb5b8e7b3608c2b4613bc484da0da9e7602a176bd1098b2f6e12def836f"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-initial-onboarding.js.map",
+      "sha256": "2400bc8d594e52f447ccf4f342d50de3573708afe0b04528d7912b5867b8ea99"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-onboarding-routes.d.ts",
+      "sha256": "dc8ecb3158aa0603a2b91fea3c98fdc4418f32272955d00ddf81e00679cb752b"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-onboarding-routes.js",
+      "sha256": "95275d8ca1f2f9520bf7a70c285a5be1dab7794f1b3be3f4f714914ea77a981e"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-onboarding-routes.js.map",
+      "sha256": "43653a5fdf7a64f7f25e261b84e954c17fb928da15d4bc781d65e48d1c1dae1b"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-onboarding.postgres.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-onboarding.postgres.test.js",
+      "sha256": "570cb3217ff6e85b8ffee59fae70e4941aada66a024efbfc02cd39767bb6d8a1"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-onboarding.postgres.test.js.map",
+      "sha256": "e47304268fecf932d78ba10e4749abed92f858ef99169733cc3333048f24fe84"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-onboarding.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-onboarding.test.js",
+      "sha256": "30530dd5a1803bd46fdcc7808c1527ee6db9783c69ea2c1f1e741c932c4b7d6e"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-onboarding.test.js.map",
+      "sha256": "17776064ebf3be9eff11d19c8d27b75c1806b51f6caf1fc75f9b856dbd1bdfe1"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-user-onboarding.d.ts",
+      "sha256": "82c938ca63a9d3f9e7a6160b14a9d27f2c2152144126c002ac4012df89a2926f"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-user-onboarding.js",
+      "sha256": "27b42a7059a941c6b2c6d772a949ff879137d30b4ffba119f17c2adf9ac54661"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-user-onboarding.js.map",
+      "sha256": "67e5f21c002150f8b2a6a821e66149abb66bc58817db2bcd30c49ef85a917380"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-user-onboarding.postgres.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-user-onboarding.postgres.test.js",
+      "sha256": "1929bc68d6ef6c9a83df4848d49b0337aab2ec02c353d874dae14c91f75cead2"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-user-onboarding.postgres.test.js.map",
+      "sha256": "4d49a775af3bb03e9b0b6521c8c0800a62e158813db8cce82b04e98e7a1f20ca"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-user-onboarding.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-user-onboarding.test.js",
+      "sha256": "40b01615f1bb8494fe211361ba22a43ecdb48e34b6032d1a9f247e898e297a3b"
+    },
+    {
+      "path": "apps/backend/dist/security/tenant-user-onboarding.test.js.map",
+      "sha256": "caea019b602ab2121db7b2f4af2a188adde9f6eee41d7200624e7e3f811e3a4d"
+    },
+    {
+      "path": "apps/backend/dist/security/testing/historical-catalog-stage.d.ts",
+      "sha256": "6ede6f7902be044ad3b372f8106498f3b2605efc1b4b4a9b6322a7c4adfdb7ea"
+    },
+    {
+      "path": "apps/backend/dist/security/testing/historical-catalog-stage.js",
+      "sha256": "96feb06a618ef0ed50dbedab1acf0c4acf34a07f599007bb6c9cf8d3cc81feba"
+    },
+    {
+      "path": "apps/backend/dist/security/testing/historical-catalog-stage.js.map",
+      "sha256": "d1852d7df28b95aa5ee036422ac7da95eacbf002f343874fa54f85b083c517a6"
+    },
+    {
+      "path": "apps/backend/dist/security/user-identity-discovery.d.ts",
+      "sha256": "cda0768c06706c6925a97debbccaf0bd5726fb4abc23c81d21f5b5519f2d6c30"
+    },
+    {
+      "path": "apps/backend/dist/security/user-identity-discovery.js",
+      "sha256": "25a85b705fd8cb1fa35702aab2f13e6ee894759866058d3ddd52e2314b445be1"
+    },
+    {
+      "path": "apps/backend/dist/security/user-identity-discovery.js.map",
+      "sha256": "a46caf41fe3dd33aed845579bdf8015fb27a43a09b9ffa4877aa6e11b8e9148c"
+    },
+    {
+      "path": "apps/backend/dist/server.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "apps/backend/dist/server.js",
+      "sha256": "54a711ccfa7686d977dc3cbe342dafcdc2fcf39b5279f388cee1d5e304d4b32f"
+    },
+    {
+      "path": "apps/backend/dist/server.js.map",
+      "sha256": "ff7878644fdddb47a38c4645cb17b253856fb9b948f308e3dd84e92dfa6ef72f"
+    },
+    {
+      "path": "apps/backend/dist/transaction.d.ts",
+      "sha256": "effadf6378613de208e8713d202db3f7767dcd5af3c7d3d071aeece8219294fc"
+    },
+    {
+      "path": "apps/backend/dist/transaction.js",
+      "sha256": "fc3345b83efd83b61c9dae944f13353ae98ce790dc2944681ac3b9f3cfde44b3"
+    },
+    {
+      "path": "apps/backend/dist/transaction.js.map",
+      "sha256": "60578dcd2ad16fa64592a963a12f155516e99c66ac1a6774f4babc5ee0ebf361"
+    },
+    {
+      "path": "apps/backend/dist/uuid.d.ts",
+      "sha256": "1a52bd9d19d6d71451a740dd7919ccc7c7bd70304c46bf54d4de086ac9fc1cd8"
+    },
+    {
+      "path": "apps/backend/dist/uuid.js",
+      "sha256": "59297c7271d647c1fff13686c556734a32a79b1632eb34089071b283d97d92a5"
+    },
+    {
+      "path": "apps/backend/dist/uuid.js.map",
+      "sha256": "5b34232824ba699629d0dc5376923a1bd8b11c3618e3b413c507d7d7e5b044b9"
+    },
+    {
+      "path": "apps/frontend/dist/assets/index-BNhQyVyL.css",
+      "sha256": "b55c440ffb50943558d4b7d14eadd86f2acea985c1a956ca20ca7a4e3af0e149"
+    },
+    {
+      "path": "apps/frontend/dist/assets/index-CNjplQYs.js",
+      "sha256": "d83223e1756b584d36ca5ced893b24d4992f3b549598e013d31bbbd0bf47a2e8"
+    },
+    {
+      "path": "apps/frontend/dist/index.html",
+      "sha256": "631149508415b7eff37f8ec299a40e50020fd15d86a602c60c7caa286f37e957"
+    },
+    {
+      "path": "apps/frontend/dist/tecdex-logo-light.svg",
+      "sha256": "215de8e5447f770649647d55556dceeed84f8f6e64393d618690ef0954246806"
+    },
+    {
+      "path": "packages/contracts/dist/frontend-auth-projections.d.ts",
+      "sha256": "e92374cbd23b35e45e44f1c126a7f49206d422f1adfd706eaffc5fb4a689dd34"
+    },
+    {
+      "path": "packages/contracts/dist/frontend-auth-projections.js",
+      "sha256": "bb1ce6ebb7a9ca4cd4a7dc8f234ba7e9f48992bf47f1e5106a4d75a4bbffbd74"
+    },
+    {
+      "path": "packages/contracts/dist/frontend-auth-projections.js.map",
+      "sha256": "dbfcd110d85f9c1bec4656ca03b6b5f4e91ac4452fbc6fa9183bc12fa89b24e8"
+    },
+    {
+      "path": "packages/contracts/dist/index.d.ts",
+      "sha256": "bcec7cdd01f9d702a3c11340b1ba091b20e523bcf78dc56c9057b52872fe786c"
+    },
+    {
+      "path": "packages/contracts/dist/index.js",
+      "sha256": "d1876b7849084762f4d5729efe28ec9e57960ac7dd6fcfcafc6919da7d0b591c"
+    },
+    {
+      "path": "packages/contracts/dist/index.js.map",
+      "sha256": "51a71849f626eafdb260e1e4a7ccadc7d6450d2c8c07fbd3054ce3a9ab5d3193"
+    },
+    {
+      "path": "packages/contracts/dist/mi7a-frontend-projections.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "packages/contracts/dist/mi7a-frontend-projections.test.js",
+      "sha256": "e8e1ed9cc6f076b98cd28b4d635a3c1b49f4065b3f8d14dffbe7a200a9a6b59b"
+    },
+    {
+      "path": "packages/contracts/dist/mi7a-frontend-projections.test.js.map",
+      "sha256": "d78178cfb80f59fee1f3c7f0a7abb74992084d9583b51aeac2fd7f46382b424e"
+    },
+    {
+      "path": "packages/contracts/dist/phase5-administrative-read-contract.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "packages/contracts/dist/phase5-administrative-read-contract.test.js",
+      "sha256": "39e3241012ee34213fc279ad927d1629d35c868dd00fa2ae8a715f8c98d0d5c3"
+    },
+    {
+      "path": "packages/contracts/dist/phase5-administrative-read-contract.test.js.map",
+      "sha256": "9e1460e24f83d565986f2d97f252dd189591c70c7a471d6c37188cfd66d41d70"
+    },
+    {
+      "path": "packages/contracts/dist/phase5-executability-preflight.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "packages/contracts/dist/phase5-executability-preflight.test.js",
+      "sha256": "391abe2f18483db9c5bc13814803e55c8c1601d174cb8a6d2eb095ac43463ead"
+    },
+    {
+      "path": "packages/contracts/dist/phase5-executability-preflight.test.js.map",
+      "sha256": "56bae729c47b84b60db2b3287532d9ab7c37a68c5c3a59df19a54382ed8474f7"
+    },
+    {
+      "path": "packages/contracts/dist/phase5-membership-invitation-contract.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "packages/contracts/dist/phase5-membership-invitation-contract.test.js",
+      "sha256": "ed62ed3081feb9e92010bda31f3581d64ca075a72eab05672aefc7f11c28f559"
+    },
+    {
+      "path": "packages/contracts/dist/phase5-membership-invitation-contract.test.js.map",
+      "sha256": "717437f33392c231dc9556bdd4d4349bc6c537f861ffe45095bd0d936e19224b"
+    },
+    {
+      "path": "packages/contracts/dist/phase5-membership-role-revoke-contract.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "packages/contracts/dist/phase5-membership-role-revoke-contract.test.js",
+      "sha256": "3568134dbffe33dd79440024f8d96d4560471274a5d919656c7acb273022ad07"
+    },
+    {
+      "path": "packages/contracts/dist/phase5-membership-role-revoke-contract.test.js.map",
+      "sha256": "9aa48527678143fe70f53611c04893c78e9fe8568f425beb4ee50460b6021626"
+    },
+    {
+      "path": "packages/contracts/dist/phase5-read-contracts.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "packages/contracts/dist/phase5-read-contracts.test.js",
+      "sha256": "b67de115ffaab076955631d1f4abc8d9d605406846fb0576c088d191716dc8f6"
+    },
+    {
+      "path": "packages/contracts/dist/phase5-read-contracts.test.js.map",
+      "sha256": "2ad359d1c8d85882dbc03466dfbc66d5471c5e63a9389a501891880b4103a841"
+    },
+    {
+      "path": "packages/contracts/dist/phase5-retention-policy-contract.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "packages/contracts/dist/phase5-retention-policy-contract.test.js",
+      "sha256": "b9735f230b5a388c0ec6e6186071b286e716d96832e1d4ea01a5217280d3cb46"
+    },
+    {
+      "path": "packages/contracts/dist/phase5-retention-policy-contract.test.js.map",
+      "sha256": "27a87e36966919eb91c8ec1ec92a5de38281666e859a545d9a080200fcc5ca02"
+    },
+    {
+      "path": "packages/contracts/dist/phase6a-reference-resolution.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "packages/contracts/dist/phase6a-reference-resolution.test.js",
+      "sha256": "0b7fb8506bdd4a7c8ec0b4eba61be96ca2836308ddaa81fc5bc7d1054bf668f7"
+    },
+    {
+      "path": "packages/contracts/dist/phase6a-reference-resolution.test.js.map",
+      "sha256": "1517384f5ddf151a81f42da2755e28942ab5281263ef006e681e5c41cbb67c10"
+    },
+    {
+      "path": "packages/contracts/dist/phase6a-vocabularies.d.ts",
+      "sha256": "d790e3baa8159e73db6a1d60c1b0761ad65dd17590445e3d0ffd048d9a797b87"
+    },
+    {
+      "path": "packages/contracts/dist/phase6a-vocabularies.js",
+      "sha256": "6647f62fc00b7f5d6578774f27d58d663be6753b705c367410cf216b8eed005f"
+    },
+    {
+      "path": "packages/contracts/dist/phase6a-vocabularies.js.map",
+      "sha256": "20965dd602b4910110d29ce13f8d3d97a406600f4c4cfeba7dcba5e214451c01"
+    },
+    {
+      "path": "packages/contracts/dist/phase6a3-provenance-contract.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "packages/contracts/dist/phase6a3-provenance-contract.test.js",
+      "sha256": "280a225fd83fa66e34efb67705e4201b2646f02d3937a15c428a873286a8b5a8"
+    },
+    {
+      "path": "packages/contracts/dist/phase6a3-provenance-contract.test.js.map",
+      "sha256": "c1c5f8cc08986246184717329a86b5379114a41657b615f7bae217e35e098e2a"
+    },
+    {
+      "path": "packages/contracts/dist/phase6a3-publication.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "packages/contracts/dist/phase6a3-publication.test.js",
+      "sha256": "f4c3381cc46b5bb60a09ff9adc9a15735ce53100ddda9324feb4590c86df2371"
+    },
+    {
+      "path": "packages/contracts/dist/phase6a3-publication.test.js.map",
+      "sha256": "0ada2c0ae61b29602c9a45fa6d5f98d8be296c37103fa2188465908409277808"
+    },
+    {
+      "path": "packages/contracts/dist/platform-role-administration.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "packages/contracts/dist/platform-role-administration.test.js",
+      "sha256": "9b0bde27dab77223ef747a32ea99ff6bc683c55258340353f765d72b0d2e7dd8"
+    },
+    {
+      "path": "packages/contracts/dist/platform-role-administration.test.js.map",
+      "sha256": "c6213cec30f1c461c9968f9111d9f8d69350fd933681320424d2ddc9ee15333b"
+    },
+    {
+      "path": "packages/contracts/dist/platform-role-read-contract.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "packages/contracts/dist/platform-role-read-contract.test.js",
+      "sha256": "b898ff551dcabc83cc1c978d1982b34d505d6e9645c05f1b35dc3e98106bf573"
+    },
+    {
+      "path": "packages/contracts/dist/platform-role-read-contract.test.js.map",
+      "sha256": "de88afd6e379d5b98c99eac9f451fd8c4297f036ed69dba4f50d9b6af3e63139"
+    },
+    {
+      "path": "packages/contracts/dist/platform-tenant-user-onboarding.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "packages/contracts/dist/platform-tenant-user-onboarding.test.js",
+      "sha256": "7ec054588edbac793c87b81fe8c9f5586946d39507844cdb0a924f9dcf60bc9d"
+    },
+    {
+      "path": "packages/contracts/dist/platform-tenant-user-onboarding.test.js.map",
+      "sha256": "769906fe5556d609d8f3d262e53e383e4b5bda52602caa773d900d7dd258409a"
+    },
+    {
+      "path": "packages/contracts/dist/pre-f5b-executable-contracts.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "packages/contracts/dist/pre-f5b-executable-contracts.test.js",
+      "sha256": "3e282e3570c3650b238232106d338851e6ef82819c4f343b5ad58dd3dd2b8a7d"
+    },
+    {
+      "path": "packages/contracts/dist/pre-f5b-executable-contracts.test.js.map",
+      "sha256": "4c8c595322697f95c3da20654faf96ed77820f4327a42ffb24838ae3e588e443"
+    },
+    {
+      "path": "packages/contracts/dist/pre-f5d-platform-iam-contracts.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "packages/contracts/dist/pre-f5d-platform-iam-contracts.test.js",
+      "sha256": "61c833d8e566e9725108ee5760e6a3439875f02c3afbce99a4e5c6cbc9082862"
+    },
+    {
+      "path": "packages/contracts/dist/pre-f5d-platform-iam-contracts.test.js.map",
+      "sha256": "d158d5e59d94c5e70138aee0778303637ff18cbcf352c25af10cfedb990cf810"
+    },
+    {
+      "path": "packages/contracts/dist/pre-f5e-platform-iam-token-contracts.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "packages/contracts/dist/pre-f5e-platform-iam-token-contracts.test.js",
+      "sha256": "b8898f2dbd16de6902d4ec6aeb08a20be809b92d171389c409e15ff55581a0a3"
+    },
+    {
+      "path": "packages/contracts/dist/pre-f5e-platform-iam-token-contracts.test.js.map",
+      "sha256": "f0cf16ebb45925b47e32d40adbb4caddb7cf78712cf360c29661c5730e594a67"
+    },
+    {
+      "path": "packages/contracts/dist/role-assign-projection-scope.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "packages/contracts/dist/role-assign-projection-scope.test.js",
+      "sha256": "84c7a99ecefbb86dbc22fa4b0c4732aa03b99132f2cec0e84436fc5a63d6dfa3"
+    },
+    {
+      "path": "packages/contracts/dist/role-assign-projection-scope.test.js.map",
+      "sha256": "08e26ace11f5e962607186db93fa8e8bf41c30ca198a4b7d56d7b0862c82304a"
+    },
+    {
+      "path": "packages/contracts/dist/tenant-onboarding-d2.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "packages/contracts/dist/tenant-onboarding-d2.test.js",
+      "sha256": "9ce934e6754583907e72af0cbf4434a679dd55c297dab3de7dd75a64ee85eb16"
+    },
+    {
+      "path": "packages/contracts/dist/tenant-onboarding-d2.test.js.map",
+      "sha256": "b69e5b824f3024d88647b722d63e0cbc365e1d0203b40a3bec73fdc2489772ee"
+    },
+    {
+      "path": "packages/contracts/dist/testing/schema-validator.d.ts",
+      "sha256": "c73e9af9f9e6a406ff1d13caf3b070502088cbb1cfd541fc83f05339f0868ecd"
+    },
+    {
+      "path": "packages/contracts/dist/testing/schema-validator.js",
+      "sha256": "1c77a12a5861dd538ce0a5ea3b8404d175e645b484c632ac29f1276b4a0b8b1c"
+    },
+    {
+      "path": "packages/contracts/dist/testing/schema-validator.js.map",
+      "sha256": "b51403714dabdd132e45a7ea1160089547faa113b1636ad3a0445abb2871401a"
+    },
+    {
+      "path": "packages/contracts/dist/validation-candidate-contract.test.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "packages/contracts/dist/validation-candidate-contract.test.js",
+      "sha256": "d00e0b2d6a693d81e19a3be4e516cbc56687001aca51fd55b9de83b2f60dd128"
+    },
+    {
+      "path": "packages/contracts/dist/validation-candidate-contract.test.js.map",
+      "sha256": "e5c28050f6f393cdedbe7daa93a63f034a70de3678d9d9661197636195c9fd4e"
+    },
+    {
+      "path": "packages/shared-types/dist/index.d.ts",
+      "sha256": "3ccd2287521bbaa4a94604b56bc1cf49b5f91044282ff999db025e889cab3019"
+    },
+    {
+      "path": "packages/shared-types/dist/index.js",
+      "sha256": "e08b7f1a877861a02dcd81f11198e21edcb892027e53cb843e1219a530bbac85"
+    },
+    {
+      "path": "packages/shared-types/dist/index.js.map",
+      "sha256": "a0e289685955d7e7a45c5ea614af28ecb05f6207d3ff7fd64de0ec0f4ed5b0db"
+    }
+  ],
+  "build_manifest_utf8_sha256": "b52962772e1f5fa61cbc8a952442884e68dcf44395ad563eb871e6ccf70653d9",
+  "dependencies": [
+    {
+      "id": "CFGD",
+      "status": "OFFICIAL_SUFFICIENCY_AND_VERSIONED_MODE_BINDING_NOT_DEMONSTRATED"
+    },
+    {
+      "id": "CT04_C04W",
+      "status": "CANONICAL_TYPED_LEGAL_CONTEXT_UNRESOLVED"
+    },
+    {
+      "id": "D01_D02",
+      "status": "R3_EXACT_APPROVAL_NOT_RECORDED"
+    },
+    {
+      "id": "VOC_C04",
+      "status": "ACTUAL_HISTORICAL_INVENTORY_NOT_AUTHORIZED"
+    },
+    {
+      "id": "TIMEZONE_UI",
+      "status": "APPROVED_CONTEXT_PROJECTION_MISSING"
+    },
+    {
+      "id": "UI_HUMAN",
+      "status": "PENDING_HUMAN_ACCEPTANCE"
+    }
+  ],
+  "migration_plan": [
+    {
+      "id": "20261009000100",
+      "effect": "Canonical contextual EC/layer UQs +exact typeddefault; locks/checks; no data rewrite",
+      "precondition": "Read-only aggregate inventory: null-safe business keyduplicates,defaults0/>1/type/state,FK/layer/coherence/convalidated/schema ledger; reject incompatibledata; no guessedbackfill",
+      "recovery": "Transactionrollback beforecommit; afterwards forward-only repair or specifically approved coordinatedbackuprestore preserving new legitimate contextual records"
+    },
+    {
+      "id": "20261009000200",
+      "effect": "3permissions/44 template pairs +approvedbaseline tenants only;noCustomAdminMembershipRole",
+      "condition": "No realgrantwrites before separate approval; coordinate33 auditceremony, new3read gates failclosed until auditvalid"
+    },
+    {
+      "id": "20261009000300",
+      "effect": "ExactadoptionAuditEvents, no grants DML; actualbefore/after.present true, genuineactor/receipt/manifests/time/UUID7",
+      "active_manifest": "OUTSIDE_ACTIVE_MANIFEST; add exact reviewed checksum through new canonical-runner version only after actor/planapproval",
+      "caller_contract": "BEGIN/SETLOCAL tcdx.publication_service_principal_id/execute exactSQL/atomiccanonicalledger33 insertion/COMMIT; unavailableactor/hash/audit/failedpostcheck =>ROLLBACK; no retroactivecreatedat"
+    }
+  ],
+  "stages": [
+    "Resolve canonical residual inputs/bindings and exact new approvals first",
+    "Freeze final source/contracts/artifact/container transports and new operationalmanifest, no pending source assumptions",
+    "Approve read-only QA/IAM validation plan, targets/identities/access/minimizedaggregates before any connection",
+    "Check actual backup and independentdiscardable restore of existing data, integrity/rowcounts/FKs/indexes/constraints/defaults/ledger; no QA mutations",
+    "Approve exact availability/lock window,DBA identity,33 actor/canonicalrunnerintegration,migration/build hashes and operation list",
+    "Apply only explicitly authorized forward-only31/32/33; no historical edit,reseed,backfillguess,globalconfigchange orposthoc audit",
+    "Deploy only if exact separate approval; validate genuineauthority/tenantmembership/scope/entitlement/SoD/revocation/hold/retention/history/error runtime",
+    "Record PASS/FAIL/NOT_RUN byscope; localbrowser/IAMsimulation neverexternalacceptance; do not promote absentphysicalRLS"
+  ],
+  "rollback_or_forward_recovery": "Never restore UNIQUEtenant or globalordinal after allowing legitimatecontextualrows; no truncation/deletionofhistory. Preserve backups plus postcommitwrite lineage; proposedforwardfixrequires exactdelta approval. Unavailableauditfailclosestransaction.",
+  "not_authorized_or_executed": [
+    "QA_SQL",
+    "QA_DDL",
+    "QA_DML",
+    "QA_grants",
+    "IAM_real",
+    "Credentials",
+    "Deploy",
+    "External_E2E",
+    "Push",
+    "PR",
+    "Merge",
+    "6A4",
+    "SOGv2"
+  ]
+}

@@ -1,0 +1,443 @@
+{
+  "config": {
+    "argv": [
+      "/private/tmp/tcdx-grc-npm-cache/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "/Users/andresbarouh/repos/tcdx-grc/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/playwright.r6-next.config.ts",
+      "--project=chromium-desktop",
+      "--grep",
+      "D3 IANA|permission projection governs|wrong tenant projection|fresh permission revocation|dashboard branding|C: tenant explicit lookup",
+      "--reporter=line,json"
+    ],
+    "configFile": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/playwright.r6-next.config.ts",
+    "rootDir": "/Users/andresbarouh/repos/tcdx-grc/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/smoke-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/andresbarouh/repos/tcdx-grc/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/smoke-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium-laptop",
+        "name": "chromium-laptop",
+        "testDir": "/Users/andresbarouh/repos/tcdx-grc/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/smoke-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium-tablet",
+        "name": "chromium-tablet",
+        "testDir": "/Users/andresbarouh/repos/tcdx-grc/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/smoke-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium-narrow",
+        "name": "chromium-narrow",
+        "testDir": "/Users/andresbarouh/repos/tcdx-grc/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 2,
+    "webServer": {
+      "command": "npm --prefix apps/frontend run dev -- --host 127.0.0.1 --port 4193 --strictPort",
+      "cwd": "/Users/andresbarouh/repos/tcdx-grc",
+      "url": "http://127.0.0.1:4193",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "branding.spec.ts",
+      "file": "branding.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "dashboard branding uses the same logo with responsive navigation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 859,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T13:40:54.442Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c7f19e806919ac620bf8-74a05666488e15e07ff2",
+          "file": "branding.spec.ts",
+          "line": 43,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "core-grc-ui.spec.ts",
+      "file": "core-grc-ui.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "D3 IANA rejects a DST gap and serializes an explicit overlapping instant in UTC",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 718,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T13:40:56.517Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "69da6a877a1448e4f3c4-9f4b52ac6517e8490a6b",
+          "file": "core-grc-ui.spec.ts",
+          "line": 141,
+          "column": 1
+        },
+        {
+          "title": "D3 IANA changes tenant context without retaining the prior zone",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 1,
+                  "status": "timedOut",
+                  "duration": 30129,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts",
+                        "column": 64,
+                        "line": 191
+                      },
+                      "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Agregar elemento' })\u001b[22m\n\n\n  189 |   await selector.selectOption(tenantId);\n  190 |   await page.getByRole(\"button\", { name: \"Ver detalle\" }).click();\n> 191 |   await page.getByRole(\"button\", { name: \"Agregar elemento\" }).click();\n      |                                                                ^\n  192 |   await expect(page.getByText(/Europe\\/Berlin/).first()).toBeVisible();\n  193 |   await selector.selectOption(tenantB);\n  194 |   await expect.poll(() => requests.at(-1)).toBe(tenantB);\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:191:64"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T13:40:57.357Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/smoke-artifacts/core-grc-ui-D3-IANA-change-3e342-ut-retaining-the-prior-zone-chromium-desktop/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/smoke-artifacts/core-grc-ui-D3-IANA-change-3e342-ut-retaining-the-prior-zone-chromium-desktop/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/smoke-artifacts/core-grc-ui-D3-IANA-change-3e342-ut-retaining-the-prior-zone-chromium-desktop/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "69da6a877a1448e4f3c4-19d980b452deb3b957da",
+          "file": "core-grc-ui.spec.ts",
+          "line": 171,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "managed-identity-ui.spec.ts",
+      "file": "managed-identity-ui.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "permission projection governs MI controls; roles and tenant context grant none",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 776,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T13:40:54.452Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c4d78a66682dc0ab592f-dc7767548d40229c403c",
+          "file": "managed-identity-ui.spec.ts",
+          "line": 70,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "platform-role-ui.spec.ts",
+      "file": "platform-role-ui.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "fresh permission revocation prevents POST even after opening the confirmation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 478,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T13:40:55.748Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6cf63e2897bb90a2c388-b675184f9f4b5783503d",
+          "file": "platform-role-ui.spec.ts",
+          "line": 106,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "tenant-onboarding-ui.spec.ts",
+      "file": "tenant-onboarding-ui.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "C: tenant explicit lookup, runtime role catalog, membership and server refetch",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 594,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T13:40:55.835Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a10ef0dc829facc3f369-392ddc34cd541da08730",
+          "file": "tenant-onboarding-ui.spec.ts",
+          "line": 113,
+          "column": 1
+        },
+        {
+          "title": "wrong tenant projection cannot enable tenant incorporation or assignment",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 153,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T13:40:56.433Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a10ef0dc829facc3f369-5cf9ce2c21cd5834c750",
+          "file": "tenant-onboarding-ui.spec.ts",
+          "line": 168,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-13T13:40:53.051Z",
+    "duration": 34518.282999999996,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

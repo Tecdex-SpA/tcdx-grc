@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { SignJWT, importPKCS8, importSPKI, jwtVerify } from "jose";
+import { CompactSign, compactVerify, SignJWT, importPKCS8, importSPKI, jwtVerify } from "jose";
 import { validate as validateUuid } from "uuid";
 import type { BackendConfig } from "../config.js";
 import { FoundationError } from "../errors.js";
@@ -125,6 +125,21 @@ export class ApplicationTokenService implements IdentityVerifier {
 
   async revoke(identity: VerifiedIdentity): Promise<void> {
     await this.sessions.revoke(identity.tokenId, identity.principalId);
+  }
+
+  /** Domain-separated pagination evidence; never an authentication token. */
+  async signReferenceCursor(payload: string): Promise<string> {
+    return new CompactSign(new TextEncoder().encode(payload))
+      .setProtectedHeader({ alg: this.config.algorithm, kid: this.config.keyId, typ: "tcdx-reference-cursor.v1" })
+      .sign(this.privateKey);
+  }
+
+  async verifyReferenceCursor(value: string): Promise<string> {
+    const result = await compactVerify(value, this.publicKey, { algorithms: [this.config.algorithm] });
+    if (result.protectedHeader.typ !== "tcdx-reference-cursor.v1" || result.protectedHeader.kid !== this.config.keyId) {
+      throw new Error("Invalid reference cursor");
+    }
+    return new TextDecoder().decode(result.payload);
   }
 
   async revokePrincipal(principalId: string): Promise<void> {

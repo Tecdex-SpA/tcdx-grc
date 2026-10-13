@@ -6,9 +6,9 @@ This contract converts the rector documentation into an operational development 
 
 ## Current governed state
 
-The authoritative rector baseline is `TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23` and `docs/rector/BASELINE_STATUS` is `ACTIVE`. The 2026-09-23 human approval authorizes only the v1.7 reconciliation and Phase 5 closure recorded in the mutable execution status; it does not authorize commit, push, PR, merge, production or Phase 6.
+The authoritative rector baseline is `TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09` and `docs/rector/BASELINE_STATUS` is `ACTIVE`. The express Product Owner mandate of 2026-10-09 authorizes the precise internal editorial/methodological governance amendment recorded in `docs/rector/ACTIVE_ACTIVATION.json` and contract 49. It does not adopt pending STEP 6A.3 macro hashes, activate SOG v2, change operational SoD or authorize QA, external IAM, non-disposable DDL, push, PR, merge or deployment.
 
-Historical baseline v1.6 remains immutable under `docs/rector/history/` and is verified independently from the active v1.7 manifest.
+Historical baselines v1.4–v1.7 remain immutable under `docs/rector/history/`. The v1.8 verifier checks the active and root manifests, protected v1.7 bytes, the exact delta and the human authorization record. The frozen v1.7 lineage of previously published data/contract artifacts remains valid.
 
 ## Activation conditions
 

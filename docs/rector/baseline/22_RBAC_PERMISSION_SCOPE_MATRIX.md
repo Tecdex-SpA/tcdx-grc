@@ -67,10 +67,10 @@ Por defecto, la misma identidad no puede:
 - complete + verify la misma Action;
 - execute AuditTest + approve final conclusion si el tenant exige independencia;
 - request risk acceptance + approve la misma aceptación;
-- author + approve una metodología/regla global;
+- author + approve una metodología/regla global en actos operacionales del producto; el gobierno editorial/metodológico interno del texto se rige por 49 y admite aprobación humana unipersonal expresa;
 - configure connector + approve privileged credential access cuando política reforzada esté activa.
 
-Excepción requiere policy explícita, motivo y AuditEvent.
+Excepción operacional requiere policy explícita, motivo y AuditEvent. La adopción editorial/metodológica interna conforme a 49 no concede una excepción operacional ni permisos a usuarios de GRC.
 
 ## 7. Machine identities
 

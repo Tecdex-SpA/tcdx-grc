@@ -1,0 +1,298 @@
+{
+  "id": "MACRO-STEP6A3-RESIDUAL-20261009-R2",
+  "status": "PENDING_EXACT_PO_APPROVAL",
+  "created_at": "2026-10-09T20:39:21.522466+00:00",
+  "authority": "PO funciones acumuladas; rector49 permite una sola persona; cuestionario C16 exige hashes previos y aprobación exacta de deltas nuevos",
+  "predecessor": {
+    "id": "MACRO-STEP6A3-20261009-R1",
+    "sha256": "5b8c02385615fe6b5c825b18619d0cf1d493b7b7880e47530cc02893b3c953c4",
+    "status": "APPROVED_UNCHANGED_NOT_RESUBMITTED"
+  },
+  "artifacts": [
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_MACRO_R2/01_MEMBERSHIP_PAGINATION_DELTA.md",
+      "sha256": "c9ea86a5a6d319d992679e4c93f725e9dce70e35f359622257c7741e11414f5a"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_MACRO_R2/02_RBAC_PUBLICATION_AUDIT_DELTA.md",
+      "sha256": "1c381bd283f0619f0ebc4a15e91fa9623b4f018a5e1ec246459eb1bc9c4b3f47"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_MACRO_R2/03_VOCABULARY_PROVENANCE_DELTA.md",
+      "sha256": "dbc0318a60ec5e14d1b4bb3282c5f9ec81cdc65b0a37f073492bddd3a6ab6fbb"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_MACRO_R2/04_CFGD_CORRECTED_SUFFICIENCY_REVIEW.md",
+      "sha256": "1cfe108bd90e119e2107a2cb4060dcd8673ceb6bd4f1a7e59f90e39bdb5645d1"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_MACRO_R2/05_RETENTION_TYPED_BINDING_FINDING.md",
+      "sha256": "79c2c1bb11c403bd34e5bcbc5826a3c12ae91c4063a866288d6afcf1c2794326"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "DR-CT03-BOUNDED-KEYSET-R2",
+      "artifact": {
+        "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_MACRO_R2/01_MEMBERSHIP_PAGINATION_DELTA.md",
+        "sha256": "c9ea86a5a6d319d992679e4c93f725e9dce70e35f359622257c7741e11414f5a"
+      },
+      "clauses": [
+        "C-01",
+        "C-03A"
+      ],
+      "effect": "new published CT03 order and cursor2 only; no schema change",
+      "operation_blocked": "change current order until approval",
+      "competent_functions": [
+        "Architecture",
+        "Backend",
+        "Security",
+        "IAM"
+      ],
+      "acceptance": "native long names/pagination/context/revocation; R2 NOT_RUN"
+    },
+    {
+      "id": "DR-RBAC44-PUBLICATION-AUDIT-R2",
+      "artifact": {
+        "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_MACRO_R2/02_RBAC_PUBLICATION_AUDIT_DELTA.md",
+        "sha256": "1c381bd283f0619f0ebc4a15e91fa9623b4f018a5e1ec246459eb1bc9c4b3f47"
+      },
+      "clauses": [
+        "C-07"
+      ],
+      "effect": "new code+precise publication audit ceremony/SEED010; no new grant pair",
+      "operation_blocked": "rollout RBAC authority before transactional publication evidence",
+      "competent_functions": [
+        "Architecture",
+        "Backend",
+        "Security",
+        "IAM"
+      ],
+      "acceptance": "transactional actor/audit/44grant/replay/checksum negatives; R2 NOT_RUN"
+    },
+    {
+      "id": "DR-VOC52-TYPED-PROVENANCE-R2",
+      "artifact": {
+        "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_MACRO_R2/03_VOCABULARY_PROVENANCE_DELTA.md",
+        "sha256": "dbc0318a60ec5e14d1b4bb3282c5f9ec81cdc65b0a37f073492bddd3a6ab6fbb"
+      },
+      "clauses": [
+        "C-05"
+      ],
+      "effect": "formally typed additive existing AuditEvent profile; historical absence explicit",
+      "operation_blocked": "claim full provenance/rollout new vocabulary without immutable occurrence binding",
+      "competent_functions": [
+        "Architecture",
+        "Backend",
+        "Security",
+        "Compliance",
+        "Data Model"
+      ],
+      "acceptance": "52/14/26 mapping and history/negative/rollback; R2 NOT_RUN"
+    }
+  ],
+  "technical_inputs_remaining": [
+    {
+      "id": "CFG-D",
+      "artifact": {
+        "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_MACRO_R2/04_CFGD_CORRECTED_SUFFICIENCY_REVIEW.md",
+        "sha256": "1cfe108bd90e119e2107a2cb4060dcd8673ceb6bd4f1a7e59f90e39bdb5645d1"
+      },
+      "state": "NOT_DEMONSTRATED_NEEDS_OFFICIAL_SOURCE_VERSION_BINDING_NOT_SIGNATURE_ONLY"
+    },
+    {
+      "id": "C-04W",
+      "artifact": {
+        "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_MACRO_R2/05_RETENTION_TYPED_BINDING_FINDING.md",
+        "sha256": "79c2c1bb11c403bd34e5bcbc5826a3c12ae91c4063a866288d6afcf1c2794326"
+      },
+      "state": "CANONICAL_TYPED_LEGAL_CONTEXT_UNDEFINED"
+    }
+  ],
+  "literal_approval_text": "Apruebo MACRO-STEP6A3-RESIDUAL-20261009-R2 y los textos literales de DR-CT03-BOUNDED-KEYSET-R2, DR-RBAC44-PUBLICATION-AUDIT-R2 y DR-VOC52-TYPED-PROVENANCE-R2, con los hashes del manifiesto presentado, para publicación local e implementación después de sus gates técnicos. Mantengo CFG-D sin none hasta suficiencia/versionado demostrados, CT04 sin política aplicable hasta binding canónico legal, y todas las exclusiones operacionales de R1. Esta aprobación no suministra actores, fuentes legales ni parámetros que no estén definidos.",
+  "sources": [
+    {
+      "path": "docs/rector/baseline/17_CATALOGO_METRICAS_FORMULAS_Y_AGREGACIONES.md",
+      "line": 50,
+      "sha256": "b5a6eb29e7877a5e1217f9177170354f694d57265175c10883849a5938db465d",
+      "quote": "Peso por defecto = 1. El Regulatory Pack puede publicar pesos distintos."
+    },
+    {
+      "path": "docs/rector/baseline/17_CATALOGO_METRICAS_FORMULAS_Y_AGREGACIONES.md",
+      "line": 52,
+      "sha256": "b5a6eb29e7877a5e1217f9177170354f694d57265175c10883849a5938db465d",
+      "quote": "`score = sum(weight * status_factor) / sum(weight of scored applicable requirements) * 100`"
+    },
+    {
+      "path": "docs/rector/baseline/17_CATALOGO_METRICAS_FORMULAS_Y_AGREGACIONES.md",
+      "line": 56,
+      "sha256": "b5a6eb29e7877a5e1217f9177170354f694d57265175c10883849a5938db465d",
+      "quote": "Default `minimum_coverage = 80%`. Si coverage < minimum, `result_status=insufficient_coverage`; puede mostrarse preview claramente no oficial. Requirement `not_applicable` se excluye antes del denominador de coverage."
+    },
+    {
+      "path": "docs/rector/baseline/17_CATALOGO_METRICAS_FORMULAS_Y_AGREGACIONES.md",
+      "line": 72,
+      "sha256": "b5a6eb29e7877a5e1217f9177170354f694d57265175c10883849a5938db465d",
+      "quote": "`min(design_effectiveness, operating_effectiveness)`"
+    },
+    {
+      "path": "docs/rector/baseline/19_METODOLOGIAS_GRC_COMPLIANCE_RISK_ASSURANCE.md",
+      "line": 19,
+      "sha256": "549e64e9ab8f0c2edcfb3e6c5c03939125e311d32298c3fac8d0b09b2d1f5c95",
+      "quote": "- una declaración manual puede iniciar assessment, pero evidencia/assurance gobierna su confianza."
+    },
+    {
+      "path": "docs/rector/baseline/19_METODOLOGIAS_GRC_COMPLIANCE_RISK_ASSURANCE.md",
+      "line": 37,
+      "sha256": "549e64e9ab8f0c2edcfb3e6c5c03939125e311d32298c3fac8d0b09b2d1f5c95",
+      "quote": "Overall effectiveness default: min(design, operating). Minimum coverage baseline 80%; bajo threshold, `result_status=insufficient_coverage` y no se publica efectividad oficial."
+    },
+    {
+      "path": "docs/rector/baseline/19_METODOLOGIAS_GRC_COMPLIANCE_RISK_ASSURANCE.md",
+      "line": 90,
+      "sha256": "549e64e9ab8f0c2edcfb3e6c5c03939125e311d32298c3fac8d0b09b2d1f5c95",
+      "quote": "`0` significa mitigación modelada completa bajo la metodología y evidencia/coverage válidas; no significa ausencia de riesgo ni ausencia de datos."
+    },
+    {
+      "path": "docs/rector/baseline/19_METODOLOGIAS_GRC_COMPLIANCE_RISK_ASSURANCE.md",
+      "line": 136,
+      "sha256": "549e64e9ab8f0c2edcfb3e6c5c03939125e311d32298c3fac8d0b09b2d1f5c95",
+      "quote": "- considerar evidencia cargada como evidencia aprobada;"
+    },
+    {
+      "path": "docs/physical-data-model/01_PHYSICAL_DATA_MODEL.md",
+      "line": 23,
+      "sha256": "cdbee203ac9afe9f89cbb4320f6b7010a0e315bc160d2be6134ed3c2a15fabd5",
+      "quote": "Todos los perfiles con `tenant_id` aplican FKs compuestas en relaciones TENANT_*; los `created_by/updated_by` son metadata, mientras `ops_audit.audit_events` es la autoridad de reconstrucción. `effective_to > effective_from`; intervalos abiertos usan NULL. Defaults distintos de timestamps técnicos, booleanos explícitos y contadores cero sólo aparecen cuando la semántica los autoriza."
+    },
+    {
+      "path": "docs/physical-data-model/01_PHYSICAL_DATA_MODEL.md",
+      "line": 42,
+      "sha256": "cdbee203ac9afe9f89cbb4320f6b7010a0e315bc160d2be6134ed3c2a15fabd5",
+      "quote": "| `iam.user_identities` — UserIdentity | M / PLATFORM_CONTROL | `identity_key varchar(255)!`; `display_name text!`; `email_normalized text?`; `lifecycle_state varchar(32)!`; `last_authenticated_at timestamptz?` | UQ identity_key; email not universal identity | current; security audit; PEC/POL |"
+    },
+    {
+      "path": "docs/physical-data-model/01_PHYSICAL_DATA_MODEL.md",
+      "line": 43,
+      "sha256": "cdbee203ac9afe9f89cbb4320f6b7010a0e315bc160d2be6134ed3c2a15fabd5",
+      "quote": "| `iam.tenant_memberships` — TenantMembership | TM / TENANT_OWNED | `user_identity_id uuid!`; `membership_state varchar(32)!`; `joined_at timestamptz!`; `ended_at timestamptz?` | UQ active `(tenant_id,user_identity_id)`; interval | effective membership; audit; AO/POL |"
+    },
+    {
+      "path": "docs/physical-data-model/01_PHYSICAL_DATA_MODEL.md",
+      "line": 109,
+      "sha256": "cdbee203ac9afe9f89cbb4320f6b7010a0e315bc160d2be6134ed3c2a15fabd5",
+      "quote": "| `evidence.evidences` — Evidence | TM | `evidence_code varchar(128)!`; `evidence_type varchar(64)!`; `business_owner_subject_id uuid?`; `lifecycle_state varchar(32)!`; `valid_from/to timestamptz?`; `retention_policy_id uuid!`; `source_kind varchar(32)!` | UQ tenant+code; lifecycle 21 | validity; audit; AO/retain ≥7y |"
+    },
+    {
+      "path": "docs/physical-data-model/01_PHYSICAL_DATA_MODEL.md",
+      "line": 114,
+      "sha256": "cdbee203ac9afe9f89cbb4320f6b7010a0e315bc160d2be6134ed3c2a15fabd5",
+      "quote": "| `evidence.file_objects` — FileObject | TM | `object_key text!`; `original_filename text!`; `declared_mime varchar(255)!`; `detected_mime varchar(255)!`; `size_bytes bigint!`; `sha256 char(64)!`; `encryption_key_ref text!`; `classification varchar(32)!`; `retention_policy_id uuid!`; `scan_status varchar(32)!`; `scan_completed_at timestamptz?`; `storage_version varchar(128)!`; `source_provenance text!`; `effective_from/to timestamptz?` | UQ tenant+object_key+storage_version; size>=0; usable only scan PASS; no secret/blob | validity; audit; retain by policy |"
+    },
+    {
+      "path": "docs/physical-data-model/01_PHYSICAL_DATA_MODEL.md",
+      "line": 186,
+      "sha256": "cdbee203ac9afe9f89cbb4320f6b7010a0e315bc160d2be6134ed3c2a15fabd5",
+      "quote": "| `privacy.processing_activity_legal_bases` — typed link | TI | `processing_activity_id uuid!`; `legal_basis_id uuid!` | same tenant/global compatible; UQ pair | IR |"
+    },
+    {
+      "path": "docs/physical-data-model/01_PHYSICAL_DATA_MODEL.md",
+      "line": 285,
+      "sha256": "cdbee203ac9afe9f89cbb4320f6b7010a0e315bc160d2be6134ed3c2a15fabd5",
+      "quote": "| `ops_audit.audit_events` — AuditEvent | EV | `audit_event_id uuid!`; `event_code varchar(160)!`; `event_version integer!`; `aggregate_type varchar(128)!`; `aggregate_id uuid!`; `command_code varchar(160)!`; `actor_user_identity_id uuid?`; `actor_service_principal_id uuid?`; `occurred_at timestamptz!`; `outcome varchar(32)!`; `before_payload jsonb?`; `after_payload jsonb?`; `ip_address inet?`; `device_ref text?`; `classification varchar(32)!` | exactly one actor where applicable; ownership/tenant conditional; no secrets/blobs; UQ event id | append-only event; IR ≥7y |"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md",
+      "line": 23,
+      "sha256": "029ba9a9e2a0f13a726b3133bd43be71b2caf209ecb11c6381074da40a1bf247",
+      "quote": "Request común: `page[size]: integer [1,100], default 25`; `page[cursor]: string maxLength 2048`; `filter[query]: string [2,160]` sólo en selección; IDs `$ref: UuidV7`; purpose enum por operación. Rechazar query desconocida/duplicada, string vacía, combinación incompatible y query tenant/email/identity/role/state. UUID nunca como nombre/criterio empresarial. Todas las queries usan `style: form, explode: true`; los nombres con corchetes son literales."
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md",
+      "line": 42,
+      "sha256": "029ba9a9e2a0f13a726b3133bd43be71b2caf209ecb11c6381074da40a1bf247",
+      "quote": "Todos los objetos usan `additionalProperties: false`. Envelope `type: object; required: [items,page]`, items array con item schema específico y page `required: [has_more,next_cursor]`, has_more boolean y next_cursor `type: [string,'null']; maxLength: 2048`. Los campos de cada item son required; `nullable` abajo significa unión con null, no omisión. UUIDv7 y UTC usan schemas ya publicados. Strings de nombre text no reciben longitud inventada; el catálogo firmado preserva límites físicos."
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md",
+      "line": 87,
+      "sha256": "029ba9a9e2a0f13a726b3133bd43be71b2caf209ecb11c6381074da40a1bf247",
+      "quote": "Orden F: framework_code ASC, version_number DESC, id ASC; M display_name ASC, joined_at ASC, id ASC; R policy_code ASC, version_number DESC, id ASC. SQL filtra tenant, grants, entitlement, policy, vigencia y propósito antes de DISTINCT/LIMIT/has_more. Fetch size+1 sobre conjunto autorizado, cursor keyset sobre tupla completa de orden. No totales ocultos ni filtro tardío en UI."
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md",
+      "line": 79,
+      "sha256": "d20d1bfa04f61c43b5c7fdb6767cf5c2046a68b24a33ef4d7638b6afdd733c0e",
+      "quote": "VOC-C05: permisos/capabilities/parent ObjectPolicy/scope/tenant/SoD/idempotency/row_version actuales de23 por ocurrencia; código no otorga derecho ni reduce clasificación. Audit/lineage existente genérico no demuestra versión de estas nuevas familias. Backend/Data Model deben firmar enlace reproducible entre código/version del catálogo y versión/audit/snapshot del objeto antes de runtime. Si falta soporte canónico, enmienda específica y gate físico, no JSON crítico ad hoc ni nueva columna creada aquí."
+    },
+    {
+      "path": "docs/executable-contracts/08_AUDIT_EVENT_CATALOG.md",
+      "line": 17,
+      "sha256": "f073915dce1a2e014abd1dd8a8525325540bb49ea0bb800aff89ec5782a203e0",
+      "quote": "The human Phase 5+ resolution of 2026-09-29 publishes `audit.platform.subscription_regulatory_pack.activate.v1` and `audit.platform.subscription_regulatory_pack.revoke.v1` for the distinct contractual relation. Activation records the exact Subscription, RegulatoryPackVersion and effective interval. Revocation records before/after, actor and required reason. Both operations emit their corresponding `platform.subscription_regulatory_pack.*.v1` outbox event in the same transaction. No physical DELETE or generic Subscription update is authorized."
+    },
+    {
+      "path": "docs/executable-contracts/08_AUDIT_EVENT_CATALOG.md",
+      "line": 23,
+      "sha256": "f073915dce1a2e014abd1dd8a8525325540bb49ea0bb800aff89ec5782a203e0",
+      "quote": "The human Phase 5 MembershipRole revoke decision of 2026-09-28 uses the existing `audit.platform.role.revoke.v1` for exactly one TENANT_OWNED assignment. It records canonical actor, tenant, assignment, role, before/after validity and required reason in the same transaction as the validity closure and `iam.role.revoked.v1` outbox event. Platform Admin use additionally records the existing reinforced privileged-use audit. Same-key replay produces no new audit/outbox event; no identity secret, token, digest or PlatformRoleAssignment is included."
+    },
+    {
+      "path": "docs/executable-contracts/08_AUDIT_EVENT_CATALOG.md",
+      "line": 25,
+      "sha256": "f073915dce1a2e014abd1dd8a8525325540bb49ea0bb800aff89ec5782a203e0",
+      "quote": "The human STEP 23L-MI6A decision publishes six future Platform-only Managed Identity material-audit codes: `audit.platform.managed_identity.provision.v1`, `audit.platform.managed_identity.disable.v1`, `audit.platform.managed_identity.enable.v1`, `audit.platform.managed_identity.password_reset.v1`, `audit.platform.managed_identity.mfa_reset.v1` and `audit.platform.managed_identity.session_revoke.v1`. Each corresponds to exactly one approved POST in contract 22 and artifact 03. They require canonical Platform actor, target UserIdentity where known, operation, server time, correlation, result, sa"
+    },
+    {
+      "path": "docs/executable-contracts/08_AUDIT_EVENT_CATALOG.md",
+      "line": 29,
+      "sha256": "f073915dce1a2e014abd1dd8a8525325540bb49ea0bb800aff89ec5782a203e0",
+      "quote": "## Code convention"
+    },
+    {
+      "path": "docs/executable-contracts/08_AUDIT_EVENT_CATALOG.md",
+      "line": 38,
+      "sha256": "f073915dce1a2e014abd1dd8a8525325540bb49ea0bb800aff89ec5782a203e0",
+      "quote": "- actor user XOR service principal where applicable;"
+    },
+    {
+      "path": "docs/executable-contracts/08_AUDIT_EVENT_CATALOG.md",
+      "line": 41,
+      "sha256": "f073915dce1a2e014abd1dd8a8525325540bb49ea0bb800aff89ec5782a203e0",
+      "quote": "- minimized before/after fields relevant to the decision;"
+    },
+    {
+      "path": "docs/executable-contracts/08_AUDIT_EVENT_CATALOG.md",
+      "line": 51,
+      "sha256": "f073915dce1a2e014abd1dd8a8525325540bb49ea0bb800aff89ec5782a203e0",
+      "quote": "| profile | operations | before/after semantics | reinforced |"
+    }
+  ],
+  "risks": [
+    "change of CT03 presentation order and existing cursor restart",
+    "C07 real authorized service actor required; no synthetic production identity",
+    "VOC provenance profile needs real root/child immutable versions and transaction",
+    "CT04 pending cannot omit mandatory policyFK",
+    "none remains unproved"
+  ],
+  "rejected_options": [
+    "silently changing approved order",
+    "truncating persisted names",
+    "inventing actor/new seed",
+    "unaudited privilege publication",
+    "critical ad hoc JSON metadata",
+    "automatic defaults/aliases",
+    "signature without sufficiency",
+    "whole SOGv2"
+  ],
+  "not_authorized": [
+    "QA/IAM real",
+    "DDL non-disposable",
+    "deploy",
+    "SOGv2",
+    "none unproved",
+    "6A4",
+    "commit without overall PASS",
+    "Git remote"
+  ]
+}

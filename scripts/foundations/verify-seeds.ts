@@ -8,6 +8,7 @@ type Phase5RuntimePermissions = {
 };
 
 type SeedManifest = {
+  phase6a3ReferencePermissions?: { migrationId: string; permissionRows: number; permissionCodes: string[]; templateGrantRows: number };
   phase5Methodologies?: { migrationId: string; permissionRows: number; permissionCodes: string[]; methodologyRows: number; formulaRows: number; methodologyIds: string[] };
   permissionRows: number;
   lifecycleEdges: number;
@@ -267,6 +268,8 @@ try {
     methodologies: await scalar("SELECT count(*)::text AS count FROM risk.risk_methodologies"),
   };
 
+  const referenceSeed=manifest.phase6a3ReferencePermissions;
+  const referenceApplied=referenceSeed ? await scalar("SELECT count(*)::text AS count FROM platform.schema_migrations WHERE migration_id=$1 AND outcome='applied'", [referenceSeed.migrationId])===1 : false;
   const methodologySeed = manifest.phase5Methodologies;
   const methodologyApplied = methodologySeed ? await scalar("SELECT count(*)::text AS count FROM platform.schema_migrations WHERE migration_id=$1 AND outcome='applied'", [methodologySeed.migrationId]) === 1 : false;
   if (methodologyApplied) {
@@ -277,6 +280,7 @@ try {
   }
   const expectedPermissions =
     manifest.permissionRows
+    + (referenceApplied && referenceSeed ? referenceSeed.permissionRows : 0)
     + (methodologyApplied && methodologySeed ? methodologySeed.permissionRows : 0)
     + (phase5Applied && phase5 ? phase5.permissionRows : 0)
     + (subscriptionPermissionApplied && subscriptionPermission ? subscriptionPermission.permissionRows : 0)

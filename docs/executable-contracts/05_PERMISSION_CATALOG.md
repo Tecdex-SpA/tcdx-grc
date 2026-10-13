@@ -307,3 +307,13 @@ permission is CORE_PLATFORM/platform only; endpoint revalidates all predicates.
 |---|---|---|---|---|---|---|---|
 | `compliance.methodology.read` | ISO_COMPLIANCE | select published methodology | tenant | published, effective, compatible domain; no global edit | existing assessment-create roles only | default DENY; tenant entitlement required | PHASE5_METHODOLOGY_BINDING_ARCHITECTURE_DECISION_20261007; 19,31,39 |
 | `controls.methodology.read` | CONTROLS_ASSURANCE | select published methodology | tenant | published, effective, compatible domain; no global edit | existing assessment-create roles only | default DENY; tenant entitlement required | PHASE5_METHODOLOGY_BINDING_ARCHITECTURE_DECISION_20261007; 19,31,39 |
+
+## STEP 6A.3 — publicación local v1, aprobación macro R1
+
+Autoridad: contrato29 y recibo MACRO-STEP6A3-20261009-R1-APPROVAL. Grants físicos requieren su operación autorizada; scope procede de MembershipRole.
+
+| Permission | Capability | Resource | Scopes | Action | Roles | Policy | Source |
+|---|---|---|---|---|---|---|---|
+| `compliance.framework.read` | ISO_COMPLIANCE | framework | tenant | read | EXECUTIVE_BOARD_VIEWER, GRC_MANAGER, QUALITY_MANAGER, COMPLIANCE_MANAGER, CISO_SECURITY_MANAGER, AI_GOVERNANCE_MANAGER, PRIVACY_MANAGER, LEGAL_REVIEWER, AUDITOR_LEAD, AUDITOR, REGULATORY_CONTENT_STEWARD, REPORT_VIEWER, VIEWER | actor tenant; additional purpose capability + parent permission + real scope + SoD; no Platform enumeration | executable29; MACRO R1 |
+| `platform.membership_reference.read` | CORE_PLATFORM | membership_reference | tenant,assigned_object,owned_object,audit_engagement; exact parent only | read | EXECUTIVE_BOARD_VIEWER, GRC_MANAGER, QUALITY_MANAGER, COMPLIANCE_MANAGER, RISK_MANAGER, CISO_SECURITY_MANAGER, AI_GOVERNANCE_MANAGER, PRIVACY_MANAGER, LEGAL_REVIEWER, AUDITOR_LEAD, AUDITOR, PROCESS_OWNER, CONTROL_OWNER, EVIDENCE_OWNER, ACTION_OWNER, REPORT_VIEWER, VIEWER | actor tenant; additional purpose capability + parent permission + real scope + SoD; no Platform enumeration | executable29; MACRO R1 |
+| `privacy.retention_policy_reference.read` | EVIDENCE_DOCUMENTS | retention_policy_reference | tenant,assigned_object,owned_object; exact parent/command only | read | EXECUTIVE_BOARD_VIEWER, GRC_MANAGER, QUALITY_MANAGER, COMPLIANCE_MANAGER, CISO_SECURITY_MANAGER, AI_GOVERNANCE_MANAGER, PRIVACY_MANAGER, LEGAL_REVIEWER, AUDITOR_LEAD, AUDITOR, CONTROL_OWNER, EVIDENCE_OWNER, REPORT_VIEWER, VIEWER | actor tenant; additional purpose capability + parent permission + real scope + SoD; no Platform enumeration | executable29; MACRO R1 |

@@ -185,9 +185,9 @@ describe("PRE-F5B executable-contract closure", () => {
       }
     }
     expect(versionedF5Mutations.size).toBe(28);
-    expect(schemaBlock("IssueCreateRequest")).toContain("priority: { type: string, minLength: 1, maxLength: 32 }");
-    expect(schemaBlock("IssueTriageRequest")).toContain("priority: { type: string, minLength: 1, maxLength: 32 }");
-    expect(schemaBlock("ActionCreateRequest")).toContain("priority: { type: string, minLength: 1, maxLength: 32 }");
+    expect(schemaBlock("IssueCreateRequest")).toContain("priority: { $ref: '#/components/schemas/IssuePriority' }");
+    expect(schemaBlock("IssueTriageRequest")).toContain("priority: { $ref: '#/components/schemas/IssuePriority' }");
+    expect(schemaBlock("ActionCreateRequest")).toContain("priority: { $ref: '#/components/schemas/ActionPriority' }");
   });
 
   it("keeps operation permission, audit, event and idempotency decisions internally closed", () => {

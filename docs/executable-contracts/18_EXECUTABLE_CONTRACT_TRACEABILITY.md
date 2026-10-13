@@ -153,3 +153,16 @@ Human MI tenant E2E packet -> DR-2026-10-07-MANAGED-IDENTITY-TENANT-ONBOARDING -
 ## Approved Phase 5 methodology amendment
 
 See [27 — canonical methodology binding](27_PHASE5_METHODOLOGY_BINDING.md) and the explicit human architecture approval. Migration `20261007000200` produces 30 migrations / 237 physical tables / 172 permissions. Seeds: separate Compliance and Control Effectiveness version 1, two compatible FormulaDefinitions, two narrowly scoped read permissions; publication audit `audit.compliance.methodology.publish.v1` and `audit.controls.methodology.publish.v1`. No historical migration or immutable rector file is changed.
+
+## STEP 6A.3 — publicación local macro R1
+
+MACRO-STEP6A3-20261009-R1 → recibo humano exacto → rector activo v1.8/49 → contratos29/30 → OpenAPI02/matriz03/Permission05 → manifests canónicos RBAC44 y VOC52 → migraciones nuevas 20261009000100/20261009000200 → backend reference-reads/service → UI selectores existentes → pruebas unitarias/negativas/SQL local descartable. Los 30 SQL históricos y GET EC R1 se preservan. Publicación local no es despliegue.
+
+| Cláusula | Operación/consumidor | Autoridad | Evidencia | Límite |
+|---|---|---|---|---|
+| CT01 C-01/C-02/C-06F | frameworkVersionReferenceList; selector SoA | executable29, macro R1 | reference-reads.test.ts, reference-reads.postgres.test.ts | no nueva norma/ZIP; Pack oficial o validación explícita |
+| CT03 C-03A/B/C-06M | membershipReferenceList; responsable Request/Action | executable29, macro R1 | red mínima, history exacto, revalidación nativa y revocación | no administración ni creador como owner |
+| CT04 C-04/G/W/C-06R | retentionPolicyReferenceList; selección y estado pendiente | executable29, macro R1 | 422 binding ausente, history exacto | aplicación legal y command completo bloqueados por binding tipado no publicado |
+| VOC-C01..06 | 52 códigos/14 familias/26 ocurrencias | executable30 y su manifest versionado | phase6a3-publication.test.ts; validación backend y labels contextuales | historia string preservada; cero coerción/alias |
+| UQ/default | dos UQ contextuales y CHECK tipado | modelo físico01:224/228/229, macro R1 | 38 casos nativos y runner atómico/reapply/schema | sólo instancia local descartable; QA no ejecutado |
+| CFG-D | Compliance v1 / Controls v1 | contrato27 + macro R1 condicional | reglas oficiales y límites documentados28 | none no publicado; ausencia de entradas oficiales suficientes |

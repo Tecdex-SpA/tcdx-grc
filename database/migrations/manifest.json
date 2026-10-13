@@ -572,6 +572,48 @@
         "methodologies=two_separate_published_versions",
         "assessment_methodology_fks=validated"
       ]
+    },
+    {
+      "id": "20261009000100",
+      "filename": "20261009000100_phase6a3_configuration_integrity.sql",
+      "sha256": "b717f0c91f88a4079f791fd68cc08ff5202ef7f0dda6c7cf85ea37cb23441722",
+      "transactional": true,
+      "preconditions": [
+        "approved macro R1",
+        "exact source constraints",
+        "compatible existing data; no backfill"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=237",
+        "published_permissions=172",
+        "EC_natural_key=NULLS_NOT_DISTINCT",
+        "layer_unique=parent_precedence_ordinal",
+        "defaults=exactly_one_compatible_typed_value",
+        "existing_records_preserved"
+      ]
+    },
+    {
+      "id": "20261009000200",
+      "filename": "20261009000200_phase6a3_reference_read_permissions.sql",
+      "sha256": "920ececb9d28e3821a9faf9d2c754db481a26c0e33c53ae0f94b3a0535885ed8",
+      "transactional": true,
+      "preconditions": [
+        "ledger_count=31",
+        "published_permissions=172",
+        "44 exact baseline role templates",
+        "no current candidate permissions"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=237",
+        "published_permissions=175",
+        "new_permissions=3",
+        "exact_global_template_pairs=44",
+        "no_platform_or_tenant_admin_escalation",
+        "existing_baseline_tenant_instances=exact_approved_pairs",
+        "no_custom_role_or_membership_grants"
+      ]
     }
   ]
 }

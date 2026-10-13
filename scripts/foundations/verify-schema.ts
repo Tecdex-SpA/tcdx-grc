@@ -53,6 +53,8 @@ expectedConstraints.delete("uq_requirement_control_mappings__ownership_class_ten
 expectedConstraints.delete("uq_normative_unit_control_mappings__mapping_version");
 expectedConstraints.delete("uq_subjects__tenant_id_canonical_key");
 for (const name of expectedNames(/CONSTRAINT "([^"]+)"/g, "database/migrations/20261007000200_phase5_methodology_binding.sql")) expectedConstraints.add(name);
+for (const old of ["uq_effective_configurations__tenant_id","uq_effective_configuration_layers__ordinal","ck_configuration_definitions__default_value_count"]) expectedConstraints.delete(old);
+for (const name of expectedNames(/ADD CONSTRAINT ([a-z0-9_]+)\s+(?:CHECK|UNIQUE)/g, "database/migrations/20261009000100_phase6a3_configuration_integrity.sql")) expectedConstraints.add(name);
 const expectedIndexes = new Set([
   ...expectedNames(/CREATE (?:UNIQUE )?INDEX "([^"]+)"/g, "database/migrations/20261007000200_phase5_methodology_binding.sql"),
   ...expectedNames(/CREATE (?:UNIQUE )?INDEX "([^"]+)"/g, "database/migrations/20260916000800_required_indexes.sql"),

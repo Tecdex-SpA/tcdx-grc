@@ -1,0 +1,617 @@
+{
+  "id": "P0-QA-READ-20261013",
+  "recorded_at": "2026-10-13 15:42:50 UTC",
+  "execution_started_at": "2026-10-13T15:06:02Z",
+  "scope": "PO-authorized read-only QA; no deploy/DDL/DML/grants/IAM/person authentication",
+  "human_authorization": {
+    "source": "Current PO mandate and explicit asynchronous answer si autorizo, followed by tecdex siempre; temporary SSH authentication authorized separately",
+    "operator": "tecdex",
+    "credential_value_recorded": false,
+    "secret_files_created": false,
+    "post_P0_requirement": "Replace temporary authentication with managed access under separate authority; no rotation performed"
+  },
+  "backend": {
+    "operator": "tecdex",
+    "uid": 1000,
+    "hostname": "grc-bk",
+    "component": "backend",
+    "scope": "READ_ONLY_NO_DB_LOGIN_NO_SECRETS",
+    "container": {
+      "name": "/tcdx-grc-backend",
+      "container_id": "6acd160b09f89943bb0657ad04b47f39ff4ed37f9c40a79af8c40b5ba1a36ae3",
+      "image_id": "sha256:ab9902e4215289307992b9aa98421d5882a18b4236752948356b4fbe25829195",
+      "image_ref": "sha256:ab9902e4215289307992b9aa98421d5882a18b4236752948356b4fbe25829195",
+      "running": true,
+      "status": "running",
+      "health": "healthy",
+      "restart_count": 1,
+      "started_at": "2026-10-09T06:43:09.480425945Z",
+      "ports": {
+        "4000/tcp": [
+          {
+            "HostIp": "0.0.0.0",
+            "HostPort": "4000"
+          },
+          {
+            "HostIp": "::",
+            "HostPort": "4000"
+          }
+        ]
+      },
+      "runtime_user": "node"
+    },
+    "labels": {
+      "org.opencontainers.image.revision": "bbf4c8752ebcfa91a3215f7096c6df5b5a74d081",
+      "org.opencontainers.image.source.tree": "4aaa36167744a6c6be62750748f53f8106f3c638",
+      "org.opencontainers.image.source": "https://github.com/Tecdex-SpA/tcdx-grc",
+      "com.docker.compose.project.config_files": "/home/tecdex/apps/tcdx-grc-phase5-role-revoke-20260928-r2/deploy/qa/docker-compose.yml,/tmp/tcdx-grc-step23k-backend.override.yml",
+      "com.docker.compose.project.working_dir": "/home/tecdex/apps/tcdx-grc-phase5-role-revoke-20260928-r2/deploy/qa"
+    },
+    "image": {
+      "id": "sha256:ab9902e4215289307992b9aa98421d5882a18b4236752948356b4fbe25829195",
+      "architecture": "amd64",
+      "os": "linux",
+      "tags": [
+        "tcdx-grc-backend:phase5-methodology-ee6e4c359d70"
+      ],
+      "digests": [
+        "tcdx-grc-backend@sha256:ab9902e4215289307992b9aa98421d5882a18b4236752948356b4fbe25829195"
+      ]
+    },
+    "rollback_candidates": [
+      {
+        "ID": "a42c6fa7b8f2",
+        "Names": "tcdx-grc-backend-pre-phase5-methodology-ee6e4c359d70",
+        "Image": "394ad8fadf27",
+        "State": "exited",
+        "Status": "Exited (0) 5 days ago"
+      },
+      {
+        "ID": "74b941b2287c",
+        "Names": "tcdx-grc-backend-pre-mi-tenant-e2e-a910c94aa24e",
+        "Image": "798937c23bb2",
+        "State": "exited",
+        "Status": "Exited (0) 5 days ago"
+      },
+      {
+        "ID": "d0c4590dc7b6",
+        "Names": "tcdx-grc-backend-pre-tenant-d3-a-rd-f65c821cfdda",
+        "Image": "7c69fd4acc43",
+        "State": "exited",
+        "Status": "Exited (0) 5 days ago"
+      },
+      {
+        "ID": "3150baefb350",
+        "Names": "tcdx-grc-backend-pre-tenant-d2-c2-498cad9e5f61",
+        "Image": "7446ac5b691d",
+        "State": "exited",
+        "Status": "Exited (0) 6 days ago"
+      },
+      {
+        "ID": "2d8eefb520b4",
+        "Names": "tcdx-grc-backend-pre-mi10-p2f-d37f7b7430f3",
+        "Image": "tcdx-grc-backend:mi10-p2c-800ab939adfa",
+        "State": "exited",
+        "Status": "Exited (0) 6 days ago"
+      },
+      {
+        "ID": "40f8c9729817",
+        "Names": "tcdx-grc-backend-pre-mi10-p2c-800ab939adfa",
+        "Image": "822a94b9610a",
+        "State": "exited",
+        "Status": "Exited (0) 6 days ago"
+      },
+      {
+        "ID": "7651227c0943",
+        "Names": "tcdx-grc-backend-pre-mi9-r2-a7edb08fdbbc",
+        "Image": "tcdx-grc-backend:phase5-bbf4c8752ebcfa91a3215f7096c6df5b5a74d081",
+        "State": "exited",
+        "Status": "Exited (0) 7 days ago"
+      }
+    ],
+    "nonsecret_configuration": {
+      "DATABASE_SSL_MODE": "disable",
+      "DATABASE_USER": "tcdx_grc_app",
+      "DATABASE_HOST": "192.168.2.40",
+      "NODE_ENV": "qa",
+      "DATABASE_NAME": "tcdx-grc",
+      "DATABASE_PORT": "5432"
+    },
+    "local_procedure_metadata": [
+      {
+        "path": "/tmp/tcdx-grc-mi-tenant-e2e-runtime-driver.py",
+        "exists": false,
+        "contents_read": false
+      },
+      {
+        "path": "/tmp/tcdx-grc-step23k-backend.override.yml",
+        "exists": true,
+        "uid": 1000,
+        "mode": "0o644",
+        "bytes": 97,
+        "contents_read": false
+      },
+      {
+        "path": "/tmp/tcdx-grc-step23l-p0r-frontend.override.yml",
+        "exists": false,
+        "contents_read": false
+      },
+      {
+        "path": "/home/tecdex/.pg_service.conf",
+        "exists": false,
+        "contents_read": false
+      },
+      {
+        "path": "/home/tecdex/.pgpass",
+        "exists": false,
+        "contents_read": false
+      }
+    ],
+    "projection_code": {
+      "sha256": "0f07ce2dd6d839c3b522594db1c14be717728102e80537d20cd3b94183a7e403",
+      "self_v1_present": true,
+      "self_v2_present": false
+    },
+    "health_reads": {
+      "/health/live": {
+        "status": 200
+      },
+      "/health/ready": {
+        "status": 200
+      }
+    }
+  },
+  "frontend": {
+    "operator": "tecdex",
+    "uid": 1000,
+    "hostname": "grc-www",
+    "component": "frontend",
+    "scope": "READ_ONLY_NO_DB_LOGIN_NO_SECRETS",
+    "container": {
+      "name": "/tcdx-grc-frontend",
+      "container_id": "31c3257ee28ffa0c03ae7791b178c089b2cfb118043e668270a15e09627e5080",
+      "image_id": "sha256:f31fd8a5b63003ba0973822854a94dc03b0b9753ec9dc165253418608c0f73ce",
+      "image_ref": "sha256:f31fd8a5b63003ba0973822854a94dc03b0b9753ec9dc165253418608c0f73ce",
+      "running": true,
+      "status": "running",
+      "health": "healthy",
+      "restart_count": 0,
+      "started_at": "2026-10-08T10:01:49.659877314Z",
+      "ports": {
+        "8080/tcp": [
+          {
+            "HostIp": "0.0.0.0",
+            "HostPort": "8080"
+          },
+          {
+            "HostIp": "::",
+            "HostPort": "8080"
+          }
+        ]
+      },
+      "runtime_user": "node"
+    },
+    "labels": {
+      "org.opencontainers.image.revision": "bbf4c8752ebcfa91a3215f7096c6df5b5a74d081",
+      "org.opencontainers.image.source.tree": "4aaa36167744a6c6be62750748f53f8106f3c638",
+      "org.opencontainers.image.source": "https://github.com/Tecdex-SpA/tcdx-grc",
+      "com.docker.compose.project.config_files": "/home/tecdex/apps/tcdx-grc-phase5-role-revoke-frontend-final-20260928/deploy/qa/docker-compose.frontend.yml,/tmp/tcdx-grc-step23l-p0r-frontend.override.yml",
+      "com.docker.compose.project.working_dir": "/home/tecdex/apps/tcdx-grc-phase5-role-revoke-frontend-final-20260928/deploy/qa"
+    },
+    "image": {
+      "id": "sha256:f31fd8a5b63003ba0973822854a94dc03b0b9753ec9dc165253418608c0f73ce",
+      "architecture": "amd64",
+      "os": "linux",
+      "tags": [
+        "tcdx-grc-frontend:phase5-methodology-ee6e4c359d70"
+      ],
+      "digests": [
+        "tcdx-grc-frontend@sha256:f31fd8a5b63003ba0973822854a94dc03b0b9753ec9dc165253418608c0f73ce"
+      ]
+    },
+    "rollback_candidates": [
+      {
+        "ID": "de04a1d4e014",
+        "Names": "tcdx-grc-frontend-pre-phase5-methodology-ee6e4c359d70",
+        "Image": "ae833259203f",
+        "State": "exited",
+        "Status": "Exited (0) 5 days ago"
+      },
+      {
+        "ID": "5b03cf40b375",
+        "Names": "tcdx-grc-frontend-pre-phase5-recovery-6671b742e278",
+        "Image": "1d34a78b51ee",
+        "State": "exited",
+        "Status": "Exited (0) 5 days ago"
+      },
+      {
+        "ID": "42ecba6bad16",
+        "Names": "tcdx-grc-frontend-pre-mi-tenant-e2e-a910c94aa24e",
+        "Image": "22997516450d",
+        "State": "exited",
+        "Status": "Exited (0) 5 days ago"
+      },
+      {
+        "ID": "cc8b671a56a1",
+        "Names": "tcdx-grc-frontend-pre-d3-release-124cb82b8b12",
+        "Image": "d68e4f32c86a",
+        "State": "exited",
+        "Status": "Exited (0) 5 days ago"
+      },
+      {
+        "ID": "39ad806a28df",
+        "Names": "tcdx-grc-frontend-pre-mi10-p2f-d37f7b7430f3",
+        "Image": "277519148761",
+        "State": "exited",
+        "Status": "Exited (0) 6 days ago"
+      },
+      {
+        "ID": "2e4b04cbca08",
+        "Names": "tcdx-grc-frontend-pre-mi9-r2-a7edb08fdbbc",
+        "Image": "tcdx-grc-frontend:phase5-bbf4c8752ebcfa91a3215f7096c6df5b5a74d081-domainfix",
+        "State": "exited",
+        "Status": "Exited (0) 7 days ago"
+      }
+    ],
+    "nonsecret_configuration": {
+      "NODE_ENV": "qa"
+    },
+    "local_procedure_metadata": [
+      {
+        "path": "/tmp/tcdx-grc-mi-tenant-e2e-runtime-driver.py",
+        "exists": false,
+        "contents_read": false
+      },
+      {
+        "path": "/tmp/tcdx-grc-step23k-backend.override.yml",
+        "exists": false,
+        "contents_read": false
+      },
+      {
+        "path": "/tmp/tcdx-grc-step23l-p0r-frontend.override.yml",
+        "exists": true,
+        "uid": 1000,
+        "mode": "0o664",
+        "bytes": 109,
+        "contents_read": false
+      },
+      {
+        "path": "/home/tecdex/.pg_service.conf",
+        "exists": false,
+        "contents_read": false
+      },
+      {
+        "path": "/home/tecdex/.pgpass",
+        "exists": false,
+        "contents_read": false
+      }
+    ],
+    "frontend_assets": {
+      "index_sha256": "2bb6f0e5d30faddf044975d1884a4eb525e087c242d9d9b0ac858e6790bcf1b6",
+      "assets": [
+        {
+          "path": "/assets/index-B-ZsnPOc.js",
+          "sha256": "0cc529bf3dc084b508f8f5e862a31bb319f9280965eecf03b00d2ada2515b00f",
+          "bytes": 389665,
+          "self_v1_present": true,
+          "self_v2_present": false
+        },
+        {
+          "path": "/assets/index-BmB4OoCc.css",
+          "sha256": "3d81569dbc230cad03aca1fb1cf9b231151c0aed9bab803fdc0021e465076299",
+          "bytes": 23578,
+          "self_v1_present": false,
+          "self_v2_present": false
+        }
+      ]
+    }
+  },
+  "database": {
+    "state": "DB_READ_BLOCKED",
+    "connected": false,
+    "safe_error_class": "DEPTH_ZERO_SELF_SIGNED_CERT",
+    "plaintext_fallback_used": false,
+    "owner_role_used": false
+  },
+  "tls_diagnosis": {
+    "effective_runtime_mode": "disable",
+    "implementation": "apps/backend/src/database.ts: config.database.sslMode disable -> ssl:false",
+    "P0_attempt_mode": "ssl.rejectUnauthorized=true",
+    "different_from_runtime": true,
+    "governing_clause": "rector26 section3 TLS en tránsito",
+    "plaintext_authorization_found": false,
+    "documented_CA_reference_found": false,
+    "next_database_step": "DBA supplies approved trusted CA/server identity or explicit effective transport authorization; no TLS validation bypass"
+  },
+  "public_https": [
+    {
+      "at": "2026-10-13T15:07:30.370027+00:00",
+      "command": [
+        "curl",
+        "--silent",
+        "--show-error",
+        "--connect-timeout",
+        "5",
+        "--max-time",
+        "15",
+        "--output",
+        "/dev/null",
+        "--write-out",
+        "%{http_code}|%{ssl_verify_result}|%{remote_ip}|%{content_type}",
+        "https://grc.tecdex.net/"
+      ],
+      "exit": 0,
+      "http_status": "200",
+      "tls_verify_result": "0",
+      "remote_ip": "181.212.166.187",
+      "mime": "text/html; charset=utf-8",
+      "safe_error": ""
+    },
+    {
+      "at": "2026-10-13T15:07:30.563854+00:00",
+      "command": [
+        "curl",
+        "--silent",
+        "--show-error",
+        "--connect-timeout",
+        "5",
+        "--max-time",
+        "15",
+        "--output",
+        "/dev/null",
+        "--write-out",
+        "%{http_code}|%{ssl_verify_result}|%{remote_ip}|%{content_type}",
+        "https://grc.tecdex.net/api/v1/auth/providers"
+      ],
+      "exit": 0,
+      "http_status": "200",
+      "tls_verify_result": "0",
+      "remote_ip": "181.212.166.187",
+      "mime": "application/json; charset=utf-8",
+      "safe_error": ""
+    },
+    {
+      "at": "2026-10-13T15:07:30.618616+00:00",
+      "command": [
+        "curl",
+        "--silent",
+        "--show-error",
+        "--connect-timeout",
+        "5",
+        "--max-time",
+        "15",
+        "--output",
+        "/dev/null",
+        "--write-out",
+        "%{http_code}|%{ssl_verify_result}|%{remote_ip}|%{content_type}",
+        "https://grc.tecdex.net/api/v1/auth/me/authorization"
+      ],
+      "exit": 0,
+      "http_status": "401",
+      "tls_verify_result": "0",
+      "remote_ip": "181.212.166.187",
+      "mime": "application/problem+json; charset=utf-8",
+      "safe_error": ""
+    },
+    {
+      "at": "2026-10-13T15:07:30.676362+00:00",
+      "command": [
+        "curl",
+        "--silent",
+        "--show-error",
+        "--connect-timeout",
+        "5",
+        "--max-time",
+        "15",
+        "--output",
+        "/dev/null",
+        "--write-out",
+        "%{http_code}|%{ssl_verify_result}|%{remote_ip}|%{content_type}",
+        "https://grc.tecdex.net/api/v2/auth/me/authorization"
+      ],
+      "exit": 0,
+      "http_status": "404",
+      "tls_verify_result": "0",
+      "remote_ip": "181.212.166.187",
+      "mime": "application/json; charset=utf-8",
+      "safe_error": ""
+    }
+  ],
+  "public_assets": [
+    {
+      "at": "2026-10-13T15:16:42.630395+00:00",
+      "url": "https://grc.tecdex.net/assets/index-B-ZsnPOc.js",
+      "exit": 0,
+      "bytes": 389665,
+      "sha256": "0cc529bf3dc084b508f8f5e862a31bb319f9280965eecf03b00d2ada2515b00f",
+      "self_v1_present": true,
+      "self_v2_present": false
+    },
+    {
+      "at": "2026-10-13T15:16:42.712602+00:00",
+      "url": "https://grc.tecdex.net/assets/index-BmB4OoCc.css",
+      "exit": 0,
+      "bytes": 23578,
+      "sha256": "3d81569dbc230cad03aca1fb1cf9b231151c0aed9bab803fdc0021e465076299",
+      "self_v1_present": false,
+      "self_v2_present": false
+    }
+  ],
+  "local_freeze": {
+    "scope": "LOCAL_ONLY_NO_DEPLOY_NO_DDL",
+    "created_at": "2026-10-13T15:34:32.242822+00:00",
+    "source_paths": 203,
+    "exact_tested_source_hashes_matched": 200,
+    "extra_nonruntime_paths": [],
+    "packaging_delta_files": [
+      "apps/backend/Dockerfile",
+      "apps/frontend/Dockerfile",
+      "packages/contracts/package.json"
+    ],
+    "packaging_delta_exact_hashes": {
+      "apps/backend/Dockerfile": "47ebf8eaa031510da799c7aadfd1f71e92ccce21c6d942c3ffc52980d14e21c6",
+      "apps/frontend/Dockerfile": "b6a1998bc90a09e71ea9e595596ed65d7f5d8ee8cfd0d6b474427126afca726b",
+      "packages/contracts/package.json": "7687941476e5c3f35a47227bb9b6990f6ae4843e7d79723b9f142c6da8fd9570"
+    },
+    "packaging_delta_reason": "Canonical compiled-dist entrypoints and workspace dependency builds; no copy into src; exact PO-authorized packaging delta; all other files retain tested source hashes",
+    "source_fingerprint": "7d512e859abde82f69a773a6009f8b241c2561c31a950c8b3636066cac181aae",
+    "source_manifest": "/tmp/tcdx-iana-v2-local-pair-20261013-0h1biec_/source-manifest.json",
+    "context": "/tmp/tcdx-iana-v2-local-pair-20261013-0h1biec_",
+    "backend_source": "/tmp/tcdx-iana-v2-local-pair-20261013-0h1biec_/backend-source",
+    "frontend_source": "/tmp/tcdx-iana-v2-local-pair-20261013-0h1biec_/frontend-source",
+    "exports_identical": true,
+    "generated_artifacts_excluded": [
+      "apps/frontend/vite.config.js",
+      "apps/frontend/vite.config.js.map"
+    ],
+    "generated_exclusion_evidence": "Approved frontend build explicitly uses vite.config.ts; JS/map are untracked generated outputs absent from tested source manifest; originals preserved",
+    "backend_tag": "tcdx-grc-backend:iana-v2-local-7d512e859abd",
+    "frontend_tag": "tcdx-grc-frontend:iana-v2-local-7d512e859abd",
+    "qa_db_compatibility": "UNVERIFIED_BLOCKED_TLS; not a deployment release",
+    "full_worktree_dependencies": "Contains approved inherited6A3 sources; candidate31/32/33/34 not authorized for QA"
+  },
+  "build_status": "LOCAL_IMAGES_VALIDATED_NOT_AUTHORIZED_FOR_DEPLOY",
+  "rollback_status": "Active images available and prior containers retained; adapted driver/recovery not executed",
+  "traces": {
+    "public_commands_json_sha256": "d79a3bcf85676dab181f6d2231f9ff5aa718c0a0754cfe506eb91d080446e19a",
+    "failed_publickey_probe_sha256": "cd83f33515c8a4bd26e9d0f7c110012e754df5c17b23e036beff48d7c04e298e",
+    "ssh_command_policy": "StrictHostKeyChecking=yes; UpdateHostKeys=no; no agent forwarding; password entered in non-echoing prompt; bounded commands"
+  },
+  "initial_read_helper_error": {
+    "cause": "Invalid Docker Go-template function grouping",
+    "corrected_locally": true,
+    "one_backend_inventory_retry_passed": true,
+    "product_or_remote_files_changed": false
+  },
+  "qa_database_ledger": "NOT_READ; certificate validation solved, libpq matching authentication missing",
+  "qa_deploy_go": "NO_GO",
+  "qa_mutations": 0,
+  "tests_product_rerun": 0,
+  "latest_po_decisions": {
+    "operator": "tecdex",
+    "administrative_postgres_actor": "postgres",
+    "scope": "metadata READ ONLY only; current application identity is not administrator",
+    "public_certificate_source": "PO confirmed Ubuntu snakeoil certificate paths; authorized public certificate verification; no private key read",
+    "packaging": "PO rejected dist-to-src copying and authorized structural production entrypoints and dependency compilation; only affected backend rebuilt"
+  },
+  "database_final": {
+    "at": "2026-10-13T15:35:49.648109+00:00",
+    "state": "BLOCKED_CONNECTION_OR_AUTHENTICATION",
+    "role_authorized": "postgres",
+    "transport": "verify-full",
+    "tls_identity": "db-tecdex",
+    "physical_target": "192.168.2.40:5432/tcdx-grc",
+    "certificate_pem_sha256": "0a99469321c1117cdf3154a7e5c5e50dd42f719af7b8b1a647fa0bb55179519b",
+    "authentication": "Existing protected libpq passfile; no secret value accessed/copied by agent",
+    "exit": 2,
+    "result_csv": "",
+    "safe_error": "psql: error: connection to server at \"192.168.2.40\", port 5432 failed: fe_sendauth: no password supplied\n",
+    "private_key_read": false,
+    "configuration_mutated": false,
+    "authenticated_identity_verified": false
+  },
+  "certificate": {
+    "source": "tecdex@192.168.2.40:/etc/ssl/certs/ssl-cert-snakeoil.pem; PO-authorized trusted SSH; private key not read",
+    "operator": "tecdex",
+    "hostname": "db-v4.tcdx.int",
+    "reference": "/tmp/tcdx-qa-postgres-public-cert-20261013.pem",
+    "pem_sha256": "0a99469321c1117cdf3154a7e5c5e50dd42f719af7b8b1a647fa0bb55179519b",
+    "certificate_metadata": "sha256 Fingerprint=FB:68:09:DA:13:9E:E3:E5:2C:2F:1F:EA:D7:5B:11:92:7B:04:B8:96:7A:2B:5D:B8:46:9C:B6:70:E3:BB:A3:E6\nsubject=CN=db-tecdex\nissuer=CN=db-tecdex\nnotBefore=May 17 20:59:33 2026 GMT\nnotAfter=May 14 20:59:33 2036 GMT\nX509v3 Subject Alternative Name: \n    DNS:db-tecdex\n",
+    "openssl_exit": 0
+  },
+  "public_certificate_pem": "-----BEGIN CERTIFICATE-----\nMIIC+DCCAeCgAwIBAgIUGclnYrYjfYrXoqQV+hFVY3bR6ywwDQYJKoZIhvcNAQEL\nBQAwFDESMBAGA1UEAwwJZGItdGVjZGV4MB4XDTI2MDUxNzIwNTkzM1oXDTM2MDUx\nNDIwNTkzM1owFDESMBAGA1UEAwwJZGItdGVjZGV4MIIBIjANBgkqhkiG9w0BAQEF\nAAOCAQ8AMIIBCgKCAQEAqMRYdqNZF2+uPzCgnDg2utBAZo0W8HDLnp2c3X6VIZGq\nrv+7F36lrLNZFD2d4t12BjR4/TDAUWosmjjdnHCYQuhGZyHrnCrXSUmyeyqjXQlq\n3YOxaE3IW18vvDskli6nsjGDlPcwKPqpixp6PpN5UCt1swIStntGxqBA68dO032D\nph/N32uMBoA4H6Akv5hJrJGEehonoPFyDEwLifYVf69LLxxWvNz5uaeZ14L9Z7bM\nX9VPuBy0a9QvpwPBfFOV3ENkPsarH86SRMfLFme5KdcZHmy7BEoPFTDIDD2bblJ4\nMI1m9gXg7XJ7FU8cUkGhYteJr439bXwHdGJ0rOGGVQIDAQABo0IwQDAJBgNVHRME\nAjAAMBQGA1UdEQQNMAuCCWRiLXRlY2RleDAdBgNVHQ4EFgQUNp5OhlrYFTzF93wD\n6xkpsPGCQScwDQYJKoZIhvcNAQELBQADggEBAIkt5QRyr+ufDy6PhV38QesjMEJm\n5+G33LAkpqCB19tVmOHuU82ZswhU8mUnquF5EVgByY/nnUNQ2rLE0M5fH8f8Puf5\nc6VpQnO0/zIkeKCJnl+stijR9UznUqT7XNlQ0qEPHMXRpXQ6NiWuyPRklVVChxT7\nK1PD6zB0jfWwGUPZSpy5wOGIKObaHBka2dWYTocJGo1oOon6zqrEKGjjF0NX1hJO\nIsEr7uVO7e87gIyuzR6DwshLXMeN1Q04kafZ0PvxchA7Q10+MC9oFdbiwI6h4OnJ\nJ3uNP/SvK/+sXTKowHPGlu2sRiJyftvd3+C5PLr/eDggFqfxq53LE2kaMVg=\n-----END CERTIFICATE-----\n",
+  "packaging_delta": {
+    "authority": "Current PO instruction CORRECCION CANONICA DEL EMPAQUETADO BACKEND; local-only structural fix",
+    "scope": "Package entrypoints compiled dist; dependency build graph; no product/DTO/API semantics changed",
+    "exact_files": {
+      "apps/backend/Dockerfile": "47ebf8eaa031510da799c7aadfd1f71e92ccce21c6d942c3ffc52980d14e21c6",
+      "apps/frontend/Dockerfile": "b6a1998bc90a09e71ea9e595596ed65d7f5d8ee8cfd0d6b474427126afca726b",
+      "packages/contracts/package.json": "7687941476e5c3f35a47227bb9b6990f6ae4843e7d79723b9f142c6da8fd9570"
+    }
+  },
+  "final_images": {
+    "state": "LOCAL_PAIR_BUILT_AND_VALIDATED",
+    "at": "2026-10-13T15:38:01.603608+00:00",
+    "images": {
+      "backend": {
+        "image_id": "sha256:c2cb4cf9ea4140ba606845dfc99ba7749105079c89df3cf1e80f5c2a4176dee3",
+        "tag": "tcdx-grc-backend:iana-v2-local-7d512e859abd",
+        "platform": "linux/amd64",
+        "base_digest": "node:22.23.2-bookworm-slim@sha256:48e4b67d85f87bd551df43704e24d252f56cc5f8e9718841aace50f19948f0f9",
+        "base_layers_match": true,
+        "transport_path": "/tmp/tcdx-iana-v2-local-pair-20261013-0h1biec_/backend-local-image.tar",
+        "transport_sha256": "9f029b57cbc8fd2860506952c4a309c16c6f415c138d9b4b811fd251f406bb2c",
+        "transport_config_sha256": "sha256:4b00f31d61886040598a771258a85f7b375103efd068ceee94b8d7097309f539",
+        "validation": {
+          "state": "COMPILED_IMAGE_LOCAL_PASS",
+          "contracts_entry": "file:///app/packages/contracts/dist/index.js",
+          "iana_javascript_present": true,
+          "compiled_files_in_src": false,
+          "application_listen": "PASS_LOCAL_WITHOUT_DB",
+          "v1_self": 404,
+          "v1_redirect": false,
+          "v2_unauthenticated": 401,
+          "v1_providers": 200,
+          "node": "v22.23.2",
+          "network": "none",
+          "database_queries": 0,
+          "app_env_file_present": false
+        },
+        "source_fingerprint": "7d512e859abde82f69a773a6009f8b241c2561c31a950c8b3636066cac181aae",
+        "reused_without_rebuild": false,
+        "scope": "LOCAL_ONLY_NOT_AUTHORIZED_FOR_QA_DEPLOY"
+      },
+      "frontend": {
+        "image_id": "sha256:d83025f687b94d5cb69d7782d11e320bfcde36497fddce8595ff723184a567f0",
+        "tag": "tcdx-grc-frontend:iana-v2-local-b488bbaaafc8",
+        "platform": "linux/amd64",
+        "base_digest": "node:22.23.2-bookworm-slim@sha256:48e4b67d85f87bd551df43704e24d252f56cc5f8e9718841aace50f19948f0f9",
+        "base_layers_match": true,
+        "transport_path": "/tmp/tcdx-iana-v2-local-pair-20261013-f_si0mfa/frontend-local-image.tar",
+        "transport_sha256": "071e48be3b1334ca23a25d178dbb031914f66123f411d4cdcb3a20d2d08d52e8",
+        "transport_config_sha256": "sha256:f687c72df4ba335ec70b60666f007d9165c58ecc03ec4cfc6130bc6c0a379b28",
+        "validation": {
+          "state": "IMAGE_BUNDLE_LOCAL_PASS",
+          "assets": [
+            {
+              "path": "/assets/index-C6N_MYES.js",
+              "bytes": 422441,
+              "sha256": "da6099a85b525ff1d63d7c2fba112d21ab55958d7a9bf33330c9d94ee218a301",
+              "v1_self": false,
+              "v2_self": true,
+              "canonical_origin": true
+            },
+            {
+              "path": "/assets/index-BNhQyVyL.css",
+              "bytes": 23784,
+              "sha256": "b55c440ffb50943558d4b7d14eadd86f2acea985c1a956ca20ca7a4e3af0e149",
+              "v1_self": false,
+              "v2_self": false,
+              "canonical_origin": false
+            }
+          ],
+          "logo_sha256": "215de8e5447f770649647d55556dceeed84f8f6e64393d618690ef0954246806",
+          "node": "v22.23.2",
+          "network": "none",
+          "app_env_file_present": false
+        },
+        "source_fingerprint": "b488bbaaafc895b9634e4109c015aefdb7f5bc84a55f567a823a281671fcfcd4",
+        "reused_without_rebuild": true,
+        "scope": "LOCAL_ONLY_NOT_AUTHORIZED_FOR_QA_DEPLOY"
+      }
+    },
+    "qa_db_compatibility": "NOT_VERIFIED",
+    "qa_transport": false,
+    "qa_deploy": false,
+    "product_suites_rerun": 0
+  },
+  "canonical_packaging_validation": {
+    "numTotalTests": 22,
+    "numPassedTests": 22,
+    "numFailedTests": 0,
+    "numPendingTests": 0,
+    "success": true
+  },
+  "rejected_intermediate_packaging": "cp dist into src was rejected by PO; removed from final Dockerfile; intermediate image is NOT_RELEASABLE",
+  "next_single_action": "DBA provides a managed/authentication reference matching postgres/tcdx-grc and TLS host db-tecdex at hostaddr192.168.2.40; no passwords in repo; then READ ONLY metadata compatibility"
+}

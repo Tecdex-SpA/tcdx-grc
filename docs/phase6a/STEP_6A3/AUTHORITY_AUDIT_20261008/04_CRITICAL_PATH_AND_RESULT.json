@@ -1,0 +1,645 @@
+{
+  "task_id": "STEP_6A3_SOLO_PO_AUTHORITY_AUDIT_20261008",
+  "audit_decision_date_supplied_by_po": "2026-10-08",
+  "master_regent": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23",
+  "CODEX_VARIATION_BUDGET": "ZERO",
+  "mode": "SOLO_PRODUCT_OWNER + CODEX_ASSISTED_ENGINEERING",
+  "AUTHORITY_AUDIT": "PARTIAL_BLOCKED",
+  "audit_coverage": "48/48",
+  "reason": "Exhaustive documentary audit; three CFG-D clauses lack evidence on methodological authorship/change and applicability of global author/approver SoD. No additional approvals or role competence invented.",
+  "RECTOR_GATE": "PASS",
+  "rector_gate_scope": "AUDIT_ONLY_INTEGRITY_AND_AUTHORIZED_DOCUMENTATION",
+  "STEP_6A3": "PARTIAL_BLOCKED",
+  "product_publication_gate": "BLOCKED",
+  "STEP_6A4": "NOT_STARTED",
+  "classification": {
+    "confirmed_counts": {
+      "A": 1,
+      "B": 44,
+      "C": 0
+    },
+    "provisional_counts": {
+      "A?": 0,
+      "B?": 0,
+      "C?": 3
+    },
+    "principal_category_including_provisional": {
+      "A": 1,
+      "B": 44,
+      "C": 3
+    },
+    "indeterminate_count": 3,
+    "total": 48,
+    "unique": 48,
+    "order_matches_ledger": true,
+    "unclassified_or_duplicate": 0,
+    "certainty_separate_from_category": true,
+    "category_a_ids": [
+      "CFG-HANDLER"
+    ],
+    "category_b_ids": [
+      "C-01",
+      "C-02",
+      "C-03A",
+      "C-03B",
+      "C-04",
+      "C-04G-1",
+      "C-04G-2",
+      "C-04G-3",
+      "C-04W",
+      "C-06F",
+      "C-06M",
+      "C-06R",
+      "C-07",
+      "C-08",
+      "RBAC-D01",
+      "RBAC-D02",
+      "CFG-D-HISTORY",
+      "CFG-UQ1",
+      "CFG-UQ2",
+      "CFG-DEFAULT",
+      "CFG-QA",
+      "CV01-A",
+      "CV02-A",
+      "CV03-A",
+      "CV04-A",
+      "CV05-A",
+      "CV06-A",
+      "CV07-A",
+      "CV08-I",
+      "CV08-A",
+      "CV08-C",
+      "CV09-A",
+      "CV10-A",
+      "CV11-A",
+      "CV12-A",
+      "CV13-A",
+      "CV14-A",
+      "VOC-C01",
+      "VOC-C02",
+      "VOC-C03",
+      "VOC-C04",
+      "VOC-C05",
+      "VOC-C06",
+      "VOC-QA"
+    ],
+    "indeterminate_ids": [
+      "CFG-D-COMPLIANCE-V1",
+      "CFG-D-CONTROLS-V1",
+      "CFG-D-PUBLICATION"
+    ]
+  },
+  "approvals": {
+    "single_ledger": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md",
+    "ledger_unchanged": true,
+    "pending_review": 48,
+    "new_approvals": 0,
+    "new_signatures": 0,
+    "po_functional_direction": "APPROVED_2026_10_08_WITHIN_EXISTING_SCOPE",
+    "po_technical_competence_current_clause_scope": "NOT_DEMONSTRATED",
+    "role_consolidation_legal_basis": "docs/rector/baseline/43_PLAN_MAESTRO_RECTOR_DISENO_Y_DESARROLLO.md:116",
+    "historical_role_consolidation": "docs/governance/PHASE_5_HUMAN_GATE_APPROVAL.md:14",
+    "historic_approval_does_not_approve_current_clauses": true
+  },
+  "external_review": {
+    "unconditional_for_current_clause_approval": "NOT_DEMONSTRATED",
+    "confirmed_category_c_ids": [],
+    "conditional_minimum": "One competent human distinct from methodology author can cover both exact methods and publication if global author/approve SoD applies and PO is author; no presumed competency or exception. Otherwise revisit classification from exact evidence.",
+    "conditional_source": "docs/rector/baseline/22_RBAC_PERMISSION_SCOPE_MATRIX.md:70",
+    "exception_requirements_source": "docs/rector/baseline/22_RBAC_PERMISSION_SCOPE_MATRIX.md:73",
+    "method_authorship_and_act_nature": "NOT_DEMONSTRATED",
+    "exception_for_current_cfgd": "NOT_DEMONSTRATED",
+    "separate_future_operational_obligations": [
+      {
+        "scope": "Regulatory pack publication, outside this audit",
+        "source": "docs/rector/baseline/41_BASELINE_REGULATORIO_OBLIGATORIO.md:69",
+        "requirement": "Importer/author cannot be sole approver; prescribed functions per pack remain required."
+      },
+      {
+        "scope": "RetentionPolicy lifecycle QA, no execution here",
+        "source": "docs/executable-contracts/01_IMPLEMENTATION_DECISION_MANIFEST.md:37",
+        "requirement": "Two independently authenticated real humans; plan approval is not execution."
+      },
+      {
+        "scope": "Critical Evidence/high-risk Action and governed Audit",
+        "source": "docs/rector/baseline/42_PLANES_COMERCIALES_Y_ROLES_BASE.md:123",
+        "requirement": "Preserve object/actor SoD; distinct hats or accounts do not waive actor separation."
+      }
+    ],
+    "legal_professional_external_requirement": "NOT_DEMONSTRATED_NO_EXTERNAL_LEGAL_RESEARCH"
+  },
+  "static_evidence": {
+    "vocab_proposed_values": 52,
+    "vocab_families": 14,
+    "vocab_occurrences": 26,
+    "existing_mapping_required_occurrences": 4,
+    "new_contract_occurrences": 22,
+    "csv22_sha256": "8a9669d3389eba33be3640756777c35642a5d910567082cdd1fc12bf91c66239",
+    "csv29_source_fields_and_family_hashes_match": true,
+    "vocab_published": 0,
+    "vocab_selectable": 0,
+    "effective_dates_invented": 0,
+    "candidate_role_rows": 24,
+    "rbac_candidate_grants": 44,
+    "rbac_candidate_distribution": {
+      "F": 13,
+      "M": 17,
+      "R": 14
+    },
+    "effective_grants_published": 0,
+    "action_create_seed_roles": [
+      "GRC_MANAGER",
+      "QUALITY_MANAGER",
+      "COMPLIANCE_MANAGER",
+      "RISK_MANAGER",
+      "AUDITOR_LEAD",
+      "AUDITOR"
+    ],
+    "requirement_read_rolepermission_matches_in_migrations": 0,
+    "runtime_qa_counts_not_inferred": true,
+    "backend_source_files_inspected": 110,
+    "ec_http_declaration": "PUBLISHED",
+    "ec_http_handler": "NOT_DEMONSTRATED_STATIC_SEARCH",
+    "ec_omission_does_not_prove_sufficiency": true,
+    "physical_discrepancies": "UQ tenant-only; ordinal global; default <=1 versus approved exactly1; inspection only"
+  },
+  "authority_rules": {
+    "total": 29,
+    "should_used_to_require_extra_human": 0,
+    "short_quotes_exact_source_lines": true
+  },
+  "historical_zip": {
+    "name": "TCDX_GRC_RECTOR_BASELINE_v1.1_2026-09-15(1).zip",
+    "status": "NOT_AVAILABLE_IN_WORKSPACE",
+    "search": "Exact recursive path search and local ZIP inventory; no replacement with internet",
+    "active_baseline_replaced": false
+  },
+  "sources_sha256": {
+    "AGENTS.md": "92983b9c7df6b8e9810a1f660c405a816a3b08b7d316e0c63cffd726fd056a78",
+    "apps/backend/src/app.ts": "6ce9884fbea6a845d7abe30dcb581b066377e8b2a7af0d58dc052120caa505a4",
+    "apps/backend/src/core-grc/methodologies.ts": "f26fae3f8db3af0dcd64eba2feacb7c55c91382f67bac13c1772765490695c3b",
+    "apps/backend/src/core-grc/routes.ts": "a785d04f2d65dfb4a5ec99a8e5edfb9531076b3b4a70e7ee3bfae1eecc910d91",
+    "apps/backend/src/core-grc/service.ts": "8aca4e04193c0ba8009eb06396d56b586dd76e8e132e9136039c69be76376f2a",
+    "database/migrations/20260916000600_constraints_and_uniqueness.sql": "7d079aa1234050b6dde06d9fb3cad939144fcbccdf287cc31bbe863c68899bf5",
+    "database/migrations/20260916000900_canonical_seeds.sql": "94547ff1fa6a9accf56ff6f28be93afeb91b8c290ca9bb224667862c64c8c2e7",
+    "database/migrations/20261007000200_phase5_methodology_binding.sql": "fa178ad731d48045313a11b22f1bdf3c228be502dafa1883136162ad48127850",
+    "docs/executable-contracts/01_IMPLEMENTATION_DECISION_MANIFEST.md": "1adead94dca6632fa05f27746deff0443b99c6233a5985deb5e5a104e400b1de",
+    "docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml": "05eec34a53c39ff8f7d9e328c9549c6d0095a5c981542b4c51c82b7f34a995e3",
+    "docs/executable-contracts/05_PERMISSION_CATALOG.md": "a13b45c9c54a96e85b99b58dd03c2366bcc776c8a0def86dca1def4d13e417b3",
+    "docs/executable-contracts/27_PHASE5_METHODOLOGY_BINDING.md": "eedf85debfb5eb48e25d4abdd5ff4332c5dba8197ab7b96a66b97f640cfef4df",
+    "docs/governance/ADR_2026_10_01_TCDX_MANAGED_IDENTITY_KEYCLOAK.md": "d25d80ec751f8b914bf320b38e4cadd19fa2f880d3dcb95296c2a1f6daa59863",
+    "docs/governance/CODEX_RECTOR_ENFORCEMENT.md": "ca62c9e5a925f21724465e7225bdec93b0b347e110b2fc80b519349167670e31",
+    "docs/governance/DR_2026_10_06_TENANT_ONBOARDING_D1_R.md": "e017ce47c831d8ea951a170ad754f0b89e72ddf8805dc20cb77233c01acd73d1",
+    "docs/governance/DR_2026_10_07_COMPONENT_SCOPED_RELEASE_POLICY.md": "a630f82f72a88e1ff5e4bd60cc33c7b8a6cdf8536ccb35d7645ce6f1c96e68cd",
+    "docs/governance/DR_2026_10_07_MANAGED_IDENTITY_TENANT_ONBOARDING.md": "161022d4b9c48fbc5546926d200cba4e571443814b8adf7f6b4e061988734234",
+    "docs/governance/MASTER_EXECUTION_STATUS.md": "6d4cb6fcc720148ba5c9346a3d770fd83a6daa81640f77ce98ea0a066e8e926b",
+    "docs/governance/PHASE5_METHODOLOGY_BINDING_ARCHITECTURE_DECISION_20261007.md": "55fcf4ccc20b53937f1b057ce31b32914790876dd9d8aa74e15753bedf532b09",
+    "docs/governance/PHASE5_PLUS_DEFERRED_CAPABILITIES.md": "f1ed711010251e19c21b3050eb268c40461fbe3cc338c1dc6b9865015e1f643d",
+    "docs/governance/PHASE5_QA_REVIEWER_MEMBERSHIP_AUTHORIZATION_20261007.md": "c8e09564f89a9aef2d5fa28201d0bc8e6e1e2dc85bbaff1b2c91d9bfccff067f",
+    "docs/governance/PHASE_2_HUMAN_APPROVAL.md": "93fdd24e140a97519adfffaf6c0a699c1aae2358ef54daeed987e560d246b284",
+    "docs/governance/PHASE_5_ADMINISTRATIVE_READ_AUTHORITY_DECISION.md": "559292614559526525c23613c927b6ac0beb9d73883bbfc1dc597fa476a033b4",
+    "docs/governance/PHASE_5_API_READ_CONTRACT_DECISION.md": "c554ca9b9a1be5a2bb9e856cbe3afb5bb44751db58a8ee04d4c1f2cb9d9030d9",
+    "docs/governance/PHASE_5_CANONICAL_TENANT_USER_ENROLLMENT_DECISION.md": "a7ad53a89f19db038b32e4ed60a9fa5894aad92ebc929088ea8bd5bc96c1ede7",
+    "docs/governance/PHASE_5_CORE_GRC_IMPLEMENTATION_REPORT.md": "c6c2194b78b49e1390e0ebe0120d52252ecbfe03b5c8d3f6ab70653d721fa2c5",
+    "docs/governance/PHASE_5_FAST_TRACK_RUNTIME_UI_DECISIONS.md": "aa18f346195012755f18f8d5ad17568b0ec376bf01c83728c9957d334e3cd279",
+    "docs/governance/PHASE_5_HUMAN_GATE_APPROVAL.md": "eb74fce13fe4891cbbccc932b633596a5b7a5a63cdf2f0d28ccb4e5ad7a28a4c",
+    "docs/governance/PHASE_5_MEMBERSHIP_ROLE_REVOKE_DECISION.md": "3435b3b7d66d07adda82d4b3e6fc35f90a913876681709ff5297a55a76420db0",
+    "docs/governance/PHASE_5_PLUS_LOCAL_CLOSURE_REPORT.md": "bb97d368a50fd06bc66013718388f301a4fb6d2c79e861287a74466355731893",
+    "docs/governance/PHASE_5_PLUS_QA_MATERIALIZATION_PLAN_2026-09-29.md": "2850782cbbbeb8b93ee558e039d023306d8fe3e1b9d482a700364c3b9703e2e0",
+    "docs/governance/PHASE_5_RELEASE_DEPENDENCY_MANIFEST.md": "2e89a836ef378eb868897ad320bbcba685c17b35c6af0e631bf46ff7c8531c38",
+    "docs/governance/PHASE_5_RUNTIME_SECURITY_CLOSURE_REPORT.md": "27b94e58c3a4f8927221641f9d2d3b951a8ee62675ed18f4a628ea59640587ef",
+    "docs/governance/PHASE_5_SUBSCRIPTION_CREATE_DECISION.md": "6c99968e67e77cd4a023a83a977425687e67097335144386c766dc7300311ab1",
+    "docs/governance/PHYSICAL_DATA_MODEL_APPROVAL.md": "74675ea848dc07388fbeb43c21e39132babc9ed714f3af29291ca88fbca91662",
+    "docs/governance/PRE_F4_AUDIT_MODEL_AMENDMENT_APPROVAL.md": "d85303dbc51dac4674aa0de4add70577a346bf14bf8b3acdbec93f5f85b68572",
+    "docs/governance/PRE_F4_AUDIT_MODEL_BEFORE_AFTER_MATRIX.md": "b707baabe4446b5b3e26a13890ac8883ad44d1db419d50fef00b40c0ee77433e",
+    "docs/governance/PRE_F4_AUDIT_MODEL_CLOSURE_REPORT.md": "4e3171dd82fd5a6712ae2c28470361c370e6795667d01672ced5192a84867c6c",
+    "docs/governance/PRE_F4_AUDIT_MODEL_IMPACT_REPORT.md": "8639b24adca16c841c78bb99588cef2c37ebdbab3b711a66c46f5ad5ca68e7b6",
+    "docs/governance/PRE_F4_AUDIT_MODEL_MATERIALIZATION_REPORT.md": "1267fc16c2d8b9a4408549d5adf4de56501143ae4f3c6d7cad5063e3cec99560",
+    "docs/governance/PRE_F5B_EXECUTABLE_CONTRACT_DECISION.md": "82190cdb3312de8635426634e9e0cf53aa45a61d22f9debd2fce161786ed6d1a",
+    "docs/governance/PRE_F5B_EXECUTABLE_CONTRACT_MATERIALIZATION_REPORT.md": "409d3987565abb36e704dc797b3d22533bd24230b5b1e868ff59e693644a3e2c",
+    "docs/governance/PRE_F5C_EXECUTABLE_PHYSICAL_RECONCILIATION_DECISION.md": "d9a1092d2d833333d6c55619ec54242729caa8fdd1500051234250ec4ed76e15",
+    "docs/governance/PRE_F5C_EXECUTABLE_PHYSICAL_RECONCILIATION_REPORT.md": "5a6b3f8cec44a3b99eaaeb297e400307298e0296414656d847350f92ee2cfb9a",
+    "docs/governance/PRE_F5C_QA_MATERIALIZATION_REPORT.md": "dd383158ac95e9d15b24fd2e5a9ceb84a3faf51648ecd091bd7d17eb9d284443",
+    "docs/governance/PRE_F5D_PLATFORM_IAM_CONTRACT_RECONCILIATION_REPORT.md": "72f77531503d79c9d60e3b3eefca09534f39c88135ac8d7a61b93844506290de",
+    "docs/governance/PRE_F5E_HUMAN_ARCHITECTURE_DECISIONS_REPORT.md": "bc549190cdaf0dc4fb177ec543a824f5c89b1e4513ef7c9676ee4b1061e144b0",
+    "docs/governance/PRE_F5E_RECTOR_V1_6_ACTIVATION_APPROVAL.md": "eb2ef814fb653bbd11c24b2d3bf2e0cfd28d2a957d2cf75c50c82ff82adca3b8",
+    "docs/governance/PRE_F5_READ_CONTRACT_MATERIALIZATION_REPORT.md": "fd9a3bf542ec724671d09df5b7e408d131f340c6621a98b0b3bc7cc6ff2d2dfd",
+    "docs/governance/STEP_23L_MANAGED_IDENTITY_IMPLEMENTATION_PLAN.md": "fd528b9c11236507b8c9b97a63be256af133e14d7b9508b2fbcdbcd3fb988296",
+    "docs/governance/STEP_23L_MI8A_RELEASE_PACKAGING_CONTRACT.md": "51fafb3f680f5cffc412b7fee762ff24bdee9c05cffaea2bc9a7a87571bb0c98",
+    "docs/governance/STEP_23L_TENANT_ONBOARDING_D2_RD_C2_OCI_METADATA_DECISION.md": "ae89e0a8b7b8a90afcb62dce1b508b5096d27cfea6b47c08a84a4fe0ae5f1590",
+    "docs/governance/TCDX_MANAGED_IDENTITY_INFRASTRUCTURE_AMENDMENT_v1.0_2026-10-01.md": "e743dae3690436cb81760a99fec6478b98b0f96ad10aaf33139a338693f965d1",
+    "docs/phase6a/STEP_6A3/01_IMPLEMENTATION_MANIFEST.md": "053ee05dac8da5905bfc3becac275021fbfd7abc841c6286622c417be2edd5b2",
+    "docs/phase6a/STEP_6A3/02_READ_CAPABILITIES_IMPLEMENTATION.md": "93a3ce2697c3ca95b80dcbdde2831308ac2714eb794ba7d0f3ba6381fee21bde",
+    "docs/phase6a/STEP_6A3/03_SELECTOR_COMPONENTS.md": "c32b973154b0c0f8b72420eccecde995e376869aeab3bfa1fcd5443265407fed",
+    "docs/phase6a/STEP_6A3/04_VOCABULARY_RESOLUTION.md": "aed94c07b921fb06bcebde2a3c3887186dc047d485e8b6196783baaa3f7bc888",
+    "docs/phase6a/STEP_6A3/05_FORM_ADOPTION_MATRIX.csv": "0978b1f81f6be7635ab68871f842bf6596c2d9bd6b36d0afe79640321c373250",
+    "docs/phase6a/STEP_6A3/06_SECURITY_AND_TENANT_ISOLATION.md": "6988cb7c3ec1911994eb6452133bb40253d646084ab5b8fbc2611791321f4d88",
+    "docs/phase6a/STEP_6A3/07_TEST_AND_CONTRACT_RESULTS.md": "3fbdd5c83c0afb33cd1b2ee28a8ee051ca682424f30916d4c6a1d3599d8f38ad",
+    "docs/phase6a/STEP_6A3/08_OPEN_DECISIONS.md": "f638d020fe488f583fb96c425ced99afe3850e0342af0c3884d467804f027a80",
+    "docs/phase6a/STEP_6A3/09_STEP_6A3_IMPLEMENTATION_REPORT.md": "0e768dcbf46fd67d2e58e50015652f735892c6686fdc69a8b68e28930070444c",
+    "docs/phase6a/STEP_6A3/10_STEP_6A3_RESULT.json": "5fe7f2e08e4d135158f0a9231f98f03191c853b19127ff42c1df2d51b1487b5b",
+    "docs/phase6a/STEP_6A3/11_CORRECTIVE_CONTRACT_DECISION_PACKET.md": "ac6707e27e58a1a804527ff3a74efdaae2319ae691479a398fc0a0698a14d42b",
+    "docs/phase6a/STEP_6A3/12_CORRECTIVE_VOCABULARY_MATRIX.csv": "a931cdc2df860c4181b59dd122d69eed01107b47ad99e6aa6d8c3865d849aa6c",
+    "docs/phase6a/STEP_6A3/13_CORRECTIVE_CLOSURE_REPORT.md": "cf63f51959ff06ba3fe1417580aaf5c6563575c525596a97cc30bf1e2528c10c",
+    "docs/phase6a/STEP_6A3/14_STEP_6A3_CORRECTIVE_RESULT.json": "5fb55fc9f76238df3e39ba3412e776997751e02dd2220b136581aa4048a6ec6c",
+    "docs/phase6a/STEP_6A3/15_DR_6A3_TECHNICAL_20261008.md": "7e4ce411b88b8666a61f149bb093bc7f1f1f861f0c9a5ebeb5078ccf5439d20d",
+    "docs/phase6a/STEP_6A3/16_TECHNICAL_READ_CAPABILITY_MATRIX.csv": "eaae8023bc6e27e5bafcb7558057eabedb890954c96e1f8f4872c39bc05c5436",
+    "docs/phase6a/STEP_6A3/17_TECHNICAL_VOCABULARY_FIELD_MATRIX.csv": "ba4f9e92c822760c0c6b75903979560f3f7272be7828246c53f0e5626f882ee6",
+    "docs/phase6a/STEP_6A3/18_TECHNICAL_LOCALIZATION_AND_GATE_REPORT.md": "02dd03d8f021c0b10034ff4e7a4afd180b30723d58b896cb77dd477472fd8f0c",
+    "docs/phase6a/STEP_6A3/19_STEP_6A3_TECHNICAL_RESULT.json": "947b55c0aeae810dd367663350c98d35660a4d77db7502d4fcdafc7f2511bc74",
+    "docs/phase6a/STEP_6A3/20_P_RBAC_PUBLICATION_DECISION_PACKET.md": "5d6768ed6b806f5795d387dd3bd48ba0f744c60002c4e36d1a1452a69ea592af",
+    "docs/phase6a/STEP_6A3/21_P_CONFIG_BINDING_EVIDENCE_AND_ARCHITECTURE_OPTIONS.md": "afda666e389ff53e29f6646459b67b6d3b67c43e85dde94159c08a74fd94fc51",
+    "docs/phase6a/STEP_6A3/22_P_VOC_CANONICAL_VALUE_PROPOSALS.csv": "8a9669d3389eba33be3640756777c35642a5d910567082cdd1fc12bf91c66239",
+    "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md": "de3feae44235a7cdc905671f75769d3606f5c61b7bf8314f0fd32be87df7bab3",
+    "docs/phase6a/STEP_6A3/24_STEP_6A3_RECONCILIATION_REPORT.md": "c7b88af994c6cfee4ebcb30e7eed38972abd41f0de19dea4815939a738189fe1",
+    "docs/phase6a/STEP_6A3/25_STEP_6A3_RESULT.json": "4ced73e1bda291c7a7ec4609aa981f88400b959822b552ac677cff06bb910d40",
+    "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md": "eaa99da3d895883a7c38275968500df5c8703f11846b284f785a4b38108d6f1e",
+    "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md": "029ba9a9e2a0f13a726b3133bd43be71b2caf209ecb11c6381074da40a1bf247",
+    "docs/phase6a/STEP_6A3/28_CONFIG_CFGD_CONDITIONAL_DECISION_AND_PHYSICAL_RECONCILIATION.md": "28b0f1b9b7a0fa4718b0612f447b81d71dd8a7653e7a3f8bf5458b2333660b48",
+    "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv": "5106f98f64a950ed7dddb5618f14a11864b166421be1dac7613682863492dc5e",
+    "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md": "d20d1bfa04f61c43b5c7fdb6767cf5c2046a68b24a33ef4d7638b6afdd733c0e",
+    "docs/phase6a/STEP_6A3/31_STEP_6A3_PO_RECONCILIATION_REPORT.md": "b0719937440f9b00b900625ce2c6cbbeee7f5aa5ba12832785b3f22b51d1b25d",
+    "docs/phase6a/STEP_6A3/32_STEP_6A3_PO_RECONCILIATION_RESULT.json": "48d1c8f854bfd2bb1e9548bbd907f0cb4e74bdeaa85c4b1991372bdbdd9a90b5",
+    "docs/physical-data-model/01_PHYSICAL_DATA_MODEL.md": "cdbee203ac9afe9f89cbb4320f6b7010a0e315bc160d2be6134ed3c2a15fabd5",
+    "docs/rector/BASELINE_ID": "31c16635b026480e66a250efbc8564effc5c80eee6fa8d3d805b062b4bdea4f9",
+    "docs/rector/BASELINE_STATUS": "883d3bff9a26459c06c2dae4b4993c3f6bf4059f8abefb81bef9985f280237ff",
+    "docs/rector/RECTOR_MANIFEST.sha256": "a90e803974325b43d44269968ed40875b1ce1826cb83fc78a2be35b5f49cd5b5",
+    "docs/rector/baseline/00_README_KNOWLEDGE_BASE.md": "ebb362da25c90d2dd0c28fc3cab8e1b0730c36b92dd5afe918885fccf8a94cbf",
+    "docs/rector/baseline/01_DEFINICION_NUEVO_PRODUCTO.md": "fbad6b9f4fe649b2690c4c7eb4da0786a1068e73f5227e1ab5ddbb986bc7428a",
+    "docs/rector/baseline/02_DEFINICION_BASE_DATOS_MODELO_DATOS.md": "847ae4c7fd0fdd4aaba24b046a2c14ee7679decf9ae77b9f4a6712764564c9c6",
+    "docs/rector/baseline/03_RELACION_ENTRE_ESTADOS.md": "6a49c8347f3d59d9f0acfc629aa6b11d547276432655832105c6e20ecc324d90",
+    "docs/rector/baseline/04_DEFINICION_FUNCIONAMIENTO.md": "524ee7d0347af8ce04ed9a13598f178ec40ef8750bdd8f7b432db01c20546904",
+    "docs/rector/baseline/05_MAPA_FUNCIONAMIENTO.md": "be7d087f1747b49555bc7b955213570a58e1e1f901517c2e44cadffa3b24c968",
+    "docs/rector/baseline/06_CONSIDERACIONES_ENGINEERING_CONSTITUTION.md": "23fd50c8728c7f9f9ab6ebdbf7830d8aef81dfd881ef7f5fa44f5040d8a33223",
+    "docs/rector/baseline/07_TCDX_GRC_DOMAIN_MODEL.md": "7ab5e287d69764c3483bc4ed5525df715befa61483e635f50e8a16d0636f6672",
+    "docs/rector/baseline/08_TCDX_GRC_CANONICAL_DATA_MODEL.md": "5e6bf40c8949f56bb3151e45fa6bc3c7f2f42975478522644f331c4e5e277f3b",
+    "docs/rector/baseline/09_TCDX_GRC_RBAC_MODEL.md": "f2091d5fc3e5257bbb7cbdd47eb0f56e002c40b4dcb345f9b4288571438e9fff",
+    "docs/rector/baseline/10_TCDX_GRC_TRACEABILITY_MATRIX.md": "bb7474eeb476c15e8cbf94104c3cdb172d66c9ec67f61c16ca114ca49620492c",
+    "docs/rector/baseline/11_ALINEAMIENTO_DESARROLLO.md": "a0f8ddbbbf0c5f3106324078b5b59e106d461099d57954f418bd91f78591b3f0",
+    "docs/rector/baseline/12_INFRAESTRUCTURA_Y_LIMITES.md": "7221e43483a71d2fe4d5b27e1b424db4a6d117ebfcea94da27351163311424c2",
+    "docs/rector/baseline/13_CHECKLIST_ANTI_REGRESION.md": "073c2d852eb9a43e03ea539d44efb89147fab428c918d6356054100fe641f556",
+    "docs/rector/baseline/14_CONTRATO_CANONICO_INGESTA_CALCULO_RESULTADOS.md": "8eb2ee104f59493359318a8ca7c7dda761805c24d1515a6971ed7268d2778e76",
+    "docs/rector/baseline/15_MODULOS_CONSUMIDORES_Y_MATRIZ_DE_INFORMACION.md": "c58240683527e25e4037ef954e006c76968b887d332ebaeab2e8f2e5cd8c58f0",
+    "docs/rector/baseline/16_CATALOGO_CANONICO_OBSERVACIONES_Y_SUBJECTS.md": "ff8d04bc386e3ba3ce0a529d51e90665d7ef88a9a19e51f1f61b247f33a2bf4d",
+    "docs/rector/baseline/17_CATALOGO_METRICAS_FORMULAS_Y_AGREGACIONES.md": "b5a6eb29e7877a5e1217f9177170354f694d57265175c10883849a5938db465d",
+    "docs/rector/baseline/18_RULES_ENGINE_GRC_IMPACT_CONTRACT.md": "c5c219785fe9d5cd2bc42e3b3ddcb36fbf98f9068da6c872d04288fecbab5dff",
+    "docs/rector/baseline/19_METODOLOGIAS_GRC_COMPLIANCE_RISK_ASSURANCE.md": "549e64e9ab8f0c2edcfb3e6c5c03939125e311d32298c3fac8d0b09b2d1f5c95",
+    "docs/rector/baseline/20_MATRIZ_CONECTORES_DATOS_OBSERVACIONES_IMPACTO.md": "729e07f9831aa31dc8b8431f501edd10fb17a3ecc9d267d712e6fb7ceac7b66f",
+    "docs/rector/baseline/21_LIFECYCLE_TRANSITION_MATRIX.md": "af1b6eed6bcb13c7ddebf9d0b3dc2a44cfc7f230c866d6c1c44da23d1fc888a5",
+    "docs/rector/baseline/22_RBAC_PERMISSION_SCOPE_MATRIX.md": "913c82d8e4693111f76db7c7291e79460b9b775458d07ef8c981fc69c662a78e",
+    "docs/rector/baseline/23_CONTRATO_TEMPORAL_VERSIONADO_RETENCION_RECALCULO.md": "27fe799dc0bf1dcefb1e8af7efb56e1b019b934d8d18b0f6a957f6d162eff50a",
+    "docs/rector/baseline/24_CONTRATO_EVIDENCIA_DOCUMENTOS_ARCHIVOS.md": "b652d31d0be9b0a856d0cb66d74faf609915432f6c85bf98ea8723cd833b563d",
+    "docs/rector/baseline/25_API_EVENTOS_IDEMPOTENCIA_AUDITORIA.md": "683d2c0f17ed0cf0aedb6ed107b3dc69d68a664b06ef019c01bfb8b87f4d633b",
+    "docs/rector/baseline/26_NON_FUNCTIONAL_SECURITY_RELIABILITY_OBSERVABILITY.md": "6bd7535ac7314da4b3b48284f57d42095af1a200f04d0dcbbaa732a552987af9",
+    "docs/rector/baseline/27_REPORTING_UX_RESULTADOS_DRILLDOWN.md": "8c5ade951e818d456b7c01dc428536f49bac49cc71ed19a92ff58e8336c2ff52",
+    "docs/rector/baseline/28_PREIMPLEMENTATION_CONTRACT_GATE.md": "dbb5400dc858730bdf0e940ff1ce0b47e95335590dd7c616efdf8099f770a92b",
+    "docs/rector/baseline/29_CONFIGURACION_PARAMETRIZACION_Y_EXTENSIBILIDAD.md": "328390a8b584b2cbad4943319ee4d3cbbaac9f87d6ccc4ba38d8806c2b6cb1f3",
+    "docs/rector/baseline/30_MODELO_LOGICO_RELACIONAL_CANONICO.md": "1ddf3c886a1294c0973576fa6a3337abdf05dbb0bfb2072e04d95bd990c8d5cf",
+    "docs/rector/baseline/31_DECISIONES_FUNDACIONALES_CERRADAS.md": "d7d1fb0ab645f15366902f8a3a358a44d42aeeb1c083a5464297c2b6c385f2fa",
+    "docs/rector/baseline/32_GLOSARIO_SEMANTICO_Y_NOMENCLATURA.md": "6a8cb31930b410bd9260100688b4b6d2112f78b312ba2c3fd0066bd6fbabc2c2",
+    "docs/rector/baseline/33_CATALOGO_ENTIDADES_CANONICAS.md": "7e2cb028aca17a448a7f9010aa71f9af0094adfd3366f74e86fc1c46651c94d0",
+    "docs/rector/baseline/34_ARQUITECTURA_LOGICA_COMPONENTES_Y_DEPENDENCIAS.md": "4e7c2355bd3355aa2e41d2e13599409549c3c8241b9ad279b9344bbeff043882",
+    "docs/rector/baseline/35_SOURCE_PRECEDENCE_CONFLICT_RESOLUTION_POLICY.md": "66f646b1620630c517146210b61530f3a93b42cce6f41a8c72a478ae769fb67e",
+    "docs/rector/baseline/36_AUTOMATION_POLICY_AND_HUMAN_OVERSIGHT.md": "d8ed5c606dca321f12226e511aea6ba7ed6fc09487d34c660d2f330526c6d639",
+    "docs/rector/baseline/37_REGULATORY_PACK_CONTRACT.md": "a04d8134e1f620f7b2e3d543f65543f46cdd5bc052075e19b7365e7873be093b",
+    "docs/rector/baseline/38_RESULT_STATUS_AND_DATA_SUFFICIENCY_CONTRACT.md": "0b38fe578b11ffbbeac406a97f10a2462bf7ac5bb7c914c21ada9b289bb68f07",
+    "docs/rector/baseline/39_DECISIONES_SEMANTICAS_FINALES_PRE_MODELO_FISICO.md": "a66b2ac97332ae7fe864659dc791b1997ab4741d1e9063e5cc4c57c9592389de",
+    "docs/rector/baseline/40_CIERRE_INTEGRIDAD_SEMANTICA_Y_CONTRATOS_FISICOS.md": "5b6050c3b4cb20d095bfee40dd8d4efe24e17e5a614ab8dff4a5e006f2fb06e5",
+    "docs/rector/baseline/41_BASELINE_REGULATORIO_OBLIGATORIO.md": "b521642a0772306ea00213edb981311c2adc2d8c3a46750d6d3ca0e6ec4a145a",
+    "docs/rector/baseline/42_PLANES_COMERCIALES_Y_ROLES_BASE.md": "1d3ab34978339da234e8b5676e645fe799b94f7fdef45a2e46517fc8b16bdf59",
+    "docs/rector/baseline/43_PLAN_MAESTRO_RECTOR_DISENO_Y_DESARROLLO.md": "ed2d7d62b659a2ef687faea4d339787cbea96e72fe1fc3baf8832fb91e256ffb",
+    "docs/rector/baseline/44_CONTRATO_ESTRUCTURA_NORMATIVA_REQUISITOS_CONTROLES.md": "6f19fd4e83862252dc039c23609a73d7cdbaab6cce8c8c0875ae254c71ebfe60",
+    "docs/rector/baseline/45_CONTRATO_DESARROLLO_CERRADO_Y_NO_INFERENCIA.md": "d9917dbb9c2959ab74a1bf9c3a92db8df75724a5da7ab6e8047ab3fc134e4ce7",
+    "docs/rector/baseline/46_REGENTE_MAESTRO_DEL_DESARROLLO.md": "4c72d04753311cc4c37d234d319d25882e03beaacff1f4a2cd4aa5efbd574431",
+    "docs/rector/baseline/47_APROBACION_Y_ACTIVACION_BASELINE.md": "0539ba5abdc3178d4b6f634284e78c575571a67a6ca48c4c07609f9377671780",
+    "docs/rector/baseline/48_CONTRATO_AUDITORIA_INTEGRADA_ISO_19011.md": "84b7b4cd357d3b6d3d47f1e3b58e4a90ce994c0d385bba2045d70e605e3185c6",
+    "docs/rector/baseline/PRE_IMPLEMENTATION_GATE_REPORT.md": "c2cf8144f74641b7f17392bbff60a4a0f6e9255804a91e231b0dbbc936689633"
+  },
+  "checks": {
+    "executed_commands": {
+      "rector_integrity": {
+        "command": [
+          "bash",
+          "scripts/verify-rector-governance.sh"
+        ],
+        "exit_code": 0,
+        "status": "PASS",
+        "stdout_sha256": "c873d0aca12c3a33cc74df1e37fd4473c24857723253f02c81c9663019f4b32a",
+        "log": "/private/tmp/step6a3-authority-audit/rector_integrity.log"
+      },
+      "rector_status_projection": {
+        "command": [
+          "bash",
+          "scripts/test-rector-governance-status.sh"
+        ],
+        "exit_code": 0,
+        "status": "PASS",
+        "stdout_sha256": "4a950b39b20f2de1440a2b45b243b63df607fa3ede7f7e32e9f7e9da71864597",
+        "log": "/private/tmp/step6a3-authority-audit/rector_status_projection.log"
+      },
+      "existing_contracts_static": {
+        "command": [
+          "node",
+          "scripts/foundations/generate-contract-assets.mjs",
+          "--check"
+        ],
+        "exit_code": 0,
+        "status": "PASS",
+        "stdout_sha256": "d808fb04e96c2410888e55d14401334ff87f0e9998ce72f4f3a1466e4b6fb8fc",
+        "log": "/private/tmp/step6a3-authority-audit/existing_contracts_static.log"
+      },
+      "diff_check": {
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exit_code": 0,
+        "status": "PASS",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "log": "/private/tmp/step6a3-authority-audit/diff_check.log"
+      }
+    },
+    "document_check_groups": [
+      {
+        "check": "csv_header_exact_13_columns",
+        "status": "PASS"
+      },
+      {
+        "check": "48_ids_unique_same_order_as_ledger",
+        "status": "PASS"
+      },
+      {
+        "check": "classification_counts_and_explicit_uncertainty",
+        "status": "PASS"
+      },
+      {
+        "check": "required_functions_preserved_and_enums_valid",
+        "status": "PASS"
+      },
+      {
+        "check": "all_csv_source_anchors_exist_nonempty",
+        "status": "PASS"
+      },
+      {
+        "check": "29_rules_exact_source_quotes_preserved",
+        "status": "PASS"
+      },
+      {
+        "check": "139_source_hashes_unchanged",
+        "status": "PASS"
+      },
+      {
+        "check": "1277_preexisting_files_unchanged",
+        "status": "PASS"
+      },
+      {
+        "check": "head_branch_index_and_inherited_diffs_unchanged",
+        "status": "PASS"
+      },
+      {
+        "check": "only_three_own_outputs_before_final_json",
+        "status": "PASS"
+      },
+      {
+        "check": "audit_files_no_trailing_whitespace",
+        "status": "PASS"
+      }
+    ],
+    "document_check_group_count": 11,
+    "csv_source_anchor_count": 411,
+    "unique_csv_source_anchor_count": 162,
+    "new_product_tests_executed": 0,
+    "not_run": [
+      {
+        "checks": "unit, frontend subset, typecheck, lint",
+        "reason": "Audit documentation only, no product code changes; no added authority evidence."
+      },
+      {
+        "checks": "PostgreSQL, DB history/inventory, migration/restore",
+        "reason": "DB changes forbidden; no database access needed for this classification."
+      },
+      {
+        "checks": "E2E, QA, IAM, visual, runtime, external law research",
+        "reason": "Network/QA/product changes prohibited; new candidate capabilities unpublished."
+      }
+    ],
+    "historic_regression_reference_only": {
+      "unit": 509,
+      "frontend_subset": 102,
+      "isolated_postgres": 82,
+      "grc_e2e": 448,
+      "iam_ui_subset": 256
+    }
+  },
+  "preflight": {
+    "root": "/Users/andresbarouh/repos/tcdx-grc",
+    "origin": "https://github.com/Tecdex-SpA/tcdx-grc.git",
+    "branch": "main",
+    "head": "6af66387aa03fa185ef139584de07700f247b903",
+    "continuity_divergence": false,
+    "status_initial": " M apps/frontend/src/api-client.ts\n M apps/frontend/src/core-grc.tsx\n M apps/frontend/src/i18n/display-text.ts\n M apps/frontend/src/i18n/es.ts\n M apps/frontend/src/styles.css\n M docs/governance/MASTER_EXECUTION_STATUS.md\n M e2e/core-grc-ui.spec.ts\n M packages/contracts/src/index.ts\n?? apps/frontend/src/reference-read.test.ts\n?? apps/frontend/src/reference-read.ts\n?? apps/frontend/src/reference-selectors.test.tsx\n?? apps/frontend/src/reference-selectors.tsx\n?? artifacts/phase5-iam-ui/step23l-managed-identity-tenant-onboarding-e2e/snapshot.mjs\n?? data/regulatory/catalogs/_archives/\n?? docs/normative-sources/\n?? docs/phase6a/\n?? packages/contracts/src/phase6a-reference-resolution.test.ts\n?? packages/contracts/src/phase6a-vocabularies.ts\n?? scripts/foundations/generate-phase6a-vocabularies.mjs\n",
+    "staged_diff_bytes": 0,
+    "worktree_diff_bytes": 57385,
+    "worktree_diff_sha256": "860c65f8b7506b2862c037cc4ca2c22ca673d859f8310ce48175059a825ecdac",
+    "cached_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "index_sha256": "94de5eee93cbdf7830351d9ab7c06241e0991fae3442d891c3856e40387f3270",
+    "index_listing_sha256": "0108d5583467d5b7a559b8505f3d08a23d091c3512c0b98a8e1902fb6889c4e8",
+    "preexisting_file_count": 1277,
+    "preexisting_hash_manifest_sha256": "db777ad2e0587ea869fbe3106832767799c70b81f1b978196d6300095f6ddbbe",
+    "audit_directory_absent_before_creation": true
+  },
+  "preservation": {
+    "preexisting_modified_by_this_execution": [],
+    "source_hashes_verified": 139,
+    "preexisting_files_verified_unchanged": 1277,
+    "branch_head_unchanged": true,
+    "index_sha256_final": "94de5eee93cbdf7830351d9ab7c06241e0991fae3442d891c3856e40387f3270",
+    "index_unchanged": true,
+    "inherited_diff_sha256_final": "860c65f8b7506b2862c037cc4ca2c22ca673d859f8310ce48175059a825ecdac",
+    "inherited_diffs_unchanged": true,
+    "governance_unchanged_no_append": true,
+    "files_created": [
+      "docs/phase6a/STEP_6A3/AUTHORITY_AUDIT_20261008/01_RECTOR_AUTHORITY_RULES.md",
+      "docs/phase6a/STEP_6A3/AUTHORITY_AUDIT_20261008/02_48_CLAUSE_CLASSIFICATION.csv",
+      "docs/phase6a/STEP_6A3/AUTHORITY_AUDIT_20261008/03_SOLO_PO_OPERATING_MODEL_AND_DECISION.md",
+      "docs/phase6a/STEP_6A3/AUTHORITY_AUDIT_20261008/04_CRITICAL_PATH_AND_RESULT.json"
+    ],
+    "files_created_count": 4,
+    "files_modified_preexisting": [],
+    "new_artifact_hashes": {
+      "docs/phase6a/STEP_6A3/AUTHORITY_AUDIT_20261008/01_RECTOR_AUTHORITY_RULES.md": "3fdef1745f3dd45e39b7fd08d00f3c509c7c671a80ddd546c3cb58f763e90ee3",
+      "docs/phase6a/STEP_6A3/AUTHORITY_AUDIT_20261008/02_48_CLAUSE_CLASSIFICATION.csv": "39dfdc5ef3e0cac7410b933f9653d6937f265cd8fc1021b6eae0ceb7a161ca7b",
+      "docs/phase6a/STEP_6A3/AUTHORITY_AUDIT_20261008/03_SOLO_PO_OPERATING_MODEL_AND_DECISION.md": "b332c7c81c73db17744ee3b6f78673bbcff63e55372cecd51a8f2bb0b6d08df0"
+    },
+    "result_json_self_hash": "Not embedded; verify externally to avoid circular hash"
+  },
+  "restrictions_respected": {
+    "COMMITS": 0,
+    "QA_MUTATIONS": 0,
+    "DEPLOY": "NO",
+    "network_access": 0,
+    "ddl_or_migration_execution": 0,
+    "seeds_or_grants_or_permission_publications": 0,
+    "executable_contract_changes": 0,
+    "backend_changes": 0,
+    "frontend_changes": 0,
+    "infra_changes": 0,
+    "deployment_contract_changes": 0,
+    "governance_changes": 0,
+    "normative_zip_import": false,
+    "historical_sources_overwritten": false,
+    "new_parallel_signoff_ledger": false,
+    "simulated_signatures": 0
+  },
+  "critical_path": [
+    {
+      "priority": 1,
+      "kind": "ALREADY_VERIFIABLE",
+      "clause_ids": [
+        "CFG-HANDLER"
+      ],
+      "codex_evidence": "Static HTTP declaration/routes search, CSV hashes/counts, grants and physical discrepancies",
+      "human_action": "PO may accept factual record only; no gate/publication."
+    },
+    {
+      "priority": 2,
+      "kind": "PO_COMPETENCE_AND_ROLE_DECISION",
+      "clause_ids": [
+        "C-01",
+        "C-02",
+        "C-03A",
+        "C-03B",
+        "C-04",
+        "C-04G-1",
+        "C-04G-2",
+        "C-04G-3",
+        "C-04W",
+        "C-06F",
+        "C-06M",
+        "C-06R",
+        "C-07",
+        "C-08",
+        "RBAC-D01",
+        "RBAC-D02",
+        "CFG-D-HISTORY",
+        "CFG-UQ1",
+        "CFG-UQ2",
+        "CFG-DEFAULT",
+        "CFG-QA",
+        "CV01-A",
+        "CV02-A",
+        "CV03-A",
+        "CV04-A",
+        "CV05-A",
+        "CV06-A",
+        "CV07-A",
+        "CV08-I",
+        "CV08-A",
+        "CV08-C",
+        "CV09-A",
+        "CV10-A",
+        "CV11-A",
+        "CV12-A",
+        "CV13-A",
+        "CV14-A",
+        "VOC-C01",
+        "VOC-C02",
+        "VOC-C03",
+        "VOC-C04",
+        "VOC-C05",
+        "VOC-C06",
+        "VOC-QA"
+      ],
+      "human_action": "PO decides exact functions to exercise; demonstrate competence/formal authority/acceptance and SoD check; then individual decisions per function in ledger26."
+    },
+    {
+      "priority": 3,
+      "kind": "INDETERMINATE_EVIDENCE_THEN_CONDITIONAL_EXTERNAL_REVIEW",
+      "clause_ids": [
+        "CFG-D-COMPLIANCE-V1",
+        "CFG-D-CONTROLS-V1",
+        "CFG-D-PUBLICATION"
+      ],
+      "human_action": "Architecture/Security/Methodology determine precise act nature and author/approver provenance. If PO author and SoD applies without valid exception, distinct competent human reviews exact methods/publication."
+    },
+    {
+      "priority": 4,
+      "kind": "CONFIG_METHOD_AND_DATA_REVIEW",
+      "clause_ids": [
+        "CFG-D-COMPLIANCE-V1",
+        "CFG-D-CONTROLS-V1",
+        "CFG-D-HISTORY",
+        "CFG-D-PUBLICATION",
+        "CFG-UQ1",
+        "CFG-UQ2",
+        "CFG-DEFAULT"
+      ],
+      "human_action": "Confirm sufficiency separately per method; preserve history/version; approve physical design only; no DDL/data inventory here."
+    },
+    {
+      "priority": 5,
+      "kind": "RBAC_SECURITY_DOMAIN_REVIEW",
+      "clause_ids": [
+        "C-01",
+        "C-02",
+        "C-03A",
+        "C-03B",
+        "C-04",
+        "C-04G-1",
+        "C-04G-2",
+        "C-04G-3",
+        "C-04W",
+        "C-06F",
+        "C-06M",
+        "C-06R",
+        "C-07",
+        "C-08",
+        "RBAC-D01",
+        "RBAC-D02"
+      ],
+      "dependencies": "C-01/02/03A/B/04/G/W, C-06F/M/R and D01/D02 before C-07; C-08 acceptance plan only",
+      "human_action": "Exact individual decisions under demonstrated functions, preserving minimal PII, selector/command symmetry, discovery versus applicability and global hold/contractual DENY."
+    },
+    {
+      "priority": 6,
+      "kind": "VOC_DOMAIN_COMPATIBILITY_REVIEW",
+      "clause_ids": [
+        "CV01-A",
+        "CV02-A",
+        "CV03-A",
+        "CV04-A",
+        "CV05-A",
+        "CV06-A",
+        "CV07-A",
+        "CV08-I",
+        "CV08-A",
+        "CV08-C",
+        "CV09-A",
+        "CV10-A",
+        "CV11-A",
+        "CV12-A",
+        "CV13-A",
+        "CV14-A",
+        "VOC-C01",
+        "VOC-C02",
+        "VOC-C03",
+        "VOC-C04",
+        "VOC-C05",
+        "VOC-C06",
+        "VOC-QA"
+      ],
+      "human_action": "VOC-C01..06 and each family, CV08 I/A/C distinct; inventory/compatibility before enforcement; QA approves plan only, no runtime."
+    },
+    {
+      "priority": 7,
+      "kind": "LATER_SEPARATE_AUTHORIZATION",
+      "clause_ids": [
+        "C-08",
+        "CFG-QA",
+        "VOC-QA"
+      ],
+      "human_action": "Approve exact test plans under human QA function; future publication/implementation/runtime require separate task packet and real applicable SoD. STEP6A.4 not started."
+    }
+  ]
+}

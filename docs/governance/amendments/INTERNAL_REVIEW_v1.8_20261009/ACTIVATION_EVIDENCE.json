@@ -1,0 +1,53 @@
+{
+  "status": "ACTIVE_VERIFIED",
+  "activation": {
+    "id": "ACT-INTERNAL-REVIEW-V18-20261009",
+    "baseline_id": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09",
+    "predecessor": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23",
+    "effective_at": "2026-10-09T18:23:58.855422Z",
+    "manifest_sha256": "e51f6539df119775b2feb8839907c8cd690623b82707b399aa15a31d59196533",
+    "authorization_path": "docs/governance/amendments/INTERNAL_REVIEW_v1.8_20261009/HUMAN_AUTHORIZATION.md",
+    "authorization_sha256": "84cf154b1fe7af4636fef483a2edd959e989be68d98a13aea0d07b0a865d42ff",
+    "delta_sha256": "b9ebef745853313f2814fe7e724e444da62e821309116ac9e0c158a8e3f05524",
+    "scope": "INTERNAL_EDITORIAL_METHODOLOGICAL_GOVERNANCE_ONLY",
+    "human": "Andrés Barouh",
+    "functions": [
+      "Architecture",
+      "Backend",
+      "Security",
+      "Compliance",
+      "IAM",
+      "Privacy/Legal",
+      "DBA",
+      "Methodology"
+    ],
+    "sog_v2": "DRAFT_NOT_EFFECTIVE",
+    "main_integration": "NOT_PERFORMED"
+  },
+  "checks": {
+    "rector_integrity": "PASS",
+    "root_manifest_matches_active": "PASS",
+    "protected_v1_7": "PASS",
+    "negative_governance_cases": 6,
+    "rector_status_regression": "PASS",
+    "active_baseline_consumer_test": "PASS_13_PRE_F5E_CASES_WITH_ACTIVE_V18_EXPECTATION",
+    "local_regression": "725_PASS_0_FAIL_0_OMITTED"
+  },
+  "evidence_files": [
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/activated-rector.log",
+      "sha256": "f07bcd9a84ac952a66ee2215269cea5eaec0890988a1ce4456d299ce16a8b61c"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/rector-status.log",
+      "sha256": "4a950b39b20f2de1440a2b45b243b63df607fa3ede7f7e32e9f7e9da71864597"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/full-tests.json",
+      "sha256": "034dbbbd12e712de632de327a008865ce2ba8e7cdfe48514215caf114b37e9e6"
+    }
+  ],
+  "main_integration": "NOT_PERFORMED",
+  "remote_ci": "NOT_RUN_NOT_CLAIMED",
+  "sog_v2": "DRAFT_NOT_EFFECTIVE"
+}

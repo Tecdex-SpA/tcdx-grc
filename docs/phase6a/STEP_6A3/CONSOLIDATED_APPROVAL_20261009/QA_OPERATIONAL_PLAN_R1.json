@@ -1,0 +1,77 @@
+{
+  "id": "QA-STEP6A3-OPERATIONAL-PREPARATION-20261009-R1",
+  "status": "PREPARED_NOT_AUTHORIZED_NOT_EXECUTED",
+  "rector_active": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09",
+  "local_prerequisite": {
+    "regression": "725_PASS_0_FAIL_0_OMITTED",
+    "uq_native": "38_PASS",
+    "scope": "DISPOSABLE_LOCAL_ONLY"
+  },
+  "approval_manifest": {
+    "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/MACRO_MANIFEST_R1.json",
+    "sha256": "5b8c02385615fe6b5c825b18619d0cf1d493b7b7880e47530cc02893b3c953c4",
+    "status": "PENDING_PO_MACRO_SIGNATURE"
+  },
+  "canonical_hosts": {
+    "database": "192.168.2.40",
+    "backend": "192.168.2.45",
+    "frontend": "192.168.2.46",
+    "public_url": "https://grc.tecdex.net/"
+  },
+  "execution_guard": "No command connects to QA or IAM; all future operational acts require this plan completed with exact published migration/build hashes and a later PO approval. Local PASS alone never authorizes execution.",
+  "dependencies": [
+    {
+      "requirement": "Exact macro signature and publication",
+      "state": "PENDING"
+    },
+    {
+      "requirement": "CT01/03/04 implemented and validated with effective contracts",
+      "state": "PENDING_CONTRACT_PUBLICATION"
+    },
+    {
+      "requirement": "CFG-D official sufficiency and immutable publication binding",
+      "state": "NOT_DEMONSTRATED"
+    },
+    {
+      "requirement": "New canonical forward-only migration ID, manifest/schema successor and build transport hashes",
+      "state": "NOT_ALLOCATED_PENDING_MACRO"
+    },
+    {
+      "requirement": "Real approved actor/accounts/tenant memberships for QA/IAM ceremonies",
+      "state": "NOT_PROVIDED_NO_CREDENTIAL_ACCESS"
+    },
+    {
+      "requirement": "Approved DBA execution identity, backup/restore evidence, availability window and recovery plan",
+      "state": "PENDING_SEPARATE_OPERATIONAL_APPROVAL"
+    }
+  ],
+  "forward_candidate": {
+    "path": "docs/phase6a/STEP_6A3/physical-reconciliation/forward-only.candidate.sql",
+    "sha256": "d20b7778e62e5ad3c94d7bcfba1eb7b9e43763e3e713f4fea83221ab6d3531f5",
+    "historical_migrations": "30_UNCHANGED",
+    "incompatible_data": "ABORT_ENTIRE_TRANSACTION; NO_GUESSED_BACKFILL"
+  },
+  "stages": [
+    "PO reviews and signs macro; publish only closed approved deltas and produce exact versioned artifacts",
+    "Complete local end-to-end slice and freeze signed release manifests; preserve GET EC R1",
+    "Read-only QA preflight under separately approved plan: identity/version/ledger/constraint/index/data cardinality and reference integrity, no row export/PII",
+    "Verify backup and isolated restore against existing data; measure lock window; reject incompatible rows without DML",
+    "PO approves exact final QA plan with migration/build hashes, DBA authority and permitted acts",
+    "Canonical runner applies only approved new forward-only migrations; validates checksums/idempotency, exact data/FK preservation and no unintended grants",
+    "Coordinated backend/frontend deployment only if separately approved; same canonical public domain",
+    "Real authenticated tenant isolation/permission/scope/entitlement/revocation/SoD/IAM ceremonies; no invented second reviewer or synthetic QA identity",
+    "Fresh regression and effective configuration read, record actual external gates; do not promote RLS physical absent implementation"
+  ],
+  "post_commit_recovery": "Never reinstall global tenant/ordinal constraints after legitimate contextual cardinalities. Forward correction or specifically approved coordinated restore; preserve new records and audit lineage.",
+  "not_executed": [
+    "QA_SQL",
+    "QA_DDL",
+    "QA_DML",
+    "IAM_REAL",
+    "QA_DEPLOY",
+    "EXTERNAL_E2E",
+    "PUSH",
+    "PR",
+    "MERGE"
+  ]
+}

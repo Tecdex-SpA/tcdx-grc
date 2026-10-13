@@ -1,0 +1,65 @@
+{
+  "tests": [
+    {
+      "component": "tcdx-grc-backend",
+      "scenario": "normal",
+      "result": "PASS"
+    },
+    {
+      "component": "tcdx-grc-backend",
+      "scenario": "candidate_failed",
+      "result": "PASS"
+    },
+    {
+      "component": "tcdx-grc-backend",
+      "scenario": "candidate_missing",
+      "result": "PASS"
+    },
+    {
+      "component": "tcdx-grc-backend",
+      "scenario": "foreign_active",
+      "result": "PASS"
+    },
+    {
+      "component": "tcdx-grc-backend",
+      "scenario": "old_restart_growth",
+      "result": "PASS"
+    },
+    {
+      "component": "tcdx-grc-frontend",
+      "scenario": "normal",
+      "result": "PASS"
+    },
+    {
+      "component": "tcdx-grc-frontend",
+      "scenario": "candidate_failed",
+      "result": "PASS"
+    },
+    {
+      "component": "tcdx-grc-frontend",
+      "scenario": "candidate_missing",
+      "result": "PASS"
+    },
+    {
+      "component": "tcdx-grc-frontend",
+      "scenario": "foreign_active",
+      "result": "PASS"
+    },
+    {
+      "component": "tcdx-grc-frontend",
+      "scenario": "old_restart_growth",
+      "result": "PASS"
+    },
+    {
+      "scenario": "deploy_blocked_without_GO",
+      "result": "PASS"
+    },
+    {
+      "scenario": "rollback_blocked_without_GO",
+      "result": "PASS"
+    }
+  ],
+  "count": 12,
+  "real_recovery_executed": false,
+  "remote_writes_enabled": false
+}

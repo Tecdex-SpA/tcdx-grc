@@ -1,0 +1,59 @@
+{
+  "status": "PASS_DISPOSABLE_ONLY",
+  "cases": 12,
+  "results": [
+    {
+      "name": "missing actor",
+      "result": "PASS_FAIL_CLOSED_ROLLBACK"
+    },
+    {
+      "name": "inactive actor",
+      "result": "PASS_FAIL_CLOSED_ROLLBACK"
+    },
+    {
+      "name": "wrong source hash",
+      "result": "PASS_FAIL_CLOSED_ROLLBACK"
+    },
+    {
+      "name": "baseline unpublished",
+      "result": "PASS_FAIL_CLOSED_ROLLBACK"
+    },
+    {
+      "name": "audit INSERT failure aborts grant DML",
+      "result": "PASS_FAIL_CLOSED_ROLLBACK"
+    },
+    {
+      "name": "exact global D01 1→0 and D02 0→11, actual states, revocation image and XOR audit",
+      "result": "PASS"
+    },
+    {
+      "name": "exact eleven reader roles, other grants unchanged",
+      "result": "PASS"
+    },
+    {
+      "name": "concurrent reconciler cannot bypass transaction locks; timeout rolls back",
+      "result": "PASS_FAIL_CLOSED"
+    },
+    {
+      "name": "idempotent replay preserves real IDs and twelve audits",
+      "result": "PASS"
+    },
+    {
+      "name": "corrupt existing receipt never silently repaired",
+      "result": "PASS_FAIL_CLOSED"
+    },
+    {
+      "name": "duplicate publication evidence cannot mask corrupt or repeated adoption",
+      "result": "PASS_FAIL_CLOSED"
+    },
+    {
+      "name": "complete rollback restores exact preexisting grants and history, zero persistent writes",
+      "result": "PASS"
+    }
+  ],
+  "system_identifier": "7694735811590922280",
+  "transaction_end": "ROLLBACK",
+  "persistent_test_writes": 0,
+  "qa": "NOT_RUN",
+  "iam_real": "NOT_RUN"
+}

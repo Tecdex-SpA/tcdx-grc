@@ -1,0 +1,23 @@
+{
+  "status": "PASS_READ_ONLY_INVENTORY",
+  "system_identifier": "7694735811590922280",
+  "transaction_end": "ROLLBACK",
+  "writes": 0,
+  "counts": {
+    "tenants": 0,
+    "platform_assignments": 0,
+    "memberships": 0,
+    "tenant_audits": 0,
+    "local_publication_audits": 44,
+    "rls_tables": 0,
+    "rls_forced": 0,
+    "rls_policies": 0,
+    "migrations": 32,
+    "permissions": 175
+  },
+  "local_fixture_note": "One disposable PLATFORM_CONTROL ServicePrincipal plus44 global AuditEvents only; never a product seed/IAM actor; database tmpfs destroyed at end",
+  "RLS": "NOT_IMPLEMENTED",
+  "QA": "NOT_RUN",
+  "IAM_REAL": "NOT_RUN",
+  "E2E_EXTERNAL": "NOT_RUN"
+}

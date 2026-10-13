@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import "./permission-projection-catalog.mjs";
+import { extendPhase6a3Inventory, phase6a3PermissionCodes } from "./phase6a3-amendment.mjs";
 import { extendMethodologyInventory } from "./phase5-methodology-amendment.mjs";
 
 import { createHash } from "node:crypto";
@@ -1039,7 +1040,7 @@ function parsePermissions() {
     const cells = line.startsWith("| `") ? line.slice(2, -2).split(" | ").map((cell) => cell.trim()) : [];
     if (!cells[0]?.match(/^`[a-z0-9_.]+`$/) || cells.length < 8) continue;
     const permissionCode = cells[0].slice(1, -1);
-    if (!permissionCode.includes(".")) continue;
+    if (!permissionCode.includes(".") || phase6a3PermissionCodes.includes(permissionCode)) continue;
     const parts = permissionCode.split(".");
     let grantRoles = roles.filter((role) => cells[5].includes(role));
     if (/same as|same domain/i.test(cells[5]) && rows.length) {
@@ -1379,7 +1380,7 @@ const tenantUserOnboardingFilename = "20261007000100_platform_tenant_user_onboar
 const tenantUserOnboardingMigration = [tenantUserOnboardingFilename, readFileSync(resolve(migrationDir, tenantUserOnboardingFilename), "utf8")];
 const methodologyFilename = "20261007000200_phase5_methodology_binding.sql";
 const methodologyMigration = [methodologyFilename, readFileSync(resolve(migrationDir, methodologyFilename), "utf8")];
-const migrations = [...historicalMigrations, preF5cMigration, phase5RuntimeMigration, preF5eMigration, phase5FinalMigration, phase5SubscriptionCatalogMigration, phase5RetentionPolicyMigration, phase5MembershipInvitationMigration, phase5MembershipInvitationAuthorityMigration, phase5AdministrativeReadMigration, phase5MembershipRoleRevokeMigration, phase5ControlAssessmentStartMigration, phase5RegulatoryCatalogMigration, phase5SubscriptionRegulatoryPackMigration, phase5PlusMigration, phase5PlusValidationMigration, managedIdentityPermissionsMigration, platformRolePermissionMigration, discoveryPermissionMigration, tenantUserOnboardingMigration, methodologyMigration];
+const migrations = [...historicalMigrations, preF5cMigration, phase5RuntimeMigration, preF5eMigration, phase5FinalMigration, phase5SubscriptionCatalogMigration, phase5RetentionPolicyMigration, phase5MembershipInvitationMigration, phase5MembershipInvitationAuthorityMigration, phase5AdministrativeReadMigration, phase5MembershipRoleRevokeMigration, phase5ControlAssessmentStartMigration, phase5RegulatoryCatalogMigration, phase5SubscriptionRegulatoryPackMigration, phase5PlusMigration, phase5PlusValidationMigration, managedIdentityPermissionsMigration, platformRolePermissionMigration, discoveryPermissionMigration, tenantUserOnboardingMigration, methodologyMigration, ...["20261009000100_phase6a3_configuration_integrity.sql","20261009000200_phase6a3_reference_read_permissions.sql"].map(filename => [filename, readFileSync(resolve(migrationDir,filename), "utf8")])];
 const manifest = {
   manifestVersion: 1,
   runnerVersion: "1.0.0",
@@ -1388,7 +1389,7 @@ const manifest = {
   advisoryLockSource: "tcdx-grc:platform.schema_migrations:v1",
   migrations: migrations.map(([filename, content]) => ({
     id: filename.slice(0, 14), filename, sha256: sha256(content), transactional: true,
-    preconditions: filename.includes("phase5_methodology_binding")
+    preconditions: filename.includes("phase6a3_configuration_integrity") ? ["approved macro R1", "exact source constraints", "compatible existing data; no backfill"] : filename.includes("phase6a3_reference_read_permissions") ? ["ledger_count=31", "published_permissions=172", "44 exact baseline role templates", "no current candidate permissions"] : filename.includes("phase5_methodology_binding")
       ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=29", "latest_migration=20261007000100", "physical_tables=235", "published_permissions=170", "assessment_rows=0"]
       : filename.includes("platform_tenant_user_onboarding_permission_publication")
       ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=28", "latest_migration=20261006000200", "physical_tables=235", "published_permissions=169", "tenant_user_onboard_permissions=0", "canonical_platform_admin_roles=1"]
@@ -1431,7 +1432,11 @@ const manifest = {
       : filename.includes("pre_f4")
       ? ["database_name=tcdx-grc", "postgres_major=16", "ledger_count=9", "physical_tables=214", "existing_audits=0_or_approved_reconciliation"]
       : ["database_name=tcdx-grc", "postgres_major=16"],
-    postconditions: filename.includes("phase5_methodology_binding")
+    postconditions: filename.includes("phase6a3_configuration_integrity")
+      ? ["ledger_outcome=applied", "physical_tables=237", "published_permissions=172", "EC_natural_key=NULLS_NOT_DISTINCT", "layer_unique=parent_precedence_ordinal", "defaults=exactly_one_compatible_typed_value", "existing_records_preserved"]
+      : filename.includes("phase6a3_reference_read_permissions")
+      ? ["ledger_outcome=applied", "physical_tables=237", "published_permissions=175", "new_permissions=3", "exact_global_template_pairs=44", "no_platform_or_tenant_admin_escalation", "existing_baseline_tenant_instances=exact_approved_pairs", "no_custom_role_or_membership_grants"]
+      : filename.includes("phase5_methodology_binding")
       ? ["ledger_outcome=applied", "physical_tables=237", "published_permissions=172", "methodologies=two_separate_published_versions", "assessment_methodology_fks=validated"]
       : filename.includes("platform_tenant_user_onboarding_permission_publication")
       ? ["ledger_outcome=applied", "physical_tables=235", "published_permissions=170", "tenant_user_onboard_permissions=1", "platform_admin_grant=1", "unauthorized_grants=0", "schema_delta=0"]
@@ -1478,7 +1483,7 @@ const manifest = {
 };
 
 writeOrCheck(resolve(root, "database/migrations/manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`);
-writeOrCheck(resolve(root, "database/expected-schema.json"), `${JSON.stringify(extendMethodologyInventory(expectedInventory(rows)), null, 2)}\n`);
+writeOrCheck(resolve(root, "database/expected-schema.json"), `${JSON.stringify(extendPhase6a3Inventory(extendMethodologyInventory(expectedInventory(rows))), null, 2)}\n`);
 const canonicalSeedSql = historicalMigrations.find(([filename]) => filename === "20260916000900_canonical_seeds.sql")[1];
 writeOrCheck(resolve(root, "database/seed-manifest.json"), `${JSON.stringify({
   manifestVersion: 2,
@@ -1566,6 +1571,7 @@ writeOrCheck(resolve(root, "database/seed-manifest.json"), `${JSON.stringify({
       "platform.tenant_account_classification.update"
     ]
   },
+  phase6a3ReferencePermissions: { migrationId: "20261009000200", permissionRows: 3, permissionCodes: ["compliance.framework.read", "platform.membership_reference.read", "privacy.retention_policy_reference.read"], templateGrantRows: 44 },
   phase5Methodologies: { migrationId: "20261007000200", permissionRows: 2, permissionCodes: ["compliance.methodology.read", "controls.methodology.read"], methodologyRows: 2, formulaRows: 2, methodologyIds: ["01a11900-0000-7001-8000-000000000001", "01a11900-0000-7001-8000-000000000002"] },
   tenantUserOnboardingPermission: {
     migrationId: "20261007000100", permissionRows: 1, platformAdminGrantRows: 1,
@@ -1614,4 +1620,4 @@ if (matrixWithCount === matrixSource && !matrixSource.includes(`\`CONTRACTUAL_OP
 writeOrCheck(openApiPath, openApiWithCount);
 writeOrCheck(operationMatrixPath, matrixWithCount);
 
-console.log(JSON.stringify({ mode: checkOnly ? "check" : "write", physicalTables: extendMethodologyInventory(expectedInventory(rows)).tableCount, publishedPermissions: 172, permissionsAfterCatalogRelease: 163, lifecycleEdges: 103, rawLifecycleDefinitionRows: 140, migrations: migrations.length, operations: operationIds.length, readOperations: readCount }, null, 2));
+console.log(JSON.stringify({ mode: checkOnly ? "check" : "write", physicalTables: extendPhase6a3Inventory(extendMethodologyInventory(expectedInventory(rows))).tableCount, publishedPermissions: 175, permissionsAfterCatalogRelease: 163, lifecycleEdges: 103, rawLifecycleDefinitionRows: 140, migrations: migrations.length, operations: operationIds.length, readOperations: readCount }, null, 2));

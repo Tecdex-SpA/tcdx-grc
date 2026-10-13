@@ -1,7 +1,7 @@
-# 43 — Plan maestro rector de diseño y desarrollo — v1.7
+# 43 — Plan maestro rector de diseño y desarrollo — v1.8
 
-> Active baseline: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23`.
-> Status: `ACTIVE`; human approval recorded in `docs/governance/PRE_F4_AUDIT_MODEL_AMENDMENT_APPROVAL.md`.
+> Active baseline: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09`.
+> Status: `ACTIVE`; human approval recorded in `docs/governance/amendments/INTERNAL_REVIEW_v1.8_20261009/HUMAN_AUTHORIZATION.md`; las aprobaciones históricas se preservan en history.
 
 ## 1. Autoridad
 
@@ -113,4 +113,4 @@ Pruebas funcionales, seguridad, carga, accesibilidad, recuperación, cross-tenan
 - QA/Release Owner: test contracts, evidencia runtime y release gates.
 - Regulatory Content Owners: roles especializados definidos en 41.
 
-Una persona puede ocupar varios roles en un equipo pequeño, pero debe registrarse el sombrero usado en cada aprobación y respetar las segregaciones obligatorias.
+Una persona puede ocupar varios roles: se registran las funciones ejercidas en cada aprobación. Para gobierno editorial/metodológico interno se aplica 49: no se exige segunda persona por defecto; sí cuando el PO lo ordene específicamente o una obligación superior aplicable lo imponga. Se respetan íntegramente las segregaciones operacionales de usuarios GRC y las obligaciones externas.

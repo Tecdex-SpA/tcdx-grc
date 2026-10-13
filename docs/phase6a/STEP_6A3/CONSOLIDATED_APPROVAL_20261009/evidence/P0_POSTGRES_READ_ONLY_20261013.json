@@ -1,0 +1,608 @@
+{
+  "at": "2026-10-13T15:59:58.995401+00:00",
+  "scope": "P0_POSTGRES_METADATA_READ_ONLY",
+  "state": "PASS_READ_ONLY",
+  "client": "psql -X -w; protected libpq authentication; no secret read by agent",
+  "connection_parameters": "host=db-tecdex hostaddr=192.168.2.40 port=5432 dbname=tcdx-grc user=postgres sslmode=verify-full sslrootcert=/tmp/tcdx-qa-postgres-public-cert-20261013.pem connect_timeout=6 application_name=tcdx_p0_read_only_metadata",
+  "certificate_pem_sha256": "0a99469321c1117cdf3154a7e5c5e50dd42f719af7b8b1a647fa0bb55179519b",
+  "sql": "\nBEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY;\nSET LOCAL statement_timeout='10s';\nSET LOCAL lock_timeout='3s';\nSET LOCAL idle_in_transaction_session_timeout='15s';\nSELECT current_database()='tcdx-grc' AND current_user='postgres' AND inet_server_addr()='192.168.2.40'::inet AND inet_server_port()=5432 AND current_setting('server_version_num')::integer BETWEEN 160000 AND 169999 AND current_setting('transaction_read_only')='on' AS target_ok \\gset\n\\if :target_ok\nSELECT json_build_object('section','connection','server_version',current_setting('server_version'),'database',current_database(),'identity',current_user,'server_address',inet_server_addr(),'server_port',inet_server_port(),'read_only',current_setting('transaction_read_only'),'ssl',s.ssl,'tls_version',s.version,'cipher',s.cipher) FROM pg_stat_ssl s WHERE s.pid=pg_backend_pid();\nSELECT json_build_object('section','migration','id',trim(migration_id),'filename',filename,'sha256',trim(content_sha256),'transactional',transactional,'outcome',outcome) FROM platform.schema_migrations ORDER BY migration_id;\nSELECT json_build_object('section','column','schema',table_schema,'table',table_name,'column',column_name,'type',data_type,'udt',udt_name,'nullable',is_nullable) FROM information_schema.columns WHERE (table_schema,table_name) IN (('platform','tenants'),('platform','tenant_memberships'),('platform','principals')) ORDER BY table_schema,table_name,ordinal_position;\nROLLBACK;\n\\else\nROLLBACK;\n\\quit 3\n\\endif\n",
+  "exit": 0,
+  "metadata": [
+    {
+      "section": "connection",
+      "server_version": "16.15 (Ubuntu 16.15-0ubuntu0.24.04.1)",
+      "database": "tcdx-grc",
+      "identity": "postgres",
+      "server_address": "192.168.2.40",
+      "server_port": 5432,
+      "read_only": "on",
+      "ssl": true,
+      "tls_version": "TLSv1.3",
+      "cipher": "TLS_AES_256_GCM_SHA384"
+    },
+    {
+      "section": "migration",
+      "id": "20260916000100",
+      "filename": "20260916000100_bootstrap_schemas_and_ledger.sql",
+      "sha256": "4f29910baacf82526fb06226c237024b7315038a4868baa7bbda56ced4779437",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260916000200",
+      "filename": "20260916000200_platform_iam_organization.sql",
+      "sha256": "08fce9d08e729f097095a10cfdfbf093c43f9d8cbfbee97d39594691f4ad8f29",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260916000300",
+      "filename": "20260916000300_normative_control_evidence.sql",
+      "sha256": "f300aac95b6fba36c09fc6ac77550bf574f953c0ee0ad374a8cbf6fdb338ef9f",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260916000400",
+      "filename": "20260916000400_risk_operations_privacy.sql",
+      "sha256": "a38d2a7babbe77d79783d66e8ce909916e967be739d3712f303e51883d85a81b",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260916000500",
+      "filename": "20260916000500_data_integration_reporting_ai.sql",
+      "sha256": "bac1e0a421a4d532eb2da27e4bc9453125cfa407a2e8da904c8749c726815764",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260916000600",
+      "filename": "20260916000600_constraints_and_uniqueness.sql",
+      "sha256": "7d079aa1234050b6dde06d9fb3cad939144fcbccdf287cc31bbe863c68899bf5",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260916000700",
+      "filename": "20260916000700_foreign_keys.sql",
+      "sha256": "d2112e4b402e8789312d5473969b615e6d7ab344a58a2211f790c4423dd4361f",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260916000800",
+      "filename": "20260916000800_required_indexes.sql",
+      "sha256": "d3502b9de76209b54b40497e6b9fdf94d463335d1f5441fb0fb924786648336e",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260916000900",
+      "filename": "20260916000900_canonical_seeds.sql",
+      "sha256": "94547ff1fa6a9accf56ff6f28be93afeb91b8c290ca9bb224667862c64c8c2e7",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260916001000",
+      "filename": "20260916001000_pre_f4_integrated_audit_model.sql",
+      "sha256": "c4247051c223960eb5ca817a0f85650dbc828a7864e48f66a1a73b1d298a224d",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260921000100",
+      "filename": "20260921000100_pre_f5c_executable_physical_reconciliation.sql",
+      "sha256": "1181d7ab26718927124de880e351fbaba3f2daaca41267a1ef66d28ac2021680",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260921000200",
+      "filename": "20260921000200_phase5_core_grc_runtime_permissions.sql",
+      "sha256": "8cc3d1b2a64a5b00ffd55f93ccfbcdfcde5406ffa9c1fa7f2d2055f505048eb0",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260923000100",
+      "filename": "20260923000100_pre_f5e_platform_authority.sql",
+      "sha256": "4ee0b3d24c7d7aa6ea87a8e9a6618cd2a7b164aedf1e3990590c3cf1b512ea82",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260923000200",
+      "filename": "20260923000200_phase5_final_closure.sql",
+      "sha256": "96a56b5669cd6e6fd0d751dc12526e3fe6ad2c612e77a8a7e144c847775be96c",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260924000100",
+      "filename": "20260924000100_phase5_subscription_create_catalog.sql",
+      "sha256": "a41efa51265d5f95a342674bdbac2faecf37ac31ac1c45aef47b394c7e380f2f",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260924000200",
+      "filename": "20260924000200_phase5_retention_policy_lifecycle.sql",
+      "sha256": "751ff47c9644b8d7134bb16148728a075e61af3057fa2a271e280a1fb1cd1728",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260924000300",
+      "filename": "20260924000300_phase5_membership_invitation.sql",
+      "sha256": "0942e5eb360f7157a444d7b04fbe7558312e8d782347e60a745a8d4365034806",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260925000100",
+      "filename": "20260925000100_phase5_membership_invitation_platform_authority_reconciliation.sql",
+      "sha256": "b66f88a19323d7a92465f6e61e762dffcf511eae55e53456d811c7912d3dad8a",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260928000100",
+      "filename": "20260928000100_phase5_administrative_read_permissions.sql",
+      "sha256": "d19c72ce5a0b9e5caa65d8b6b93daec1b2188dee54067551bb8ac3c8c7dcdd35",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260928000200",
+      "filename": "20260928000200_phase5_membership_role_revoke_platform_grant.sql",
+      "sha256": "d47e4fa07250092c5b8c063a60713528627acee864f93278b3c5f0ed5dd57cdc",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260928000300",
+      "filename": "20260928000300_phase5_control_assessment_start_tenant_scope.sql",
+      "sha256": "4e38ffe74d4c5324d16871228e65e800396d538f45aaf29b052d895bfb5cbe84",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260928000400",
+      "filename": "20260928000400_phase5_regulatory_catalog_contract_alignment.sql",
+      "sha256": "1d4e5a51372531a1a5645dd5152cd00742016a3e5a7f3c508193caa65afcb929",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260929000100",
+      "filename": "20260929000100_phase5_subscription_regulatory_pack_authority.sql",
+      "sha256": "58db95213900be09348312702659b292f53a5913fe03df99102c444320c70bbd",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260929000200",
+      "filename": "20260929000200_phase5_plus_permissions_applicability.sql",
+      "sha256": "58d52157c20f5daa95d533030fa0b2ed4f85d7faea1a0f256a167f608a23ea8d",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20260929000300",
+      "filename": "20260929000300_phase5_plus_subject_validation_access.sql",
+      "sha256": "5eb46ac182929c1649fed610a4d66cd92017ea07b473aba933e5c167f5e1dfdb",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20261001000100",
+      "filename": "20261001000100_managed_identity_permissions_publication.sql",
+      "sha256": "90503ed1cf626c7d8a3529d323670322e180efde90257ee8bb99efe2736eef07",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20261006000100",
+      "filename": "20261006000100_platform_role_administration_permission_publication.sql",
+      "sha256": "2a3c0d14748a9494d6ef60572802782eab2cdf3f4e60bef6026d73c48c1b6399",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20261006000200",
+      "filename": "20261006000200_user_identity_discovery_permission_publication.sql",
+      "sha256": "fa7d34a7f33044b8ee02478211c67a6c1c36ee64df0e0d2de57a60101d157c22",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20261007000100",
+      "filename": "20261007000100_platform_tenant_user_onboarding_permission_publication.sql",
+      "sha256": "4f91369da1908264eba937e5c9d760a34bcefe3d7de1d726ac558c3f9b138673",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "migration",
+      "id": "20261007000200",
+      "filename": "20261007000200_phase5_methodology_binding.sql",
+      "sha256": "fa178ad731d48045313a11b22f1bdf3c228be502dafa1883136162ad48127850",
+      "transactional": true,
+      "outcome": "applied"
+    },
+    {
+      "section": "column",
+      "schema": "platform",
+      "table": "tenants",
+      "column": "tenant_id",
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "NO"
+    },
+    {
+      "section": "column",
+      "schema": "platform",
+      "table": "tenants",
+      "column": "created_at",
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO"
+    },
+    {
+      "section": "column",
+      "schema": "platform",
+      "table": "tenants",
+      "column": "created_by_user_identity_id",
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES"
+    },
+    {
+      "section": "column",
+      "schema": "platform",
+      "table": "tenants",
+      "column": "created_by_service_principal_id",
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES"
+    },
+    {
+      "section": "column",
+      "schema": "platform",
+      "table": "tenants",
+      "column": "updated_at",
+      "type": "timestamp with time zone",
+      "udt": "timestamptz",
+      "nullable": "NO"
+    },
+    {
+      "section": "column",
+      "schema": "platform",
+      "table": "tenants",
+      "column": "updated_by_user_identity_id",
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES"
+    },
+    {
+      "section": "column",
+      "schema": "platform",
+      "table": "tenants",
+      "column": "updated_by_service_principal_id",
+      "type": "uuid",
+      "udt": "uuid",
+      "nullable": "YES"
+    },
+    {
+      "section": "column",
+      "schema": "platform",
+      "table": "tenants",
+      "column": "row_version",
+      "type": "bigint",
+      "udt": "int8",
+      "nullable": "NO"
+    },
+    {
+      "section": "column",
+      "schema": "platform",
+      "table": "tenants",
+      "column": "tenant_code",
+      "type": "character varying",
+      "udt": "varchar",
+      "nullable": "NO"
+    },
+    {
+      "section": "column",
+      "schema": "platform",
+      "table": "tenants",
+      "column": "legal_name",
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO"
+    },
+    {
+      "section": "column",
+      "schema": "platform",
+      "table": "tenants",
+      "column": "display_name",
+      "type": "text",
+      "udt": "text",
+      "nullable": "NO"
+    },
+    {
+      "section": "column",
+      "schema": "platform",
+      "table": "tenants",
+      "column": "default_timezone",
+      "type": "character varying",
+      "udt": "varchar",
+      "nullable": "NO"
+    },
+    {
+      "section": "column",
+      "schema": "platform",
+      "table": "tenants",
+      "column": "lifecycle_state",
+      "type": "character varying",
+      "udt": "varchar",
+      "nullable": "NO"
+    },
+    {
+      "section": "column",
+      "schema": "platform",
+      "table": "tenants",
+      "column": "data_classification",
+      "type": "character varying",
+      "udt": "varchar",
+      "nullable": "NO"
+    }
+  ],
+  "safe_error": "",
+  "configuration_mutated": false,
+  "ddl_dml_executed": false,
+  "transaction": "REPEATABLE READ READ ONLY, ended ROLLBACK",
+  "local_manifest_comparison": {
+    "manifest_path": "database/migrations/manifest.json",
+    "manifest_sha256": "f10105381a492feabf7f39ae92329c49bc7f357f3b5aee06b4ef279b983801b9",
+    "applied_count": 30,
+    "local_manifest_count": 32,
+    "mismatches": [],
+    "unknown_applied": [],
+    "pending": [
+      {
+        "id": "20261009000100",
+        "filename": "20261009000100_phase6a3_configuration_integrity.sql",
+        "sha256": "b717f0c91f88a4079f791fd68cc08ff5202ef7f0dda6c7cf85ea37cb23441722",
+        "transactional": true,
+        "preconditions": [
+          "approved macro R1",
+          "exact source constraints",
+          "compatible existing data; no backfill"
+        ],
+        "postconditions": [
+          "ledger_outcome=applied",
+          "physical_tables=237",
+          "published_permissions=172",
+          "EC_natural_key=NULLS_NOT_DISTINCT",
+          "layer_unique=parent_precedence_ordinal",
+          "defaults=exactly_one_compatible_typed_value",
+          "existing_records_preserved"
+        ]
+      },
+      {
+        "id": "20261009000200",
+        "filename": "20261009000200_phase6a3_reference_read_permissions.sql",
+        "sha256": "920ececb9d28e3821a9faf9d2c754db481a26c0e33c53ae0f94b3a0535885ed8",
+        "transactional": true,
+        "preconditions": [
+          "ledger_count=31",
+          "published_permissions=172",
+          "44 exact baseline role templates",
+          "no current candidate permissions"
+        ],
+        "postconditions": [
+          "ledger_outcome=applied",
+          "physical_tables=237",
+          "published_permissions=175",
+          "new_permissions=3",
+          "exact_global_template_pairs=44",
+          "no_platform_or_tenant_admin_escalation",
+          "existing_baseline_tenant_instances=exact_approved_pairs",
+          "no_custom_role_or_membership_grants"
+        ]
+      }
+    ]
+  },
+  "compatibility_metadata_query": {
+    "at": "2026-10-13T16:01:03.461296+00:00",
+    "sql": "\nBEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY;\nSET LOCAL statement_timeout='10s';\nSET LOCAL lock_timeout='3s';\nSET LOCAL idle_in_transaction_session_timeout='15s';\nSELECT current_database()='tcdx-grc' AND current_user='postgres' AND inet_server_addr()='192.168.2.40'::inet AND inet_server_port()=5432 AND current_setting('transaction_read_only')='on' AS target_ok \\gset\n\\if :target_ok\nSELECT json_build_object('section','membership_column','schema',table_schema,'table',table_name,'column',column_name,'type',data_type,'udt',udt_name,'nullable',is_nullable) FROM information_schema.columns WHERE table_schema='iam' AND table_name='tenant_memberships' ORDER BY ordinal_position;\nSELECT json_build_object('section','configuration_constraint','table',conrelid::regclass::text,'name',conname,'validated',convalidated,'definition',pg_get_constraintdef(oid)) FROM pg_constraint WHERE conrelid IN ('config.configuration_definitions'::regclass,'config.effective_configurations'::regclass,'config.effective_configuration_layers'::regclass) AND conname IN ('uq_ec__canonical_business_key','uq_ec_layers__parent_level_ordinal','ck_configuration_definitions__typed_default','uq_effective_configurations__tenant_id','uq_effective_configuration_layers__ordinal','ck_configuration_definitions__default_value_count') ORDER BY conname;\nROLLBACK;\n\\else\nROLLBACK;\n\\quit 3\n\\endif\n",
+    "exit": 0,
+    "metadata": [
+      {
+        "section": "membership_column",
+        "schema": "iam",
+        "table": "tenant_memberships",
+        "column": "tenant_membership_id",
+        "type": "uuid",
+        "udt": "uuid",
+        "nullable": "NO"
+      },
+      {
+        "section": "membership_column",
+        "schema": "iam",
+        "table": "tenant_memberships",
+        "column": "created_at",
+        "type": "timestamp with time zone",
+        "udt": "timestamptz",
+        "nullable": "NO"
+      },
+      {
+        "section": "membership_column",
+        "schema": "iam",
+        "table": "tenant_memberships",
+        "column": "created_by_user_identity_id",
+        "type": "uuid",
+        "udt": "uuid",
+        "nullable": "YES"
+      },
+      {
+        "section": "membership_column",
+        "schema": "iam",
+        "table": "tenant_memberships",
+        "column": "created_by_service_principal_id",
+        "type": "uuid",
+        "udt": "uuid",
+        "nullable": "YES"
+      },
+      {
+        "section": "membership_column",
+        "schema": "iam",
+        "table": "tenant_memberships",
+        "column": "updated_at",
+        "type": "timestamp with time zone",
+        "udt": "timestamptz",
+        "nullable": "NO"
+      },
+      {
+        "section": "membership_column",
+        "schema": "iam",
+        "table": "tenant_memberships",
+        "column": "updated_by_user_identity_id",
+        "type": "uuid",
+        "udt": "uuid",
+        "nullable": "YES"
+      },
+      {
+        "section": "membership_column",
+        "schema": "iam",
+        "table": "tenant_memberships",
+        "column": "updated_by_service_principal_id",
+        "type": "uuid",
+        "udt": "uuid",
+        "nullable": "YES"
+      },
+      {
+        "section": "membership_column",
+        "schema": "iam",
+        "table": "tenant_memberships",
+        "column": "row_version",
+        "type": "bigint",
+        "udt": "int8",
+        "nullable": "NO"
+      },
+      {
+        "section": "membership_column",
+        "schema": "iam",
+        "table": "tenant_memberships",
+        "column": "tenant_id",
+        "type": "uuid",
+        "udt": "uuid",
+        "nullable": "NO"
+      },
+      {
+        "section": "membership_column",
+        "schema": "iam",
+        "table": "tenant_memberships",
+        "column": "user_identity_id",
+        "type": "uuid",
+        "udt": "uuid",
+        "nullable": "NO"
+      },
+      {
+        "section": "membership_column",
+        "schema": "iam",
+        "table": "tenant_memberships",
+        "column": "membership_state",
+        "type": "character varying",
+        "udt": "varchar",
+        "nullable": "NO"
+      },
+      {
+        "section": "membership_column",
+        "schema": "iam",
+        "table": "tenant_memberships",
+        "column": "joined_at",
+        "type": "timestamp with time zone",
+        "udt": "timestamptz",
+        "nullable": "NO"
+      },
+      {
+        "section": "membership_column",
+        "schema": "iam",
+        "table": "tenant_memberships",
+        "column": "ended_at",
+        "type": "timestamp with time zone",
+        "udt": "timestamptz",
+        "nullable": "YES"
+      },
+      {
+        "section": "configuration_constraint",
+        "table": "config.configuration_definitions",
+        "name": "ck_configuration_definitions__default_value_count",
+        "validated": true,
+        "definition": "CHECK ((num_nonnulls(default_boolean_value, default_integer_value, default_decimal_value, default_text_value, default_timestamp_value, default_duration_seconds_value, default_json_value) <= 1))"
+      },
+      {
+        "section": "configuration_constraint",
+        "table": "config.effective_configuration_layers",
+        "name": "uq_effective_configuration_layers__ordinal",
+        "validated": true,
+        "definition": "UNIQUE (ordinal)"
+      },
+      {
+        "section": "configuration_constraint",
+        "table": "config.effective_configurations",
+        "name": "uq_effective_configurations__tenant_id",
+        "validated": true,
+        "definition": "UNIQUE NULLS NOT DISTINCT (tenant_id)"
+      }
+    ],
+    "safe_error": ""
+  },
+  "conclusions": {
+    "P0_DATABASE": "PASS_READ_ONLY",
+    "DATABASE_TLS_MODE_P0": "verify-full/TLSv1.3",
+    "IANA_DB_MIGRATION_REQUIRED": "NONE",
+    "QA_SCHEMA_LEDGER": "30_APPLIED_MATCHING_LOCAL_CHECKSUMS",
+    "FULL_BUNDLE_COMPATIBILITY": "NOT_APPROVED_QA30_VS_LOCAL32",
+    "pending_non_iana_migrations": [
+      "20261009000100",
+      "20261009000200"
+    ],
+    "QA_DEPLOY_GO": "NO_GO",
+    "QA_DEPLOY_EXECUTED": false,
+    "backup_restore_executed": false,
+    "business_or_personal_rows_read": false,
+    "credentials_read_by_agent": false
+  }
+}

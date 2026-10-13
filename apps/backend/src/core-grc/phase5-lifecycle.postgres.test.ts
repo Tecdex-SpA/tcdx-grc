@@ -12,6 +12,8 @@ import { executeMutation, mutations, type MutationDefinition } from "./service.j
 import { packVisibility } from "../regulatory/pack-entitlement.js";
 import { listTenantNormativeContent } from "../regulatory/tenant-read.js";
 import { listSelectableSubjects } from "./subject-read.js";
+import {readVocabularyProvenance} from "./vocabulary-provenance.js";
+import {VOCABULARY_MANIFEST_SHA256} from "@tcdx-grc/contracts";
 
 const enabled = process.env.TCDX_PHASE5_LIFECYCLE_INTEGRATION === "true";
 const rollback = Symbol("isolated-phase5-rollback");
@@ -189,6 +191,18 @@ describe.skipIf(!enabled)("Phase 5 lifecycle PostgreSQL isolated integration", (
         });
         const fileId = finalized.response.file_object_id as string;
         expect(finalized.response).toMatchObject({ scan_status: "passed", retention_policy_id: policyId });
+        const profiles=await readVocabularyProvenance(tx,tenantId,'FileObject',fileId);
+        expect(profiles).toHaveLength(1);expect(profiles[0]).toMatchObject({profile_version:1,manifest_sha256:VOCABULARY_MANIFEST_SHA256,root:{entity_type:'FileObject',entity_id:fileId,entity_version:{kind:'row_version',value:'1'}},occurrences:[{family_id:'CV-01',code:'confidential',input_path:'classification',entity_id:fileId,entity_version:{kind:'row_version',value:'1'}}]});
+        expect(await readVocabularyProvenance(tx,newUuidV7(),'FileObject',fileId)).toEqual([]);
+        expect(await readVocabularyProvenance(tx,tenantId,'FileObject',newUuidV7())).toEqual([]);
+        const originalProvenance=JSON.stringify(profiles);const finalizeReplayKey=newUuidV7();
+        // A separate upload exercises idempotent replay without manufacturing a second audit profile.
+        const replayUpload=await executeMutation(tx,fileOwner(uploadCreate),uploadCreate,{body:{...uploadBody,original_filename:'provenance-replay.pdf'},idempotencyKey:newUuidV7(),correlationId:newUuidV7(),fileStorage:storage});
+        const replayFinalizeInput={body:{expected_version:1},targetId:replayUpload.response.upload_intent_id as string,idempotencyKey:finalizeReplayKey,correlationId:newUuidV7(),fileStorage:storage};
+        const replayFinalized=await executeMutation(tx,fileOwner(uploadFinalize),uploadFinalize,replayFinalizeInput);
+        const replayFinalize=await executeMutation(tx,fileOwner(uploadFinalize),uploadFinalize,{...replayFinalizeInput,correlationId:newUuidV7()});
+        expect(replayFinalize.replayed).toBe(true);expect(await readVocabularyProvenance(tx,tenantId,'FileObject',replayFinalized.response.file_object_id as string)).toHaveLength(1);
+        expect(JSON.stringify(await readVocabularyProvenance(tx,tenantId,'FileObject',fileId))).toBe(originalProvenance);
         const stored = await sql<{ intent_state: string; objects: number; leaked_url: number }>`
           SELECT
             (SELECT lifecycle_state FROM evidence.file_upload_intents WHERE tenant_id=${tenantId}::uuid AND file_upload_intent_id=${uploadId}::uuid) AS intent_state,
@@ -196,7 +210,7 @@ describe.skipIf(!enabled)("Phase 5 lifecycle PostgreSQL isolated integration", (
             (SELECT count(*)::integer FROM ops_audit.audit_events WHERE tenant_id=${tenantId}::uuid
                AND after_payload::text LIKE '%one-time-upload%') AS leaked_url
         `.execute(tx);
-        expect(stored.rows[0]).toMatchObject({ intent_state: "promoted", objects: 1, leaked_url: 0 });
+        expect(stored.rows[0]).toMatchObject({ intent_state: "promoted", objects: 2, leaked_url: 0 });
         const infected = await executeMutation(tx, fileOwner(uploadCreate), uploadCreate, {
           body: { ...uploadBody, original_filename: "infected.pdf" }, idempotencyKey: newUuidV7(), correlationId: newUuidV7(), fileStorage: storage
         });
@@ -211,7 +225,7 @@ describe.skipIf(!enabled)("Phase 5 lifecycle PostgreSQL isolated integration", (
             FROM evidence.file_upload_intents WHERE tenant_id=${tenantId}::uuid
              AND file_upload_intent_id=${infected.response.upload_intent_id as string}::uuid
         `.execute(tx);
-        expect(rejectState.rows[0]).toMatchObject({ lifecycle_state: "rejected", objects: 1 });
+        expect(rejectState.rows[0]).toMatchObject({ lifecycle_state: "rejected", objects: 2 });
         rejectMalware = false;
 
         const subjectId = newUuidV7();

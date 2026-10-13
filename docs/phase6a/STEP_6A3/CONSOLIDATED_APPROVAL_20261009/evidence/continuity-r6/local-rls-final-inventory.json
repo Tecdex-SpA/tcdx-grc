@@ -1,0 +1,28 @@
+{
+  "command": [
+    "docker",
+    "exec",
+    "7427285491c6ccf8b0b0d3a950251ee4dad34f1b17d86b0ee74ed3210e491b1d",
+    "psql",
+    "-h",
+    "127.0.0.1",
+    "-p",
+    "55432",
+    "-U",
+    "postgres",
+    "-d",
+    "tcdx-grc",
+    "-At",
+    "-c",
+    "SELECT json_build_object('server_version',current_setting('server_version'),'database',current_database(),'system_identifier',(SELECT system_identifier::text FROM pg_control_system()),'rls_tables',(SELECT count(*) FROM pg_class WHERE relrowsecurity),'forced_tables',(SELECT count(*) FROM pg_class WHERE relforcerowsecurity),'policies',(SELECT count(*) FROM pg_policy),'scope','OWN_DISPOSABLE_ONLY')::text"
+  ],
+  "result": {
+    "server_version": "16.15 (Debian 16.15-1.pgdg13+2)",
+    "database": "tcdx-grc",
+    "system_identifier": "7696125537008902190",
+    "rls_tables": 0,
+    "forced_tables": 0,
+    "policies": 0,
+    "scope": "OWN_DISPOSABLE_ONLY"
+  }
+}

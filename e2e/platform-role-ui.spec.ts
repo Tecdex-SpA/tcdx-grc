@@ -9,13 +9,13 @@ const all=['platform.managed_identity.read','platform.role.administer','platform
 async function fixture(page:Page,options:{permissions?:string[];active?:boolean;readError?:number;catalogError?:number;mutationError?:number;uncertain?:boolean;refreshError?:boolean}={}){
   const state={items:options.active?[assignment]:[],reads:0,catalogReads:0,posts:[] as {path:string;body:Record<string,unknown>;key:string}[],permissions:options.permissions??all,authorizations:0};
   await page.addInitScript(()=>sessionStorage.setItem('tcdx.access_token','p2d-r-synthetic-session'));
-  await page.route('**/api/v1/**',async route=>{
+  await page.route(url => url.pathname.startsWith("/api/v1/") || url.pathname === "/api/v2/auth/me/authorization",async route=>{
     const request=route.request(),url=new URL(request.url()),path=url.pathname;
     const problem=async(status:number)=>route.fulfill({status,contentType:'application/problem+json',body:JSON.stringify({code:status===409?'TCDX.CONFLICT.RESOURCE':status===404?'TCDX.RESOURCE.NOT_FOUND':status===403?'TCDX.AUTHORIZATION.DENIED':status===401?'TCDX.AUTHENTICATION.REQUIRED':'TCDX.VALIDATION.FAILED',message:'Internal error detail must not be displayed',correlation_id:assignmentId,retryable:false})});
     if(path==='/api/v1/access/me')return route.fulfill({json:{available_tenant_contexts:[{tenant_id:tenant,tenant_display_name:'Empresa sintética',tenant_membership_id:tenant,membership_state:'active',effective_role_codes:['TENANT_ADMIN']}],effective_platform_role_codes:['PLATFORM_ADMIN']}});
-    if(path==='/api/v1/auth/me/authorization'){
+    if(path==='/api/v2/auth/me/authorization'){
       state.authorizations++;
-      return route.fulfill({json:{evaluated_at:new Date().toISOString(),platform_permissions:state.permissions,tenant_permissions:{tenant_id:tenant,permissions:{'platform.role.read':[{scope_kind:'tenant'}]}}}});
+      return route.fulfill({json:{evaluated_at:new Date().toISOString(),platform_permissions:state.permissions,tenant_permissions:{tenant_id:tenant,default_timezone:"Europe/Berlin",permissions:{'platform.role.read':[{scope_kind:'tenant'}]}}}});
     }
     if(path.startsWith('/api/v1/platform/managed-identities'))return route.fulfill({json:path.endsWith(target)?identity:{items:[identity],page:{has_more:false,next_cursor:null}}});
     if(path.startsWith('/api/v1/platform/user-identities/')||path==='/api/v1/roles'){
@@ -80,7 +80,7 @@ test('assign and revoke send exact IDs/payloads/fresh keys and refetch server st
   await expect(page.getByRole('dialog')).not.toContainText(assignmentId);
   await expect(page.getByRole('button',{name:'Actualizar roles de plataforma'})).toBeFocused();
   expect(await page.evaluate(()=>Array.from(document.querySelectorAll<HTMLElement>('body *')).filter(element=>element.getBoundingClientRect().right>innerWidth+1).map(element=>({tag:element.tagName,class:element.className,right:element.getBoundingClientRect().right}))), 'Responsive elements must fit the viewport').toEqual([]);
-  await page.screenshot({path:`/tmp/tcdx-grc-mi10-p2d-r-roles-${info.project.name}.png`,fullPage:true});
+  await page.screenshot({path:`${process.env.TCDX_UI_EVIDENCE_DIR ?? "/tmp"}/tcdx-grc-mi10-p2d-r-roles-${info.project.name}.png`,fullPage:true});
   await page.getByRole('button',{name:`Revocar rol ${assignment.role_name}`}).click();
   await expect(page.getByLabel('Motivo del cambio de rol')).toBeFocused();
   await page.getByLabel('Motivo del cambio de rol').fill('Revocación sintética explícita');

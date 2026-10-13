@@ -106,3 +106,8 @@ No new outbox event. Existing INTERNAL TENANT_BOOTSTRAP keeps audit.iam.applicat
 ## Approved Phase 5 methodology amendment
 
 See [27 — canonical methodology binding](27_PHASE5_METHODOLOGY_BINDING.md) and the explicit human architecture approval. Migration `20261007000200` produces 30 migrations / 237 physical tables / 172 permissions. Seeds: separate Compliance and Control Effectiveness version 1, two compatible FormulaDefinitions, two narrowly scoped read permissions; publication audit `audit.compliance.methodology.publish.v1` and `audit.controls.methodology.publish.v1`. No historical migration or immutable rector file is changed.
+
+
+## STEP6A.3 — aprobación macro R2
+
+[31](31_PHASE6A3_RESIDUAL_DELTAS_R2.md) publica audit.iam.role_permission.publish.v1 para la ceremonia interna phase6a3RolePermissionPublication y el perfil aditivo CONTRACT_VOCABULARY_PROVENANCE_V1 del audit material existente de las escrituras26. R2manifestSHA 2dd41de880d445963c5c74917751d58490c63d7364ec1ad2179bbe39c5187ed8. No aumenta el catálogo materializado en QA ni crea endpoint/outbox. Actor de publicación: ServicePrincipal PLATFORM_CONTROL activo real, no seed ficticio; aprobación humana y actor de ejecución son distintos conceptos. Publicación reforzada atomiza adopción y AuditEvent. Procedencia de vocabulario se reconstruye desde manifestSHA y IDs/versiones reales de raíz/hijos; la identidad inmutable TI es su revisión canónica y no se inventa row_version para esos hijos. Ausencia histórica del perfil sigue explícita, sin backfill.

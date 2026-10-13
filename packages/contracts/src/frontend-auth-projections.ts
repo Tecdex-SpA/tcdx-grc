@@ -28,6 +28,7 @@ export type CurrentPrincipalAuthorization = {
   platform_permissions: string[];
   tenant_permissions: null | {
     tenant_id: string;
+    default_timezone: string;
     permissions: Record<string, TenantPermissionScope[]>;
   };
 };

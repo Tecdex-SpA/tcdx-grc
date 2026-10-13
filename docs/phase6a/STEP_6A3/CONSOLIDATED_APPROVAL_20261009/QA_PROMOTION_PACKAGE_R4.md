@@ -1,0 +1,9 @@
+# Continuidad del paquete QA R4
+
+Estado: PREPARED_NOT_READY_NOT_AUTHORIZED_NOT_EXECUTED. Este documento referencia el paquete exacto R3, no lo republica ni duplica sus comandos.
+
+QA_OPERATIONAL_PLAN_R3.json SHA-256 `3a1451f6b733fc7c2f45b46b9bf376364dcd24428affe1a2062256b640afc0e8` permanece intacto. Sus 14 artefactos contractuales/migratorios fueron cotejados; build_transport_manifest tiene 454 entradas, 454 coincidentes y 0 discrepancias. Detalle: evidence/continuity-r4/qa-build-comparison.json. Los hashes de builds no prueban imagen candidata QA ni digest desplegado.
+
+GO sigue bloqueado por las tres CFG-D, C-04W, proyección IANA no aprobada, inventario VOC histórico, identidad operacional real/runner33-34 y aceptación humana/runtime. No existe ventana propuesta autorizada ni actor identificado: no se inventan. Antes de ejecución se necesita paquete sucesor exacto con esas decisiones cerradas y candidato fuente/build/imagen sellado, ventana expresa, backups/restore y recuperación, identidades y operación permitida. Dominio: https://grc.tecdex.net/.
+
+Preservar preflight/read-only/backup/restore y las migraciones forward-only31/32/33/34 descritas en R3. 33/34 continúan fuera del manifest activo32. NO-GO ante datos incompatibles, fuente/actor/hash/auditoría incorrectos, pérdida de aislamiento, ausencia de bindings o falta de autorización. Rollback transaccional antes de commit; recuperación posterior forward-only aprobada que preserve datos/historia, sin reinstalar constraints globales ni resucitar grants. Smoke debe probar tenant/RBAC/entitlement/SoD/revocación, lectores CT01/03/04, GET EC y UTC/IANA, MIME/assets/deep route, IAM y E2E externos reales. Hoy todos esos actos externos NOT_RUN. El diff R4 sólo modifica documentación y se conserva separado del diff heredado en el checkpoint.

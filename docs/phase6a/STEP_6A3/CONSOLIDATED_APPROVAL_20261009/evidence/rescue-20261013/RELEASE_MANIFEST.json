@@ -1,0 +1,128 @@
+{
+  "task": "PO_EXECUTIVE_CONTINUITY_20261013",
+  "authority": "Express PO instruction in current Codex session: rescue commit/push and conditional IANA QA30 promotion only",
+  "master_regent": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09",
+  "rescue_base_commit": "6af66387aa03fa185ef139584de07700f247b903",
+  "branch": "rescue/step6a3-integral-20261013",
+  "initial_files": 816,
+  "tracked_committed": 78,
+  "new_committed": 737,
+  "excluded_sensitive": 0,
+  "excluded_build_artifacts": 1,
+  "unresolved": 0,
+  "preservation": "809 exact plus 6 authorized corrections plus append-only traceability update after capture; no deletion",
+  "artifact_custody": [
+    {
+      "path": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/browser-artifacts-before-controlled-stop.tar.gz",
+      "sha256": "cc88db65c092efd7cc746b9988e2f96c5229c9385ceb21e5940585bbd1f3f7ae",
+      "bytes": 8804880
+    }
+  ],
+  "qa30_reproduction": {
+    "base_commit": "6af66387aa03fa185ef139584de07700f247b903",
+    "overlay_paths": [
+      "apps/backend/Dockerfile",
+      "apps/backend/src/app.ts",
+      "apps/backend/src/security/frontend-projections.postgres.test.ts",
+      "apps/backend/src/security/frontend-projections.test.ts",
+      "apps/backend/src/security/frontend-projections.ts",
+      "apps/backend/src/security/platform-iam-service.ts",
+      "apps/frontend/Dockerfile",
+      "apps/frontend/src/api-client.ts",
+      "apps/frontend/src/core-grc.tsx",
+      "apps/frontend/src/frontend-auth-projections.ts",
+      "apps/frontend/src/i18n/es.ts",
+      "apps/frontend/src/tenant-onboarding.test.tsx",
+      "apps/frontend/src/tenant-onboarding.tsx",
+      "apps/frontend/src/tenant-timezone.test.tsx",
+      "apps/frontend/src/tenant-timezone.tsx",
+      "docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml",
+      "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/iana-approved.txt",
+      "packages/contracts/package.json",
+      "packages/contracts/src/frontend-auth-projections.ts",
+      "packages/contracts/src/iana-timezone.ts",
+      "packages/contracts/src/index.ts",
+      "packages/contracts/src/mi7a-frontend-projections.test.ts",
+      "packages/contracts/src/phase6a3-iana-contract.test.ts",
+      "packages/contracts/src/testing/schema-validator.ts"
+    ],
+    "command": "python3 docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/rescue-20261013/reproduce-qa30.py /private/tmp/tcdx-qa30-reproduced",
+    "verified_paths": 183,
+    "manifest_sha256": "79f2e9b39f22f8e8f68dfbf10ec95f6b1c4a7c4bac5de774e846f9f9c0791bec",
+    "source_scope": "IANA/APIv2 plus canonical packaging only; QA32 selectors excluded"
+  },
+  "images": {
+    "backend": {
+      "tag": "tcdx-grc-backend:iana-v2-qa30-240063fbc85b",
+      "image_id": "sha256:3be791953c806bbb24556526f06adfa73b364f374856a4f8102e5db9521d3cee",
+      "digest": "sha256:3be791953c806bbb24556526f06adfa73b364f374856a4f8102e5db9521d3cee",
+      "transport": "/tmp/tcdx-integral-20261013/backend-qa30-image.tar",
+      "transport_sha256": "13905ae1be716f5422ece03a43512bd5a2089ae15bfeb5b680305d2d7bbd5454",
+      "platform": "linux/amd64",
+      "user": "node",
+      "validation": {
+        "node": "v22.23.2",
+        "compiled_loader_and_iana": "PASS",
+        "v1self": 404,
+        "v2self_without_session": 401,
+        "v1providers": 200,
+        "no_store_vary": "PASS",
+        "reference_dependencies": false,
+        "all_other_routes": "PASS_METHOD_PATH_EQUIVALENCE"
+      }
+    },
+    "frontend": {
+      "tag": "tcdx-grc-frontend:iana-v2-qa30-79f2e9b39f22",
+      "image_id": "sha256:2936ac99ed0fea65354f4e55f2b9f3d0fe431ab72a5a4f47c97bc31fc0768ab1",
+      "digest": "sha256:2936ac99ed0fea65354f4e55f2b9f3d0fe431ab72a5a4f47c97bc31fc0768ab1",
+      "transport": "/tmp/tcdx-integral-20261013/frontend-qa30-79f2e9b39f22-image.tar",
+      "transport_sha256": "52b53135c173ce26324c1f88e4181533a62001cbb8127a8f92fad009a9ea1a17",
+      "platform": "linux/amd64",
+      "user": "node",
+      "validation": {
+        "v2": true,
+        "v1self": false,
+        "reference_dependencies": false,
+        "strict_IANA_client_validator": true,
+        "assets": [
+          {
+            "path": "/assets/index-BmB4OoCc.css",
+            "sha256": "3d81569dbc230cad03aca1fb1cf9b231151c0aed9bab803fdc0021e465076299"
+          },
+          {
+            "path": "/assets/index-SoxsEvVE.js",
+            "sha256": "cd8d38e14789576295fe7ca5857015b8b8cc7fee6f3114b8441585aa1b9c14d2"
+          }
+        ]
+      }
+    }
+  },
+  "transport_custody": [
+    {
+      "path": "/Users/andresbarouh/repos/tcdx-grc/.release-custody/20261013/backend-qa30-image.tar",
+      "sha256": "13905ae1be716f5422ece03a43512bd5a2089ae15bfeb5b680305d2d7bbd5454",
+      "bytes": 162548736,
+      "recovery_source": "/tmp/tcdx-integral-20261013/backend-qa30-image.tar"
+    },
+    {
+      "path": "/Users/andresbarouh/repos/tcdx-grc/.release-custody/20261013/frontend-qa30-79f2e9b39f22-image.tar",
+      "sha256": "52b53135c173ce26324c1f88e4181533a62001cbb8127a8f92fad009a9ea1a17",
+      "bytes": 80039936,
+      "recovery_source": "/tmp/tcdx-integral-20261013/frontend-qa30-79f2e9b39f22-image.tar"
+    },
+    {
+      "path": "/Users/andresbarouh/repos/tcdx-grc/.release-custody/20261013/integral-source-and-evidence-20261013.tar",
+      "sha256": "38dd90ece8e86ad85a83db2a0d604cd4c5fe0e97cdf30e77aabfe3a4f18e3152",
+      "bytes": 5324800,
+      "recovery_source": "/tmp/tcdx-integral-20261013/integral-source-and-evidence-20261013.tar"
+    }
+  ],
+  "governance": {
+    "STEP_6A3": "PARTIAL_BLOCKED",
+    "STEP_6A4": "NOT_STARTED",
+    "RECTOR_GATE": "BLOCKED",
+    "HUMAN_UI_REVIEW": "NOT_APPROVED"
+  },
+  "qa_deploy": "NOT_EXECUTED; TLS repair and exact operational GO pending",
+  "provenance": "Inherited test results retained; no historical full-suite rerun claimed"
+}

@@ -16,6 +16,8 @@ export class ApiClient {
     private readonly selectedTenant: () => SelectedTenant
   ) {}
 
+  currentTenantId(): string | null { return this.selectedTenant()?.tenantId ?? null; }
+
   async request<T>(path: string, init: RequestInit = {}, options: { tenantContext?: "required" | "omit" } = {}): Promise<T> {
     const token = await this.tokens.getAccessToken();
     if (!token) throw new ApiProblem({ code: "TCDX.AUTHENTICATION.REQUIRED", message: uiText.auth.title, correlation_id: crypto.randomUUID(), retryable: false }, 401);
@@ -34,7 +36,18 @@ export class ApiClient {
       if (response.status === 401) await this.tokens.clearSession();
       throw new ApiProblem(problem, response.status);
     }
-    return response.status === 204 ? undefined as T : await response.json() as T;
+    if(response.status === 204) return undefined as T;
+    if(/^\/api\/v1\/(framework-version-references|membership-references|retention-policy-references)(?:\?|$)/.test(path)) {
+      const parse=JSON.parse as (text:string,reviver:(key:string,value:unknown,context?:{source?:string})=>unknown)=>unknown;
+      return parse(await response.text(),(key,value,context)=> {
+        if(["version_number","retention_seconds"].includes(key) && typeof value==="number" && !Number.isSafeInteger(value)) {
+          if(!context?.source || !/^[0-9]+$/.test(context.source)) throw new Error("LOSSLESS_INTEGER_UNAVAILABLE");
+          return BigInt(context.source);
+        }
+        return value;
+      }) as T;
+    }
+    return await response.json() as T;
   }
 
   accessMe<T>(): Promise<T> { return this.request<T>("/api/v1/access/me", {}, { tenantContext: "omit" }); }
@@ -48,7 +61,7 @@ export class ApiClient {
   }
 
   currentAuthorization(tenantId: string | null, signal?: AbortSignal): Promise<CurrentPrincipalAuthorization> {
-    return this.request<CurrentPrincipalAuthorization>("/api/v1/auth/me/authorization", {
+    return this.request<CurrentPrincipalAuthorization>("/api/v2/auth/me/authorization", {
       headers: tenantId ? { "X-TCDX-Tenant-Id": tenantId } : {}, cache: "no-store", ...(signal ? { signal } : {})
     }, { tenantContext: "omit" });
   }

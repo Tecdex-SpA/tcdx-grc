@@ -1,0 +1,34 @@
+# Phase 6A implementation backlog
+
+Audit date: 2026-10-08. Baseline: main at 6af66387aa03fa185ef139584de07700f247b903.
+Master: TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23. Mode: READ_ONLY_AUDIT.
+Recommendations are audit proposals for the authorized later stages; no application contract or runtime change is approved by this artifact.
+
+Only the task packet for STEP 6A.1 is active. This backlog does not start 6A.2, approve architecture changes or request IAM grants. Every candidate must retain the master → canonical model → frozen physical model → approved executable contract → backend → UI authority chain. Later missing contract closure is a prerequisite, not a temporary fallback.
+
+| Backlog | Finding(s) | Target stage | Concrete output | Dependencies / gate | Validation |
+| --- | --- | --- | --- | --- | --- |
+| B-01 | UX-20; UX-01–09 | 6A.2 Navigation design | Design existing workspaces/tabs, parent context routes, prerequisites and permitted drill-down map | 04 confirmed edges; v1.0 navigation; preserve four-domain scope | Review every edge; no invented ControlAssessment→AssuranceTest or Applicability→SoAItem relation |
+| B-02 | UX-01/03 | 6A.3 Reference resolution/selectors | Framework/Requirement selection design and reusable authorized scope Subject picker | RR-G01 owner-approved contract if required; existing requirement/Subject reads | Cross-tenant negatives; pagination; no arbitrary FrameworkVersion |
+| B-03 | UX-02/04 | 6A.3 Reference resolution/selectors | Applicability/tenant Control/version selectors and retained domain methodology selector | Approved reference reads; separate base/tenant eligibility; RR-G02 for optional configuration | Correct parent/version/domain; missing/expired methodology denied |
+| B-04 | UX-05/08 | 6A.3 Reference resolution/selectors | Minimal assignee selection and eligible evidence version picker | RR-G03; existing evidence graph; no membership administration grant shortcut | Unauthorized/foreign/stale options denied; fulfillment typed link compatibility |
+| B-05 | UX-06 | 6A.3 Reference resolution/selectors | Retention selection contract/design over existing canonical policies | RR-G04; Privacy/Evidence/Security owner approval | Global versus tenant policy visibility; no duplicated policies |
+| B-06 | UX-14/18 | 6A.3 Reference resolution/selectors | Complete existing selector cursor support; reconcile two Controls filter contracts | Existing paginated reads; U-FILTER explicit closure before mutation | >100 options reachable; disallowed queries remain errors; no frontend invented filters |
+| B-07 | UX-03 | 6A.4 Business forms | SoA business header + typed item editor | RR-G01; U-VOC item decision/state; existing SoaItemCreateInput | No UUID/JSON; exact pair/nonempty/atomic serialization |
+| B-08 | UX-06/17 | 6A.4 Business forms | Evidence business sections, scan/upload feedback and typed links | RR-G04; approved EvidenceLinkCreateInput; U-VOC evidence fields | Scan fails closed; exact target; no creation until usable file; retry preserves canonical lineage |
+| B-09 | UX-09 | 6A.4 Business forms | Assurance sample rows preserving optionality | AssuranceSampleExecuteInput; U-VOC selection_method | Counts/period/status and omitted samples accepted per named contract |
+| B-10 | UX-07/12 | 6A.4 Business forms | Issue create/triage business choices and typed origin selection | Existing three Core origins; U-VOC severity/priority/origin role | No Risk/Incident/Supplier/Audit origin expansion |
+| B-11 | UX-10/11/16/19 | 6A.4 Business forms | Dates, required/conditional rules, accessible field guidance and canonical business labels | Named schemas; existing base definitions and fixed retention mapping; code ownership retained | Date versus UTC serialization; optional inputs omitted; numeric conditionals; no generated code assumption |
+| B-12 | UX-12 | 6A.4 Business forms | Contract enum presentation and semantic vocabulary closure register | Approved shared/generated enums; Domain/Architecture owners close U-VOC | Exact domain-specific values; no static frontend catalogs or arbitrary technical role/state |
+| B-13 | UX-01–08/13/15/20 | 6A.5 Contextual workflows | Parent-to-child operations, readable typed relations/history, evidence version context and permission-aware actions | 6A.2 design; 6A.3 selectors; object/SoD backend decisions | No copying IDs; authorized same-tenant context; complete != verify; no hidden creation |
+| B-14 | All findings and all 42 forms | 6A.6 Functional acceptance | Execute form-specific acceptance and required E2E/runtime/visual evidence on authorized candidate | All implementation prerequisites closed; explicit runtime gate; human UI review | 08 per-operation criteria; actual negative RBAC/tenant/SoD tests; human acceptance required |
+
+## Reuse assessment
+
+Use existing React/native control language and styles, not a new UI framework. `ControlVersionSelect`, `SubjectSelect`, `MethodologySelect`, `StatePanel`, PageHeader/TableShell, DetailDrawer, StatusBadge and ApiClient are concrete reusable patterns in `apps/frontend/src/core-grc.tsx` / `apps/frontend/src/api-client.ts`. Subject and control selectors need paging, business copy and robust dependent-reset/error handling. MethodologySelect already handles all cursors. `InitialCompanyWizard` demonstrates a guided staged form and business validation, but its administrative tenant creation semantics are not reusable as authority for business objects. `frontend-auth-projections.ts` demonstrates backend-sourced presentation eligibility; object/SoD remains in backend. styles.css provides approved responsive drawer/table/form language and focus styles; future conformance must be tested.
+
+No general async picker abstraction, breadcrumb component or date-picker/wizard library was found beyond these concrete patterns/native controls. Do not claim a component exists just because the visual contract lists a family. Compose existing patterns and verify accessibility/focus/validation; any new abstraction must serve the approved later packet.
+
+## Architecture safety (explicit rejection)
+
+Reject replacing UUIDs with manually entered arbitrary codes, parallel lookup tables, duplicated catalogs, frontend-owned vocabularies, arbitrary JSON business forms, fake tenants, default-allow lookups, cross-tenant/global selectors without authorized filtering, schema changes for UI convenience, SQL writes, bypassing canonical operations, weaker validation, hidden entity creation, Platform/Tenant authority conflation, implicit broad grants, legacy compatibility layers and expansion into Risk/Incidents/Loss. Reuse canonical persistence, operations, permissions, effective configuration, tenant scope, idempotency, concurrency, audit and lineage. Any necessary missing read is documented precisely in 03 and must be contractually closed before implementation.

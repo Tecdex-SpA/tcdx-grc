@@ -14,6 +14,17 @@ afterEach(() => {
 });
 
 describe("frontend backend-authoritative session boundary", () => {
+  it("requests the proposed major v2 own projection with the selected context and no v1 fallback", async () => {
+    const tenantId = "01900000-0000-7000-8000-000000000001";
+    const fetcher = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+      expect(String(input)).toBe("https://grc.tecdex.net/api/v2/auth/me/authorization");
+      expect(new Headers(init?.headers).get("x-tcdx-tenant-id")).toBe(tenantId);
+      return new Response(JSON.stringify({ evaluated_at: "2026-10-13T00:00:00Z", platform_permissions: [], tenant_permissions: null }), { status: 200 });
+    });
+    vi.stubGlobal("fetch", fetcher);
+    await new ApiClient("https://grc.tecdex.net", tokens, () => ({ tenantId })).currentAuthorization(tenantId);
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
   it("uses only GRC HTTPS endpoints for file upload and download", async () => {
     const tenantId = "01900000-0000-7000-8000-000000000001";
     const intentId = "01900000-0000-7000-8000-000000000002";

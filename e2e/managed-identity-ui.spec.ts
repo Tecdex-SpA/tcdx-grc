@@ -2,7 +2,7 @@ import { expect, test, type Page, type Route } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
 
 test.use({ screenshot: "off", trace: "off" });
-const visualDirectory = "/tmp/tcdx-grc-step23l-mi7-r-ui";
+const visualDirectory = `${process.env.TCDX_UI_EVIDENCE_DIR ?? "/tmp"}/tcdx-grc-step23l-mi7-r-ui`;
 test.beforeAll(async () => { await mkdir(visualDirectory, { recursive: true }); });
 
 const id = "018f47f2-6170-7bd0-9d43-12f644a2b311";
@@ -22,9 +22,9 @@ async function authenticated(page: Page, permissions: string[], roles: string[] 
       membership_state: "active", effective_role_codes: roles.includes("TENANT_ADMIN") ? ["TENANT_ADMIN"] : [] }],
     effective_platform_role_codes: roles.filter((role) => role !== "TENANT_ADMIN")
   } }));
-  await page.route("**/api/v1/auth/me/authorization", (route) => route.fulfill({ json: {
+  await page.route("**/api/v2/auth/me/authorization", (route) => route.fulfill({ json: {
     evaluated_at: new Date().toISOString(), platform_permissions: permissions,
-    tenant_permissions: { tenant_id: tenantId, permissions: {} }
+    tenant_permissions: { tenant_id: tenantId, default_timezone: "Europe/Berlin", permissions: {} }
   } }));
   await page.route("**/api/v1/platform/managed-identities**", (route) => {
     const request = route.request();
@@ -237,9 +237,9 @@ test("administrative lifecycle actions require a reason and distinct intentions"
 
 test("tenant admin and a Platform role name without projected permission cannot enter MI", async ({ page }) => {
   await authenticated(page, [], ["TENANT_ADMIN", "PLATFORM_ADMIN"]);
-  await page.route("**/api/v1/auth/me/authorization", (route) => route.fulfill({ json: {
+  await page.route("**/api/v2/auth/me/authorization", (route) => route.fulfill({ json: {
     evaluated_at: new Date().toISOString(), platform_permissions: [],
-    tenant_permissions: { tenant_id: tenantId, permissions: { "platform.role.read": [{ scope_kind: "tenant" }] } }
+    tenant_permissions: { tenant_id: tenantId, default_timezone: "Europe/Berlin", permissions: { "platform.role.read": [{ scope_kind: "tenant" }] } }
   } }));
   await page.goto("/configuraciones/identidades-gestionadas");
   await expect(page.getByRole("button", { name: "Identidades gestionadas" })).toHaveCount(0);
@@ -248,7 +248,7 @@ test("tenant admin and a Platform role name without projected permission cannot 
 
 test("failed permission projection clears MI presentation eligibility", async ({ page }) => {
   await authenticated(page, ["platform.managed_identity.read"], ["PLATFORM_ADMIN"]);
-  await page.route("**/api/v1/auth/me/authorization", (route) => route.fulfill({ status: 503,
+  await page.route("**/api/v2/auth/me/authorization", (route) => route.fulfill({ status: 503,
     contentType: "application/problem+json", body: JSON.stringify({ code: "TCDX.DEPENDENCY.UNAVAILABLE",
       message: "Dependency unavailable", correlation_id: id, retryable: true }) }));
   await page.goto("/configuraciones/identidades-gestionadas");

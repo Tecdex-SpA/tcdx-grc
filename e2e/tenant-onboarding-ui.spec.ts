@@ -17,12 +17,12 @@ async function runtime(page: Page, options: { platform?: boolean; dual?: boolean
   let companyCreated = false, partial = !!options.partial, rolePartial = !!options.rolePartial, refetchFailure = !!options.refetchFailure, unconfirmedRole = !!options.unconfirmedRole;
   function makeMember() { return { tenant_membership_id: memberId, tenant_id: tenantId, user_identity_id: personId, membership_state: "active", joined_at: "2026-01-01T00:00:00Z", ended_at: null, user_identity: { display_name: identity.display_name, email_normalized: null, lifecycle_state: "active", last_authenticated_at: null }, roles: options.assigned ? [{ membership_role_id: roleIds[0], role_id: roleIds[0], role_name: "Responsable del servidor", scope_kind: "tenant", valid_from: "2020-01-01T00:00:00Z", valid_to: null, etag: "a".repeat(64) }] as Record<string, unknown>[] : [] as Record<string, unknown>[] }; }
   const credential = `local-fixture-${crypto.randomUUID()}`;
-  await page.route("**/api/v1/**", async route => {
+  await page.route(url => url.pathname.startsWith("/api/v1/") || url.pathname === "/api/v2/auth/me/authorization", async route => {
     const request = route.request(), url = new URL(request.url()), path = url.pathname, method = request.method();
     requests.push({ path, method, query: url.search, tenant: request.headers()["x-tcdx-tenant-id"], etag: request.headers()["if-match"], body: request.postData() ? request.postDataJSON() : undefined, ...(request.headers()["idempotency-key"] ? { key: request.headers()["idempotency-key"] } : {}) });
     const deny = (status: number, details?: unknown) => route.fulfill({ status, json: { code: status === 403 ? "TCDX.AUTHORIZATION.DENIED" : "TCDX.DEPENDENCY.UNAVAILABLE", message: "internal-unsafe-details", correlation_id: tenantId, retryable: status >= 500, ...(details ? { details } : {}) } });
     if (path === "/api/v1/access/me") return route.fulfill({ json: { available_tenant_contexts: options.platform && !options.dual ? [] : [{ tenant_id: tenantId, tenant_display_name: company.display_name, tenant_membership_id: tenantId, membership_state: "active", effective_role_codes: ["UNTRUSTED_DISPLAY_ROLE"] }], effective_platform_role_codes: options.platform ? ["UNTRUSTED_DISPLAY_ROLE"] : [] } });
-    if (path === "/api/v1/auth/me/authorization") return route.fulfill({ json: { evaluated_at: new Date().toISOString(), platform_permissions: options.platform ? platformCodes.filter(code => (!options.noPlatformAssign || code !== "platform.role.assign") && (!options.tenantReadsOnly || !["platform.membership.read", "platform.role.read"].includes(code))) : [], tenant_permissions: options.platform && !options.dual ? null : { tenant_id: options.wrongTenant ? personId : tenantId, permissions: options.missing ? {} : Object.fromEntries(tenantCodes.map(code => [code, [{ scope_kind: "tenant" }]])) } } });
+    if (path === "/api/v2/auth/me/authorization") return route.fulfill({ json: { evaluated_at: new Date().toISOString(), platform_permissions: options.platform ? platformCodes.filter(code => (!options.noPlatformAssign || code !== "platform.role.assign") && (!options.tenantReadsOnly || !["platform.membership.read", "platform.role.read"].includes(code))) : [], tenant_permissions: options.platform && !options.dual ? null : { tenant_id: options.wrongTenant ? personId : tenantId, default_timezone: "Europe/Berlin", permissions: options.missing ? {} : Object.fromEntries(tenantCodes.map(code => [code, [{ scope_kind: "tenant" }]])) } } });
     if (path === "/api/v1/user-identities") {
       const platform = url.searchParams.get("mode") === "platform_search";
       expect(request.headers()["x-tcdx-tenant-id"]).toBe(platform ? undefined : tenantId);
@@ -82,10 +82,10 @@ async function tenantSelect(page: Page) {
   await page.getByRole("checkbox", { name: "Responsable del servidor" }).check();
 }
 async function screenshot(page: Page, name: string, project: string) {
-  await mkdir("/tmp/tcdx-grc-step23l-tenant-onboarding-d3-r-ui", { recursive: true });
+  await mkdir(`${process.env.TCDX_UI_EVIDENCE_DIR ?? "/tmp"}/tcdx-grc-step23l-tenant-onboarding-d3-r-ui`, { recursive: true });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBe(true);
   await page.evaluate(() => window.scrollTo(0, 0));
-  await page.screenshot({ path: `/tmp/tcdx-grc-step23l-tenant-onboarding-d3-r-ui/${name}-${project}.png`, fullPage: true, mask: [page.getByLabel("Credencial temporal emitida")] });
+  await page.screenshot({ path: `${process.env.TCDX_UI_EVIDENCE_DIR ?? "/tmp"}/tcdx-grc-step23l-tenant-onboarding-d3-r-ui/${name}-${project}.png`, fullPage: true, mask: [page.getByLabel("Credencial temporal emitida")] });
 }
 test("A: company with existing identity uses exact onboarding boundary, refetch and no manual IDs", async ({ page }, info) => {
   const r = await runtime(page, { platform: true }); await companyFields(page); await existingIdentity(page);

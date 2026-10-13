@@ -1,0 +1,56 @@
+{
+  "images": {
+    "backend": {
+      "tag": "tcdx-grc-backend:iana-v2-qa30-240063fbc85b",
+      "image_id": "sha256:3be791953c806bbb24556526f06adfa73b364f374856a4f8102e5db9521d3cee",
+      "digest": "sha256:3be791953c806bbb24556526f06adfa73b364f374856a4f8102e5db9521d3cee",
+      "transport": "/tmp/tcdx-integral-20261013/backend-qa30-image.tar",
+      "transport_sha256": "13905ae1be716f5422ece03a43512bd5a2089ae15bfeb5b680305d2d7bbd5454",
+      "platform": "linux/amd64",
+      "user": "node",
+      "validation": {
+        "node": "v22.23.2",
+        "compiled_loader_and_iana": "PASS",
+        "v1self": 404,
+        "v2self_without_session": 401,
+        "v1providers": 200,
+        "no_store_vary": "PASS",
+        "reference_dependencies": false,
+        "all_other_routes": "PASS_METHOD_PATH_EQUIVALENCE"
+      }
+    },
+    "frontend": {
+      "tag": "tcdx-grc-frontend:iana-v2-qa30-79f2e9b39f22",
+      "image_id": "sha256:2936ac99ed0fea65354f4e55f2b9f3d0fe431ab72a5a4f47c97bc31fc0768ab1",
+      "digest": "sha256:2936ac99ed0fea65354f4e55f2b9f3d0fe431ab72a5a4f47c97bc31fc0768ab1",
+      "transport": "/tmp/tcdx-integral-20261013/frontend-qa30-79f2e9b39f22-image.tar",
+      "transport_sha256": "52b53135c173ce26324c1f88e4181533a62001cbb8127a8f92fad009a9ea1a17",
+      "platform": "linux/amd64",
+      "user": "node",
+      "validation": {
+        "v2": true,
+        "v1self": false,
+        "reference_dependencies": false,
+        "strict_IANA_client_validator": true,
+        "assets": [
+          {
+            "path": "/assets/index-BmB4OoCc.css",
+            "sha256": "3d81569dbc230cad03aca1fb1cf9b231151c0aed9bab803fdc0021e465076299"
+          },
+          {
+            "path": "/assets/index-SoxsEvVE.js",
+            "sha256": "cd8d38e14789576295fe7ca5857015b8b8cc7fee6f3114b8441585aa1b9c14d2"
+          }
+        ]
+      }
+    }
+  },
+  "source_manifest_sha256": "79f2e9b39f22f8e8f68dfbf10ec95f6b1c4a7c4bac5de774e846f9f9c0791bec",
+  "QA30_SCHEMA_COMPATIBILITY": "PASS_LOCAL_SCHEMA30_NATIVE_PROJECTION",
+  "other_registered_routes": "PASS_EXCEPT_APPROVED_SELF_MAJOR",
+  "remote_deploy": false,
+  "source_component_freezes": {
+    "backend": "240063fbc85b1f356b13bbf8acfb92978d3866822d5673b368e19a3ba7761657",
+    "frontend": "79f2e9b39f22f8e8f68dfbf10ec95f6b1c4a7c4bac5de774e846f9f9c0791bec"
+  }
+}

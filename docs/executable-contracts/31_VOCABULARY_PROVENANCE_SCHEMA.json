@@ -1,0 +1,434 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tcdx:contract:vocabulary-provenance:v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile_version",
+    "contract_version",
+    "manifest_sha256",
+    "root",
+    "occurrences"
+  ],
+  "properties": {
+    "profile_version": {
+      "const": 1
+    },
+    "contract_version": {
+      "const": "STEP6A3_VOCABULARIES_v1"
+    },
+    "manifest_sha256": {
+      "const": "81e559c96f687c319d415bb57b97187f17f91d884b35594b4ce0db7b68862b83"
+    },
+    "root": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "entity_type",
+        "entity_id",
+        "entity_version"
+      ],
+      "properties": {
+        "entity_type": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "entity_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "entity_version": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "row_version",
+                "version_number"
+              ]
+            },
+            "value": {
+              "type": "string",
+              "pattern": "^(?:[1-9][0-9]{0,17}|[1-8][0-9]{18}|9[0-1][0-9]{17}|92[0-1][0-9]{16}|922[0-2][0-9]{15}|9223[0-2][0-9]{14}|92233[0-6][0-9]{13}|922337[0-1][0-9]{12}|92233720[0-2][0-9]{10}|922337203[0-5][0-9]{9}|9223372036[0-7][0-9]{8}|92233720368[0-4][0-9]{7}|922337203685[0-3][0-9]{6}|9223372036854[0-6][0-9]{5}|92233720368547[0-6][0-9]{4}|922337203685477[0-4][0-9]{3}|9223372036854775[0-7][0-9]{2}|922337203685477580[0-6]|9223372036854775807)$",
+              "maxLength": 19
+            }
+          }
+        }
+      }
+    },
+    "occurrences": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "family_id",
+          "code",
+          "input_path",
+          "entity_type",
+          "entity_id",
+          "entity_version"
+        ],
+        "properties": {
+          "family_id": {
+            "enum": [
+              "CV-01",
+              "CV-02",
+              "CV-03",
+              "CV-04",
+              "CV-05",
+              "CV-06",
+              "CV-07",
+              "CV-08",
+              "CV-09",
+              "CV-10",
+              "CV-11",
+              "CV-12",
+              "CV-13",
+              "CV-14"
+            ]
+          },
+          "code": {
+            "type": "string"
+          },
+          "input_path": {
+            "type": "string",
+            "pattern": "^[a-z_]+(\\[[0-9]+\\]\\.[a-z_]+)?$"
+          },
+          "entity_type": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "entity_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "entity_version": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "row_version",
+                  "version_number",
+                  "root_row_version",
+                  "root_version_number"
+                ]
+              },
+              "value": {
+                "type": "string",
+                "pattern": "^(?:[1-9][0-9]{0,17}|[1-8][0-9]{18}|9[0-1][0-9]{17}|92[0-1][0-9]{16}|922[0-2][0-9]{15}|9223[0-2][0-9]{14}|92233[0-6][0-9]{13}|922337[0-1][0-9]{12}|92233720[0-2][0-9]{10}|922337203[0-5][0-9]{9}|9223372036[0-7][0-9]{8}|92233720368[0-4][0-9]{7}|922337203685[0-3][0-9]{6}|9223372036854[0-6][0-9]{5}|92233720368547[0-6][0-9]{4}|922337203685477[0-4][0-9]{3}|9223372036854775[0-7][0-9]{2}|922337203685477580[0-6]|9223372036854775807)$",
+                "maxLength": 19
+              }
+            }
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "family_id": {
+                  "const": "CV-01"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "code": {
+                  "enum": [
+                    "public",
+                    "internal",
+                    "confidential",
+                    "restricted"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "family_id": {
+                  "const": "CV-02"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "code": {
+                  "enum": [
+                    "document",
+                    "record",
+                    "image",
+                    "report"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "family_id": {
+                  "const": "CV-03"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "code": {
+                  "enum": [
+                    "continuous",
+                    "daily",
+                    "weekly",
+                    "monthly",
+                    "quarterly",
+                    "semiannual",
+                    "annual",
+                    "event_driven"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "family_id": {
+                  "const": "CV-04"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "code": {
+                  "enum": [
+                    "applicable",
+                    "not_applicable"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "family_id": {
+                  "const": "CV-05"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "code": {
+                  "enum": [
+                    "not_implemented",
+                    "partially_implemented",
+                    "implemented",
+                    "not_applicable"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "family_id": {
+                  "const": "CV-06"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "code": {
+                  "enum": [
+                    "closure"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "family_id": {
+                  "const": "CV-07"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "code": {
+                  "enum": [
+                    "trigger"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "family_id": {
+                  "const": "CV-08"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "code": {
+                  "enum": [
+                    "urgent",
+                    "high",
+                    "normal",
+                    "low"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "family_id": {
+                  "const": "CV-09"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "code": {
+                  "enum": [
+                    "relevant",
+                    "partially_relevant",
+                    "not_relevant"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "family_id": {
+                  "const": "CV-10"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "code": {
+                  "enum": [
+                    "census",
+                    "random",
+                    "stratified_random",
+                    "systematic",
+                    "judgmental"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "family_id": {
+                  "const": "CV-11"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "code": {
+                  "enum": [
+                    "critical",
+                    "major",
+                    "moderate",
+                    "minor"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "family_id": {
+                  "const": "CV-12"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "code": {
+                  "enum": [
+                    "uploaded",
+                    "system_record",
+                    "human_observation",
+                    "external_record"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "family_id": {
+                  "const": "CV-13"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "code": {
+                  "enum": [
+                    "sufficient",
+                    "partially_sufficient",
+                    "insufficient"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "family_id": {
+                  "const": "CV-14"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "code": {
+                  "enum": [
+                    "COMPLIANCE_MANAGER",
+                    "CONTROL_OWNER",
+                    "PROCESS_OWNER",
+                    "QUALITY_MANAGER",
+                    "CISO_SECURITY_MANAGER"
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

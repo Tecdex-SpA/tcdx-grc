@@ -1,0 +1,110 @@
+[
+  {
+    "gate": "rector",
+    "command": [
+      "bash",
+      "scripts/verify-rector-governance.sh"
+    ],
+    "at": "2026-10-10T01:47:04.266239+00:00",
+    "duration_seconds": 0.572,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/rector.log",
+    "log_sha256": "be827f42eb6ea9aa9359e7f5e925cc56b81bf1dbc9f7f0b6337292b1c38192ff"
+  },
+  {
+    "gate": "status",
+    "command": [
+      "bash",
+      "scripts/test-rector-governance-status.sh"
+    ],
+    "at": "2026-10-10T01:47:04.839063+00:00",
+    "duration_seconds": 1.615,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/status.log",
+    "log_sha256": "4a950b39b20f2de1440a2b45b243b63df607fa3ede7f7e32e9f7e9da71864597"
+  },
+  {
+    "gate": "contracts",
+    "command": [
+      "node",
+      "scripts/foundations/generate-contract-assets.mjs",
+      "--check"
+    ],
+    "at": "2026-10-10T01:47:06.457002+00:00",
+    "duration_seconds": 0.061,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/contracts.log",
+    "log_sha256": "6b23028285d3508b88246bfaf068d1c124204ef566bf5065a39cdcf841fc8976"
+  },
+  {
+    "gate": "vocabulary",
+    "command": [
+      "node",
+      "scripts/foundations/generate-phase6a-vocabularies.mjs",
+      "--check"
+    ],
+    "at": "2026-10-10T01:47:06.519860+00:00",
+    "duration_seconds": 0.333,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/vocabulary.log",
+    "log_sha256": "712684f1e3b9a46e0b8fb6e9333573ec75e4a38f571ca1a587fbba6126af6001"
+  },
+  {
+    "gate": "governance-negatives",
+    "command": [
+      "python3",
+      "scripts/verify-internal-governance.py",
+      "--negative-tests"
+    ],
+    "at": "2026-10-10T01:47:06.854237+00:00",
+    "duration_seconds": 0.077,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/governance-negatives.log",
+    "log_sha256": "53e0673bfb3b2dc039d560b97793deae140516e7566252b4000289630afa99b8"
+  },
+  {
+    "gate": "residuals",
+    "command": [
+      "python3",
+      "scripts/foundations/verify-phase6a3-residuals.py"
+    ],
+    "at": "2026-10-10T01:47:06.934448+00:00",
+    "duration_seconds": 0.399,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/residuals.log",
+    "log_sha256": "1c44a230d4156a6dd48489c647d1d52376bd02b7ffcf92b4b64ffba4bd2c1e3d"
+  },
+  {
+    "gate": "secrets",
+    "command": [
+      "node",
+      "scripts/foundations/secret-scan.mjs"
+    ],
+    "at": "2026-10-10T01:47:07.335207+00:00",
+    "duration_seconds": 3.884,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/secrets.log",
+    "log_sha256": "785afde26b815831ebbe2ea9b6a7125f5b49cdf400b3697f50d456a5337f0f2d"
+  },
+  {
+    "gate": "whitespace",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "at": "2026-10-10T01:47:11.222035+00:00",
+    "duration_seconds": 0.252,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/whitespace.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

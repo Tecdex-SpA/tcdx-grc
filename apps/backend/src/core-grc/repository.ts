@@ -1,3 +1,4 @@
+import {recordVocabularyWrite,readVocabularyProvenance} from "./vocabulary-provenance.js";
 import { createHash } from "node:crypto";
 import { CompiledQuery, sql, type Kysely, type Transaction } from "kysely";
 import { validate as validateUuid } from "uuid";
@@ -407,6 +408,7 @@ export async function detailResource(executor: Executor, actor: CoreActor, defin
     row.evidence_links = (await sql<Row>`SELECT action_evidence_link_id,action_id,evidence_version_id,link_role FROM remediation.action_evidence_links WHERE tenant_id=${actor.tenantId}::uuid AND action_id=${id}::uuid ORDER BY created_at`.execute(executor)).rows;
     row.verifications = (await sql<Row>`SELECT action_verification_id,action_id,verifier_membership_id,verification_decision,rationale,verified_at,retest_reference FROM remediation.action_verifications WHERE tenant_id=${actor.tenantId}::uuid AND action_id=${id}::uuid ORDER BY verified_at`.execute(executor)).rows;
   }
+  if(["StatementOfApplicability","Control","AssuranceTest","Evidence","EvidenceVersion","Issue","Action","FileUploadIntent","FileObject"].includes(definition.name)) {const profiles=await readVocabularyProvenance(executor,actor.tenantId,definition.name,id);if(profiles.length)row.contract_provenance=profiles;}
   return normalizeProjection(row) as Row;
 }
 
@@ -415,7 +417,7 @@ export async function insertRow(executor: Executor, table: string, values: Recor
   const parameters = Object.values(values);
   const placeholders = parameters.map((_, index) => `$${index + 1}`);
   const result = await executor.executeQuery<Row>(CompiledQuery.raw(`INSERT INTO ${table} (${columns.map((column) => `"${column}"`).join(",")}) VALUES (${placeholders.join(",")}) RETURNING ${returning}`, parameters));
-  return result.rows[0]!;
+  const row=result.rows[0]!;recordVocabularyWrite(table,row);return row;
 }
 
 export async function casTransition(executor: Executor, actor: CoreActor, definition: ResourceDefinition, id: string, expectedVersion: number, fromState: string, toState: string, changes: Record<string, unknown> = {}): Promise<Row> {
@@ -431,7 +433,7 @@ export async function casTransition(executor: Executor, actor: CoreActor, defini
     if (Number(current.rows[0].row_version) !== expectedVersion) throw new FoundationError("TCDX.CONFLICT.CONCURRENCY", "Concurrent modification detected", 409, true);
     throw new FoundationError("TCDX.LIFECYCLE.TRANSITION_DENIED", "Lifecycle transition denied", 409);
   }
-  return row;
+  recordVocabularyWrite(definition.table,row);return row;
 }
 
 export async function casRetentionPolicyTransition(executor: Executor, actor: CoreActor, id: string, expectedVersion: number, fromState: string, toState: string, publish = false): Promise<Row> {

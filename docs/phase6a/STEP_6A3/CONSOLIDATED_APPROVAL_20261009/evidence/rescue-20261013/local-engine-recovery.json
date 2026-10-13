@@ -1,0 +1,42 @@
+{
+  "scope": "LOCAL_DISPOSABLE_DOCKER_ENGINE_ONLY_NO_QA_WRITES",
+  "events": [
+    {
+      "case": "backend_candidate_engine_replace_config_health",
+      "result": "PASS"
+    },
+    {
+      "case": "frontend_candidate_engine_replace_config_health",
+      "result": "PASS"
+    },
+    {
+      "case": "controlled_local_frontend_failure",
+      "result": "INJECTED_OWN_DISPOSABLE_OBJECT_ONLY"
+    },
+    {
+      "case": "frontend_exact_previous_object_config_health_restored",
+      "result": "PASS"
+    },
+    {
+      "case": "backend_exact_previous_object_config_health_restored",
+      "result": "PASS"
+    },
+    {
+      "case": "previous_pair_contract_restored",
+      "result": "PASS",
+      "backend_route_statuses": [
+        401,
+        404
+      ]
+    }
+  ],
+  "pass_checks": 5,
+  "local_real_recovery_executed": true,
+  "qa_recovery_executed": false,
+  "previous_pair": {
+    "backend": "sha256:ab9902e4215289307992b9aa98421d5882a18b4236752948356b4fbe25829195",
+    "frontend": "sha256:f31fd8a5b63003ba0973822854a94dc03b0b9753ec9dc165253418608c0f73ce"
+  },
+  "failed_objects_retained": true,
+  "source_driver_write_guard": "STILL_DISABLED"
+}

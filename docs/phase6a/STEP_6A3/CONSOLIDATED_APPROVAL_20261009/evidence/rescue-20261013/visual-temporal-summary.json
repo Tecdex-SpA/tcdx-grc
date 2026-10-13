@@ -1,0 +1,30 @@
+{
+  "visual_equivalence": [
+    {
+      "viewport": 1536,
+      "png_identical": true,
+      "sha256": "1677768db0e90758ac83e9ac4a0663e273a831bf008c6d40c683bffab761c93f",
+      "basis": "matched compiled old/candidate same controlled browser state; 6 checks completed before temporal harness failure"
+    },
+    {
+      "viewport": 390,
+      "png_identical": true,
+      "sha256": "f42d09f40110527896891426c6a93176661fd0aa23685aa7415cb7a75691efb5",
+      "basis": "matched compiled old/candidate same controlled browser state; 6 checks completed before temporal harness failure"
+    }
+  ],
+  "temporal_retest": {
+    "scope": "LOCAL_COMPILED_IMAGES_SIMULATED_BROWSER_NOT_REAL_IAM",
+    "results": [
+      {
+        "case": "tenant_switch_programmatic_narrow_no_browser_fallback_manual_pending",
+        "result": "PASS"
+      }
+    ],
+    "count": 1,
+    "human_ui_review": "NOT_APPROVED"
+  },
+  "unique_browser_check_basis": "6 successful layout/brand/equivalence checks followed by1 directed temporal PASS; not claimed as one full clean run",
+  "manual_mobile": "PENDING",
+  "human_ui_review": "NOT_APPROVED"
+}

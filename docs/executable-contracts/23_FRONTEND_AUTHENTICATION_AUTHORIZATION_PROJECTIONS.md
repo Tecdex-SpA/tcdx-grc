@@ -255,3 +255,7 @@ by this contract task.
 ## Managed Identity tenant onboarding E2E — 2026-10-07
 
 Executable26 adds presentation binding platform.tenant_user.onboard with CORE_PLATFORM/platform only. Fresh effective Platform projection controls central tenant-user onboarding. Tenant projections, role names, email and username never authorize it; backend revalidates. Existing D3-A membershipRoleAssign/revoke scopes remain unchanged.
+
+## STEP6A3 D3 successor candidate — 2026-10-13 (DRAFT_NOT_EFFECTIVE)
+
+Contract33_PHASE6A3_TENANT_TIMEZONE_PROJECTION.md contains the exact PO-approved delta SHA2566205faaafa3cb0cbd4d0cf34cd9c8343ccca64392e638a833e10fa7db8c73375. The required major v2 transport, retirement and compatibility proposal needs later exact-byte acceptance under rector25 §1 and rector49 §3; no effective publication is recorded. Only after that acceptance, applicable gates and local publication metadata, selected tenant_permissions is the closed tuple {tenant_id,permissions,default_timezone}; all other semantics above are preserved. Backend reads the persisted own tenant zone in the same read-only repeatable-read snapshot. Upon effective publication the proposed successor would replace only the former self-projection tuple, transport and its temporal presentation consumers. This draft append does not supersede the effective historical contract. No extra Permission, grant, physical schema or read audit. Historical MI7A authority remains recorded; external rollout is not authorized.

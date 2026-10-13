@@ -187,3 +187,8 @@ Central onboarding publication20261007000100 adds exactly platform.tenant_user.o
 ## Approved Phase 5 methodology amendment
 
 See [27 — canonical methodology binding](27_PHASE5_METHODOLOGY_BINDING.md) and the explicit human architecture approval. Migration `20261007000200` produces 30 migrations / 237 physical tables / 172 permissions. Seeds: separate Compliance and Control Effectiveness version 1, two compatible FormulaDefinitions, two narrowly scoped read permissions; publication audit `audit.compliance.methodology.publish.v1` and `audit.controls.methodology.publish.v1`. No historical migration or immutable rector file is changed.
+
+
+## STEP6A.3 — publicación local R1/R2
+
+R1 adopta exactamente3 permisos y44 pares de29 (13F/17M/14R), mediante nuevas migraciones31/32. SEED-005 vigente local:175 permisos; 30 migraciones históricas permanecen intactas. SEED-006/010 no concede pares fuera del manifest29, ni derechos de comando por un permiso de lectura. R2 exige audit.iam.role_permission.publish.v1 transaccional por cada materialización/adopción RolePermission y actorServicePrincipal real existente; ningún nuevo actor/credencial es seed de producto. Gate previo de adopción global auditada; sin actor/aprobación/hash/audit completo, DENY y rollback.33 se prepara fuera de manifest activo para nueva adopción de filas candidatas: before.present refleja estado real y no un INSERT retrospectivo.

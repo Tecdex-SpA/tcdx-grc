@@ -24,6 +24,14 @@ const FIELD_LABELS: Readonly<Record<string, string>> = {
   retention_policy_id: "ID de política de retención",
   file_object_id: "ID de archivo",
   applicability_decision: "Decisión de aplicabilidad",
+  implementation_state: "Estado de implementación",
+  justification: "Justificación",
+  population_count: "Tamaño de la población",
+  sample_count: "Tamaño de la muestra",
+  sample_code: "Código de muestra",
+  selection_method: "Método de selección",
+  sample_period_start: "Inicio del período de muestra",
+  sample_period_end: "Fin del período de muestra",
   rationale: "Fundamento",
   reason: "Motivo",
   result_status: "Estado del resultado",
@@ -86,6 +94,26 @@ const FIELD_LABELS: Readonly<Record<string, string>> = {
 
 const VALUE_LABELS: Readonly<Record<string, string>> = {
   ...STATUS_LABELS,
+  TENANT_DERIVED: "Derivado de la organización",
+  insufficient_coverage: "Cobertura insuficiente",
+  stale_source: "Fuente desactualizada",
+  conflicting_sources: "Fuentes en conflicto",
+  dependency_pending: "Dependencia pendiente",
+  invalid_input: "Datos de entrada no válidos",
+  source_error: "Error de la fuente",
+  calculation_error: "Error de cálculo",
+  not_tested: "Sin probar",
+  finding: "Hallazgo",
+  non_conformity: "No conformidad",
+  gap: "Brecha",
+  exception: "Excepción",
+  audit_observation: "Observación de auditoría",
+  legal_hold: "Suspensión del borrado por obligación legal",
+  mandatory_regulatory_policy: "Política normativa obligatoria",
+  contractual_policy: "Política contractual",
+  tenant_policy: "Política de la organización",
+  product_baseline: "Política base del producto",
+  expiry_or_closure: "Vencimiento o cierre",
   PLATFORM_CONTROL: "Control base TCDX",
   GLOBAL_REFERENCE: "Control de referencia",
   TENANT_OWNED: "Control de la organización",
@@ -127,9 +155,9 @@ const VALUE_LABELS: Readonly<Record<string, string>> = {
 };
 
 const ROLE_LABELS: Readonly<Record<string, string>> = {
-  PLATFORM_ADMIN: "Administrador de Platform",
-  PLATFORM_SUPPORT: "Soporte Platform",
-  TENANT_ADMIN: "Administrador del tenant",
+  PLATFORM_ADMIN: "Administrador de la plataforma",
+  PLATFORM_SUPPORT: "Soporte de la plataforma",
+  TENANT_ADMIN: "Administrador de la empresa",
   PRIVACY_MANAGER: "Responsable de privacidad",
   LEGAL_REVIEWER: "Revisor legal",
   "GRC Manager": "Responsable GRC",
@@ -169,3 +197,21 @@ export function fieldPlaceholder(field: string): string {
   if (field.includes("date") || field.endsWith("_at") || field.endsWith("_from") || field.endsWith("_to")) return "AAAA-MM-DD";
   return `Ingresa ${fieldLabel(field).toLowerCase()}`;
 }
+
+// Labels consume published values; they never define an allowed vocabulary.
+export function publishedOptionLabel(value: string | number, context: "value" | "lifecycle" = "value"): string | undefined {
+  if (typeof value === "number") return String(value);
+  return context === "lifecycle" ? STATUS_LABELS[value] : VALUE_LABELS[value];
+}
+
+// Rector16 initial Subject types. Unknown extensions need their own published translation.
+const SUBJECT_TYPE_LABELS: Readonly<Record<string, string>> = {
+  organization: "Organización", organizational_unit: "Unidad organizativa", process: "Proceso",
+  service: "Servicio", asset: "Activo", system: "Sistema", application: "Aplicación",
+  data_asset: "Activo de datos", identity: "Identidad", group: "Grupo", supplier: "Proveedor",
+  contract: "Contrato", location: "Ubicación", repository: "Repositorio", pipeline: "Flujo de procesamiento",
+  cloud_account: "Cuenta de nube", cloud_resource: "Recurso de nube", project: "Proyecto", ticket: "Solicitud",
+  document: "Documento", control: "Control", requirement: "Requisito", risk: "Riesgo",
+  incident: "Incidente", audit: "Auditoría", action: "Acción"
+};
+export function subjectTypeLabel(value: string): string | undefined { return SUBJECT_TYPE_LABELS[value]; }

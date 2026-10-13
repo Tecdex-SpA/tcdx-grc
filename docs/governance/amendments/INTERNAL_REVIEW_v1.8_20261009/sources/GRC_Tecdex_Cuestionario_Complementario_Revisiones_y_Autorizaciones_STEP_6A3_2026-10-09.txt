@@ -1,0 +1,102 @@
+GRC Tecdex | Cuestionario complementario
+STEP 6A.3 · Aclaraciones vinculantes, revisión independiente y operaciones de alto impacto
+Origen: cuestionario principal respondido y firmado el 09-10-2026. Este anexo NO sustituye sus respuestas: aclara contradicciones, identifica actos que requieren revisión específica y delimita autorizaciones. Rector activo reportado: MASTER_REGENT v1.7; enmienda SOG v2 permanece candidata hasta activación acreditada.
+Instrucciones para responder
+Marque UNA alternativa por pregunta (X). Complete los campos solicitados. Una aprobación de diseño no certifica pruebas no realizadas ni convierte una misma persona en revisor independiente. Las operaciones sin entorno, artefacto y procedimiento concretos quedan pendientes de ejecución. Las opciones de excepción no pueden contrariar una norma superior.
+Aprobador: Andrés Barouh    Fecha/hora (America/Santiago): __9 octubre 2026, 15:00_________    Firma: ____Andres Barouh A
+A. Independencia, competencia y autoridad
+C01. En A04 indicó que se designa a sí mismo. Si una cláusula vigente exige una PERSONA DISTINTA, ¿qué instrucción aprueba?
+[ ] A. Solicitar revisión humana externa puntual y mantener bloqueado el acto hasta recibirla.
+[ ] B. Solicitar a Codex que demuestre, con cita rectora, que la independencia no es exigible para ese acto; si sí lo es, mantenerlo bloqueado.
+[ ] C. Solicitar una excepción formal SOLO si la fuente superior la permite; hasta su aprobación, mantener bloqueo.
+Respuesta / observaciones: Revisor distinto (si existe), contacto/función o política de excepción aplicable: __nada que yo apruebe se bloquea, yo tengo todo el poder de decision en el 100% del product, funcionamiento y cumplimiento_____
+
+C02. ¿Autoriza que Codex prepare una matriz de competencia por cada una de sus ocho funciones, y usted firme su revisión personal de riesgos, evidencia y límites?
+[ ] APRUEBO    [ ] APRUEBO CON CONDICIONES    [ X] NO APRUEBO
+Respuesta / observaciones: Evidencia verificable de experiencia/atribuciones por función (o indicar que la entregará al revisar): __tengo la experiencia y atribuciones, este es el quinto modelo de este software que Desarrollo.__
+
+C03. Para CFG-D y reglas globales, ¿quién es el AUTOR humano real de cada metodología/version y quién aprobará su contenido?
+[ X] A. Autoría atribuible a mí;  no solicitar determinación de separación o excepción permitida.
+[ ] B. Autoría atribuible a otra persona (identificarla).
+[ ] C. Autoría no determinada: Codex debe presentar historial y hashes antes de resolver.
+Respuesta / observaciones: BASELINE_COMPLIANCE v1 autor: _YO_____; aprobador: __YO____. BASELINE_CONTROL_EFFECTIVENESS v1 autor: __YO____; aprobador: ___YO___.
+
+C04. ¿Cómo desea recibir las decisiones metodológicas/SoD que aún requieran juicio humano, conforme a H06?
+[ X] A. Un único Word con cláusulas exactas, versiones/hashes, riesgos, opciones y casillas de aprobación separadas.
+[ ] B. Revisión individual por contrato.
+Respuesta / observaciones: Condiciones: _________________________________________________________________
+
+B. Contradicciones funcionales y controles de seguridad
+C05. En E02 marcó NO APRUEBO al DENY por falta de aplicabilidad. ¿Qué comportamiento EXACTO autoriza cuando no existe binding legal/contractual verificable?
+[ ] A. Permitir visualizar políticas informativas, pero PROHIBIR seleccionarlas/aplicarlas hasta binding válido.
+[ X] B. Permitir continuar el flujo sin política aplicada, si el contrato lo permite, con estado explícito PENDIENTE; no afirmar cumplimiento.
+[ ] C. Solicitar modificación rectora formal de la regla DENY (no ejecutar antes de aprobación válida).
+Respuesta / observaciones: Precisar operación afectada (lectura / selección / aplicación / publicación) y tratamiento QA vs comercial: ______
+
+C06. Respecto a E01: ¿el tenant admin configura su propia política y el contrato de servicio determina las obligaciones del proveedor, sin presumir que ambos son el mismo documento?
+[X ] APRUEBO esta separación y revisión contractual antes de activación comercial.
+[ ] APRUEBO CON CONDICIONES    [ ] NO APRUEBO
+Respuesta / observaciones: Fuente y responsable de verificar contrato de servicio; qué se permite en QA sin binding: __________________
+
+C07. En C03 señaló que podría solicitar excepciones a DENY/tenant scope. ¿Ratifica que cualquier excepción futura requiere acto rector específico, sin override verbal ni cross-tenant implícito?
+[ X] APRUEBO    [ ] APRUEBO CON CONDICIONES    [ ] NO APRUEBO
+Respuesta / observaciones: Condiciones o cláusula rectora que propone modificar: ______________________________________________
+
+C08. En F02 solicitó no ser excesivamente restrictivo hasta comercial. ¿Confirma que aislamiento tenant, mínimo privilegio y prohibición de escalamiento NO se difieren?
+[ X] APRUEBO (mejoras UX no críticas pueden planificarse, controles obligatorios no).
+[ ] APRUEBO CON CONDICIONES    [ ] NO APRUEBO
+Respuesta / observaciones: Indique controles concretos que considera diferibles y su fuente de autorización: _______Tenant es privado para otros tenant, eso siempre debe mantenerse así, solo el admin plataform o el support plataform pueden acceder a los demás tenant para sus labores de configuracion y soporte________________
+
+C09. En D03 expresó preocupación por eficiencia. ¿Aprueba revalidar elegibilidad al guardar y operaciones sensibles, optimizando con consultas acotadas/caché segura sin eliminar validación obligatoria?
+[ X] APRUEBO    [ ] APRUEBO CON CONDICIONES    [ ] NO APRUEBO
+Respuesta / observaciones: Límite de latencia objetivo o restricciones: __________________________________________________
+
+C. Operaciones, entornos y aceptación
+C10. En F05/G04/I07/J04 autorizó operaciones reales, pero no indicó destino ni ventana. ¿Cuál es el alcance ejecutable AHORA?
+[ X] A. Solo local descartable; QA y producción requieren paquete operacional exacto y segunda autorización.
+[ ] B. QA únicamente, previa entrega y aprobación de plan por operación; producción excluida.
+[ ] C. Otro (definir cada entorno, base, acción, ventana y preflight).
+Respuesta / observaciones: Entorno/host/BD, operación, ventana, respaldo, reversión, actor autorizado: ____una vez pasa prueba local automáticamente se debe crear paquete para QA __________________________
+
+C11. En K02 marcó APRUEBO a commit/push/PR/merge/deploy sin discriminar. Seleccione qué queda autorizado AHORA.
+[ ] A. Ninguna operación Git remota ni despliegue; solicitar paquete exacto después de gates.
+[X ] B. Solo commit local en rama de trabajo definida, tras PASS y revisión del diff.
+[ ] C. Otro (describir por separado commit, push, PR, merge, deploy y destinos).
+Respuesta / observaciones: Rama, HEAD, archivos, autorización de cada operación y condiciones: ____cuando yo lo indique se pasa a QA__________________________
+
+C12. En J03 indicó que las pruebas negativas se harán manualmente. ¿Autoriza también pruebas automatizadas reproducibles obligatorias y revisión manual complementaria?
+[ ] APRUEBO ambas, sin reemplazar una por la otra.
+[ X] APRUEBO CON CONDICIONES    [ ] NO APRUEBO
+Respuesta / observaciones: Responsable y evidencias de pruebas manuales reales: ____lo vemos caso a caso______________________
+
+C13. Para J04: ¿qué identidades y ambientes reales se usarán para IAM y QA, y quién gestionará secretos?
+[ X] A. Solicitar plan y cuentas reales antes de ejecutar; por ahora NOT_RUN.
+[ ] B. Autorizo QA tras verificación de las cuentas y resguardo de secretos (detallar).
+[ ] C. Otro (detallar).
+Respuesta / observaciones: Proveedor (Zoho/Entra/Google/Managed si implementado), tenant, roles, actor, ambiente, custodia de secretos: ______
+
+C14. En B04 marcó dos alternativas y escribió «Local y remoto». ¿Qué autoriza respecto a GET EC R1?
+[ X] A. Conservar PASS local; verificar QA/remoto sin cambiar contrato salvo regresión.
+[ ] B. Reabrir contrato e implementación solo si existe defecto probado.
+[ ] C. Otra decisión (delimitar).
+Respuesta / observaciones: Indicar ambiente remoto y condiciones de prueba: ______________________________________________
+
+C15. En J05/J06 solicitó su veredicto sobre RLS y gates. ¿Confirma que no declarará PASS de una obligación técnica sin evidencia, aunque usted apruebe funcionalmente el avance?
+[ X] APRUEBO    [ ] APRUEBO CON CONDICIONES    [ ] NO APRUEBO
+Respuesta / observaciones: Si propone dispensa: cláusula rectora y autorización formal aplicable: ___solo si es conducente a errores en la Plataforma, su compilacion y funcionamiento____
+
+D. Identificación de artefactos y acto final
+C16. ¿Autoriza una aprobación agrupada de los candidatos CT01/03/04, RBAC44, VOC52, CFG-D y UQ/default SOLO si Codex entrega ANTES un manifiesto inmutable de rutas, hashes, cláusulas y deltas, y no hay hallazgos bloqueantes?
+[ X] APRUEBO aprobación agrupada CON manifiesto revisado y firma posterior.
+[ ] APRUEBO CON CONDICIONES    [ ] NO APRUEBO (firmaré cada artefacto).
+Respuesta / observaciones: Condiciones y método de firma de manifiesto: ____prohibido darme un documento a firmar por cada cambio o será Eterno el Desarrollo, solo aprobaciones macro me solicitas_________________
+
+C17. La propuesta SOG v2 sigue DRAFT_NOT_EFFECTIVE. ¿Qué decide respecto de su eventual activación?
+[ X] A. Solicitar paquete específico de enmienda y activación para revisión posterior; no activarla ahora.
+[ ] B. No activar SOG v2; aplicar únicamente rector vigente.
+[ ] C. Otra decisión sujeta a hash, revisión e integración exigida.
+Respuesta / observaciones: Observaciones: _________________________________________________________________
+
+Declaración de alcance y cierre
+Las respuestas complementan el documento principal sin retroactividad ni presunción de publicación, pruebas, SoD o revisión independiente. Toda decisión sobre un contrato concreto deberá citar su versión y hash verificados. Una sola firma humana podrá documentar varias funciones ejercidas, pero no equivale a dos personas ni elimina controles superiores. Ante contradicción, se bloqueará el acto afectado y se presentará su fuente exacta.
+Declaro haber revisado personalmente las opciones marcadas y sus consecuencias.Nombre: __Andrés Barouh___  Fecha/hora: __9 octubre 2026, 15:04 hrs________Firma / aceptación expresa: _____Andrés Barouh A____________________

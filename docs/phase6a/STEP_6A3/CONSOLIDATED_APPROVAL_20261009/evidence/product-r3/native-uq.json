@@ -1,0 +1,184 @@
+{
+  "status": "PASS",
+  "scope": "NATIVE_CANONICAL_CONSTRAINTS_ON_OWN_DISPOSABLE_CLONES_ONLY",
+  "postgres": "16.15",
+  "instance": {
+    "container_id": "60906c8a477e3c8659f058a97ee831d8014e654856943fe9688c2832e09186e9",
+    "name": "/tcdx-step6a3-v18-pg-20261009",
+    "labels": {
+      "tcdx.disposable": "true",
+      "tcdx.execution": "step6a3-v18-20261009"
+    },
+    "started_at": "2026-10-09T18:24:51.041875846Z",
+    "image": "sha256:f1c3376c26f2609ab9f29f71f824103fe2fcd8ee0346485cb6122a4f93df6f94",
+    "ipc_mode": "private",
+    "shm_size": 134217728,
+    "tmpfs": {
+      "/var/lib/postgresql/data": "rw,size=512m"
+    },
+    "host": "127.0.0.1",
+    "port": 55436,
+    "internal_port": 55432,
+    "system_identifier": "7694735811590922280"
+  },
+  "migration_sha256": "d20b7778e62e5ad3c94d7bcfba1eb7b9e43763e3e713f4fea83221ab6d3531f5",
+  "tests": [
+    {
+      "name": "actual forward delta rolls back all DDL and preserves nonempty records",
+      "result": "PASS"
+    },
+    {
+      "name": "preexisting absent default fails closed without backfill",
+      "result": "PASS"
+    },
+    {
+      "name": "preexisting wrong typed default fails closed without data change",
+      "result": "PASS"
+    },
+    {
+      "name": "preexisting invalid hash fails closed without DDL residue",
+      "result": "PASS"
+    },
+    {
+      "name": "unexpected source constraint name cannot be silently dropped",
+      "result": "PASS"
+    },
+    {
+      "name": "forward migration accepts existing canonical data and preserves every record",
+      "result": "PASS"
+    },
+    {
+      "name": "same tenant different EC natural keys are accepted",
+      "result": "PASS"
+    },
+    {
+      "name": "duplicate EC natural key with NULL subject is rejected by native constraint",
+      "result": "PASS"
+    },
+    {
+      "name": "ordinal reused across EC parents is accepted",
+      "result": "PASS"
+    },
+    {
+      "name": "ordinal reused across precedence levels is accepted",
+      "result": "PASS"
+    },
+    {
+      "name": "duplicate contextual ordinal is rejected natively",
+      "result": "PASS"
+    },
+    {
+      "name": "cross-tenant EC layer is rejected by unchanged composite FK",
+      "result": "PASS"
+    },
+    {
+      "name": "typed boolean default roundtrip preserves false/zero/empty",
+      "result": "PASS"
+    },
+    {
+      "name": "absent boolean default is rejected",
+      "result": "PASS"
+    },
+    {
+      "name": "wrong boolean default is rejected",
+      "result": "PASS"
+    },
+    {
+      "name": "typed integer default roundtrip preserves false/zero/empty",
+      "result": "PASS"
+    },
+    {
+      "name": "absent integer default is rejected",
+      "result": "PASS"
+    },
+    {
+      "name": "wrong integer default is rejected",
+      "result": "PASS"
+    },
+    {
+      "name": "typed decimal default roundtrip preserves false/zero/empty",
+      "result": "PASS"
+    },
+    {
+      "name": "absent decimal default is rejected",
+      "result": "PASS"
+    },
+    {
+      "name": "wrong decimal default is rejected",
+      "result": "PASS"
+    },
+    {
+      "name": "typed text default roundtrip preserves false/zero/empty",
+      "result": "PASS"
+    },
+    {
+      "name": "absent text default is rejected",
+      "result": "PASS"
+    },
+    {
+      "name": "wrong text default is rejected",
+      "result": "PASS"
+    },
+    {
+      "name": "typed timestamp default roundtrip preserves false/zero/empty",
+      "result": "PASS"
+    },
+    {
+      "name": "absent timestamp default is rejected",
+      "result": "PASS"
+    },
+    {
+      "name": "wrong timestamp default is rejected",
+      "result": "PASS"
+    },
+    {
+      "name": "typed duration default roundtrip preserves false/zero/empty",
+      "result": "PASS"
+    },
+    {
+      "name": "absent duration default is rejected",
+      "result": "PASS"
+    },
+    {
+      "name": "wrong duration default is rejected",
+      "result": "PASS"
+    },
+    {
+      "name": "typed json default roundtrip preserves false/zero/empty",
+      "result": "PASS"
+    },
+    {
+      "name": "absent json default is rejected",
+      "result": "PASS"
+    },
+    {
+      "name": "wrong json default is rejected",
+      "result": "PASS"
+    },
+    {
+      "name": "multiple defaults are rejected without coercion",
+      "result": "PASS"
+    },
+    {
+      "name": "unknown default type is rejected without invented enum",
+      "result": "PASS"
+    },
+    {
+      "name": "concurrent duplicate EC inserts serialize and reject one writer",
+      "result": "PASS"
+    },
+    {
+      "name": "old global tenant uniqueness cannot be reinstalled after valid new cardinalities",
+      "result": "PASS"
+    },
+    {
+      "name": "unregistered raw rerun fails closed; ledger idempotency is not faked",
+      "result": "PASS"
+    }
+  ],
+  "count": 38,
+  "persistent_shared_writes": 0,
+  "qa": "NOT_RUN",
+  "rls": "NOT_IMPLEMENTED",
+  "external_e2e": "NOT_RUN"
+}

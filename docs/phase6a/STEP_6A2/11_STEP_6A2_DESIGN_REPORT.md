@@ -1,0 +1,23 @@
+# Informe de diseño STEP6A.2
+
+Fecha: 2026-10-08. Autoridad: TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23. HEAD: main / 6af66387aa03fa185ef139584de07700f247b903. Alcance: diseño documental, sin implementación.
+
+STEP_6A2=PASS. RECTOR_GATE=PASS para el diseño documental autorizado; no aprobación humana de contratos DRAFT ni de runtime. Baseline comparada con resultado6A.1 sin diferencias: 42 formularios, 361 campos auditados históricos, 95 referencias internas, 3 JSON, 89 vocabularios, 21 fuentes existentes, 4 capacidades faltantes, 38 relaciones confirmadas, 29 links faltantes, 9P0/9P1/2P2. No se repitió auditoría ni se alteró6A.1.
+
+Matrices nuevas: FORM-01..42 conserva orden de6A.1 y AC-F; FIELD_ID original F-0001..F-0361; 03 agrupa exactamente las95 ocurrencias y no crea95 componentes; VOC_ID enlaza89 campos; JSON vincula3padres y22miembros; DEP-01..38 conserva38 edges y DEP-39/40rechaza2; LINK-01..29 corresponde al conjunto UI_NAVIGATION_MISSING histórico. 09 enlaza20 findings con tareas, fuentes, seguridad y pruebas. 10 separa gate documental de aceptación funcional/runtime.
+
+READ propuestas: cuatro capacidades reales requeridas con reuso parcial, no afirmación de cuatro rutas nuevas. Nuevos nombres de Permission/endpoint no aprobados. Las28 ocurrencias de vocabulario unknown tienen requisito individual de decisión/fuente: no inventar opciones ni free text por defecto. Documento físico/relaciones/payloads siguen sin cambios. Propuestas DRAFT bajo rector45 y autorización del task packet6A.2; decisiones materiales nuevas deben aprobarse/publicarse antes de implementación6A.3.
+
+Gobernanza: Phase5 PASS/CLOSED YES permanece; Phase6A IN_PROGRESS,6A1 PASS;6A3..6A6 NOT_STARTED. Risk/IncidentsLoss NOT_STARTED. Append sólo a `docs/governance/MASTER_EXECUTION_STATUS.md`; fuentes rectoras/6A.1/Phase5 inmutables. Regla transversal obligatoria conserva IDs en persistencia y contratos.
+
+Evidencia específica consultada por ambigüedad: catálogo de Permission demuestra que framework.read no está publicado, detail EffectiveConfiguration aprobado y resolver interno sin HTTPdiscovery; no se infiere otra configuración. `apps/backend/src/configuration/resolver.ts` read-only. OpenAPI/matrices de6A.1 consumidos localmente para operaciones/permisos/schema; no inspección integral de implementación. Rector especializado22/24/25/31/43/45, entrada46/enforcement y seiscontratos visuales activos leídos. Verificador rector exit0/RECTOR_GATE=PASS; su proyección histórica de Phase6 no sustituye autorización posterior6A del ProductOwner ni appendactual. U-ZIP histórico no demuestra identidad del archivo(1); no se usa para cambiar autoridadv1.7.
+
+VALIDATION_RECEIPT se agrega después de ejecutar parse/conteos/integridad referencias/source paths/whitespace/secret/scope y preservación. No suites, installs, Docker, QA ni redes. Próxima acción requerida sólo después de autorización del paso y cierre contractual correspondiente: EXECUTE_STEP_6A3_CANONICAL_REFERENCE_RESOLUTION. No iniciada automáticamente.
+
+## Evidencia de cierre documental
+
+Se validaron los tres CSV (ancho de columnas, identidad única y referencias), JSON parse y conteos; FORM-01..42 cubren 142 ocurrencias de inputs/upload/miembros JSON entre los 361 campos auditados históricos. Las 95 referencias internas quedan particionadas exactamente una vez en 26 familias de diseño. Vocabularios: 89 FIELD_ID únicos en 52 grupos (61 confirmados, 28 requisitos individuales de resolución). Los tres JSON incluyen sus 22 miembros. LINK-01..29 preserva exactamente el conjunto histórico de navegación faltante; 38 DEP confirmadas y 2 relaciones rechazadas. Todos los 20 hallazgos tienen tareas, con cobertura P0=9/P1=9/P2=2 y 18 tareas sin dependencias huérfanas.
+
+CSV_VALIDATION=PASS; JSON_VALIDATION=PASS; REFERENCE_INTEGRITY=PASS; SOURCE_PATH_VALIDATION=PASS (44 paths, 7 referencias de línea); GIT_DIFF_CHECK=PASS (tracked y documentos nuevos); SECRET_SCAN=PASS (documentos nuevos y append); SCOPE_CHECK=PASS. Rector integrity script exit0/RECTOR_GATE=PASS. HEAD/index sin cambios; hashes de los 10 archivos6A.1 preservados y prefijo de gobernanza anterior preservado. Documento técnico de diseño sólo: no fuente aplicación, contrato executable, DB, IAM, infraestructura, deployment, staging, commit, push o merge cambiados. No regresión funcional/runtime/visual ejecutada ni reclamada.
+
+Cambios de este paso: los 12 archivos bajo `docs/phase6a/STEP_6A2/` y append a `docs/governance/MASTER_EXECUTION_STATUS.md`. Worktree previo preservado, incluyendo artifacts/catalog archives ajenos. El resultado JSON contiene VALIDATION_RECEIPT y notas de conteo. La verificación de documento PASS no convierte RR/U-VOC/U-FILTER DRAFT en producto autorizado ni human approvals.

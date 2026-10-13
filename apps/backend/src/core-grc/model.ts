@@ -9,6 +9,7 @@ export type CoreGrcDependencies = {
   identityVerifier: IdentityVerifier;
   fileStorage: FileStoragePort;
   runtimeEnvironment?: "development" | "test" | "qa" | "production";
+  referenceCursor?: { signReferenceCursor(payload: string): Promise<string>; verifyReferenceCursor(value: string): Promise<string> };
 };
 
 export type CoreActor = {

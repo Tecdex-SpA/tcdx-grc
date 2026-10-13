@@ -347,3 +347,8 @@ tbody tr:hover { background: #fff9f5; }
 .onboarding-provision .data-card { padding: 16px; }
 .onboarding-wizard input, .onboarding-wizard select { max-width: 100%; }
 .onboarding-wizard dd { margin-inline-start: 0; overflow-wrap: anywhere; }
+
+/* Canonical pickers reuse form spacing and remain inside the approved drawer. */
+.control-version-selector { min-width: 0; display: grid; gap: 8px; }
+.control-version-selector input, .control-version-selector select { min-width: 0; max-width: 100%; }
+.control-version-selector label { overflow-wrap: anywhere; }

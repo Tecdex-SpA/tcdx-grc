@@ -101,6 +101,14 @@ export const permissionProjectionCatalog: Readonly<Record<string, { capabilities
       "owned_object"
     ]
   },
+  "compliance.framework.read": {
+    "capabilities": [
+      "ISO_COMPLIANCE"
+    ],
+    "scopes": [
+      "tenant"
+    ]
+  },
   "compliance.methodology.read": {
     "capabilities": [
       "ISO_COMPLIANCE"
@@ -1037,6 +1045,17 @@ export const permissionProjectionCatalog: Readonly<Record<string, { capabilities
       "platform"
     ]
   },
+  "platform.membership_reference.read": {
+    "capabilities": [
+      "CORE_PLATFORM"
+    ],
+    "scopes": [
+      "tenant",
+      "audit_engagement",
+      "assigned_object",
+      "owned_object"
+    ]
+  },
   "platform.membership.create": {
     "capabilities": [
       "CORE_PLATFORM"
@@ -1269,6 +1288,16 @@ export const permissionProjectionCatalog: Readonly<Record<string, { capabilities
     ],
     "scopes": [
       "tenant"
+    ]
+  },
+  "privacy.retention_policy_reference.read": {
+    "capabilities": [
+      "EVIDENCE_DOCUMENTS"
+    ],
+    "scopes": [
+      "tenant",
+      "assigned_object",
+      "owned_object"
     ]
   },
   "privacy.retention_policy.approve": {

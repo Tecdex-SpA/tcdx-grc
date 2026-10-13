@@ -80,3 +80,8 @@ Human STEP 23L-MI10-P2A authorizes local preparation and isolated PostgreSQL app
 ## Approved Phase 5 methodology amendment
 
 See [27 — canonical methodology binding](27_PHASE5_METHODOLOGY_BINDING.md) and the explicit human architecture approval. Migration `20261007000200` produces 30 migrations / 237 physical tables / 172 permissions. Seeds: separate Compliance and Control Effectiveness version 1, two compatible FormulaDefinitions, two narrowly scoped read permissions; publication audit `audit.compliance.methodology.publish.v1` and `audit.controls.methodology.publish.v1`. No historical migration or immutable rector file is changed.
+
+
+## STEP6A.3 — sucesión local de migraciones
+
+MACRO R1 aprobó20261009000100 (UQ/default, exactamente3 restricciones superiores) y20261009000200 (3 permisos/44 pares baseline),32 migraciones locales/237 tablas/175 permisos. Las30 históricas no cambian. Ambas se verifican con runner canónico+checksum+transacción+ledger y exclusivamente DB propia descartable. QA no autorizada. MACRO R2 incorpora ceremonia reforzada de adopción RolePermission; nuevo candidato33 se mantiene fuera de migraciones activas hasta plan de actor y publicación operacional exacta. No habilitar capacidades nuevas con filas32 sin sus audits de adopción. Backfill arbitrario, cambios de cardinalidad histórica o reintroducir UQ global para rollback están prohibidos; error previo a commit revierte y recuperación posterior es forward-only o restore coordinado aprobado.
