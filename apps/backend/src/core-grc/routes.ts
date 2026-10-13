@@ -368,6 +368,7 @@ export function registerCoreGrcRoutes(app: FastifyInstance, dependencies: CoreGr
   });
 
   const administrativeRoutes = [
+    ["planVersionList", "/api/v1/platform/plan-versions"],
     ["tenantList", "/api/v1/platform/tenants"],
     ["tenantGet", "/api/v1/platform/tenants/:id"],
     ["membershipList", "/api/v1/memberships"],

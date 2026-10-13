@@ -39,7 +39,7 @@ async function mockRuntime(page: Page, roles: string[] = ["GRC_MANAGER"], platfo
       return;
     }
     if (url.pathname === "/api/v2/auth/me/authorization") {
-      await route.fulfill({ json: { evaluated_at: new Date().toISOString(), platform_permissions: platformRoles.includes("PLATFORM_ADMIN") ? ["platform.tenant.read", "platform.tenant.create", "platform.user_identity.read", "platform.membership.read", "platform.membership_invitation.read", "platform.membership_invitation.create", "platform.membership_invitation.update", "platform.role.read", "platform.role.assign"] : [],
+      await route.fulfill({ json: { evaluated_at: new Date().toISOString(), platform_permissions: platformRoles.includes("PLATFORM_ADMIN") ? ["platform.tenant.read", "platform.tenant.create", "platform.subscription.create", "platform.user_identity.read", "platform.membership.read", "platform.membership_invitation.read", "platform.membership_invitation.create", "platform.membership_invitation.update", "platform.role.read", "platform.role.assign"] : [],
         tenant_permissions: { tenant_id: tenantId, default_timezone: "Europe/Berlin", permissions: roles.includes("TENANT_ADMIN") ? Object.fromEntries(["platform.membership.read", "platform.membership.create", "platform.role.read", "platform.role.assign", "platform.user_identity.read"].map(code => [code, [{scope_kind:"tenant"}]])) : {} } } });
       return;
     }
@@ -137,6 +137,47 @@ const evidenceDirectory = process.env.TCDX_UI_EVIDENCE_DIR ?? "artifacts/phase5-
 
 test.beforeAll(async () => { await mkdir(evidenceDirectory, { recursive: true }); });
 test.beforeEach(({page})=>{page.on("pageerror",error=>console.error("BROWSER_ERROR",error.message));});
+
+test("Platform Admin assigns a published plan and immediately reaches contracted frameworks", async ({ page }, testInfo) => {
+  await mockRuntime(page, ["GRC_MANAGER"], ["PLATFORM_ADMIN"]);
+  let subscribed = false;
+  let creates = 0;
+  const planVersionId = "018f47f2-6170-7bd0-9d43-12f644a2b131";
+  const subscription = { subscription_id: tenantId, subscription_code: "TECDEX-QA", lifecycle_state: "active",
+    plan_code: "GRC", plan_name: "GRC", plan_version_number: 1 };
+  await page.route(url => ["/api/v1/platform/tenants", `/api/v1/platform/tenants/${tenantId}`].includes(url.pathname), route => {
+    expect(route.request().headers()["x-tcdx-tenant-id"]).toBeUndefined();
+    const row = { tenant_id: tenantId, tenant_code: "TECDEX", legal_name: "TecDex SpA", display_name: "TecDex",
+      default_timezone: "America/Santiago", lifecycle_state: "active", current_subscription: subscribed ? subscription : null };
+    return route.fulfill({ json: new URL(route.request().url()).pathname.endsWith(tenantId)
+      ? row : { items: [row], page: { has_more: false, next_cursor: null } } });
+  });
+  await page.route("**/api/v1/platform/plan-versions?**", route => {
+    expect(route.request().headers()["x-tcdx-tenant-id"]).toBeUndefined();
+    expect(new URL(route.request().url()).searchParams.get("page[size]")).toBe("100");
+    return route.fulfill({ json: { items: [{ plan_version_id: planVersionId, plan_code: "GRC", plan_name: "GRC",
+      version_number: 1, display_name: "GRC v1" }], page: { has_more: false, next_cursor: null } } });
+  });
+  await page.route("**/api/v1/platform/subscriptions", route => {
+    creates++;
+    expect(route.request().headers()["x-tcdx-tenant-id"]).toBeUndefined();
+    expect(route.request().headers()["idempotency-key"]).toBeTruthy();
+    expect(route.request().postDataJSON()).toEqual({ tenant_id: tenantId, plan_version_id: planVersionId, subscription_code: "TECDEX-QA" });
+    subscribed = true;
+    return route.fulfill({ status: 202, json: { operation_id: "subscriptionCreate", status: "completed", resource_id: tenantId } });
+  });
+  await page.goto("/configuraciones/empresas");
+  await page.getByRole("button", { name: "Ver detalle" }).click();
+  await expect(page.getByRole("heading", { name: "Asignar plan" })).toBeVisible();
+  await page.getByLabel("Versión de plan publicada").selectOption(planVersionId);
+  await page.getByLabel("Código de suscripción").fill("TECDEX-QA");
+  await page.getByRole("button", { name: "Asignar plan", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Marcos contratados" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Asignar plan" })).toHaveCount(0);
+  await expect(page.getByRole("dialog")).toContainText("GRC · v1");
+  expect(creates).toBe(1);
+  await page.screenshot({ path: `${process.env.TCDX_UI_EVIDENCE_DIR ?? "/tmp"}/plan-assignment-${testInfo.project.name}.png`, fullPage: true });
+});
 
 test("D3 IANA rejects a DST gap and serializes an explicit overlapping instant in UTC", async ({ page }) => {
   await mockRuntime(page);

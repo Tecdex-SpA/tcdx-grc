@@ -15,6 +15,7 @@ describe("Phase 5 Core GRC route surface", () => {
       ["GET", "/api/v1/access/me"],
       ["POST", "/api/v1/platform/tenants"],
       ["POST", "/api/v1/platform/subscriptions"],
+      ["GET", "/api/v1/platform/plan-versions"],
       ["POST", "/api/v1/platform/membership-invitations"],
       ["POST", "/api/v1/platform/membership-invitations/018f47f2-6170-7bd0-9d43-12f644a2b111/revoke"],
       ["POST", "/api/v1/memberships"],

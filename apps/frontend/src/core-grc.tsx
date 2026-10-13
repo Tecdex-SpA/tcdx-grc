@@ -929,6 +929,66 @@ function TenantCompany({ api, context }: { api: ApiClient; context: TenantContex
   return <><PageHeader title={uiText.navigation.companies}/><DataCard title={context.tenant_display_name}><ContractedPacks api={api} platform={false}/><ValidationPacks api={api} platform={false}/><SubjectsAdmin api={api}/></DataCard></>;
 }
 
+type PublishedPlanVersion = { plan_version_id: string; plan_code: string; plan_name: string; version_number: number; display_name: string };
+
+function PlanAssignment({ api, tenantId, authorizeFresh, created }: { api: ApiClient; tenantId: string; authorizeFresh(code: string): Promise<boolean>; created(): void }) {
+  const [catalog, setCatalog] = useState<PublishedPlanVersion[]>([]);
+  const [cursor, setCursor] = useState<string | null>(null);
+  const [state, setState] = useState<"loading" | "ready" | "denied" | "error">("loading");
+  const [planVersionId, setPlanVersionId] = useState("");
+  const [subscriptionCode, setSubscriptionCode] = useState("");
+  const [feedback, setFeedback] = useState("");
+  const [busy, setBusy] = useState(false);
+  const key = useRef(crypto.randomUUID());
+  const load = async (next?: string, signal?: AbortSignal) => {
+    const query = new URLSearchParams({ "page[size]": "100" });
+    if (next) query.set("page[cursor]", next);
+    const result = await api.platformGet<{ items: PublishedPlanVersion[]; page: PageMeta }>(`/api/v1/platform/plan-versions?${query}`, signal ? { signal } : {});
+    setCatalog((current) => next ? [...current, ...result.items] : result.items);
+    setCursor(result.page.next_cursor);
+    setState("ready");
+  };
+  useEffect(() => {
+    const controller = new AbortController();
+    setState("loading");
+    void load(undefined, controller.signal).catch((error: unknown) => {
+      if (!controller.signal.aborted) setState(error instanceof ApiProblem && [401, 403].includes(error.status) ? "denied" : "error");
+    });
+    return () => controller.abort();
+  }, [api, tenantId]);
+  const submit = async () => {
+    if (busy || !planVersionId || !subscriptionCode.trim()) return;
+    setBusy(true); setFeedback("");
+    try {
+      if (!await authorizeFresh("platform.subscription.create")) { setFeedback("Tu sesión no tiene permiso vigente para asignar planes."); return; }
+      await api.platformPost("/api/v1/platform/subscriptions", {
+        tenant_id: tenantId, plan_version_id: planVersionId, subscription_code: subscriptionCode.trim()
+      }, key.current);
+      key.current = crypto.randomUUID();
+      created();
+    } catch (error) {
+      const status = error instanceof ApiProblem ? error.status : 0;
+      setFeedback(({ 400: "Revisa el código y la versión de plan seleccionada.", 401: "La sesión expiró; vuelve a iniciar sesión.",
+        403: "No tienes autorización para asignar planes.", 404: "La empresa o versión de plan ya no está disponible.",
+        409: "Ya existe una suscripción activa o la solicitud entró en conflicto.", 422: "La versión del plan ya no está publicada." } as Record<number, string>)[status]
+        ?? "No se pudo confirmar la suscripción. Reintenta sin cambiar la selección para conservar la misma solicitud.");
+      if (status === 409) created();
+    } finally { setBusy(false); }
+  };
+  return <DataCard title="Asignar plan" className="admin-section">
+    {state === "loading" ? <LoadingState/> : state === "denied" ? <StatePanel kind="permission-denied" detail="No tienes acceso al catálogo de planes publicados."/> :
+      state === "error" ? <StatePanel kind="error" detail="No fue posible cargar el catálogo de planes." retry={() => { setState("loading"); void load().catch(() => setState("error")); }}/> :
+      catalog.length === 0 ? <StatePanel kind="empty" detail="No hay versiones de plan publicadas y vigentes. Solicita su publicación al administrador de plataforma."/> :
+      <form className="admin-form" onSubmit={(event) => { event.preventDefault(); void submit(); }}>
+        <label><span>Versión de plan publicada</span><select required value={planVersionId} onChange={(event) => { setPlanVersionId(event.target.value); key.current = crypto.randomUUID(); }}><option value="">Selecciona un plan</option>{catalog.map((version) => <option key={version.plan_version_id} value={version.plan_version_id}>{version.plan_name} · v{version.version_number} · {version.display_name}</option>)}</select></label>
+        {cursor && <button type="button" className="button secondary" onClick={() => { void load(cursor).catch(() => setFeedback("No fue posible continuar el catálogo de planes.")); }}>Cargar más planes</button>}
+        <label><span>Código de suscripción</span><input required maxLength={96} value={subscriptionCode} onChange={(event) => { setSubscriptionCode(event.target.value); key.current = crypto.randomUUID(); }}/></label>
+        {feedback && <p className="inline-feedback error" role="alert">{feedback}</p>}
+        <button className="button primary" type="submit" disabled={busy || !planVersionId || !subscriptionCode.trim()}>{busy ? "Asignando…" : "Asignar plan"}</button>
+      </form>}
+  </DataCard>;
+}
+
 function CompaniesAdmin({ api, authorization, authorizeFresh }: { api: ApiClient; authorization: CurrentPrincipalAuthorization | null; authorizeFresh(code: string): Promise<boolean> }) {
   const [state, retry, loadMore] = useAdminPage(api, "/api/v1/platform/tenants", true);
   const [selectedId, setSelectedId] = useState<string>();
@@ -941,6 +1001,7 @@ function CompaniesAdmin({ api, authorization, authorizeFresh }: { api: ApiClient
       .then(setDetail).catch(() => setDetailError(true));
   }, [api, selectedId]);
   const refetch = async () => { await api.platformGet("/api/v1/platform/tenants"); retry(); };
+  const refreshDetail = () => { if (selectedId) void api.platformGet<Row>(`/api/v1/platform/tenants/${encodeURIComponent(selectedId)}`).then((next) => { setDetail(next); retry(); }).catch(() => setDetailError(true)); };
   return <>
     <div className="page-heading"><div><p className="eyebrow">{uiText.navigation.settings}</p><h1>{uiText.navigation.companies}</h1><p>{uiText.administration.companiesDetail}</p></div></div>
     <InitialCompanyWizard api={api} permissions={new Set(authorization?.platform_permissions ?? [])} authorizeFresh={authorizeFresh} refetch={refetch}/>
@@ -948,7 +1009,7 @@ function CompaniesAdmin({ api, authorization, authorizeFresh }: { api: ApiClient
       const subscription = item.current_subscription as Row | null;
       return <tr key={String(item.tenant_id)}><td><strong>{String(item.display_name)}</strong><small className="admin-secondary">{String(item.legal_name)}</small></td><td><StatusBadge value={item.lifecycle_state}/></td><td>{subscription ? `${String(subscription.plan_name)} · v${String(subscription.plan_version_number)}` : uiText.administration.noPlan}</td><td><button className="link-button" onClick={() => setSelectedId(String(item.tenant_id))}>{uiText.actions.viewDetail}</button></td></tr>;
     })}</tbody></table></div>}</TableShell>}</AdminPageBody>
-    {selectedId && <div className="drawer-backdrop" role="presentation" onMouseDown={() => setSelectedId(undefined)}><aside className="drawer" role="dialog" aria-modal="true" aria-labelledby="company-detail-title" onMouseDown={(event) => event.stopPropagation()}><header className="drawer-header"><div><p className="eyebrow">{uiText.navigation.settings}</p><h2 id="company-detail-title">{detail ? String(detail.display_name) : uiText.navigation.companies}</h2></div><button className="icon-button" onClick={() => setSelectedId(undefined)} aria-label={uiText.forms.closeDetail}>×</button></header><div className="drawer-body">{detailError ? <StatePanel kind="error" detail={uiText.administration.loadError}/> : !detail ? <LoadingState/> : <><p>{String(detail.legal_name)}</p><p><StatusBadge value={detail.lifecycle_state}/></p><p>{uiText.administration.companyCode}: {String(detail.tenant_code)}</p><p>{uiText.administration.timezone}: {String(detail.default_timezone)}</p><p>{uiText.administration.plan}: {detail.current_subscription ? String((detail.current_subscription as Row).plan_name) : uiText.administration.noPlan}</p>{detail.current_subscription && <ContractedPacks api={api} platform subscriptionId={String((detail.current_subscription as Row).subscription_id)}/>}<ValidationPacks key={selectedId} api={api} platform tenantId={selectedId}/><button className="button secondary" onClick={() => { navigate(`${settingsRoutes.users}?tenant_id=${encodeURIComponent(selectedId)}`); setSelectedId(undefined); }}>{uiText.administration.viewUsers}</button></>}</div></aside></div>}
+    {selectedId && <div className="drawer-backdrop" role="presentation" onMouseDown={() => setSelectedId(undefined)}><aside className="drawer" role="dialog" aria-modal="true" aria-labelledby="company-detail-title" onMouseDown={(event) => event.stopPropagation()}><header className="drawer-header"><div><p className="eyebrow">{uiText.navigation.settings}</p><h2 id="company-detail-title">{detail ? String(detail.display_name) : uiText.navigation.companies}</h2></div><button className="icon-button" onClick={() => setSelectedId(undefined)} aria-label={uiText.forms.closeDetail}>×</button></header><div className="drawer-body">{detailError ? <StatePanel kind="error" detail={uiText.administration.loadError} retry={refreshDetail}/> : !detail ? <LoadingState/> : <><p>{String(detail.legal_name)}</p><p><StatusBadge value={detail.lifecycle_state}/></p><p>{uiText.administration.companyCode}: {String(detail.tenant_code)}</p><p>{uiText.administration.timezone}: {String(detail.default_timezone)}</p><p>{uiText.administration.plan}: {detail.current_subscription ? `${String((detail.current_subscription as Row).plan_name)} · v${String((detail.current_subscription as Row).plan_version_number)}` : uiText.administration.noPlan}</p>{detail.current_subscription ? <ContractedPacks key={String((detail.current_subscription as Row).subscription_id)} api={api} platform subscriptionId={String((detail.current_subscription as Row).subscription_id)}/> : authorization?.platform_permissions.includes("platform.subscription.create") ? <PlanAssignment key={selectedId} api={api} tenantId={selectedId} authorizeFresh={authorizeFresh} created={refreshDetail}/> : <StatePanel kind="permission-denied" detail="Se requiere autorización de plataforma para asignar un plan."/>}<ValidationPacks key={selectedId} api={api} platform tenantId={selectedId}/><button className="button secondary" onClick={() => { navigate(`${settingsRoutes.users}?tenant_id=${encodeURIComponent(selectedId)}`); setSelectedId(undefined); }}>{uiText.administration.viewUsers}</button></>}</div></aside></div>}
   </>;
 }
 

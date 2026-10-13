@@ -3,7 +3,7 @@ info:
   title: TCDX GRC API Base Contract
   version: 1.0.0-contract-candidate
   description: >-
-    Contrato schema-first aprobado de Fase 2 con las enmiendas PRE-F5, PRE-F5B, PRE-F5C, los cierres compatibles PRE-F5E y las decisiones Subscription, lecturas administrativas y Fase 5+. Publica 164 operaciones que cierran
+    Contrato schema-first aprobado de Fase 2 con las enmiendas PRE-F5, PRE-F5B, PRE-F5C, los cierres compatibles PRE-F5E y las decisiones Subscription, lecturas administrativas y Fase 5+. Publica 165 operaciones que cierran
     trazabilidad rector-capability-permission-audit-idempotency-modelo físico.
     H-003..H-005 autorizan las operaciones mínimas de Configuration,
     privacy retention/erasure y lifecycle-registry sobre entidades existentes.
@@ -928,6 +928,28 @@ paths:
         '401': { $ref: '#/components/responses/AuthenticationError' }
         '403': { $ref: '#/components/responses/AuthorizationError' }
         '404': { $ref: '#/components/responses/NotFoundError' }
+  "/platform/plan-versions":
+    get:
+      operationId: planVersionSelectableList
+      tags: ["platform"]
+      summary: "Published, currently effective PlanVersions selectable by Platform Admin"
+      description: "Uses existing platform.subscription.create authority, no tenant header. Returns only canonical plan/version display metadata with cursor pagination."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.subscription.create`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`platform.plan_versions`, `platform.plans`"
+      x-tcdx-rector-source: "Product Owner commercial UI connection 2026-10-13; 09,22,42"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/PageSize' }, { $ref: '#/components/parameters/Cursor' }]
+      responses:
+        '200': { $ref: '#/components/responses/PublishedPlanVersionListSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
   "/platform/subscriptions":
     post:
       operationId: subscriptionCreate
@@ -5504,6 +5526,24 @@ components:
         reason: { type: string, minLength: 1, maxLength: 2000 }
         person_verification_ref: { type: string, minLength: 1, maxLength: 255 }
       description: Nonsecret person-verification reference; no credential value is accepted as input. The original successful response may disclose a newly generated temporary credential once.
+    PublishedPlanVersion:
+      type: object
+      additionalProperties: false
+      required: [plan_version_id, plan_id, plan_code, plan_name, version_number, display_name]
+      properties:
+        plan_version_id: { $ref: '#/components/schemas/UuidV7' }
+        plan_id: { $ref: '#/components/schemas/UuidV7' }
+        plan_code: { type: string }
+        plan_name: { type: string }
+        version_number: { type: integer }
+        display_name: { type: string }
+    PublishedPlanVersionPage:
+      type: object
+      additionalProperties: false
+      required: [items, page]
+      properties:
+        items: { type: array, items: { $ref: '#/components/schemas/PublishedPlanVersion' } }
+        page: { $ref: '#/components/schemas/PageMeta' }
     TenantAdministrativeProjection:
       type: object
       additionalProperties: false
@@ -7770,6 +7810,9 @@ components:
       content:
         application/problem+json:
           schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+    PublishedPlanVersionListSuccess:
+      description: Authorized published PlanVersion cursor page for subscription assignment.
+      content: { application/json: { schema: { $ref: '#/components/schemas/PublishedPlanVersionPage' } } }
     TenantAdministrativeListSuccess:
       description: Authorized global Tenant metadata cursor page.
       content: { application/json: { schema: { $ref: '#/components/schemas/TenantAdministrativePage' } } }
