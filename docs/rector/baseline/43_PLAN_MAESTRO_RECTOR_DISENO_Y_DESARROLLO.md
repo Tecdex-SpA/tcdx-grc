@@ -1,7 +1,7 @@
-# 43 — Plan maestro rector de diseño y desarrollo — v1.9
+# 43 — Plan maestro rector de diseño y desarrollo — candidata v1.12
 
-> Baseline de esta versión: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14`.
-> La v1.8 es la predecesora; esta versión sólo entra en vigencia con publicación/activación competente de sus bytes. La aprobación comercial de diseño no sustituye ese gate. Las aprobaciones históricas se preservan en history.
+> Candidata `TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16`; `DRAFT_NOT_EFFECTIVE`.
+> Predecesora activa `TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15`, preservada. DR001/002/003.
 
 ## 1. Autoridad
 
@@ -36,7 +36,7 @@ Estas elecciones sólo cambian mediante ADR humano aprobado y actualización pre
 
 ### Fase 0 — Baseline rector
 
-Salida para esta sucesora: baseline `TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14`, documentos 00–49 aplicables, con v1.4–v1.8 preservadas según su historia de activación. Gate humano y técnico: `RECTOR_BASELINE=PASS` para los bytes exactos sucesores. Sin ese gate, esta versión no desplaza a v1.8.
+Salida: candidata completa `TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16` y manifest verificable, preservando `TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15` e historia. Gate técnico documental: integridad/coherencia/compatibilidad. La aprobación conceptual DR001/002/003 ya existe y no se ratifica. Activación es una operación distinta expresamente excluida en esta tarea; no se presume ni se solicita como segunda aprobación conceptual.
 
 ### Fase 1 — Modelo físico definitivo
 
@@ -46,7 +46,7 @@ Gate: `PHYSICAL_DATA_MODEL_REVIEW=PASS`.
 
 ### Fase 2 — Contratos ejecutables
 
-Congelar OpenAPI base, event catalog, permission catalog, error model, idempotency, audit events, seed manifests, test contracts, migration plan e `IMPLEMENTATION_DECISION_MANIFEST`. Cada artefacto debe identificar owner y aprobación humana. Gate: `EXECUTABLE_CONTRACTS=PASS`.
+Congelar OpenAPI base, event catalog, permission catalog, error model, idempotency, audit events, seed manifests, test contracts, migration plan e `IMPLEMENTATION_DECISION_MANIFEST`. Cada artefacto identifica la instrucción PO habilitante, alcance, trazabilidad y verificación técnica; no exige un segundo aprobador interno. Gate: `EXECUTABLE_CONTRACTS=PASS`.
 
 ### Fase 3 — Creación definitiva de base y foundations
 
@@ -95,11 +95,11 @@ Pruebas funcionales, seguridad, carga, accesibilidad, recuperación, cross-tenan
 1. Cada slice recorre persistence→domain→API→RBAC→audit→UI→tests→E2E→runtime→traceability.
 2. No se aceptan mocks como evidencia de cierre runtime.
 3. No se reabre una decisión cerrada por comodidad de implementación.
-4. Toda excepción requiere ADR, owner, fecha de expiración y plan de eliminación; nunca crea una vía paralela.
+4. Una contradicción interna con decisión expresa PO se reconcilia conforme a49. No se inventan ADR de excepción, deuda ni vías paralelas. Una alteración arquitectónica fuera del alcance exige decisión específica PO y verificación técnica.
 5. No se hacen commit, merge ni deploy si el gate aplicable a ese artefacto o capacidad está FAIL.
 6. El estado de cada fase se registra en un único `MASTER_EXECUTION_STATUS.md` generado en el repositorio de desarrollo, no dentro de esta base rectora.
-7. Codex aplica 45. Si una tarea permite más de una solución material, detiene esa parte y solicita un Decision Record humano; no selecciona por conveniencia.
-8. Los owners humanos aprueban gates y ADR. Codex puede preparar evidencia y propuestas DRAFT, pero no autoaprobarlas.
+7. Codex aplica45/49: resuelve decisiones de ejecución dentro de la instrucción y arquitectura autorizadas, verifica y continúa; detiene sólo el acto excepcional no resoluble en alcance, externo aplicable o excluido, con consecuencia y alternativa compatibles.
+8. El PO es autoridad única de decisiones internas. Los gates técnicos se calculan con evidencia; no se inventa una firma ni un PASS humano. No hay ratificación administrativa para ejecutar lo ya autorizado.
 9. Todo task packet material declara alcance, fuentes, archivos permitidos, contratos afectados, criterios de aceptación, pruebas y acciones prohibidas. La omisión material produce BLOCKED.
 
 ## 6. Responsables del desarrollo
@@ -113,4 +113,12 @@ Pruebas funcionales, seguridad, carga, accesibilidad, recuperación, cross-tenan
 - QA/Release Owner: test contracts, evidencia runtime y release gates.
 - Regulatory Content Owners: roles especializados definidos en 41.
 
-Una persona puede ocupar varios roles: se registran las funciones ejercidas en cada aprobación. Para gobierno editorial/metodológico interno se aplica 49: no se exige segunda persona por defecto; sí cuando el PO lo ordene específicamente o una obligación superior aplicable lo imponga. Se respetan íntegramente las segregaciones operacionales de usuarios GRC y las obligaciones externas.
+Estas funciones describen competencias técnicas y responsabilidades de producto; no crean aprobadores internos adicionales ni obligan a una declaración administrativa de funciones del PO. DR003 y49 establecen autoridad única y continuidad. Una restricción externa requiere fuente/aplicabilidad concreta; las separaciones operacionales de clientes permanecen.
+
+## 7. Continuidad y proporcionalidad — DR003
+
+La instrucción expresa del Product Owner constituye autorización suficiente para las actividades comprendidas en su alcance. No se exige segunda firma, segundo aprobador, comité, revisor humano independiente ni ratificación administrativa interna. La autorización funcional comprende análisis, diseño, contratos ejecutables, backend/frontend necesarios, pruebas, corrección y validación técnica dentro del alcance; Codex mantiene continuidad autónoma. Una contradicción con una directiva interna anterior se reconcilia documentalmente, sin veto administrativo permanente. Se mantienen integridad, hashes, trazabilidad, verificación técnica y límites expresos; registrar la instrucción y los bytes producidos no significa atribuir una firma humana a bytes futuros. Sólo se detiene la operación afectada por un impedimento técnico/de seguridad no resoluble en alcance, una restricción externa con fuente y aplicabilidad concreta, o una exclusión expresa. No se inventan obligaciones, revisores ni responsables. Esta regla no amplía alcance ni autoriza arquitectura arbitraria, deuda o despliegues excluidos.
+
+Se preservan el modelo canónico y físico aprobado, contratos de backend/frontend y su evolución trazable autorizada, IAM/RBAC, mínimo privilegio, aislamiento multi-tenant, integridad transaccional, auditoría, seguridad, privacidad e historia. La gobernanza interna del desarrollo es distinta de la SoD operacional que ofrece GRC a los clientes: Evidence submit/approve, Action complete/verify, risk acceptance, Audit y credenciales conservan sus policies y actores cuando correspondan. No hay permiso, grant, estado, tabla ni excepción operacional nueva por esta regla.
+
+La asistencia Platform y autonomía Tenant descritas en01/42 rigen hasta completar Fase10. El orden de fases permanece; el cierre de cada capacidad exige evidencia real de sus requisitos aplicables, no una colección de firmas internas. El resultado READY_FOR_PO_REVIEW de esta tarea es documental. H01–H10 quedan suspendidas como tarea de desarrollo actual y se reclasifican prospectivamente por el expediente sucesor; no se declaran PASS ni inaplicables retroactivamente. STEP_6A3=PARTIAL_BLOCKED; STEP_6A4=NOT_STARTED.

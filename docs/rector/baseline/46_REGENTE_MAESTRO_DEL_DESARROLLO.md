@@ -4,7 +4,9 @@
 
 Este documento es el punto de entrada obligatorio y la constitución operativa maestra del desarrollo TCDX GRC. Integra y gobierna los documentos 00–49 aplicables de este baseline. No reemplaza sus contratos especializados: fija cómo deben ser interpretados, ejecutados y verificados durante todo el ciclo hasta `MARKET_RELEASE_READY=PASS`.
 
-`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15`
+`CANDIDATE_MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16`
+
+`STATUS=DRAFT_NOT_EFFECTIVE`; predecesora activa `TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15`.
 
 `CODEX_VARIATION_BUDGET=ZERO`
 
@@ -65,7 +67,7 @@ IA es asistencia gobernada, no autoridad de negocio. El backend controla context
 
 ## 8. Cero deuda y no inferencia
 
-Aplican íntegramente 06, 13, 35 y 45. Ante una decisión material no cerrada: `RECTOR_GATE=BLOCKED`. No se completa el vacío mediante “mejor práctica”, analogía con otro producto, decisión de framework, código generado, fallback, TODO o supuesto. Todo cambio material requiere task packet cerrado y, cuando corresponda, Decision Record humano.
+Aplican íntegramente 06, 13, 35 y 45. No se inventan decisiones de producto ni se amplía el alcance mediante analogía, framework, fallback o deuda. Una decisión expresa PO autoriza las actividades comprendidas y su reconciliación interna. Sólo un impedimento excepcional de45/49 detiene la operación afectada; las verificaciones técnicas continúan sobre el trabajo independiente. Todo cambio material mantiene trazabilidad a la instrucción PO y sus verificaciones. DR003 autoriza las actividades comprendidas y elimina ratificaciones internas reiterativas; una exclusión expresa sigue vigente.
 
 ## 9. Calidad verificable
 
@@ -85,13 +87,21 @@ Todo artefacto material debe poder rastrearse desde requisito/contrato rector ha
 
 ## 12. Regla de cierre
 
-No se declara “READY”, “DONE”, “PRODUCTION READY” ni equivalente por avance porcentual. El cierre exige evidencia de todos los gates y capacidades dependientes. La autoridad final de release corresponde al QA/Release Owner y aprobadores humanos definidos, nunca a Codex.
+No se declara “READY”, “DONE”, “PRODUCTION READY” ni equivalente por avance porcentual. El cierre exige evidencia de todos los gates y capacidades dependientes. La autoridad interna de decisiones de release corresponde al Product Owner; Codex no inventa su acto ni autorización de un despliegue fuera de alcance. La evidencia de aceptación operacional del producto sigue siendo real, sin firmas simuladas.
 
-Cualquier contradicción entre una tarea y este baseline produce `RECTOR_GATE=BLOCKED` y no una reinterpretación del baseline.
+Una contradicción entre una instrucción expresa PO y una directiva interna anterior exige preparar el delta formal, no un bloqueo administrativo permanente. La activación o implementación expresamente excluida no se ejecuta. Las restricciones excepcionales se acotan y evidencian conforme45/49.
 
 
 ## STEP_6A3 — candidata de incorporación inicial de fuente v1.11
 
 `STATUS=DRAFT_NOT_EFFECTIVE; HUMAN_EXACT_BYTES_REVIEW=PENDING`. Baseline candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15, predecesora TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15. Diseño PO aprobado por SHA `1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b`; constancia `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/PO_DESIGN_APPROVAL_RECEIPT_20261015.json`. Esta sección sólo tendrá efecto después de publicación conforme47/49 y gates físico/ejecutable; no autoriza operación QA ni deploy por sí sola.
 
-Esta sucesora candidata incorpora exclusivamente el diseño de fuente inicial aprobado por el PO. El acto PO no declara otras funciones ejercidas ni aprueba bytes futuros; no se atribuyen aprobaciones Architecture/Data/Security/Release o Privacy/Legal inexistentes. Antes de activar se requiere decisión exacta sobre el manifest candidato con funciones competentes expresas, dictamen físico y contratos derivados. Implementación, pruebas de código dependiente, build y promoción esperan sus gates; QA auténtica/UI/cierre siguen separados.6A4 sólo tras cierre de6A3 y acto formal autorizado.
+El diseño técnico de fuente inicial v1.11 permanece como antecedente de esta sucesora, que añade DR001/002/003. No se atribuyen firmas ni funciones internas inexistentes: la instrucción PO autoriza las actividades en alcance sin declaraciones administrativas, segundos aprobadores o ratificación de bytes derivados. Se verifican manifiesto, compatibilidad y contratos; una activación/promoción expresamente excluida no se ejecuta. Aceptación operacional y evidencia real siguen separadas del permiso de desarrollar.6A4 sólo tras cierre de6A3 y una instrucción que incluya su inicio.
+
+## Autoridad interna sucesora — DR003
+
+La instrucción expresa del Product Owner constituye autorización suficiente para las actividades comprendidas en su alcance. No se exige segunda firma, segundo aprobador, comité, revisor humano independiente ni ratificación administrativa interna. La autorización funcional comprende análisis, diseño, contratos ejecutables, backend/frontend necesarios, pruebas, corrección y validación técnica dentro del alcance; Codex mantiene continuidad autónoma. Una contradicción con una directiva interna anterior se reconcilia documentalmente, sin veto administrativo permanente. Se mantienen integridad, hashes, trazabilidad, verificación técnica y límites expresos; registrar la instrucción y los bytes producidos no significa atribuir una firma humana a bytes futuros. Sólo se detiene la operación afectada por un impedimento técnico/de seguridad no resoluble en alcance, una restricción externa con fuente y aplicabilidad concreta, o una exclusión expresa. No se inventan obligaciones, revisores ni responsables. Esta regla no amplía alcance ni autoriza arquitectura arbitraria, deuda o despliegues excluidos.
+
+Se preservan el modelo canónico y físico aprobado, contratos de backend/frontend y su evolución trazable autorizada, IAM/RBAC, mínimo privilegio, aislamiento multi-tenant, integridad transaccional, auditoría, seguridad, privacidad e historia. La gobernanza interna del desarrollo es distinta de la SoD operacional que ofrece GRC a los clientes: Evidence submit/approve, Action complete/verify, risk acceptance, Audit y credenciales conservan sus policies y actores cuando correspondan. No hay permiso, grant, estado, tabla ni excepción operacional nueva por esta regla.
+
+Esta preparación no cambia la cadena baseline→modelo canónico/físico→contratos→implementación; formaliza cómo la decisión PO actualiza la autoridad documental. Los estados de gate técnicos requieren evidencia; los controles funcionales de clientes y obligaciones externas reales permanecen. Ni una cláusula de revisión interna anterior ni el estado PARTIAL_BLOCKED del cierre impiden esta preparación expresamente autorizada. La candidata no está activa.

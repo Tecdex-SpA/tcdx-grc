@@ -79,7 +79,7 @@ No se acepta fallback indefinido.
 
 ## Gates
 
-No commit/push/merge/deploy hasta superar los gates correspondientes y obtener autorización cuando el flujo de trabajo la requiera.
+Los gates técnicos aplicables se verifican con evidencia real. DR-GRC-20261016-003 elimina la doble aprobación interna del desarrollo: la instrucción PO autoriza las actividades dentro de su alcance y las contradicciones internas se reconcilian. Una exclusión expresa de commit/push/merge/deploy sigue siendo obligatoria; no se ejecuta una acción fuera del alcance.
 
 ## Addendum constitucional - Compatibilidad semantica de datos
 

@@ -12,7 +12,7 @@ Cuando dos documentos parecen incompatibles, se resuelve en este orden:
 
 La precedencia única vigente es la declarada en 00. Este documento conserva autoridad sobre sus reconciliaciones semánticas, pero no sobre planes, roles, contenido regulatorio, stack, secuencia o estructura normativa, que se rigen por 41–44.
 
-Esta precedencia sólo resuelve interpretación. Si una fuente superior contradice definición de producto de manera material, el gate vuelve a BLOCKED y debe reconciliarse el producto; no se ignora silenciosamente.
+Esta precedencia no autoriza reinterpretación silenciosa. Una decisión expresa PO contradictoria con directivas internas anteriores exige preparar su reconciliación formal conforme45/49 y no bloquea esa preparación. Se mantiene toda restricción externa demostrada y la arquitectura canónica.
 
 ## 3. Decisiones reconciliadas
 
@@ -86,7 +86,7 @@ Event/Audit context usa `ownership_class`. `tenant_id` es obligatorio sólo para
 
 ## 4. Reglas de derivación del modelo físico
 
-El diseñador PostgreSQL sólo puede derivar de forma trazable decisiones ya fijadas. Normalización, tablas puente, índices, particionado, materialized views, caches y cualquier otra elección física deben constar en el entregable de Fase 1 con requisito origen, rationale verificable y aprobación del Data Model Owner y Architecture Owner. Si existen dos o más representaciones contractualmente válidas, Codex no elige: registra la decisión requerida y devuelve `RECTOR_GATE=BLOCKED` para esa parte.
+El diseñador PostgreSQL sólo puede derivar de forma trazable decisiones ya fijadas. Normalización, tablas puente, índices, particionado, materialized views, caches y cualquier otra elección física deben constar en el entregable de Fase 1 con requisito origen, rationale y validación técnica verificables bajo la instrucción PO. No se exigen firmas Data Model/Architecture adicionales para el desarrollo en alcance. Una arquitectura distinta o decisión de producto no autorizada se acota al acto afectado; no se altera el modelo congelado por conveniencia.
 
 Ni el diseñador ni Codex pueden decidir por sí mismos:
 
@@ -112,7 +112,7 @@ Cualquier necesidad de inventar uno de esos puntos revierte `SEMANTIC_PRE_PHYSIC
 
 La mera posibilidad técnica, convención de framework, práctica habitual, patrón encontrado en código previo o preferencia de Codex no constituye autoridad. Aplica el contrato 45.
 
-## 5. Gate
+## 5. Antecedente histórico de gate v1.3 (sin reabrir fases)
 
 Tras la reconciliación de 08, 17, 19, 29, 30, 31, 33, 35, 38, 39, 44 y 45, el scan técnico no detecta conflictos materiales conocidos. Sin embargo, la revisión v1.3 no se autoactiva:
 
@@ -125,3 +125,7 @@ Tras la reconciliación de 08, 17, 19, 29, 30, 31, 33, 35, 38, 39, 44 y 45, el s
 `FUNCTIONAL_DEVELOPMENT=BLOCKED`
 
 Una vez registrada la aprobación humana, se restablecen `SEMANTIC_PRE_PHYSICAL_GATE=PASS`, `PRE_IMPLEMENTATION_CONTRACT_GATE=PASS_FOR_PHYSICAL_MODEL_DESIGN` y `PHYSICAL_MODEL_DESIGN=AUTHORIZED`. La siguiente etapa obligatoria será la Fase 1 de 43: derivar el modelo físico definitivo, incluyendo entidades y relaciones añadidas en 41–44, y someterlo a `PHYSICAL_DATA_MODEL_REVIEW`. Sólo después del PASS se avanza a contratos ejecutables; migrations siguen bloqueadas hasta `EXECUTABLE_CONTRACTS=PASS`.
+
+## 6. Límite sucesor de gobierno
+
+DR003 sucede únicamente los trámites internos de aprobación/derivación contradictorios. Los contratos semánticos de §3 y los nombres/relaciones canónicos permanecen. El snapshot histórico de §5 no describe un retorno actual a Fase1 ni un bloqueo de esta candidata; baseline activa y estado real siguen en sus punteros fuera de la candidata. No se ejecutan DDL ni migraciones.

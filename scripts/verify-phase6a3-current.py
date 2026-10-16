@@ -40,8 +40,30 @@ if key != "macro_implementation_20261009":
     for field in ["STEP_6A3", "STEP_6A4", "SOG_V2", "RECTOR_GATE"]:
         if current.get(field) != macro.get(field):
             raise SystemExit("STEP6A3 unauthorized gate promotion: " + field)
-if current["RECTOR_ACTIVE_VERSION"] != (proposal / "docs/rector/BASELINE_ID").read_text().strip():
-    raise SystemExit("STEP6A3 current ledger baseline mismatch")
+# STEP6A3 is an immutable historical execution checkpoint.
+# A later documentary rector activation must not rewrite its recorded version.
+active_version = (proposal / "docs/rector/BASELINE_ID").read_text().strip()
+checkpoint_version = current["RECTOR_ACTIVE_VERSION"]
+v112 = "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16"
+v111 = "TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15"
+
+if active_version != checkpoint_version:
+    if not (
+        active_version == v112
+        and checkpoint_version == v111
+        and key == "v111_initial_source_publication_checkpoint_20261015"
+    ):
+        raise SystemExit("STEP6A3 current ledger baseline mismatch")
+    # The new activation and the immutable predecessor are verified separately.
+    from subprocess import run
+    result = run(
+        ["python3", "scripts/verify-v112-governance.py"],
+        cwd=root,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode:
+        raise SystemExit("STEP6A3 successor rector activation invalid")
 if key == "v110_activation_checkpoint_20261015":
     predecessor = ledger.get(current.get("predecessor_checkpoint"))
     if predecessor is None or predecessor.get("RECTOR_ACTIVE_VERSION") != "TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14":
@@ -62,7 +84,12 @@ if key == "v111_initial_source_publication_checkpoint_20261015":
         raise SystemExit("STEP6A3 v1.11 predecessor mismatch")
     if hashlib.sha256((root / current["approval_receipt_path"]).read_bytes()).hexdigest() != current["approval_receipt_sha256"]:
         raise SystemExit("STEP6A3 v1.11 approval mismatch")
-    if hashlib.sha256((root / "docs/rector/baseline/SHA256SUMS.txt").read_bytes()).hexdigest() != current["successor_manifest_sha256"]:
+    v111_manifest = (
+        root / "docs/rector/history/TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15/SHA256SUMS.txt"
+        if active_version == v112
+        else root / "docs/rector/baseline/SHA256SUMS.txt"
+    )
+    if hashlib.sha256(v111_manifest.read_bytes()).hexdigest() != current["successor_manifest_sha256"]:
         raise SystemExit("STEP6A3 v1.11 manifest mismatch")
 if current["STEP_6A4"] != "NOT_STARTED" or current["SOG_V2"] != "DRAFT_NOT_EFFECTIVE":
     raise SystemExit("Unauthorized downstream promotion")

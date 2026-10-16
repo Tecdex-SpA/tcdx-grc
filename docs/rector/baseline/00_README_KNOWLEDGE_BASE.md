@@ -4,7 +4,7 @@
 
 Este paquete constituye la base contractual, funcional y de ingeniería para el nuevo desarrollo **TCDX GRC**.
 
-Baseline de esta versión propuesta: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15`. Su entrada en vigencia requiere activación humana y técnica conforme a 47; la v1.10 es la predecesora íntegra. Las referencias v1.3 siguientes documentan historia semántica; no sustituyen 46/47/49 ni el manifest vigente.
+Baseline de esta candidata: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16`, DRAFT_NOT_EFFECTIVE; predecesora activa v1.11 íntegra. La activación está expresamente excluida en esta tarea. DR001/002/003 y45/46/47/49 gobiernan la preparación y eliminan aprobaciones internas reiterativas. Las referencias/versiones/etiquetas preparatorias heredadas documentan la procedencia de contratos anteriores, no pendientes de aprobación conceptual actual ni vigencia de esta candidata. La publicación efectiva v1.11 se verifica por sus recibos/punteros sellados.
 
 No contiene prompts a ejecutar individualmente. Sus archivos son **fuentes de conocimiento y alineamiento** que deben ser leídas y respetadas por ChatGPT, Codex y desarrolladores antes de diseñar o implementar componentes.
 
@@ -142,3 +142,10 @@ La decisión humana `DR-STEP6A3-COMMERCIAL-GOVERNANCE-20261013-02` aprobó el di
 `STATUS=DRAFT_NOT_EFFECTIVE; HUMAN_EXACT_BYTES_REVIEW=PENDING`. Baseline candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15, predecesora TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15. Diseño PO aprobado por SHA `1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b`; constancia `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/PO_DESIGN_APPROVAL_RECEIPT_20261015.json`. Esta sección sólo tendrá efecto después de publicación conforme47/49 y gates físico/ejecutable; no autoriza operación QA ni deploy por sí sola.
 
 Copia completa candidata de51archivos. Sólo los deltas INITIAL_SOURCE indicados modifican la predecesora; ningún archivo de baseline activa o historia se modifica.
+
+## Lectura de esta sucesora candidata — 2026-10-16
+
+`CANDIDATE_BASELINE=TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16`; `STATUS=DRAFT_NOT_EFFECTIVE`.
+Predecesora activa: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15`. Fuente: DR-GRC-20261016-001/002 (commit2373b5b63a49ddddb47e104947020e4ceb070f64, PR21) y DR-GRC-20261016-003 (instrucción PO de esta sesión), registradas en docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/.
+Este directorio entrega los51 documentos completos y SHA256SUMS; los no afectados conservan bytes. Las referencias históricas a decisiones/versiones previas conservan su alcance; 43/45/46/47/49 de esta candidata formalizan la autoridad interna sucesora. La candidata no modifica punteros activos ni activa contratos.
+No hay segunda aprobación conceptual de DR001/002/003. READY_FOR_PO_REVIEW describe la entrega revisable, no un gate humano adicional obligatorio ni activación. Se mantiene STEP_6A3=PARTIAL_BLOCKED y STEP_6A4=NOT_STARTED.

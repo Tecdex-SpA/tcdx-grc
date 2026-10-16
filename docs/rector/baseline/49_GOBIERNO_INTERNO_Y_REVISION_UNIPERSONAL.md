@@ -1,31 +1,33 @@
-# 49 — Gobierno interno y revisión humana unipersonal
+# 49 — Autoridad única interna y separación de controles del producto
 
-## 1. Alcance y autoridad
+## 1. Decisión expresa definitiva
 
-Versión 1.0, adoptada mediante DR-INTERNAL-REVIEW-V18-20261009 en la baseline v1.8. Vigencia efectiva: la registrada en docs/rector/ACTIVE_ACTIVATION.json, después de publicación y comprobación técnica. Esta regla modifica exclusivamente el gobierno editorial y metodológico interno de contratos técnicos, arquitectura, backend, seguridad, IAM, privacidad/datos, compliance y metodologías/reglas globales internas. No modifica permisos operacionales del producto.
+DR-GRC-20261016-003 actualiza el gobierno interno del desarrollo de GRC Tecdex. El creador/Product Owner declara ser el único responsable de sus decisiones internas. Las decisiones DR001/002 se integran con esta adenda sin reemitirlas ni solicitar otra aprobación conceptual. Este documento es candidato y no activa por sí mismo la sucesora.
 
-El Product Owner puede acumular estas funciones y aprobar con una sola firma humana expresa, indicando las funciones ejercidas. No existe por defecto obligación de una segunda persona revisora interna ni de acreditación separada de cada función. Una persona no se representa como dos revisores independientes. Se requiere revisión humana independiente cuando el PO la ordene específicamente o cuando una obligación superior aplicable la imponga.
+## 2. Suficiencia y continuidad de la instrucción
 
-## 2. Autor y aprobador de metodología/regla global interna
+La instrucción expresa del Product Owner constituye autorización suficiente para las actividades comprendidas en su alcance. No se exige segunda firma, segundo aprobador, comité, revisor humano independiente ni ratificación administrativa interna. La autorización funcional comprende análisis, diseño, contratos ejecutables, backend/frontend necesarios, pruebas, corrección y validación técnica dentro del alcance; Codex mantiene continuidad autónoma. Una contradicción con una directiva interna anterior se reconcilia documentalmente, sin veto administrativo permanente. Se mantienen integridad, hashes, trazabilidad, verificación técnica y límites expresos; registrar la instrucción y los bytes producidos no significa atribuir una firma humana a bytes futuros. Sólo se detiene la operación afectada por un impedimento técnico/de seguridad no resoluble en alcance, una restricción externa con fuente y aplicabilidad concreta, o una exclusión expresa. No se inventan obligaciones, revisores ni responsables. Esta regla no amplía alcance ni autoriza arquitectura arbitraria, deuda o despliegues excluidos.
 
-La separación author + approve de 22 §6 no impide que el PO sea autor, revisor y aprobador del texto editorial o metodológico interno. La excepción de alcance es normativa y expresa; no habilita comandos de autoaprobación en GRC, no concede grants, no constituye excepción de ObjectPolicy ni sustituye las policies operacionales que exigen motivo y AuditEvent.
+La acumulación de funciones internas no requiere declaraciones administrativas adicionales para autorizar el alcance ya instruido. No se representa una persona como dos revisores independientes ni se crean firmas. La revisión técnica puede ser automatizada y Codex informa resultados reales; no transforma la ausencia de otro humano en veto. El PO puede revisar el resultado concreto sin que esa lectura se imponga como ratificación rutinaria para desarrollar lo autorizado.
 
-## 3. Controles compensatorios obligatorios
+## 3. Integridad y trazabilidad
 
-Cada adopción conserva identidad humana, funciones ejercidas, decisión exacta, versión, manifest con SHA-256 de los bytes UTF-8 o binarios correspondientes, fuentes, dependencias, riesgos, pruebas positivas/negativas, fecha efectiva real y registro histórico inmutable. La suficiencia de una metodología se acredita por versión con reglas oficiales y pruebas; la acumulación de funciones no acredita suficiencia matemática o semántica. Los gates técnicos no se dispensan. Codex prepara y verifica; nunca firma ni aprueba en nombre del humano.
+Toda entrega material conserva instrucción/decisión fuente, alcance, versiones, SHA-256, fuentes, dependencias, delta, riesgos y evidencia de verificaciones. No se exige aprobación separada de cada byte derivado dentro de la autorización integral. No se atribuye firma PO a bytes futuros o no firmados: se registra la autorización de la actividad y los hashes resultantes. Activación/efectividad sólo se registra cuando el acto está incluido, se ejecutó realmente y sus punteros/manifiestos concuerdan. Una exclusión expresa impide ese acto, sin bloquear la preparación independiente.
 
-Una aprobación macro puede comprender múltiples artefactos exactos. Si sus hashes aún no fueron presentados y aprobados, la autorización funcional general no los publica. Cambios posteriores materiales exigen nuevo delta trazable. Una aprobación de gobierno interno no autoriza operaciones de BD, IAM, QA ni despliegue.
+## 4. Separaciones operacionales preservadas
 
-## 4. Separaciones y controles preservados
+Se preservan el modelo canónico y físico aprobado, contratos de backend/frontend y su evolución trazable autorizada, IAM/RBAC, mínimo privilegio, aislamiento multi-tenant, integridad transaccional, auditoría, seguridad, privacidad e historia. La gobernanza interna del desarrollo es distinta de la SoD operacional que ofrece GRC a los clientes: Evidence submit/approve, Action complete/verify, risk acceptance, Audit y credenciales conservan sus policies y actores cuando correspondan. No hay permiso, grant, estado, tabla ni excepción operacional nueva por esta regla.
 
-Se conservan submit/approve de la misma Evidence, complete/verify de la misma Action, request/approve de la misma risk acceptance, execute AuditTest/approve final conclusion cuando el tenant exige independencia, y configure connector/approve privileged credential access bajo política reforzada. Se conservan controles editoriales de packs regulatorios de 41/42, fuera de esta enmienda; su revisión específica no se dispensa por arrastre.
+Se mantienen las revisiones de Evidence crítica, verificación de acciones, aceptación de riesgos, independencia Audit cuando la policy la exige y acceso reforzado a credenciales. Las publicaciones y revisiones de contenido regulatorio del producto conservan sus controles; no se atribuye permiso operacional al PO por esta decisión interna. La configuración SaaS ordinaria no se confunde con esos actos ni exige universalmente acreditación jurídica.
 
-Permanecen multi-tenant estricto, default DENY, mínimo privilegio, Platform/Tenant authority separadas, RBAC + entitlement + scope + ObjectPolicy, auditoría, procedencia, versionado e integridad histórica. No se modifica esquema canónico ni autorización runtime. Las prohibiciones SoD de comandos de producto y las policies de publicación de ConfigurationDefinition o RetentionPolicy siguen aplicables.
+## 5. Obligaciones externas demostradas
 
-## 5. Obligaciones superiores
+Sólo una restricción externa efectivamente aplicable, con fuente/cláusula y objeto concretos, puede restringir el acto correspondiente. No se inventa ley, contrato externo, certificación, revisor o responsable. No se declara cumplimiento ni se dispensa una obligación externa real. Se documentan consecuencia y alternativa compatibles y se continúa el trabajo no dependiente.
 
-La ley, regulación, contrato externo o certificación aplicable prevalece en su ámbito. Si exige independencia, se identifica fuente exacta, cláusula, aplicabilidad y acto mínimo bloqueado; el PO no la deroga. La ausencia de una fuente externa identificada no se convierte en requisito inventado. Esta enmienda no declara cumplimiento ni certificación.
+## 6. Precedencia documental y proporcionalidad
 
-## 6. Precedencia y límites
+Tras su activación formal, esta regla sucede las directivas administrativas internas anteriores contradictorias de06/43/45/46/47 y sus contratos. Mientras es candidata, la instrucción PO autoriza preparar esa modificación y la v1.11 permanece intacta. No se convierte una contradicción interna en bloqueo permanente. La precedencia se limita al gobierno de desarrollo; no cambia la selección de observaciones por SourcePrecedencePolicy ni reglas de retención/suficiencia de los clientes.
 
-49 prevalece únicamente sobre exigencias internas de segunda persona y sobre author + approve editorial/metodológico interno de 22 §6 y roles internos de 43 §6. No reemplaza otras prohibiciones SoD ni fuentes superiores. 45 conserva decisión humana expresa y presupuesto cero. 46 conserva la cadena de autoridad y gates. SOG v2 continúa DRAFT_NOT_EFFECTIVE. La secuencia 6A.3 → 6A.4 → ZIP normativo → 6A.5 se preserva. No se dispensa CI/revisión humana antes de integrar main.
+## 7. Límite de la presente tarea
+
+Sólo documentos y contratos candidatos, sin backend/frontend, DB/migración, runtime, QA/PROD, activación, commit/push/merge ni despliegues. STEP_6A3=PARTIAL_BLOCKED; H01–H10 suspendidas como tarea actual sin PASS retroactivo; STEP_6A4=NOT_STARTED. No se autoriza ampliación funcional, deuda, cambio arbitrario de arquitectura ni self-service previo a completar Fase10.
