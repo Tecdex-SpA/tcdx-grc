@@ -1,0 +1,113 @@
+{
+  "status": "SPECIFIED_NOT_EXECUTED",
+  "cases": [
+    {
+      "id": "ASSISTED-01",
+      "scenario": "Platform initial onboarding and published commercial enablement",
+      "expected": "canonical first admin; truthful partial receipts; no actor Membership",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "ASSISTED-02",
+      "scenario": "Tenant/client attempts company self-onboarding or self-contracting before end of Phase10",
+      "expected": "DENY; no alternate route",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "TENANT-01",
+      "scenario": "Tenant Admin manages existing identities and allowed roles in own tenant",
+      "expected": "normal effective authorization; no second Platform ratification",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "TENANT-02",
+      "scenario": "Tenant Admin requests Platform roles, tenant MI creation or foreign-tenant access",
+      "expected": "DENY; no authority inferred from role name",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "PLATFORM-01",
+      "scenario": "Platform assists users via contract26 with effective permissions",
+      "expected": "exact target tenant; no implicit assign via unrelated Platform scope",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "CONFIG-01",
+      "scenario": "ordinary permitted parameter on published definition without legal attachment",
+      "expected": "not denied merely for absent legal accreditation; exact type/scope/permission enforced",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "CONFIG-02",
+      "scenario": "unknown definition, override not allowed or missing effective permission",
+      "expected": "DENY; no invented binding or defaults",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "SOURCE-01",
+      "scenario": "ordinary nonmandatory published applicability without source",
+      "expected": "technical context/chain eligible; no legal accreditation inferred",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "SOURCE-02",
+      "scenario": "formal source supplied but foreign, unapproved, expired or not scan-PASS",
+      "expected": "DENY formal dependent command; no waiver",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "SOD-01",
+      "scenario": "Evidence submitter approves own Evidence or author releases own hold",
+      "expected": "existing operational SoD DENY",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "RETENTION-01",
+      "scenario": "12-month commercial proposal vs approved evidence and AuditEvent category floors",
+      "expected": "retain floors and anchors; no purge at12months",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "RETENTION-02",
+      "scenario": "active hold, unknown obligation, conflicting policies or unknown anchor",
+      "expected": "DENY purge even after plan expiration or option change",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "TIME-01",
+      "scenario": "mapping months across variable month lengths/leap years/end-of-month",
+      "expected": "no seconds mapping before exact temporal contract; no 30day default",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "HISTORY-01",
+      "scenario": "new selection/default after existing published policy/Subscription",
+      "expected": "immutable history and original term; no retroactive rewrite",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "GOV-01",
+      "scenario": "express functional instruction with implementation/tests in scope",
+      "expected": "continue within scope without second internal signer",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "GOV-02",
+      "scenario": "document-only instruction excludes implementation/activation/push/deploy",
+      "expected": "do not execute excluded acts; continue candidate preparation",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "GOV-03",
+      "scenario": "earlier internal directive conflicts with express PO decision",
+      "expected": "prepare formal update; do not impose administrative veto",
+      "execution": "NOT_RUN"
+    },
+    {
+      "id": "GOV-04",
+      "scenario": "concrete external obligation or unresolvable security risk",
+      "expected": "restrict affected operation with source/consequence/compatible alternative",
+      "execution": "NOT_RUN"
+    }
+  ]
+}

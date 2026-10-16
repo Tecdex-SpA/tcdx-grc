@@ -1,0 +1,503 @@
+{
+  "status": "DRAFT_NOT_EFFECTIVE",
+  "candidate": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "active_predecessor": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15",
+  "source_head": "0524d615dada258a87bd71d0b84f9babf7c2f9d1",
+  "decisions": [
+    "DR-GRC-20261016-001",
+    "DR-GRC-20261016-002",
+    "DR-GRC-20261016-003"
+  ],
+  "files": [
+    {
+      "path": "docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/ANNOTATED_OPERATIONS.json",
+      "size": 2135,
+      "sha256": "f7580ff3622d159226172db1923df5c4d97e978a866c96f0499d6495956fb49e"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/DELTA.md",
+      "size": 9178,
+      "sha256": "abfc408f039c4095f5039ee1229b9dbd2cd0a120eba7f762613e62633aa7c3ce"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/OPERATION_BINDINGS.json",
+      "size": 9784,
+      "sha256": "c5a6a6cb9ae2a8893adf3675ed6b08396b7ad64ab387fc689f5c76034d1ac01e"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/RETENTION_PROPOSAL.json",
+      "size": 852,
+      "sha256": "5a2254642fe76ff9d2bfc54df29c1618b38e92b0eacb3725773144cad9454a9b"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/SOURCE_MAP.json",
+      "size": 2769,
+      "sha256": "12490880cae6899c62735da38971db01a56ff74e7df5fefc0ff00d69f6314375"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/TEST_SCENARIOS.json",
+      "size": 4301,
+      "sha256": "2d2c3dd5968c7fbeb3721a9a2af7e5727da064715fdbb18839e6e0e4965e5f42"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/snapshots/00_README.md",
+      "size": 928,
+      "sha256": "416f715967e1004f402fbc0cad5090543f9087fd4af464359652f919a906f99b"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/snapshots/02_OPENAPI_BASE_CONTRACT.yaml",
+      "size": 461176,
+      "sha256": "f756aacc164812e46c6e8971bbe95431851c951119ce2249de7d7a9f19a802a8"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/snapshots/03_API_RESOURCE_OPERATION_MATRIX.md",
+      "size": 84795,
+      "sha256": "1a9d52a895e7da84fd6062fa0a8c267711fb639c5a584d8147c564674d6d5554"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/snapshots/05_PERMISSION_CATALOG.md",
+      "size": 65681,
+      "sha256": "397cb317e6507fdf75dff4115a8ecad91797c76425015255a2cf1320244e512a"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/snapshots/09_SEED_MANIFESTS.md",
+      "size": 53382,
+      "sha256": "e754451ba2e29cf48f11fc51e031559a3e1ddf6fc9f14ca687a0425dce9137cc"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/snapshots/10_TEST_CONTRACTS.md",
+      "size": 25465,
+      "sha256": "370b7f28ce4433ff077ce01b5a8917e4b91ab5ff66b2fac4994a092c4a2884dc"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/snapshots/14_FILE_EVIDENCE_STORAGE_CONTRACT.md",
+      "size": 10140,
+      "sha256": "8529b1ee7d97598e699a84fce0da1e8d5229142a00961b0fc1eff10edb72fdee"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/snapshots/20_EXECUTABLE_CONTRACTS_REVIEW_REPORT.md",
+      "size": 1153,
+      "sha256": "1b3e0aae4b22fa6350aef4ebaefedb66d10ad90052787950436744ae000cf858"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/snapshots/25_TENANT_INITIAL_ONBOARDING_AND_IDENTITY_DISCOVERY.md",
+      "size": 23734,
+      "sha256": "8f7054edd2395e1eb3c7e0163eb9db9887bdca3e51a4fb4bea83ab8deb6188a0"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/snapshots/26_PLATFORM_TENANT_USER_ONBOARDING.md",
+      "size": 9384,
+      "sha256": "c4d5ae8830b67055b2193c09cffdbd5ddc29c58ddb2f2de2cba9f1453c4dd1d7"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/snapshots/29_PHASE6A3_REFERENCE_READS.md",
+      "size": 3359,
+      "sha256": "1bbd595ed6af2e6517cd0dfcc9c6dba437998724a26b3259875c4eca609c5427"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/BASELINE_DELTA_INVENTORY.json",
+      "size": 3056,
+      "sha256": "5b0c260b93b69a88eb7e9a053db5ef15136f890c962b8b319d95490168ad7d10"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/BUNDLE_LAYOUT.json",
+      "size": 686,
+      "sha256": "63d248becebf8ffd310b14e5f9851b68ecc19d32291af62f2b5c70280e24d7f3"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/CHECKS.json",
+      "size": 1500,
+      "sha256": "f91ba0f71a8e2214f8cf5b0e1d991c42758ba7ced59132a2d32a8a0316d94eb1"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/CONTRADICTION_MATRIX.json",
+      "size": 4798,
+      "sha256": "4c026f1c9b68636e3101f98e3066e23f9920fc8f5da888967e3e689396d4981b"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/CONTRADICTION_MATRIX.md",
+      "size": 3473,
+      "sha256": "2cdccc9f3c96b6e7de5267c670a14ea0ae72c65726861bccf6c8fd2e19336b38"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/DECISION_RECORD.md",
+      "size": 5657,
+      "sha256": "abc283701314ae7dc2c5fdb55f2349df6dc6543192bb05107c72d60aae1bc7f4"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/DECISION_RECORD_DR003.md",
+      "size": 3267,
+      "sha256": "03cd93d8d097e331152a39dc2159f8b8ae27a5713ff22c6f59d0074a46a99f27"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/DIFFERENCES.patch",
+      "size": 141946,
+      "sha256": "d9878e4a5d33e4b525ef3002d3430541e2d066c3aa7b59320de0c7b9f79d05a3"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/DIFFERENCE_INDEX.json",
+      "size": 7134,
+      "sha256": "0945e9dae47a49cd82e3ff088bed12f9245f58698efb1b14f6445fbe84ba33fc"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/DR003_SOURCE_RECEIPT.json",
+      "size": 768,
+      "sha256": "ef7d396b6ce030c08baed1c3af2cb8673f776bc0da72b3babc351586f52a5f80"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/GOVERNANCE_RULE.txt",
+      "size": 1705,
+      "sha256": "32014b65a5c776bf8702e48a9e983dff578c943e4bbaaba98f31da597badaefe"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/IMPACT_ANALYSIS.md",
+      "size": 5615,
+      "sha256": "aef91c14cc677c8d2b72560b5f9e265d487697b5291af99bd88885f2187b9ae8"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/PROTECTED_STATE.json",
+      "size": 711220,
+      "sha256": "4ac0e8610734044ee87a94f611156f6f652f08c84d3cd05850f425386f865cc8"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/README.md",
+      "size": 7571,
+      "sha256": "967a07c92af49daed64455af27a5095474e9ef42b39250152037b98e4959d1f0"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/RESULT.json",
+      "size": 2230,
+      "sha256": "429d4eb19dde027b2f2cdaf3884ee9e03af3d585954cd06cae5d223cf9a8372c"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/SOURCE_VERIFICATION.json",
+      "size": 1316,
+      "sha256": "777d571d74ba96f5d7bb41871187c00c28f395aa076df4cb2beff032fc8608f8"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/STEP_6A3_ACCEPTANCE_DELTA.md",
+      "size": 3953,
+      "sha256": "ac24374e9479243f4f54d3ef704a3b45fb50b9e4f6a1fd0bbf53739eef1394f9"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/TASK_PACKET.md",
+      "size": 4517,
+      "sha256": "8e5beb192f7f86de9eca3059e1ea99e9cd22218de99074792688910a29b449f4"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/evidence/active-rector-after.log",
+      "size": 14582,
+      "sha256": "093822bdd653b43cb90b0f69e3b57f858329df99a15d46110bbc4a35e630c665"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/evidence/active-rector-before.log",
+      "size": 14582,
+      "sha256": "093822bdd653b43cb90b0f69e3b57f858329df99a15d46110bbc4a35e630c665"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/evidence/active-status.log",
+      "size": 24,
+      "sha256": "4a950b39b20f2de1440a2b45b243b63df607fa3ede7f7e32e9f7e9da71864597"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/evidence/secret-scan.json",
+      "size": 44,
+      "sha256": "785afde26b815831ebbe2ea9b6a7125f5b49cdf400b3697f50d456a5337f0f2d"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/evidence/tooling.json",
+      "size": 261,
+      "sha256": "ef12e515fc2c1ee83f46d9c1837d1c5a5b27ed569949dfd2f6616d8109aa1152"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/publication-proposals/ACTIVATION_BOUNDARY.md",
+      "size": 850,
+      "sha256": "b17b5160468b913eb5221c9c6ceee199574a2b04d597c26bf4e6000c913e467a"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/publication-proposals/AGENTS.md",
+      "size": 6574,
+      "sha256": "2631e3cba3d227dac6a5f8f7ee76e77626da525de7b9d0ae909ef872cc61c6fe"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/publication-proposals/CODEX_RECTOR_ENFORCEMENT.md",
+      "size": 1302,
+      "sha256": "649ab6701e77e9f61975e2b0607c86d349f8058bc936d938c4d65fa1ee2d7a20"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/publication-proposals/MASTER_EXECUTION_STATUS_DELTA.md",
+      "size": 687,
+      "sha256": "4b0acc93e6029e149b9f23aaf7c73a8ae8db89d5118e4f6111bbb95eac2ab8db"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/verify_candidate.py",
+      "size": 11065,
+      "sha256": "60c0289bde8a674887801b16c7c8c001e79d6a99b3480c4067efdb0cfe04008c"
+    },
+    {
+      "path": "docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/verify_openapi.mjs",
+      "size": 5371,
+      "sha256": "0e0e5d11b629c78bcaa0a6e648a743969fea737e465e4d5cd6232b257fd16e01"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/00_README_KNOWLEDGE_BASE.md",
+      "size": 11511,
+      "sha256": "59d91fe37b1d6890d8ef97cf19529a192e0a493f1557e7f785da95129fd1f3db"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/01_DEFINICION_NUEVO_PRODUCTO.md",
+      "size": 7388,
+      "sha256": "b5ab75859e238299d139a41fcca9d27b8408d53dac56933bff3c9bb61484e88b"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/02_DEFINICION_BASE_DATOS_MODELO_DATOS.md",
+      "size": 3574,
+      "sha256": "847ae4c7fd0fdd4aaba24b046a2c14ee7679decf9ae77b9f4a6712764564c9c6"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/03_RELACION_ENTRE_ESTADOS.md",
+      "size": 1782,
+      "sha256": "6a49c8347f3d59d9f0acfc629aa6b11d547276432655832105c6e20ecc324d90"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/04_DEFINICION_FUNCIONAMIENTO.md",
+      "size": 1907,
+      "sha256": "524ee7d0347af8ce04ed9a13598f178ec40ef8750bdd8f7b432db01c20546904"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/05_MAPA_FUNCIONAMIENTO.md",
+      "size": 2325,
+      "sha256": "be7d087f1747b49555bc7b955213570a58e1e1f901517c2e44cadffa3b24c968"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/06_CONSIDERACIONES_ENGINEERING_CONSTITUTION.md",
+      "size": 3393,
+      "sha256": "5f94c905a00b1f9e7ad3710eeab226df5110a5a6c5edd07f02e6c3bed718b918"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/07_TCDX_GRC_DOMAIN_MODEL.md",
+      "size": 4582,
+      "sha256": "da29764b7afd83dd9961dea2e79cd182e742cc4bc27257c79b044e380f1e2eec"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/08_TCDX_GRC_CANONICAL_DATA_MODEL.md",
+      "size": 6648,
+      "sha256": "d1fed26f73627de8d686f44ad19b2b4a902541c9716b285b93dae461608af04d"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/09_TCDX_GRC_RBAC_MODEL.md",
+      "size": 4562,
+      "sha256": "f02ed9d11934ab0268c410afd2c4a90b484729a7f2f65d070ffddb3b1a52fe37"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/10_TCDX_GRC_TRACEABILITY_MATRIX.md",
+      "size": 6216,
+      "sha256": "bb7474eeb476c15e8cbf94104c3cdb172d66c9ec67f61c16ca114ca49620492c"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/11_ALINEAMIENTO_DESARROLLO.md",
+      "size": 2573,
+      "sha256": "a0f8ddbbbf0c5f3106324078b5b59e106d461099d57954f418bd91f78591b3f0"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/12_INFRAESTRUCTURA_Y_LIMITES.md",
+      "size": 1824,
+      "sha256": "7221e43483a71d2fe4d5b27e1b424db4a6d117ebfcea94da27351163311424c2"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/13_CHECKLIST_ANTI_REGRESION.md",
+      "size": 2209,
+      "sha256": "073c2d852eb9a43e03ea539d44efb89147fab428c918d6356054100fe641f556"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/14_CONTRATO_CANONICO_INGESTA_CALCULO_RESULTADOS.md",
+      "size": 4992,
+      "sha256": "8eb2ee104f59493359318a8ca7c7dda761805c24d1515a6971ed7268d2778e76"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/15_MODULOS_CONSUMIDORES_Y_MATRIZ_DE_INFORMACION.md",
+      "size": 8718,
+      "sha256": "c58240683527e25e4037ef954e006c76968b887d332ebaeab2e8f2e5cd8c58f0"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/16_CATALOGO_CANONICO_OBSERVACIONES_Y_SUBJECTS.md",
+      "size": 5770,
+      "sha256": "ff8d04bc386e3ba3ce0a529d51e90665d7ef88a9a19e51f1f61b247f33a2bf4d"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/17_CATALOGO_METRICAS_FORMULAS_Y_AGREGACIONES.md",
+      "size": 6997,
+      "sha256": "26238d0597c49e58e7fa7e4e2bcedb2aa6e8630676e50230655b9138882514b7"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/18_RULES_ENGINE_GRC_IMPACT_CONTRACT.md",
+      "size": 2271,
+      "sha256": "c5c219785fe9d5cd2bc42e3b3ddcb36fbf98f9068da6c872d04288fecbab5dff"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/19_METODOLOGIAS_GRC_COMPLIANCE_RISK_ASSURANCE.md",
+      "size": 5867,
+      "sha256": "38adcf00f78a69a15d1c8b55f3a8e0afe77b8ab51bc96bd07d3167eafaaf0be1"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/20_MATRIZ_CONECTORES_DATOS_OBSERVACIONES_IMPACTO.md",
+      "size": 5417,
+      "sha256": "729e07f9831aa31dc8b8431f501edd10fb17a3ecc9d267d712e6fb7ceac7b66f"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/21_LIFECYCLE_TRANSITION_MATRIX.md",
+      "size": 11033,
+      "sha256": "e6ea4c34984c8bf4dff3f34c1fb705bab33f054f184be97f5e4efc98dd0476b2"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/22_RBAC_PERMISSION_SCOPE_MATRIX.md",
+      "size": 15719,
+      "sha256": "50a93300a75f133c5a47262272d1c54df93dabab26372dab5674d133532224c7"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/23_CONTRATO_TEMPORAL_VERSIONADO_RETENCION_RECALCULO.md",
+      "size": 8663,
+      "sha256": "4bc2dd9954f9c92790658b4f48694f80629c9475b8b3977434f5cd3d43a8cc6b"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/24_CONTRATO_EVIDENCIA_DOCUMENTOS_ARCHIVOS.md",
+      "size": 7732,
+      "sha256": "75cc9dfededc549c1138c143bc7e3d8bdaa6ccf553bee206aac9d391a0d5fa99"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/25_API_EVENTOS_IDEMPOTENCIA_AUDITORIA.md",
+      "size": 4950,
+      "sha256": "40d33ee7f26f2f4944d36b029f0360ddc595598f670881ce5b9fda4a0ee9853b"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/26_NON_FUNCTIONAL_SECURITY_RELIABILITY_OBSERVABILITY.md",
+      "size": 2254,
+      "sha256": "6bd7535ac7314da4b3b48284f57d42095af1a200f04d0dcbbaa732a552987af9"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/27_REPORTING_UX_RESULTADOS_DRILLDOWN.md",
+      "size": 1692,
+      "sha256": "8c5ade951e818d456b7c01dc428536f49bac49cc71ed19a92ff58e8336c2ff52"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/28_PREIMPLEMENTATION_CONTRACT_GATE.md",
+      "size": 6644,
+      "sha256": "a8cbbccf1fb7a2e0bc36998233165ddad4c6a57b48aee23568b0b2abbf49e0ce"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/29_CONFIGURACION_PARAMETRIZACION_Y_EXTENSIBILIDAD.md",
+      "size": 4478,
+      "sha256": "4ea8a91e3cbb120d83d1295caf3f3820ce5a07d9601c48ca1a24017bc614574b"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/30_MODELO_LOGICO_RELACIONAL_CANONICO.md",
+      "size": 13173,
+      "sha256": "abea25bc1aa53723eed014997fbe3e9e3658100e1909973699b0f928e601bb95"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/31_DECISIONES_FUNDACIONALES_CERRADAS.md",
+      "size": 8639,
+      "sha256": "d7d1fb0ab645f15366902f8a3a358a44d42aeeb1c083a5464297c2b6c385f2fa"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/32_GLOSARIO_SEMANTICO_Y_NOMENCLATURA.md",
+      "size": 6406,
+      "sha256": "6a8cb31930b410bd9260100688b4b6d2112f78b312ba2c3fd0066bd6fbabc2c2"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/33_CATALOGO_ENTIDADES_CANONICAS.md",
+      "size": 12112,
+      "sha256": "c3764f193866974a9fd8266aa1cd411ed32325e56d22511759d827a9c5892ba9"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/34_ARQUITECTURA_LOGICA_COMPONENTES_Y_DEPENDENCIAS.md",
+      "size": 3075,
+      "sha256": "14cf0fbe85a045761fcba75fcbfb7d609829b121680be98ba716cffa21cab76d"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/35_SOURCE_PRECEDENCE_CONFLICT_RESOLUTION_POLICY.md",
+      "size": 2491,
+      "sha256": "66f646b1620630c517146210b61530f3a93b42cce6f41a8c72a478ae769fb67e"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/36_AUTOMATION_POLICY_AND_HUMAN_OVERSIGHT.md",
+      "size": 1468,
+      "sha256": "d8ed5c606dca321f12226e511aea6ba7ed6fc09487d34c660d2f330526c6d639"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/37_REGULATORY_PACK_CONTRACT.md",
+      "size": 2924,
+      "sha256": "a04d8134e1f620f7b2e3d543f65543f46cdd5bc052075e19b7365e7873be093b"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/38_RESULT_STATUS_AND_DATA_SUFFICIENCY_CONTRACT.md",
+      "size": 7715,
+      "sha256": "f68b84d51dee0387b51e5b55ce319ea1327e41005a1d2bf2c4fc7f57b46f7716"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/39_DECISIONES_SEMANTICAS_FINALES_PRE_MODELO_FISICO.md",
+      "size": 14145,
+      "sha256": "a66b2ac97332ae7fe864659dc791b1997ab4741d1e9063e5cc4c57c9592389de"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/40_CIERRE_INTEGRIDAD_SEMANTICA_Y_CONTRATOS_FISICOS.md",
+      "size": 7796,
+      "sha256": "d78f1793f666c87ca4058d095ed9a74e397ad739a0af94a1ff20b68d9e969816"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/41_BASELINE_REGULATORIO_OBLIGATORIO.md",
+      "size": 5957,
+      "sha256": "b521642a0772306ea00213edb981311c2adc2d8c3a46750d6d3ca0e6ec4a145a"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/42_PLANES_COMERCIALES_Y_ROLES_BASE.md",
+      "size": 10867,
+      "sha256": "23fe245750ffbac748b2cf023c98772ccda95fa2c2227f3c4094d6747213d889"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/43_PLAN_MAESTRO_RECTOR_DISENO_Y_DESARROLLO.md",
+      "size": 13114,
+      "sha256": "d551b6ace31b956e2614c291c744066903416e3648285c0e9ef39235988ed762"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/44_CONTRATO_ESTRUCTURA_NORMATIVA_REQUISITOS_CONTROLES.md",
+      "size": 12549,
+      "sha256": "6f19fd4e83862252dc039c23609a73d7cdbaab6cce8c8c0875ae254c71ebfe60"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/45_CONTRATO_DESARROLLO_CERRADO_Y_NO_INFERENCIA.md",
+      "size": 4973,
+      "sha256": "6d3ecbfacecd384a59126e96947c95d4afb00e03094fb764abc1b0390a5699b3"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/46_REGENTE_MAESTRO_DEL_DESARROLLO.md",
+      "size": 11451,
+      "sha256": "45bbfc99508ae3c15498ee67a50a34724727e5dc1a4ad1efd1cacafc9a16e3d3"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/47_APROBACION_Y_ACTIVACION_BASELINE.md",
+      "size": 4669,
+      "sha256": "c7e3e3c0851b5dda438276bfabb442d0de0311205523ec8187d6498396a7646c"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/48_CONTRATO_AUDITORIA_INTEGRADA_ISO_19011.md",
+      "size": 8167,
+      "sha256": "84b7b4cd357d3b6d3d47f1e3b58e4a90ce994c0d385bba2045d70e605e3185c6"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/49_GOBIERNO_INTERNO_Y_REVISION_UNIPERSONAL.md",
+      "size": 5208,
+      "sha256": "ca10baf5712be2db17becd9a374e8f451c1c1e0b7a85eae761261f924359d211"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/PRE_IMPLEMENTATION_GATE_REPORT.md",
+      "size": 4214,
+      "sha256": "f500ecff798fe992dfb22c7f8807cdddd92d89fb3be2ad32b12999ef1e72c12d"
+    },
+    {
+      "path": "docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/SHA256SUMS.txt",
+      "size": 5478,
+      "sha256": "cdd0165364e50dee176c8a8ec8cf7c1f55a5905f4febd91c63459583c9faec85"
+    }
+  ]
+}

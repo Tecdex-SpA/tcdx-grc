@@ -1,0 +1,1393 @@
+--- docs/rector/baseline/00_README_KNOWLEDGE_BASE.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/00_README_KNOWLEDGE_BASE.md
+@@ -4,7 +4,7 @@
+ 
+ Este paquete constituye la base contractual, funcional y de ingeniería para el nuevo desarrollo **TCDX GRC**.
+ 
+-Baseline de esta versión propuesta: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15`. Su entrada en vigencia requiere activación humana y técnica conforme a 47; la v1.10 es la predecesora íntegra. Las referencias v1.3 siguientes documentan historia semántica; no sustituyen 46/47/49 ni el manifest vigente.
++Baseline de esta candidata: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16`, DRAFT_NOT_EFFECTIVE; predecesora activa v1.11 íntegra. La activación está expresamente excluida en esta tarea. DR001/002/003 y45/46/47/49 gobiernan la preparación y eliminan aprobaciones internas reiterativas. Las referencias/versiones/etiquetas preparatorias heredadas documentan la procedencia de contratos anteriores, no pendientes de aprobación conceptual actual ni vigencia de esta candidata. La publicación efectiva v1.11 se verifica por sus recibos/punteros sellados.
+ 
+ No contiene prompts a ejecutar individualmente. Sus archivos son **fuentes de conocimiento y alineamiento** que deben ser leídas y respetadas por ChatGPT, Codex y desarrolladores antes de diseñar o implementar componentes.
+ 
+@@ -142,3 +142,10 @@
+ `STATUS=DRAFT_NOT_EFFECTIVE; HUMAN_EXACT_BYTES_REVIEW=PENDING`. Baseline candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15, predecesora TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15. Diseño PO aprobado por SHA `1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b`; constancia `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/PO_DESIGN_APPROVAL_RECEIPT_20261015.json`. Esta sección sólo tendrá efecto después de publicación conforme47/49 y gates físico/ejecutable; no autoriza operación QA ni deploy por sí sola.
+ 
+ Copia completa candidata de51archivos. Sólo los deltas INITIAL_SOURCE indicados modifican la predecesora; ningún archivo de baseline activa o historia se modifica.
++
++## Lectura de esta sucesora candidata — 2026-10-16
++
++`CANDIDATE_BASELINE=TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16`; `STATUS=DRAFT_NOT_EFFECTIVE`.
++Predecesora activa: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15`. Fuente: DR-GRC-20261016-001/002 (commit2373b5b63a49ddddb47e104947020e4ceb070f64, PR21) y DR-GRC-20261016-003 (instrucción PO de esta sesión), registradas en docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/.
++Este directorio entrega los51 documentos completos y SHA256SUMS; los no afectados conservan bytes. Las referencias históricas a decisiones/versiones previas conservan su alcance; 43/45/46/47/49 de esta candidata formalizan la autoridad interna sucesora. La candidata no modifica punteros activos ni activa contratos.
++No hay segunda aprobación conceptual de DR001/002/003. READY_FOR_PO_REVIEW describe la entrega revisable, no un gate humano adicional obligatorio ni activación. Se mantiene STEP_6A3=PARTIAL_BLOCKED y STEP_6A4=NOT_STARTED.
+--- docs/rector/baseline/01_DEFINICION_NUEVO_PRODUCTO.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/01_DEFINICION_NUEVO_PRODUCTO.md
+@@ -109,3 +109,8 @@
+ ## Addendum - Producto basado en hechos trazables
+ 
+ TCDX GRC transforma informacion real y declarativa en resultados GRC explicables mediante una cadena canonica de ingesta, normalizacion, observacion, medicion, reglas, impacto, remediacion, evidencia, verificacion y reporting. El producto no se limita a registrar cumplimiento: debe poder explicar el origen y calculo de cada resultado relevante. Aplican obligatoriamente los contratos 14 y 15 de esta base.
++
++## Administración SaaS e incorporación asistida — DR001 §§1–4
++
++Hasta completar la Fase10, Platform Admin realiza la incorporación asistida: crea la empresa cliente, incorpora su primer Tenant Admin mediante IAM/RBAC existentes, asigna la PlanVersion publicada y habilita módulos/capabilities/normas conforme al catálogo y oferta autorizados. Habilitar una norma no publica contenido regulatorio ni elude su gate. El Tenant Admin administra autónomamente usuarios, roles y configuraciones operativas autorizadas dentro de su tenant; la asistencia Platform no sustituye esa autonomía. Platform sólo opera donde tiene permisos efectivos y objetivo tenant explícito validado. No adquiere Membership implícita.
++Autoatención, contratación autoservida y creación autónoma de empresas por clientes quedan fuera de Fases1–10; su evaluación posterior no constituye autorización anticipada. La configuración operativa y la operación GRC no requieren universalmente fuente jurídica auténtica ni revisión independiente. Acreditación formal, resultados oficiales y controles operacionales conservan las fuentes, revisiones y SoD que les correspondan. No se presenta configuración como certificación o cumplimiento legal.
+--- docs/rector/baseline/06_CONSIDERACIONES_ENGINEERING_CONSTITUTION.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/06_CONSIDERACIONES_ENGINEERING_CONSTITUTION.md
+@@ -79,7 +79,7 @@
+ 
+ ## Gates
+ 
+-No commit/push/merge/deploy hasta superar los gates correspondientes y obtener autorización cuando el flujo de trabajo la requiera.
++Los gates técnicos aplicables se verifican con evidencia real. DR-GRC-20261016-003 elimina la doble aprobación interna del desarrollo: la instrucción PO autoriza las actividades dentro de su alcance y las contradicciones internas se reconcilian. Una exclusión expresa de commit/push/merge/deploy sigue siendo obligatoria; no se ejecuta una acción fuera del alcance.
+ 
+ ## Addendum constitucional - Compatibilidad semantica de datos
+ 
+--- docs/rector/baseline/09_TCDX_GRC_RBAC_MODEL.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/09_TCDX_GRC_RBAC_MODEL.md
+@@ -79,3 +79,7 @@
+ ## Matriz vinculante
+ 
+ La convención de permissions, scopes y SoD se completa en `22_RBAC_PERMISSION_SCOPE_MATRIX.md`. Todo endpoint/command futuro debe declarar permission y scope antes de implementarse.
++
++## Administración asistida y autonomía tenant — DR001
++
++La incorporación inicial usa el command Platform tenantInitialOnboardingCreate y el bootstrap interno existente; usuarios posteriores usan tenantUserOnboardingCreate o los comandos tenant propios conforme a contratos25/26. Platform puede administrar accesos sólo por sus permisos publicados y predicados explícitos; la unión de scopes de un catálogo no extiende un comando. Tenant Admin opera su tenant con Membership/roles/entitlements efectivos. El nombre del rol no concede todos los permisos, aprobación de evidencia ni autoridad Platform. No hay autoservicio de alta de empresas antes de completar Fase10.
+--- docs/rector/baseline/21_LIFECYCLE_TRANSITION_MATRIX.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/21_LIFECYCLE_TRANSITION_MATRIX.md
+@@ -144,4 +144,8 @@
+ 
+ `STATUS=DRAFT_NOT_EFFECTIVE; HUMAN_EXACT_BYTES_REVIEW=PENDING`. Baseline candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15, predecesora TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15. Diseño PO aprobado por SHA `1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b`; constancia `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/PO_DESIGN_APPROVAL_RECEIPT_20261015.json`. Esta sección sólo tendrá efecto después de publicación conforme47/49 y gates físico/ejecutable; no autoriza operación QA ni deploy por sí sola.
+ 
+-Se propone un único comando retention_policy_applicability.bind_initial_source, actualización draft→draft con CAS, idempotencia y AuditEvent. No publica una nueva arista de transición de estado ni cambia las cinco aristas C-04W ya auditadas. Una draft que custodia fuente pendiente no pasa a revisión, aprobación o publicación antes de bind; published continúa inmutable. Las dos filas QA under_review preexistentes no se regresan ni se modifican.
++Se propone un único comando retention_policy_applicability.bind_initial_source, actualización draft→draft con CAS, idempotencia y AuditEvent. No publica una nueva arista de transición de estado ni cambia las cinco aristas C-04W ya auditadas. En el flujo de acreditación formal, una draft que custodia fuente pendiente no pasa a revisión, aprobación o publicación antes de bind; published continúa inmutable. Las dos filas QA under_review preexistentes no se regresan ni se modifican.
++
++## Configuración ordinaria frente a workflow formal — DR001 §4 / DR003
++
++Una opción ordinaria autorizada se aplica por ConfigurationDefinition/Override existentes y sus policies, no por una falsa transición de Evidence o aprobación jurídica. La ausencia de fuente jurídica no es por sí sola motivo para bloquear esa configuración. No se eliminan aristas, permisos ni SoD de RetentionPolicy/Applicability, Evidence, holds u otros objetos. Una aplicabilidad ordinaria publicada sin fuente no acredita derecho externo y conserva todos sus controles técnicos; la excepción draft INITIAL_SOURCE permanece acotada a preparar una fuente formal. No se crea estado ni escritura directa de lifecycle. Publicar datos o una arista posterior requiere la instrucción operativa en alcance y verificación técnica; nunca modifica filas históricas inmutables.
+--- docs/rector/baseline/22_RBAC_PERMISSION_SCOPE_MATRIX.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/22_RBAC_PERMISSION_SCOPE_MATRIX.md
+@@ -157,3 +157,8 @@
+ `STATUS=DRAFT_NOT_EFFECTIVE; HUMAN_EXACT_BYTES_REVIEW=PENDING`. Baseline candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15, predecesora TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15. Diseño PO aprobado por SHA `1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b`; constancia `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/PO_DESIGN_APPROVAL_RECEIPT_20261015.json`. Esta sección sólo tendrá efecto después de publicación conforme47/49 y gates físico/ejecutable; no autoriza operación QA ni deploy por sí sola.
+ 
+ Se mantienen todos los Permission/RolePermission/MembershipRole existentes. Tenant Admin humano es custodio y autor del draft; el autor documental puede ser ese custodio o Evidence Owner humano del mismo tenant con scope tenant y permisos efectivos de cada operación. Upload/finalize/create/submit sólo admiten su cadena documental exacta; finalize/submit permanecen del autor documental. Bind es del Tenant Admin custodio autor con privacy.retention_policy.update y PRIVACY. EvidenceReview debe ser de identidad distinta del autor documental; la aprobación de aplicabilidad debe ser de identidad distinta del autor del draft. Ser autor del draft no impide revisar Evidence ajena si el permiso existe. Ninguna acumulación editorial conforme49 sustituye estas separaciones. M2M/Platform, identidad ajena, falta de permiso/entitlement/scope y objeto de otro tenant: DENY. No se conceden grants ni lectura documental general.
++
++## Límite de la autonomía administrativa — DR001 §§1–4 / DR003
++
++Tenant Admin administra personas/roles/configuraciones de su tenant usando permisos efectivos ya definidos, sin ratificación Platform por cada operación ordinaria. No obtiene authority Platform, permisos globales, aprobación de evidencia propia ni liberación de holds. Platform Admin asiste mediante contratos25/26, sus permisos comerciales y de acceso explícitos; no usa una Membership ficticia ni convierte platform.role.assign en assign Platform genérico. No se añaden grants en esta candidata.
++La fuente y revisión jurídicas se exigen para la acreditación formal correspondiente, no para una preferencia SaaS por su mera naturaleza administrativa. Las separaciones de aprobación ya modeladas en los comandos sensibles permanecen. La eliminación de dobles firmas internas del desarrollo de49 no las elimina.
+--- docs/rector/baseline/23_CONTRATO_TEMPORAL_VERSIONADO_RETENCION_RECALCULO.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/23_CONTRATO_TEMPORAL_VERSIONADO_RETENCION_RECALCULO.md
+@@ -77,4 +77,11 @@
+ 
+ `STATUS=DRAFT_NOT_EFFECTIVE; HUMAN_EXACT_BYTES_REVIEW=PENDING`. Baseline candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15, predecesora TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15. Diseño PO aprobado por SHA `1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b`; constancia `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/PO_DESIGN_APPROVAL_RECEIPT_20261015.json`. Esta sección sólo tendrá efecto después de publicación conforme47/49 y gates físico/ejecutable; no autoriza operación QA ni deploy por sí sola.
+ 
+-La custodia de la primera fuente mediante FK a aplicabilidad draft no cambia duración ni precedencia de la policy ordinaria tenant-owned publicada/vigente. Source pendiente se deriva de FK/estado existentes; no es un enum persistido, legal hold, obligación acreditada ni permiso de borrado. Ninguna cadena pendiente habilita consumo de negocio, evaluación oficial, purge o release; todas las obligaciones concurrentes y la historia se conservan. Source e intervalo se revalidan al bind y antes de aprobar/publicar. Los plazos comerciales futuros de12/18/24/36/48/60meses no se implementan por esta sucesora.
++La custodia de la primera fuente mediante FK a aplicabilidad draft no cambia duración ni precedencia de la policy ordinaria tenant-owned publicada/vigente. Source pendiente se deriva de FK/estado existentes; no es un enum persistido, legal hold, obligación acreditada ni permiso de borrado. Ninguna cadena pendiente habilita consumo de negocio, evaluación oficial, purge o release; todas las obligaciones concurrentes y la historia se conservan. Source e intervalo se revalidan al bind y antes de aprobar/publicar. La propuesta comercial de12/18/24/36/48/60meses se incorpora contractualmente en §11; no se declara implementada ni se convierte en segundos o autorización de purge.
++
++## 11. Opción comercial operativa y conservación concurrente — DR001 §5
++
++Propuesta comercial:12 meses por defecto y alternativas18/24/36/48/60 meses. Su dimensión es servicio/operación y no define por sí sola cuánto puede conservarse o borrarse cada categoría. Esta candidata no materializa defaults, UsageLimit, ConfigurationDefinition/Override ni políticas. La selección comercial debe referenciar datos versionados de oferta/contrato y configuración; nunca hardcodes de tenant ni una segunda autoridad de duración.
++Las duraciones y anclas de §6 permanecen íntegras: AuditEvent7años; documentos/evidencias aprobados7años desde expiración/cierre; raw90días online y disposición gobernada; observaciones/mediciones7años; CalculationRun/Snapshot7años; logs connector180días; security1año online o refuerzo. Una ventana de servicio12meses no autoriza borrar evidencia aprobada a12meses ni reducir acceso/historia exigidos por su contrato; archivo y disponibilidad se gobiernan por la categoría, no por una reducción silenciosa del SLA. No se homogeneizan obligaciones con unidades o eventos de inicio distintos.
++La conservación efectiva evalúa por objeto el evento inicial, la categoría y TODAS las políticas aplicables conforme a §8. Se conservan los pisos de producto y obligaciones superiores; la opción comercial sólo puede añadir una condición compatible. No se usa la precedencia tenant_policy para reducir el piso de categoría. Un hold sin release autorizado impide purge indefinidamente; cambiar plan, elegir12meses, expirar o archivar no lo libera. Fuente obligatoria no resuelta, conflicto o ancla desconocida impiden purge/acreditación dependientes, no una configuración independiente.
++El contrato de datos temporal posterior debe fijar el código/versión publicado, unidad mes calendario o duración exacta, ancla, zona y regla de fin de mes antes de mapear a retention_seconds. No se asume mes=30días ni se inventa un default persistido. Esto acota la implementación de esa opción y no reabre su decisión comercial ni bloquea la candidata. No existe autorización de eliminación en esta entrega.
+--- docs/rector/baseline/24_CONTRATO_EVIDENCIA_DOCUMENTOS_ARCHIVOS.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/24_CONTRATO_EVIDENCIA_DOCUMENTOS_ARCHIVOS.md
+@@ -73,7 +73,7 @@
+ 
+ ## 9. Enmienda candidata STEP_6A3 C-04W
+ 
+-El comando nuevo request-upload exige RetentionPolicyApplicability publicada y aplicable, registra su FK y la RetentionPolicy/version. Finalize conserva la misma FK en FileObject sólo tras scan-PASS y hash real. EvidenceVersion hereda el vínculo exacto del FileObject directo o de DocumentVersion.file_object_id y concuerda con Evidence.retention_policy_id. La fuente legal o contractual se aporta como EvidenceVersion auténtica del mismo tenant, revisada, vigente y respaldada por FileObject scan-PASS antes de publicar una nueva versión de aplicabilidad que la cite. La carga técnica nunca acredita validez jurídica. Las versiones históricas permanecen inmutables; ausencia de respaldo se informa como insuficiencia.
++El comando nuevo request-upload exige RetentionPolicyApplicability publicada y aplicable, registra su FK y la RetentionPolicy/version. Finalize conserva la misma FK en FileObject sólo tras scan-PASS y hash real. EvidenceVersion hereda el vínculo exacto del FileObject directo o de DocumentVersion.file_object_id y concuerda con Evidence.retention_policy_id. Cuando una aplicabilidad cita una fuente para acreditación jurídica o contractual formal, esa fuente se aporta como EvidenceVersion auténtica del mismo tenant, revisada, vigente y respaldada por FileObject scan-PASS antes de publicar la nueva versión que la cite. Una aplicabilidad operativa ordinaria puede carecer de fuente: no se le atribuye por ello acreditación jurídica. La carga técnica nunca acredita validez jurídica. Las versiones históricas permanecen inmutables; ausencia de respaldo se informa como insuficiencia.
+ 
+ Fuente exacta del delta: `docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/CONTRACT_PACKET_20261015.md`; SHA-256 `6b87812823472d56a89622eca8119b0cd56606f2f21d635dd84bf903896ba7f2`. Esta copia candidata no es autoridad activa antes del gate 47.
+ 
+@@ -83,3 +83,8 @@
+ `STATUS=DRAFT_NOT_EFFECTIVE; HUMAN_EXACT_BYTES_REVIEW=PENDING`. Baseline candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15, predecesora TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15. Diseño PO aprobado por SHA `1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b`; constancia `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/PO_DESIGN_APPROVAL_RECEIPT_20261015.json`. Esta sección sólo tendrá efecto después de publicación conforme47/49 y gates físico/ejecutable; no autoriza operación QA ni deploy por sí sola.
+ 
+ Excepción exclusiva al requisito de primaria publicada para el primer documento fuente: si no existe primaria ordinaria elegible para el contexto exacto, request-upload, finalize y EvidenceCreate pueden usar una nueva aplicabilidad draft de un Tenant Admin custodio, sin source, vinculada a policy ordinaria tenant-owned publicada/vigente. Cada comando revalida bajo locks el mismo tenant, clasificación, propósito evidence_document, contexto, FK y ausencia de primaria/conflicto. Intent/file/EvidenceVersion conservan la misma FK y el mismo autor documental real, Tenant Admin custodio o Evidence Owner con permisos/scope vigentes. En esta ruta acotada links=[] no crea evidencia de negocio. Scan/hash/MIME/storage, expiración, cleanup y revisión independiente se mantienen. El documento auténtico es externo aportado por persona competente: su carga no acredita legalidad. El draft permanece draft durante carga/revisión. Sólo tras aprobación independiente, vigencia/scan-PASS y cláusula auténtica el custodio ejecuta bind; después siguen submit/review/approve/publish ordinarios. No se admite source inexistente, histórica sin vigencia, cambio de autoría, datos falsos o publicación previa para desbloquear upload. El contrato ejecutable sucesor detalla el comando y consumo.
++
++## Configuración y carga ordinarias — DR001 §4
++
++No se exige adjuntar documento jurídico ni iniciar revisión independiente para guardar una configuración SaaS ordinaria autorizada. Las cargas ordinarias conservan primaria operativa publicada, policy tenant-owned/vigente, contexto/clasificación y FK exactos, hash, MIME, scan-PASS, autorización y auditoría. Una primaria ordinaria sin source puede ser elegible técnicamente sin acreditar un fundamento jurídico; no se fabrica un documento para desbloquearla. Si se invoca una obligación obligatoria/contractual o una fuente, se validan su procedencia y el flujo formal correspondiente. La ausencia de policy/binding técnico publicado sí impide el comando afectado; no impide administrar usuarios o una configuración independiente.
++La excepción draft de primera fuente continúa exclusivamente para acreditar una fuente real. Su revisión y bind no se convierten en requisito universal de operación ordinaria. EvidenceReview/approve, retención concurrente y hold mantienen SoD y controles; ninguna carga demuestra cumplimiento por sí sola. Las categorías de23 y toda historia permanecen.
+--- docs/rector/baseline/28_PREIMPLEMENTATION_CONTRACT_GATE.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/28_PREIMPLEMENTATION_CONTRACT_GATE.md
+@@ -87,7 +87,7 @@
+ - ownership_class/tenant_id en eventos globales, plataforma y tenant;
+ - Tenant como ownership vs Organization/Subject como scope.
+ - decisiones abiertas que Codex podría resolver por preferencia técnica;
+-- alternativas múltiples sin Decision Record humano aprobado;
++- decisiones de producto fuera del alcance PO o alternativas técnicas no resolubles dentro de la arquitectura/autorización; no se exige otro Decision Record para lo ya instruido por el PO;
+ - task packets sin archivos permitidos, contratos afectados, criterio de aceptación o acciones prohibidas;
+ - gates o ADR que dependan exclusivamente de autoaprobación de Codex.
+ 
+@@ -100,3 +100,7 @@
+ PASS sólo si `39_DECISIONES_SEMANTICAS_FINALES_PRE_MODELO_FISICO.md`, `40_CIERRE_INTEGRIDAD_SEMANTICA_Y_CONTRATOS_FISICOS.md` y `44_CONTRATO_ESTRUCTURA_NORMATIVA_REQUISITOS_CONTROLES.md` están vigentes y el diseño físico puede derivar sin inventar decisiones sobre effectiveness, escalas de riesgo, appetite/tolerance, Data Trust, source precedence, Subject identity, erasure, timezone, IDs, tenant ownership, configuration precedence, result semantics, deletion policy, estructura normativa, atomicidad de Requirements, origen de Controls o crosswalks.
+ 
+ `PASS_FOR_PHYSICAL_MODEL_DESIGN` autoriza exclusivamente diseño/revisión física. No autoriza migrations ni funcionalidad runtime.
++
++## Gobierno de la verificación sucesora — DR003
++
++G1–G15 siguen verificándose técnicamente por alcance. Las firmas internas o comités no son otro gate: la instrucción PO basta para actividades incluidas. Una contradicción interna se reconcilia; no se declara vigente una candidata. Fuente externa concreta, riesgo técnico no resoluble o exclusión expresa acotan sólo el acto afectado. Esta preparación no afirma PASS_FOR_IMPLEMENTATION ni reemplaza pruebas futuras.
+--- docs/rector/baseline/29_CONFIGURACION_PARAMETRIZACION_Y_EXTENSIBILIDAD.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/29_CONFIGURACION_PARAMETRIZACION_Y_EXTENSIBILIDAD.md
+@@ -53,3 +53,8 @@
+ ## 8. Guards comerciales propuestos
+ 
+ La completitud de familias, cuotas y entitlements se valida al publicar una nueva PlanVersion y antes de asignar derechos. `FeatureFlag` no es Entitlement ni sustituye la cuota comercial. Los límites requeridos son datos versionados del contrato publicado, con valor finito y constante por PlanVersion; no se inyectan defaults o máximos en código. El cambio de plan usa una sola autoridad transaccional y no habilita un segundo motor de elegibilidad por frontend, configuración tenant o familia inferida.
++
++## 9. Administración ordinaria proporcional — DR001 §4
++
++Tenant Admin puede administrar los parámetros que una ConfigurationDefinition publicada autorice para tenant, con tipo/scope/validación y permisos efectivos. Esa acción no requiere universalmente documento jurídico, Legal Reviewer ni segunda firma de desarrollo. No modifica definición global, entitlement, catálogo de permisos, metodología oficial ni decisiones jurídicas. ConfigurationOverride y EffectiveConfiguration conservan sus invariantes y procedencia; leer EffectiveConfiguration no crea ni materializa un binding ausente.
++Para retención comercial, no existe binding nuevo publicado por esta candidata. SEED011 históricamente vacío permanece intacto. Antes de implementar la selección en meses debe cerrarse el contenido de la definición/dato comercial y su equivalencia temporal; la aprobación conceptual no se vuelve a solicitar. Una configuración operativa no reemplaza RetentionPolicy como autoridad de conservación ni inventa suficiencia metodológica, legal o matemática.
+--- docs/rector/baseline/40_CIERRE_INTEGRIDAD_SEMANTICA_Y_CONTRATOS_FISICOS.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/40_CIERRE_INTEGRIDAD_SEMANTICA_Y_CONTRATOS_FISICOS.md
+@@ -12,7 +12,7 @@
+ 
+ La precedencia única vigente es la declarada en 00. Este documento conserva autoridad sobre sus reconciliaciones semánticas, pero no sobre planes, roles, contenido regulatorio, stack, secuencia o estructura normativa, que se rigen por 41–44.
+ 
+-Esta precedencia sólo resuelve interpretación. Si una fuente superior contradice definición de producto de manera material, el gate vuelve a BLOCKED y debe reconciliarse el producto; no se ignora silenciosamente.
++Esta precedencia no autoriza reinterpretación silenciosa. Una decisión expresa PO contradictoria con directivas internas anteriores exige preparar su reconciliación formal conforme45/49 y no bloquea esa preparación. Se mantiene toda restricción externa demostrada y la arquitectura canónica.
+ 
+ ## 3. Decisiones reconciliadas
+ 
+@@ -86,7 +86,7 @@
+ 
+ ## 4. Reglas de derivación del modelo físico
+ 
+-El diseñador PostgreSQL sólo puede derivar de forma trazable decisiones ya fijadas. Normalización, tablas puente, índices, particionado, materialized views, caches y cualquier otra elección física deben constar en el entregable de Fase 1 con requisito origen, rationale verificable y aprobación del Data Model Owner y Architecture Owner. Si existen dos o más representaciones contractualmente válidas, Codex no elige: registra la decisión requerida y devuelve `RECTOR_GATE=BLOCKED` para esa parte.
++El diseñador PostgreSQL sólo puede derivar de forma trazable decisiones ya fijadas. Normalización, tablas puente, índices, particionado, materialized views, caches y cualquier otra elección física deben constar en el entregable de Fase 1 con requisito origen, rationale y validación técnica verificables bajo la instrucción PO. No se exigen firmas Data Model/Architecture adicionales para el desarrollo en alcance. Una arquitectura distinta o decisión de producto no autorizada se acota al acto afectado; no se altera el modelo congelado por conveniencia.
+ 
+ Ni el diseñador ni Codex pueden decidir por sí mismos:
+ 
+@@ -112,7 +112,7 @@
+ 
+ La mera posibilidad técnica, convención de framework, práctica habitual, patrón encontrado en código previo o preferencia de Codex no constituye autoridad. Aplica el contrato 45.
+ 
+-## 5. Gate
++## 5. Antecedente histórico de gate v1.3 (sin reabrir fases)
+ 
+ Tras la reconciliación de 08, 17, 19, 29, 30, 31, 33, 35, 38, 39, 44 y 45, el scan técnico no detecta conflictos materiales conocidos. Sin embargo, la revisión v1.3 no se autoactiva:
+ 
+@@ -125,3 +125,7 @@
+ `FUNCTIONAL_DEVELOPMENT=BLOCKED`
+ 
+ Una vez registrada la aprobación humana, se restablecen `SEMANTIC_PRE_PHYSICAL_GATE=PASS`, `PRE_IMPLEMENTATION_CONTRACT_GATE=PASS_FOR_PHYSICAL_MODEL_DESIGN` y `PHYSICAL_MODEL_DESIGN=AUTHORIZED`. La siguiente etapa obligatoria será la Fase 1 de 43: derivar el modelo físico definitivo, incluyendo entidades y relaciones añadidas en 41–44, y someterlo a `PHYSICAL_DATA_MODEL_REVIEW`. Sólo después del PASS se avanza a contratos ejecutables; migrations siguen bloqueadas hasta `EXECUTABLE_CONTRACTS=PASS`.
++
++## 6. Límite sucesor de gobierno
++
++DR003 sucede únicamente los trámites internos de aprobación/derivación contradictorios. Los contratos semánticos de §3 y los nombres/relaciones canónicos permanecen. El snapshot histórico de §5 no describe un retorno actual a Fase1 ni un bloqueo de esta candidata; baseline activa y estado real siguen en sus punteros fuera de la candidata. No se ejecutan DDL ni migraciones.
+--- docs/rector/baseline/42_PLANES_COMERCIALES_Y_ROLES_BASE.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/42_PLANES_COMERCIALES_Y_ROLES_BASE.md
+@@ -133,3 +133,12 @@
+ - Legal Reviewer aprueba interpretación jurídica, no resultados técnicos.
+ 
+ La matriz permission/scope definitiva continúa en 22 y debe incorporar estos roles antes del `PHYSICAL_DATA_MODEL_REVIEW`.
++
++## 6. Modelo de incorporación y administración hasta Fase10 — DR001 §§1–4
++
++La contratación y el alta de empresas son asistidas por Platform Admin hasta completar Fase10. Secuencia de negocio: identidad inicial canónica/MI por sus mecanismos existentes → empresa y primer Tenant Admin mediante contrato25 → Subscription/PlanVersion publicada y habilitación conforme al catálogo → normas/versiones elegibles por comandos existentes. Una creación parcial se informa como tal; tenantCreate no prueba habilitación ni readiness. No hay pago/contratación autoservida, cliente creando su empresa ni autorización automática postFase10.
++Tenant Admin administra usuarios internos, roles y parámetros autorizados del tenant. Platform puede asistir por contrato26 y otros comandos expresamente autorizados por permisos efectivos; no obtiene ni necesita una Membership ficticia para actuar por su ruta Platform. No se amplían planes, capabilities, permisos ni scopes. Administración ordinaria usa CORE_PLATFORM/configuración; no se exige PRIVACY para una mera preferencia SaaS. Los comandos de acreditación Privacy conservan PRIVACY y sus permisos/SoD; no se usa esta distinción para conceder PRIVACY a ISO.
++
++## 7. Retención comercial propuesta — DR001 §5
++
++Oferta candidata12meses predeterminados y alternativas18/24/36/48/60. Continúa siendo propuesta no implementada, con términos versionados por PlanVersion/UsageLimit y configuración canónica cuando se publique su binding exacto. No se editan PlanVersion publicadas ni datos existentes, no se añaden valores implícitos ni se reduce el período de una Subscription. Documento23§11 delimita unidad/ancla y conservación por categoría: la oferta nunca anula obligaciones, hold, auditoría ni prohibiciones de purge. La edición comercial no publica contenido regulatorio ni certifica cumplimiento.
+--- docs/rector/baseline/43_PLAN_MAESTRO_RECTOR_DISENO_Y_DESARROLLO.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/43_PLAN_MAESTRO_RECTOR_DISENO_Y_DESARROLLO.md
+@@ -1,7 +1,7 @@
+-# 43 — Plan maestro rector de diseño y desarrollo — v1.9
++# 43 — Plan maestro rector de diseño y desarrollo — candidata v1.12
+ 
+-> Baseline de esta versión: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14`.
+-> La v1.8 es la predecesora; esta versión sólo entra en vigencia con publicación/activación competente de sus bytes. La aprobación comercial de diseño no sustituye ese gate. Las aprobaciones históricas se preservan en history.
++> Candidata `TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16`; `DRAFT_NOT_EFFECTIVE`.
++> Predecesora activa `TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15`, preservada. DR001/002/003.
+ 
+ ## 1. Autoridad
+ 
+@@ -36,7 +36,7 @@
+ 
+ ### Fase 0 — Baseline rector
+ 
+-Salida para esta sucesora: baseline `TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14`, documentos 00–49 aplicables, con v1.4–v1.8 preservadas según su historia de activación. Gate humano y técnico: `RECTOR_BASELINE=PASS` para los bytes exactos sucesores. Sin ese gate, esta versión no desplaza a v1.8.
++Salida: candidata completa `TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16` y manifest verificable, preservando `TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15` e historia. Gate técnico documental: integridad/coherencia/compatibilidad. La aprobación conceptual DR001/002/003 ya existe y no se ratifica. Activación es una operación distinta expresamente excluida en esta tarea; no se presume ni se solicita como segunda aprobación conceptual.
+ 
+ ### Fase 1 — Modelo físico definitivo
+ 
+@@ -46,7 +46,7 @@
+ 
+ ### Fase 2 — Contratos ejecutables
+ 
+-Congelar OpenAPI base, event catalog, permission catalog, error model, idempotency, audit events, seed manifests, test contracts, migration plan e `IMPLEMENTATION_DECISION_MANIFEST`. Cada artefacto debe identificar owner y aprobación humana. Gate: `EXECUTABLE_CONTRACTS=PASS`.
++Congelar OpenAPI base, event catalog, permission catalog, error model, idempotency, audit events, seed manifests, test contracts, migration plan e `IMPLEMENTATION_DECISION_MANIFEST`. Cada artefacto identifica la instrucción PO habilitante, alcance, trazabilidad y verificación técnica; no exige un segundo aprobador interno. Gate: `EXECUTABLE_CONTRACTS=PASS`.
+ 
+ ### Fase 3 — Creación definitiva de base y foundations
+ 
+@@ -95,11 +95,11 @@
+ 1. Cada slice recorre persistence→domain→API→RBAC→audit→UI→tests→E2E→runtime→traceability.
+ 2. No se aceptan mocks como evidencia de cierre runtime.
+ 3. No se reabre una decisión cerrada por comodidad de implementación.
+-4. Toda excepción requiere ADR, owner, fecha de expiración y plan de eliminación; nunca crea una vía paralela.
++4. Una contradicción interna con decisión expresa PO se reconcilia conforme a49. No se inventan ADR de excepción, deuda ni vías paralelas. Una alteración arquitectónica fuera del alcance exige decisión específica PO y verificación técnica.
+ 5. No se hacen commit, merge ni deploy si el gate aplicable a ese artefacto o capacidad está FAIL.
+ 6. El estado de cada fase se registra en un único `MASTER_EXECUTION_STATUS.md` generado en el repositorio de desarrollo, no dentro de esta base rectora.
+-7. Codex aplica 45. Si una tarea permite más de una solución material, detiene esa parte y solicita un Decision Record humano; no selecciona por conveniencia.
+-8. Los owners humanos aprueban gates y ADR. Codex puede preparar evidencia y propuestas DRAFT, pero no autoaprobarlas.
++7. Codex aplica45/49: resuelve decisiones de ejecución dentro de la instrucción y arquitectura autorizadas, verifica y continúa; detiene sólo el acto excepcional no resoluble en alcance, externo aplicable o excluido, con consecuencia y alternativa compatibles.
++8. El PO es autoridad única de decisiones internas. Los gates técnicos se calculan con evidencia; no se inventa una firma ni un PASS humano. No hay ratificación administrativa para ejecutar lo ya autorizado.
+ 9. Todo task packet material declara alcance, fuentes, archivos permitidos, contratos afectados, criterios de aceptación, pruebas y acciones prohibidas. La omisión material produce BLOCKED.
+ 
+ ## 6. Responsables del desarrollo
+@@ -113,4 +113,12 @@
+ - QA/Release Owner: test contracts, evidencia runtime y release gates.
+ - Regulatory Content Owners: roles especializados definidos en 41.
+ 
+-Una persona puede ocupar varios roles: se registran las funciones ejercidas en cada aprobación. Para gobierno editorial/metodológico interno se aplica 49: no se exige segunda persona por defecto; sí cuando el PO lo ordene específicamente o una obligación superior aplicable lo imponga. Se respetan íntegramente las segregaciones operacionales de usuarios GRC y las obligaciones externas.
++Estas funciones describen competencias técnicas y responsabilidades de producto; no crean aprobadores internos adicionales ni obligan a una declaración administrativa de funciones del PO. DR003 y49 establecen autoridad única y continuidad. Una restricción externa requiere fuente/aplicabilidad concreta; las separaciones operacionales de clientes permanecen.
++
++## 7. Continuidad y proporcionalidad — DR003
++
++La instrucción expresa del Product Owner constituye autorización suficiente para las actividades comprendidas en su alcance. No se exige segunda firma, segundo aprobador, comité, revisor humano independiente ni ratificación administrativa interna. La autorización funcional comprende análisis, diseño, contratos ejecutables, backend/frontend necesarios, pruebas, corrección y validación técnica dentro del alcance; Codex mantiene continuidad autónoma. Una contradicción con una directiva interna anterior se reconcilia documentalmente, sin veto administrativo permanente. Se mantienen integridad, hashes, trazabilidad, verificación técnica y límites expresos; registrar la instrucción y los bytes producidos no significa atribuir una firma humana a bytes futuros. Sólo se detiene la operación afectada por un impedimento técnico/de seguridad no resoluble en alcance, una restricción externa con fuente y aplicabilidad concreta, o una exclusión expresa. No se inventan obligaciones, revisores ni responsables. Esta regla no amplía alcance ni autoriza arquitectura arbitraria, deuda o despliegues excluidos.
++
++Se preservan el modelo canónico y físico aprobado, contratos de backend/frontend y su evolución trazable autorizada, IAM/RBAC, mínimo privilegio, aislamiento multi-tenant, integridad transaccional, auditoría, seguridad, privacidad e historia. La gobernanza interna del desarrollo es distinta de la SoD operacional que ofrece GRC a los clientes: Evidence submit/approve, Action complete/verify, risk acceptance, Audit y credenciales conservan sus policies y actores cuando correspondan. No hay permiso, grant, estado, tabla ni excepción operacional nueva por esta regla.
++
++La asistencia Platform y autonomía Tenant descritas en01/42 rigen hasta completar Fase10. El orden de fases permanece; el cierre de cada capacidad exige evidencia real de sus requisitos aplicables, no una colección de firmas internas. El resultado READY_FOR_PO_REVIEW de esta tarea es documental. H01–H10 quedan suspendidas como tarea de desarrollo actual y se reclasifican prospectivamente por el expediente sucesor; no se declaran PASS ni inaplicables retroactivamente. STEP_6A3=PARTIAL_BLOCKED; STEP_6A4=NOT_STARTED.
+--- docs/rector/baseline/45_CONTRATO_DESARROLLO_CERRADO_Y_NO_INFERENCIA.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/45_CONTRATO_DESARROLLO_CERRADO_Y_NO_INFERENCIA.md
+@@ -1,108 +1,35 @@
+-# 45 — Contrato de desarrollo cerrado y no inferencia
++# 45 — Contrato de desarrollo autorizado y no ampliación — candidata v1.12
+ 
+-## 1. Propósito
++## 1. Fuente y alcance
+ 
+-Impedir que Codex, otro agente automático o una práctica técnica implícita amplíe, complete o reinterprete TCDX GRC. El producto se desarrolla desde un contrato cerrado. La automatización ejecuta decisiones aprobadas; no sustituye a Product Owner, Architecture Owner, Data Model Owner, Security Reviewer ni QA Release Owner.
++DR-GRC-20261016-001/002/003 son decisiones expresas PO. Este texto candidato formaliza la gobernanza interna sucesora; no activa una baseline ni altera evidencia previa.
+ 
+-## 2. Presupuesto de variación cero
++## 2. Autoridad y autorización integral
+ 
+-`CODEX_VARIATION_BUDGET=ZERO`.
++La instrucción expresa del Product Owner constituye autorización suficiente para las actividades comprendidas en su alcance. No se exige segunda firma, segundo aprobador, comité, revisor humano independiente ni ratificación administrativa interna. La autorización funcional comprende análisis, diseño, contratos ejecutables, backend/frontend necesarios, pruebas, corrección y validación técnica dentro del alcance; Codex mantiene continuidad autónoma. Una contradicción con una directiva interna anterior se reconcilia documentalmente, sin veto administrativo permanente. Se mantienen integridad, hashes, trazabilidad, verificación técnica y límites expresos; registrar la instrucción y los bytes producidos no significa atribuir una firma humana a bytes futuros. Sólo se detiene la operación afectada por un impedimento técnico/de seguridad no resoluble en alcance, una restricción externa con fuente y aplicabilidad concreta, o una exclusión expresa. No se inventan obligaciones, revisores ni responsables. Esta regla no amplía alcance ni autoriza arquitectura arbitraria, deuda o despliegues excluidos.
+ 
+-Codex puede:
++## 3. Presupuesto de variación cero
+ 
+-- leer y verificar fuentes autorizadas;
+-- derivar mecánicamente artefactos cuando existe una única correspondencia trazable;
+-- detectar inconsistencias, impactos y datos faltantes;
+-- preparar una propuesta marcada DRAFT cuando el task packet lo autorice;
+-- ejecutar verificaciones expresamente permitidas por el gate.
++`CODEX_VARIATION_BUDGET=ZERO`. No se añaden funcionalidades, entidades, roles, permisos, estados, dependencias, arquitectura arbitraria ni deuda. Codex puede completar las actividades técnicas incluidas en la instrucción, ajustar contratos y documentación trazablemente y corregir fallos dentro de alcance sin volver a pedir permiso. Una instrucción limitada a documentación no autoriza implementación. Una exclusión expresa prevalece sobre la regla general de autorización integral.
+ 
+-Codex no puede:
++## 4. Trazabilidad del trabajo
+ 
+-- elegir entre dos o más alternativas materialmente válidas;
+-- llenar vacíos con buenas prácticas, experiencia previa, convenciones de framework o preferencia propia;
+-- añadir alcance, UX, estados, entidades, campos, endpoints, eventos, permisos, capabilities, dependencias o abstracciones no solicitadas;
+-- convertir ejemplos, código existente, mocks, tests, comentarios o documentación histórica en autoridad;
+-- crear un ADR, excepción o supuesto para desbloquear su propia tarea;
+-- aprobar su propio diseño, gate, excepción, seguridad o release;
+-- modificar archivos fuera del conjunto permitido por el task packet;
+-- ejecutar commit, push, merge, migración, deploy o acción destructiva sin autorización específica y gate aplicable.
++El task packet registra instrucción, fuente, alcance, baseline, archivos, invariantes, verificaciones, acciones permitidas/excluidas y resultado. No es una solicitud adicional de firma. Se registran hashes exactos y deltas de los artefactos producidos, sin atribuir al PO firma de bytes que no firmó. El registro de autorización basta para ejecutar lo comprendido; revisión documental de la entrega no es un veto administrativo a esa continuidad.
+ 
+-## 3. Regla de no inferencia
++## 5. Reconciliación de autoridad
+ 
+-Toda decisión material debe tener una cita a cláusula rectora o un Decision Record humano aprobado. Si la fuente permite varias interpretaciones, no existe una interpretación por defecto. El estado obligatorio es:
++Una directiva interna anterior contradictoria se identifica con cláusula y se prepara su actualización formal. La contradicción no bloquea la preparación ni obliga a reemitir la decisión conceptual. La baseline activa no se reinterpreta ni reescribe silenciosamente; se preserva hasta que una instrucción permita la operación de activación. No se confunde esta precedencia de gobierno con SourcePrecedencePolicy de datos GRC. Cambios fuera del alcance no se legitiman por un ADR inventado.
+ 
+-`RECTOR_GATE=BLOCKED`
++## 6. Invariantes y separación operacional
+ 
+-El reporte debe indicar exactamente: decisión ausente, artefactos afectados, alternativas detectadas sin recomendar una como decisión oficial, owner requerido y gate bloqueado.
++Se preservan el modelo canónico y físico aprobado, contratos de backend/frontend y su evolución trazable autorizada, IAM/RBAC, mínimo privilegio, aislamiento multi-tenant, integridad transaccional, auditoría, seguridad, privacidad e historia. La gobernanza interna del desarrollo es distinta de la SoD operacional que ofrece GRC a los clientes: Evidence submit/approve, Action complete/verify, risk acceptance, Audit y credenciales conservan sus policies y actores cuando correspondan. No hay permiso, grant, estado, tabla ni excepción operacional nueva por esta regla.
+ 
+-Una inferencia puramente mecánica es admisible sólo cuando todos los siguientes puntos son verdaderos:
++No se presume obligación externa por el nombre de un rol. Una restricción externa debe citar fuente exacta, cláusula/aplicabilidad, objeto afectado y consecuencia. Si no está demostrada, no se convierte en requisito universal ni se declara dispensada una obligación real.
+ 
+-1. existe una única salida compatible con el contrato;
+-2. no cambia comportamiento, semántica, seguridad, datos, alcance comercial ni operación;
+-3. conserva nombres, tipos, cardinalidades, estados y restricciones aprobados;
+-4. es reversible antes de ejecutar una acción bloqueada;
+-5. queda trazada a la fuente y a una prueba de aceptación.
++## 7. Detención excepcional acotada
+ 
+-Si algún punto no puede demostrarse, la acción no es mecánica y queda bloqueada.
++Sólo se detiene la operación afectada cuando está expresamente excluida, existe impedimento técnico/de seguridad no resoluble en alcance, o restricción externa concretamente aplicable. Se informa fuente, consecuencia y alternativa compatible y se continúa el trabajo independiente. Falta de segundo firmante interno, comité, ratificación de bytes derivados o declaración administrativa de funciones no son impedimentos. Codex no inventa identidad/consentimiento, fuentes, datos, PASS de usuario ni actos de release.
+ 
+-## 4. Task packet obligatorio
++## 8. Entrega
+ 
+-Antes de un cambio material debe existir un task packet con:
+-
+-- `TASK_ID` y objetivo verificable;
+-- baseline y gate vigentes;
+-- requisitos y cláusulas rectoras;
+-- archivos/rutas autorizados y archivos prohibidos;
+-- entidades, contratos, permissions, scopes y tenants afectados;
+-- comportamiento exacto esperado, incluidos errores y estados insuficientes;
+-- no objetivos y límites de alcance;
+-- dependencias y versiones ya aprobadas;
+-- criterios de aceptación y pruebas obligatorias;
+-- acciones operativas expresamente autorizadas o prohibidas;
+-- owners humanos de decisión, revisión y aprobación.
+-
+-Los campos no aplicables se marcan `NOT_APPLICABLE` con razón. No se aceptan valores implícitos, `TODO`, `TBD`, “según corresponda”, “mejor práctica” o “similar a” cuando afecten una decisión material.
+-
+-## 5. Decision Record humano
+-
+-Cuando aparece una decisión no cerrada, el owner competente emite un Decision Record antes de continuar. Debe contener ID, problema, alcance, alternativas consideradas, decisión exacta, consecuencias, contratos afectados, owner, fecha, aprobadores y gate que desbloquea.
+-
+-Un ADR o Decision Record:
+-
+-- no puede ser inventado ni autoaprobado por Codex;
+-- no puede contradecir una fuente rectora superior;
+-- no puede autorizar una vía legacy/paralela o deuda contractual silenciosa;
+-- requiere actualización de las fuentes y manifestaciones afectadas antes del código.
+-
+-## 6. Aprobación humana y gates
+-
+-Codex puede calcular evidencia y estado propuesto, pero los siguientes PASS requieren aprobación humana registrada: baseline rector, modelo físico, contratos ejecutables, seguridad/privacidad, gates runtime y release.
+-
+-Sin identidad del aprobador, rol ejercido, fecha y evidencia, el estado permanece `PENDING_REVIEW` aunque las pruebas estén verdes.
+-
+-### 6.1. Funciones humanas acumuladas
+-
+-Para revisión y publicación editorial/metodológica interna aplica 49. Una sola persona humana puede ejercer varias funciones con decisión expresa trazable; no se inventan firmas independientes. Se mantienen los gates técnicos, las aprobaciones exactas de artefactos, las separaciones operacionales y obligaciones superiores. La autorización funcional no publica hashes aún no aprobados.
+-
+-## 7. Reglas específicas por fase
+-
+-- Fase 1: ante más de una representación física válida, Codex no elige. El diseño permanece DRAFT hasta decisión del Data Model Owner y Architecture Owner.
+-- Fase 2: no se seleccionan librerías, versiones, convenciones, contratos API/eventos ni códigos por defecto. Todo queda congelado en artefactos aprobados.
+-- Fases 3–9: cada slice implementa únicamente task packets aprobados; no hay refactor oportunista ni dependencia nueva implícita.
+-- Fase 10: Codex no declara release; prepara evidencia para QA Release Owner y los aprobadores definidos.
+-
+-## 8. Cierre y evidencia
+-
+-Todo reporte de ejecución incluye:
+-
+-- `CODEX_VARIATION_BUDGET=ZERO`;
+-- `TASK_PACKET_STATUS=COMPLETE|BLOCKED`;
+-- decisiones mecánicamente derivadas;
+-- decisiones humanas citadas;
+-- supuestos introducidos: `NONE`;
+-- archivos fuera de alcance modificados: `NONE`;
+-- alternativas no resueltas;
+-- aprobaciones humanas pendientes;
+-- acciones bloqueadas confirmadas como no ejecutadas.
+-
+-Un reporte que omita estos campos no puede concluir PASS.
++Informar gate técnico y alcance, baseline activa/candidata, hashes/deltas, pruebas efectivamente ejecutadas, preservación, conflictos reales, límites y operaciones no ejecutadas. Supuestos no autorizados y archivos fuera de alcance: NONE. Gates humanos históricos se registran literalmente; no se fabrican ni se vuelven a exigir como ratificación para desarrollar lo ya autorizado. La presente entrega no hace commit/push/merge, DB, runtime, despliegue, activación, cierre6A3 ni inicio6A4.
+--- docs/rector/baseline/46_REGENTE_MAESTRO_DEL_DESARROLLO.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/46_REGENTE_MAESTRO_DEL_DESARROLLO.md
+@@ -4,7 +4,9 @@
+ 
+ Este documento es el punto de entrada obligatorio y la constitución operativa maestra del desarrollo TCDX GRC. Integra y gobierna los documentos 00–49 aplicables de este baseline. No reemplaza sus contratos especializados: fija cómo deben ser interpretados, ejecutados y verificados durante todo el ciclo hasta `MARKET_RELEASE_READY=PASS`.
+ 
+-`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15`
++`CANDIDATE_MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16`
++
++`STATUS=DRAFT_NOT_EFFECTIVE`; predecesora activa `TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15`.
+ 
+ `CODEX_VARIATION_BUDGET=ZERO`
+ 
+@@ -65,7 +67,7 @@
+ 
+ ## 8. Cero deuda y no inferencia
+ 
+-Aplican íntegramente 06, 13, 35 y 45. Ante una decisión material no cerrada: `RECTOR_GATE=BLOCKED`. No se completa el vacío mediante “mejor práctica”, analogía con otro producto, decisión de framework, código generado, fallback, TODO o supuesto. Todo cambio material requiere task packet cerrado y, cuando corresponda, Decision Record humano.
++Aplican íntegramente 06, 13, 35 y 45. No se inventan decisiones de producto ni se amplía el alcance mediante analogía, framework, fallback o deuda. Una decisión expresa PO autoriza las actividades comprendidas y su reconciliación interna. Sólo un impedimento excepcional de45/49 detiene la operación afectada; las verificaciones técnicas continúan sobre el trabajo independiente. Todo cambio material mantiene trazabilidad a la instrucción PO y sus verificaciones. DR003 autoriza las actividades comprendidas y elimina ratificaciones internas reiterativas; una exclusión expresa sigue vigente.
+ 
+ ## 9. Calidad verificable
+ 
+@@ -85,13 +87,21 @@
+ 
+ ## 12. Regla de cierre
+ 
+-No se declara “READY”, “DONE”, “PRODUCTION READY” ni equivalente por avance porcentual. El cierre exige evidencia de todos los gates y capacidades dependientes. La autoridad final de release corresponde al QA/Release Owner y aprobadores humanos definidos, nunca a Codex.
++No se declara “READY”, “DONE”, “PRODUCTION READY” ni equivalente por avance porcentual. El cierre exige evidencia de todos los gates y capacidades dependientes. La autoridad interna de decisiones de release corresponde al Product Owner; Codex no inventa su acto ni autorización de un despliegue fuera de alcance. La evidencia de aceptación operacional del producto sigue siendo real, sin firmas simuladas.
+ 
+-Cualquier contradicción entre una tarea y este baseline produce `RECTOR_GATE=BLOCKED` y no una reinterpretación del baseline.
++Una contradicción entre una instrucción expresa PO y una directiva interna anterior exige preparar el delta formal, no un bloqueo administrativo permanente. La activación o implementación expresamente excluida no se ejecuta. Las restricciones excepcionales se acotan y evidencian conforme45/49.
+ 
+ 
+ ## STEP_6A3 — candidata de incorporación inicial de fuente v1.11
+ 
+ `STATUS=DRAFT_NOT_EFFECTIVE; HUMAN_EXACT_BYTES_REVIEW=PENDING`. Baseline candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15, predecesora TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15. Diseño PO aprobado por SHA `1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b`; constancia `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/PO_DESIGN_APPROVAL_RECEIPT_20261015.json`. Esta sección sólo tendrá efecto después de publicación conforme47/49 y gates físico/ejecutable; no autoriza operación QA ni deploy por sí sola.
+ 
+-Esta sucesora candidata incorpora exclusivamente el diseño de fuente inicial aprobado por el PO. El acto PO no declara otras funciones ejercidas ni aprueba bytes futuros; no se atribuyen aprobaciones Architecture/Data/Security/Release o Privacy/Legal inexistentes. Antes de activar se requiere decisión exacta sobre el manifest candidato con funciones competentes expresas, dictamen físico y contratos derivados. Implementación, pruebas de código dependiente, build y promoción esperan sus gates; QA auténtica/UI/cierre siguen separados.6A4 sólo tras cierre de6A3 y acto formal autorizado.
++El diseño técnico de fuente inicial v1.11 permanece como antecedente de esta sucesora, que añade DR001/002/003. No se atribuyen firmas ni funciones internas inexistentes: la instrucción PO autoriza las actividades en alcance sin declaraciones administrativas, segundos aprobadores o ratificación de bytes derivados. Se verifican manifiesto, compatibilidad y contratos; una activación/promoción expresamente excluida no se ejecuta. Aceptación operacional y evidencia real siguen separadas del permiso de desarrollar.6A4 sólo tras cierre de6A3 y una instrucción que incluya su inicio.
++
++## Autoridad interna sucesora — DR003
++
++La instrucción expresa del Product Owner constituye autorización suficiente para las actividades comprendidas en su alcance. No se exige segunda firma, segundo aprobador, comité, revisor humano independiente ni ratificación administrativa interna. La autorización funcional comprende análisis, diseño, contratos ejecutables, backend/frontend necesarios, pruebas, corrección y validación técnica dentro del alcance; Codex mantiene continuidad autónoma. Una contradicción con una directiva interna anterior se reconcilia documentalmente, sin veto administrativo permanente. Se mantienen integridad, hashes, trazabilidad, verificación técnica y límites expresos; registrar la instrucción y los bytes producidos no significa atribuir una firma humana a bytes futuros. Sólo se detiene la operación afectada por un impedimento técnico/de seguridad no resoluble en alcance, una restricción externa con fuente y aplicabilidad concreta, o una exclusión expresa. No se inventan obligaciones, revisores ni responsables. Esta regla no amplía alcance ni autoriza arquitectura arbitraria, deuda o despliegues excluidos.
++
++Se preservan el modelo canónico y físico aprobado, contratos de backend/frontend y su evolución trazable autorizada, IAM/RBAC, mínimo privilegio, aislamiento multi-tenant, integridad transaccional, auditoría, seguridad, privacidad e historia. La gobernanza interna del desarrollo es distinta de la SoD operacional que ofrece GRC a los clientes: Evidence submit/approve, Action complete/verify, risk acceptance, Audit y credenciales conservan sus policies y actores cuando correspondan. No hay permiso, grant, estado, tabla ni excepción operacional nueva por esta regla.
++
++Esta preparación no cambia la cadena baseline→modelo canónico/físico→contratos→implementación; formaliza cómo la decisión PO actualiza la autoridad documental. Los estados de gate técnicos requieren evidencia; los controles funcionales de clientes y obligaciones externas reales permanecen. Ni una cláusula de revisión interna anterior ni el estado PARTIAL_BLOCKED del cierre impiden esta preparación expresamente autorizada. La candidata no está activa.
+--- docs/rector/baseline/47_APROBACION_Y_ACTIVACION_BASELINE.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/47_APROBACION_Y_ACTIVACION_BASELINE.md
+@@ -1,34 +1,28 @@
+-# 47 — Aprobación y activación de sucesoras rectoras
++# 47 — Preparación, integridad y activación de sucesoras
+ 
+-## Antecedente humano ya aprobado
++## 1. Sucesora identificada
+ 
+-`DR-STEP6A3-COMMERCIAL-GOVERNANCE-20261013-02`, firmado por Andrés Barouh el `2026-10-13T23:45:00Z`, aprueba G-01..G-06, C-01..C-12, H-01..H-12 y F-01..F-10 en el alcance exacto de `GP-STEP6A3-COMMERCIAL-20261013-02`. El paquete tiene SHA-256 `489e8cec4b72c2cf464d0315e5ba4f2f5664012b60df2327a07f82882943ba55` y su manifest SHA-256 `b454e3e2475ece966f87a4da1f89c1640f5cf9baf48d7b7d146935edc4db5cc3`. La constancia local está en `docs/phase6a/STEP_6A3/FINAL_CONTRACT_RECONCILIATION_20261013/HUMAN_DECISION_RECEIPT_20261013.md`.
++Candidata: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16`; predecesora activa: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15`.
++`STATUS=DRAFT_NOT_EFFECTIVE`; `ACTIVATION=NOT_AUTHORIZED_NOT_PERFORMED`.
++Fuente: decisiones expresas DR-GRC-20261016-001/002 del commit2373b5b63a49ddddb47e104947020e4ceb070f64/PR21 y DR-GRC-20261016-003 de la presente conversación. Las tres decisiones no requieren segunda aprobación conceptual.
+ 
+-Esa decisión aprueba diseño y artefactos candidatos presentados. No aprueba por arrastre los bytes de esta baseline sucesora, su manifest, expected-schema activo, publicación/seed manifest ni implementación futura. No cierra las obligaciones H ni STEP 6A.3.
++## 2. Autorización suficiente, sin doble aprobación interna
+ 
+-## Alcance de la sucesora propuesta
++La instrucción expresa del Product Owner constituye autorización suficiente para las actividades comprendidas en su alcance. No se exige segunda firma, segundo aprobador, comité, revisor humano independiente ni ratificación administrativa interna. La autorización funcional comprende análisis, diseño, contratos ejecutables, backend/frontend necesarios, pruebas, corrección y validación técnica dentro del alcance; Codex mantiene continuidad autónoma. Una contradicción con una directiva interna anterior se reconcilia documentalmente, sin veto administrativo permanente. Se mantienen integridad, hashes, trazabilidad, verificación técnica y límites expresos; registrar la instrucción y los bytes producidos no significa atribuir una firma humana a bytes futuros. Sólo se detiene la operación afectada por un impedimento técnico/de seguridad no resoluble en alcance, una restricción externa con fuente y aplicabilidad concreta, o una exclusión expresa. No se inventan obligaciones, revisores ni responsables. Esta regla no amplía alcance ni autoriza arquitectura arbitraria, deuda o despliegues excluidos.
+ 
+-Reconciliar el catálogo comercial único, CommercialFamily, sus relaciones soporte, UsageLimit por PlanVersion/familia, transición change-plan, regla prospectiva R-P, permisos/autoridad, temporalidad, auditoría y publicación independiente conforme al paquete aprobado. Las relaciones y contratos derivados son candidatos nuevos hasta aprobación exacta y publicación competente. La v1.8 predecesora no se modifica in situ y debe preservarse como historia verificable si se activa esta sucesora.
++No se exige como trámite adicional decisión por cada hash derivado, ratificación de diseño ya decidido, segunda firma técnica ni declaración de otras funciones del PO. Se identifica el alcance realmente autorizado y se calculan manifiestos de los bytes producidos. No se afirma que esos hashes fueron firmados por el PO cuando no lo fueron. READY_FOR_PO_REVIEW significa artefactos concretos disponibles para lectura, no necesidad de una segunda autorización para completar el trabajo incluido.
+ 
+-## Condiciones de activación
++## 3. Controles documentales y técnicos conservados
+ 
+-1. Presentar los archivos completos 00–49, `PRE_IMPLEMENTATION_GATE_REPORT.md` y `SHA256SUMS.txt`, más el delta exacto respecto de v1.8 y el hash de manifest de esta sucesora.
+-2. Obtener decisión humana expresa sobre esos bytes nuevos y su alcance, sin volver a someter el diseño del paquete v2 ya aprobado.
+-3. Verificar identidad/funciones/fecha, fuentes, dependencias, pruebas positivas y negativas, preservación histórica y ausencia de conflicto material con el rector vigente.
+-4. Publicar por la ceremonia rectora: baseline, ID, estado y manifests concordantes, verificador de integridad adaptado a la sucesora, CI y revisión humana antes de integrar main. Ningún cambio aislado de `BASELINE_STATUS` activa el contrato.
+-5. Someter después el modelo físico y los contratos ejecutables derivados a sus gates humanos y técnicos propios antes de implementación dependiente.
++Entregar51 documentos completos, SHA256SUMS y manifest de paquete que enumere baseline, contratos candidatos, fuentes/recibos, deltas, criterios6A3, impacto y verificador. Verificar integridad, inventario sin extras, coherencia, referencias, ausencia de secretos, compatibilidad física y preservación de la predecesora/historia. No se cambia una fila publicada ni se fabrica aprobación histórica. Los gates técnicos no se dispensan.
+ 
+-La preparación o verificación de este candidato no declara `RECTOR_BASELINE=PASS` para v1.9 ni autoriza DDL/DML compartido, IAM real, grants, commit, push, merge, deploy, STEP 6A.4 o release.
++## 4. Operación de activación y publicación
+ 
+-## Sucesora STEP_6A3 v1.10 (candidata)
++Una futura instrucción que incluya activación permite su ejecución técnica con los hashes/alcance registrados, sin nueva aprobación conceptual ni ratificación administrativa. Si la instrucción la excluye, no se activa. Esta tarea la excluye expresamente: BASELINE_ID, BASELINE_STATUS, ACTIVE_ACTIVATION.json, RECTOR_MANIFEST.sha256, AGENTS/enforcement/status activos permanecen intactos. Sólo existen propuestas de esos textos y checklist de concordancia, sin acto ni fecha efectiva inventados.
++Antes de integrar main siguen CI/protección de rama y revisiones técnicas automatizadas aplicables; no se inventa segundo humano interno. Una obligación externa de independencia sólo se exige si se demuestra su fuente y aplicabilidad. Commit/push/merge/despliegue y cambios de DB no se ejecutan por la preparación; en esta tarea están expresamente excluidos.
+ 
+-Predecesora activa: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14`. Paquete funcional aprobado: `docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/CONTRACT_PACKET_20261015.md`, SHA-256 `6b87812823472d56a89622eca8119b0cd56606f2f21d635dd84bf903896ba7f2`. Esta copia integra únicamente sus deltas C-04W y CFG-D en 17, 19, 21–24, 30, 33 y 38. La decisión funcional no aprobó estos bytes de baseline ni DDL, grants, runtime o QA.
++## 5. Límites de producto y pasos siguientes
+ 
+-Activación exige: (1) entrega íntegra 00–49, reporte preimplementación y SHA256SUMS; (2) aprobación humana expresa de identificador, manifest y SHA-256 exactos, con funciones/fecha; (3) compatibilidad, fuentes, historia, pruebas positivas y negativas; (4) ceremonia de baseline, ID, status, manifests, verificador CI y revisión antes de main; (5) gates independientes físico y ejecutable antes de DDL/grants o implementación dependiente. La predecesora no se modifica ni reinterpreta. Preparación no autoriza STEP_6A4 ni QA.
++Se preservan el modelo canónico y físico aprobado, contratos de backend/frontend y su evolución trazable autorizada, IAM/RBAC, mínimo privilegio, aislamiento multi-tenant, integridad transaccional, auditoría, seguridad, privacidad e historia. La gobernanza interna del desarrollo es distinta de la SoD operacional que ofrece GRC a los clientes: Evidence submit/approve, Action complete/verify, risk acceptance, Audit y credenciales conservan sus policies y actores cuando correspondan. No hay permiso, grant, estado, tabla ni excepción operacional nueva por esta regla.
+ 
+-
+-## STEP_6A3 — candidata de incorporación inicial de fuente v1.11
+-
+-`STATUS=DRAFT_NOT_EFFECTIVE; HUMAN_EXACT_BYTES_REVIEW=PENDING`. Baseline candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15, predecesora TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15. Diseño PO aprobado por SHA `1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b`; constancia `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/PO_DESIGN_APPROVAL_RECEIPT_20261015.json`. Esta sección sólo tendrá efecto después de publicación conforme47/49 y gates físico/ejecutable; no autoriza operación QA ni deploy por sí sola.
+-
+-La candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15 entrega51 archivos completos y SHA256SUMS, delta exacto y manifest de revisión contra v1.10. La aprobación PO registrada cubre el diseño de SHA 1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b y su preparación, no estos bytes nuevos. Activación requiere decisión humana por manifest/ID/hashes y funciones Architecture/Data/Security competentes realmente ejercidas, constancia de dictamen físico y aprobación ejecutable exacta; ceremony de ID/status/manifests/verificador concordantes y CI/revisión antes de main. El PO puede acumular funciones sólo si las declara conforme49, sin inventarlas. QA deployment exige autoridad Release de esa versión; fuentes, SoD y aceptación humana permanecen. Sin cierre efectivo6A3 no hay READY_TO_START ni inicio6A4.
++La futura implementación consume contratos formalmente vigentes y manifiestos de datos exactos que correspondan; no usa el texto candidato como un permiso operativo. Los detalles temporales/comerciales pendientes se acotan al binding futuro de esa función. STEP_6A3=PARTIAL_BLOCKED y STEP_6A4=NOT_STARTED. Las evidencias/aprobaciones previas permanecen históricas; no se cierran H01–H10 por esta preparación.
+--- docs/rector/baseline/49_GOBIERNO_INTERNO_Y_REVISION_UNIPERSONAL.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/49_GOBIERNO_INTERNO_Y_REVISION_UNIPERSONAL.md
+@@ -1,31 +1,33 @@
+-# 49 — Gobierno interno y revisión humana unipersonal
++# 49 — Autoridad única interna y separación de controles del producto
+ 
+-## 1. Alcance y autoridad
++## 1. Decisión expresa definitiva
+ 
+-Versión 1.0, adoptada mediante DR-INTERNAL-REVIEW-V18-20261009 en la baseline v1.8. Vigencia efectiva: la registrada en docs/rector/ACTIVE_ACTIVATION.json, después de publicación y comprobación técnica. Esta regla modifica exclusivamente el gobierno editorial y metodológico interno de contratos técnicos, arquitectura, backend, seguridad, IAM, privacidad/datos, compliance y metodologías/reglas globales internas. No modifica permisos operacionales del producto.
++DR-GRC-20261016-003 actualiza el gobierno interno del desarrollo de GRC Tecdex. El creador/Product Owner declara ser el único responsable de sus decisiones internas. Las decisiones DR001/002 se integran con esta adenda sin reemitirlas ni solicitar otra aprobación conceptual. Este documento es candidato y no activa por sí mismo la sucesora.
+ 
+-El Product Owner puede acumular estas funciones y aprobar con una sola firma humana expresa, indicando las funciones ejercidas. No existe por defecto obligación de una segunda persona revisora interna ni de acreditación separada de cada función. Una persona no se representa como dos revisores independientes. Se requiere revisión humana independiente cuando el PO la ordene específicamente o cuando una obligación superior aplicable la imponga.
++## 2. Suficiencia y continuidad de la instrucción
+ 
+-## 2. Autor y aprobador de metodología/regla global interna
++La instrucción expresa del Product Owner constituye autorización suficiente para las actividades comprendidas en su alcance. No se exige segunda firma, segundo aprobador, comité, revisor humano independiente ni ratificación administrativa interna. La autorización funcional comprende análisis, diseño, contratos ejecutables, backend/frontend necesarios, pruebas, corrección y validación técnica dentro del alcance; Codex mantiene continuidad autónoma. Una contradicción con una directiva interna anterior se reconcilia documentalmente, sin veto administrativo permanente. Se mantienen integridad, hashes, trazabilidad, verificación técnica y límites expresos; registrar la instrucción y los bytes producidos no significa atribuir una firma humana a bytes futuros. Sólo se detiene la operación afectada por un impedimento técnico/de seguridad no resoluble en alcance, una restricción externa con fuente y aplicabilidad concreta, o una exclusión expresa. No se inventan obligaciones, revisores ni responsables. Esta regla no amplía alcance ni autoriza arquitectura arbitraria, deuda o despliegues excluidos.
+ 
+-La separación author + approve de 22 §6 no impide que el PO sea autor, revisor y aprobador del texto editorial o metodológico interno. La excepción de alcance es normativa y expresa; no habilita comandos de autoaprobación en GRC, no concede grants, no constituye excepción de ObjectPolicy ni sustituye las policies operacionales que exigen motivo y AuditEvent.
++La acumulación de funciones internas no requiere declaraciones administrativas adicionales para autorizar el alcance ya instruido. No se representa una persona como dos revisores independientes ni se crean firmas. La revisión técnica puede ser automatizada y Codex informa resultados reales; no transforma la ausencia de otro humano en veto. El PO puede revisar el resultado concreto sin que esa lectura se imponga como ratificación rutinaria para desarrollar lo autorizado.
+ 
+-## 3. Controles compensatorios obligatorios
++## 3. Integridad y trazabilidad
+ 
+-Cada adopción conserva identidad humana, funciones ejercidas, decisión exacta, versión, manifest con SHA-256 de los bytes UTF-8 o binarios correspondientes, fuentes, dependencias, riesgos, pruebas positivas/negativas, fecha efectiva real y registro histórico inmutable. La suficiencia de una metodología se acredita por versión con reglas oficiales y pruebas; la acumulación de funciones no acredita suficiencia matemática o semántica. Los gates técnicos no se dispensan. Codex prepara y verifica; nunca firma ni aprueba en nombre del humano.
++Toda entrega material conserva instrucción/decisión fuente, alcance, versiones, SHA-256, fuentes, dependencias, delta, riesgos y evidencia de verificaciones. No se exige aprobación separada de cada byte derivado dentro de la autorización integral. No se atribuye firma PO a bytes futuros o no firmados: se registra la autorización de la actividad y los hashes resultantes. Activación/efectividad sólo se registra cuando el acto está incluido, se ejecutó realmente y sus punteros/manifiestos concuerdan. Una exclusión expresa impide ese acto, sin bloquear la preparación independiente.
+ 
+-Una aprobación macro puede comprender múltiples artefactos exactos. Si sus hashes aún no fueron presentados y aprobados, la autorización funcional general no los publica. Cambios posteriores materiales exigen nuevo delta trazable. Una aprobación de gobierno interno no autoriza operaciones de BD, IAM, QA ni despliegue.
++## 4. Separaciones operacionales preservadas
+ 
+-## 4. Separaciones y controles preservados
++Se preservan el modelo canónico y físico aprobado, contratos de backend/frontend y su evolución trazable autorizada, IAM/RBAC, mínimo privilegio, aislamiento multi-tenant, integridad transaccional, auditoría, seguridad, privacidad e historia. La gobernanza interna del desarrollo es distinta de la SoD operacional que ofrece GRC a los clientes: Evidence submit/approve, Action complete/verify, risk acceptance, Audit y credenciales conservan sus policies y actores cuando correspondan. No hay permiso, grant, estado, tabla ni excepción operacional nueva por esta regla.
+ 
+-Se conservan submit/approve de la misma Evidence, complete/verify de la misma Action, request/approve de la misma risk acceptance, execute AuditTest/approve final conclusion cuando el tenant exige independencia, y configure connector/approve privileged credential access bajo política reforzada. Se conservan controles editoriales de packs regulatorios de 41/42, fuera de esta enmienda; su revisión específica no se dispensa por arrastre.
++Se mantienen las revisiones de Evidence crítica, verificación de acciones, aceptación de riesgos, independencia Audit cuando la policy la exige y acceso reforzado a credenciales. Las publicaciones y revisiones de contenido regulatorio del producto conservan sus controles; no se atribuye permiso operacional al PO por esta decisión interna. La configuración SaaS ordinaria no se confunde con esos actos ni exige universalmente acreditación jurídica.
+ 
+-Permanecen multi-tenant estricto, default DENY, mínimo privilegio, Platform/Tenant authority separadas, RBAC + entitlement + scope + ObjectPolicy, auditoría, procedencia, versionado e integridad histórica. No se modifica esquema canónico ni autorización runtime. Las prohibiciones SoD de comandos de producto y las policies de publicación de ConfigurationDefinition o RetentionPolicy siguen aplicables.
++## 5. Obligaciones externas demostradas
+ 
+-## 5. Obligaciones superiores
++Sólo una restricción externa efectivamente aplicable, con fuente/cláusula y objeto concretos, puede restringir el acto correspondiente. No se inventa ley, contrato externo, certificación, revisor o responsable. No se declara cumplimiento ni se dispensa una obligación externa real. Se documentan consecuencia y alternativa compatibles y se continúa el trabajo no dependiente.
+ 
+-La ley, regulación, contrato externo o certificación aplicable prevalece en su ámbito. Si exige independencia, se identifica fuente exacta, cláusula, aplicabilidad y acto mínimo bloqueado; el PO no la deroga. La ausencia de una fuente externa identificada no se convierte en requisito inventado. Esta enmienda no declara cumplimiento ni certificación.
++## 6. Precedencia documental y proporcionalidad
+ 
+-## 6. Precedencia y límites
++Tras su activación formal, esta regla sucede las directivas administrativas internas anteriores contradictorias de06/43/45/46/47 y sus contratos. Mientras es candidata, la instrucción PO autoriza preparar esa modificación y la v1.11 permanece intacta. No se convierte una contradicción interna en bloqueo permanente. La precedencia se limita al gobierno de desarrollo; no cambia la selección de observaciones por SourcePrecedencePolicy ni reglas de retención/suficiencia de los clientes.
+ 
+-49 prevalece únicamente sobre exigencias internas de segunda persona y sobre author + approve editorial/metodológico interno de 22 §6 y roles internos de 43 §6. No reemplaza otras prohibiciones SoD ni fuentes superiores. 45 conserva decisión humana expresa y presupuesto cero. 46 conserva la cadena de autoridad y gates. SOG v2 continúa DRAFT_NOT_EFFECTIVE. La secuencia 6A.3 → 6A.4 → ZIP normativo → 6A.5 se preserva. No se dispensa CI/revisión humana antes de integrar main.
++## 7. Límite de la presente tarea
++
++Sólo documentos y contratos candidatos, sin backend/frontend, DB/migración, runtime, QA/PROD, activación, commit/push/merge ni despliegues. STEP_6A3=PARTIAL_BLOCKED; H01–H10 suspendidas como tarea actual sin PASS retroactivo; STEP_6A4=NOT_STARTED. No se autoriza ampliación funcional, deuda, cambio arbitrario de arquitectura ni self-service previo a completar Fase10.
+--- docs/rector/baseline/PRE_IMPLEMENTATION_GATE_REPORT.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16/PRE_IMPLEMENTATION_GATE_REPORT.md
+@@ -1,15 +1,44 @@
+-# PRE_IMPLEMENTATION_GATE_REPORT — candidata v1.11 de fuente inicial
++# Revisión preimplementación — candidata v1.12
+ 
+-STATUS=BLOCKED_PENDING_EXACT_BYTES_HUMAN_APPROVAL
+-ACTIVE_PREDECESSOR=TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15
+-CANDIDATE=TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15
+-PO_DESIGN_APPROVAL=RECORDED
+-SOURCE_PROPOSAL_SHA256=1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b
+-ARCHITECTURE_DATA_SECURITY_FUNCTIONS_APPROVAL=PENDING_EXPLICIT_ACT
+-PHYSICAL_COMPATIBILITY=TECHNICAL_REVIEW_ONLY_HUMAN_DICTAMEN_PENDING
+-EXECUTABLE_PUBLICATION=NOT_EFFECTIVE
+-RELEASE_QA_AUTHORITY=NOT_GRANTED_FOR_NEW_BYTES
+-STEP_6A3=PARTIAL_BLOCKED
+-STEP_6A4=NOT_STARTED
++`CANDIDATE_BASELINE=TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16`; `STATUS=DRAFT_NOT_EFFECTIVE`.
++`RECTOR_SUCCESSOR_CANDIDATE=READY_FOR_PO_REVIEW` significa paquete documental verificable; no aprobación/activación ni implementación.
++Fuentes DR001/002 verificadas por GitHub commit/PR/blob; DR003 registrada literalmente desde instrucción PO. No se solicita segunda aprobación conceptual ni se crea firma humana.
+ 
+-No cambia modelo físico, grants ni metodologíasv1. Ninguna migración prevista es dictamen final; requiere revisión Data Model Owner y PostgreSQL16 aislado. No implementar ni desplegar antes de gates.
++## Alcance derivado
++
++Administración asistida Platform hasta Fase10; autonomía Tenant dentro de permisos; separación configuración/acreditación; propuesta de meses sin reducir obligaciones; autoridad única/continuidad y prohibición de doble aprobación interna. Matriz detallada y criterios6A3 en el expediente PO_COMMERCIAL_SIMPLIFICATION_20261016.
++
++## Compatibilidad y límites
++
++Modelo canónico/físico, entidades/estados/permisos/scopes y contratos de transporte no cambian. Fuente opcional ya representable en Applicability; FK/cadena/hold/SoD siguen vigentes. No se garantiza compatibilidad runtime nueva sin implementación y pruebas posteriores. Binding de datos comerciales y semántica mes/ancla deben concretarse antes de implementar esa selección; no impiden preparar la sucesora ni reabren la decisión PO. Baseline activa/punteros, historia, backend/frontend y DB permanecen íntegros.
++
++## Gate de esta ejecución
++
++Verificaciones documentales y de preservación se registran en CHECKS.json y se reproducen con verify_candidate.py del expediente. No se ejecutan nuevas pruebas de aceptación, migraciones o despliegues. Activación y publicación Git están expresamente excluidas. STEP_6A3=PARTIAL_BLOCKED; STEP_6A4=NOT_STARTED; HUMAN_UI_REVIEW no se declara PASS. Restricciones residuales y alternativas se especifican por operación en IMPACT_ANALYSIS.md.
++
++## Matriz G1–G15 — alcance documental de la propuesta
++
++No es PASS_FOR_IMPLEMENTATION, ni aprobación humana, ni repetición de pruebas de
++producto. PASS_DOCUMENTARY significa consistencia/preparación dentro de este alcance.
++
++| Gate | Alcance / evidencia | Resultado de preparación / límite |
++|---|---|---|
++| G1 Product Scope | DR001/003; 01/42/43; autoalta excluida hasta Fase10 | PASS_DOCUMENTARY |
++| G2 Domain Ownership | 07/08/30/33/34 sin cambio; ningún write owner añadido | PASS_DOCUMENTARY |
++| G3 Canonical Model | hashes del modelo y expected-schema intactos | PASS_DOCUMENTARY |
++| G4 Integration Representation | sin conector o fuente externa nuevos | PASS_UNCHANGED_SCOPE |
++| G5 Metrics & Methodology | 17/19/38 y contrato27 sin cambio; sin inferencia none/valid | PASS_UNCHANGED_SCOPE |
++| G6 Rules & Impact | sin regla/efecto automático nuevo; C3/C4 preservan hold | PASS_DOCUMENTARY |
++| G7 Lifecycle | estados/aristas/scopes no cambian en esta preparación; publicación futura si requiere cambio de policy | PASS_DOCUMENTARY; runtime NOT_RUN |
++| G8 RBAC | 09/22 y catálogo05; permisos/grants/scopes intactos | PASS_DOCUMENTARY; runtime NOT_RUN |
++| G9 Temporal/Retention |23§§6/8 intactos; §11/RETENTION_PROPOSAL; unidad/ancla/binding meses no inferidos | PASS_FOR_PREPARATION; MONTH_SELECTION_IMPLEMENTATION_NOT_CLOSED |
++| G10 Evidence |24/14; source nullable existente y cadena/scan/SoD preservadas | PASS_DOCUMENTARY; nuevos flujos NOT_RUN |
++| G11 API/Event Integrity | comparación estructural175 operaciones, components, seguridad/audit/eventos | PASS_DOCUMENTARY; ningún transporte nuevo |
++| G12 Non-functional |26/43 y visualv1.0 preservados; sin nuevo runtime | PASS_UNCHANGED_SCOPE; runtime NOT_RUN |
++| G13 Connectors | ningún conector o contrato proveedor nuevo | PASS_UNCHANGED_SCOPE |
++| G14 Traceability | CONTRADICTION_MATRIX y STEP_6A3_ACCEPTANCE_DELTA, SOURCE_MAP y manifest | PASS_DOCUMENTARY |
++| G15 Semantic Integrity | gobierno interno separado de SoD, configuración de acreditación y oferta de conservación | PASS_DOCUMENTARY; límites explícitos en IMPACT_ANALYSIS |
++
++La selección comercial mensual sólo es propuesta contractual. Se preserva
++NO_BINDING_DEMONSTRATED para su dato específico; no se inventa código/unidad ni
++se transforma este resultado en autorización de implementarla sin cerrar inputs.
+--- docs/executable-contracts/00_README.md
++++ docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/snapshots/00_README.md
+@@ -1,59 +1,13 @@
+-# Fase 2 — executable contracts final closure candidate
++# Contratos derivados candidatos PO v1.12
+ 
+-| Campo | Valor |
+-|---|---|
+-| Master regent | `TCDX_GRC_MASTER_REGENT_BASELINE_v1.4_2026-09-15` |
+-| Phase | `EXECUTABLE_CONTRACTS_FINAL_CLOSURE` |
+-| Contract owner | Architecture Owner |
+-| Approving human roles | Product Owner/CPO, Architecture Owner, Data Model Owner, Backend Owner, Frontend Owner, Security & Privacy Reviewer, QA/Release Owner, Regulatory Content Owner as applicable |
+-| Status | `CANDIDATE_READY_FOR_HUMAN_REVIEW` |
+-| Physical authority | approved commit `a822bb92d0d585edd84adc8a1c65ec280923cc8e` |
+-| Continuity base | draft commit `bee2c20` |
+-
+-This directory freezes Phase 2 declarative contracts only. It contains no executable DDL, migrations, seed scripts, backend, frontend, worker, package manifest, lockfile or deployment action. It does not approve `EXECUTABLE_CONTRACTS=PASS`.
+-
+-## Final closure result
+-
+-The continuation Decision Record and final human decisions H-001..H-006 close package-manager direction, exact toolchain/driver pins, repository layout, typed SQL, project migration runner, test stacks, OpenAPI authority/generation, UUIDv7 library direction, authentication trust profile, AI boundary, the three missing permission families and the exact `Issue.dismissed` source states. Controlled derivation publishes:
+-
+-- 74 public API operations in OpenAPI and the operation matrix;
+-- 55 domain/integration event types;
+-- 134 permissions and explicit base-role/scope grants;
+-- one stable problem error vocabulary;
+-- 69 mutating API idempotency/audit mappings;
+-- 95 lifecycle edges with permission, audit, event and idempotency contracts, including exactly `open -> dismissed` and `triaged -> dismissed` for Issue;
+-- exact plan/capability/role/methodology/regulatory-header seed manifests;
+-- migration, authentication, storage, outbox, observability, AI and test contracts.
+-
+-No Phase 2 human decision or documentary blocker remains. This is a candidate for the separate human gate and does not self-approve it:
+-
+-```text
+-EXECUTABLE_CONTRACTS_DESIGN=CANDIDATE_READY_FOR_HUMAN_REVIEW
+-HUMAN_GATE_REQUIRED=EXECUTABLE_CONTRACTS
+-```
+-
+-## Common rules
+-
+-- API base is `/api/v1`; OpenAPI 3.1 is schema-first authority and generation is one-way to types/client.
+-- Bearer JWT identity is validated by backend; tenant selection header never grants access.
+-- Effective authorization is identity -> membership/service principal -> entitlement/capability -> permission -> scope/ownership -> object policy -> SoD -> ALLOW; otherwise DENY.
+-- UUIDv7 is application-generated; timestamps are UTC; tenant civil time uses contractual IANA timezone.
+-- PostgreSQL owns business state, idempotency, outbox and job authority. Redis 7 is non-authoritative.
+-- `tenant_id` follows ownership class; no `SYSTEM_TENANT_ID`.
+-- Audit and domain/integration events are distinct.
+-- No generic table CRUD, `DELETE`, `update_status`, cross-tenant bypass, protected-content reconstruction or AI authority exists.
+-
+-Artifacts 01–20 form one review unit. Artifact 18 proves bidirectional traceability, 19 is the authoritative blocker ledger and 20 is the consolidated review result.
+-
+-
+-## STEP 23L-TENANT-ONBOARDING-D1-R
+-
+-Executable25 closes the human-approved identity discovery, first-company onboarding application boundary, internal TENANT_BOOTSTRAP invariants, privacy/audit, subscription ordering and partial recovery. OpenAPI02/matrix03 transport bindings are local only; Permission05 definition/grants are contract-approved/runtime-unpublished. Source/runtime catalogs, seeds, migrations and QA are unchanged. No independent bootstrap endpoint.
+-
+-## Managed Identity tenant onboarding E2E — 2026-10-07
+-
+-Executable26 closes human-approved centralized tenant-user onboarding and the separate target identity/company access projection. It complements executable21–25 without changing generic tenant assignment authority.
+-
+-## Approved Phase 5 methodology amendment
+-
+-See [27 — canonical methodology binding](27_PHASE5_METHODOLOGY_BINDING.md) and the explicit human architecture approval. Migration `20261007000200` produces 30 migrations / 237 physical tables / 172 permissions. Seeds: separate Compliance and Control Effectiveness version 1, two compatible FormulaDefinitions, two narrowly scoped read permissions; publication audit `audit.compliance.methodology.publish.v1` and `audit.controls.methodology.publish.v1`. No historical migration or immutable rector file is changed.
++`STATUS=DRAFT_NOT_EFFECTIVE`. Autoridad: DR001/002 recuperadas por commit y DR003
++de esta conversación. No se exige segunda aprobación interna ni ratificación.
++Las fuentes activas/históricas no se modifican ni se renumeran sus conteos antiguos.
++DELTA.md C1–C7 es el delta mínimo; las copias completas02/03/05/09/10/14/25/26/29
++materializan anotaciones, gobierno y alcance.20 informa esta revisión concreta.
++Se preservan175 operaciones, todos los schemas de transporte, permisos/scopes,
++auditoría/eventos y entidades físicas actuales. No se afirma cierre de todos los
++contratos históricos, disponibilidad runtime ni implementación mensual.
++Los encabezados históricos de aprobación en contratos no copiados no establecen
++un segundo firmante para desarrollo futuro:49/DR003 rige la gobernanza interna.
++No cambia ninguna aprobación/SoD operacional ofrecida por el producto.
+--- docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml
++++ docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/snapshots/02_OPENAPI_BASE_CONTRACT.yaml
+@@ -1,3 +1,4 @@
++x-tcdx-po-candidate: {status: DRAFT_NOT_EFFECTIVE, authority: DR-GRC-20261016-001/002/003, activation: NOT_PERFORMED}
+ # CANDIDATE_NOT_EFFECTIVE INITIAL_SOURCE v1.11
+ openapi: 3.1.0
+ info:
+@@ -44,6 +45,7 @@
+   "/platform/tenants/{tenant_id}/users:onboard":
+     post:
+       operationId: tenantUserOnboardingCreate
++      x-tcdx-po-reconciliation: "C2: explicitly authorized Platform assistance; no implicit tenant grants or MI tenant authority"
+       tags: [platform]
+       summary: "Centralized user access to an explicitly selected company"
+       description: "Executable26: Platform-only canonical identity/Membership onboarding and additive tenant-role reconciliation; target CORE_PLATFORM required. No bootstrap, identity creation, actor Membership, Keycloak authority or generic tenant assignment expansion. Safe durable partial progress; same original intent resumes pending roles only."
+@@ -147,6 +149,7 @@
+   "/platform/tenants:initial-onboarding":
+     post:
+       operationId: tenantInitialOnboardingCreate
++      x-tcdx-po-reconciliation: "C2: assisted customer onboarding through completion of Phase10; no client self-service; existing authority/transactions unchanged"
+       tags: ["platform"]
+       summary: "D1-R bounded new-company and first-admin application command"
+       description: "Executable25: requires both Platform permissions; distinct active initial administrator; existing identity or MI already provisioned through its separately authorized operation. tenantCreate then internal TENANT_BOOTSTRAP only. No arbitrary existing tenant input or independently addressable bootstrap. Same bound key reconciles/resumes only its own pending steps; no secret, rollback fiction or implicit actor Membership."
+@@ -688,6 +691,7 @@
+         '404': { $ref: '#/components/responses/NotFoundError' }
+     post:
+       operationId: subscriptionRegulatoryPackActivate
++      x-tcdx-po-reconciliation: "C2: eligible published catalog only; no regulatory content publication inferred"
+       tags: ["platform"]
+       summary: "Activate exact published RegulatoryPackVersion, forward only"
+       security: [{ bearerAuth: [] }]
+@@ -954,6 +958,7 @@
+   "/platform/subscriptions":
+     post:
+       operationId: subscriptionCreate
++      x-tcdx-po-reconciliation: "C2: assisted commercial enablement from published PlanVersion; no client self-contracting"
+       tags: ["platform"]
+       summary: "CORE_PLATFORM: subscriptionCreate"
+       description: "Approved by the 2026-09-24 Phase 5 Subscription decision. Actor: Platform Admin with the published platform.subscription.create Permission. No tenant header. Caller selects an existing active tenant and existing published PlanVersion and supplies only the canonical subscription business code. Subscription ID, active lifecycle, start time and actors are server-owned. Effective entitlements remain derived exclusively from the selected PlanVersion; capability and entitlement lists are forbidden. Contract shape: SubscriptionCreateRequest → SubscriptionProjection."
+@@ -1033,6 +1038,7 @@
+         '403': { $ref: '#/components/responses/AuthorizationError' }
+     post:
+       operationId: membershipCreate
++      x-tcdx-po-reconciliation: "C2: autonomous permitted tenant administration; no additional Platform ratification"
+       tags: ["iam"]
+       summary: "CORE_PLATFORM: membershipCreate"
+       description: "Derived from 22,42 and the 2026-09-23 PRE-F5E human decision. Actor: Tenant Admin. Tenant comes only from validated X-TCDX-Tenant-Id. The operation materializes an active membership for an existing canonical user_identity_id; it creates no invite, identity, credential or role. Contract shape: MembershipCreateRequest → TenantMembershipProjection."
+@@ -1208,6 +1214,7 @@
+         '404': { $ref: '#/components/responses/NotFoundError' }
+     post:
+       operationId: membershipRoleAssign
++      x-tcdx-po-reconciliation: "C2: same-tenant published roles and effective permissions; no Platform authority inferred"
+       tags: ["iam"]
+       summary: "CORE_PLATFORM: membershipRoleAssign"
+       description: "Derived from 22,42 and PRE-F5E H5. Actor: Tenant Admin. Membership is path-derived; tenant is authenticated context; role and existing RBAC scope discriminants are same-tenant. PLATFORM_CONTROL roles are forbidden. valid_from is server time and optional valid_to must be later. Contract shape: MembershipRoleAssignRequest → MembershipRoleAssignmentProjection."
+@@ -2061,6 +2068,7 @@
+   "/files:request-upload":
+     post:
+       operationId: uploadIntentCreate
++      x-tcdx-po-reconciliation: "C3: published ordinary technical applicability may have no legal source; exact chain and physical guards unchanged; formal INITIAL_SOURCE remains bounded"
+       x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
+       tags: ["evidence"]
+       summary: "EVIDENCE_DOCUMENTS: uploadIntentCreate"
+@@ -2091,6 +2099,7 @@
+   "/file-upload-intents/{id}:finalize":
+     post:
+       operationId: uploadFinalize
++      x-tcdx-po-reconciliation: "C3: same technical chain, scan, hash, current authority and concurrent retention; no juridical certification inferred"
+       x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
+       tags: ["evidence"]
+       summary: "EVIDENCE_DOCUMENTS: uploadFinalize"
+@@ -3484,6 +3493,7 @@
+   "/configuration-overrides":
+     post:
+       operationId: configurationOverrideCreate
++      x-tcdx-po-reconciliation: "C3: ordinary permitted configuration without universal legal-source or independent-review prerequisite; no override of sensitive workflow SoD"
+       tags: ["configuration"]
+       summary: "CORE_PLATFORM: configurationOverrideCreate"
+       description: "H-003. Creates a tenant-scoped override only when the published definition permits its type and scope; it never mutates the global definition."
+@@ -3777,6 +3787,7 @@
+         '403': { $ref: '#/components/responses/AuthorizationError' }
+     post:
+       operationId: retentionApplicabilityCreate
++      x-tcdx-po-reconciliation: "C3: optional source for nonmandatory ordinary operational applicability; cited source always validated; no new field or state"
+       tags: ["privacy"]
+       summary: "PRIVACY: retentionApplicabilityCreate"
+       security: [{ bearerAuth: [] }]
+@@ -3825,6 +3836,7 @@
+   "/retention-policy-applicabilities/{id}:submit-for-review":
+     post:
+       operationId: retentionApplicabilitySubmitForReview
++      x-tcdx-po-reconciliation: "C3: formal INITIAL_SOURCE custody remains source-bound; ordinary technical configuration is distinct"
+       x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
+       tags: ["privacy"]
+       summary: "PRIVACY: retentionApplicabilitySubmitForReview"
+@@ -3909,6 +3921,7 @@
+   "/retention-policy-applicabilities/{id}:publish":
+     post:
+       operationId: retentionApplicabilityPublish
++      x-tcdx-po-reconciliation: "C3: no universal legal accreditation claim; existing lifecycle/SoD/chain and supplied-source validation retained"
+       x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
+       tags: ["privacy"]
+       summary: "PRIVACY: retentionApplicabilityPublish"
+@@ -4450,6 +4463,7 @@
+         '409': { $ref: '#/components/responses/ConflictError' }
+     post:
+       operationId: evidenceCreate
++      x-tcdx-po-reconciliation: "C3: technical eligibility not juridical accreditation; no change to Evidence review/approve SoD"
+       x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
+       tags: ["evidence"]
+       summary: "EVIDENCE_DOCUMENTS: evidenceCreate"
+@@ -4970,6 +4984,7 @@
+   "/retention-policy-references":
+     get:
+       operationId: retentionPolicyReferenceList
++      x-tcdx-po-reconciliation: "C3: technical binding required; legal evidence prerequisite only for formal accreditation; no new scopes"
+       x-tcdx-scope: "tenant, assigned_object, owned_object"
+       x-tcdx-physical-entities: "privacy.retention_policies, regulatory.regulatory_import_manifests, authorized purpose parents"
+       x-tcdx-rector-source: "MACRO-STEP6A3-20261009-R1; executable29; rector49"
+@@ -5117,6 +5132,7 @@
+   "/retention-policy-applicabilities/{id}:bind-initial-source":
+     post:
+       operationId: retentionApplicabilityBindInitialSource
++      x-tcdx-po-reconciliation: "C3: exclusively formal source binding; not a universal prerequisite for ordinary configuration"
+       tags: ["privacy"]
+       summary: "PRIVACY: vincular fuente inicial a un borrador propio"
+       security: [{ bearerAuth: [] }]
+--- docs/executable-contracts/03_API_RESOURCE_OPERATION_MATRIX.md
++++ docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/snapshots/03_API_RESOURCE_OPERATION_MATRIX.md
+@@ -1,3 +1,5 @@
++> DRAFT_NOT_EFFECTIVE — copia candidata PO v1.12. Estados y recibos heredados describen su autoridad histórica; el delta PO rige la propuesta futura.
++
+ > CANDIDATE_NOT_EFFECTIVE: snapshot sucesor INITIAL_SOURCE; texto histórico preservado, requiere publicación competente.
+ 
+ # API resource / operation matrix
+@@ -5,7 +7,7 @@
+ | Campo | Valor |
+ |---|---|
+ | Contract owner | Backend Owner |
+-| Approving human roles | Product Owner/CPO, Architecture Owner, Backend Owner, Security & Privacy Reviewer, domain owners |
++| Internal development authority | Express PO instruction in scope; DR003; no second internal approval |
+ | Status | `CONTRACT_DEFINED` |
+ 
+ ## Normative conventions
+@@ -215,9 +217,9 @@
+ 
+ ## STEP 6A.3 — referencia mínima publicada localmente v1
+ 
+-| frameworkVersionReferenceList | GET `/framework-version-references` | tenant; ISO_COMPLIANCE + purpose capability | exact macro44 roles, purpose bounded | `compliance.framework.read`; published29 scopes | active membership + parent permission + exact FK + same tenant/ObjectPolicy/SoD; legal binding before application | query → FrameworkVersionReferencePage | COMMON; NAT | NONE; NONE | RO; canonical references and parent | MACRO-STEP6A3-20261009-R1; executable29 |
+-| membershipReferenceList | GET `/membership-references` | tenant; CORE_PLATFORM + purpose capability | exact macro44 roles, purpose bounded | `platform.membership_reference.read`; published29 scopes | active membership + parent permission + exact FK + same tenant/ObjectPolicy/SoD; legal binding before application | query → MembershipReferencePage | COMMON; NAT | NONE; NONE | RO; canonical references and parent | MACRO-STEP6A3-20261009-R1; executable29 |
+-| retentionPolicyReferenceList | GET `/retention-policy-references` | tenant; EVIDENCE_DOCUMENTS + purpose capability | exact macro44 roles, purpose bounded | `privacy.retention_policy_reference.read`; published29 scopes | active membership + parent permission + exact FK + same tenant/ObjectPolicy/SoD; legal binding before application | query → RetentionPolicyReferencePage | COMMON; NAT | NONE; NONE | RO; canonical references and parent | MACRO-STEP6A3-20261009-R1; executable29 |
++| frameworkVersionReferenceList | GET `/framework-version-references` | tenant; ISO_COMPLIANCE + purpose capability | exact macro44 roles, purpose bounded | `compliance.framework.read`; published29 scopes | active membership + parent permission + exact FK + same tenant/ObjectPolicy/SoD; technical binding always; legal accreditation only when formally claimed | query → FrameworkVersionReferencePage | COMMON; NAT | NONE; NONE | RO; canonical references and parent | MACRO-STEP6A3-20261009-R1; executable29 |
++| membershipReferenceList | GET `/membership-references` | tenant; CORE_PLATFORM + purpose capability | exact macro44 roles, purpose bounded | `platform.membership_reference.read`; published29 scopes | active membership + parent permission + exact FK + same tenant/ObjectPolicy/SoD; technical binding always; legal accreditation only when formally claimed | query → MembershipReferencePage | COMMON; NAT | NONE; NONE | RO; canonical references and parent | MACRO-STEP6A3-20261009-R1; executable29 |
++| retentionPolicyReferenceList | GET `/retention-policy-references` | tenant; EVIDENCE_DOCUMENTS + purpose capability | exact macro44 roles, purpose bounded | `privacy.retention_policy_reference.read`; published29 scopes | active membership + parent permission + exact FK + same tenant/ObjectPolicy/SoD; technical binding always; legal accreditation only when formally claimed | query → RetentionPolicyReferencePage | COMMON; NAT | NONE; NONE | RO; canonical references and parent | MACRO-STEP6A3-20261009-R1; executable29 |
+ 
+ 
+ ## INITIAL_SOURCE v1.11 — delta candidato
+@@ -239,3 +241,16 @@
+ 
+ Transacción: lock_timeout5s; bloquear registry, scopes y side-effects; resolver proof/principal; verificar predecesora v1 exacta del snapshot QA; insertar únicamente v2 con3scopes y el mismo side-effect requerido ordinal1; insertar una auditoría audit.platform.lifecycle_transition.publish.v1 bajo step6a3InitialSourceLifecyclePublication, con manifest/decisión/hash/principal/correlation, sin secretos. Falla audit o discrepancia revierte todo. Replay exacto verifica v2, scopes/efecto/audit único y retorna0 filas/0audit nuevos; discrepancia es409 y nunca edita v1/v2. Las cinco aristas C04W conservan sus filas/auditorías sin republicación. Bind no crea otra arista.
+ 
++
++
++## Delta normativo candidato PO — operaciones existentes
++
++Contrato DELTA.md C1–C7 rige esta copia. Las filas no crean rutas ni grants:
++tenantInitialOnboardingCreate/tenantUserOnboardingCreate son incorporación
++asistida; membershipCreate/membershipRoleAssign, autonomía tenant autorizada;
++subscriptionCreate/subscriptionRegulatoryPackActivate habilitan sólo catálogo
++elegible. configurationOverrideCreate no requiere acreditación jurídica universal;
++retentionPolicyReferenceList valida binding técnico y exige fuente jurídica sólo
++cuando la aplicación invoca acreditación formal. La fuente de una primaria ordinaria
++publicada puede ser nula sin simular acreditación. Las aristas/SoD y FK se conservan.
++Las opciones mensuales no agregan campos a un request genérico no cerrado.
+--- docs/executable-contracts/05_PERMISSION_CATALOG.md
++++ docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/snapshots/05_PERMISSION_CATALOG.md
+@@ -1,3 +1,5 @@
++> DRAFT_NOT_EFFECTIVE — copia candidata PO v1.12. Estados y recibos heredados describen su autoridad histórica; el delta PO rige la propuesta futura.
++
+ > CANDIDATE_NOT_EFFECTIVE: snapshot sucesor INITIAL_SOURCE; texto histórico preservado, requiere publicación competente.
+ 
+ # Permission, capability and base-role catalog
+@@ -20,7 +22,7 @@
+ | Campo | Valor |
+ |---|---|
+ | Contract owner | Security & Privacy Reviewer |
+-| Approving human roles | Product Owner/CPO, Architecture Owner, Security & Privacy Reviewer, domain owners |
++| Internal development authority | Express PO instruction in scope; DR003; no second internal approval |
+ | Status | `CONTRACT_DEFINED` |
+ 
+ Authorization is always `identity → active membership → entitlement/capability → permission → scope → object policy → SoD → ALLOW`, otherwise DENY. Plan, capability, entitlement, role, permission, scope and ownership remain separate.
+@@ -345,3 +347,13 @@
+ 
+ Transacción: lock_timeout5s; bloquear registry, scopes y side-effects; resolver proof/principal; verificar predecesora v1 exacta del snapshot QA; insertar únicamente v2 con3scopes y el mismo side-effect requerido ordinal1; insertar una auditoría audit.platform.lifecycle_transition.publish.v1 bajo step6a3InitialSourceLifecyclePublication, con manifest/decisión/hash/principal/correlation, sin secretos. Falla audit o discrepancia revierte todo. Replay exacto verifica v2, scopes/efecto/audit único y retorna0 filas/0audit nuevos; discrepancia es409 y nunca edita v1/v2. Las cinco aristas C04W conservan sus filas/auditorías sin republicación. Bind no crea otra arista.
+ 
++
++
++## Gobierno y autonomía candidatos — sin cambios de catálogo
++
++La instrucción PO y49 sustituyen aprobaciones internas repetidas de desarrollo.
++Ninguna fila Permission/RolePermission/scope se añade, elimina o amplía. Tenant
++Admin opera sólo con permisos efectivos; la asistencia Platform usa contratos25/26
++y comandos explícitamente autorizados. Configuración ordinaria no exige fuente
++jurídica por defecto; la acreditación formal, aprobación de Evidence, publicación
++sensible y release de holds conservan permisos/SoD. DELTA.md delimita la regla.
+--- docs/executable-contracts/09_SEED_MANIFESTS.md
++++ docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/snapshots/09_SEED_MANIFESTS.md
+@@ -1,3 +1,5 @@
++> DRAFT_NOT_EFFECTIVE — copia candidata PO v1.12. Estados y recibos heredados describen su autoridad histórica; el delta PO rige la propuesta futura.
++
+ > CANDIDATE_NOT_EFFECTIVE: snapshot sucesor INITIAL_SOURCE; texto histórico preservado, requiere publicación competente.
+ 
+ # Seed manifests and lifecycle transition registry
+@@ -5,7 +7,7 @@
+ | Campo | Valor |
+ |---|---|
+ | Contract owner | Data Model Owner |
+-| Approving human roles | Product Owner/CPO, Architecture Owner, Data Model Owner, Security & Privacy Reviewer, Regulatory Content Owner |
++| Internal development authority | Express PO instruction in scope; DR003; no second internal approval |
+ | Status | `CONTRACT_DEFINED` |
+ 
+ These are the declarative authority for the immutable Phase 3 seed plus the PRE-F5C incremental materialization. Every manifest uses canonical content serialization + SHA-256; same stable key/version/checksum converges, and a different checksum for an applied immutable version fails closed. Published lifecycle rows are immutable: authority is the highest `version_number` per `(entity_type, from_state, command_code)` when that row is `published`; a highest version marked `superseded` withdraws the old command without rewriting history.
+@@ -219,3 +221,13 @@
+ 
+ Transacción: lock_timeout5s; bloquear registry, scopes y side-effects; resolver proof/principal; verificar predecesora v1 exacta del snapshot QA; insertar únicamente v2 con3scopes y el mismo side-effect requerido ordinal1; insertar una auditoría audit.platform.lifecycle_transition.publish.v1 bajo step6a3InitialSourceLifecyclePublication, con manifest/decisión/hash/principal/correlation, sin secretos. Falla audit o discrepancia revierte todo. Replay exacto verifica v2, scopes/efecto/audit único y retorna0 filas/0audit nuevos; discrepancia es409 y nunca edita v1/v2. Las cinco aristas C04W conservan sus filas/auditorías sin republicación. Bind no crea otra arista.
+ 
++
++
++## Delta de preparación PO — sin adopción de datos
++
++SEED001–012 y sus filas históricas permanecen. No hay defaults mensuales,
++UsageLimit/ConfigurationDefinition/Override nuevo ni tenant de prueba. La propuesta
++comercial12/18/24/36/48/60 se registra en DELTA.md; su binding exacto debe cerrarse
++antes de implementación. No se altera SEED011 vacío ni se usa bootstrap como
++seed de policy o permiso no autorizado. Integridad y registry siguen obligatorios;
++no hay segunda firma interna para ejecutar una instrucción PO en alcance.
+--- docs/executable-contracts/10_TEST_CONTRACTS.md
++++ docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/snapshots/10_TEST_CONTRACTS.md
+@@ -1,9 +1,11 @@
++> DRAFT_NOT_EFFECTIVE — copia candidata PO v1.12. Estados y recibos heredados describen su autoridad histórica; el delta PO rige la propuesta futura.
++
+ # Test contracts
+ 
+ | Campo | Valor |
+ |---|---|
+ | Contract owner | QA/Release Owner |
+-| Approving human roles | QA/Release Owner, Architecture Owner, Security & Privacy Reviewer, Data Model/Backend/Frontend owners by layer |
++| Internal development authority | Express PO instruction in scope; DR003; no second internal approval |
+ | Status | `CONTRACT_DEFINED` |
+ | Human authority | Decision Record: DR-F2-005, DR-F2-006, DR-F2-007, DR-F2-010 |
+ 
+@@ -84,3 +86,13 @@
+ | TC-F5PLUS-CANDIDATE-001 | Human STEP 22J candidate read | Platform Admin authentication, permission and nonproduction environment; exact version/provenance/manifest/source chain | GET `/platform/regulatory-pack-validation-candidates` with cursor and effective instant; break each candidate authority independently | only authorized draft metadata; malformed input/default DENY; production and Tenant Admin DENY; no commercial selector crossover or access assignment | Fastify inject, deterministic PostgreSQL 16 integration, contract alignment | PHASE_5_PLUS_LOCAL | STEP 22J 2026-09-30; Phase 5+ amendment |
+ 
+ The five `*.postgres.test.ts` files are run by `pnpm test:integration` with isolated-local guards and no skipped integration case. The unit suite's five conditional skips are those same separately executed PostgreSQL files.
++
++
++## Escenarios candidatos PO (especificados, no ejecutados)
++
++TEST_SCENARIOS.json enumera positivos y negativos de alta asistida, autonomía,
++configuración/acreditación, retención por categoría/hold, temporalidad y gobierno.
++Estado de cada caso: NOT_RUN. No se suman a pruebas históricas ni dan PASS runtime.
++La validación documental comprueba invariantes estructurales; no prueba seguridad
++operacional nueva. No se exige otro aprobador interno para ejecutar pruebas
++autorizadas; una exclusión expresa de QA/DB/aceptación se respeta.
+--- docs/executable-contracts/14_FILE_EVIDENCE_STORAGE_CONTRACT.md
++++ docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/snapshots/14_FILE_EVIDENCE_STORAGE_CONTRACT.md
+@@ -1,3 +1,5 @@
++> DRAFT_NOT_EFFECTIVE — copia candidata PO v1.12. Estados y recibos heredados describen su autoridad histórica; el delta PO rige la propuesta futura.
++
+ > CANDIDATE_NOT_EFFECTIVE: snapshot sucesor INITIAL_SOURCE; texto histórico preservado, requiere publicación competente.
+ 
+ # File and evidence storage contract
+@@ -5,7 +7,7 @@
+ | Campo | Valor |
+ |---|---|
+ | Contract owner | Backend Owner / Security & Privacy Reviewer |
+-| Approving human roles | Architecture Owner, Backend Owner, Security & Privacy Reviewer, Data Model Owner |
++| Internal development authority | Express PO instruction in scope; DR003; no second internal approval |
+ | Status | `CONTRACT_DEFINED` |
+ 
+ ## Authority split
+@@ -62,3 +64,16 @@
+ 
+ Transacción: lock_timeout5s; bloquear registry, scopes y side-effects; resolver proof/principal; verificar predecesora v1 exacta del snapshot QA; insertar únicamente v2 con3scopes y el mismo side-effect requerido ordinal1; insertar una auditoría audit.platform.lifecycle_transition.publish.v1 bajo step6a3InitialSourceLifecyclePublication, con manifest/decisión/hash/principal/correlation, sin secretos. Falla audit o discrepancia revierte todo. Replay exacto verifica v2, scopes/efecto/audit único y retorna0 filas/0audit nuevos; discrepancia es409 y nunca edita v1/v2. Las cinco aristas C04W conservan sus filas/auditorías sin republicación. Bind no crea otra arista.
+ 
++
++
++## Delta operativo y jurídico candidato PO
++
++DELTA.md C3–C4 sucede cualquier lectura universal de INITIAL_SOURCE: ese flujo
++es para incorporar una fuente formal y no es un requisito de guardar una opción
++ordinaria. Una primaria ordinaria publicada sin fuente puede ser técnicamente
++elegible con policy ordinaria no obligatoria, contexto y FK exactos, conservando
++guards físicos y todas las obligaciones concurrentes. No acredita legalidad.
++Si se vincula fuente o se invoca acreditación formal, sus revisiones y SoD se
++validan; Evidence/hold no se autoaprueban por autonomía Tenant. No se permiten
++uploads nuevos sin FK ni purge por una opción mensual. El operador privado y sus
++publicaciones históricas conservan sus contratos; no se ejecutan aquí.
+--- docs/executable-contracts/20_EXECUTABLE_CONTRACTS_REVIEW_REPORT.md
++++ docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/snapshots/20_EXECUTABLE_CONTRACTS_REVIEW_REPORT.md
+@@ -1,63 +1,16 @@
+-# Executable contracts review report
++# Revisión de contratos derivados PO v1.12
+ 
+-| Campo | Valor |
+-|---|---|
+-| Contract owner | Architecture Owner |
+-| Approving human roles | Product Owner/CPO, Architecture Owner, Data Model Owner, Backend Owner, Frontend Owner, Security & Privacy Reviewer, QA/Release Owner, Regulatory Content Owner as applicable |
+-| Status | `CANDIDATE_READY_FOR_HUMAN_REVIEW` |
+-
+-```text
+-BASELINE_INTEGRITY=PASS
+-PHYSICAL_MODEL_INTEGRITY=PASS
+-EXECUTABLE_REQUIREMENTS_COVERAGE=32/32
+-OPENAPI_CONTRACT=PASS
+-EVENT_CATALOG=PASS
+-PERMISSION_CATALOG=PASS
+-ERROR_MODEL=PASS
+-IDEMPOTENCY_CONTRACT=PASS
+-AUDIT_EVENT_CATALOG=PASS
+-SEED_MANIFESTS=PASS
+-TEST_CONTRACTS=PASS
+-MIGRATION_PLAN=PASS
+-IMPLEMENTATION_DECISION_MANIFEST=PASS
+-TENANT_ISOLATION_GAPS=0
+-UNSOURCED_CONTRACTS=0
+-CROSS_CONTRACT_CONFLICTS=0
+-SEMANTIC_INFERENCES=0
+-OPEN_HUMAN_DECISIONS=0
+-OPEN_BLOCKERS=0
+-```
+-
+-`EXECUTABLE_CONTRACTS_DESIGN=CANDIDATE_READY_FOR_HUMAN_REVIEW`
+-
+-This report never declares `EXECUTABLE_CONTRACTS=PASS`.
+-
+-## Internal audits
+-
+-| audit | result | evidence |
+-|---|---|---|
+-| A — Rector -> Contracts | PASS documentary | 32/32 groups closed; final rows cite H-001..H-006 and higher rector/physical authority |
+-| B — Physical -> Contracts | PASS documentary | all 175 canonical physical entities remain consumed without model change; 74 operations and 95 lifecycle edges name physical authority |
+-| C — Contracts -> Rector | PASS documentary | all published operations/events/permissions/audits/seeds/tests have rector source; unsourced=0 |
+-| D — API <-> Permission <-> Audit <-> Event <-> Idempotency | PASS for published catalog | 74 operations; 134 permissions; 69 mutating mappings; 55 events; 164 audit codes; all POSTs keyed |
+-| E — Lifecycle <-> Permission <-> Audit <-> Seeds | PASS documentary | 95 edges close the chain; Issue dismissal is exactly open/triaged -> dismissed with reason, permission and audit |
+-| F — Tenant isolation | PASS documentary | no header authority, cross-tenant concealment, same-tenant FKs/scopes, tenant-bound idempotency/events/cache and negative tests; gaps=0 |
+-| G — Freeze readiness | PASS documentary candidate | Phase 3 foundations can consume exact pins, permissions/grants, operations, seed manifests and lifecycle rows without taking a material Phase 2 decision; `EXECUTABLE_CONTRACTS` human gate remains required |
+-
+-## Integrity and prohibited-action confirmation
+-
+-```text
+-RECTOR_FILES_MODIFIED=0
+-PHYSICAL_MODEL_FILES_MODIFIED=0
+-MASTER_EXECUTION_STATUS_MODIFIED=0
+-DDL_EXECUTED=0
+-MIGRATIONS_CREATED=0
+-DATABASE_CHANGED=0
+-FUNCTIONAL_DEVELOPMENT=0
+-BACKEND_IMPLEMENTED=0
+-FRONTEND_IMPLEMENTED=0
+-DEPLOYMENT_PERFORMED=0
+-CODEX_VARIATION_BUDGET=ZERO
+-```
+-
+-The contract families are freeze-complete as a documentary candidate. This report does not declare `EXECUTABLE_CONTRACTS=PASS`; only the separate human gate may do so.
++`STATUS=DRAFT_NOT_EFFECTIVE`; autoridad interna: instrucción PO DR001/002/003.
++`CANDIDATE_REVIEW_SCOPE=DOCUMENTARY_AND_ARCHITECTURAL_COMPATIBILITY`.
++No se autoaprueba EXECUTABLE_CONTRACTS ni runtime; no existe segunda aprobación
++interna obligatoria. El informe concreto, resultados y manifiestos están en el
++expediente de reconciliación; el verificador contrasta175 operaciones, schemas,
++seguridad, permisos/scopes, auditoría/eventos, referencias y preservación física.
++No hay modificación funcional de transporte ni datos publicados. La estructura
++física permite fuente opcional; el binding temporal/comercial de meses y schemas
++específicos aún no existe y se debe cerrar antes de implementar esa selección.
++La alternativa compatible usa datos tipados de entidades existentes, sin reducir
++categorías ni holds. Esta dependencia localizada no bloquea la candidata.
++Pruebas de futuros flujos: especificadas en TEST_SCENARIOS.json, NOT_RUN. CI/Git,
++QA/PROD y nuevas implementaciones no se ejecutan en esta tarea. Los conteos y PASS
++de informes anteriores sólo acreditan sus versiones históricas.
+--- docs/executable-contracts/25_TENANT_INITIAL_ONBOARDING_AND_IDENTITY_DISCOVERY.md
++++ docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/snapshots/25_TENANT_INITIAL_ONBOARDING_AND_IDENTITY_DISCOVERY.md
+@@ -1,3 +1,5 @@
++> DRAFT_NOT_EFFECTIVE — copia candidata PO v1.12. Estados y recibos heredados describen su autoridad histórica; el delta PO rige la propuesta futura.
++
+ # STEP 23L-TENANT-ONBOARDING-D1-R — identity discovery and initial onboarding
+ 
+ Status: `CLOSED_LOCAL_CONTRACT_ONLY`. Human authority: Andrés Barouh's explicit
+@@ -341,3 +343,17 @@
+ migration28, role publication, schema or QA mutation in D1-R. Runtime168 remains
+ unchanged and new Permission count0; until actual authorized publication and
+ implementation, default DENY applies to both new operations.
++
++
++## Modelo asistido candidato PO — DR001/003
++
++Este recorrido es el alta de clientes hasta completar Fase10, sin autoalta o
++contratación cliente autoservida. Conserva la secuencia, bootstrap único, identidad
++real, excepción inicial sin Subscription, no Membership del actor, secretos,
++idempotencia y resultados parciales. La habilitación comercial posterior consume
++Subscription/PlanVersion/Entitlement y normas elegibles existentes. La autoridad
++interna de desarrollo se rige por49/DR003, sin segunda firma ni nuevo packet para
++cada paso ya comprendido; no se afirma implementación/QA por esta copia.
++Tenant Admin administra lo permitido por sus roles en su tenant sin ratificación
++Platform de cada acción. La configuración ordinaria no invoca acreditación formal
++como requisito universal; no recibe MI Platform-only ni privilegios extra.
+--- docs/executable-contracts/26_PLATFORM_TENANT_USER_ONBOARDING.md
++++ docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/snapshots/26_PLATFORM_TENANT_USER_ONBOARDING.md
+@@ -1,3 +1,5 @@
++> DRAFT_NOT_EFFECTIVE — copia candidata PO v1.12. Estados y recibos heredados describen su autoridad histórica; el delta PO rige la propuesta futura.
++
+ # Platform tenant-user onboarding — approved complementary contract
+ 
+ Authority: Andrés Barouh's STEP 23L-MANAGED-IDENTITY-TENANT-ONBOARDING-E2E
+@@ -129,3 +131,14 @@
+ Required local security, PostgreSQL, UI/E2E and static gates precede publication.
+ Backend+frontend build from same definitive two-export freeze; unchanged IAM
+ reused. No positive functional QA mutation; human functional test pending.
++
++
++## Alcance candidato hasta Fase10 — DR001/003
++
++Platform Admin puede asistir incorporación/accesos por ESTE comando y las lecturas/
++revocaciones autorizadas; no por extensión implícita de permisos tenant o por el
++nombre del rol. Tenant Admin conserva administración propia de personas/roles por
++sus comandos y no espera autorización Platform adicional. No se amplían scopes,
++grants ni MI tenant-side. Auditoría, aislamiento, autoridad efectiva y resultados
++parciales de este contrato permanecen. No hay autoalta/contratación autoservida.
++La revisión interna de desarrollo consume la instrucción PO sin otro firmante.
+--- docs/executable-contracts/29_PHASE6A3_REFERENCE_READS.md
++++ docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/snapshots/29_PHASE6A3_REFERENCE_READS.md
+@@ -1,3 +1,5 @@
++> DRAFT_NOT_EFFECTIVE — copia candidata PO v1.12. Estados y recibos heredados describen su autoridad histórica; el delta PO rige la propuesta futura.
++
+ > CANDIDATE_NOT_EFFECTIVE: snapshot sucesor INITIAL_SOURCE; texto histórico preservado, requiere publicación competente.
+ 
+ # STEP6A3_REFERENCE_READS_v1 — publicación local
+@@ -8,7 +10,7 @@
+ 
+ Se adopta íntegramente el contenido normativo del artefacto aprobado `docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md`, SHA-256 `029ba9a9e2a0f13a726b3133bd43be71b2caf209ecb11c6381074da40a1bf247`, y sus bases incorporadas selladas en el manifiesto. Sus etiquetas históricas DRAFT/PENDING describen el estado anterior, quedan preservadas y son supersedidas únicamente por esta publicación para los deltas cerrados. Las cantidades de nuevos permisos/grants efectivos del candidato describían antes de publicación, no su materialización. No se cambia la semántica aprobada.
+ 
+-La implementación consume OpenAPI02, matriz03, Permission05 y los assets canónicos derivados. Requisito superior o dependencia no resuelta mantiene DENY; CT04 no permite aplicar políticas sin binding legal ni omitir FK obligatoria. History no genera elegibilidad nueva.
++La implementación consume OpenAPI02, matriz03, Permission05 y los assets canónicos derivados. Requisito superior o dependencia no resuelta mantiene DENY; CT04 no permite omitir binding técnico/FK; para acreditar una obligación jurídica se requiere su respaldo aplicable, sin universalizarlo a configuración ordinaria. History no genera elegibilidad nueva.
+ 
+ 
+ ## INITIAL_SOURCE v1.11 — delta candidato
+@@ -18,3 +20,14 @@
+ La vista de upload puede seleccionar el draft sólo para incorporar su fuente, separada inequívocamente de primarias ordinarias. La selección debe verificarse en backend, con permisos/capabilities propios de la operación; no se transforma una lectura en derecho de comando. Los selectores de evidencia ordinaria excluyen versiones ligadas a aplicabilidad no publicada. El selector de bind permite únicamente EvidenceVersion de la misma cadena draft aprobada independientemente/vigente/scan-PASS, accesible al custodio o revisor según ObjectPolicy existente acotado. History sigue mostrando su estado original sin crear elegibilidad. La consulta fuente pendiente no expone documentos de otro actor por mera pertenencia al tenant. No se añade Permission/RolePermission ni propósito persistido.
+ 
+ 
++
++
++## Selección operativa y acreditación — candidata PO
++
++El binding jurídico se requiere cuando la operación pretende acreditar fundamento
++externo; el binding técnico de policy/contexto/FK siempre se valida. Una primaria
++operativa publicada puede carecer de source sin ser presentada como acreditada.
++No se selecciona una draft INITIAL_SOURCE como primaria ordinaria; no se amplía
++lectura documental/submit tenant-only ni se elude permiso padre/ObjectPolicy.
++Una lectura de EC no crea configuración ni binding ausente. DELTA.md no modifica
++scopes publicados, cursores ni proyecciones y conserva toda historia.
+--- AGENTS.md
++++ docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/publication-proposals/AGENTS.md
+@@ -1,11 +1,11 @@
+ # TCDX GRC — Codex Project Constitution
+ 
+-This repository is governed for 100% of the TCDX GRC product lifecycle by the immutable master baseline `TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15` under `docs/rector/baseline/`, with `46_REGENTE_MAESTRO_DEL_DESARROLLO.md` as the mandatory entry point and `docs/governance/CODEX_RECTOR_ENFORCEMENT.md` as enforcement contract.
++This repository is governed for 100% of the TCDX GRC product lifecycle by the immutable master baseline `TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16` under `docs/rector/baseline/`, with `46_REGENTE_MAESTRO_DEL_DESARROLLO.md` as the mandatory entry point and `docs/governance/CODEX_RECTOR_ENFORCEMENT.md` as enforcement contract.
+ 
+ ## Current gate
+ 
+ `PROJECT_MODE=RECTOR_GOVERNED`
+-`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15`
++`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16`
+ `CODEX_VARIATION_BUDGET=ZERO`
+ 
+ Codex MUST NOT treat implementation code, tests, framework conventions, historical documents, mocks or its own reasoning as a source of product authority.
+@@ -46,7 +46,7 @@
+ 6. Run the rector governance/integrity checks when executable tooling is available.
+ 7. Determine whether the requested work is explicitly authorized by the current gate.
+ 
+-If any requested action conflicts with the active rector baseline or requires a material decision not closed by it, Codex MUST stop that part of the work and report `RECTOR_GATE=BLOCKED`. It MUST NOT solve the conflict by inventing compatibility layers, temporary schemas, shadow models, hardcoded exceptions, legacy structures, TODO debt, fallbacks, alternate semantics or inferred product decisions.
++If any requested action conflicts with the active rector baseline or requires a material decision not closed by it, Codex MUST prepare the formal reconciliation of a conflicting prior internal directive under an express PO instruction, continue authorized independent work, and stop only an operation excluded from scope, subject to a concrete applicable external restriction, or blocked by an unresolvable technical/security impediment. It MUST NOT solve the conflict by inventing compatibility layers, temporary schemas, shadow models, hardcoded exceptions, legacy structures, TODO debt, fallbacks, alternate semantics or inferred product decisions.
+ 
+ ## Permanent architectural authority chain
+ 
+@@ -92,3 +92,7 @@
+ - traceability evidence for the implemented slice.
+ 
+ A task is not complete if mandatory checks fail or implementation diverges from the rector hierarchy.
++
++## Express PO authority — DR-GRC-20261016-003
++
++The express PO instruction is sufficient authorization for activities within its scope, including necessary analysis, design, contracts, implementation, tests, fixes and validation. No second internal signature, committee, independent human reviewer, role declaration or administrative ratification is required. Preserve technical checks, hashes and traceability without attributing unmade signatures. Explicit exclusions prevail. Preserve operational product SoD, canonical architecture, IAM/RBAC, tenant isolation, audit and security. This file is only a proposed successor of AGENTS.md; current activation is expressly excluded.
+--- docs/governance/CODEX_RECTOR_ENFORCEMENT.md
++++ docs/governance/amendments/PO_COMMERCIAL_SIMPLIFICATION_20261016/publication-proposals/CODEX_RECTOR_ENFORCEMENT.md
+@@ -1,69 +1,18 @@
+-# TCDX GRC — Rector Enforcement Contract
++# Enforcement contract — propuesta sucesora v1.12
+ 
+-## Purpose
+-
+-This contract converts the rector documentation into an operational development gate. It applies to Codex and to any contributor working in this repository.
+-
+-## Current governed state
+-
+-The authoritative rector baseline is `TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15`; `docs/rector/BASELINE_STATUS=ACTIVE`. Its exact approved 51-document manifest SHA-256 is `4599f6e522ed91952ab01296a4c0b9cbe4df8ad4c1a612afd7fd0414215f824b`, included in the final review manifest `f4db8b38ac4fb18abb0978f9654a83def7b4ee024bafff560a8dbf6e9b7f9247`. The actual human decision, declared PO/Architecture/Data Model/Security/Privacy functions and conditional QA Release authority are recorded in `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/COMPETENT_AUTHORITY_FINAL_APPROVAL_20261015.json`. Rector49 permits the declared editorial accumulation; it does not replace operational SoD, legal source or actual QA acceptance.
+-
+-The earlier A01–A13 approval and four/six artifact approvals remain valid for their exact bytes. v1.10 manifest `b9b6bf6930931af5eb32ca1b4027212ad3a82f247fef677b919af24d30ac9060` is preserved under history, alongside prior baselines. `scripts/verify-v111-governance.py` verifies active/candidate/root publication, actual decision, protected v1.10/v1.9, executable snapshots, R2 and contract27. Publication does not close STEP_6A3 or start STEP_6A4. A runtime registry scope mismatch found during new-flow testing remains a technical promotion blocker; no authority or QA PASS is inferred to bypass it.
+-
+-## Activation conditions
+-
+-The rector baseline may become `ACTIVE` only when all of the following are true:
+-
+-1. The human-approved rector documents are present under `docs/rector/baseline/`.
+-2. A manifest of approved files and SHA-256 hashes exists at `docs/rector/RECTOR_MANIFEST.sha256`.
+-3. `./scripts/verify-rector-governance.sh` validates every manifest entry.
+-4. The baseline version is recorded in `docs/rector/BASELINE_ID`.
+-5. Before integration into `main`, the activation change passes the mandatory GitHub CI checks and human review.
+-
+-Changing `BASELINE_STATUS` alone does not authorize development if the manifest or integrity checks fail.
+-
+-## Authority order
+-
+-When active, conflicts are resolved in this order:
+-
+-1. approved rector baseline and its explicit source-precedence policy;
+-2. canonical/domain/logical contracts contained in that baseline;
+-3. frozen physical PostgreSQL model after its formal approval gate;
+-4. backend contracts and implementation;
+-5. frontend behavior and presentation;
+-6. tests and fixtures, which must verify the contracts rather than redefine them.
+-
+-## Blocking conditions
+-
+-Work MUST stop with `RECTOR_GATE=BLOCKED` when it would require any of the following without explicit rector authority:
+-
+-- adding or redefining a canonical entity, state, relationship or semantic;
+-- adding database structures merely to satisfy a backend/frontend implementation shortcut;
+-- creating parallel or shadow data models;
+-- introducing compatibility/legacy structures not required by the rector baseline;
+-- hardcoded tenant IDs, user IDs, dates, customer exceptions or product-specific bypasses;
+-- weakening multi-tenant, RBAC, audit, traceability, evidence, temporal or lineage contracts;
+-- bypassing a pending architectural gate;
+-- replacing an unresolved rector decision with an implementation assumption;
+-- reducing a required commercial/product capability to a demo, mock, MVP stub or TODO debt.
+-
+-## Database freeze principle
+-
+-The physical PostgreSQL model becomes authoritative only after its formal review gate. Once frozen, backend changes must conform to it. A backend or frontend requirement that appears to demand a schema change is treated as an architectural change request and must be reconciled against the rector baseline before any DDL is modified.
+-
+-## CI enforcement model
+-
+-GitHub Actions is the executable enforcement layer. The workflow must fail on:
+-
+-- missing governance files;
+-- unauthorized implementation while baseline is pending;
+-- active baseline without ID/manifest;
+-- hash mismatch in rector files;
+-- unauthorized direct changes to frozen database contracts once the physical-model freeze gate exists;
+-- future contract tests or architecture checks added by approved development phases.
+-
+-The `main` branch must then be protected by a GitHub Ruleset/branch protection rule that requires the governance check to pass before merge and disallows bypass for normal contributors.
+-
+-## Required completion report
+-
+-Every development task must report gate state, baseline state, changed files, validation performed, unresolved conflicts and affected architectural layers.
++`STATUS=PROPOSED_NOT_EFFECTIVE`; predecesora activa v1.11 intacta.
++DR001/002/003 son la fuente; la instrucción expresa PO basta para actividades
++incluidas y no requiere segundo firmante, comité ni ratificación interna.
++Las contradicciones internas se actualizan formalmente, sin veto permanente.
++La autorización integral no amplía alcance ni revoca exclusiones expresas.
++Se conservan manifests/bytes/versiones, trazabilidad, verificación técnica,
++modelo canónico/físico, contratos, RBAC, tenant isolation, auditoría, privacidad,
++seguridad e historia. SoD de producto se aplica por objeto y policy efectiva.
++CI/main y controles de integridad no se eluden; una restricción externa exige
++fuente y aplicabilidad concreta. Sólo se detiene la operación afectada por causa
++excepcional demostrada o excluida; se continúa el trabajo independiente.
++Una futura activación incluida en una instrucción debe comprobar concordancia de
++baseline/ID/status/manifests/registro de fuente/alcance y fecha efectiva real,
++sin inventar firma sobre hashes ni pedir otra aprobación conceptual.
++En la tarea actual activación, Git publicación, DB, código y deploy están excluidos;
++los punteros activos no cambian. READY_FOR_PO_REVIEW es entrega revisable.
+--- /dev/null
++++ docs/executable-contracts/candidates/PO_COMMERCIAL_SIMPLIFICATION_v1.12/DELTA.md
+@@ -0,0 +1,138 @@
++# Contrato derivado mínimo — DR-GRC-20261016-001/002/003
++
++`STATUS=DRAFT_NOT_EFFECTIVE`; `RUNTIME_IMPLEMENTED=NO`.
++Sucesora candidata v1.12, predecesora activa v1.11. Este texto sólo modifica las
++copias candidatas del contrato; no publica rutas, policies, datos ni permisos.
++
++## C1. Autoridad interna de desarrollo
++
++La instrucción expresa PO basta para las actividades incluidas: análisis, diseño,
++contratos, implementación backend/frontend necesaria, pruebas, correcciones y
++validación. No se requiere segunda firma, comité, revisor independiente interno,
++ratificación de bytes derivados ni declaración administrativa adicional de roles.
++Se conserva la instrucción fuente, su alcance y los hashes producidos, sin afirmar
++que el PO firmó bytes futuros. Una contradicción interna se actualiza formalmente;
++no constituye veto permanente. Se detiene sólo la operación excluida, con riesgo
++técnico/de seguridad no resoluble en alcance o restricción externa concretamente
++demostrada. La presente instrucción es sólo documental y excluye implementación,
++activación y publicación Git. No se generaliza la regla a SoD del producto.
++
++## C2. Incorporación y autoridad de los administradores
++
++Hasta completar Fase10, Platform Admin realiza tenantInitialOnboardingCreate
++(contrato25): identidad canónica existente o MI previamente provisionada por su
++operación autorizada, tenantCreate, bootstrap interno de roles/primer TENANT_ADMIN,
++recibo durable y refetch. Actor Platform no recibe Membership ni roles tenant.
++El alta inicial sin Subscription conserva la excepción existente acotada; no
++habilita la operación tenant general antes de CORE_PLATFORM efectivo.
++Habilitación usa subscriptionCreate sobre PlanVersion publicada y los comandos
++subscriptionRegulatoryPackActivate existentes sobre versiones elegibles. Ningún
++plan concede RBAC, publica contenido ni elude cuotas/entitlements/intervalos.
++Posteriores usuarios: Tenant Admin usa membershipCreate y membershipRoleAssign
++en su tenant; asistencia Platform usa tenantUserOnboardingCreate (contrato26),
++sus lecturas/revocación expresamente permitidas. platform.role.assign no se
++amplía para asignar por ruta Platform genérica. MI y credenciales siguen siendo
++Platform-only; Tenant Admin incorpora identidades existentes y compone roles
++permitidos, sin crear cuentas OIDC ni recibir secreto ajeno. No se crean usuarios
++ficticios, cuentas compartidas, grants, endpoints de solicitud ni autoservicio.
++
++Autonomía significa no esperar una ratificación Platform por cada acción tenant
++permitida. Requiere Membership activa, entitlement, permiso/scope efectivo,
++ObjectPolicy y SoD; sin ellos DENY. No se agrega permiso de lectura EC a Tenant
++Admin: effectiveConfigurationGet conserva su grant/scope real y sólo lee un
++binding persistido existente. No se convierte esa lectura en cálculo/escritura.
++La autoatención de clientes queda fuera de Fases1–10 cuando representa
++autoalta/contratación autónoma; no se habilitan por la llegada del calendario.
++
++## C3. Configuración ordinaria y acreditación
++
++Una preferencia SaaS usa configurationOverrideCreate sobre una definición
++publicada, de tipo y scope permitidos, con CORE_PLATFORM y su permiso existente;
++no necesita universalmente documento jurídico auténtico ni revisión independiente.
++No modifica definición global, catálogo, resultado oficial ni políticas sensibles.
++No se ejecutan los workflows de Evidence/RetentionPolicy sólo para guardar esa
++preferencia. Las revisiones/SoD que un comando sensible sí tiene se conservan.
++
++Una aplicabilidad operativa ordinaria puede estar publicada sin source_evidence_
++version_id/legal_basis_id/source_clause_ref cuando no invoca acreditación externa,
++su policy es ordinaria tenant_policy/product_baseline no obligatoria y conserva
++los predicados técnicos existentes. Esta distinción se deriva de policy_kind,
++is_mandatory y vínculos reales: no hay enum, flag caller-controlled ni autoridad
++paralela. No se rebaja una policy obligatoria/contractual/hold llamándola ordinaria.
++Si hay fuente vinculada, se verifica siempre; si se pretende acreditación formal,
++se requieren fuente auténtica, vigencia, revisión y SoD correspondientes. Una
++fuente nula no acredita obligación jurídica ni cumplimiento, pero tampoco es
++por sí sola error técnico para una configuración/carga ordinaria elegible.
++
++uploadIntentCreate/uploadContentPut/uploadFinalize/evidenceCreate conservan
++autorización, primaria operativa inequívoca publicada (o la excepción INITIAL_SOURCE
++formal exacta), FK/policy/tenant/contexto, MIME/tamaño/hash/scan, idempotencia,
++auditoría y transacciones. No admiten NULL en vínculos nuevos para evitar un guard.
++Una primaria publicada ordinaria sin fuente no se filtra sólo por carecer de
++acreditación jurídica. Los límites de consumo de la cadena draft INITIAL_SOURCE
++siguen intactos; no se usa para evidencia de negocio hasta su publicación válida.
++La aclaración no cambia scopes tenant-only de submit ordinario ni grants ajenos.
++
++retentionApplicabilityBindInitialSource continúa siendo el acto exclusivo de bind
++de fuente formal en draft, con fuente elegible independiente, sin backfill,
++alteración de autor ni edición de publicaciones. Si una operación invoca un
++fundamento externo obligatorio todavía no acreditado, se limita la acreditación
++o purge correspondiente, no alta de usuarios/configuración independiente.
++Retener por precaución no es acreditar legalmente esa obligación.
++
++## C4. Retención propuesta sin reducción
++
++Propuesta comercial12meses por defecto, alternativas18/24/36/48/60. No se declara
++implementada ni persistida. La propuesta describe servicio operativo; no reemplaza
++las categorías de rector23§6 ni las condiciones de disponibilidad/historia que
++les correspondan. No añade límite0, duración en segundos, seed o fecha implícita.
++Por objeto se conservan todas las obligaciones concurrentes, su categoría, evento
++inicial y versión; no se hace max numérico entre unidades/anclas incomparables.
++La duración efectiva no puede quedar por debajo del piso de categoría ni de una
++obligación superior real. Hold activo sin release autorizado siempre DENY purge;
++conflicto, ancla o obligación necesaria no resuelta también DENY purge. Cambiar
++plan/meses, expiración, archive o release no ejecuta borrado. Publicaciones e
++historia son inmutables y no se acorta ningún contrato anterior.
++
++El catálogo temporal debe cerrar, antes de implementar esa selección, código y
++versión de dato, unidad/calendario, ancla, zona/regla de fin de mes y traducción
++a retention_seconds cuando corresponda. SEED011 no contiene hoy esa definición
++y los schemas de configuración genéricos no cierran el input de meses. Se registra
++NO_BINDING_DEMONSTRATED para esa selección, no para todo el producto. La solución
++compatible es un contrato/manifiesto de datos tipados sobre las entidades ya
++existentes, dentro del alcance de la futura instrucción, sin segunda aprobación
++conceptual ni tablas nuevas. No se escoge mes=30días ni se publica nada ahora.
++
++## C5. Errores, efectos y contratos sin cambio
++
++Transporte, request/response, códigos400/401/403/404/409/422/503 aplicables por cada
++operación, If-Match/expected_version, idempotencia y auditorías/eventos existentes
++se conservan. No se añade código de error, permiso, grant, evento o arista.
++Los comentarios y x-tcdx-po-reconciliation son propuestas documentales; no son
++feature flag ni policy runtime. OPERATION_BINDINGS.json deriva IDs/paths/permisos/
++scopes/capabilities de la OpenAPI activa y verifica que el transporte no cambió.
++Políticas/aristas publicadas que una implementación futura necesite evolucionar
++se versionan y verifican sobre el registry existente, sin reescribir historia ni
++inventar una versión/policy_ref en este paquete.
++
++## C6. UX contractual y criterios futuros
++
++Hasta Fase10, Empresa→alta asistida Platform, administrador inicial y habilitación
++son actos distintos con recibos reales y resultados parciales explícitos. Tenant
++Admin administra Usuarios/Roles y parámetros propios con permisos efectivos.
++La presentación separa configuración operativa de acreditación formal y no usa
++etiquetas que certifiquen cumplimiento por guardar una opción o cargar un archivo.
++No hay autoalta ni checkout de clientes, UUID/JSON manual ni entrega de credenciales
++ajenas. Opciones en meses se presentan sólo cuando el contrato de datos y backend
++real existan; no mostrar una opción como implementada por este documento.
++Se preservan tokens, layouts, componentes, densidad, navegación y branding
++docs/ui v1.0; no hay cambio visual ni HUMAN_UI_REVIEW=PASS. Aceptación operacional
++real es evidencia funcional, no segunda aprobación interna para desarrollar.
++
++## C7. Estado
++
++Las pruebas futuras se especifican en TEST_SCENARIOS.json; todas NOT_RUN en esta
++tarea. Integridad/coherencia se verifican estáticamente sin sustituir runtime.
++STEP_6A3=PARTIAL_BLOCKED; H01–H10 suspendidas y reclasificadas prospectivamente;
++STEP_6A4=NOT_STARTED. Activación, DB, backend/frontend, QA/PROD, commit/push/merge
++y despliegue no están autorizados en esta ejecución.
