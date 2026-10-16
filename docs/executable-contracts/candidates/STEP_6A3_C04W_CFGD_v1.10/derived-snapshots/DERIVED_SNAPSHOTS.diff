@@ -1,0 +1,436 @@
+diff --git a/docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml b/docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml
+index 05613c7..c606070 100644
+--- a/docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml
++++ b/docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml
+@@ -3,7 +3,7 @@ info:
+   title: TCDX GRC API Base Contract
+   version: 1.0.0-contract-candidate
+   description: >-
+-    Contrato schema-first aprobado de Fase 2 con las enmiendas PRE-F5, PRE-F5B, PRE-F5C, los cierres compatibles PRE-F5E y las decisiones Subscription, lecturas administrativas y Fase 5+. Publica 165 operaciones que cierran
++    Contrato schema-first aprobado de Fase 2 con las enmiendas PRE-F5, PRE-F5B, PRE-F5C, los cierres compatibles PRE-F5E y las decisiones Subscription, lecturas administrativas y Fase 5+. Publica 174 operaciones que cierran
+     trazabilidad rector-capability-permission-audit-idempotency-modelo físico.
+     H-003..H-005 autorizan las operaciones mínimas de Configuration,
+     privacy retention/erasure y lifecycle-registry sobre entidades existentes.
+@@ -2266,7 +2266,7 @@ paths:
+       security: [{ bearerAuth: [] }]
+       x-tcdx-capability: "EVIDENCE_DOCUMENTS"
+       x-tcdx-permission: "`evidence.evidence.submit`"
+-      x-tcdx-scope: "owned/assigned"
++      x-tcdx-scope: "owned/assigned/tenant"
+       x-tcdx-audit-event: "`audit.evidence.evidence.submit.v1`"
+       x-tcdx-domain-events: "`evidence.evidence.submitted.v1`"
+       x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+@@ -3718,6 +3718,235 @@ paths:
+         '403': { $ref: '#/components/responses/AuthorizationError' }
+         '404': { $ref: '#/components/responses/NotFoundError' }
+         '409': { $ref: '#/components/responses/ConflictError' }
++  "/retention-policies/{id}:submit-for-review":
++    post:
++      operationId: retentionPolicySubmitForReview
++      tags: ["privacy"]
++      summary: "PRIVACY: retentionPolicySubmitForReview"
++      security: [{ bearerAuth: [] }]
++      x-tcdx-capability: "PRIVACY"
++      x-tcdx-permission: "`privacy.retention_policy.update`"
++      x-tcdx-scope: "tenant"
++      x-tcdx-audit-event: "`audit.privacy.retention_policy.submit_for_review.v1`"
++      x-tcdx-domain-events: "NONE"
++      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
++      x-tcdx-transaction-boundary: "TX"
++      x-tcdx-physical-entities: "`privacy.retention_policies`, audit/idempotency"
++      x-tcdx-rector-source: "C-04W; successor v1.10; executable DELTA"
++      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
++      requestBody:
++        required: true
++        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionPolicyTransitionRequest' } } }
++      responses:
++        '202': { $ref: '#/components/responses/OperationSuccess' }
++        '400': { $ref: '#/components/responses/ValidationError' }
++        '401': { $ref: '#/components/responses/AuthenticationError' }
++        '403': { $ref: '#/components/responses/AuthorizationError' }
++        '404': { $ref: '#/components/responses/NotFoundError' }
++        '409': { $ref: '#/components/responses/ConflictError' }
++        '422': { $ref: '#/components/responses/ValidationError' }
++  "/retention-policy-applicabilities":
++    get:
++      operationId: retentionApplicabilityList
++      tags: ["privacy"]
++      summary: "PRIVACY: retentionApplicabilityList"
++      security: [{ bearerAuth: [] }]
++      x-tcdx-capability: "PRIVACY"
++      x-tcdx-permission: "`privacy.retention_policy.read`"
++      x-tcdx-scope: "tenant"
++      x-tcdx-audit-event: "NONE"
++      x-tcdx-domain-events: "NONE"
++      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
++      x-tcdx-transaction-boundary: "RO"
++      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`"
++      x-tcdx-rector-source: "C-04W; successor v1.10"
++      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/PageSize' }, { $ref: '#/components/parameters/Cursor' }]
++      responses:
++        '200': { $ref: '#/components/responses/OperationSuccess' }
++        '401': { $ref: '#/components/responses/AuthenticationError' }
++        '403': { $ref: '#/components/responses/AuthorizationError' }
++    post:
++      operationId: retentionApplicabilityCreate
++      tags: ["privacy"]
++      summary: "PRIVACY: retentionApplicabilityCreate"
++      security: [{ bearerAuth: [] }]
++      x-tcdx-capability: "PRIVACY"
++      x-tcdx-permission: "`privacy.retention_policy.create`"
++      x-tcdx-scope: "tenant"
++      x-tcdx-audit-event: "`audit.privacy.retention_policy_applicability.create.v1`"
++      x-tcdx-domain-events: "NONE"
++      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
++      x-tcdx-transaction-boundary: "TX"
++      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`, audit/idempotency"
++      x-tcdx-rector-source: "C-04W; successor v1.10"
++      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
++      requestBody:
++        required: true
++        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionApplicabilityCreateRequest' } } }
++      responses:
++        '202': { $ref: '#/components/responses/OperationSuccess' }
++        '400': { $ref: '#/components/responses/ValidationError' }
++        '401': { $ref: '#/components/responses/AuthenticationError' }
++        '403': { $ref: '#/components/responses/AuthorizationError' }
++        '404': { $ref: '#/components/responses/NotFoundError' }
++        '409': { $ref: '#/components/responses/ConflictError' }
++        '422': { $ref: '#/components/responses/ValidationError' }
++  "/retention-policy-applicabilities/{id}":
++    get:
++      operationId: retentionApplicabilityGet
++      tags: ["privacy"]
++      summary: "PRIVACY: retentionApplicabilityGet"
++      security: [{ bearerAuth: [] }]
++      x-tcdx-capability: "PRIVACY"
++      x-tcdx-permission: "`privacy.retention_policy.read`"
++      x-tcdx-scope: "tenant"
++      x-tcdx-audit-event: "NONE"
++      x-tcdx-domain-events: "NONE"
++      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
++      x-tcdx-transaction-boundary: "RO"
++      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`"
++      x-tcdx-rector-source: "C-04W; successor v1.10"
++      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
++      responses:
++        '200': { $ref: '#/components/responses/OperationSuccess' }
++        '401': { $ref: '#/components/responses/AuthenticationError' }
++        '403': { $ref: '#/components/responses/AuthorizationError' }
++        '404': { $ref: '#/components/responses/NotFoundError' }
++  "/retention-policy-applicabilities/{id}:submit-for-review":
++    post:
++      operationId: retentionApplicabilitySubmitForReview
++      tags: ["privacy"]
++      summary: "PRIVACY: retentionApplicabilitySubmitForReview"
++      security: [{ bearerAuth: [] }]
++      x-tcdx-capability: "PRIVACY"
++      x-tcdx-permission: "`privacy.retention_policy.update`"
++      x-tcdx-scope: "tenant"
++      x-tcdx-audit-event: "`audit.privacy.retention_policy_applicability.submit_for_review.v1`"
++      x-tcdx-domain-events: "NONE"
++      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
++      x-tcdx-transaction-boundary: "TX"
++      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`, audit/idempotency"
++      x-tcdx-rector-source: "C-04W; successor v1.10; executable DELTA"
++      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
++      requestBody:
++        required: true
++        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionPolicyTransitionRequest' } } }
++      responses:
++        '202': { $ref: '#/components/responses/OperationSuccess' }
++        '400': { $ref: '#/components/responses/ValidationError' }
++        '401': { $ref: '#/components/responses/AuthenticationError' }
++        '403': { $ref: '#/components/responses/AuthorizationError' }
++        '404': { $ref: '#/components/responses/NotFoundError' }
++        '409': { $ref: '#/components/responses/ConflictError' }
++        '422': { $ref: '#/components/responses/ValidationError' }
++  "/retention-policy-applicabilities/{id}:review":
++    post:
++      operationId: retentionApplicabilityReview
++      tags: ["privacy"]
++      summary: "PRIVACY: retentionApplicabilityReview"
++      security: [{ bearerAuth: [] }]
++      x-tcdx-capability: "PRIVACY"
++      x-tcdx-permission: "`privacy.retention_policy.review`"
++      x-tcdx-scope: "tenant"
++      x-tcdx-audit-event: "`audit.privacy.retention_policy_applicability.review.v1`"
++      x-tcdx-domain-events: "NONE"
++      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
++      x-tcdx-transaction-boundary: "TX"
++      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`, audit/idempotency"
++      x-tcdx-rector-source: "C-04W; successor v1.10; executable DELTA"
++      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
++      requestBody:
++        required: true
++        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionPolicyTransitionRequest' } } }
++      responses:
++        '202': { $ref: '#/components/responses/OperationSuccess' }
++        '400': { $ref: '#/components/responses/ValidationError' }
++        '401': { $ref: '#/components/responses/AuthenticationError' }
++        '403': { $ref: '#/components/responses/AuthorizationError' }
++        '404': { $ref: '#/components/responses/NotFoundError' }
++        '409': { $ref: '#/components/responses/ConflictError' }
++        '422': { $ref: '#/components/responses/ValidationError' }
++  "/retention-policy-applicabilities/{id}:approve":
++    post:
++      operationId: retentionApplicabilityApprove
++      tags: ["privacy"]
++      summary: "PRIVACY: retentionApplicabilityApprove"
++      security: [{ bearerAuth: [] }]
++      x-tcdx-capability: "PRIVACY"
++      x-tcdx-permission: "`privacy.retention_policy.approve`"
++      x-tcdx-scope: "tenant"
++      x-tcdx-audit-event: "`audit.privacy.retention_policy_applicability.approve.v1`"
++      x-tcdx-domain-events: "NONE"
++      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
++      x-tcdx-transaction-boundary: "TX"
++      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`, audit/idempotency"
++      x-tcdx-rector-source: "C-04W; successor v1.10; executable DELTA"
++      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
++      requestBody:
++        required: true
++        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionPolicyTransitionRequest' } } }
++      responses:
++        '202': { $ref: '#/components/responses/OperationSuccess' }
++        '400': { $ref: '#/components/responses/ValidationError' }
++        '401': { $ref: '#/components/responses/AuthenticationError' }
++        '403': { $ref: '#/components/responses/AuthorizationError' }
++        '404': { $ref: '#/components/responses/NotFoundError' }
++        '409': { $ref: '#/components/responses/ConflictError' }
++        '422': { $ref: '#/components/responses/ValidationError' }
++  "/retention-policy-applicabilities/{id}:publish":
++    post:
++      operationId: retentionApplicabilityPublish
++      tags: ["privacy"]
++      summary: "PRIVACY: retentionApplicabilityPublish"
++      security: [{ bearerAuth: [] }]
++      x-tcdx-capability: "PRIVACY"
++      x-tcdx-permission: "`privacy.retention_policy.publish`"
++      x-tcdx-scope: "tenant"
++      x-tcdx-audit-event: "`audit.privacy.retention_policy_applicability.publish.v1`"
++      x-tcdx-domain-events: "NONE"
++      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
++      x-tcdx-transaction-boundary: "TX"
++      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`, audit/idempotency"
++      x-tcdx-rector-source: "C-04W; successor v1.10; executable DELTA"
++      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
++      requestBody:
++        required: true
++        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionPolicyTransitionRequest' } } }
++      responses:
++        '202': { $ref: '#/components/responses/OperationSuccess' }
++        '400': { $ref: '#/components/responses/ValidationError' }
++        '401': { $ref: '#/components/responses/AuthenticationError' }
++        '403': { $ref: '#/components/responses/AuthorizationError' }
++        '404': { $ref: '#/components/responses/NotFoundError' }
++        '409': { $ref: '#/components/responses/ConflictError' }
++        '422': { $ref: '#/components/responses/ValidationError' }
++  "/retention-policy-applicabilities/{id}:release-hold":
++    post:
++      operationId: legalHoldRelease
++      tags: ["privacy"]
++      summary: "PRIVACY: legalHoldRelease"
++      security: [{ bearerAuth: [] }]
++      x-tcdx-capability: "PRIVACY"
++      x-tcdx-permission: "`privacy.retention_policy.legal_hold.release`"
++      x-tcdx-scope: "tenant"
++      x-tcdx-audit-event: "`audit.privacy.retention_policy.legal_hold.release.v1`"
++      x-tcdx-domain-events: "NONE"
++      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
++      x-tcdx-transaction-boundary: "TX"
++      x-tcdx-physical-entities: "`privacy.retention_policy_hold_releases`, audit/idempotency"
++      x-tcdx-rector-source: "C-04W; successor v1.10; executable DELTA"
++      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
++      requestBody:
++        required: true
++        content: { application/json: { schema: { $ref: '#/components/schemas/LegalHoldReleaseRequest' } } }
++      responses:
++        '202': { $ref: '#/components/responses/OperationSuccess' }
++        '400': { $ref: '#/components/responses/ValidationError' }
++        '401': { $ref: '#/components/responses/AuthenticationError' }
++        '403': { $ref: '#/components/responses/AuthorizationError' }
++        '404': { $ref: '#/components/responses/NotFoundError' }
++        '409': { $ref: '#/components/responses/ConflictError' }
++        '422': { $ref: '#/components/responses/ValidationError' }
+   "/data-subject-requests":
+     post:
+       operationId: dataSubjectRequestCreate
+@@ -6699,13 +6928,16 @@ components:
+     UploadIntentCreateRequest:
+       type: object
+       additionalProperties: false
+-      required: [original_filename, declared_mime, size_bytes, classification, retention_policy_id, source_provenance]
++      required: [original_filename, declared_mime, size_bytes, classification, retention_policy_id, retention_policy_applicability_id, source_provenance]
+       properties:
+         original_filename: { type: string, minLength: 1 }
+         declared_mime: { type: string, minLength: 1, maxLength: 255 }
+         size_bytes: { type: integer, format: int64, minimum: 0 }
+         classification: { $ref: '#/components/schemas/FileClassification' }
+         retention_policy_id: { $ref: '#/components/schemas/UuidV7' }
++        retention_policy_applicability_id: { $ref: '#/components/schemas/UuidV7' }
++        scope_subject_id: { $ref: '#/components/schemas/UuidV7' }
++        processing_activity_id: { $ref: '#/components/schemas/UuidV7' }
+         source_provenance: { type: string, minLength: 1 }
+         effective_from: { $ref: '#/components/schemas/UtcTimestamp' }
+         effective_to: { $ref: '#/components/schemas/UtcTimestamp' }
+@@ -6786,7 +7018,7 @@ components:
+         provenance_ref: { type: string, minLength: 1 }
+         links:
+           type: array
+-          minItems: 1
++          minItems: 0
+           items: { $ref: '#/components/schemas/EvidenceLinkCreateInput' }
+       description: FileObject must be finalized, usable and scan-PASS; all objects and policies must be tenant-compatible. Evidence, first draft version and links are created atomically.
+     EvidenceSubmitRequest:
+@@ -6922,7 +7154,7 @@ components:
+     RetentionPolicyCreateRequest:
+       type: object
+       additionalProperties: false
+-      required: [policy_code, version_number, policy_kind, retention_seconds, trigger_event_code, precedence_rank, is_mandatory]
++      required: [policy_code, version_number, policy_kind, trigger_event_code, precedence_rank, is_mandatory]
+       properties:
+         policy_code: { type: string, minLength: 1, maxLength: 128 }
+         version_number: { type: integer, format: int64, minimum: 1 }
+@@ -6931,7 +7163,7 @@ components:
+         trigger_event_code: { type: string, enum: [expiry_or_closure] }
+         precedence_rank: { type: integer, enum: [500, 400, 300, 200, 100] }
+         is_mandatory: { type: boolean }
+-      description: Precedence must match policy_kind exactly (500/400/300/200/100). effective_from, effective_to, lifecycle, row_version, regulatory source and disposition are not caller-controlled.
++      description: For legal_hold retention_seconds is absent and persisted NULL; for every other kind it is a required nonnegative integer. Precedence must match policy_kind exactly (500/400/300/200/100). effective_from, effective_to, lifecycle, row_version, regulatory source and disposition are not caller-controlled.
+     RetentionPolicyTransitionRequest:
+       type: object
+       additionalProperties: false
+@@ -6940,11 +7172,34 @@ components:
+     RetentionPolicyUpdateRequest:
+       type: object
+       additionalProperties: false
+-      required: [retention_seconds, is_mandatory]
++      required: [is_mandatory]
+       properties:
+         retention_seconds: { type: integer, format: int64, minimum: 0 }
+         is_mandatory: { type: boolean }
+-      description: Draft-only update; strong If-Match supplies row_version. Policy identity, kind, trigger, precedence and lifecycle remain server-controlled.
++      description: Draft-only update; legal_hold omits retention_seconds and all other kinds require it. Strong If-Match supplies row_version. Policy identity, kind, trigger, precedence and lifecycle remain server-controlled.
++    RetentionApplicabilityCreateRequest:
++      type: object
++      additionalProperties: false
++      required: [retention_policy_id, version_number, classification]
++      properties:
++        retention_policy_id: { $ref: '#/components/schemas/UuidV7' }
++        version_number: { type: integer, format: int64, minimum: 1 }
++        classification: { $ref: '#/components/schemas/FileClassification' }
++        scope_subject_id: { $ref: '#/components/schemas/UuidV7' }
++        processing_activity_id: { $ref: '#/components/schemas/UuidV7' }
++        legal_basis_id: { $ref: '#/components/schemas/UuidV7' }
++        source_evidence_version_id: { $ref: '#/components/schemas/UuidV7' }
++        source_clause_ref: { type: string, minLength: 1 }
++        effective_from: { $ref: '#/components/schemas/UtcTimestamp' }
++        effective_to: { $ref: '#/components/schemas/UtcTimestamp' }
++        supersedes_applicability_id: { $ref: '#/components/schemas/UuidV7' }
++    LegalHoldReleaseRequest:
++      type: object
++      additionalProperties: false
++      required: [reason]
++      properties:
++        reason: { type: string, minLength: 1 }
++        release_source_evidence_version_id: { $ref: '#/components/schemas/UuidV7' }
+     DomainCommandRequest:
+       type: object
+       description: Operation-specific schema placeholder constrained by the named request contract in artifact 03; implementations must refine it without adding fields or semantics not traced to that contract.
+diff --git a/docs/executable-contracts/03_API_RESOURCE_OPERATION_MATRIX.md b/docs/executable-contracts/03_API_RESOURCE_OPERATION_MATRIX.md
+index 8e4bff6..a50c701 100644
+--- a/docs/executable-contracts/03_API_RESOURCE_OPERATION_MATRIX.md
++++ b/docs/executable-contracts/03_API_RESOURCE_OPERATION_MATRIX.md
+@@ -18,6 +18,15 @@ The ten Phase 5 collection GETs use cursor pagination only: `page[size]` integer
+ 
+ | operation_id | method/path | domain; capability | actor class | permission; scope | tenant semantics | request → response | errors; idem | audit; emitted event | TX; physical entities | rector source |
+ |---|---|---|---|---|---|---|---|---|---|---|
++| retentionPolicySubmitForReview | POST `/retention-policies/{id}:submit-for-review` | privacy; PRIVACY | Tenant Admin author | `privacy.retention_policy.update`; tenant | own draft→under_review; If-Match, separate approval | RetentionPolicyTransitionRequest → RetentionPolicy | COMMON; KEY | `audit.privacy.retention_policy.submit_for_review.v1`; NONE | TX; `privacy.retention_policies`, audit/idempotency | v1.10 C-04W; 21,22,23 |
++| retentionApplicabilityList | GET `/retention-policy-applicabilities` | privacy; PRIVACY | authorized tenant reader | `privacy.retention_policy.read`; tenant | own tenant rows, paginated | filters/cursor → RetentionApplicabilityPage | COMMON; NAT | NONE; NONE | RO; `privacy.retention_policy_applicabilities` | v1.10 C-04W; 23,24 |
++| retentionApplicabilityGet | GET `/retention-policy-applicabilities/{id}` | privacy; PRIVACY | authorized tenant reader | `privacy.retention_policy.read`; tenant | foreign ID concealed | id → RetentionApplicability | COMMON; NAT | NONE; NONE | RO; `privacy.retention_policy_applicabilities` | v1.10 C-04W; 23,24 |
++| retentionApplicabilityCreate | POST `/retention-policy-applicabilities` | privacy; PRIVACY | Tenant Admin/Privacy Manager | `privacy.retention_policy.create`; tenant | own published policy; draft v1 or successor; typed source/context | RetentionApplicabilityCreateRequest → RetentionApplicability | COMMON; KEY | `audit.privacy.retention_policy_applicability.create.v1`; NONE | TX; `privacy.retention_policy_applicabilities`, audit/idempotency | v1.10 C-04W; 23,24,30 |
++| retentionApplicabilitySubmitForReview | POST `/retention-policy-applicabilities/{id}:submit-for-review` | privacy; PRIVACY | author | `privacy.retention_policy.update`; tenant | own draft→under_review; If-Match | RetentionPolicyTransitionRequest → RetentionApplicability | COMMON; KEY | `audit.privacy.retention_policy_applicability.submit_for_review.v1`; NONE | TX; applicability, audit/idempotency | v1.10 C-04W; 21,22,23 |
++| retentionApplicabilityReview | POST `/retention-policy-applicabilities/{id}:review` | privacy; PRIVACY | Privacy Manager/Legal Reviewer | `privacy.retention_policy.review`; tenant | draft→under_review; If-Match | RetentionPolicyTransitionRequest → RetentionApplicability | COMMON; KEY | `audit.privacy.retention_policy_applicability.review.v1`; NONE | TX; applicability, audit/idempotency | v1.10 C-04W; 21,22,23 |
++| retentionApplicabilityApprove | POST `/retention-policy-applicabilities/{id}:approve` | privacy; PRIVACY | Legal Reviewer distinct from author | `privacy.retention_policy.approve`; tenant | under_review→approved; source/context revalidated | RetentionPolicyTransitionRequest → RetentionApplicability | COMMON; KEY | `audit.privacy.retention_policy_applicability.approve.v1`; NONE | TX; applicability, audit/idempotency | v1.10 C-04W; 21,22,23 |
++| retentionApplicabilityPublish | POST `/retention-policy-applicabilities/{id}:publish` | privacy; PRIVACY | Tenant Admin/Privacy Manager | `privacy.retention_policy.publish`; tenant | approved→published; immutable exact version | RetentionPolicyTransitionRequest → RetentionApplicability | COMMON; KEY | `audit.privacy.retention_policy_applicability.publish.v1`; NONE | TX; applicability, audit/idempotency | v1.10 C-04W; 21,22,23 |
++| legalHoldRelease | POST `/retention-policy-applicabilities/{id}:release-hold` | privacy; PRIVACY | Legal Reviewer distinct from author | `privacy.retention_policy.legal_hold.release`; tenant | published active hold; reason; insert-only; no purge | LegalHoldReleaseRequest → RetentionPolicyHoldRelease | COMMON; KEY | `audit.privacy.retention_policy.legal_hold.release.v1`; NONE | TX; `privacy.retention_policy_hold_releases`, audit/idempotency | v1.10 C-04W; 22,23 |
+ | tenantUserOnboardingCreate | POST `/platform/tenants/{tenant_id}/users:onboard` | platform; CORE_PLATFORM | HUMAN_INTERACTIVE Platform Admin | `platform.tenant_user.onboard`; platform | explicit eligible target tenant+canonical identity, target CORE_PLATFORM; no actor grant or bootstrap | TenantUserOnboardingRequest → TenantUserOnboardingResult; safe partial progress | 400/401/403/404/409/503; KEY | `audit.platform.tenant_user.onboard.v1`; existing Membership/role child events only | child TX+durable idem progress; IAM Membership/roles, target entitlement, audit/outbox | Human MI tenant E2E §§8–18; executable26;09,22,25,42 |
+ | userIdentityTenantAccessList | GET `/platform/user-identities/{user_identity_id}/tenant-access` | iam; CORE_PLATFORM | HUMAN_INTERACTIVE Platform Admin | `platform.membership.read`; platform | canonical target identity, no tenant header, target-bound pagination | UUIDv7+cursor → UserIdentityTenantAccessPage | 400/401/403/404/503; NAT | NONE; NONE | RO repeatable read; IAM Membership/roles, platform.tenants | Human MI tenant E2E §18; executable26;09,22,25,42 |
+ | userIdentityDiscovery | GET `/user-identities` | iam; CORE_PLATFORM | authorized HUMAN_INTERACTIVE Platform Admin or own Tenant Admin | `platform.user_identity.read`; platform or tenant | exclusive required mode; Platform global search without tenant header; tenant exact only with active Membership, effective TENANT_ADMIN, entitlement and validated header; no tenant pagination/prefix/fuzzy/autocomplete; hidden/ambiguous empty200 | mode+criterion+value+Platform cursor → UserIdentityDiscoveryPage | 400/401/403/429/503 per06/25; NAT | `audit.platform.user_identity.discover.v1`; NONE | RO business + audit append; `iam.user_identities`, safe existing provider metadata, canonical grants/context, `ops_audit.audit_events` | Human D1-R; executable25;09,22,25,42; CONTRACT_ONLY_RUNTIME_UNPUBLISHED |
+@@ -110,7 +119,7 @@ The ten Phase 5 collection GETs use cursor pagination only: `page[size]` integer
+ | evidenceGet | GET `/evidence/{id}` | evidence; EVIDENCE_DOCUMENTS | authorized evidence reader | `evidence.evidence.read`; tenant/object-derived/audit_engagement | detail may project authorized versions, links and reviews | id → EvidenceProjection with version/link/review metadata | COMMON; NAT | NONE; NONE | RO; `evidence.evidences`, `evidence.evidence_versions`, `evidence.evidence_links`, `evidence.evidence_reviews` | DR-PHASE5-API-READ-2026-09-17-002; 09,22,24,44 |
+ | evidenceVersionGet | GET `/evidence-versions/{id}` | evidence; EVIDENCE_DOCUMENTS | authorized evidence reader | `evidence.evidence.read`; tenant/object-derived/audit_engagement | version belongs to an authorized Evidence aggregate; binary/signed URL excluded | id → EvidenceVersionProjection with authorized links/reviews | COMMON; NAT | NONE; NONE | RO; `evidence.evidence_versions`, `evidence.evidence_links`, `evidence.evidence_reviews` | DR-PHASE5-API-READ-2026-09-17-002; 09,22,24,44 |
+ | evidenceCreate | POST `/evidence` | evidence; EVIDENCE_DOCUMENTS | Evidence Owner | `evidence.evidence.create`; tenant/owned/assigned | finalized scan-PASS FileObject; same tenant; creates Evidence + first draft EvidenceVersion + requested typed links atomically | EvidenceCreateRequest → Evidence | COMMON; KEY | `audit.evidence.evidence.create.v1`; `evidence.evidence.created.v1` | TX; file object/evidence/version/typed links/audit/outbox/idempotency | DR-PRE-F5B-2026-09-21-004; 22,24,25,30,44 |
+-| evidenceSubmit | POST `/evidence-versions/{id}:submit` | evidence; EVIDENCE_DOCUMENTS | Evidence Owner | `evidence.evidence.submit`; owned/assigned | scan PASS; typed links; `draft→submitted` | EvidenceSubmitRequest → EvidenceVersion | COMMON; KEY | `audit.evidence.evidence.submit.v1`; `evidence.evidence.submitted.v1` | TX; evidence/version/links | 21,24 |
++| evidenceSubmit | POST `/evidence-versions/{id}:submit` | evidence; EVIDENCE_DOCUMENTS | Evidence Owner or Tenant Admin policy-source author | `evidence.evidence.submit`; owned/assigned/tenant | scan PASS; typed links or own C-04W source; `draft→submitted` | EvidenceSubmitRequest → EvidenceVersion | COMMON; KEY | `audit.evidence.evidence.submit.v1`; `evidence.evidence.submitted.v1` | TX; evidence/version/links | 21,24; v1.10 C-04W |
+ | evidenceReviewStart | POST `/evidence-versions/{id}:start-review` | evidence; EVIDENCE_DOCUMENTS | reviewer | `evidence.evidence.review`; assigned/tenant | reviewer eligible; `submitted→under_review` | EvidenceReviewStartRequest → EvidenceVersion | COMMON; KEY | `audit.evidence.evidence.start_review.v1`; NONE | TX; evidence/version/review | 21,22 |
+ | evidenceApprove | POST `/evidence-versions/{id}:approve` | evidence; EVIDENCE_DOCUMENTS | reviewer | `evidence.evidence.approve`; tenant | SoD; relevance/sufficiency; `under_review→approved` | EvidenceApproveRequest → EvidenceVersion | COMMON; KEY | `audit.evidence.evidence.approve.v1`; `evidence.evidence.approved.v1` | TX; version/review | 21,22,24 |
+ | evidenceReject | POST `/evidence-versions/{id}:reject` | evidence; EVIDENCE_DOCUMENTS | reviewer | `evidence.evidence.reject`; tenant | reason required; `under_review→rejected` | EvidenceRejectRequest → EvidenceVersion | COMMON; KEY | `audit.evidence.evidence.reject.v1`; `evidence.evidence.rejected.v1` | TX; version/review | 21,24 |
+@@ -180,7 +189,7 @@ The ten Phase 5 collection GETs use cursor pagination only: `page[size]` integer
+ | validationAccessCreate | POST `/platform/regulatory-pack-validation-accesses` | regulatory; CORE_PLATFORM | PLATFORM_ADMIN | `platform.regulatory_pack_validation_access.create`; platform | nonproduction, demo/test, exact provenance/version; no overlap | exact tenant/version/provenance/interval → access | COMMON; KEY | `audit.platform.regulatory_pack_validation_access.create.v1`; NONE | TX; validation access/audit/idempotency | Human Phase 5+ 2026-09-29 |
+ | validationAccessRevoke | POST `/platform/regulatory-pack-validation-accesses/{id}:revoke` | regulatory; CORE_PLATFORM | PLATFORM_ADMIN | `platform.regulatory_pack_validation_access.archive`; platform | active→revoked; If-Match; retained history | reason+ETag → access | COMMON; KEY | `audit.platform.regulatory_pack_validation_access.revoke.v1`; NONE | TX; validation access/audit/idempotency | Human Phase 5+ 2026-09-29 |
+ 
+-`CONTRACTUAL_OPERATIONS=165`; `PUBLIC_READ_OPERATIONS=60`; `PUBLIC_MUTATING_OPERATIONS=105` (103 POST and one PUT). Every operation has capability, permission (or explicit authenticated context for `accessGet`/`currentPrincipalAuthorizationRead`, public authentication context for `authenticationProviderList`), audit decision, idempotency class, transaction boundary, physical objects and source. Eight MI6A operations are human-approved contracts only; their runtime routes and Permissions are not yet published. The internal `MEMBERSHIP_INVITATION_ACCEPT` OIDC ceremony is deliberately outside this public-operation count. Counts are verified from the operation rows and OpenAPI rather than maintained as an independent authority. MI7A adds exactly two read-only contracts, with no new Permission; runtime implementation is pending MI7-R. PUBLIC_READ_OPERATIONS counts published GET contracts, not unauthenticated endpoints.
++`CONTRACTUAL_OPERATIONS=174`; `PUBLIC_READ_OPERATIONS=62`; `PUBLIC_MUTATING_OPERATIONS=112` (111 POST and one PUT). Every operation has capability, permission (or explicit authenticated context for `accessGet`/`currentPrincipalAuthorizationRead`, public authentication context for `authenticationProviderList`), audit decision, idempotency class, transaction boundary, physical objects and source. Eight MI6A operations are human-approved contracts only; their runtime routes and Permissions are not yet published. The internal `MEMBERSHIP_INVITATION_ACCEPT` OIDC ceremony is deliberately outside this public-operation count. Counts are verified from the operation rows and OpenAPI rather than maintained as an independent authority. MI7A adds exactly two read-only contracts, with no new Permission; runtime implementation is pending MI7-R. PUBLIC_READ_OPERATIONS counts published GET contracts, not unauthenticated endpoints.
+ 
+ ## Final-decision reconciliation
+ 
+diff --git a/docs/executable-contracts/05_PERMISSION_CATALOG.md b/docs/executable-contracts/05_PERMISSION_CATALOG.md
+index 2bb57c2..7c4898b 100644
+--- a/docs/executable-contracts/05_PERMISSION_CATALOG.md
++++ b/docs/executable-contracts/05_PERMISSION_CATALOG.md
+@@ -235,6 +235,7 @@ H-003..H-005 authorize these Permission rows over existing entities and capabili
+ | `privacy.retention_policy.approve` | PRIVACY | approve retention policy | tenant | same tenant | Legal Reviewer | legal decision; author/approver SoD; reinforced audit | 22,23,42; H-004 |
+ | `privacy.retention_policy.publish` | PRIVACY | publish retention policy | tenant | same tenant; cannot weaken mandatory/contractual policy | Privacy Manager | approval required; reinforced audit | 22,23,39; H-004 |
+ | `privacy.retention_policy.archive` | PRIVACY | archive retention policy | tenant | same tenant; history retained | Privacy Manager | no purge authorization by itself; reason; audit | 23,39; H-004 |
++| `privacy.retention_policy.legal_hold.release` | PRIVACY | release published legal hold applicability | tenant | tenant-owned Legal Reviewer; same tenant; distinct author | Legal Reviewer | reason, strong If-Match, idempotency, valid optional source and transactional audit; no purge | 22,23,24; STEP_6A3 C-04W |
+ | `privacy.data_subject_request.read` | PRIVACY | read data-subject request | tenant | same tenant; personal content minimized | Privacy Manager, Legal Reviewer, GRC Manager | restricted; reinforced access audit by policy | 26,39,42; H-004 |
+ | `privacy.data_subject_request.create` | PRIVACY | create data-subject request | tenant | same tenant | Privacy Manager | request identity minimized; audit | 33,39,42; H-004 |
+ | `privacy.data_subject_request.update` | PRIVACY | update data-subject request | tenant, assigned_object | same tenant | Privacy Manager | lifecycle/object policy; audit | 22,39; H-004 |
+@@ -317,3 +318,7 @@ Autoridad: contrato29 y recibo MACRO-STEP6A3-20261009-R1-APPROVAL. Grants físic
+ | `compliance.framework.read` | ISO_COMPLIANCE | framework | tenant | read | EXECUTIVE_BOARD_VIEWER, GRC_MANAGER, QUALITY_MANAGER, COMPLIANCE_MANAGER, CISO_SECURITY_MANAGER, AI_GOVERNANCE_MANAGER, PRIVACY_MANAGER, LEGAL_REVIEWER, AUDITOR_LEAD, AUDITOR, REGULATORY_CONTENT_STEWARD, REPORT_VIEWER, VIEWER | actor tenant; additional purpose capability + parent permission + real scope + SoD; no Platform enumeration | executable29; MACRO R1 |
+ | `platform.membership_reference.read` | CORE_PLATFORM | membership_reference | tenant,assigned_object,owned_object,audit_engagement; exact parent only | read | EXECUTIVE_BOARD_VIEWER, GRC_MANAGER, QUALITY_MANAGER, COMPLIANCE_MANAGER, RISK_MANAGER, CISO_SECURITY_MANAGER, AI_GOVERNANCE_MANAGER, PRIVACY_MANAGER, LEGAL_REVIEWER, AUDITOR_LEAD, AUDITOR, PROCESS_OWNER, CONTROL_OWNER, EVIDENCE_OWNER, ACTION_OWNER, REPORT_VIEWER, VIEWER | actor tenant; additional purpose capability + parent permission + real scope + SoD; no Platform enumeration | executable29; MACRO R1 |
+ | `privacy.retention_policy_reference.read` | EVIDENCE_DOCUMENTS | retention_policy_reference | tenant,assigned_object,owned_object; exact parent/command only | read | EXECUTIVE_BOARD_VIEWER, GRC_MANAGER, QUALITY_MANAGER, COMPLIANCE_MANAGER, CISO_SECURITY_MANAGER, AI_GOVERNANCE_MANAGER, PRIVACY_MANAGER, LEGAL_REVIEWER, AUDITOR_LEAD, AUDITOR, CONTROL_OWNER, EVIDENCE_OWNER, REPORT_VIEWER, VIEWER | actor tenant; additional purpose capability + parent permission + real scope + SoD; no Platform enumeration | executable29; MACRO R1 |
++
++## STEP_6A3 C-04W — asignaciones cerradas
++
++El manifest exacto `candidates/STEP_6A3_C04W_CFGD_v1.10/ROLE_PERMISSIONS.json` SHA-256 `8c9112ae1db21f477cca6f16dba12ccbe0b4956b2d477b77b4097d3ed5727583` define nueve permisos existentes para TENANT_ADMIN tenant-owned y el permiso nuevo `privacy.retention_policy.legal_hold.release` para LEGAL_REVIEWER tenant-owned, todos con `MembershipRole.scope_kind=tenant`. El permiso nuevo pertenece a PRIVACY, acción de release de hold publicado, y exige mismo tenant, actor humano distinto del autor, razón, CAS, idempotencia, fuente invocada válida y AuditEvent. No concede archive ni purge. Las nueve asignaciones Tenant Admin no cambian permisos de roles ajenos ni otorgan Platform authority; los dos scopes tenant añadidos a `evidence.document.update` y `evidence.evidence.submit` sólo admiten la fuente propia del flujo C-04W mediante ObjectPolicy backend. La capability PRIVACY sigue limitada por el plan GRC publicado.
+diff --git a/docs/executable-contracts/08_AUDIT_EVENT_CATALOG.md b/docs/executable-contracts/08_AUDIT_EVENT_CATALOG.md
+index 0955982..70cb8cf 100644
+--- a/docs/executable-contracts/08_AUDIT_EVENT_CATALOG.md
++++ b/docs/executable-contracts/08_AUDIT_EVENT_CATALOG.md
+@@ -111,3 +111,7 @@ See [27 — canonical methodology binding](27_PHASE5_METHODOLOGY_BINDING.md) and
+ ## STEP6A.3 — aprobación macro R2
+ 
+ [31](31_PHASE6A3_RESIDUAL_DELTAS_R2.md) publica audit.iam.role_permission.publish.v1 para la ceremonia interna phase6a3RolePermissionPublication y el perfil aditivo CONTRACT_VOCABULARY_PROVENANCE_V1 del audit material existente de las escrituras26. R2manifestSHA 2dd41de880d445963c5c74917751d58490c63d7364ec1ad2179bbe39c5187ed8. No aumenta el catálogo materializado en QA ni crea endpoint/outbox. Actor de publicación: ServicePrincipal PLATFORM_CONTROL activo real, no seed ficticio; aprobación humana y actor de ejecución son distintos conceptos. Publicación reforzada atomiza adopción y AuditEvent. Procedencia de vocabulario se reconstruye desde manifestSHA y IDs/versiones reales de raíz/hijos; la identidad inmutable TI es su revisión canónica y no se inventa row_version para esos hijos. Ausencia histórica del perfil sigue explícita, sin backfill.
++
++## STEP_6A3 C-04W — delta de auditoría v1.10
++
++El contrato de operaciones 03 y OpenAPI 02 vincula exactamente siete códigos nuevos: `audit.privacy.retention_policy.submit_for_review.v1`, `audit.privacy.retention_policy_applicability.create.v1`, `audit.privacy.retention_policy_applicability.submit_for_review.v1`, `audit.privacy.retention_policy_applicability.review.v1`, `audit.privacy.retention_policy_applicability.approve.v1`, `audit.privacy.retention_policy_applicability.publish.v1` y `audit.privacy.retention_policy.legal_hold.release.v1`. Cada mutación produce un único AuditEvent material en su transacción; el levantamiento conserva razón, actor Legal Reviewer, tenant, aplicabilidad, estado previo y resultante, hora PostgreSQL y fuente opcional. Las lecturas nuevas no generan AuditEvent material. Los conteos de cobertura anteriores describen el catálogo histórico; no se promueven hasta la publicación y verificación QA de estos códigos.
+diff --git a/docs/executable-contracts/09_SEED_MANIFESTS.md b/docs/executable-contracts/09_SEED_MANIFESTS.md
+index c4ebd02..20703d3 100644
+--- a/docs/executable-contracts/09_SEED_MANIFESTS.md
++++ b/docs/executable-contracts/09_SEED_MANIFESTS.md
+@@ -192,3 +192,9 @@ See [27 — canonical methodology binding](27_PHASE5_METHODOLOGY_BINDING.md) and
+ ## STEP6A.3 — publicación local R1/R2
+ 
+ R1 adopta exactamente3 permisos y44 pares de29 (13F/17M/14R), mediante nuevas migraciones31/32. SEED-005 vigente local:175 permisos; 30 migraciones históricas permanecen intactas. SEED-006/010 no concede pares fuera del manifest29, ni derechos de comando por un permiso de lectura. R2 exige audit.iam.role_permission.publish.v1 transaccional por cada materialización/adopción RolePermission y actorServicePrincipal real existente; ningún nuevo actor/credencial es seed de producto. Gate previo de adopción global auditada; sin actor/aprobación/hash/audit completo, DENY y rollback.33 se prepara fuera de manifest activo para nueva adopción de filas candidatas: before.present refleja estado real y no un INSERT retrospectivo.
++
++## STEP_6A3 C-04W — publicación de permisos y aristas
++
++Fuente de diez pares exactos: `candidates/STEP_6A3_C04W_CFGD_v1.10/ROLE_PERMISSIONS.json` SHA-256 `8c9112ae1db21f477cca6f16dba12ccbe0b4956b2d477b77b4097d3ed5727583`. La adopción conserva grants existentes, inserta nueve pares por cada TENANT_ADMIN tenant-owned existente y un par de release por cada LEGAL_REVIEWER tenant-owned, con permiso `privacy.retention_policy.legal_hold.release` tenant, audit de publicación y verificación de tenant/role/permission. La plantilla de bootstrap futura usa el mismo manifest, sin grant global o directo a UserIdentity.
++
++Aristas nuevas: `RetentionPolicy draft→under_review` por `retention_policy.submit_for_review` con update del autor; `RetentionPolicyApplicability draft→under_review→approved→published` por `submit_for_review|review|approve|publish` con los cuatro permisos y códigos AuditEvent de la matriz 03. Las aristas existentes de RetentionPolicy se preservan. `legalHoldRelease` inserta un hecho inmutable y no cambia `lifecycle_state` de policy o applicability.
+diff --git a/docs/executable-contracts/14_FILE_EVIDENCE_STORAGE_CONTRACT.md b/docs/executable-contracts/14_FILE_EVIDENCE_STORAGE_CONTRACT.md
+index d332232..4d70651 100644
+--- a/docs/executable-contracts/14_FILE_EVIDENCE_STORAGE_CONTRACT.md
++++ b/docs/executable-contracts/14_FILE_EVIDENCE_STORAGE_CONTRACT.md
+@@ -35,3 +35,7 @@ Document, DocumentVersion, Evidence, EvidenceVersion, EvidenceReview, FileUpload
+ Checksum is verified at finalization and retrieval/restore procedures. Object versioning/backup is reconciled with PostgreSQL metadata. Missing/mismatched blob causes explicit dependency/source failure, not successful Evidence. Orphan quarantine cleanup and retention purge are idempotent, audited jobs honoring legal hold.
+ 
+ `FILE_EVIDENCE_STORAGE_CONTRACT=PASS` as a Phase 2 contract candidate.
++
++## STEP_6A3 C-04W — cadena documental vinculada
++
++Un nuevo FileUploadIntent exige `retention_policy_applicability_id` de una policy tenant-owned publicada, ordinaria e inequívoca, clasificación y contexto compatibles. FileObject hereda exactamente esa FK después de scan-PASS y hash real. EvidenceVersion conserva la misma applicability y concuerda con Evidence.retention_policy_id y su FileObject directo o mediante DocumentVersion. Las filas históricas con FK nula se consultan como `LEGACY_UNBOUND`; no se les inventa fuente ni se las presenta como acreditadas. Una fuente legal vinculada requiere EvidenceVersion aprobada, vigente y FileObject scan-PASS, con cláusula y contexto explícitos. El vínculo prueba procedencia técnica y no certifica cumplimiento jurídico. Purge reevalúa obligaciones concurrentes, retención ordinaria y todo legal hold activo, con DENY ante conflicto o contexto insuficiente.

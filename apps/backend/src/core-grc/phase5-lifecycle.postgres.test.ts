@@ -14,6 +14,10 @@ import { listTenantNormativeContent } from "../regulatory/tenant-read.js";
 import { listSelectableSubjects } from "./subject-read.js";
 import {readVocabularyProvenance} from "./vocabulary-provenance.js";
 import {VOCABULARY_MANIFEST_SHA256} from "@tcdx-grc/contracts";
+import { buildApp } from "../app.js";
+import type { Kysely } from "kysely";
+import type { FoundationDatabase } from "../database.js";
+import { readFileSync } from "node:fs";
 
 const enabled = process.env.TCDX_PHASE5_LIFECYCLE_INTEGRATION === "true";
 const rollback = Symbol("isolated-phase5-rollback");
@@ -60,8 +64,10 @@ function storagePort(reject: () => boolean): FileStoragePort {
 
 describe.skipIf(!enabled)("Phase 5 lifecycle PostgreSQL isolated integration", () => {
   it("persists RetentionPolicy, Storage, Evidence and ControlAssessmentSubmit with isolated actors", async () => {
-    if (process.env.DATABASE_HOST !== "127.0.0.1" || process.env.DATABASE_PORT !== "55432"
-      || process.env.TCDX_ISOLATED_REBUILD !== "true") {
+    const isolated = (process.env.DATABASE_PORT === "55432" && process.env.TCDX_ISOLATED_REBUILD === "true")
+      || (process.env.DATABASE_PORT !== undefined && process.env.DATABASE_PORT !== "5432"
+        && process.env.TCDX_C04W_ISOLATED_REBUILD === "true");
+    if (process.env.DATABASE_HOST !== "127.0.0.1" || !isolated) {
       throw new Error("PHASE5_LIFECYCLE_TEST_REQUIRES_ISOLATED_LOCAL_POSTGRES");
     }
     const database = createDatabase(loadConfig(process.env));
@@ -168,6 +174,95 @@ describe.skipIf(!enabled)("Phase 5 lifecycle PostgreSQL isolated integration", (
         `.execute(tx);
         expect(effects.rows[0]).toMatchObject({ audits: 5, events: 1, policies: 1 });
 
+        const retentionApplicabilityId = newUuidV7();
+        await sql`INSERT INTO privacy.retention_policy_applicabilities
+          (retention_policy_applicability_id,tenant_id,retention_policy_id,version_number,
+           classification,purpose,lifecycle_state,created_by_user_identity_id)
+          VALUES (${retentionApplicabilityId}::uuid,${tenantId}::uuid,${policyId}::uuid,1,
+                  'confidential','evidence_document','draft',${authorId}::uuid)`.execute(tx);
+        await sql`UPDATE privacy.retention_policy_applicabilities SET lifecycle_state='under_review',row_version=2
+          WHERE retention_policy_applicability_id=${retentionApplicabilityId}::uuid`.execute(tx);
+        await sql`UPDATE privacy.retention_policy_applicabilities SET lifecycle_state='approved',row_version=3
+          WHERE retention_policy_applicability_id=${retentionApplicabilityId}::uuid`.execute(tx);
+        await sql`UPDATE privacy.retention_policy_applicabilities
+          SET lifecycle_state='published',row_version=4,effective_from=transaction_timestamp(),
+              published_at=transaction_timestamp()
+          WHERE retention_policy_applicability_id=${retentionApplicabilityId}::uuid`.execute(tx);
+
+        const holdPolicyId = newUuidV7();
+        const holdApplicabilityId = newUuidV7();
+        const reviewerRoleId = newUuidV7();
+        const releasePermissionId = newUuidV7();
+        await sql`INSERT INTO privacy.retention_policies
+          (retention_policy_id,ownership_class,tenant_id,policy_code,version_number,
+           policy_kind,retention_seconds,trigger_event_code,precedence_rank,is_mandatory,
+           lifecycle_state,effective_from,created_by_user_identity_id)
+          VALUES (${holdPolicyId}::uuid,'TENANT_OWNED',${tenantId}::uuid,
+                  ${`ISOLATED-HOLD-${holdPolicyId.slice(0, 8)}`},1,'legal_hold',NULL,
+                  'expiry_or_closure',500,true,'published',transaction_timestamp(),${authorId}::uuid)`.execute(tx);
+        await sql`INSERT INTO privacy.retention_policy_applicabilities
+          (retention_policy_applicability_id,tenant_id,retention_policy_id,version_number,
+           classification,purpose,lifecycle_state,created_by_user_identity_id)
+          VALUES (${holdApplicabilityId}::uuid,${tenantId}::uuid,${holdPolicyId}::uuid,1,
+                  'confidential','evidence_document','draft',${authorId}::uuid)`.execute(tx);
+        await sql`UPDATE privacy.retention_policy_applicabilities SET lifecycle_state='under_review',row_version=2
+          WHERE retention_policy_applicability_id=${holdApplicabilityId}::uuid`.execute(tx);
+        await sql`UPDATE privacy.retention_policy_applicabilities SET lifecycle_state='approved',row_version=3
+          WHERE retention_policy_applicability_id=${holdApplicabilityId}::uuid`.execute(tx);
+        await sql`UPDATE privacy.retention_policy_applicabilities
+          SET lifecycle_state='published',row_version=4,effective_from=transaction_timestamp(),
+              published_at=transaction_timestamp()
+          WHERE retention_policy_applicability_id=${holdApplicabilityId}::uuid`.execute(tx);
+        await sql`INSERT INTO iam.roles
+          (role_id,ownership_class,tenant_id,role_code,name,lifecycle_state)
+          VALUES (${reviewerRoleId}::uuid,'TENANT_OWNED',${tenantId}::uuid,
+                  'LEGAL_REVIEWER','Isolated Legal Reviewer','published')`.execute(tx);
+        await sql`INSERT INTO iam.permissions
+          (permission_id,permission_code,domain_code,resource_code,action_code,lifecycle_state)
+          VALUES (${releasePermissionId}::uuid,'privacy.retention_policy.legal_hold.release',
+                  'privacy','retention_policy','release','published')`.execute(tx);
+        await sql`INSERT INTO iam.role_permissions
+          (role_permission_id,ownership_class,tenant_id,role_id,permission_id)
+          VALUES (${newUuidV7()}::uuid,'TENANT_OWNED',${tenantId}::uuid,
+                  ${reviewerRoleId}::uuid,${releasePermissionId}::uuid)`.execute(tx);
+        await sql`INSERT INTO iam.membership_roles
+          (membership_role_id,tenant_id,tenant_membership_id,role_id,scope_kind,valid_from)
+          VALUES (${newUuidV7()}::uuid,${tenantId}::uuid,${approverMembershipId}::uuid,
+                  ${reviewerRoleId}::uuid,'tenant',transaction_timestamp())`.execute(tx);
+        const releaseDefinition = mutations.get("legalHoldRelease")!;
+        await expect(executeMutation(tx, actor(releaseDefinition, tenantId, authorMembershipId, authorId, "TENANT_ADMIN"), releaseDefinition, {
+          body: { expected_version: 4, reason: "Unauthorized" }, targetId: holdApplicabilityId,
+          idempotencyKey: newUuidV7(), correlationId: newUuidV7()
+        })).rejects.toMatchObject({ code: "TCDX.AUTHORIZATION.DENIED" });
+        const releaseInput = { body: { expected_version: 4, reason: "Reviewed isolated hold" },
+          targetId: holdApplicabilityId, idempotencyKey: newUuidV7(), correlationId: newUuidV7() };
+        const released = await executeMutation(tx,
+          actor(releaseDefinition, tenantId, approverMembershipId, approverId, "LEGAL_REVIEWER"),
+          releaseDefinition, releaseInput);
+        expect(released.response).toMatchObject({
+          retention_policy_applicability_id: holdApplicabilityId, lifecycle_state: "released"
+        });
+        const replayedRelease = await executeMutation(tx,
+          actor(releaseDefinition, tenantId, approverMembershipId, approverId, "LEGAL_REVIEWER"),
+          releaseDefinition, { ...releaseInput, correlationId: newUuidV7() });
+        expect(replayedRelease.replayed).toBe(true);
+        const releaseEvidence = await sql<{ release_count: number; audit_count: number }>`
+          SELECT (SELECT count(*)::integer FROM privacy.retention_policy_hold_releases
+                   WHERE tenant_id=${tenantId}::uuid AND retention_policy_applicability_id=${holdApplicabilityId}::uuid) AS release_count,
+                 (SELECT count(*)::integer FROM ops_audit.audit_events
+                   WHERE tenant_id=${tenantId}::uuid AND aggregate_id=${holdApplicabilityId}::uuid
+                     AND event_code='audit.privacy.retention_policy.legal_hold.release.v1') AS audit_count
+        `.execute(tx);
+        expect(releaseEvidence.rows[0]).toEqual({ release_count: 1, audit_count: 1 });
+        await expect(executeMutation(tx,
+          actor(releaseDefinition, tenantId, approverMembershipId, approverId, "LEGAL_REVIEWER"),
+          releaseDefinition, { ...releaseInput, idempotencyKey: newUuidV7() }))
+          .rejects.toMatchObject({ code: "TCDX.LIFECYCLE.TRANSITION_DENIED" });
+        await expect(releaseDefinition.execute({ transaction: tx,
+          actor: actor(releaseDefinition, newUuidV7(), approverMembershipId, approverId, "LEGAL_REVIEWER"),
+          ...releaseInput, auditEventId: newUuidV7() }))
+          .rejects.toMatchObject({ code: "TCDX.RESOURCE.NOT_FOUND" });
+
         const uploadCreate = mutations.get("uploadIntentCreate")!;
         const uploadFinalize = mutations.get("uploadFinalize")!;
         const fileOwner = (definition: MutationDefinition) => actor(definition, tenantId, authorMembershipId, authorId, "EVIDENCE_OWNER");
@@ -179,8 +274,34 @@ describe.skipIf(!enabled)("Phase 5 lifecycle PostgreSQL isolated integration", (
           size_bytes: 12,
           classification: "confidential",
           retention_policy_id: policyId,
+          retention_policy_applicability_id: retentionApplicabilityId,
           source_provenance: "isolated-test-upload"
         };
+        // Technical fixtures only, never a source of legal or QA acceptance evidence.
+        for (const body of [
+          { ...uploadBody, classification: "public" },
+          { ...uploadBody, retention_policy_id: holdPolicyId },
+          { ...uploadBody, retention_policy_applicability_id: holdApplicabilityId }
+        ]) {
+          await expect(executeMutation(tx, fileOwner(uploadCreate), uploadCreate, {
+            body, idempotencyKey: newUuidV7(), correlationId: newUuidV7(), fileStorage: storage
+          })).rejects.toMatchObject({ code: "TCDX.INVARIANT.VIOLATION" });
+        }
+        await expect(uploadCreate.execute({ transaction: tx,
+          actor: { ...fileOwner(uploadCreate), tenantId: newUuidV7() }, body: uploadBody,
+          correlationId: newUuidV7(), fileStorage: storage }))
+          .rejects.toMatchObject({ code: "TCDX.INVARIANT.VIOLATION" });
+        for (const deniedActor of [
+          { ...fileOwner(uploadCreate), permissions: new Set<string>() },
+          { ...fileOwner(uploadCreate), capabilityGroups: new Set<string>() }
+        ]) {
+          await expect(executeMutation(tx, deniedActor, uploadCreate, {
+            body: uploadBody, idempotencyKey: newUuidV7(), correlationId: newUuidV7(), fileStorage: storage
+          })).rejects.toBeInstanceOf(FoundationError);
+        }
+        const deniedUploads = await sql<{ count: number }>`SELECT count(*)::integer AS count
+          FROM evidence.file_upload_intents WHERE tenant_id=${tenantId}::uuid`.execute(tx);
+        expect(deniedUploads.rows[0]?.count).toBe(0);
         const upload = await executeMutation(tx, fileOwner(uploadCreate), uploadCreate, {
           body: uploadBody, idempotencyKey: newUuidV7(), correlationId: newUuidV7(), fileStorage: storage
         });
@@ -191,6 +312,32 @@ describe.skipIf(!enabled)("Phase 5 lifecycle PostgreSQL isolated integration", (
         });
         const fileId = finalized.response.file_object_id as string;
         expect(finalized.response).toMatchObject({ scan_status: "passed", retention_policy_id: policyId });
+        const laterHoldPolicy = newUuidV7();
+        const laterHold = newUuidV7();
+        // A technical hold is inserted after upload in command order. No legal document is fabricated.
+        await sql`INSERT INTO privacy.retention_policies
+          (retention_policy_id,ownership_class,tenant_id,policy_code,version_number,policy_kind,retention_seconds,
+           trigger_event_code,precedence_rank,is_mandatory,lifecycle_state,effective_from,created_by_user_identity_id)
+          VALUES (${laterHoldPolicy}::uuid,'TENANT_OWNED',${tenantId}::uuid,${`ISOLATED-LATER-HOLD-${laterHoldPolicy}`},
+            1,'legal_hold',NULL,'expiry_or_closure',500,true,'published',transaction_timestamp(),${authorId}::uuid)`.execute(tx);
+        await sql`INSERT INTO privacy.retention_policy_applicabilities
+          (retention_policy_applicability_id,tenant_id,retention_policy_id,version_number,classification,purpose,lifecycle_state,created_by_user_identity_id)
+          VALUES (${laterHold}::uuid,${tenantId}::uuid,${laterHoldPolicy}::uuid,1,'confidential','evidence_document','draft',${authorId}::uuid)`.execute(tx);
+        await sql`UPDATE privacy.retention_policy_applicabilities SET lifecycle_state='under_review',row_version=2
+          WHERE retention_policy_applicability_id=${laterHold}::uuid`.execute(tx);
+        await sql`UPDATE privacy.retention_policy_applicabilities SET lifecycle_state='approved',row_version=3
+          WHERE retention_policy_applicability_id=${laterHold}::uuid`.execute(tx);
+        await sql`UPDATE privacy.retention_policy_applicabilities
+          SET lifecycle_state='published',row_version=4,effective_from=transaction_timestamp(),published_at=transaction_timestamp()
+          WHERE retention_policy_applicability_id=${laterHold}::uuid`.execute(tx);
+        await executeMutation(tx, actor(releaseDefinition, tenantId, approverMembershipId, approverId, "LEGAL_REVIEWER"),
+          releaseDefinition, { body: { expected_version: 4, reason: "Technical isolated release after upload" },
+            targetId: laterHold, idempotencyKey: newUuidV7(), correlationId: newUuidV7() });
+        const afterHoldRelease = await sql<{ applicability: string; count: number }>`
+          SELECT retention_policy_applicability_id::text AS applicability,
+                 (SELECT count(*)::integer FROM evidence.file_objects WHERE tenant_id=${tenantId}::uuid) AS count
+            FROM evidence.file_objects WHERE tenant_id=${tenantId}::uuid AND file_object_id=${fileId}::uuid`.execute(tx);
+        expect(afterHoldRelease.rows[0]).toEqual({ applicability: retentionApplicabilityId, count: 1 });
         const profiles=await readVocabularyProvenance(tx,tenantId,'FileObject',fileId);
         expect(profiles).toHaveLength(1);expect(profiles[0]).toMatchObject({profile_version:1,manifest_sha256:VOCABULARY_MANIFEST_SHA256,root:{entity_type:'FileObject',entity_id:fileId,entity_version:{kind:'row_version',value:'1'}},occurrences:[{family_id:'CV-01',code:'confidential',input_path:'classification',entity_id:fileId,entity_version:{kind:'row_version',value:'1'}}]});
         expect(await readVocabularyProvenance(tx,newUuidV7(),'FileObject',fileId)).toEqual([]);
@@ -252,8 +399,8 @@ describe.skipIf(!enabled)("Phase 5 lifecycle PostgreSQL isolated integration", (
         expect(selectedSubjects.items[0]).toEqual({ subject_id: subjectId, subject_type: "person", canonical_key: `isolated-owner:${subjectId}`, display_name: "Isolated Control Owner", lifecycle_state: "active" });
         expect((await listSelectableSubjects(tx, subjectReader, {})).items.map((item) => item.subject_id))
           .not.toEqual(expect.arrayContaining([futureSubjectId, archivedSubjectId, foreignSubjectId]));
-        const reference = await sql<{ control_id: string; control_version_id: string; regulatory_pack_version_id: string; framework_version_id: string }>`
-          SELECT cv.control_id,cv.control_version_id,pfv.regulatory_pack_version_id,r.framework_version_id
+        const reference = await sql<{ control_id: string; control_version_id: string; regulatory_pack_id: string; regulatory_pack_version_id: string; framework_version_id: string }>`
+          SELECT cv.control_id,cv.control_version_id,pv.regulatory_pack_id,pfv.regulatory_pack_version_id,r.framework_version_id
             FROM controls.control_versions cv
             JOIN regulatory.requirement_control_mappings rcm ON rcm.control_version_id=cv.control_version_id
             JOIN regulatory.requirements r ON r.requirement_id=rcm.requirement_id
@@ -278,7 +425,10 @@ describe.skipIf(!enabled)("Phase 5 lifecycle PostgreSQL isolated integration", (
         await sql`UPDATE regulatory.regulatory_pack_versions SET lifecycle_state='published'
           WHERE regulatory_pack_version_id=${packVersionId}::uuid`.execute(tx);
         const plan = await sql<{ plan_version_id: string }>`
-          SELECT plan_version_id FROM platform.plan_versions WHERE lifecycle_state='published' ORDER BY plan_version_id LIMIT 1
+          SELECT pv.plan_version_id FROM platform.plan_versions pv WHERE pv.lifecycle_state='published'
+           AND EXISTS (SELECT 1 FROM platform.entitlements e JOIN platform.capabilities c USING(capability_id)
+             WHERE e.plan_version_id=pv.plan_version_id AND e.is_enabled AND c.capability_group='PRIVACY')
+           ORDER BY pv.plan_version_id LIMIT 1
         `.execute(tx);
         const planVersionId = plan.rows[0]?.plan_version_id;
         if (!planVersionId) throw new Error("PUBLISHED_PLAN_VERSION_REQUIRED");
@@ -291,8 +441,8 @@ describe.skipIf(!enabled)("Phase 5 lifecycle PostgreSQL isolated integration", (
         `.execute(tx);
         await sql`
           INSERT INTO platform.subscription_regulatory_packs
-            (subscription_regulatory_pack_id,tenant_id,subscription_id,regulatory_pack_version_id,lifecycle_state,effective_from,created_by_user_identity_id,updated_by_user_identity_id)
-          VALUES (${assignmentId}::uuid,${tenantId}::uuid,${subscriptionId}::uuid,${packVersionId}::uuid,'active',transaction_timestamp()-interval '1 day',${authorId}::uuid,${authorId}::uuid)
+            (subscription_regulatory_pack_id,tenant_id,subscription_id,regulatory_pack_id,regulatory_pack_version_id,lifecycle_state,effective_from,created_by_user_identity_id,updated_by_user_identity_id)
+          VALUES (${assignmentId}::uuid,${tenantId}::uuid,${subscriptionId}::uuid,${reference.rows[0]!.regulatory_pack_id}::uuid,${packVersionId}::uuid,'active',transaction_timestamp()-interval '1 day',${authorId}::uuid,${authorId}::uuid)
         `.execute(tx);
         const visible = await packVisibility(tx, tenantId);
         expect(visible.frameworkVersionIds.has(reference.rows[0]!.framework_version_id)).toBe(true);
@@ -438,6 +588,7 @@ describe.skipIf(!enabled)("Phase 5 lifecycle PostgreSQL isolated integration", (
         const evidenceApprove = mutations.get("evidenceApprove")!;
         const requestCreate = mutations.get("evidenceRequestCreate")!;
         const requestFulfill = mutations.get("evidenceRequestFulfill")!;
+        const fixtureTime = (await sql<{ now: Date }>`SELECT transaction_timestamp() AS now`.execute(tx)).rows[0]!.now.toISOString();
         const evidence = await executeMutation(tx, fileOwner(evidenceCreate), evidenceCreate, {
           body: {
             evidence_code: `ISOLATED-${tenantId.slice(0, 8)}`,
@@ -446,6 +597,7 @@ describe.skipIf(!enabled)("Phase 5 lifecycle PostgreSQL isolated integration", (
             source_kind: "uploaded",
             file_object_id: fileId,
             provenance_ref: "isolated-upload",
+            effective_from: fixtureTime,
             links: [{ control_id: controlId, claim: "Exact control evidence" }]
           }, idempotencyKey: newUuidV7(), correlationId: newUuidV7()
         });
@@ -467,6 +619,122 @@ describe.skipIf(!enabled)("Phase 5 lifecycle PostgreSQL isolated integration", (
           idempotencyKey: newUuidV7(), correlationId: newUuidV7()
         });
         expect(approvedEvidence.response.lifecycle_state).toBe("approved");
+        const chain = await sql<{ intent: string; file: string; version: string; policy: string }>`
+          SELECT i.retention_policy_applicability_id::text AS intent,f.retention_policy_applicability_id::text AS file,
+                 ev.retention_policy_applicability_id::text AS version,e.retention_policy_id::text AS policy
+            FROM evidence.evidence_versions ev JOIN evidence.evidences e USING(tenant_id,evidence_id)
+            JOIN evidence.file_objects f ON f.tenant_id=ev.tenant_id AND f.file_object_id=ev.file_object_id
+            JOIN evidence.file_upload_intents i ON i.tenant_id=f.tenant_id AND i.file_object_id=f.file_object_id
+           WHERE ev.tenant_id=${tenantId}::uuid AND ev.evidence_version_id=${evidenceVersionId}::uuid
+        `.execute(tx);
+        expect(chain.rows[0]).toEqual({ intent: retentionApplicabilityId, file: retentionApplicabilityId,
+          version: retentionApplicabilityId, policy: policyId });
+
+        // First prove DENY with the unpublished registry; then install the exact DRAFT mapping only
+        // as a technical rollback fixture. This never claims competent publication or QA acceptance.
+        const bindingCreate = mutations.get("retentionApplicabilityCreate")!;
+        const bindingSubmit = mutations.get("retentionApplicabilitySubmitForReview")!;
+        const bindingApprove = mutations.get("retentionApplicabilityApprove")!;
+        const bindingPublish = mutations.get("retentionApplicabilityPublish")!;
+        const successor = await executeMutation(tx,
+          actor(bindingCreate, tenantId, authorMembershipId, authorId, "TENANT_ADMIN"), bindingCreate, {
+            body: { retention_policy_id: policyId, version_number: 2, classification: "confidential",
+              supersedes_applicability_id: retentionApplicabilityId, source_evidence_version_id: evidenceVersionId,
+              source_clause_ref: "TECHNICAL-FIXTURE-NOT-LEGAL-EVIDENCE",
+              effective_from: new Date(Date.parse(fixtureTime) + 1).toISOString() },
+            idempotencyKey: newUuidV7(), correlationId: newUuidV7()
+          });
+        const successorId = String(successor.response.retention_policy_applicability_id);
+        const bindingRun = (definition: MutationDefinition, version: number, identity = authorId) => executeMutation(tx,
+          actor(definition, tenantId, identity === authorId ? authorMembershipId : approverMembershipId,
+            identity, identity === authorId ? "TENANT_ADMIN" : "LEGAL_REVIEWER"), definition, {
+            body: { expected_version: version }, targetId: successorId,
+            idempotencyKey: newUuidV7(), correlationId: newUuidV7()
+          });
+        await expect(bindingRun(bindingSubmit, 1)).rejects.toMatchObject({ code: "TCDX.LIFECYCLE.TRANSITION_DENIED" });
+        const candidateBindings = JSON.parse(readFileSync(new URL("../../../../docs/executable-contracts/candidates/STEP_6A3_C04W_CFGD_v1.10/LIFECYCLE_BINDINGS.json", import.meta.url), "utf8"));
+        expect(candidateBindings.status).toBe("DRAFT_NOT_EFFECTIVE");
+        for (const b of candidateBindings.bindings) {
+          const transitionId = newUuidV7();
+          await sql`INSERT INTO ops_audit.lifecycle_transition_definitions
+            (lifecycle_transition_definition_id,entity_type,version_number,from_state,command_code,to_state,
+             precondition_policy_ref,permission_id,sod_policy_ref,audit_event_code,notification_policy_ref,
+             recalculation_policy_ref,idempotency_semantics,concurrency_semantics,system_actor_allowed,lifecycle_state,published_at)
+            SELECT ${transitionId}::uuid,${b.entity_type},1,${b.from_state},${b.command_code},${b.to_state},
+              ${b.precondition_policy_ref},permission_id,${b.sod_policy_ref},${b.audit_event_code},${b.notification_policy},
+              ${b.recalculation_policy},${b.idempotency_semantics},${b.concurrency_semantics},${b.system_actor_allowed},'published',transaction_timestamp()
+              FROM iam.permissions WHERE permission_code=${b.permission_code} AND lifecycle_state='published'`.execute(tx);
+          for (const scope of b.allowed_scopes) {
+            await sql`INSERT INTO ops_audit.lifecycle_transition_scopes
+              (lifecycle_transition_scope_id,lifecycle_transition_definition_id,scope_kind)
+              VALUES (${newUuidV7()}::uuid,${transitionId}::uuid,${scope})`.execute(tx);
+          }
+          expect(b.side_effect_event_codes).toEqual([]);
+        }
+        await bindingRun(bindingSubmit, 1);
+        await expect(bindingRun(bindingApprove, 2)).rejects.toMatchObject({ code: "TCDX.AUTHORIZATION.DENIED" });
+        await bindingRun(bindingApprove, 2, approverId);
+        await sql`SAVEPOINT c04w_source_scan_negative`.execute(tx);
+        await sql`UPDATE evidence.file_objects SET scan_status='rejected' WHERE file_object_id=${fileId}::uuid`.execute(tx);
+        await expect(bindingRun(bindingPublish, 3)).rejects.toThrow("C04W_SOURCE_NOT_APPROVED_OR_SCAN_PASS");
+        await sql`ROLLBACK TO SAVEPOINT c04w_source_scan_negative`.execute(tx);
+        const publishedBinding = await bindingRun(bindingPublish, 3);
+        expect(publishedBinding.response.lifecycle_state).toBe("published");
+        await sql`SAVEPOINT c04w_history_negative`.execute(tx);
+        await expect(sql`UPDATE privacy.retention_policy_applicabilities SET source_clause_ref='tampered',row_version=row_version+1
+          WHERE retention_policy_applicability_id=${successorId}::uuid`.execute(tx)).rejects.toThrow("C04W_PUBLISHED_IMMUTABLE");
+        await sql`ROLLBACK TO SAVEPOINT c04w_history_negative`.execute(tx);
+        const historical = await sql<{ id: string }>`SELECT retention_policy_applicability_id::text AS id
+          FROM evidence.evidence_versions WHERE evidence_version_id=${evidenceVersionId}::uuid`.execute(tx);
+        expect(historical.rows[0]?.id).toBe(retentionApplicabilityId);
+
+        // HTTP routing + PostgreSQL authorization. Identity verification is a labelled technical adapter,
+        // not real OIDC login. Route transactions use savepoints inside the outer test rollback.
+        await sql`INSERT INTO iam.role_permissions (role_permission_id,ownership_class,tenant_id,role_id,permission_id)
+          SELECT ${newUuidV7()}::uuid,'TENANT_OWNED',${tenantId}::uuid,${reviewerRoleId}::uuid,permission_id
+            FROM iam.permissions WHERE permission_code='privacy.retention_policy.read' AND lifecycle_state='published'`.execute(tx);
+        const routeDatabase = new Proxy(tx, { get(target, property) {
+          if (property === "transaction") return () => ({ execute: async (callback: (transaction: typeof tx) => Promise<unknown>) => {
+            await sql`SAVEPOINT c04w_http_route`.execute(tx);
+            try {
+              const result = await callback(tx);
+              await sql`RELEASE SAVEPOINT c04w_http_route`.execute(tx);
+              return result;
+            } catch (error) {
+              await sql`ROLLBACK TO SAVEPOINT c04w_http_route`.execute(tx);
+              await sql`RELEASE SAVEPOINT c04w_http_route`.execute(tx);
+              throw error;
+            }
+          } });
+          const value = Reflect.get(target, property, target);
+          return typeof value === "function" ? value.bind(target) : value;
+        } });
+        const http = buildApp(async () => true, {
+          database: routeDatabase as unknown as Kysely<FoundationDatabase>, fileStorage: storage,
+          identityVerifier: { verifyBearerToken: async () => ({ principalId: approverId,
+            principalClass: "HUMAN_INTERACTIVE", tokenId: "isolated-technical-adapter", expiresAt: new Date(Date.now() + 60_000) }) }
+        });
+        try {
+          const headers = { authorization: "Bearer isolated-technical-adapter", "x-tcdx-tenant-id": tenantId };
+          expect((await http.inject({ method: "GET", url: `/api/v1/retention-policy-applicabilities/${successorId}`, headers })).statusCode).toBe(200);
+          expect((await http.inject({ method: "GET", url: `/api/v1/retention-policy-applicabilities/${successorId}`,
+            headers: { ...headers, "x-tcdx-tenant-id": otherTenantId } })).statusCode).toBe(404);
+          for (const invalid of [
+            { headers: {}, body: { reason: "Technical fixture" } },
+            { headers: { "if-match": 'W/"4"' }, body: { reason: "Technical fixture" } },
+            { headers: { "if-match": '"4"' }, body: { reason: "Technical fixture", expected_version: 4 } }
+          ]) {
+            expect((await http.inject({ method: "POST", url: `/api/v1/retention-policy-applicabilities/${laterHold}:release-hold`,
+              headers: { ...headers, ...invalid.headers, "idempotency-key": newUuidV7() }, payload: invalid.body })).statusCode).toBe(400);
+          }
+          expect((await http.inject({ method: "POST", url: `/api/v1/retention-policy-applicabilities/${laterHold}:release-hold`,
+            headers: { ...headers, "if-match": '"4"', "idempotency-key": newUuidV7() }, payload: { reason: "Duplicate technical release" } })).statusCode).toBe(409);
+          await sql`SAVEPOINT c04w_http_no_entitlement`.execute(tx);
+          await sql`UPDATE platform.subscriptions SET starts_at=transaction_timestamp()-interval '1 day',ends_at=transaction_timestamp()
+            WHERE subscription_id=${subscriptionId}::uuid`.execute(tx);
+          expect((await http.inject({ method: "GET", url: `/api/v1/retention-policy-applicabilities/${successorId}`, headers })).statusCode).toBe(403);
+          await sql`ROLLBACK TO SAVEPOINT c04w_http_no_entitlement`.execute(tx);
+        } finally { await http.close(); }
         const request = await executeMutation(tx, fileOwner(requestCreate), requestCreate, {
           body: { request_code: `ISOLATED-REQ-${tenantId.slice(0, 8)}`, control_id: controlId, assigned_membership_id: authorMembershipId },
           idempotencyKey: newUuidV7(), correlationId: newUuidV7()

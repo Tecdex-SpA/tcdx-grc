@@ -8,7 +8,7 @@ const api = parse(openApi);
 describe("Phase6A closed read/vocabulary authority", () => {
   it("maps each adapter to an existing GET and exact published permission", () => {
     const definitions = [...adapterSource.matchAll(/operation: "([^"]+)", path: "([^"]+)", id: "[^"]+", permission: "([^"]+)"/g)].map(match => ({ operation: match[1]!, path: match[2]!, permission: match[3]! }));
-    expect(definitions).toHaveLength(16);
+    expect(definitions).toHaveLength(17);
     for (const definition of definitions) {
       const op = api.paths[definition.path]?.get;
       expect(op?.operationId).toBe(definition.operation); expect(op["x-tcdx-permission"].replaceAll("`", "")).toBe(definition.permission);

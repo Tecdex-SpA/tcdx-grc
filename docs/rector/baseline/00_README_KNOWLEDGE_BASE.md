@@ -4,7 +4,7 @@
 
 Este paquete constituye la base contractual, funcional y de ingeniería para el nuevo desarrollo **TCDX GRC**.
 
-Baseline vigente: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09`. Las referencias v1.3 siguientes documentan historia semántica; no sustituyen 46/47/49 ni el manifest vigente.
+Baseline de esta versión propuesta: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15`. Su entrada en vigencia requiere activación humana y técnica conforme a 47; la v1.10 es la predecesora íntegra. Las referencias v1.3 siguientes documentan historia semántica; no sustituyen 46/47/49 ni el manifest vigente.
 
 No contiene prompts a ejecutar individualmente. Sus archivos son **fuentes de conocimiento y alineamiento** que deben ser leídas y respetadas por ChatGPT, Codex y desarrolladores antes de diseñar o implementar componentes.
 
@@ -126,8 +126,19 @@ La topología distingue de forma expresa nombre lógico de componente, FQDN e IP
 
 ## Estado del baseline
 
-Sólo los archivos `.md` enumerados 00–45, `PRE_IMPLEMENTATION_GATE_REPORT.md` y `SHA256SUMS.txt` integran el paquete. El verificador exige inventario exacto y rechaza archivos normativos adicionales, ausentes o enlaces simbólicos. Hallazgos, cruces, borradores, archivos adjuntos individualmente y revisiones históricas quedan excluidos y no son normativos. La autoridad corresponde exclusivamente a los archivos extraídos del ZIP cuyo checksum coincide con este manifiesto.
+Sólo los archivos `.md` enumerados 00–49, `PRE_IMPLEMENTATION_GATE_REPORT.md` y `SHA256SUMS.txt` integran una baseline activada. El verificador exige inventario exacto y rechaza archivos normativos adicionales, ausentes o enlaces simbólicos. Hallazgos, cruces, borradores, archivos adjuntos individualmente y revisiones históricas quedan excluidos y no son normativos. Este directorio candidato no adquiere autoridad por existir ni por superar una comprobación de hashes.
 
 ## Enmienda interna v1.8
 
 49_GOBIERNO_INTERNO_Y_REVISION_UNIPERSONAL.md es fuente vinculante exclusivamente para aprobación interna por funciones acumuladas. No deroga SoD operacional ni obligaciones externas. Activación y alcance en 47; historia v1.7 protegida.
+
+## Candidato comercial v1.9
+
+La decisión humana `DR-STEP6A3-COMMERCIAL-GOVERNANCE-20261013-02` aprobó el diseño y los bytes candidatos de `GP-STEP6A3-COMMERCIAL-20261013-02`; la reconciliación en 07/08/21/22/23/25/29/30/33/34/42 de esta versión es una nueva manifestación por bytes que exige aprobación y publicación propias. Su preparación no cambia la baseline v1.8 previa, los contratos físicos/ejecutables activos ni los estados de STEP 6A.3/6A.4 por sí sola. Se conserva el dominio público `https://grc.tecdex.net/`.
+
+
+## STEP_6A3 — candidata de incorporación inicial de fuente v1.11
+
+`STATUS=DRAFT_NOT_EFFECTIVE; HUMAN_EXACT_BYTES_REVIEW=PENDING`. Baseline candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15, predecesora TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15. Diseño PO aprobado por SHA `1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b`; constancia `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/PO_DESIGN_APPROVAL_RECEIPT_20261015.json`. Esta sección sólo tendrá efecto después de publicación conforme47/49 y gates físico/ejecutable; no autoriza operación QA ni deploy por sí sola.
+
+Copia completa candidata de51archivos. Sólo los deltas INITIAL_SOURCE indicados modifican la predecesora; ningún archivo de baseline activa o historia se modifica.

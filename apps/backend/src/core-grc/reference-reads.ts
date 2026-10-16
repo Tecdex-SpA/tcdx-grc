@@ -195,6 +195,31 @@ export async function readReferencePage(ex:Executor,actor:CoreActor,kind:Referen
   from="privacy.retention_policies rp";id="rp.retention_policy_id";first='rp.policy_code COLLATE "C"';second="rp.version_number";descending=true;
   // Current physical model has no typed legal applicability binding. Discovery is not eligibility.
   select="rp.retention_policy_id,rp.policy_code,rp.version_number::text,rp.policy_kind,rp.retention_seconds::text,rp.trigger_event_code,rp.precedence_rank,rp.is_mandatory,rp.ownership_class,rp.lifecycle_state,rp.effective_from,rp.effective_to,false AS selectable";
+  if(!history) {
+    const initialActor=actor.roles.includes('TENANT_ADMIN') || actor.roles.includes('EVIDENCE_OWNER');
+    const selectable=`rp.tenant_id=${tenant} AND rp.ownership_class='TENANT_OWNED' AND rp.policy_kind<>'legal_hold' AND ${active}
+      AND EXISTS (SELECT 1 FROM privacy.retention_policy_applicabilities a
+        WHERE a.tenant_id=rp.tenant_id AND a.retention_policy_id=rp.retention_policy_id AND a.purpose='evidence_document'
+        AND ((a.lifecycle_state='published' AND a.effective_from<=${instant} AND (a.effective_to IS NULL OR a.effective_to>${instant}))
+          OR (${initialActor?'TRUE':'FALSE'} AND a.lifecycle_state='draft' AND a.source_evidence_version_id IS NULL
+            AND a.version_number=1 AND a.supersedes_applicability_id IS NULL
+            AND EXISTS (SELECT 1 FROM iam.tenant_memberships tm JOIN iam.membership_roles mr
+              ON mr.tenant_id=tm.tenant_id AND mr.tenant_membership_id=tm.tenant_membership_id
+              JOIN iam.roles rr ON rr.tenant_id=mr.tenant_id AND rr.role_id=mr.role_id
+              WHERE tm.tenant_id=a.tenant_id AND tm.user_identity_id=a.created_by_user_identity_id
+                AND tm.membership_state='active' AND rr.lifecycle_state='published' AND rr.role_code='TENANT_ADMIN'
+                AND mr.scope_kind='tenant' AND mr.valid_from<=${instant} AND (mr.valid_to IS NULL OR mr.valid_to>${instant}))
+            AND NOT EXISTS (SELECT 1 FROM privacy.retention_policy_applicabilities peer
+              JOIN privacy.retention_policies pp ON pp.tenant_id=peer.tenant_id AND pp.retention_policy_id=peer.retention_policy_id
+              WHERE peer.tenant_id=a.tenant_id AND peer.classification=a.classification AND peer.purpose=a.purpose
+                AND (peer.scope_subject_id IS NULL OR peer.scope_subject_id=a.scope_subject_id)
+                AND (peer.processing_activity_id IS NULL OR peer.processing_activity_id=a.processing_activity_id)
+                AND peer.lifecycle_state='published' AND peer.effective_from<=${instant} AND (peer.effective_to IS NULL OR peer.effective_to>${instant})
+                AND pp.lifecycle_state='published' AND pp.policy_kind<>'legal_hold' AND pp.effective_from<=${instant} AND (pp.effective_to IS NULL OR pp.effective_to>${instant})))))`;
+    // Eligibility is contextual and revalidated by the command, never inferred
+    // from publication of an ordinary policy alone.
+    select=select.replace('false AS selectable',`(${selectable}) AS selectable`);
+  }
   if(exactPolicy) clauses.push(`${id}=${bind(exactPolicy,"::uuid")}`);
   for(const [key,expr,cast] of [["retention_policy_id",id,"::uuid"],["policy_kind","rp.policy_kind",""],["version_number","rp.version_number","::bigint"]]) if(q.filters[key!]) clauses.push(`${expr}=${bind(q.filters[key!],cast)}`);
  }

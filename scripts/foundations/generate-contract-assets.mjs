@@ -1482,8 +1482,45 @@ const manifest = {
   }))
 };
 
-writeOrCheck(resolve(root, "database/migrations/manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`);
-writeOrCheck(resolve(root, "database/expected-schema.json"), `${JSON.stringify(extendPhase6a3Inventory(extendMethodologyInventory(expectedInventory(rows))), null, 2)}\n`);
+// Commercial activation consumes the exact human-approved bytes, never a regenerated schema.
+const commercialDirectory = "docs/physical-data-model/amendments/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE";
+const commercialReview = JSON.parse(readFileSync(resolve(root, commercialDirectory, "pending-publication/GATE_REVIEW_MANIFEST.json"), "utf8"));
+const commercialManifestPath = `${commercialDirectory}/09_MIGRATION_MANIFEST_CANDIDATE.json`;
+const commercialManifestBytes = readFileSync(resolve(root, commercialManifestPath), "utf8");
+if (sha256(commercialManifestBytes) !== commercialReview.artifacts.find(a => a.path === commercialManifestPath)?.sha256)
+  throw new Error("Approved commercial migration manifest drift");
+const commercialManifest = JSON.parse(commercialManifestBytes);
+if (JSON.stringify(commercialManifest.migrations.slice(0, -1)) !== JSON.stringify(manifest.migrations)
+  || commercialManifest.migrations.length !== manifest.migrations.length + 1) throw new Error("Historical migration manifest drift");
+const commercialEntry = commercialManifest.migrations.at(-1);
+if (sha256(readFileSync(resolve(migrationDir, commercialEntry.filename))) !== commercialEntry.sha256) throw new Error("Commercial migration bytes drift");
+const publication = JSON.parse(readFileSync(resolve(root, commercialDirectory, "pending-publication/EFFECTIVE_PUBLICATION_MANIFEST.json"), "utf8"));
+const approvedSchema = publication.artifacts.find(a => a.target === "database/expected-schema.json");
+const commercialSchemaBytes = readFileSync(resolve(root, approvedSchema.staged), "utf8");
+if (sha256(commercialSchemaBytes) !== approvedSchema.sha256) throw new Error("Approved commercial schema bytes drift");
+const c04wR2Filename = "20261015000100_c04w_applicability_hold_r2.sql";
+const c04wR2Sha256 = "b2a5bc73f75d7f95fb7ba5068f1b3ea77a923d7da7501446d05455ee545ec523";
+const c04wR2Path = resolve(migrationDir, c04wR2Filename);
+if (sha256(readFileSync(c04wR2Path)) !== c04wR2Sha256) throw new Error("Approved C-04W R2 migration bytes drift");
+const c04wManifest = {
+  ...commercialManifest,
+  migrations: [...commercialManifest.migrations, {
+    id: "20261015000100", filename: c04wR2Filename, sha256: c04wR2Sha256,
+    transactional: true,
+    preconditions: ["QA backup and isolated restore verified", "33 applied migrations", "approved R2 exact SHA-256"],
+    postconditions: ["ledger_outcome=applied", "physical_tables=242", "historical_rows_preserved"]
+  }]
+};
+const c04wSchemaPath = resolve(root, "docs/physical-data-model/candidates/STEP_6A3_C04W_v1.10/EXPECTED_SCHEMA_C04W_CANDIDATE.json");
+const c04wSchemaBytes = readFileSync(c04wSchemaPath, "utf8");
+const c04wSchema = JSON.parse(c04wSchemaBytes);
+const commercialSchema = JSON.parse(commercialSchemaBytes);
+if (c04wSchema.tableCount !== 242 || c04wSchema.tables.length !== 242 ||
+    JSON.stringify(c04wSchema.tables.slice(0, commercialSchema.tables.length).map(t => t.name)) !==
+    JSON.stringify(commercialSchema.tables.map(t => t.name)))
+  throw new Error("C-04W physical schema candidate does not extend the commercial schema");
+writeOrCheck(resolve(root, "database/migrations/manifest.json"), `${JSON.stringify(c04wManifest, null, 2)}\n`);
+writeOrCheck(resolve(root, "database/expected-schema.json"), c04wSchemaBytes);
 const canonicalSeedSql = historicalMigrations.find(([filename]) => filename === "20260916000900_canonical_seeds.sql")[1];
 writeOrCheck(resolve(root, "database/seed-manifest.json"), `${JSON.stringify({
   manifestVersion: 2,
@@ -1617,7 +1654,22 @@ if (openApiWithCount === openApiSource && !openApiSource.includes(`Publica ${ope
   throw new Error("OpenAPI operation summary missing");
 if (matrixWithCount === matrixSource && !matrixSource.includes(`\`CONTRACTUAL_OPERATIONS=${operationIds.length}\``))
   throw new Error("Matrix operation summary missing");
-writeOrCheck(openApiPath, openApiWithCount);
-writeOrCheck(operationMatrixPath, matrixWithCount);
+// Published INITIAL_SOURCE snapshots are approved as exact bytes. Their leading
+// counts describe the predecessor; the appended operation is authoritative.
+// Do not normalize a sealed contract during physical-asset generation.
+const initialSourcePublication = resolve(root, "docs/executable-contracts/amendments/STEP_6A3_INITIAL_SOURCE_SUBMIT_SCOPE_v1.11/CONTRACT_PUBLICATION_RECEIPT.json");
+if (existsSync(initialSourcePublication)) {
+  const publication = JSON.parse(readFileSync(initialSourcePublication, "utf8"));
+  if (publication.status !== "PUBLISHED_LOCAL_EFFECTIVE") throw new Error("Initial source publication is not effective");
+  for (const path of [openApiPath, operationMatrixPath]) {
+    const entry = publication.files.find(entry => resolve(root, entry.path) === path);
+    if (!entry || createHash("sha256").update(readFileSync(path)).digest("hex") !== entry.sha256) throw new Error("Published initial source contract drift");
+  }
+} else {
+  writeOrCheck(openApiPath, openApiWithCount);
+  writeOrCheck(operationMatrixPath, matrixWithCount);
+}
 
-console.log(JSON.stringify({ mode: checkOnly ? "check" : "write", physicalTables: extendPhase6a3Inventory(extendMethodologyInventory(expectedInventory(rows))).tableCount, publishedPermissions: 175, permissionsAfterCatalogRelease: 163, lifecycleEdges: 103, rawLifecycleDefinitionRows: 140, migrations: migrations.length, operations: operationIds.length, readOperations: readCount }, null, 2));
+const commercialApi = JSON.parse(readFileSync(resolve(root, "docs/executable-contracts/amendments/STEP_6A3_COMMERCIAL_v1.9/02_OPENAPI_COMMERCIAL_MERGED.json"), "utf8"));
+const commercialOperations = Object.values(commercialApi.paths).flatMap(path => Object.values(path).filter(value => value && typeof value === "object" && value.operationId)).length;
+console.log(JSON.stringify({ mode: checkOnly ? "check" : "write", physicalTables: c04wSchema.tableCount, publishedPermissions: 175, permissionsAfterCatalogRelease: 163, lifecycleEdges: 103, rawLifecycleDefinitionRows: 140, migrations: c04wManifest.migrations.length, operations: commercialOperations, baseOperations: operationIds.length, readOperations: readCount }, null, 2));

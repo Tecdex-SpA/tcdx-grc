@@ -1,0 +1,20 @@
+{
+  "scope": "STEP_6A3_C04W_QA_PREMIGRATION",
+  "status": "PASS_ISOLATED_CURRENT_QA_TECHNICAL",
+  "qa_host": "db-v4.tcdx.int",
+  "database": "tcdx-grc",
+  "postgresql_version": "16.15",
+  "backup_path": "/var/backups/tcdx-grc/step6a3-basebackup-w5UXYYlC/base.tar.gpg",
+  "backup_sha256": "776b79ea7f7f44850a1175441086a95ba8d3a45677b8437abd9557982072f60e",
+  "backup_ciphertext_bytes": 233062276,
+  "backup_stream_and_tar_structure": "PASS",
+  "pg_verifybackup": "PASS",
+  "restore_container": "step6a3-pg16-restore",
+  "restore_pgdata": "/var/lib/postgresql/16/step6a3-current",
+  "restore_port": 55434,
+  "qa_counts": { "migrations": 33, "tenants": 3, "subscriptions": 5, "entitlements": 72 },
+  "restore_counts": { "migrations": 33, "tenants": 3, "subscriptions": 5, "entitlements": 72 },
+  "startup": "pg_ctl timed out while recovery completed; PostgreSQL log subsequently recorded ready to accept connections and a read-only query succeeded",
+  "r2_applied_to_qa": false,
+  "source": "2026-10-15 operator terminal output and read-only SSH/LXD verification in this execution"
+}

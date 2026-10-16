@@ -1,0 +1,103 @@
+{
+  "recorded_at_utc": "2026-10-15T20:18:40.913994+00:00",
+  "results": [
+    {
+      "name": "v110-governance",
+      "command": [
+        "python3",
+        "scripts/verify-v110-governance.py"
+      ],
+      "exit_code": 0,
+      "log_sha256": "1eadbe368072f8d355e44318e56261ba93b0af3c0911c92fd8982fc1250e08f8"
+    },
+    {
+      "name": "rector-governance",
+      "command": [
+        "bash",
+        "scripts/verify-rector-governance.sh"
+      ],
+      "exit_code": 0,
+      "log_sha256": "9b3b94ec85592aec30fd97184369b71bb91d861d0ae2f8fd0535e860b194b0ee"
+    },
+    {
+      "name": "rector-status",
+      "command": [
+        "bash",
+        "scripts/test-rector-governance-status.sh"
+      ],
+      "exit_code": 0,
+      "log_sha256": "4a950b39b20f2de1440a2b45b243b63df607fa3ede7f7e32e9f7e9da71864597"
+    },
+    {
+      "name": "current-step6a3",
+      "command": [
+        "python3",
+        "scripts/verify-phase6a3-current.py"
+      ],
+      "exit_code": 0,
+      "log_sha256": "7be326b0fc9b62e717bb3bc0c2d35285c3752758d7ba851d288a6d874ecc7ca3"
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "backend-typecheck",
+      "command": [
+        "/tmp/tcdx-grc-npm-cache/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+        "node_modules/typescript/bin/tsc",
+        "-p",
+        "apps/backend/tsconfig.json",
+        "--noEmit"
+      ],
+      "exit_code": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "frontend-typecheck",
+      "command": [
+        "/tmp/tcdx-grc-npm-cache/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+        "node_modules/typescript/bin/tsc",
+        "-p",
+        "apps/frontend/tsconfig.json",
+        "--noEmit"
+      ],
+      "exit_code": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "generated-contracts",
+      "command": [
+        "/tmp/tcdx-grc-npm-cache/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+        "scripts/foundations/generate-contract-assets.mjs",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log_sha256": "f08f87f9f2256ad66f6e33107424f39b7ddccbf4f0bec9177c65aa17ffe733e3"
+    },
+    {
+      "name": "final-spanish-ui",
+      "command": [
+        "/tmp/tcdx-grc-npm-cache/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "e2e/core-grc-ui.spec.ts",
+        "--grep",
+        "C-04W company settings|Pol\u00edticas de retenci\u00f3n mantiene",
+        "--project=chromium-desktop",
+        "--project=chromium-narrow",
+        "--reporter=line",
+        "--output=/private/tmp/tcdx-grc-step6a3-prep-20261015/docs/phase6a/STEP_6A3/evidence/account-continuity-20261015/playwright-output"
+      ],
+      "exit_code": 1,
+      "log_sha256": "4e0c522fb3d3668f21ef21984042d2fb1335eb0b969bfdd24759c68ac3ccb6ec"
+    }
+  ],
+  "ui_scope": "LOCAL_CURRENT_SOURCE_MOCK_API; no human acceptance or authenticated QA screenshot claimed"
+}

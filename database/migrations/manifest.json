@@ -614,6 +614,28 @@
         "existing_baseline_tenant_instances=exact_approved_pairs",
         "no_custom_role_or_membership_grants"
       ]
+    },
+    {
+      "id": "20261013000100",
+      "filename": "20261013000100_commercial_contract_reconciliation.sql",
+      "sha256": "ed6ca86b9234672fcb55293b5e2a69d09e999e84b3c7d75d56ccf0cd86479ae5",
+      "transactional": true
+    },
+    {
+      "id": "20261015000100",
+      "filename": "20261015000100_c04w_applicability_hold_r2.sql",
+      "sha256": "b2a5bc73f75d7f95fb7ba5068f1b3ea77a923d7da7501446d05455ee545ec523",
+      "transactional": true,
+      "preconditions": [
+        "QA backup and isolated restore verified",
+        "33 applied migrations",
+        "approved R2 exact SHA-256"
+      ],
+      "postconditions": [
+        "ledger_outcome=applied",
+        "physical_tables=242",
+        "historical_rows_preserved"
+      ]
     }
   ]
 }

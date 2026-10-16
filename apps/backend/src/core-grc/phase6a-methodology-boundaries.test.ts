@@ -143,19 +143,23 @@ describe("STEP6A.3 existing optional assessment configuration", () => {
   });
 });
 
-function submissionFixture(minimumCoverage: number) {
+function submissionFixture(minimumCoverage: number, domain: MethodologyDomain = "controls") {
   const principal = actor();
   const id = newUuidV7();
   const methodId = newUuidV7();
-  const definition = mutations.get("controlAssessmentSubmit")!;
+  const definition = mutations.get(domain === "controls" ? "controlAssessmentSubmit" : "requirementAssessmentSubmit")!;
+  principal.permissions = new Set([...principal.permissions, definition.permission]);
+  principal.permissionScopes = new Map([...principal.permissionScopes, [definition.permission, new Set(["tenant"] as const)]]);
+  const table = domain === "controls" ? "controls.control_assessments" : "regulatory.requirement_assessments";
   let saved: Row | undefined;
   const db = executor(query => {
-    if (query.sql.startsWith("SELECT") && query.sql.includes("FROM controls.control_assessments t")) {
-      return { rows: [{ control_assessment_id: id, methodology_version_ref: methodId, effective_configuration_id: null, row_version: 1, lifecycle_state: "in_progress" }] };
+    if (query.sql.includes("FROM platform.subscriptions")) return { rows: [] };
+    if (query.sql.startsWith("SELECT") && query.sql.includes(`FROM ${table} t`)) {
+      return { rows: [{ [domain === "controls" ? "control_assessment_id" : "requirement_assessment_id"]: id, methodology_version_ref: methodId, effective_configuration_id: null, row_version: 1, lifecycle_state: "in_progress" }] };
     }
     if (query.sql.includes("WITH current_edges")) return { rows: [{ to_state: "completed", audit_event_code: definition.auditEvent, sod_policy_ref: "none", scope_kind: "tenant" }] };
-    if (query.sql.includes("JOIN data.formula_definitions")) return { rows: [{ ...method("controls", minimumCoverage), methodology_version_ref: methodId }] };
-    if (query.sql.startsWith("UPDATE controls.control_assessments SET")) {
+    if (query.sql.includes("JOIN data.formula_definitions")) return { rows: [{ ...method(domain, minimumCoverage), methodology_version_ref: methodId }] };
+    if (query.sql.startsWith(`UPDATE ${table} SET`)) {
       const assignments = [...query.sql.matchAll(/"([a-z_]+)"=\$(\d+)/g)];
       saved = Object.fromEntries(assignments.map(match => [match[1]!, query.parameters[Number(match[2]) - 1]]));
       return { rows: [{ ...saved, control_assessment_id: id, row_version: 2 }] };
@@ -165,11 +169,11 @@ function submissionFixture(minimumCoverage: number) {
   return { run: (body: Row) => definition.execute({ transaction: db.database, actor: principal, targetId: id, body: { expected_version: 1, ...body } }), saved: () => saved };
 }
 
-describe("STEP6A.3 existing Controls calculation, not methodological signoff", () => {
+describe("STEP6A.3 Controls diagnostic calculation without methodological signoff", () => {
   it("calculates the conservative minimum with EC absent", async () => {
     const fixture = submissionFixture(80);
     await fixture.run({ result_status: "valid", domain_conclusion: "effective", design_effectiveness: 90, operating_effectiveness: 70, coverage_percent: 80 });
-    expect(fixture.saved()).toMatchObject({ overall_effectiveness: 70, result_status: "valid", coverage_percent: 80 });
+    expect(fixture.saved()).toMatchObject({ overall_effectiveness: 70, result_status: "insufficient_data", domain_conclusion: null, coverage_percent: 80 });
   });
 
   it("uses the method's typed coverage threshold rather than assuming the baseline value", async () => {
@@ -192,5 +196,64 @@ describe("STEP6A.3 existing Controls calculation, not methodological signoff", (
     const absent = submissionFixture(80);
     await absent.run({ result_status: "no_data" });
     expect(absent.saved()).toMatchObject({ overall_effectiveness: null, design_effectiveness: null, operating_effectiveness: null });
+  });
+});
+
+describe("CFG-D official publication guard", () => {
+  it("does not turn a compliance caller's valid claim and full coverage into an official conclusion", async () => {
+    const fixture = submissionFixture(80, "compliance");
+    await fixture.run({ result_status: "valid", domain_conclusion: "compliant", coverage_percent: 100 });
+    expect(fixture.saved()).toMatchObject({ result_status: "insufficient_data", domain_conclusion: null, coverage_percent: 100 });
+  });
+
+  it.each(["compliance", "controls"] as const)("preserves causal %s diagnostic states without inventing population, evidence or zero", async domain => {
+    for (const status of ["no_data", "dependency_pending", "conflicting_sources", "source_error", "stale_source", "insufficient_data"]) {
+      const fixture = submissionFixture(80, domain);
+      await fixture.run({ result_status: status });
+      expect(fixture.saved()).toMatchObject({ result_status: status, domain_conclusion: null, coverage_percent: null });
+      expect(fixture.saved()).not.toHaveProperty("configuration_mode");
+    }
+  });
+
+  it("rejects a lone effectiveness dimension and below-threshold valid claim without persisting either", async () => {
+    for (const body of [
+      { result_status: "valid", design_effectiveness: 90, coverage_percent: 100 },
+      { result_status: "valid", design_effectiveness: 90, operating_effectiveness: 90, coverage_percent: 79, domain_conclusion: "effective" }
+    ]) {
+      const fixture = submissionFixture(80);
+      await expect(fixture.run(body)).rejects.toMatchObject({ code: "TCDX.VALIDATION.FAILED" });
+      expect(fixture.saved()).toBeUndefined();
+    }
+  });
+
+  it.each(["compliance", "controls"] as const)("blocks a %s v1 valid preview at approval without mutating history", async domain => {
+    const principal = actor();
+    const operationId = domain === "compliance" ? "requirementAssessmentApprove" : "controlAssessmentApprove";
+    const definition = mutations.get(operationId)!;
+    principal.permissions = new Set([...principal.permissions, definition.permission]);
+    principal.permissionScopes = new Map([...principal.permissionScopes, [definition.permission, new Set(["tenant"] as const)]]);
+    const id = newUuidV7();
+    const methodId = newUuidV7();
+    const table = domain === "compliance" ? "regulatory.requirement_assessments" : "controls.control_assessments";
+    const db = executor(query => {
+      if (query.sql.includes("FROM platform.subscriptions")) return { rows: [] };
+      if (query.sql.includes(`FROM ${table} t`)) return { rows: [{
+        [domain === "compliance" ? "requirement_assessment_id" : "control_assessment_id"]: id,
+        row_version: 2, lifecycle_state: domain === "compliance" ? "assessed" : "reviewed",
+        result_status: "valid", methodology_version_ref: methodId
+      }] };
+      if (query.sql.includes("WITH current_edges")) return { rows: [{
+        to_state: "approved", audit_event_code: definition.auditEvent,
+        sod_policy_ref: "contract:test", scope_kind: "tenant"
+      }] };
+      if (query.sql.includes("SELECT COALESCE(updated_by_user_identity_id")) return { rows: [{ prior_actor: newUuidV7() }] };
+      if (query.sql.includes("JOIN data.formula_definitions")) return { rows: [{ ...method(domain), methodology_version_ref: methodId }] };
+      throw new Error(`No approval write expected: ${query.sql}`);
+    });
+    await expect(definition.execute({ transaction: db.database, actor: principal, targetId: id,
+      body: { expected_version: 2 } })).rejects.toMatchObject({
+      code: "TCDX.INVARIANT.VIOLATION", statusCode: 422
+    });
+    expect(db.executeQuery.mock.calls.some(([query]) => query.sql.startsWith(`UPDATE ${table}`))).toBe(false);
   });
 });

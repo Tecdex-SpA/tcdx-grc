@@ -1,0 +1,781 @@
+{
+  "recorded_at_utc": "2026-10-15T22:48:14.381198+00:00",
+  "source_sha256": "90f59780884c439b36f51f4a91a4311b0baa34f272ce50c1b4d8b1a8c4ac7a86",
+  "source_hash_method": "SHA256 of canonical JSON sorted keys separators comma/colon of sorted per-file inventory",
+  "archive": "/tmp/tcdx-step6a3-initial-source-backend-90f59780884c.tgz",
+  "archive_sha256": "9a3f821870e0a2c014c10d72462eeccaf0dde519455b9c3e95b831e20c5c4a90",
+  "dockerfile": "apps/backend/Dockerfile",
+  "platform": "linux/amd64",
+  "files": [
+    {
+      "path": ".dockerignore",
+      "sha256": "cd444c0666ada4c0b40969ffef7b182f0ab81bf8e35b9a802da09bf5490bf3d0"
+    },
+    {
+      "path": "apps/backend/Dockerfile",
+      "sha256": "47ebf8eaa031510da799c7aadfd1f71e92ccce21c6d942c3ffc52980d14e21c6"
+    },
+    {
+      "path": "apps/backend/package.json",
+      "sha256": "6ed0db1540be4e8a5741d2616c83c471499b67ec59154fcf09262f0363b301f3"
+    },
+    {
+      "path": "apps/backend/src/app.test.ts",
+      "sha256": "372a4c1bc1098cd8b4566c061fff918970d0e82f96162b731f5861be92c60a62"
+    },
+    {
+      "path": "apps/backend/src/app.ts",
+      "sha256": "6b0bdfc6c78fdca3c0a419a63acc45d4bb92f5f780382cf07a1576f69589b4ce"
+    },
+    {
+      "path": "apps/backend/src/config.test.ts",
+      "sha256": "0f5b79b8dd3009797acf781a53b2df4303ff9d51ff211125c23b5c0bbd25c05a"
+    },
+    {
+      "path": "apps/backend/src/config.ts",
+      "sha256": "5a2552c9749acfb11d7c15b4c42e9de284655f8e49532fad75dc4a23ed41ea74"
+    },
+    {
+      "path": "apps/backend/src/configuration/effective-read.postgres.test.ts",
+      "sha256": "61b148d58e3cc273e27830d3a942a95c1940535fee6ca7288914edcfe8cafe67"
+    },
+    {
+      "path": "apps/backend/src/configuration/effective-read.test.ts",
+      "sha256": "3d7833b720a4ab71c56247355d6cd2debb81e2d5cacc71017fe573f83b40b811"
+    },
+    {
+      "path": "apps/backend/src/configuration/effective-read.ts",
+      "sha256": "32927583488d8ce30f9604b281a66089aadf5c519b7394fcbdeb3bf8e0ee3006"
+    },
+    {
+      "path": "apps/backend/src/configuration/resolver.test.ts",
+      "sha256": "9cde2cc90359fe941ae0daebc8db119df6e9e5a9540e19af39b78978af984001"
+    },
+    {
+      "path": "apps/backend/src/configuration/resolver.ts",
+      "sha256": "35e3bb6ce93d3bdfb44bd0db6e7775776903524e0751f08f17bc8904ad9a5cc5"
+    },
+    {
+      "path": "apps/backend/src/core-grc/browser-file-routes.test.ts",
+      "sha256": "d7c34de34c480a56d41e732cd4905a87128e1f68da5f95dccda7c7e52c9867fe"
+    },
+    {
+      "path": "apps/backend/src/core-grc/core-grc.test.ts",
+      "sha256": "7f8dcdc5e2b5bcd4e775300162472846fc8e7443f21626af5d06d96fa3d63703"
+    },
+    {
+      "path": "apps/backend/src/core-grc/initial-retention-source.postgres.test.ts",
+      "sha256": "705fc3b8fe301219c6e9f521e23ec774b6263ad0aed6dcfd44418b9b3f1a3aa3"
+    },
+    {
+      "path": "apps/backend/src/core-grc/initial-retention-source.test.ts",
+      "sha256": "d1812618731401bd557eabd60fc2f10ec68772dde100b16e4516dec7148d7776"
+    },
+    {
+      "path": "apps/backend/src/core-grc/initial-retention-source.ts",
+      "sha256": "3145cc590b5c63bd90144eebdce78f0493586a434c22f2330e285752c1484343"
+    },
+    {
+      "path": "apps/backend/src/core-grc/methodologies.postgres.test.ts",
+      "sha256": "10ad081c727b87626ffb722b96970995cc97f076a20c10a8e6a97f8fa4a5862e"
+    },
+    {
+      "path": "apps/backend/src/core-grc/methodologies.ts",
+      "sha256": "f26fae3f8db3af0dcd64eba2feacb7c55c91382f67bac13c1772765490695c3b"
+    },
+    {
+      "path": "apps/backend/src/core-grc/model.ts",
+      "sha256": "0537b28658dc3c3b2083a2d6d07a854a31f2c040ccd1a017f3b83409ac8b66f9"
+    },
+    {
+      "path": "apps/backend/src/core-grc/phase5-final-closure.test.ts",
+      "sha256": "873a931ea6f78c9186c447b5b40b9d663c16ecba28f1857814093eb22bb8906d"
+    },
+    {
+      "path": "apps/backend/src/core-grc/phase5-lifecycle.postgres.test.ts",
+      "sha256": "4162f19c9387a73094587298b7411e76b0b0bc78bc707314bee24f83d02e5efb"
+    },
+    {
+      "path": "apps/backend/src/core-grc/phase6a-configuration-integrity.test.ts",
+      "sha256": "a289d585aed88a291ac9e21cce728684099b6051a8ed68be4fe1194f21cd5933"
+    },
+    {
+      "path": "apps/backend/src/core-grc/phase6a-configuration-reference-integrity.test.ts",
+      "sha256": "15ac5ad1daf2d664b3f04a1b826c291ff13abf35ba727148bf6102cf68c416ee"
+    },
+    {
+      "path": "apps/backend/src/core-grc/phase6a-methodology-boundaries.test.ts",
+      "sha256": "d98f1ffca0c4423e9f8a2af4061e8f1a16999b8e57e315e28666a80161d398ba"
+    },
+    {
+      "path": "apps/backend/src/core-grc/reference-reads.postgres.test.ts",
+      "sha256": "b602b7939d9dc42aed16310217e0ac157c1a1539fe3288bcccfbddb893190e02"
+    },
+    {
+      "path": "apps/backend/src/core-grc/reference-reads.test.ts",
+      "sha256": "764225546a5144823aee23eaaa35af64cf4306cff49956a5573a3cd844cc03fa"
+    },
+    {
+      "path": "apps/backend/src/core-grc/reference-reads.ts",
+      "sha256": "435cd42c47e048e7300c1519f9b0c0363c6754a92ee1b12c05cdff6c76bce3da"
+    },
+    {
+      "path": "apps/backend/src/core-grc/repository.ts",
+      "sha256": "3d86b773d46ab78a16ac822dab341e68fff8efb5065e13800373671c99ce2017"
+    },
+    {
+      "path": "apps/backend/src/core-grc/retention-applicability.test.ts",
+      "sha256": "19e72fe980cfbe8f33b4f49269eb015da78838f970521a8b4ed4779ed06276ea"
+    },
+    {
+      "path": "apps/backend/src/core-grc/retention-applicability.ts",
+      "sha256": "eb781e97a0209a3b3d1019111a550fb884d194bcf9b6b7835793d2e151a77a15"
+    },
+    {
+      "path": "apps/backend/src/core-grc/retention-policy.test.ts",
+      "sha256": "f53f7baf1b5ac6574ae39b7307bca98c714877743902945151d42c5c417263f5"
+    },
+    {
+      "path": "apps/backend/src/core-grc/retention-source-read.test.ts",
+      "sha256": "6a6502e62e07f1ed6ea092b4ab9ad21c78eeebadac13049ea0dbe43b01af59d8"
+    },
+    {
+      "path": "apps/backend/src/core-grc/routes.test.ts",
+      "sha256": "e418d5d0f63412748465655cf921c06dcda64e9c5780983ef6358beccd6bd800"
+    },
+    {
+      "path": "apps/backend/src/core-grc/routes.ts",
+      "sha256": "9e2307a7d736016a52ef451ce8df35e96299835ccd0bf87d82cd99f7e672315a"
+    },
+    {
+      "path": "apps/backend/src/core-grc/security.ts",
+      "sha256": "5b99f4b25dfbaa4255cbda2f1573cbb2fee9aaa90ae2d58f4615336a8ba06eef"
+    },
+    {
+      "path": "apps/backend/src/core-grc/service.ts",
+      "sha256": "6937db83507ea08cc3682fb17b1ba4c20a8c0e5dca016f34ce8d975d7d3c2422"
+    },
+    {
+      "path": "apps/backend/src/core-grc/subject-create.ts",
+      "sha256": "5abe2bc8e34789fbf6cc5ec5b3ff581b01818a53a87ced57146f7af64845c5e4"
+    },
+    {
+      "path": "apps/backend/src/core-grc/subject-read.ts",
+      "sha256": "8ad20d23964dbd4e0f100399f45449dab273ecf94192d5f07d6528284c3b7803"
+    },
+    {
+      "path": "apps/backend/src/core-grc/vocabulary-provenance.test.ts",
+      "sha256": "c4243fd1738ae303a3bdfdfa9917b3866fed3c0b5377ad7ed65441feb5c50b05"
+    },
+    {
+      "path": "apps/backend/src/core-grc/vocabulary-provenance.ts",
+      "sha256": "9b5fcd7f6c4e954b155eda9eccd0f905174c58b65d05d9cba47ead9fc4d6aec9"
+    },
+    {
+      "path": "apps/backend/src/database.ts",
+      "sha256": "713110625f9effab4f453dfbe1dde703466b7b1cea4060e7b2000205de321955"
+    },
+    {
+      "path": "apps/backend/src/errors.ts",
+      "sha256": "be1520332655add058c65808010ee7d6d96882e72fca7372ebec8900c3b776b7"
+    },
+    {
+      "path": "apps/backend/src/index.ts",
+      "sha256": "57b02256a5b74352885b74054694955fce0de453dadc44571f2d051d0b2ccd91"
+    },
+    {
+      "path": "apps/backend/src/managed-identity-config-preflight.ts",
+      "sha256": "1b35d1f4a914bf73c9d214b2cb4940f0438c0fdd3c079a1a043fde5f15ea934c"
+    },
+    {
+      "path": "apps/backend/src/persistence/foundation-records.ts",
+      "sha256": "34d0b88b7db9602d86f98c2e29c255cc2540c4e83f91f8756778a4eafcb92cfe"
+    },
+    {
+      "path": "apps/backend/src/persistence/outbox-worker.test.ts",
+      "sha256": "f43be594ecb274ef920be401e21c2a85ec92a796af05423ea3ace490978d1205"
+    },
+    {
+      "path": "apps/backend/src/persistence/outbox-worker.ts",
+      "sha256": "c91c2894788c6efd37e3d1868a5403377d23daad16e68c7b8a74aef989bf2a36"
+    },
+    {
+      "path": "apps/backend/src/ports/ai-service.ts",
+      "sha256": "353f55388f230bae76bcac65ec54dc7cb5e448fb8a478e50775e66a7b1bffce9"
+    },
+    {
+      "path": "apps/backend/src/ports/boundaries.test.ts",
+      "sha256": "065602a3e74e5057709a9d98286dd9b4ea35c6abbb8e6cb4244cb5af5c54bd78"
+    },
+    {
+      "path": "apps/backend/src/ports/file-storage.ts",
+      "sha256": "edbc181b4ac7095d77e911ee9434c23a973078f506213da7d90e79023d7d8834"
+    },
+    {
+      "path": "apps/backend/src/ports/minio-bootstrap.ts",
+      "sha256": "85347464c844d91822844d9874ee343f92b603641fdbbb40b23d23bd8a167892"
+    },
+    {
+      "path": "apps/backend/src/ports/minio-file-storage.test.ts",
+      "sha256": "0d2ab3f28ee03841e8c6402d98def7e1940ff206a26394e10933198ce0208e18"
+    },
+    {
+      "path": "apps/backend/src/ports/minio-file-storage.ts",
+      "sha256": "126941e4600b92f091127124a5943815d8bcc3ae362296c2dbfe83333067cd2d"
+    },
+    {
+      "path": "apps/backend/src/ports/observability.ts",
+      "sha256": "29a9f0aea8721ff86ebf28d023cce58eb6e991700b046dc93a485860139466ae"
+    },
+    {
+      "path": "apps/backend/src/regulatory/catalog-v1.1.test.ts",
+      "sha256": "4180907cd381975ca48a8541da92ecc3c659fd232d44f8eb391f2d0499747247"
+    },
+    {
+      "path": "apps/backend/src/regulatory/catalog-v1.1.ts",
+      "sha256": "5dad0e919d22aa6236e732ec75c1a00091b4243aebe8ee76c7deac99810804d0"
+    },
+    {
+      "path": "apps/backend/src/regulatory/coverage.ts",
+      "sha256": "e4af9c52833572e157a7aa7ee91da85440a7acbc4b335d8c216b0de2f11479b6"
+    },
+    {
+      "path": "apps/backend/src/regulatory/hash.ts",
+      "sha256": "edad6b1a92c369a87fe5b2b13c988ba197e5cbbe6dd4d168c295ca5909fcde52"
+    },
+    {
+      "path": "apps/backend/src/regulatory/memory-repository.ts",
+      "sha256": "5443b447d0c672292f7007d24cba4a24e4c112e04a82f27ec0f64e43d234bb28"
+    },
+    {
+      "path": "apps/backend/src/regulatory/model.ts",
+      "sha256": "9fe887150018f37e0ff84931325986d0b80c7f1417d97ee507bd66bb78a5be14"
+    },
+    {
+      "path": "apps/backend/src/regulatory/pack-contract-routes.test.ts",
+      "sha256": "ffb016e8dce12c1ecf87ba63cc67545f69c1dc71d3237109674d6f70a247d585"
+    },
+    {
+      "path": "apps/backend/src/regulatory/pack-contract.ts",
+      "sha256": "ef9c1ed1b0eff145146d309405bf945f38066c4590a3f0fb99c87f9611441d9d"
+    },
+    {
+      "path": "apps/backend/src/regulatory/pack-entitlement.test.ts",
+      "sha256": "8f7d371229e05d8333775066f820f8db78cbf5180bc3be3c4a9eb0c2941d8675"
+    },
+    {
+      "path": "apps/backend/src/regulatory/pack-entitlement.ts",
+      "sha256": "72bf00a5274510143900c752caa1aa1b4ee8216b93722faad42cc93042a30938"
+    },
+    {
+      "path": "apps/backend/src/regulatory/pack-temporal.postgres.test.ts",
+      "sha256": "431e930bb63bfcb17896d14e133d8b86ace775ecefc8b643b401fefccb0db8f0"
+    },
+    {
+      "path": "apps/backend/src/regulatory/phase5-plus-validation.postgres.test.ts",
+      "sha256": "89b844bfb81bde50d453b854e21293ce3b2c4cc9cfecf9de264ff37ab100b109"
+    },
+    {
+      "path": "apps/backend/src/regulatory/pipeline.test.ts",
+      "sha256": "ce1410f8c36029150c9c0e93356664cdaf4f05dc3f2324d761b8068542c03533"
+    },
+    {
+      "path": "apps/backend/src/regulatory/pipeline.ts",
+      "sha256": "ecc85d546f6b33a804c3dd0e612ff53a8129fb9a79730fa6ed84d632744aef56"
+    },
+    {
+      "path": "apps/backend/src/regulatory/postgres-repository.ts",
+      "sha256": "0e6e295afeb6ea6e916eb6ab967ab0d4027be29577ec9fbcd72a64405386ff86"
+    },
+    {
+      "path": "apps/backend/src/regulatory/repository.ts",
+      "sha256": "f9b9faef0d23ddfe1437be07b3cf6c804b059d6e3ebb141a9d443bfda71f1ece"
+    },
+    {
+      "path": "apps/backend/src/regulatory/tenant-classification.ts",
+      "sha256": "73dbf26537c7b87089f0b5b63691bc5734063f2339e5910b151070abcbca8003"
+    },
+    {
+      "path": "apps/backend/src/regulatory/tenant-read.ts",
+      "sha256": "90b2121494abfafcde87e8af13392522df24eab5113b694c198d559b43e3c970"
+    },
+    {
+      "path": "apps/backend/src/regulatory/validation-access.ts",
+      "sha256": "31c6674290e2ed68b3c996ad082d389d36857211cccb017f772362f984805869"
+    },
+    {
+      "path": "apps/backend/src/regulatory/validation-candidates-routes.test.ts",
+      "sha256": "5aac843221e867d521457f32b4aa0dabda9164ac1f89a2466e46dcea78d0a2c7"
+    },
+    {
+      "path": "apps/backend/src/regulatory/validation-candidates.postgres.test.ts",
+      "sha256": "e4324fdd6e4c79290d73cd8543d0573793a0972df74e7d678da68711e180ead0"
+    },
+    {
+      "path": "apps/backend/src/regulatory/validation-candidates.ts",
+      "sha256": "b0d30f08917dd4e7abe291c2cc4aaddd86782a75eabd23e4ef0dc1583abedcde"
+    },
+    {
+      "path": "apps/backend/src/regulatory/validator.ts",
+      "sha256": "5465f7bf016b2f3400976e79978850bcc13c97ec64bdbc25595e72e1e93db3ed"
+    },
+    {
+      "path": "apps/backend/src/security/administrative-read.ts",
+      "sha256": "f69ec78b770ba9787de7e31ce20dac07cd5dda9a710fa55424450d9b0c6792cd"
+    },
+    {
+      "path": "apps/backend/src/security/application-token.ts",
+      "sha256": "f82c39c22f80414fa30fdfca80c6df8d3433e31508a7d026da7a860c57d983a8"
+    },
+    {
+      "path": "apps/backend/src/security/authentication.test.ts",
+      "sha256": "5e347fb990db58478d5d6e0aae9a01861a80964aa9da8e82855036752a9e3a96"
+    },
+    {
+      "path": "apps/backend/src/security/authentication.ts",
+      "sha256": "93a3015225a73c16aafb1a8775e7d3852907a1d170ace37cc5f7958afd8967a7"
+    },
+    {
+      "path": "apps/backend/src/security/authorization.test.ts",
+      "sha256": "c4c4ada07fb5436ab016fafdee4e8e57a8dd96340c649c9bd3ed48a7227ccc27"
+    },
+    {
+      "path": "apps/backend/src/security/authorization.ts",
+      "sha256": "d2fab22dcc4517c5bb4169cb57be9f6758f4c6c199ddd59b76bec2031f97a359"
+    },
+    {
+      "path": "apps/backend/src/security/c04w-lifecycle-publication.postgres.test.ts",
+      "sha256": "d419346c70203ed06750340350ea06d0ab17234cc279892c37c596d6fdf36243"
+    },
+    {
+      "path": "apps/backend/src/security/c04w-lifecycle-publication.test.ts",
+      "sha256": "2a67dbc9589593bf5839dc07c1aa9432ef65704b37d7368530d4adae779a4e1d"
+    },
+    {
+      "path": "apps/backend/src/security/c04w-lifecycle-publication.ts",
+      "sha256": "4068bebb0871100ea81f44ed7821dc1f84df1fffcb907155fa8900154abf7db1"
+    },
+    {
+      "path": "apps/backend/src/security/c04w-rbac-publication.postgres.test.ts",
+      "sha256": "0d7a2db53b87de8b4d47dce30ecf5a0f759c4a454ba99e632643c29f2e5d1dcf"
+    },
+    {
+      "path": "apps/backend/src/security/commercial-catalog-operator-cli.ts",
+      "sha256": "3abcf6fdccfbd0a8254b36afc4824ba37c33a283d540d8e09c85f91841edb86f"
+    },
+    {
+      "path": "apps/backend/src/security/commercial-catalog-operator.ts",
+      "sha256": "150ddba4cf7b9a7fd94f03764b031135fedd71cf88c360559bf1431445ef9c43"
+    },
+    {
+      "path": "apps/backend/src/security/commercial-catalog-publication.postgres.test.ts",
+      "sha256": "0154d86bd896ff492277e5ea70b5d94dc1e6552a392918557e79c116ced5d7e3"
+    },
+    {
+      "path": "apps/backend/src/security/commercial-catalog-publication.ts",
+      "sha256": "3b8764a8c0801010e0ec9836c32c0892b9429f563190b95c5460e1f80f231de6"
+    },
+    {
+      "path": "apps/backend/src/security/commercial-subscription-fixture.ts",
+      "sha256": "438b370220b8a27cc3aa11e7a2f4e32a1ebdb5bdc84578a63295f3c65bb1c428"
+    },
+    {
+      "path": "apps/backend/src/security/commercial-subscription.ts",
+      "sha256": "5c3196c05c96c9e3688d9c7a289937f205a6ffd0c4a695227887c043156efd20"
+    },
+    {
+      "path": "apps/backend/src/security/frontend-projections.postgres.test.ts",
+      "sha256": "53b6034744fcba8882ba0cb51290eea25a4467c4b04b092b4a1fd5e86b2bde8d"
+    },
+    {
+      "path": "apps/backend/src/security/frontend-projections.test.ts",
+      "sha256": "0562305eaae168efa117e3e7e108fa7c42d078280b9dddd3ecaac6a2cef33b73"
+    },
+    {
+      "path": "apps/backend/src/security/frontend-projections.ts",
+      "sha256": "a40eaba9d9a6da79c2f0790601adeb854adeb41b0d5ec6d0ab8c3a000bae8079"
+    },
+    {
+      "path": "apps/backend/src/security/iam-publication-operator-cli.ts",
+      "sha256": "800543114f3c66922e736985e8850cda48c7b6a63453cf6a8531b3f1ec2a8ebb"
+    },
+    {
+      "path": "apps/backend/src/security/iam-publication-runtime.ts",
+      "sha256": "c0e4308233ba345aa29acfa6de01f1cd55f8e34a46c02e4548d275509aedfc3a"
+    },
+    {
+      "path": "apps/backend/src/security/iam-publication.postgres.test.ts",
+      "sha256": "63747ebb3da3f138d337f5b1bee0c9df699d1ab85efdeb21fc5807daf59ce14f"
+    },
+    {
+      "path": "apps/backend/src/security/iam-publication.ts",
+      "sha256": "cab047efe746107e687c8917fbcec9ea0b5dd0d9d65e0cdd79cb721e63c0c2fc"
+    },
+    {
+      "path": "apps/backend/src/security/initial-source-lifecycle-publication.ts",
+      "sha256": "cc344a6fd27df97ef6d753f971c168f5078df0edc1ef17046e854d827b947f62"
+    },
+    {
+      "path": "apps/backend/src/security/keycloak-managed-user-adapter.test.ts",
+      "sha256": "8250a577c2c58d74ce405dd61f2b296f892e5b3aac1358961ae8a9aed9a2b67e"
+    },
+    {
+      "path": "apps/backend/src/security/keycloak-managed-user-adapter.ts",
+      "sha256": "4a8f71f3e7cd41df8f2960216820bfcdcfecf847382ce1ea2e7372a4f4f6e0d3"
+    },
+    {
+      "path": "apps/backend/src/security/machine-authentication.test.ts",
+      "sha256": "5e357e4152c4f478dae9f6b3c3f44fe280b96b95ecbb99c3c5f10c7b227b13a4"
+    },
+    {
+      "path": "apps/backend/src/security/managed-identity-routes.test.ts",
+      "sha256": "6514d98b0c662445e06bada1e6db49cc5d21bb94999e46efe9d3f21f403c6aec"
+    },
+    {
+      "path": "apps/backend/src/security/managed-identity-routes.ts",
+      "sha256": "50ae34046b1d9d5a85e97722f9a4c2fedb77d932716e16f49ea9f748b397f447"
+    },
+    {
+      "path": "apps/backend/src/security/managed-identity-service.test.ts",
+      "sha256": "e15807a8f33d18cef0af0958af525ef350bc98070b1de0a3a2ada2e2c79de970"
+    },
+    {
+      "path": "apps/backend/src/security/managed-identity-service.ts",
+      "sha256": "53e6a67a4cbfbff1e619b00a72647a84335a5aa78aa35166febde55cca5e0a8b"
+    },
+    {
+      "path": "apps/backend/src/security/managed-identity.postgres.test.ts",
+      "sha256": "544b0cef9ac0c49eeff6a8c9b95316255848b8e37f04b0a9d6c1236007419006"
+    },
+    {
+      "path": "apps/backend/src/security/membership-invitation.postgres.test.ts",
+      "sha256": "a35568525b6b13120b9bbe1eede4a6c547cb0805ba028636a4284405335d85e9"
+    },
+    {
+      "path": "apps/backend/src/security/membership-invitation.test.ts",
+      "sha256": "c86ec934eb349ea0d2cd472f179c84e8e7c051bfeb1f807aaebbae33e311e4f1"
+    },
+    {
+      "path": "apps/backend/src/security/membership-role-etag.ts",
+      "sha256": "03e8ac4fb4944980bb023cda2de66e8a35020f170507808edfeb2a8f5fc7b78b"
+    },
+    {
+      "path": "apps/backend/src/security/membership-role-revoke-route.test.ts",
+      "sha256": "47f78fc807fa322713ccb18d9bf340e571450f7bd46c87456027e3ef91849c11"
+    },
+    {
+      "path": "apps/backend/src/security/membership-role-revoke.postgres.test.ts",
+      "sha256": "5fb125d50e0c8c075272288f0a7e26aae8a419689cb539049cf1ce5c9d6ad82a"
+    },
+    {
+      "path": "apps/backend/src/security/membership-role-revoke.test.ts",
+      "sha256": "882e23d6b739d9b949d71848a9e35bb220f7b4cba0766ff7259c642028d7e6ed"
+    },
+    {
+      "path": "apps/backend/src/security/methodology-predecessor-fixture.ts",
+      "sha256": "12dff3bb3ff0a1f481398bca44ec1cdf54e070085d96d98251618763c5510384"
+    },
+    {
+      "path": "apps/backend/src/security/oidc-browser-routes.test.ts",
+      "sha256": "fbed1fc82fa2591ee862bad109b0f9620bb6254c69ea4e92767b86266846b6f0"
+    },
+    {
+      "path": "apps/backend/src/security/oidc-browser.ts",
+      "sha256": "34d920e040d7ee79d348b327e8da1018a0ade224463dda5e0b056d617f962c1f"
+    },
+    {
+      "path": "apps/backend/src/security/ownership.ts",
+      "sha256": "d067c4c601407ce10f2db786eabdb3d5cc3db81c37ada6a14250eda0d22cd21c"
+    },
+    {
+      "path": "apps/backend/src/security/permission-projection-catalog.generated.ts",
+      "sha256": "2619a117ffe058619dbeaaf94beab9a08d234262812e9079631a53649c54c321"
+    },
+    {
+      "path": "apps/backend/src/security/plan-version-list.test.ts",
+      "sha256": "5233437cca89cf52f2b25ee8ab72716597ca3cc640b8d8edec96ab81fc9f32b7"
+    },
+    {
+      "path": "apps/backend/src/security/platform-authority.ts",
+      "sha256": "a284185c9166ddf266d40dfee06362e6fd849cb593c2c76686fde5a9f2299f0b"
+    },
+    {
+      "path": "apps/backend/src/security/platform-iam-service.ts",
+      "sha256": "a1f119751ce3f053d36f6736dd97028ebd21c6320bdef9526d8203e8dcab23f5"
+    },
+    {
+      "path": "apps/backend/src/security/platform-role-family.ts",
+      "sha256": "5f5d5df9de8aa3c9ea6e706f003061da6c925c800f4d9c157efe686a12ca9c13"
+    },
+    {
+      "path": "apps/backend/src/security/platform-role-read.postgres.test.ts",
+      "sha256": "968a29f1cfe982cda41dd60a54884a8f2ae7d1e438cb81f0404a9922ceb09144"
+    },
+    {
+      "path": "apps/backend/src/security/platform-role-read.test.ts",
+      "sha256": "8a1280c73b9e936abdd0ac1ccc3d16672a73046fe720e858819fc91226d4aff1"
+    },
+    {
+      "path": "apps/backend/src/security/platform-role-read.ts",
+      "sha256": "93c79513a24aef96678ec88d99e988c792f1da68af94e0d099ea41da666b8704"
+    },
+    {
+      "path": "apps/backend/src/security/platform-role-routes.ts",
+      "sha256": "535bc9f14d63a22973f1ada79ddbc3210f3551b1a1b62f70bd8152fb3ddb771a"
+    },
+    {
+      "path": "apps/backend/src/security/platform-role-service.postgres.test.ts",
+      "sha256": "9736fb0f7ace0ea0a198afa6bcb3966227d4b55f0745b0c8511f925a47b92992"
+    },
+    {
+      "path": "apps/backend/src/security/platform-role-service.test.ts",
+      "sha256": "8df94885ebf633051b70e541d181afb0493374f52011d8130ece10ef4a1c690d"
+    },
+    {
+      "path": "apps/backend/src/security/platform-role-service.ts",
+      "sha256": "02f01d5c9ec3bf49d451418fda4340f463a2899df761eb165b8cd3fb2a717f19"
+    },
+    {
+      "path": "apps/backend/src/security/platform-subscription.postgres.test.ts",
+      "sha256": "e2dc67e175c78c359b2cffad29484fc284f68d4df4c32b99bc4fc19f80de867f"
+    },
+    {
+      "path": "apps/backend/src/security/platform-subscription.test.ts",
+      "sha256": "4b8f5255f0d556e9c07bbf231f106af8f913d4d65cd8fccee3c2c3b8cfce2e31"
+    },
+    {
+      "path": "apps/backend/src/security/publication-operator-server.test.ts",
+      "sha256": "c0be5c15fa51af70004952ddf7ae8fbe169d81e585fd5eb7f9b7e09ac20e2f5f"
+    },
+    {
+      "path": "apps/backend/src/security/publication-operator-server.ts",
+      "sha256": "f72984ca42bcf45fcd7fe90615878ecc10ebe7451d536932449fab2ecc8bf9eb"
+    },
+    {
+      "path": "apps/backend/src/security/rbac-resolution-r3.postgres.test.ts",
+      "sha256": "59f9d3abbde1452ab5a4f99a09fe68c7da45bbe6277ae2cbdd0a79ff35661bee"
+    },
+    {
+      "path": "apps/backend/src/security/reference-publication.ts",
+      "sha256": "4a6ccd40c685a4c22c608d803b6946cc9d4c166cf981deed3b2ad74b0d59d732"
+    },
+    {
+      "path": "apps/backend/src/security/role-assign-projection-scope.postgres.test.ts",
+      "sha256": "6e8652b07ae4e2e76a9fd3a1a9b3530e025f620a68584662a422edfbcebc2edf"
+    },
+    {
+      "path": "apps/backend/src/security/runtime-security.postgres.test.ts",
+      "sha256": "0eb041db9af12c2747852cf959979105cd47b56a61d1e770d0c4440729b552ce"
+    },
+    {
+      "path": "apps/backend/src/security/subscription-change-plan.postgres.test.ts",
+      "sha256": "7f20043d4910d9b0e44dda4f4ee15b17fb0e991b7a42550beeda9eb705cd5097"
+    },
+    {
+      "path": "apps/backend/src/security/tenant-context.test.ts",
+      "sha256": "9ba71ab73140aceb39ef3b80ad99c3e3642c1c66fa0021936eaf7d87880619a1"
+    },
+    {
+      "path": "apps/backend/src/security/tenant-context.ts",
+      "sha256": "bd555b0861e2dfb78fab643239a8d171e7e22feb7b8151af159b41e64fe9b6aa"
+    },
+    {
+      "path": "apps/backend/src/security/tenant-initial-onboarding.ts",
+      "sha256": "940d9754bac12ac0cf008e36669dce6670b837f6da0c9d30a9e9feece02b2011"
+    },
+    {
+      "path": "apps/backend/src/security/tenant-onboarding-routes.ts",
+      "sha256": "e90598b60bb6249933fde920076b6eba21e2c3f9a87e44dbd65f7e689f10e113"
+    },
+    {
+      "path": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+      "sha256": "679f222d6a2865f2ad733a4bc320c2577955f5d9db2ef09ed88e66f381af70e3"
+    },
+    {
+      "path": "apps/backend/src/security/tenant-onboarding.test.ts",
+      "sha256": "9e26f2ff9218358fa0c4797b422dc9d5cf56b828f11fb2046a2a1658c36e314c"
+    },
+    {
+      "path": "apps/backend/src/security/tenant-user-onboarding.postgres.test.ts",
+      "sha256": "3ccd93000bb7658845bc1f94d28b9594d0ed9af0909a7cb3e5b2a88bc8c94ead"
+    },
+    {
+      "path": "apps/backend/src/security/tenant-user-onboarding.test.ts",
+      "sha256": "91669d431afcbc06b8156408d0c92a46bf2edb2d73447eaa3d7e033eb88ab743"
+    },
+    {
+      "path": "apps/backend/src/security/tenant-user-onboarding.ts",
+      "sha256": "b235d99470b824db4a2f8bb312de71afc18b9d91423275f785cceedc16c95707"
+    },
+    {
+      "path": "apps/backend/src/security/testing/historical-catalog-stage.ts",
+      "sha256": "4012be1d51c64e75cd6937990868317d582914ba8ed3522e1a34f5000c222d0b"
+    },
+    {
+      "path": "apps/backend/src/security/user-identity-discovery.ts",
+      "sha256": "2103dec61082a674d62e879d22d5719db93af7b92f16de60bff969177d6dc58d"
+    },
+    {
+      "path": "apps/backend/src/server.ts",
+      "sha256": "224a9c810d43b5f0eacf3882e72c3c78b2c9e74fb1421c1d8bb024e43634cbe5"
+    },
+    {
+      "path": "apps/backend/src/transaction.ts",
+      "sha256": "82fc4b373b4cfa608a675ddb78f1d424219d91034cdd951f6fcc441956d30d3f"
+    },
+    {
+      "path": "apps/backend/src/uuid.ts",
+      "sha256": "1bc2244b761ddf510552f7040fc70de19d07928315d89bedd704ed6360d5a574"
+    },
+    {
+      "path": "apps/backend/tsconfig.json",
+      "sha256": "b1df01c7b3ffbfde2f65f433286f600e3ff181d47db39bce8337daea3c30a2c7"
+    },
+    {
+      "path": "package.json",
+      "sha256": "3730d8273266ea0932a10ca7832b8edbd798f28ba3e43331c1e2fe3752107128"
+    },
+    {
+      "path": "packages/contracts/package.json",
+      "sha256": "7687941476e5c3f35a47227bb9b6990f6ae4843e7d79723b9f142c6da8fd9570"
+    },
+    {
+      "path": "packages/contracts/src/frontend-auth-projections.ts",
+      "sha256": "2e9071f1e89313e2bdd3d7d9ef13cf76f19edffebd58300620c6994d07c82137"
+    },
+    {
+      "path": "packages/contracts/src/iana-timezone.ts",
+      "sha256": "b82a37cf67e8d91d8e7df92c767f08c932aaa8023a0da3c171f8be81ed8c72c4"
+    },
+    {
+      "path": "packages/contracts/src/index.ts",
+      "sha256": "112c597c0535b593ee1d147b0a1cabe92aa337f9220ef72fdda2490dfd195759"
+    },
+    {
+      "path": "packages/contracts/src/initial-retention-source-contract.test.ts",
+      "sha256": "6650c9fc566de3473d9c3d3af4e2312662ada73c5b11cabf68c2e66e60457eef"
+    },
+    {
+      "path": "packages/contracts/src/mi7a-frontend-projections.test.ts",
+      "sha256": "e8d3200e7281b0c7916592069a55aeb03503bdfe7c58b40b06b0c1630106e190"
+    },
+    {
+      "path": "packages/contracts/src/phase5-administrative-read-contract.test.ts",
+      "sha256": "e22a773906c09088ae3643c6b9ce2ea3c78dc9a38ab31596d8de8e392606322b"
+    },
+    {
+      "path": "packages/contracts/src/phase5-executability-preflight.test.ts",
+      "sha256": "3ba7fe02db1f96fe690db7243b7353ca0f9f38ea1be47cc1d689c9cd027b115e"
+    },
+    {
+      "path": "packages/contracts/src/phase5-membership-invitation-contract.test.ts",
+      "sha256": "9cfa4c6c7bc967117007cd9071b7f7a633ab0a65b1f5f85832f01e5c7097387e"
+    },
+    {
+      "path": "packages/contracts/src/phase5-membership-role-revoke-contract.test.ts",
+      "sha256": "ce167d1c8aa3ebefd12f70221f65b9ac47d5a22e6da4fdcfde9d723c8e0b4d73"
+    },
+    {
+      "path": "packages/contracts/src/phase5-read-contracts.test.ts",
+      "sha256": "cf7c14e32ce1873dcf18fbaa1d36751e2b6b2dc176acd8f2b8bdf5ce6b028fd9"
+    },
+    {
+      "path": "packages/contracts/src/phase5-retention-policy-contract.test.ts",
+      "sha256": "cb23d6321bc9a91ea55ba99f4f86d99effdbe170f32c37ee46604e4d7332a4d2"
+    },
+    {
+      "path": "packages/contracts/src/phase6a-reference-resolution.test.ts",
+      "sha256": "688a244154afc78065199e9aaf3df0acddf57bc8c15ca4f5981a32efa91a74be"
+    },
+    {
+      "path": "packages/contracts/src/phase6a-vocabularies.ts",
+      "sha256": "0a10d02efb8417b5a944f5f37c2c9519666f2599dcae6de79a0bc449871acc68"
+    },
+    {
+      "path": "packages/contracts/src/phase6a3-iana-contract.test.ts",
+      "sha256": "fdcaa63ce8a4fbe18aab01414618764ad401d3098820b09afc55ccd6b64f6b4c"
+    },
+    {
+      "path": "packages/contracts/src/phase6a3-provenance-contract.test.ts",
+      "sha256": "fa9dcff9a715423126848aa5b0f0bdb5e5a9b791607f7e4f37f3af1e95e3c3ab"
+    },
+    {
+      "path": "packages/contracts/src/phase6a3-publication.test.ts",
+      "sha256": "c305022eacebebe0c3f47fc05bc581b14125aa9309a846c7462f4ddea34c3282"
+    },
+    {
+      "path": "packages/contracts/src/platform-role-administration.test.ts",
+      "sha256": "46f75392a5dabbe569fe22475109f8da3ad06e02466810b031d8e070e6f77437"
+    },
+    {
+      "path": "packages/contracts/src/platform-role-read-contract.test.ts",
+      "sha256": "c241c20b906452da353090febb7e48f6d39acd61d61b4784c353f4956af7baa4"
+    },
+    {
+      "path": "packages/contracts/src/platform-tenant-user-onboarding.test.ts",
+      "sha256": "006a52bcf8ed921945eca523c8b972254e302b21f9d05bc33261cefe744b8efd"
+    },
+    {
+      "path": "packages/contracts/src/pre-f5b-executable-contracts.test.ts",
+      "sha256": "bdba76afa80097841161e89a06f1a0a8c44e5070be4aacf7e4efd6286d6741b7"
+    },
+    {
+      "path": "packages/contracts/src/pre-f5d-platform-iam-contracts.test.ts",
+      "sha256": "1249fb55e8bcdaecb3bf48556633d5def9840c8e3f518c04f03cb1fa04bb67da"
+    },
+    {
+      "path": "packages/contracts/src/pre-f5e-platform-iam-token-contracts.test.ts",
+      "sha256": "7a78bdaeeac653cc555e284d9f81a5370bed9731d778fa9c0fe457a6f3b29a40"
+    },
+    {
+      "path": "packages/contracts/src/raw-imports.d.ts",
+      "sha256": "fc9c563cdef274837bf28d3dfff02b13ce3d19c84830b4b6c088c32c33ddb13e"
+    },
+    {
+      "path": "packages/contracts/src/role-assign-projection-scope.test.ts",
+      "sha256": "706fd5d79b3755ff9287a9be21f76bd882470bfe89c2fa8b1500331f1ac71663"
+    },
+    {
+      "path": "packages/contracts/src/tenant-onboarding-d2.test.ts",
+      "sha256": "691888e20550c2228d1228cd68ed5cfc6f714008db157ee08c89e0f3e6e71ba2"
+    },
+    {
+      "path": "packages/contracts/src/testing/schema-validator.ts",
+      "sha256": "d003e157017f759ca223866e7da80abca5a1535268ed07191230fbe1fc727f4a"
+    },
+    {
+      "path": "packages/contracts/src/validation-candidate-contract.test.ts",
+      "sha256": "19f3ad7e7a6c981e8dacb634cc03e4396d62dd27760a25c256e50549c6397237"
+    },
+    {
+      "path": "packages/contracts/tsconfig.json",
+      "sha256": "65830141c9e37d6d5a604ae796c5fe8b9258040f9e1f29547c0b238829b989d6"
+    },
+    {
+      "path": "packages/shared-types/package.json",
+      "sha256": "4087fccb73465fb77abff935134e5ae17fe460774bc98b503638aee546f0cda2"
+    },
+    {
+      "path": "packages/shared-types/src/index.ts",
+      "sha256": "0949b057a29fca129b57e57ebf3c0f09b39b4c84ccc3eebd814000f863da11fc"
+    },
+    {
+      "path": "packages/shared-types/tsconfig.json",
+      "sha256": "65830141c9e37d6d5a604ae796c5fe8b9258040f9e1f29547c0b238829b989d6"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "sha256": "7b3f38df64f2de661fff0ee9b960e1a0ebc2e6403c0859604afa7cdf5b7be057"
+    },
+    {
+      "path": "pnpm-workspace.yaml",
+      "sha256": "253208fa7c1b64372c219b9e19cef15ed70ca93b66a4d5c4c4d2297a5aff8880"
+    },
+    {
+      "path": "tsconfig.base.json",
+      "sha256": "8cc5baa8dd715bc841e12de9edbc9d75e220c1474b91287226028646a8543418"
+    }
+  ],
+  "baseline": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15",
+  "tests": "final-focused-tests.json 88PASS; isolated-pg16-submit-scope-v2-tests.json 11PASS; local mocked UI 2PASS, not human QA"
+}

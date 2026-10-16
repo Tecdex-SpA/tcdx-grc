@@ -8,6 +8,7 @@ export const moduleLabels = {
   "solicitudes-evidencia": "Solicitudes de evidencia",
   evidencias: "Evidencias",
   retencion: "Políticas de retención",
+  "aplicabilidad-retencion": "Aplicabilidad de retención",
   issues: "Hallazgos y brechas",
   acciones: "Acciones"
 } as const;

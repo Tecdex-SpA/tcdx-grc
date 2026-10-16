@@ -1,0 +1,109 @@
+{
+  "status": "DRAFT_NOT_EFFECTIVE",
+  "baseline": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15",
+  "source_packet_sha256": "6b87812823472d56a89622eca8119b0cd56606f2f21d635dd84bf903896ba7f2",
+  "scope": "STEP_6A3_C04W_ONLY",
+  "human_review": "REQUIRED_BEFORE_PUBLICATION",
+  "bindings": [
+    {
+      "operation_id": "retentionPolicySubmitForReview",
+      "entity_type": "RetentionPolicy",
+      "from_state": "draft",
+      "command_code": "retention_policy.submit_for_review",
+      "to_state": "under_review",
+      "precondition_policy_ref": "docs/executable-contracts/candidates/STEP_6A3_C04W_CFGD_v1.10/DELTA.md#c-04w",
+      "permission_code": "privacy.retention_policy.update",
+      "allowed_scopes": [
+        "tenant"
+      ],
+      "sod_policy_ref": "docs/executable-contracts/candidates/STEP_6A3_C04W_CFGD_v1.10/DELTA.md#c-04w",
+      "side_effect_event_codes": [],
+      "audit_event_code": "audit.privacy.retention_policy.submit_for_review.v1",
+      "notification_policy": "NONE_CONTRACTUALLY_REQUIRED",
+      "recalculation_policy": "NONE_CONTRACTUALLY_REQUIRED",
+      "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+      "concurrency_semantics": "ROW_VERSION_COMPARE_AND_SWAP",
+      "system_actor_allowed": false
+    },
+    {
+      "operation_id": "retentionApplicabilitySubmitForReview",
+      "entity_type": "RetentionPolicyApplicability",
+      "from_state": "draft",
+      "command_code": "retention_policy_applicability.submit_for_review",
+      "to_state": "under_review",
+      "precondition_policy_ref": "docs/executable-contracts/candidates/STEP_6A3_C04W_CFGD_v1.10/DELTA.md#c-04w",
+      "permission_code": "privacy.retention_policy.update",
+      "allowed_scopes": [
+        "tenant"
+      ],
+      "sod_policy_ref": "docs/executable-contracts/candidates/STEP_6A3_C04W_CFGD_v1.10/DELTA.md#c-04w",
+      "side_effect_event_codes": [],
+      "audit_event_code": "audit.privacy.retention_policy_applicability.submit_for_review.v1",
+      "notification_policy": "NONE_CONTRACTUALLY_REQUIRED",
+      "recalculation_policy": "NONE_CONTRACTUALLY_REQUIRED",
+      "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+      "concurrency_semantics": "ROW_VERSION_COMPARE_AND_SWAP",
+      "system_actor_allowed": false
+    },
+    {
+      "operation_id": "retentionApplicabilityReview",
+      "entity_type": "RetentionPolicyApplicability",
+      "from_state": "draft",
+      "command_code": "retention_policy_applicability.review",
+      "to_state": "under_review",
+      "precondition_policy_ref": "docs/executable-contracts/candidates/STEP_6A3_C04W_CFGD_v1.10/DELTA.md#c-04w",
+      "permission_code": "privacy.retention_policy.review",
+      "allowed_scopes": [
+        "tenant"
+      ],
+      "sod_policy_ref": "docs/executable-contracts/candidates/STEP_6A3_C04W_CFGD_v1.10/DELTA.md#c-04w",
+      "side_effect_event_codes": [],
+      "audit_event_code": "audit.privacy.retention_policy_applicability.review.v1",
+      "notification_policy": "NONE_CONTRACTUALLY_REQUIRED",
+      "recalculation_policy": "NONE_CONTRACTUALLY_REQUIRED",
+      "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+      "concurrency_semantics": "ROW_VERSION_COMPARE_AND_SWAP",
+      "system_actor_allowed": false
+    },
+    {
+      "operation_id": "retentionApplicabilityApprove",
+      "entity_type": "RetentionPolicyApplicability",
+      "from_state": "under_review",
+      "command_code": "retention_policy_applicability.approve",
+      "to_state": "approved",
+      "precondition_policy_ref": "docs/executable-contracts/candidates/STEP_6A3_C04W_CFGD_v1.10/DELTA.md#c-04w",
+      "permission_code": "privacy.retention_policy.approve",
+      "allowed_scopes": [
+        "tenant"
+      ],
+      "sod_policy_ref": "docs/executable-contracts/candidates/STEP_6A3_C04W_CFGD_v1.10/DELTA.md#c-04w",
+      "side_effect_event_codes": [],
+      "audit_event_code": "audit.privacy.retention_policy_applicability.approve.v1",
+      "notification_policy": "NONE_CONTRACTUALLY_REQUIRED",
+      "recalculation_policy": "NONE_CONTRACTUALLY_REQUIRED",
+      "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+      "concurrency_semantics": "ROW_VERSION_COMPARE_AND_SWAP",
+      "system_actor_allowed": false
+    },
+    {
+      "operation_id": "retentionApplicabilityPublish",
+      "entity_type": "RetentionPolicyApplicability",
+      "from_state": "approved",
+      "command_code": "retention_policy_applicability.publish",
+      "to_state": "published",
+      "precondition_policy_ref": "docs/executable-contracts/candidates/STEP_6A3_C04W_CFGD_v1.10/DELTA.md#c-04w",
+      "permission_code": "privacy.retention_policy.publish",
+      "allowed_scopes": [
+        "tenant"
+      ],
+      "sod_policy_ref": "docs/executable-contracts/candidates/STEP_6A3_C04W_CFGD_v1.10/DELTA.md#c-04w",
+      "side_effect_event_codes": [],
+      "audit_event_code": "audit.privacy.retention_policy_applicability.publish.v1",
+      "notification_policy": "NONE_CONTRACTUALLY_REQUIRED",
+      "recalculation_policy": "NONE_CONTRACTUALLY_REQUIRED",
+      "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+      "concurrency_semantics": "ROW_VERSION_COMPARE_AND_SWAP",
+      "system_actor_allowed": false
+    }
+  ]
+}

@@ -4,13 +4,13 @@
 
 Este documento es el punto de entrada obligatorio y la constitución operativa maestra del desarrollo TCDX GRC. Integra y gobierna los documentos 00–49 aplicables de este baseline. No reemplaza sus contratos especializados: fija cómo deben ser interpretados, ejecutados y verificados durante todo el ciclo hasta `MARKET_RELEASE_READY=PASS`.
 
-`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09`
+`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15`
 
 `CODEX_VARIATION_BUDGET=ZERO`
 
 Toda implementación, revisión, migración, API, backend, frontend, integración, IA, prueba, despliegue y release debe demostrar trazabilidad a este baseline. Código, tests, mocks, documentación histórica, convenciones de framework o decisiones de agentes no son fuente de autoridad.
 
-49 gobierna exclusivamente revisión/publicación editorial y metodológica interna y delimita la acumulación humana de funciones. No altera SoD operacional, datos, permisos, fases ni obligaciones superiores. La historia v1.7 permanece inmutable.
+49 gobierna exclusivamente revisión/publicación editorial y metodológica interna y delimita la acumulación humana de funciones. No altera SoD operacional, datos, permisos, fases ni obligaciones superiores. La historia de las baselines anteriores permanece inmutable. Esta copia sucesora no es autoridad activa antes de cumplir 47.
 
 ## 2. Producto y criterio de terminación
 
@@ -88,3 +88,10 @@ Todo artefacto material debe poder rastrearse desde requisito/contrato rector ha
 No se declara “READY”, “DONE”, “PRODUCTION READY” ni equivalente por avance porcentual. El cierre exige evidencia de todos los gates y capacidades dependientes. La autoridad final de release corresponde al QA/Release Owner y aprobadores humanos definidos, nunca a Codex.
 
 Cualquier contradicción entre una tarea y este baseline produce `RECTOR_GATE=BLOCKED` y no una reinterpretación del baseline.
+
+
+## STEP_6A3 — candidata de incorporación inicial de fuente v1.11
+
+`STATUS=DRAFT_NOT_EFFECTIVE; HUMAN_EXACT_BYTES_REVIEW=PENDING`. Baseline candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15, predecesora TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15. Diseño PO aprobado por SHA `1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b`; constancia `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/PO_DESIGN_APPROVAL_RECEIPT_20261015.json`. Esta sección sólo tendrá efecto después de publicación conforme47/49 y gates físico/ejecutable; no autoriza operación QA ni deploy por sí sola.
+
+Esta sucesora candidata incorpora exclusivamente el diseño de fuente inicial aprobado por el PO. El acto PO no declara otras funciones ejercidas ni aprueba bytes futuros; no se atribuyen aprobaciones Architecture/Data/Security/Release o Privacy/Legal inexistentes. Antes de activar se requiere decisión exacta sobre el manifest candidato con funciones competentes expresas, dictamen físico y contratos derivados. Implementación, pruebas de código dependiente, build y promoción esperan sus gates; QA auténtica/UI/cierre siguen separados.6A4 sólo tras cierre de6A3 y acto formal autorizado.

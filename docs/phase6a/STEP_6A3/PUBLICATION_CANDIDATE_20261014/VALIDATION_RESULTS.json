@@ -1,0 +1,42 @@
+{
+  "scope": "DOCUMENTARY_PUBLICATION_CANDIDATE_ONLY",
+  "active_rector_governance": "PASS",
+  "approved_v2_package_sha256": "PASS",
+  "approved_artifact_manifest_sha256": "PASS",
+  "approved_artifact_hashes": {
+    "result": "PASS",
+    "count": 30
+  },
+  "human_receipt_unchanged": {
+    "result": "PASS",
+    "sha256": "78e1216e018a3c7d5f8efb8905e415aeb9b741aa40edc1c6addb91a39a3eab8f",
+    "signed_at_utc": "2026-10-13T23:45:00Z"
+  },
+  "approved_physical_and_executable_copy_hashes": "PASS",
+  "candidate_schema_compilation": {
+    "result": "PASS",
+    "compiled_schemas": 17,
+    "operations": 4,
+    "limit": "documentary schema/ref compilation; no product request"
+  },
+  "openapi_full_candidate_merge": {
+    "result": "PASS",
+    "new_operations": 4,
+    "existing_operations_preserved": true,
+    "local_references_resolved": 2264,
+    "public_server": "https://grc.tecdex.net/api/v1"
+  },
+  "active_contract_asset_check": "PASS_32_MIGRATIONS_165_OPERATIONS",
+  "secret_scan": "PASS_ZERO_FINDINGS",
+  "tracked_diff_check": "PASS",
+  "new_normative_baseline_human_gate": "PENDING",
+  "new_physical_human_gate": "PENDING",
+  "new_executable_human_gate": "PENDING",
+  "expected_schema_full_successor": "NOT_GENERATED_OR_APPROVED",
+  "postgresql_candidate_ddl": "NOT_EXECUTED",
+  "product_unit_contract_e2e_tests": "NOT_EXECUTED_FOR_NEW_SLICE",
+  "shared_qa_iam_grants_deploy": "NOT_AUTHORIZED_OR_EXECUTED",
+  "step_6a3": "PARTIAL_BLOCKED",
+  "step_6a4": "NOT_STARTED",
+  "ready_for_release": false
+}

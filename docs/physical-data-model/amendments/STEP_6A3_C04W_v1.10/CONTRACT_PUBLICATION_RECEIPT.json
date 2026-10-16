@@ -1,0 +1,47 @@
+{
+  "status": "PASS_CONTRACT_EFFECTIVE",
+  "baseline": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15",
+  "scope": "STEP_6A3_C04W_CFGD_ONLY",
+  "effective_at_utc": "2026-10-15T19:41:18.466520+00:00",
+  "publication_mechanism": "Hash-bound successor copies and append-only authority receipt per rector49; approved source annotations are preserved",
+  "human_decision_reference": "docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/PO_SIX_DERIVED_SNAPSHOTS_EDITORIAL_APPROVAL_20261015.json",
+  "human_decisions": [
+    {
+      "path": "docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/PO_FOUR_CANDIDATES_EDITORIAL_APPROVAL_20261015.json",
+      "sha256": "d71b0d5ccb56d12e73ac214bda5ff51b85b1a6faaa9c9e26aff14661e7838e15"
+    },
+    {
+      "path": "docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/PO_SIX_DERIVED_SNAPSHOTS_EDITORIAL_APPROVAL_20261015.json",
+      "sha256": "9841298fc01c6dfef1efd062a5f72bed1cd4aab47499e0a2e2199577f42e0539"
+    }
+  ],
+  "publication_manifest_path": "docs/executable-contracts/amendments/STEP_6A3_C04W_CFGD_v1.10/PUBLICATION_MANIFEST.json",
+  "publication_manifest_sha256": "e7f30ded29f213fa33a8648466b5c7bbfcc6bb520e6cdf2b11968a41d9f6e944",
+  "files": [
+    {
+      "source": "docs/physical-data-model/candidates/STEP_6A3_C04W_v1.10/PHYSICAL_DELTA.md",
+      "successor_path": "docs/physical-data-model/amendments/STEP_6A3_C04W_v1.10/PHYSICAL_DELTA.md",
+      "sha256": "6c774adeba0bf3deebbad55c3c820f01eef908bdc264f3d97e90af1ee7a88454"
+    }
+  ],
+  "historical_contract27": {
+    "path": "docs/executable-contracts/27_PHASE5_METHODOLOGY_BINDING.md",
+    "sha256": "eedf85debfb5eb48e25d4abdd5ff4332c5dba8197ab7b96a66b97f640cfef4df"
+  },
+  "precedence": "Only approved C04W/CFGD deltas and six snapshots succeed earlier contracts under v1.10; candidate DRAFT preparation annotations do not override this publication act. All other contracts remain in force.",
+  "technical_review_reference": "docs/phase6a/STEP_6A3/C04W_CFGD_RESIDUAL_GATE_AUDIT_20261015.md",
+  "reused_verifications": [
+    "v1.10 integrity PASS",
+    "contracts:verify PASS",
+    "367 historical residual checks PASS",
+    "40 targeted tests PASS",
+    "isolated PG R2 schema/constraints PASS with rollback"
+  ],
+  "not_claimed": [
+    "QA registry publication",
+    "deployment",
+    "authentic legal source",
+    "human QA/UI acceptance",
+    "STEP_6A3 closure"
+  ]
+}

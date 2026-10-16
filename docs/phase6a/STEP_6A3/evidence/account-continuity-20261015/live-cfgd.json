@@ -1,0 +1,81 @@
+{
+  "provenance": "LIVE_QA_READ_ONLY",
+  "collected_at_utc": "2026-10-15T20:16:29.570784+00:00",
+  "result": {
+    "recorded_at_utc": "2026-10-15T20:16:32.169Z",
+    "scope": "Real authenticated browser QA guard test, not legal evidence or human acceptance",
+    "assessments": [
+      {
+        "id": "01a14122-06e4-748d-a3db-5935f64c1901",
+        "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+        "author": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "control_id": "01a118d7-6222-7470-8a85-306e07659f4a",
+        "control_version_id": "01a118d7-6222-7470-8a85-35f52db6b5a0",
+        "methodology_version_ref": "01a11900-0000-7001-8000-000000000002",
+        "effective_configuration_id": null,
+        "lifecycle_state": "completed",
+        "result_status": "insufficient_data",
+        "domain_conclusion": null,
+        "design_effectiveness": null,
+        "operating_effectiveness": null,
+        "overall_effectiveness": null,
+        "coverage_percent": null,
+        "row_version": "3",
+        "created_at": "2026-10-15T19:55:11.411Z",
+        "updated_at": "2026-10-15T19:56:11.829Z"
+      },
+      {
+        "id": "01a11afc-7f48-701e-9c0b-c2bc01ba0a5e",
+        "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+        "author": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "control_id": "01a118d7-6222-7470-8a85-306e07659f4a",
+        "control_version_id": "01a118d7-6222-7470-8a85-35f52db6b5a0",
+        "methodology_version_ref": "01a11900-0000-7001-8000-000000000002",
+        "effective_configuration_id": null,
+        "lifecycle_state": "approved",
+        "result_status": "no_data",
+        "domain_conclusion": "not_tested",
+        "design_effectiveness": null,
+        "operating_effectiveness": null,
+        "overall_effectiveness": null,
+        "coverage_percent": null,
+        "row_version": "5",
+        "created_at": "2026-10-08T10:08:37.694Z",
+        "updated_at": "2026-10-08T10:17:48.497Z"
+      }
+    ],
+    "audits": [
+      {
+        "event_code": "audit.controls.control_assessment.create.v1",
+        "command_code": "controlAssessmentCreate",
+        "outcome": "success",
+        "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "actor_service_principal_id": null,
+        "aggregate_id": "01a14122-06e4-748d-a3db-5935f64c1901",
+        "occurred_at": "2026-10-15T19:55:11.411Z",
+        "result_status": "no_data"
+      },
+      {
+        "event_code": "audit.controls.control_assessment.start.v1",
+        "command_code": "controlAssessmentStart",
+        "outcome": "success",
+        "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "actor_service_principal_id": null,
+        "aggregate_id": "01a14122-06e4-748d-a3db-5935f64c1901",
+        "occurred_at": "2026-10-15T19:55:19.117Z",
+        "result_status": "no_data"
+      },
+      {
+        "event_code": "audit.controls.control_assessment.complete.v1",
+        "command_code": "controlAssessmentSubmit",
+        "outcome": "success",
+        "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "actor_service_principal_id": null,
+        "aggregate_id": "01a14122-06e4-748d-a3db-5935f64c1901",
+        "occurred_at": "2026-10-15T19:56:11.801Z",
+        "result_status": "insufficient_data"
+      }
+    ],
+    "transaction": "READ_ONLY"
+  }
+}

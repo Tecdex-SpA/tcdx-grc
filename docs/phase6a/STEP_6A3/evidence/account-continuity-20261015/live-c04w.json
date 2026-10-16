@@ -1,0 +1,122 @@
+{
+  "provenance": "LIVE_QA_READ_ONLY",
+  "collected_at_utc": "2026-10-15T20:16:29.570784+00:00",
+  "result": {
+    "recorded_at_utc": "2026-10-15T20:16:31.861Z",
+    "scope": "AUTOMATED_QA_TECHNICAL_PENDING_RECORDS_NOT_LEGAL_EVIDENCE_NOT_HUMAN_REVIEW",
+    "applicabilities": [
+      {
+        "id": "01a14126-bc97-7721-85e4-e34026cf4213",
+        "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+        "retention_policy_id": "01a118bf-386d-76be-a26d-e7b322136302",
+        "version_number": "1",
+        "classification": "internal",
+        "scope_subject_id": "01a0f27e-b912-72d2-a08e-c5fcbd4efe43",
+        "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "source_evidence_version_id": null,
+        "source_clause_ref": null,
+        "lifecycle_state": "under_review",
+        "published_at": null,
+        "effective_from": null,
+        "row_version": "2"
+      },
+      {
+        "id": "01a14127-94bf-72c7-b2b8-ad4c48fb0905",
+        "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+        "retention_policy_id": "01a118bf-386d-76be-a26d-e7b322136302",
+        "version_number": "1",
+        "classification": "internal",
+        "scope_subject_id": null,
+        "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "source_evidence_version_id": null,
+        "source_clause_ref": null,
+        "lifecycle_state": "under_review",
+        "published_at": null,
+        "effective_from": null,
+        "row_version": "2"
+      }
+    ],
+    "audits": [
+      {
+        "aggregate_id": "01a14126-bc97-7721-85e4-e34026cf4213",
+        "event_code": "audit.privacy.retention_policy_applicability.create.v1",
+        "command_code": "retentionApplicabilityCreate",
+        "outcome": "success",
+        "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "actor_service_principal_id": null,
+        "occurred_at": "2026-10-15T20:00:20.096Z",
+        "lifecycle_state": "draft",
+        "row_version": "1"
+      },
+      {
+        "aggregate_id": "01a14126-bc97-7721-85e4-e34026cf4213",
+        "event_code": "audit.privacy.retention_policy_applicability.submit_for_review.v1",
+        "command_code": "retentionApplicabilitySubmitForReview",
+        "outcome": "success",
+        "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "actor_service_principal_id": null,
+        "occurred_at": "2026-10-15T20:00:30.516Z",
+        "lifecycle_state": "under_review",
+        "row_version": "2"
+      },
+      {
+        "aggregate_id": "01a14127-94bf-72c7-b2b8-ad4c48fb0905",
+        "event_code": "audit.privacy.retention_policy_applicability.create.v1",
+        "command_code": "retentionApplicabilityCreate",
+        "outcome": "success",
+        "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "actor_service_principal_id": null,
+        "occurred_at": "2026-10-15T20:01:15.432Z",
+        "lifecycle_state": "draft",
+        "row_version": "1"
+      },
+      {
+        "aggregate_id": "01a14127-94bf-72c7-b2b8-ad4c48fb0905",
+        "event_code": "audit.privacy.retention_policy_applicability.review.v1",
+        "command_code": "retentionApplicabilityReview",
+        "outcome": "success",
+        "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "actor_service_principal_id": null,
+        "occurred_at": "2026-10-15T20:01:24.150Z",
+        "lifecycle_state": "under_review",
+        "row_version": "2"
+      }
+    ],
+    "idempotency": [
+      {
+        "operation_code": "retentionApplicabilityCreate",
+        "result_status_code": "completed",
+        "result_ref": "retentionPolicyApplicability:01a14126-bc97-7721-85e4-e34026cf4213"
+      },
+      {
+        "operation_code": "retentionApplicabilitySubmitForReview",
+        "result_status_code": "completed",
+        "result_ref": "retentionPolicyApplicability:01a14126-bc97-7721-85e4-e34026cf4213"
+      },
+      {
+        "operation_code": "retentionApplicabilityCreate",
+        "result_status_code": "completed",
+        "result_ref": "retentionPolicyApplicability:01a14127-94bf-72c7-b2b8-ad4c48fb0905"
+      },
+      {
+        "operation_code": "retentionApplicabilityReview",
+        "result_status_code": "completed",
+        "result_ref": "retentionPolicyApplicability:01a14127-94bf-72c7-b2b8-ad4c48fb0905"
+      }
+    ],
+    "historical_source": [
+      {
+        "evidence_version_id": "01a118e4-ba56-76e7-aa44-d03594933d9c",
+        "effective_from": null,
+        "row_version": "4",
+        "lifecycle_state": "approved"
+      }
+    ],
+    "holds": [
+      {
+        "releases": 0
+      }
+    ],
+    "transaction": "READ_ONLY"
+  }
+}

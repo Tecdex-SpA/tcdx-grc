@@ -1,0 +1,383 @@
+{
+  "profile": "COMMERCIAL_CATALOG_PUBLICATION_V1",
+  "decision_record_ref": "docs/phase6a/STEP_6A3/COMMERCIAL_CATALOG_DECISION_RECORD_CANDIDATE_20261014.json",
+  "decision_record_sha256": "2c1133e5b2f898d11ef43327241c22802c076306a184bea4e26fdc6e781d8d49",
+  "families": [
+    {
+      "commercial_family_id": "01a13b99-dd4e-770c-be85-e361c7edcc87",
+      "family_code": "ISO",
+      "name": "ISO",
+      "source_type": "standard"
+    },
+    {
+      "commercial_family_id": "01a13b99-dd4f-71c4-ac66-1fb9dab70723",
+      "family_code": "LEGAL",
+      "name": "LEGAL",
+      "source_type": "law"
+    }
+  ],
+  "root_links": [
+    {
+      "regulatory_pack_commercial_family_link_id": "01a13b99-dd4f-71c4-ac66-2026319237d3",
+      "regulatory_pack_id": "01a0a783-6000-7c89-afbe-f2cd9adce6d9",
+      "commercial_family_id": "01a13b99-dd4f-71c4-ac66-1fb9dab70723",
+      "source_type": "law"
+    },
+    {
+      "regulatory_pack_commercial_family_link_id": "01a13b99-dd4f-71c4-ac66-27d27e0abede",
+      "regulatory_pack_id": "01a0a783-6000-7c5c-8299-519924083f6c",
+      "commercial_family_id": "01a13b99-dd4e-770c-be85-e361c7edcc87",
+      "source_type": "standard"
+    },
+    {
+      "regulatory_pack_commercial_family_link_id": "01a13b99-dd4f-71c4-ac66-282ac473a2a1",
+      "regulatory_pack_id": "01a0a783-6000-7da9-834d-0d7f29eded30",
+      "commercial_family_id": "01a13b99-dd4e-770c-be85-e361c7edcc87",
+      "source_type": "standard"
+    },
+    {
+      "regulatory_pack_commercial_family_link_id": "01a13b99-dd4f-71c4-ac66-2d38ce3ffe6f",
+      "regulatory_pack_id": "01a0a783-6000-7cea-8d78-6d16363e557e",
+      "commercial_family_id": "01a13b99-dd4e-770c-be85-e361c7edcc87",
+      "source_type": "standard"
+    },
+    {
+      "regulatory_pack_commercial_family_link_id": "01a13b99-dd4f-71c4-ac66-32565067006e",
+      "regulatory_pack_id": "01a0a783-6000-7a79-949a-027b89378d8a",
+      "commercial_family_id": "01a13b99-dd4e-770c-be85-e361c7edcc87",
+      "source_type": "standard"
+    }
+  ],
+  "plan_versions": [
+    {
+      "plan_version_id": "01a13b99-dd4f-71c4-ac66-34b797522893",
+      "plan_id": "01a0a783-6000-73d7-9874-ed71bd2fc3fe",
+      "version_number": "2",
+      "display_name": "GRC v2",
+      "commercial_terms_ref": null,
+      "effective_from": "2026-10-14T18:08:21.832000Z",
+      "effective_to": null,
+      "family_links": [
+        {
+          "plan_version_commercial_family_link_id": "01a13b99-dd4f-71c4-ac66-3a42d42ca7e1",
+          "commercial_family_id": "01a13b99-dd4e-770c-be85-e361c7edcc87"
+        },
+        {
+          "plan_version_commercial_family_link_id": "01a13b99-dd4f-71c4-ac66-3f24696986d7",
+          "commercial_family_id": "01a13b99-dd4f-71c4-ac66-1fb9dab70723"
+        }
+      ],
+      "usage_limits": [
+        {
+          "usage_limit_id": "01a13b99-dd4f-71c4-ac66-4302457c190b",
+          "commercial_family_id": null,
+          "limit_code": "regulatory_pack_count",
+          "limit_value": "5",
+          "unit": "pack",
+          "effective_from": "2026-10-14T18:08:21.832000Z",
+          "effective_to": null
+        },
+        {
+          "usage_limit_id": "01a13b99-dd4f-71c4-ac66-46f9f0d81013",
+          "commercial_family_id": "01a13b99-dd4e-770c-be85-e361c7edcc87",
+          "limit_code": "regulatory_pack_count",
+          "limit_value": "4",
+          "unit": "pack",
+          "effective_from": "2026-10-14T18:08:21.832000Z",
+          "effective_to": null
+        },
+        {
+          "usage_limit_id": "01a13b99-dd4f-71c4-ac66-4ab7db280b63",
+          "commercial_family_id": "01a13b99-dd4f-71c4-ac66-1fb9dab70723",
+          "limit_code": "regulatory_pack_count",
+          "limit_value": "1",
+          "unit": "pack",
+          "effective_from": "2026-10-14T18:08:21.832000Z",
+          "effective_to": null
+        }
+      ],
+      "entitlements": [
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-4e1167871f60",
+          "capability_id": "01a0a783-6000-7b60-bfea-66778932a2b9",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-51789c65eaa1",
+          "capability_id": "01a0a783-6000-7cb2-a5e1-7ca877b8599b",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-5758e2b0a654",
+          "capability_id": "01a0a783-6000-72b8-aebe-886036304e61",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-5893cdaca2bc",
+          "capability_id": "01a0a783-6000-7ec9-af95-0a7718212889",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-5eade4c5f024",
+          "capability_id": "01a0a783-6000-7555-9f0d-04086e57c3fa",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-6104d953189d",
+          "capability_id": "01a0a783-6000-722b-897c-a5a4a4922957",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-66001fffe84c",
+          "capability_id": "01a0a783-6000-7fd2-8e16-74b7c5d56b0c",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-6830298ed604",
+          "capability_id": "01a0a783-6000-7425-a7bd-87b1b26e71e6",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-6ffdeb0c5501",
+          "capability_id": "01a0a783-6000-7597-8041-d09bc719acd9",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-7397e99cd712",
+          "capability_id": "01a0a783-6000-76ee-8827-45f06c94dcef",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-774208b66402",
+          "capability_id": "01a0a783-6000-71b4-b2fc-6b8dce58ecbe",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-7adef2b04dda",
+          "capability_id": "01a0a783-6000-7194-ac73-dbe820958ab7",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-7fad22db8e56",
+          "capability_id": "01a0a783-6000-7d74-8026-2a30e54df24e",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-8029bcd8eeaf",
+          "capability_id": "01a0a783-6000-7bfc-a338-8c79e252c88d",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-845fb858d44a",
+          "capability_id": "01a0a783-6000-78e1-be2c-945962a770b6",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-8a03843936ca",
+          "capability_id": "01a0a783-6000-7819-9a37-39f03cd962cb",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-8cd67582864f",
+          "capability_id": "01a0a783-6000-770f-b226-faffc2cebe1f",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-92a0b638b8bf",
+          "capability_id": "01a0a783-6000-7230-b709-3b98da3d431d",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-9451263c75a5",
+          "capability_id": "01a0a783-6000-787b-9805-d735d4db17d6",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-9a0c9c9836ac",
+          "capability_id": "01a0a783-6000-76c7-a532-4e6ca2ce9f41",
+          "is_enabled": true
+        }
+      ]
+    },
+    {
+      "plan_version_id": "01a13b99-dd4f-71c4-ac66-9c8a942999c2",
+      "plan_id": "01a0a783-6000-7053-9c7e-65ede94b46dd",
+      "version_number": "2",
+      "display_name": "ISO v2",
+      "commercial_terms_ref": null,
+      "effective_from": "2026-10-14T18:08:21.832000Z",
+      "effective_to": null,
+      "family_links": [
+        {
+          "plan_version_commercial_family_link_id": "01a13b99-dd4f-71c4-ac66-a23977a6e7d4",
+          "commercial_family_id": "01a13b99-dd4e-770c-be85-e361c7edcc87"
+        },
+        {
+          "plan_version_commercial_family_link_id": "01a13b99-dd4f-71c4-ac66-a60e9352429a",
+          "commercial_family_id": "01a13b99-dd4f-71c4-ac66-1fb9dab70723"
+        }
+      ],
+      "usage_limits": [
+        {
+          "usage_limit_id": "01a13b99-dd4f-71c4-ac66-ab818aa05e3b",
+          "commercial_family_id": null,
+          "limit_code": "regulatory_pack_count",
+          "limit_value": "2",
+          "unit": "pack",
+          "effective_from": "2026-10-14T18:08:21.832000Z",
+          "effective_to": null
+        },
+        {
+          "usage_limit_id": "01a13b99-dd4f-71c4-ac66-ad761bf5949b",
+          "commercial_family_id": "01a13b99-dd4e-770c-be85-e361c7edcc87",
+          "limit_code": "regulatory_pack_count",
+          "limit_value": "2",
+          "unit": "pack",
+          "effective_from": "2026-10-14T18:08:21.832000Z",
+          "effective_to": null
+        },
+        {
+          "usage_limit_id": "01a13b99-dd4f-71c4-ac66-b0401413dabc",
+          "commercial_family_id": "01a13b99-dd4f-71c4-ac66-1fb9dab70723",
+          "limit_code": "regulatory_pack_count",
+          "limit_value": "0",
+          "unit": "pack",
+          "effective_from": "2026-10-14T18:08:21.832000Z",
+          "effective_to": null
+        }
+      ],
+      "entitlements": [
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-b61e1b205a71",
+          "capability_id": "01a0a783-6000-7cb2-a5e1-7ca877b8599b",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-bb5f8c452147",
+          "capability_id": "01a0a783-6000-72b8-aebe-886036304e61",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-bc34e8dfd57f",
+          "capability_id": "01a0a783-6000-7ec9-af95-0a7718212889",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-c278abce61ec",
+          "capability_id": "01a0a783-6000-722b-897c-a5a4a4922957",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-c7a28e1a0689",
+          "capability_id": "01a0a783-6000-76ee-8827-45f06c94dcef",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-c80e6124b496",
+          "capability_id": "01a0a783-6000-71b4-b2fc-6b8dce58ecbe",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd4f-71c4-ac66-ccb5bf63af19",
+          "capability_id": "01a0a783-6000-7194-ac73-dbe820958ab7",
+          "is_enabled": true
+        }
+      ]
+    },
+    {
+      "plan_version_id": "01a13b99-dd50-756c-aec2-79816cc5f51c",
+      "plan_id": "01a0a783-6000-7b45-8799-ce45d901364d",
+      "version_number": "2",
+      "display_name": "ISO_RIESGO_OPERATIVO v2",
+      "commercial_terms_ref": null,
+      "effective_from": "2026-10-14T18:08:21.832000Z",
+      "effective_to": null,
+      "family_links": [
+        {
+          "plan_version_commercial_family_link_id": "01a13b99-dd50-756c-aec2-7d55e6331d91",
+          "commercial_family_id": "01a13b99-dd4e-770c-be85-e361c7edcc87"
+        },
+        {
+          "plan_version_commercial_family_link_id": "01a13b99-dd50-756c-aec2-8103715f8d3d",
+          "commercial_family_id": "01a13b99-dd4f-71c4-ac66-1fb9dab70723"
+        }
+      ],
+      "usage_limits": [
+        {
+          "usage_limit_id": "01a13b99-dd50-756c-aec2-852325425c2e",
+          "commercial_family_id": null,
+          "limit_code": "regulatory_pack_count",
+          "limit_value": "3",
+          "unit": "pack",
+          "effective_from": "2026-10-14T18:08:21.832000Z",
+          "effective_to": null
+        },
+        {
+          "usage_limit_id": "01a13b99-dd50-756c-aec2-8bdc35b279d3",
+          "commercial_family_id": "01a13b99-dd4e-770c-be85-e361c7edcc87",
+          "limit_code": "regulatory_pack_count",
+          "limit_value": "3",
+          "unit": "pack",
+          "effective_from": "2026-10-14T18:08:21.832000Z",
+          "effective_to": null
+        },
+        {
+          "usage_limit_id": "01a13b99-dd50-756c-aec2-8c9a5ba668f0",
+          "commercial_family_id": "01a13b99-dd4f-71c4-ac66-1fb9dab70723",
+          "limit_code": "regulatory_pack_count",
+          "limit_value": "0",
+          "unit": "pack",
+          "effective_from": "2026-10-14T18:08:21.832000Z",
+          "effective_to": null
+        }
+      ],
+      "entitlements": [
+        {
+          "entitlement_id": "01a13b99-dd50-756c-aec2-90360200c5a0",
+          "capability_id": "01a0a783-6000-7cb2-a5e1-7ca877b8599b",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd50-756c-aec2-941acf341cc0",
+          "capability_id": "01a0a783-6000-72b8-aebe-886036304e61",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd50-756c-aec2-98667c8de232",
+          "capability_id": "01a0a783-6000-7ec9-af95-0a7718212889",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd50-756c-aec2-9d2b9af5c14a",
+          "capability_id": "01a0a783-6000-722b-897c-a5a4a4922957",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd50-756c-aec2-a178a9e79cbb",
+          "capability_id": "01a0a783-6000-7425-a7bd-87b1b26e71e6",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd50-756c-aec2-a7a6fbee546c",
+          "capability_id": "01a0a783-6000-76ee-8827-45f06c94dcef",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd50-756c-aec2-aac5737e0a83",
+          "capability_id": "01a0a783-6000-71b4-b2fc-6b8dce58ecbe",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd50-756c-aec2-af2bed928514",
+          "capability_id": "01a0a783-6000-7194-ac73-dbe820958ab7",
+          "is_enabled": true
+        },
+        {
+          "entitlement_id": "01a13b99-dd50-756c-aec2-b0bb77ce3de7",
+          "capability_id": "01a0a783-6000-7d74-8026-2a30e54df24e",
+          "is_enabled": true
+        }
+      ]
+    }
+  ]
+}

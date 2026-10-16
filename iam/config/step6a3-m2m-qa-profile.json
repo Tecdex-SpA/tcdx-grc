@@ -1,0 +1,17 @@
+{
+  "decision_id": "DR-STEP6A3-IAM-M2M-QA-20261014-01",
+  "environment": "qa",
+  "issuer": "https://iam.grc.tecdex.net/realms/tcdx-managed-identity",
+  "client_id": "grc-qa-iam-publisher",
+  "principal_code": "grc-qa-iam-publisher",
+  "principal_kind": "MACHINE_TO_MACHINE",
+  "display_name": "GRC QA IAM Publisher",
+  "ownership_class": "PLATFORM_CONTROL",
+  "tenant_id": null,
+  "purpose": "STEP_6A3_IAM_PUBLICATION",
+  "audience": "tcdx-grc-api",
+  "credential_ref": "/run/secrets/iam_publisher_client_secret",
+  "algorithms": ["RS256"],
+  "max_lifetime_seconds": 300,
+  "clock_tolerance_seconds": 5
+}

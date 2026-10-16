@@ -1,3 +1,5 @@
+> CANDIDATE_NOT_EFFECTIVE: snapshot sucesor INITIAL_SOURCE; texto histórico preservado, requiere publicación competente.
+
 # Permission, capability and base-role catalog
 
 ## MI6A contract-approved, runtime-unpublished permissions
@@ -235,6 +237,7 @@ H-003..H-005 authorize these Permission rows over existing entities and capabili
 | `privacy.retention_policy.approve` | PRIVACY | approve retention policy | tenant | same tenant | Legal Reviewer | legal decision; author/approver SoD; reinforced audit | 22,23,42; H-004 |
 | `privacy.retention_policy.publish` | PRIVACY | publish retention policy | tenant | same tenant; cannot weaken mandatory/contractual policy | Privacy Manager | approval required; reinforced audit | 22,23,39; H-004 |
 | `privacy.retention_policy.archive` | PRIVACY | archive retention policy | tenant | same tenant; history retained | Privacy Manager | no purge authorization by itself; reason; audit | 23,39; H-004 |
+| `privacy.retention_policy.legal_hold.release` | PRIVACY | release published legal hold applicability | tenant | tenant-owned Legal Reviewer; same tenant; distinct author | Legal Reviewer | reason, strong If-Match, idempotency, valid optional source and transactional audit; no purge | 22,23,24; STEP_6A3 C-04W |
 | `privacy.data_subject_request.read` | PRIVACY | read data-subject request | tenant | same tenant; personal content minimized | Privacy Manager, Legal Reviewer, GRC Manager | restricted; reinforced access audit by policy | 26,39,42; H-004 |
 | `privacy.data_subject_request.create` | PRIVACY | create data-subject request | tenant | same tenant | Privacy Manager | request identity minimized; audit | 33,39,42; H-004 |
 | `privacy.data_subject_request.update` | PRIVACY | update data-subject request | tenant, assigned_object | same tenant | Privacy Manager | lifecycle/object policy; audit | 22,39; H-004 |
@@ -317,3 +320,28 @@ Autoridad: contrato29 y recibo MACRO-STEP6A3-20261009-R1-APPROVAL. Grants físic
 | `compliance.framework.read` | ISO_COMPLIANCE | framework | tenant | read | EXECUTIVE_BOARD_VIEWER, GRC_MANAGER, QUALITY_MANAGER, COMPLIANCE_MANAGER, CISO_SECURITY_MANAGER, AI_GOVERNANCE_MANAGER, PRIVACY_MANAGER, LEGAL_REVIEWER, AUDITOR_LEAD, AUDITOR, REGULATORY_CONTENT_STEWARD, REPORT_VIEWER, VIEWER | actor tenant; additional purpose capability + parent permission + real scope + SoD; no Platform enumeration | executable29; MACRO R1 |
 | `platform.membership_reference.read` | CORE_PLATFORM | membership_reference | tenant,assigned_object,owned_object,audit_engagement; exact parent only | read | EXECUTIVE_BOARD_VIEWER, GRC_MANAGER, QUALITY_MANAGER, COMPLIANCE_MANAGER, RISK_MANAGER, CISO_SECURITY_MANAGER, AI_GOVERNANCE_MANAGER, PRIVACY_MANAGER, LEGAL_REVIEWER, AUDITOR_LEAD, AUDITOR, PROCESS_OWNER, CONTROL_OWNER, EVIDENCE_OWNER, ACTION_OWNER, REPORT_VIEWER, VIEWER | actor tenant; additional purpose capability + parent permission + real scope + SoD; no Platform enumeration | executable29; MACRO R1 |
 | `privacy.retention_policy_reference.read` | EVIDENCE_DOCUMENTS | retention_policy_reference | tenant,assigned_object,owned_object; exact parent/command only | read | EXECUTIVE_BOARD_VIEWER, GRC_MANAGER, QUALITY_MANAGER, COMPLIANCE_MANAGER, CISO_SECURITY_MANAGER, AI_GOVERNANCE_MANAGER, PRIVACY_MANAGER, LEGAL_REVIEWER, AUDITOR_LEAD, AUDITOR, CONTROL_OWNER, EVIDENCE_OWNER, REPORT_VIEWER, VIEWER | actor tenant; additional purpose capability + parent permission + real scope + SoD; no Platform enumeration | executable29; MACRO R1 |
+
+## STEP_6A3 C-04W — asignaciones cerradas
+
+El manifest exacto `candidates/STEP_6A3_C04W_CFGD_v1.10/ROLE_PERMISSIONS.json` SHA-256 `8c9112ae1db21f477cca6f16dba12ccbe0b4956b2d477b77b4097d3ed5727583` define nueve permisos existentes para TENANT_ADMIN tenant-owned y el permiso nuevo `privacy.retention_policy.legal_hold.release` para LEGAL_REVIEWER tenant-owned, todos con `MembershipRole.scope_kind=tenant`. El permiso nuevo pertenece a PRIVACY, acción de release de hold publicado, y exige mismo tenant, actor humano distinto del autor, razón, CAS, idempotencia, fuente invocada válida y AuditEvent. No concede archive ni purge. Las nueve asignaciones Tenant Admin no cambian permisos de roles ajenos ni otorgan Platform authority; los dos scopes tenant añadidos a `evidence.document.update` y `evidence.evidence.submit` sólo admiten la fuente propia del flujo C-04W mediante ObjectPolicy backend. La capability PRIVACY sigue limitada por el plan GRC publicado.
+
+
+## INITIAL_SOURCE v1.11 — delta candidato
+
+Se mantienen todos los Permission/RolePermission/MembershipRole existentes. Tenant Admin humano es custodio y autor del draft; el autor documental puede ser ese custodio o Evidence Owner humano del mismo tenant con scope tenant y permisos efectivos de cada operación. Upload/finalize/create/submit sólo admiten su cadena documental exacta; finalize/submit permanecen del autor documental. Bind es del Tenant Admin custodio autor con privacy.retention_policy.update y PRIVACY. EvidenceReview debe ser de identidad distinta del autor documental; la aprobación de aplicabilidad debe ser de identidad distinta del autor del draft. Ser autor del draft no impide revisar Evidence ajena si el permiso existe. Ninguna acumulación editorial conforme49 sustituye estas separaciones. M2M/Platform, identidad ajena, falta de permiso/entitlement/scope y objeto de otro tenant: DENY. No se conceden grants ni lectura documental general.
+
+Nuevo bind usa exclusivamente privacy.retention_policy.update tenant. EVIDENCE_DOCUMENTS permanece requisito de comandos documentales; PRIVACY del custodio/binder no se concede por arrastre al autor documental. Ninguna Permission nueva.
+
+
+## INITIAL_SOURCE — reconciliación de scope submit, sucesora ejecutable
+
+EvidenceVersion/draft/evidence.submit/v2→submitted conserva permiso evidence.evidence.submit, audit.evidence.evidence.submit.v1 y side effect evidence.evidence.submitted.v1. Scopes: assigned_object,owned_object,tenant. Tenant sólo permite submit por el autor humano real de la cadena INITIAL_SOURCE propia, con scope tenant efectivo, rol Tenant Admin custodio o Evidence Owner, aplicabilidad draft nueva válida, sin source, sin EvidenceLinks, policy ordinaria tenant-owned publicada/vigente, contexto/FK exactos y ausencia de primaria ordinaria. Si sólo tiene tenant y no satisface ese predicado: DENY; la lectura tenant no confiere derechos. No sintetizar scopes en el actor. Antes de CAS y en replay se reautoriza con datos bloqueados actuales. Después de publicación de la aplicabilidad el replay no produce otra transición; comprueba autor/contexto/cadena, sin conceder consumo a un documento sin links.
+
+Owned/assigned ordinarios conservan permiso, scope efectivo, ObjectPolicy y reglas actuales. No se concede tenant-only para Evidence ordinaria o ajena. Review/approve y sus SoD no cambian. El consumo ordinario y bind mantienen guards v1.11. La sucesora usa precondition_policy_ref contract:initial-retention-source-submit:v1.11. La v1 permanece inmutable e inventariada; la elección es por versión publicada superior, conforme al resolver canónico, sin fallback.
+
+## Operador privado y publicación
+
+Nueva operación privada exclusiva QA iam.initial_source.publish dentro del operador existente, sin endpoint HTTP público ni grants nuevos. Reutiliza autenticación real del principal M2M activo y sus proofs actuales. Configuración adicional: par completo TCDX_INITIAL_SOURCE_PUBLICATION_ROOT / TCDX_INITIAL_SOURCE_PUBLICATION_MANIFEST_SHA256; ausencia deshabilita la operación; configuración parcial/no QA/manifest o decisión incoherente DENY. Loaders verifican baseline activa, aprobación exacta, todos los snapshots y binding, recibo predecessor y ledger34/R2 exactos. No añadir credenciales, ServicePrincipal ni permisos; no ejecutar iam.publish/iam.c04w.publish.
+
+Transacción: lock_timeout5s; bloquear registry, scopes y side-effects; resolver proof/principal; verificar predecesora v1 exacta del snapshot QA; insertar únicamente v2 con3scopes y el mismo side-effect requerido ordinal1; insertar una auditoría audit.platform.lifecycle_transition.publish.v1 bajo step6a3InitialSourceLifecyclePublication, con manifest/decisión/hash/principal/correlation, sin secretos. Falla audit o discrepancia revierte todo. Replay exacto verifica v2, scopes/efecto/audit único y retorna0 filas/0audit nuevos; discrepancia es409 y nunca edita v1/v2. Las cinco aristas C04W conservan sus filas/auditorías sin republicación. Bind no crea otra arista.
+

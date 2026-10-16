@@ -1,16 +1,16 @@
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { availableWorkflowActions, canCreate, DataCard, distributionFromRows, KpiCard, modules, StackedDistribution, StatePanel, StatusBadge, TableShell } from "./core-grc.js";
+import { availableWorkflowActions, canCreate, DataCard, distributionFromRows, KpiCard, modules, retentionActionPermission, StackedDistribution, StatePanel, StatusBadge, TableShell } from "./core-grc.js";
 import { displayValue, fieldLabel, roleLabel } from "./i18n/display-text.js";
 import { moduleLabels, uiText } from "./i18n/es.js";
 import { STATUS_LABELS, statusLabel } from "./i18n/status-labels.js";
 
 describe("Core GRC UI contract", () => {
-  it("publishes only the authorized Phase 5 resource modules", () => {
+  it("keeps the bounded Core GRC modules and prepares C-04W tenant applicability", () => {
     expect(modules.map(({ path }) => path)).toEqual([
       "/requirement-applicabilities", "/requirement-assessments", "/statements-of-applicability", "/controls",
-      "/control-assessments", "/assurance-tests", "/evidence-requests", "/evidence", "/retention-policies", "/issues", "/actions"
+      "/control-assessments", "/assurance-tests", "/evidence-requests", "/evidence", "/retention-policies", "/retention-policy-applicabilities", "/issues", "/actions"
     ]);
     expect(JSON.stringify(modules)).not.toMatch(/risk|incident|supplier|third.part/i);
   });
@@ -29,6 +29,16 @@ describe("Core GRC UI contract", () => {
     expect(JSON.stringify(availableWorkflowActions(definition, row))).not.toMatch(/permission|scope/);
   });
 
+  it("shows initial-source bind only from the backend authorization projection", () => {
+    const definition=modules.find(({id})=>id==='aplicabilidad-retencion')!;
+    for(const row of [{lifecycle_state:'draft'},{lifecycle_state:'draft',initial_source_bind_allowed:false},{lifecycle_state:'published',initial_source_bind_allowed:true}]) {
+      expect(availableWorkflowActions(definition,row).some(action=>action.suffix==='bind-initial-source')).toBe(false);
+    }
+    const action=availableWorkflowActions(definition,{lifecycle_state:'draft',initial_source_bind_allowed:true}).find(action=>action.suffix==='bind-initial-source')!;
+    expect(action.label).toBe('Vincular fuente inicial');expect(action.fields).toEqual(['source_evidence_version_id','source_clause_ref','effective_from','effective_to']);
+    expect(retentionActionPermission(action.suffix)).toBe('privacy.retention_policy.update');
+  });
+
   it("offers canonical evidence-request fulfillment only from the open state", () => {
     const definition = modules.find(({ id }) => id === "solicitudes-evidencia")!;
     expect(availableWorkflowActions(definition, { lifecycle_state: "open", row_version: 1 }).map(({ suffix }) => suffix)).toEqual(["fulfill"]);
@@ -39,6 +49,14 @@ describe("Core GRC UI contract", () => {
     const definition = modules.find(({ id }) => id === "cumplimiento")!;
     expect(canCreate(definition)).toBe(true);
     expect(JSON.stringify(modules)).not.toMatch(/permission|scope|capability_group/);
+  });
+
+  it("maps C-04W presentation actions to the exact tenant permissions", () => {
+    expect(retentionActionPermission("submit-for-review")).toBe("privacy.retention_policy.update");
+    expect(retentionActionPermission("publish")).toBe("privacy.retention_policy.publish");
+    expect(retentionActionPermission("release-hold")).toBe("privacy.retention_policy.legal_hold.release");
+    expect(retentionActionPermission("archive")).toBeNull();
+    expect(displayValue("confidential")).toBe("Confidencial");
   });
 
   it("UI_SPANISH_CONSISTENCY centralizes Spanish navigation, modules, states and roles", () => {

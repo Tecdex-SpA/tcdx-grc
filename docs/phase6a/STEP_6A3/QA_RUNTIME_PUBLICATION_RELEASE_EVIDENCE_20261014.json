@@ -1,0 +1,984 @@
+{
+  "profile": "STEP6A3_QA_RUNTIME_EVIDENCE_V1",
+  "at": "2026-10-14T21:33:04.492109+00:00",
+  "MASTER_REGENT": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14",
+  "STEP_6A3": "PARTIAL_BLOCKED",
+  "STEP_6A4": "NOT_STARTED",
+  "environment": "qa",
+  "public_url": "https://grc.tecdex.net/",
+  "decision_id": "DR-STEP6A3-IAM-M2M-QA-20261014-01",
+  "repository_branch": "fix/qa-functional-commercial-onboarding-20261013",
+  "schema_changed": false,
+  "executable_contracts_changed": false,
+  "frontend_source_changed_in_this_execution": false,
+  "backend_changed": true,
+  "qa_deployment_changed": true,
+  "production_changed": false,
+  "iam": {
+    "status": "PASS_QA",
+    "service_principal_id": "01a13c3b-dbdd-763f-bcbb-f16ff41d99ba",
+    "real_client_credentials_verified": true,
+    "reference_grants_global": 44,
+    "reference_grants_tenant_preserved": 88,
+    "reference_publication_audits": 132,
+    "publication_replay_new_reference_audits": 0,
+    "permissions": 3,
+    "lifecycle_persisted_edges": 3,
+    "lifecycle_internal_initial_effect": "subscription_regulatory_pack.transfer_activate",
+    "human_authority_boundary": {
+      "authorization_projection": 403,
+      "tenant_list": 403,
+      "plan_version_list": 403,
+      "invalid_bearer_token": 401
+    }
+  },
+  "commercial_publication": {
+    "status": "PASS_QA",
+    "human_platform_admin_execution": "USER_REPORTED_AND_QA_PERSISTENCE_VERIFIED",
+    "manifest_sha256": "3e12e21ebc0ad31ea2e7f7ab96cc15a022252b2389fbe4d33ecf72208fc9a479",
+    "published_aggregates": 5,
+    "replayed": false,
+    "versions_v2": 3,
+    "entitlements_v2": 36,
+    "entitlements_v1_preserved": 36,
+    "subscriptions_preserved": 3,
+    "audit_events": 6,
+    "outbox_events": 5,
+    "effective_from": "2026-10-14T18:08:21.832000Z"
+  },
+  "preservation_before": {
+    "subscriptions": "5810c860520fcb994dd15c36a471989aa2e9f68ecfd7812b345d6d7e680be6ed",
+    "plan_v1": "79240e39b7a88e9953e651101d05c9afef098e8d908141b10e59a33f97dd759d",
+    "entitlements_v1": "9e722f48f8b75531361aa93d1145d9310afc26a8e12aa72e56dfc17c26a49671",
+    "reference_grants": "fc59b90d7e0f72f4086cb290ab6ae6356537c09652ca7ef3db029886b1ece2b0",
+    "roles": "613ce452fea11fa8435fd2b3f3c3ceaaa7dc04f5dd908bc7a225fee554f81422"
+  },
+  "qa_post_deployment": {
+    "status": "PASS_READONLY",
+    "at": "2026-10-14T21:31:29.906Z",
+    "identity": {
+      "db": "tcdx-grc",
+      "host": "192.168.2.40",
+      "major": 16,
+      "ssl": true
+    },
+    "counts": {
+      "migrations": 33,
+      "active_platform_service_principals": 1,
+      "reference_publication_audits": 132,
+      "r3_audits": 36,
+      "commercial_permissions": 3,
+      "commercial_lifecycle_registry_rows": 3,
+      "v2": 3,
+      "entitlements_v2": 36,
+      "unvalidated_fks": 0,
+      "app_can_provision": true,
+      "app_can_publish": true,
+      "draft_packs": 5,
+      "catalog_audits": 6,
+      "catalog_outbox": 5
+    },
+    "quotas": [
+      {
+        "plan_code": "GRC",
+        "dimension": "ISO",
+        "value": "4.0000000000",
+        "unit": "pack",
+        "open_ended": true
+      },
+      {
+        "plan_code": "GRC",
+        "dimension": "LEGAL",
+        "value": "1.0000000000",
+        "unit": "pack",
+        "open_ended": true
+      },
+      {
+        "plan_code": "GRC",
+        "dimension": "TOTAL",
+        "value": "5.0000000000",
+        "unit": "pack",
+        "open_ended": true
+      },
+      {
+        "plan_code": "ISO",
+        "dimension": "ISO",
+        "value": "2.0000000000",
+        "unit": "pack",
+        "open_ended": true
+      },
+      {
+        "plan_code": "ISO",
+        "dimension": "LEGAL",
+        "value": "0.0000000000",
+        "unit": "pack",
+        "open_ended": true
+      },
+      {
+        "plan_code": "ISO",
+        "dimension": "TOTAL",
+        "value": "2.0000000000",
+        "unit": "pack",
+        "open_ended": true
+      },
+      {
+        "plan_code": "ISO_RIESGO_OPERATIVO",
+        "dimension": "ISO",
+        "value": "3.0000000000",
+        "unit": "pack",
+        "open_ended": true
+      },
+      {
+        "plan_code": "ISO_RIESGO_OPERATIVO",
+        "dimension": "LEGAL",
+        "value": "0.0000000000",
+        "unit": "pack",
+        "open_ended": true
+      },
+      {
+        "plan_code": "ISO_RIESGO_OPERATIVO",
+        "dimension": "TOTAL",
+        "value": "3.0000000000",
+        "unit": "pack",
+        "open_ended": true
+      }
+    ],
+    "publication": {
+      "verified_material_audits": 5,
+      "verified_outbox_aggregates": 5,
+      "completed_publications": 1,
+      "commercial_admin_grants": 3,
+      "unauthorized_commercial_grants": 0,
+      "verified_machine_bindings": 1,
+      "duplicate_reference_audits": 0
+    },
+    "subscriptions_count": 3,
+    "entitlements_v1_count": 36,
+    "fingerprints": {
+      "subscriptions": "5810c860520fcb994dd15c36a471989aa2e9f68ecfd7812b345d6d7e680be6ed",
+      "plan_v1": "79240e39b7a88e9953e651101d05c9afef098e8d908141b10e59a33f97dd759d",
+      "entitlements_v1": "9e722f48f8b75531361aa93d1145d9310afc26a8e12aa72e56dfc17c26a49671",
+      "reference_grants": "fc59b90d7e0f72f4086cb290ab6ae6356537c09652ca7ef3db029886b1ece2b0",
+      "roles": "613ce452fea11fa8435fd2b3f3c3ceaaa7dc04f5dd908bc7a225fee554f81422"
+    },
+    "plans": [
+      {
+        "plan_code": "GRC",
+        "version_number": "1",
+        "lifecycle_state": "published",
+        "effective_from": "2026-09-16T00:00:00.000000Z",
+        "published": true
+      },
+      {
+        "plan_code": "GRC",
+        "version_number": "2",
+        "lifecycle_state": "published",
+        "effective_from": "2026-10-14T18:08:21.832000Z",
+        "published": true
+      },
+      {
+        "plan_code": "ISO",
+        "version_number": "1",
+        "lifecycle_state": "published",
+        "effective_from": "2026-09-16T00:00:00.000000Z",
+        "published": true
+      },
+      {
+        "plan_code": "ISO",
+        "version_number": "2",
+        "lifecycle_state": "published",
+        "effective_from": "2026-10-14T18:08:21.832000Z",
+        "published": true
+      },
+      {
+        "plan_code": "ISO_RIESGO_OPERATIVO",
+        "version_number": "1",
+        "lifecycle_state": "published",
+        "effective_from": "2026-09-16T00:00:00.000000Z",
+        "published": true
+      },
+      {
+        "plan_code": "ISO_RIESGO_OPERATIVO",
+        "version_number": "2",
+        "lifecycle_state": "published",
+        "effective_from": "2026-10-14T18:08:21.832000Z",
+        "published": true
+      }
+    ]
+  },
+  "backend_initial_activation": {
+    "status": "PASS_QA",
+    "kind": "backend",
+    "image_id": "sha256:6d65e17d19fc5462f661df5cfa4d9cdc6329c8a1e6f36b7584ab1720cdd83cdd",
+    "container_id": "3a52cbca755392abf48c1975513357185f3bd6ef37d07ba60f6464186d8b600d",
+    "previous_image_id": "sha256:59479e69ece15ae654498b637a6be5a66f0d4f0a56e00ffbea7c8cb6d3f22b49",
+    "rollback_container": "tcdx-grc-backend-rollback-step6a3-20261014",
+    "health": "healthy",
+    "release_gate_sha256": "f700d274b42dead1c84115a456fec3451310b127cf0ac34217bf5f430f15caa5"
+  },
+  "backend_final_activation": {
+    "status": "PASS_QA",
+    "kind": "backend",
+    "image_id": "sha256:e636c667c37a62105e297248db0c3077de865d3b24799333f0475eaa94ef695a",
+    "container_id": "8134ef197e51761e79694379c3562353440b06f216e32ba87919c57a1313b69c",
+    "previous_image_id": "sha256:6d65e17d19fc5462f661df5cfa4d9cdc6329c8a1e6f36b7584ab1720cdd83cdd",
+    "rollback_container": "tcdx-grc-backend-rollback-step6a3-etag-20261014",
+    "health": "healthy",
+    "release_gate_sha256": "6c710fed4abdfde204a30bd8d319c07c702e760e656c1ba7b25881e351961244"
+  },
+  "frontend_activation": {
+    "status": "PASS_QA",
+    "kind": "frontend",
+    "image_id": "sha256:aeebdb982620315edb8586bef0aa77d3fe372fc552ee120458abd01ca8fdb5f1",
+    "container_id": "543589c4bb670a76e8919e07541ed7ec185224567ffe2990d934037426526dff",
+    "previous_image_id": "sha256:461f6605c6dabded45a697d7fea40b534e78faaea9abc1eba678e3e13d117804",
+    "rollback_container": "tcdx-grc-frontend-rollback-step6a3-20261014",
+    "health": "healthy",
+    "release_gate_sha256": "f700d274b42dead1c84115a456fec3451310b127cf0ac34217bf5f430f15caa5"
+  },
+  "backend_final_source_sha256": "3dca6d4434baceb4d1a47e424e254080abc1730bc1bb7b16fd88e1dcbf4c2068",
+  "backend_final_archive_sha256": "5fca0cd59ff89930f4a1064fbfc6d7591c3980d3ad5bd97cd1fb51663e3cf452",
+  "frontend_archive_sha256": "f81617215595d1ed23709c3516aef435879ac67fe21e2f6aab041fa755717710",
+  "public_frontend_bundle_sha256": "41fd06df9832f07eb0b38ef2e7b4a7fd3993fc8f4d790266f1363ff443704316",
+  "qa_health": {
+    "backend": "PASS_QA",
+    "frontend": "PASS_QA",
+    "database": "PASS_QA",
+    "fatal_patterns": 0,
+    "sql_errors": 0,
+    "http_5xx_patterns": 0,
+    "restart_count": 0,
+    "rollback_containers_retained": true
+  },
+  "public_browser": {
+    "status": "PASS_QA",
+    "scope": "PUBLIC_LOGIN_SCREEN_ONLY",
+    "http_status": 200,
+    "zoho_login_visible": true,
+    "reload_passed": true,
+    "page_errors": [],
+    "http_5xx": [],
+    "authenticated_login": "NOT_RUN"
+  },
+  "etag_correction": {
+    "user_observed": {
+      "http_status": 200,
+      "etag": "\"1-zstd\"",
+      "content_encoding": "zstd"
+    },
+    "root_cause": "HTTP encoding modifies canonical concurrency ETag; frontend rejects transformed version",
+    "change": "Subscription detail Cache-Control: no-store, no-transform",
+    "deployed": "PASS_QA",
+    "post_correction_human_form_verification": "PASS_QA",
+    "human_result": "formulario carga"
+  },
+  "tests": {
+    "node": "22.23.2",
+    "affected_unit_tests": {
+      "status": "PASS_LOCAL",
+      "passed": 89
+    },
+    "real_isolated_postgresql": {
+      "status": "PASS_ISOLATED",
+      "passed": 37,
+      "iam_publication": 9,
+      "commercial_publication": 3,
+      "change_plan": 25
+    },
+    "etag_correction_postgresql_regression": {
+      "status": "PASS_ISOLATED",
+      "passed": 25,
+      "already_included_in_unique_test_count": true
+    },
+    "unique_affected_tests": 126,
+    "typecheck": "PASS_LOCAL",
+    "backend_amd64_build": "PASS_LOCAL",
+    "rector_integrity": "PASS_LOCAL",
+    "commercial_contracts_and_schema_verifier": "PASS_LOCAL",
+    "secret_findings": 0,
+    "git_diff_check": "PASS_LOCAL",
+    "qa_status_consumer_security": {
+      "status": "PASS_LOCAL",
+      "passed": 4,
+      "cases": [
+        "Exact runtime evidence accepted",
+        "Tampered evidence SHA rejected",
+        "False global STEP_6A3 closure rejected",
+        "Missing human UI acceptance rejected"
+      ]
+    }
+  },
+  "QA_AUTHENTICATED": "PASS_QA",
+  "CHANGE_PLAN_QA": "PASS_QA",
+  "HUMAN_UI_REVIEW": "PASS",
+  "blockers_remaining": [
+    "C-04W: BLOCKED_EXTERNAL_LEGAL_EVIDENCE",
+    "CFG-D: BLOCKED_OFFICIAL_SUFFICIENCY_AND_VERSIONED_PUBLICATION",
+    "Aceptación integral macro: depende de C-04W/CFG-D y pruebas restantes por capacidad; VOC-C04 cerrado, QA independiente aceptado"
+  ],
+  "files_changed": [
+    "apps/backend/src/security/application-token.ts",
+    "apps/backend/src/security/iam-publication.ts",
+    "apps/backend/src/security/iam-publication-runtime.ts",
+    "apps/backend/src/security/iam-publication-operator-cli.ts",
+    "apps/backend/src/security/iam-publication.postgres.test.ts",
+    "apps/backend/src/security/machine-authentication.test.ts",
+    "apps/backend/src/security/publication-operator-server.ts",
+    "apps/backend/src/security/publication-operator-server.test.ts",
+    "apps/backend/src/security/commercial-catalog-operator.ts",
+    "apps/backend/src/server.ts",
+    "apps/backend/src/core-grc/routes.ts",
+    "apps/backend/src/security/subscription-change-plan.postgres.test.ts",
+    "iam/config/step6a3-m2m-qa-profile.json",
+    "scripts/phase6a3/store-iam-publisher-secret.py",
+    "scripts/phase6a3/qa-iam-publication-runtime.py",
+    "scripts/phase6a3/qa-promote-step6a3.py",
+    "docs/phase6a/STEP_6A3/IAM_M2M_QA_DECISION_RECEIPT_20261014.json",
+    "docs/governance/MASTER_EXECUTION_STATUS.md",
+    "docs/phase6a/STEP_6A3/QA_RUNTIME_PUBLICATION_RELEASE_EVIDENCE_20261014.json",
+    "docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261009_V2/07_RESULT.json",
+    "scripts/verify-phase6a3-current.py",
+    "docs/phase6a/STEP_6A3/RESIDUAL_VOC_C04_ACCEPTANCE_CANDIDATE_20261014.json",
+    "docs/phase6a/STEP_6A3/HUMAN_RESIDUAL_VOC_C04_ACCEPTANCE_RECEIPT_20261014.json"
+  ],
+  "file_sha256": {
+    "apps/backend/src/security/application-token.ts": "f82c39c22f80414fa30fdfca80c6df8d3433e31508a7d026da7a860c57d983a8",
+    "apps/backend/src/security/iam-publication.ts": "5dee28c6aeeb1ecbfbcfd94570e187a0800e0c6f5b1842e3126aa8655acec1b0",
+    "apps/backend/src/security/iam-publication-runtime.ts": "aacbaad3c142f4949acc45e5924e951424646bfd7ba56d1cf431f67bd532b9b6",
+    "apps/backend/src/security/iam-publication-operator-cli.ts": "d92d55e77472eb5f926cdb69bf0d09c6dc6a3c6fe2fd59786a1ae99df961f750",
+    "apps/backend/src/security/iam-publication.postgres.test.ts": "63747ebb3da3f138d337f5b1bee0c9df699d1ab85efdeb21fc5807daf59ce14f",
+    "apps/backend/src/security/machine-authentication.test.ts": "5e357e4152c4f478dae9f6b3c3f44fe280b96b95ecbb99c3c5f10c7b227b13a4",
+    "apps/backend/src/security/publication-operator-server.ts": "901326b0df0fd88be2afde67575cfbe0898e2009a29dc0eefcc8473c917e3d51",
+    "apps/backend/src/security/publication-operator-server.test.ts": "c0be5c15fa51af70004952ddf7ae8fbe169d81e585fd5eb7f9b7e09ac20e2f5f",
+    "apps/backend/src/security/commercial-catalog-operator.ts": "f7a6c19b958c80bf0c38d3a58f7efc755db46d7a9b6c64f0cb9269cca2e8a99d",
+    "apps/backend/src/server.ts": "a46ffacb9395ea11d8b18e56d78c2d92083926a2135b2de3c769df3f4f47f62a",
+    "apps/backend/src/core-grc/routes.ts": "758e8536bc877f4d9e698c71c3ee2f06df3c1e8fe3b116502fb36f3f76743d98",
+    "apps/backend/src/security/subscription-change-plan.postgres.test.ts": "7f20043d4910d9b0e44dda4f4ee15b17fb0e991b7a42550beeda9eb705cd5097",
+    "iam/config/step6a3-m2m-qa-profile.json": "6c4bc99b0d25fb75cf67ad8dd8818f1dff1c430c031b1c642b11d0a408ca00f7",
+    "scripts/phase6a3/store-iam-publisher-secret.py": "b844b09a3e9b3485ecd7d1323efddd858c13ff4a00dd6e5985924b08cd313db3",
+    "scripts/phase6a3/qa-iam-publication-runtime.py": "9b62539ec83f184b716daccac0c1d7f9766bc8898073270ac25c53a9def34808",
+    "scripts/phase6a3/qa-promote-step6a3.py": "6634ac4dd2a308aa04d4090ae929d1f4e838d06f29890a60e0412349f2fc7b16",
+    "docs/phase6a/STEP_6A3/IAM_M2M_QA_DECISION_RECEIPT_20261014.json": "aa509b568c2ccee57f2caf96578dd51a6ffc1187698debbf233cdc9c40b9f72a",
+    "docs/governance/MASTER_EXECUTION_STATUS.md": "161c5b6b88a9f79c7f6b101b7e997a0adad8aade1fde2291ba1889202201b265",
+    "scripts/verify-phase6a3-current.py": "b68d3879ae7aefb48063c7192533ec962917220f1436604b64095cdcf652cdd3",
+    "docs/phase6a/STEP_6A3/RESIDUAL_VOC_C04_ACCEPTANCE_CANDIDATE_20261014.json": "29f100a9e4446f08520d78681f99223ad500dec8174a1cac98612f8a012abd4f",
+    "docs/phase6a/STEP_6A3/HUMAN_RESIDUAL_VOC_C04_ACCEPTANCE_RECEIPT_20261014.json": "fadc51b1584645ec6a71e1f8f68f2e48c4949d4c5032e72e9661b512f4f49858"
+  },
+  "functional_change_plan": {
+    "status": "READONLY_VERIFIED",
+    "subscriptions": [
+      {
+        "display_name": "TecDex",
+        "subscription_id": "01a0d491-030a-723c-940e-14eee9605a16",
+        "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+        "plan_version_id": "01a0a783-6000-7a9a-8a91-060caae3d18f",
+        "lifecycle_state": "active",
+        "row_version": "1",
+        "previous_subscription_id": null,
+        "starts_at": "2026-09-24 17:57:48.41858+00",
+        "ends_at": null,
+        "created_at": "2026-09-24 17:57:48.41858+00",
+        "plan_code": "GRC",
+        "version_number": "1"
+      },
+      {
+        "display_name": "ACME",
+        "subscription_id": "01a13700-cab2-7211-b3be-863971c965b4",
+        "tenant_id": "01a1137a-1351-76b8-ac8a-0bb109ca8e22",
+        "plan_version_id": "01a0a783-6000-73d1-a52c-eaa706d6696a",
+        "lifecycle_state": "active",
+        "row_version": "1",
+        "previous_subscription_id": null,
+        "starts_at": "2026-10-13 20:42:41.19385+00",
+        "ends_at": null,
+        "created_at": "2026-10-13 20:42:41.19385+00",
+        "plan_code": "ISO_RIESGO_OPERATIVO",
+        "version_number": "1"
+      },
+      {
+        "display_name": "ACME 2",
+        "subscription_id": "01a13702-c5aa-74cf-bcf7-80e5c8398799",
+        "tenant_id": "01a11820-ae9f-7485-93e5-942eaec71121",
+        "plan_version_id": "01a0a783-6000-7a9a-8a91-060caae3d18f",
+        "lifecycle_state": "ended",
+        "row_version": "2",
+        "previous_subscription_id": null,
+        "starts_at": "2026-10-13 20:44:50.980875+00",
+        "ends_at": "2026-10-14 21:32:08.316178+00",
+        "created_at": "2026-10-13 20:44:50.980875+00",
+        "plan_code": "GRC",
+        "version_number": "1"
+      },
+      {
+        "display_name": "ACME 2",
+        "subscription_id": "01a13c54-6cfc-7326-9da6-2729f80ec3e9",
+        "tenant_id": "01a11820-ae9f-7485-93e5-942eaec71121",
+        "plan_version_id": "01a13b99-dd50-756c-aec2-79816cc5f51c",
+        "lifecycle_state": "ended",
+        "row_version": "2",
+        "previous_subscription_id": "01a13702-c5aa-74cf-bcf7-80e5c8398799",
+        "starts_at": "2026-10-14 21:32:08.316178+00",
+        "ends_at": "2026-10-14 21:35:43.488185+00",
+        "created_at": "2026-10-14 21:32:08.251598+00",
+        "plan_code": "ISO_RIESGO_OPERATIVO",
+        "version_number": "2"
+      },
+      {
+        "display_name": "ACME 2",
+        "subscription_id": "01a13c57-b57d-7160-b7fb-71cd3823c938",
+        "tenant_id": "01a11820-ae9f-7485-93e5-942eaec71121",
+        "plan_version_id": "01a13b99-dd4f-71c4-ac66-9c8a942999c2",
+        "lifecycle_state": "active",
+        "row_version": "1",
+        "previous_subscription_id": "01a13c54-6cfc-7326-9da6-2729f80ec3e9",
+        "starts_at": "2026-10-14 21:35:43.488185+00",
+        "ends_at": null,
+        "created_at": "2026-10-14 21:35:43.447799+00",
+        "plan_code": "ISO",
+        "version_number": "2"
+      }
+    ],
+    "changes": [
+      {
+        "aggregate_id": "01a13702-c5aa-74cf-bcf7-80e5c8398799",
+        "correlation_id": "01a13c54-6c99-7551-a760-851cc409c117",
+        "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "outcome": "success",
+        "event_code": "audit.platform.subscription.change_plan.v1",
+        "command_code": "subscription.change_plan",
+        "occurred_at": "2026-10-14 21:32:08.251598+00",
+        "before_payload": {
+          "subscription": {
+            "ends_at": null,
+            "plan_id": "01a0a783-6000-73d7-9874-ed71bd2fc3fe",
+            "plan_code": "GRC",
+            "plan_name": "GRC v1",
+            "starts_at": "2026-10-13T20:44:50.980875Z",
+            "tenant_id": "01a11820-ae9f-7485-93e5-942eaec71121",
+            "row_version": "1",
+            "cancelled_at": null,
+            "lifecycle_state": "active",
+            "plan_version_id": "01a0a783-6000-7a9a-8a91-060caae3d18f",
+            "subscription_id": "01a13702-c5aa-74cf-bcf7-80e5c8398799",
+            "subscription_code": "v1",
+            "plan_version_number": "1",
+            "next_subscription_id": null,
+            "previous_subscription_id": null,
+            "commercial_configuration_status": "incomplete"
+          },
+          "scheduled_ends_at": null
+        },
+        "after_payload": {
+          "reason": "test",
+          "tenant_id": "01a11820-ae9f-7485-93e5-942eaec71121",
+          "effective_at": "2026-10-14T21:32:08.316178Z",
+          "operation_id": "subscriptionChangePlan",
+          "transfer_count": 0,
+          "evaluated_limits": [
+            {
+              "limit_value": "3",
+              "usage_limit_id": "01a13b99-dd50-756c-aec2-852325425c2e",
+              "commercial_family_id": null,
+              "evaluated_root_count": 0
+            },
+            {
+              "limit_value": "3",
+              "usage_limit_id": "01a13b99-dd50-756c-aec2-8bdc35b279d3",
+              "commercial_family_id": "01a13b99-dd4e-770c-be85-e361c7edcc87",
+              "evaluated_root_count": 0
+            },
+            {
+              "limit_value": "0",
+              "usage_limit_id": "01a13b99-dd50-756c-aec2-8c9a5ba668f0",
+              "commercial_family_id": "01a13b99-dd4f-71c4-ac66-1fb9dab70723",
+              "evaluated_root_count": 0
+            }
+          ],
+          "preserved_ends_at": null,
+          "new_plan_version_id": "01a13b99-dd50-756c-aec2-79816cc5f51c",
+          "old_plan_version_id": "01a0a783-6000-7a9a-8a91-060caae3d18f",
+          "current_subscription_id": "01a13c54-6cfc-7326-9da6-2729f80ec3e9",
+          "previous_subscription_id": "01a13702-c5aa-74cf-bcf7-80e5c8398799",
+          "evaluated_configuration_sha256": "219a5acc789792bdf81fcc53f17bdf43a2922d66b736f1e5b898b7361362572e"
+        },
+        "plan_change_outbox": 1,
+        "privileged_audits": 1
+      },
+      {
+        "aggregate_id": "01a13c54-6cfc-7326-9da6-2729f80ec3e9",
+        "correlation_id": "01a13c57-b53b-7203-bdfc-907d07b9bf8c",
+        "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "outcome": "success",
+        "event_code": "audit.platform.subscription.change_plan.v1",
+        "command_code": "subscription.change_plan",
+        "occurred_at": "2026-10-14 21:35:43.447799+00",
+        "before_payload": {
+          "subscription": {
+            "ends_at": null,
+            "plan_id": "01a0a783-6000-7b45-8799-ce45d901364d",
+            "plan_code": "ISO_RIESGO_OPERATIVO",
+            "plan_name": "ISO_RIESGO_OPERATIVO v2",
+            "starts_at": "2026-10-14T21:32:08.316178Z",
+            "tenant_id": "01a11820-ae9f-7485-93e5-942eaec71121",
+            "row_version": "1",
+            "cancelled_at": null,
+            "lifecycle_state": "active",
+            "plan_version_id": "01a13b99-dd50-756c-aec2-79816cc5f51c",
+            "subscription_id": "01a13c54-6cfc-7326-9da6-2729f80ec3e9",
+            "subscription_code": "v2",
+            "plan_version_number": "2",
+            "next_subscription_id": null,
+            "previous_subscription_id": "01a13702-c5aa-74cf-bcf7-80e5c8398799",
+            "commercial_configuration_status": "complete"
+          },
+          "scheduled_ends_at": null
+        },
+        "after_payload": {
+          "reason": "5",
+          "tenant_id": "01a11820-ae9f-7485-93e5-942eaec71121",
+          "effective_at": "2026-10-14T21:35:43.488185Z",
+          "operation_id": "subscriptionChangePlan",
+          "transfer_count": 0,
+          "evaluated_limits": [
+            {
+              "limit_value": "2",
+              "usage_limit_id": "01a13b99-dd4f-71c4-ac66-ab818aa05e3b",
+              "commercial_family_id": null,
+              "evaluated_root_count": 0
+            },
+            {
+              "limit_value": "2",
+              "usage_limit_id": "01a13b99-dd4f-71c4-ac66-ad761bf5949b",
+              "commercial_family_id": "01a13b99-dd4e-770c-be85-e361c7edcc87",
+              "evaluated_root_count": 0
+            },
+            {
+              "limit_value": "0",
+              "usage_limit_id": "01a13b99-dd4f-71c4-ac66-b0401413dabc",
+              "commercial_family_id": "01a13b99-dd4f-71c4-ac66-1fb9dab70723",
+              "evaluated_root_count": 0
+            }
+          ],
+          "preserved_ends_at": null,
+          "new_plan_version_id": "01a13b99-dd4f-71c4-ac66-9c8a942999c2",
+          "old_plan_version_id": "01a13b99-dd50-756c-aec2-79816cc5f51c",
+          "current_subscription_id": "01a13c57-b57d-7160-b7fb-71cd3823c938",
+          "previous_subscription_id": "01a13c54-6cfc-7326-9da6-2729f80ec3e9",
+          "evaluated_configuration_sha256": "b1bc8d3ac835d950efea2551a1d6aebab17efa61edaefb1da047cc8af0457d96"
+        },
+        "plan_change_outbox": 1,
+        "privileged_audits": 1
+      }
+    ]
+  },
+  "qa_post_functional": {
+    "status": "PASS_READONLY",
+    "at": "2026-10-14T21:36:07.554Z",
+    "identity": {
+      "db": "tcdx-grc",
+      "host": "192.168.2.40",
+      "major": 16,
+      "ssl": true
+    },
+    "counts": {
+      "migrations": 33,
+      "active_platform_service_principals": 1,
+      "reference_publication_audits": 132,
+      "r3_audits": 36,
+      "commercial_permissions": 3,
+      "commercial_lifecycle_registry_rows": 3,
+      "v2": 3,
+      "entitlements_v2": 36,
+      "unvalidated_fks": 0,
+      "app_can_provision": true,
+      "app_can_publish": true,
+      "draft_packs": 5,
+      "catalog_audits": 6,
+      "catalog_outbox": 5
+    },
+    "quotas": [
+      {
+        "plan_code": "GRC",
+        "dimension": "ISO",
+        "value": "4.0000000000",
+        "unit": "pack",
+        "open_ended": true
+      },
+      {
+        "plan_code": "GRC",
+        "dimension": "LEGAL",
+        "value": "1.0000000000",
+        "unit": "pack",
+        "open_ended": true
+      },
+      {
+        "plan_code": "GRC",
+        "dimension": "TOTAL",
+        "value": "5.0000000000",
+        "unit": "pack",
+        "open_ended": true
+      },
+      {
+        "plan_code": "ISO",
+        "dimension": "ISO",
+        "value": "2.0000000000",
+        "unit": "pack",
+        "open_ended": true
+      },
+      {
+        "plan_code": "ISO",
+        "dimension": "LEGAL",
+        "value": "0.0000000000",
+        "unit": "pack",
+        "open_ended": true
+      },
+      {
+        "plan_code": "ISO",
+        "dimension": "TOTAL",
+        "value": "2.0000000000",
+        "unit": "pack",
+        "open_ended": true
+      },
+      {
+        "plan_code": "ISO_RIESGO_OPERATIVO",
+        "dimension": "ISO",
+        "value": "3.0000000000",
+        "unit": "pack",
+        "open_ended": true
+      },
+      {
+        "plan_code": "ISO_RIESGO_OPERATIVO",
+        "dimension": "LEGAL",
+        "value": "0.0000000000",
+        "unit": "pack",
+        "open_ended": true
+      },
+      {
+        "plan_code": "ISO_RIESGO_OPERATIVO",
+        "dimension": "TOTAL",
+        "value": "3.0000000000",
+        "unit": "pack",
+        "open_ended": true
+      }
+    ],
+    "publication": {
+      "verified_material_audits": 5,
+      "verified_outbox_aggregates": 5,
+      "completed_publications": 1,
+      "commercial_admin_grants": 3,
+      "unauthorized_commercial_grants": 0,
+      "verified_machine_bindings": 1,
+      "duplicate_reference_audits": 0
+    },
+    "subscriptions_count": 5,
+    "entitlements_v1_count": 36,
+    "fingerprints": {
+      "subscriptions": "8f520289ed8e9b6d2263abbe167f20debe6609dac0baa3b0e3de827a0c23fbb3",
+      "plan_v1": "79240e39b7a88e9953e651101d05c9afef098e8d908141b10e59a33f97dd759d",
+      "entitlements_v1": "9e722f48f8b75531361aa93d1145d9310afc26a8e12aa72e56dfc17c26a49671",
+      "reference_grants": "fc59b90d7e0f72f4086cb290ab6ae6356537c09652ca7ef3db029886b1ece2b0",
+      "roles": "613ce452fea11fa8435fd2b3f3c3ceaaa7dc04f5dd908bc7a225fee554f81422"
+    },
+    "plans": [
+      {
+        "plan_code": "GRC",
+        "version_number": "1",
+        "lifecycle_state": "published",
+        "effective_from": "2026-09-16T00:00:00.000000Z",
+        "published": true
+      },
+      {
+        "plan_code": "GRC",
+        "version_number": "2",
+        "lifecycle_state": "published",
+        "effective_from": "2026-10-14T18:08:21.832000Z",
+        "published": true
+      },
+      {
+        "plan_code": "ISO",
+        "version_number": "1",
+        "lifecycle_state": "published",
+        "effective_from": "2026-09-16T00:00:00.000000Z",
+        "published": true
+      },
+      {
+        "plan_code": "ISO",
+        "version_number": "2",
+        "lifecycle_state": "published",
+        "effective_from": "2026-10-14T18:08:21.832000Z",
+        "published": true
+      },
+      {
+        "plan_code": "ISO_RIESGO_OPERATIVO",
+        "version_number": "1",
+        "lifecycle_state": "published",
+        "effective_from": "2026-09-16T00:00:00.000000Z",
+        "published": true
+      },
+      {
+        "plan_code": "ISO_RIESGO_OPERATIVO",
+        "version_number": "2",
+        "lifecycle_state": "published",
+        "effective_from": "2026-10-14T18:08:21.832000Z",
+        "published": true
+      }
+    ]
+  },
+  "subscription_preservation_gate": {
+    "status": "PASS_QA_WITH_EXPLICIT_HUMAN_EXCEPTION",
+    "original_rows_retained": 3,
+    "original_rows_unchanged": 2,
+    "exception_tenant_id": "01a11820-ae9f-7485-93e5-942eaec71121",
+    "exception_original_subscription_id": "01a13702-c5aa-74cf-bcf7-80e5c8398799",
+    "human_decision_literal": "Aceptar Acme 2 como excepción QA auditada",
+    "human_authority": "Andrés Barouh",
+    "pre_functional_deployment_preservation": "3/3 PASS_QA",
+    "after_human_functional_test": "Two originals unchanged; Acme 2 ended through canonical audited change-plan with preserved successors",
+    "no_historical_rewrite_or_restore": true
+  },
+  "historical_checkpoint": {
+    "source": "docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261009_V2/07_RESULT.json#rector_v19_activation_checkpoint_20261014",
+    "signed_macro_sha256": "f5327ed1f4164c1461c2cc08dc41fb5bec654a45d3c014c439b7605a7789c356",
+    "status": "PARTIAL_BLOCKED",
+    "guard": "Preserve signed historical macro; do not infer global closure from commercial functional success"
+  },
+  "SESSION_RELOAD_QA": "PASS_QA",
+  "TENANT_ISOLATION_QA": "PASS_QA",
+  "human_acceptance": {
+    "authority": "Andrés Barouh",
+    "session_reload_and_ui_literal": "Recarga correcta y pantalla aceptada",
+    "tenant_admin_rbac_and_isolation_literal": "todo ok",
+    "scope": "Deployed QA Companies/change-plan UI and actual Tenant Admin restriction; visual baseline bytes unchanged"
+  },
+  "qa_runtime_acceptance": "PASS_QA",
+  "unresolved_rector_obligations": {
+    "source": "docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261009_V2/07_RESULT.json#macro_implementation_20261009",
+    "clauses": [
+      "C-04W",
+      "CFG-D-COMPLIANCE-V1",
+      "CFG-D-CONTROLS-V1",
+      "CFG-D-PUBLICATION",
+      "CFG-QA",
+      "VOC-QA"
+    ],
+    "statement": "Historical signed requirements remain preserved; IAM/commercial QA evidence does not fabricate legal/methodology inputs or general acceptance results"
+  },
+  "residual_obligation_review": {
+    "observed_at": "2026-10-14T22:50:07.303993+00:00",
+    "baseline": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14",
+    "no_runtime_or_model_changes": true,
+    "C-04W": {
+      "status": "BLOCKED_EXTERNAL_LEGAL_EVIDENCE",
+      "primary_pending": "EVIDENCIA_EXTERNA_Y_DECISION_DE_APLICABILIDAD",
+      "rector_references": [
+        "docs/rector/baseline/23_CONTRATO_TEMPORAL_VERSIONADO_RETENCION_RECALCULO.md §§6,8",
+        "docs/rector/baseline/24_CONTRATO_EVIDENCIA_DOCUMENTOS_ARCHIVOS.md §§3,4",
+        "docs/rector/baseline/45_CONTRATO_DESARROLLO_CERRADO_Y_NO_INFERENCIA.md §§3,5",
+        "docs/rector/baseline/49_GOBIERNO_INTERNO_Y_REVISION_UNIPERSONAL.md §§3,5"
+      ],
+      "requirement": "Revalidar política publicada, vigente y jurídicamente aplicable según prioridad/hold, conservando la referencia upload→FileObject→Evidence en cada comando.",
+      "approved_contract_references": [
+        "docs/executable-contracts/29_PHASE6A3_REFERENCE_READS.md",
+        "docs/executable-contracts/31_PHASE6A3_RESIDUAL_DELTAS_R2.md",
+        "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_MACRO_R2/05_RETENTION_TYPED_BINDING_FINDING.md"
+      ],
+      "retention_history_verified_qa": {
+        "promoted_pairs": 1,
+        "upload_file_policy_mismatches": 0,
+        "evidence_file_pairs": 1,
+        "evidence_file_policy_mismatches": 0
+      },
+      "technical_gap_locations": [
+        "apps/backend/src/core-grc/service.ts:createUploadIntent",
+        "apps/backend/src/core-grc/service.ts:uploadFinalize",
+        "apps/backend/src/core-grc/service.ts:createEvidence"
+      ],
+      "gap": "Existencia/FK/pertenencia no determinan contexto jurídico, publicación/vigencia/prioridad/hold; no hay vínculo canónico aprobado desde los objetos al contexto jurídico demostrado.",
+      "missing_external_input": "Fuente oficial o contrato aplicable por versión/cláusula/jurisdicción/objeto/vigencia/hold y su relación canónica aprobada.",
+      "prior_decision_preserved": "D2=C, 2026-10-13",
+      "human_instruction_observed": "Si no existen, registra C-04W como BLOCKED_EXTERNAL_LEGAL_EVIDENCE, conservando la aceptación D2=C y sin modificar contratos, modelo de datos ni funcionalidades.",
+      "selective_block": "Aplicación legal nueva y certificación de C-04W; las verificaciones comerciales/IAM/QA independientes permanecen aceptadas."
+    },
+    "CFG-D": {
+      "status": "BLOCKED_OFFICIAL_SUFFICIENCY_AND_VERSIONED_PUBLICATION",
+      "primary_pending": "EVIDENCIA_OFICIAL_Y_DECISION_METODOLOGICA_POR_VERSION",
+      "rector_references": [
+        "docs/rector/baseline/17_CATALOGO_METRICAS_FORMULAS_Y_AGREGACIONES.md §§1,3.1–3.5",
+        "docs/rector/baseline/19_METODOLOGIAS_GRC_COMPLIANCE_RISK_ASSURANCE.md §§1–3",
+        "docs/rector/baseline/29_CONFIGURACION_PARAMETRIZACION_Y_EXTENSIBILIDAD.md §§2–3",
+        "docs/rector/baseline/35_SOURCE_PRECEDENCE_CONFLICT_RESOLUTION_POLICY.md §§2–5",
+        "docs/rector/baseline/38_RESULT_STATUS_AND_DATA_SUFFICIENCY_CONTRACT.md §§5–8",
+        "docs/rector/baseline/49_GOBIERNO_INTERNO_Y_REVISION_UNIPERSONAL.md §3"
+      ],
+      "requirement": "Acreditar autosuficiencia completa por versión metodológica mediante reglas oficiales, inputs y lineage; publicar una declaración inmutable vinculada antes de activar none.",
+      "approved_contract_references": [
+        "docs/executable-contracts/27_PHASE5_METHODOLOGY_BINDING.md",
+        "docs/executable-contracts/29_PHASE6A3_REFERENCE_READS.md",
+        "docs/executable-contracts/31_PHASE6A3_RESIDUAL_DELTAS_R2.md"
+      ],
+      "qa_methodologies_verified": [
+        {
+          "table": "regulatory.compliance_methodologies",
+          "rows": [
+            {
+              "methodology": {
+                "name": "Compliance rector baseline",
+                "tenant_id": null,
+                "created_at": "2026-10-08T09:58:35.350143+00:00",
+                "effective_to": null,
+                "published_at": "2026-10-08T09:58:35.350143+00:00",
+                "rector_source": "rector 17/19/31/38/39; PHASE5_METHODOLOGY_BINDING_ARCHITECTURE_DECISION_20261007",
+                "effective_from": "2026-10-08T09:58:35.350143+00:00",
+                "rector_version": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23",
+                "version_number": 1,
+                "lifecycle_state": "published",
+                "ownership_class": "PLATFORM_CONTROL",
+                "methodology_code": "BASELINE_COMPLIANCE",
+                "minimum_coverage": 80,
+                "formula_definition_id": "01a11900-0000-7001-8000-000000000003",
+                "compliance_methodology_id": "01a11900-0000-7001-8000-000000000001",
+                "partial_compliance_factor": 0.5
+              },
+              "formula": {
+                "name": "Compliance rector baseline",
+                "tenant_id": null,
+                "created_at": "2026-10-08T09:58:35.350143+00:00",
+                "expression": "compliance_score=sum(weight*status_factor)/sum(weight_of_scored_applicable_requirements)*100;coverage=scored_applicable_requirements/applicable_requirements*100;partial_compliance_factor=methodology.partial_compliance_factor",
+                "output_unit": "percent",
+                "effective_to": null,
+                "formula_code": "BASELINE_COMPLIANCE",
+                "published_at": "2026-10-08T09:58:35.350143+00:00",
+                "effective_from": "2026-10-08T09:58:35.350143+00:00",
+                "version_number": 1,
+                "lifecycle_state": "published",
+                "ownership_class": "GLOBAL_REFERENCE",
+                "expression_language": "TCDX_DETERMINISTIC_EXPRESSION_V1",
+                "formula_definition_id": "01a11900-0000-7001-8000-000000000003"
+              }
+            }
+          ]
+        },
+        {
+          "table": "controls.control_effectiveness_methodologies",
+          "rows": [
+            {
+              "methodology": {
+                "name": "Control effectiveness rector baseline",
+                "tenant_id": null,
+                "created_at": "2026-10-08T09:58:35.350143+00:00",
+                "effective_to": null,
+                "published_at": "2026-10-08T09:58:35.350143+00:00",
+                "rector_source": "rector 17/19/31/38/39; PHASE5_METHODOLOGY_BINDING_ARCHITECTURE_DECISION_20261007",
+                "effective_from": "2026-10-08T09:58:35.350143+00:00",
+                "rector_version": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23",
+                "version_number": 1,
+                "lifecycle_state": "published",
+                "ownership_class": "PLATFORM_CONTROL",
+                "methodology_code": "BASELINE_CONTROL_EFFECTIVENESS",
+                "minimum_coverage": 80,
+                "formula_definition_id": "01a11900-0000-7001-8000-000000000004",
+                "control_effectiveness_methodology_id": "01a11900-0000-7001-8000-000000000002"
+              },
+              "formula": {
+                "name": "Control effectiveness rector baseline",
+                "tenant_id": null,
+                "created_at": "2026-10-08T09:58:35.350143+00:00",
+                "expression": "overall_effectiveness=min(design_effectiveness,operating_effectiveness)",
+                "output_unit": "percent",
+                "effective_to": null,
+                "formula_code": "BASELINE_CONTROL_EFFECTIVENESS",
+                "published_at": "2026-10-08T09:58:35.350143+00:00",
+                "effective_from": "2026-10-08T09:58:35.350143+00:00",
+                "version_number": 1,
+                "lifecycle_state": "published",
+                "ownership_class": "GLOBAL_REFERENCE",
+                "expression_language": "TCDX_DETERMINISTIC_EXPRESSION_V1",
+                "formula_definition_id": "01a11900-0000-7001-8000-000000000004"
+              }
+            }
+          ]
+        }
+      ],
+      "available_official_rules": [
+        "Compliance: factores 1/.50/0, peso baseline1, coverage80 y fórmulas aprobadas",
+        "Controls: min(design,operating), coverage80; ausencia de assessment válido no es cero",
+        "Estados, precedencia y lineage de resultados según rector35/38"
+      ],
+      "missing_per_version_inputs_reference": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/R6_CFGD_SUCCESSOR_DESIGN.md (once inputs, D1=B aceptada; ningún valor oficial adicional)",
+      "missing_proof": [
+        "Población/aplicabilidad y overrides de pesos de pack por versión",
+        "Validez/suficiencia de evidencia y períodos/recencia por versión",
+        "Criterios publicados design/operating y propagación de procedencia/conflicto/confianza",
+        "Relación canónica publicada de inputs/modo a la versión metodológica"
+      ],
+      "prior_decision_preserved": "D1=B, 2026-10-13",
+      "human_instruction_observed": "Conserva la metodología v1 y EC opcional, sin declarar autosuficiencia, sin publicar none y sin inventar reglas, ponderaciones, períodos ni evidencias.",
+      "selective_block": "Publicación del modo/sucesor metodológico y certificación de CFG-D; v1 y EC opcional siguen intactos."
+    },
+    "MACRO_ACCEPTANCE": {
+      "status": "PARTIAL_ACCEPTED_QA",
+      "rector_references": [
+        "docs/rector/baseline/49_GOBIERNO_INTERNO_Y_REVISION_UNIPERSONAL.md §3",
+        "docs/rector/baseline/46_REGENTE_MAESTRO_DEL_DESARROLLO.md §§9,11,12"
+      ],
+      "requirement": "Aceptar artefactos exactos y sus evidencias por alcance; la aceptación parcial no certifica obligaciones dependientes no ejecutadas.",
+      "qa_runtime_acceptance": "PASS_QA_ALREADY_ACCREDITED_NOT_REPEATED",
+      "VOC-C04": "PASS_QA",
+      "VOC-C04_receipt": {
+        "path": "docs/phase6a/STEP_6A3/HUMAN_RESIDUAL_VOC_C04_ACCEPTANCE_RECEIPT_20261014.json",
+        "sha256": "fadc51b1584645ec6a71e1f8f68f2e48c4949d4c5032e72e9661b512f4f49858"
+      },
+      "inventory": {
+        "physical_columns": 16,
+        "contract_occurrences": 26,
+        "families": 14,
+        "historical_unrecognized_codes": [
+          {
+            "family": "CV-03",
+            "table": "controls.control_versions",
+            "column": "frequency_code",
+            "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+            "entity_version": "1",
+            "code": "on_demand",
+            "count": 1
+          },
+          {
+            "family": "CV-12",
+            "table": "evidence.evidences",
+            "column": "source_kind",
+            "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+            "entity_version": "1",
+            "code": "file",
+            "count": 1
+          },
+          {
+            "family": "CV-11",
+            "table": "remediation.issues",
+            "column": "severity",
+            "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+            "entity_version": "5",
+            "code": "low",
+            "count": 1
+          },
+          {
+            "family": "CV-07",
+            "table": "remediation.issue_origins",
+            "column": "origin_role",
+            "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+            "entity_version": null,
+            "code": "assurance",
+            "count": 1
+          }
+        ],
+        "no_history_mutation": true
+      },
+      "existing_closed_operational_dependencies": [
+        "IAM/ServicePrincipal/grants/permisos/lifecycle/publicación comercial/despliegue/autenticación/cambio de plan/aceptación UI y Tenant isolation acreditados en esta evidencia",
+        "Migraciones oficiales33/33 y checks locales previos preservados; no reejecutados"
+      ],
+      "global_acceptance": "BLOCKED_DEPENDENT_C04W_CFGD_AND_REMAINING_CAPABILITY_ACCEPTANCE",
+      "VOC-QA": "NOT_FULLY_ACCREDITED; inventario/historia aceptados, no se extiende a todos los workflows nuevos de las26 ocurrencias",
+      "CFG-QA": "BLOCKED_DEPENDENT_OFFICIAL_RULES_AND_PUBLICATION"
+    }
+  }
+}

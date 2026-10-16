@@ -1,0 +1,9 @@
+$ pnpm -r lint
+packages/contracts lint$ tsc -p tsconfig.json --noEmit
+packages/shared-types lint$ tsc -p tsconfig.json --noEmit
+packages/shared-types lint: Done
+packages/contracts lint: Done
+apps/backend lint$ tsc -p tsconfig.json --noEmit
+apps/frontend lint$ tsc -b --pretty false
+apps/frontend lint: Done
+apps/backend lint: Done

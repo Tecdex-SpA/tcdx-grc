@@ -1,7 +1,7 @@
-# 43 — Plan maestro rector de diseño y desarrollo — v1.8
+# 43 — Plan maestro rector de diseño y desarrollo — v1.9
 
-> Active baseline: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09`.
-> Status: `ACTIVE`; human approval recorded in `docs/governance/amendments/INTERNAL_REVIEW_v1.8_20261009/HUMAN_AUTHORIZATION.md`; las aprobaciones históricas se preservan en history.
+> Baseline de esta versión: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14`.
+> La v1.8 es la predecesora; esta versión sólo entra en vigencia con publicación/activación competente de sus bytes. La aprobación comercial de diseño no sustituye ese gate. Las aprobaciones históricas se preservan en history.
 
 ## 1. Autoridad
 
@@ -36,7 +36,7 @@ Estas elecciones sólo cambian mediante ADR humano aprobado y actualización pre
 
 ### Fase 0 — Baseline rector
 
-Salida: baseline `TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23`, documentos 00–48 aplicables, con v1.4, v1.5 y v1.6 preservados como históricos verificables. Gate: `RECTOR_BASELINE=PASS`.
+Salida para esta sucesora: baseline `TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14`, documentos 00–49 aplicables, con v1.4–v1.8 preservadas según su historia de activación. Gate humano y técnico: `RECTOR_BASELINE=PASS` para los bytes exactos sucesores. Sin ese gate, esta versión no desplaza a v1.8.
 
 ### Fase 1 — Modelo físico definitivo
 

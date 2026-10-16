@@ -49,3 +49,7 @@ FeatureFlag controla rollout técnico. Entitlement controla derecho comercial/ca
 ## 7. Metadata
 
 JSONB se reserva para atributos abiertos/no index-critical. Campos de dominio necesarios para constraints, joins, filtering, authorization, calculation, policy resolution o lineage deben ser columnas/entidades canónicas.
+
+## 8. Guards comerciales propuestos
+
+La completitud de familias, cuotas y entitlements se valida al publicar una nueva PlanVersion y antes de asignar derechos. `FeatureFlag` no es Entitlement ni sustituye la cuota comercial. Los límites requeridos son datos versionados del contrato publicado, con valor finito y constante por PlanVersion; no se inyectan defaults o máximos en código. El cambio de plan usa una sola autoridad transaccional y no habilita un segundo motor de elegibilidad por frontend, configuración tenant o familia inferida.

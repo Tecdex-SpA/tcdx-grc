@@ -10,7 +10,7 @@ fail() {
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$root"
 
-MASTER_ID="TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09"
+MASTER_ID="TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15"
 BASELINE_DIR="docs/rector/baseline"
 HISTORICAL_V1_6_DIR="docs/rector/history/TCDX_GRC_MASTER_REGENT_BASELINE_v1.6_2026-09-23"
 HISTORICAL_V1_5_DIR="docs/rector/history/TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16"
@@ -170,7 +170,7 @@ else
   fail "no SHA-256 verification tool available"
 fi
 
-python3 scripts/verify-internal-governance.py || fail "v1.8 activation/history/scope validation failed"
+python3 scripts/verify-v111-governance.py || fail "v1.11 activation/history/scope validation failed"
 
 # Current authorized phase is physical model DESIGN only. Migrations and
 # functional implementation remain blocked until their human-approved gates pass.

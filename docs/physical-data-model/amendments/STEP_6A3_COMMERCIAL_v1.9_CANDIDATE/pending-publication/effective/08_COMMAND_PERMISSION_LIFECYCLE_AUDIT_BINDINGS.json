@@ -1,0 +1,163 @@
+{
+  "status": "APPROVED_ACTIVE_CONTRACT",
+  "bindings": [
+    {
+      "operationId": "subscriptionChangePlan",
+      "command_code": "subscription.change_plan",
+      "entity": "Subscription",
+      "from": "active",
+      "to": "ended",
+      "permission": "platform.subscription.update",
+      "object_policy": "commercial.subscription.change_plan.v1",
+      "audit": "audit.platform.subscription.change_plan.v1",
+      "event": "platform.subscription.plan_changed.v1",
+      "profile": "SUBSCRIPTION_CHANGE_PLAN_V1",
+      "internal_only": false,
+      "allowed_scopes": [
+        "platform"
+      ],
+      "system_actor_allowed": false,
+      "notification_policy": "NONE_NEW",
+      "recalculation_policy": "NO_HISTORICAL_RECALCULATION",
+      "concurrency_semantics": "READ_COMMITTED_TENANT_ORDERED_LOCKS_CAS",
+      "sod_policy": "PLATFORM_ADMIN_REAL_HUMAN_NO_IMPERSONATION_NO_PRODUCT_SOD_BYPASS"
+    },
+    {
+      "operationId": null,
+      "command_code": "subscription_regulatory_pack.transfer_close",
+      "entity": "SubscriptionRegulatoryPack",
+      "from": "active",
+      "to": "revoked",
+      "permission": "platform.subscription.update",
+      "object_policy": "commercial.pack.transfer_close.v1",
+      "audit": "audit.platform.subscription_regulatory_pack.transfer_close.v1",
+      "event": "platform.subscription_regulatory_pack.transfer_closed.v1",
+      "profile": "PARENT_AND_ASSIGNMENT_ID",
+      "internal_only": true,
+      "allowed_scopes": [
+        "platform"
+      ],
+      "system_actor_allowed": false,
+      "notification_policy": "NONE_NEW",
+      "recalculation_policy": "NO_HISTORICAL_RECALCULATION",
+      "concurrency_semantics": "READ_COMMITTED_TENANT_ORDERED_LOCKS_CAS",
+      "sod_policy": "PLATFORM_ADMIN_REAL_HUMAN_NO_IMPERSONATION_NO_PRODUCT_SOD_BYPASS"
+    },
+    {
+      "operationId": null,
+      "command_code": "subscription_regulatory_pack.transfer_activate",
+      "entity": "SubscriptionRegulatoryPack",
+      "from": null,
+      "to": "active",
+      "permission": "platform.subscription.update",
+      "object_policy": "commercial.pack.transfer_activate.v1",
+      "audit": "audit.platform.subscription_regulatory_pack.transfer_activate.v1",
+      "event": "platform.subscription_regulatory_pack.transferred.v1",
+      "profile": "PARENT_AND_ASSIGNMENT_ID",
+      "internal_only": true,
+      "allowed_scopes": [
+        "platform"
+      ],
+      "system_actor_allowed": false,
+      "notification_policy": "NONE_NEW",
+      "recalculation_policy": "NO_HISTORICAL_RECALCULATION",
+      "concurrency_semantics": "READ_COMMITTED_TENANT_ORDERED_LOCKS_CAS",
+      "sod_policy": "PLATFORM_ADMIN_REAL_HUMAN_NO_IMPERSONATION_NO_PRODUCT_SOD_BYPASS"
+    },
+    {
+      "operationId": "commercialCatalogPublication",
+      "command_code": "commercial_catalog.publish",
+      "entity": "CommercialFamily",
+      "from": null,
+      "to": null,
+      "permission": "platform.commercial_catalog.publish",
+      "object_policy": "commercial.catalog.publish.v1",
+      "audit": "audit.platform.commercial_catalog.publish.v1",
+      "event": "platform.commercial_catalog.published.v1",
+      "profile": "PUBLICATION_MANIFEST_SHA256",
+      "internal_only": true,
+      "allowed_scopes": [
+        "platform"
+      ],
+      "system_actor_allowed": false,
+      "notification_policy": "NONE_NEW",
+      "recalculation_policy": "NO_HISTORICAL_RECALCULATION",
+      "concurrency_semantics": "READ_COMMITTED_ORDERED_CATALOG_LOCKS",
+      "sod_policy": "PLATFORM_ADMIN_REAL_HUMAN_NO_IMPERSONATION_NO_PRODUCT_SOD_BYPASS"
+    },
+    {
+      "operationId": "commercialCatalogPublication",
+      "command_code": "commercial_catalog.publish",
+      "entity": "PlanVersion",
+      "from": "draft",
+      "to": "published",
+      "permission": "platform.commercial_catalog.publish",
+      "object_policy": "commercial.catalog.publish.v1",
+      "audit": "audit.platform.plan_version.publish.v1",
+      "event": "platform.plan_version.published.v1",
+      "profile": "PUBLICATION_MANIFEST_SHA256",
+      "internal_only": true,
+      "allowed_scopes": [
+        "platform"
+      ],
+      "system_actor_allowed": false,
+      "notification_policy": "NONE_NEW",
+      "recalculation_policy": "NO_HISTORICAL_RECALCULATION",
+      "concurrency_semantics": "READ_COMMITTED_ORDERED_CATALOG_LOCKS",
+      "sod_policy": "PLATFORM_ADMIN_REAL_HUMAN_NO_IMPERSONATION_NO_PRODUCT_SOD_BYPASS"
+    }
+  ],
+  "read_bindings": [
+    {
+      "operationId": "subscriptionCommercialGet",
+      "permission": "platform.subscription.read",
+      "scope": "platform",
+      "material_audit": null,
+      "outbox": null
+    },
+    {
+      "operationId": "subscriptionCommercialList",
+      "permission": "platform.subscription.read",
+      "scope": "platform",
+      "material_audit": null,
+      "outbox": null
+    },
+    {
+      "operationId": "subscriptionPackTransferList",
+      "permission": "platform.subscription.read",
+      "scope": "platform",
+      "material_audit": null,
+      "outbox": null
+    }
+  ],
+  "permission_grant_candidates": [
+    {
+      "code": "platform.subscription.update",
+      "base_role": "PLATFORM_ADMIN",
+      "other_roles": "DENY",
+      "published": false
+    },
+    {
+      "code": "platform.subscription.read",
+      "base_role": "PLATFORM_ADMIN",
+      "other_roles": "DENY",
+      "published": false
+    },
+    {
+      "code": "platform.commercial_catalog.publish",
+      "base_role": "PLATFORM_ADMIN",
+      "other_roles": "DENY",
+      "published": false
+    }
+  ],
+  "publication": {
+    "scope": "platform",
+    "actor": "REAL_HUMAN_PLATFORM_ADMIN",
+    "input": "HUMAN_APPROVED_EXACT_MANIFEST_SHA256",
+    "transaction": "All manifest rows, bindings, immutable PlanVersion publication, audits per aggregate, outbox and idempotency COMMIT together",
+    "partial_publication": "PROHIBITED",
+    "active_plan_versions_changed": false,
+    "audit_command_code": "commercial_catalog.publish",
+    "api_operation_id_metadata": "commercialCatalogPublication"
+  }
+}

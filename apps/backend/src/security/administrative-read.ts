@@ -148,7 +148,7 @@ async function get(database: Kysely<FoundationDatabase>, spec: ReadSpec, id: str
 const tenantSpec: ReadSpec = {
   select: `t.tenant_id,t.tenant_code,t.legal_name,t.display_name,t.default_timezone,t.lifecycle_state,t.data_classification,t.created_at,t.updated_at,
     (SELECT jsonb_build_object('subscription_id',s.subscription_id,'subscription_code',s.subscription_code,'lifecycle_state',s.lifecycle_state,
-      'plan_code',p.plan_code,'plan_name',p.name,'plan_version_number',pv.version_number)
+      'plan_code',p.plan_code,'plan_name',pv.display_name,'plan_version_number',pv.version_number)
        FROM platform.subscriptions s JOIN platform.plan_versions pv ON pv.plan_version_id=s.plan_version_id
        JOIN platform.plans p ON p.plan_id=pv.plan_id
       WHERE s.tenant_id=t.tenant_id AND s.lifecycle_state='active' AND s.starts_at<=transaction_timestamp()

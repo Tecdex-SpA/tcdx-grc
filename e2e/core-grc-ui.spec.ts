@@ -24,11 +24,14 @@ const rows: Record<string, Record<string, unknown>[]> = {
   "/evidence-requests": [{ evidence_request_id: tenantId, row_version: 1, request_code: "ER-NN-001", lifecycle_state: "open" }],
   "/evidence": [{ evidence_id: tenantId, row_version: 3, evidence_code: "EV-NN-001", lifecycle_state: "approved" }],
   "/retention-policies": [{ retention_policy_id: tenantId, row_version: 1, policy_code: "RET-NN-001", retention_seconds: 86400, is_mandatory: false, lifecycle_state: "draft" }],
+  "/retention-policy-applicabilities": [{ retention_policy_applicability_id: memberId, row_version: 4,
+    retention_policy_id: tenantId, classification: "confidential", lifecycle_state: "published",
+    policy_kind: "legal_hold", hold_release_id: null }],
   "/issues": [{ issue_id: tenantId, row_version: 3, issue_code: "ISS-NN-001", title: "Brecha de evidencia", lifecycle_state: "remediation_in_progress" }],
   "/actions": [{ action_id: tenantId, row_version: 4, action_code: "ACT-NN-001", title: "Actualizar evidencia", lifecycle_state: "in_review" }]
 };
 
-async function mockRuntime(page: Page, roles: string[] = ["GRC_MANAGER"], platformRoles: string[] = []): Promise<void> {
+async function mockRuntime(page: Page, roles: string[] = ["GRC_MANAGER"], platformRoles: string[] = [], tenantPermissionCodes: string[] = []): Promise<void> {
   const assignedRoles: Record<string, unknown>[] = [];
   await page.addInitScript(() => { sessionStorage.setItem("tcdx.access_token", "contractual-test-token"); });
   await page.route(url => url.pathname.startsWith("/api/v1/") || url.pathname === "/api/v2/auth/me/authorization", async (route: Route) => {
@@ -40,7 +43,7 @@ async function mockRuntime(page: Page, roles: string[] = ["GRC_MANAGER"], platfo
     }
     if (url.pathname === "/api/v2/auth/me/authorization") {
       await route.fulfill({ json: { evaluated_at: new Date().toISOString(), platform_permissions: platformRoles.includes("PLATFORM_ADMIN") ? ["platform.tenant.read", "platform.tenant.create", "platform.subscription.create", "platform.subscription_regulatory_pack.read", "platform.subscription_regulatory_pack.create", "platform.subscription_regulatory_pack.archive", "platform.user_identity.read", "platform.membership.read", "platform.membership_invitation.read", "platform.membership_invitation.create", "platform.membership_invitation.update", "platform.role.read", "platform.role.assign"] : [],
-        tenant_permissions: { tenant_id: tenantId, default_timezone: "Europe/Berlin", permissions: roles.includes("TENANT_ADMIN") ? Object.fromEntries(["platform.membership.read", "platform.membership.create", "platform.role.read", "platform.role.assign", "platform.user_identity.read"].map(code => [code, [{scope_kind:"tenant"}]])) : {} } } });
+        tenant_permissions: { tenant_id: tenantId, default_timezone: "Europe/Berlin", permissions: Object.fromEntries([...(roles.includes("TENANT_ADMIN") ? ["platform.membership.read", "platform.membership.create", "platform.role.read", "platform.role.assign", "platform.user_identity.read"] : []), ...tenantPermissionCodes].map(code => [code, [{scope_kind:"tenant"}]])) } } });
       return;
     }
     if (route.request().method() === "POST") {
@@ -184,6 +187,50 @@ test("Platform Admin assigns a published plan and immediately reaches contracted
   await expect(page.getByRole("dialog")).toContainText("Estado de suscripción: Activo");
   expect(creates).toBe(1);
   await page.screenshot({ path: `${process.env.TCDX_UI_EVIDENCE_DIR ?? "/tmp"}/plan-assignment-${testInfo.project.name}.png`, fullPage: true });
+});
+
+test("Company detail never shows another company's subscription after a delayed response", async ({ page }, testInfo) => {
+  await mockRuntime(page, ["GRC_MANAGER"], ["PLATFORM_ADMIN"]);
+  const secondId = "018f47f2-6170-7bd0-9d43-12f644a2b132";
+  let releaseFirst!: () => void;
+  let signalFirst!: () => void;
+  const firstStarted = new Promise<void>((resolve) => { signalFirst = resolve; });
+  const firstResponse = new Promise<void>((resolve) => { releaseFirst = resolve; });
+  await page.route(url => ["/api/v1/platform/tenants", `/api/v1/platform/tenants/${tenantId}`,
+    `/api/v1/platform/tenants/${secondId}`].includes(url.pathname), async route => {
+    const path = new URL(route.request().url()).pathname;
+    const first = { tenant_id: tenantId, tenant_code: "FIRST", legal_name: "Empresa primera", display_name: "Empresa primera",
+      default_timezone: "America/Santiago", lifecycle_state: "active", current_subscription: {
+        subscription_id: tenantId, subscription_code: "FIRST-PLAN", lifecycle_state: "active", plan_name: "Plan primero", plan_version_number: 1 } };
+    const second = { tenant_id: secondId, tenant_code: "SECOND", legal_name: "Empresa segunda", display_name: "Empresa segunda",
+      default_timezone: "America/Santiago", lifecycle_state: "active", current_subscription: null };
+    if (path === "/api/v1/platform/tenants") {
+      await route.fulfill({ json: { items: [first, second], page: { has_more: false, next_cursor: null } } });
+    } else if (path.endsWith(tenantId)) {
+      signalFirst();
+      await firstResponse;
+      await route.fulfill({ json: first }).catch(() => { /* The obsolete request may already be aborted. */ });
+    } else {
+      await route.fulfill({ json: second });
+    }
+  });
+  await page.route("**/api/v1/platform/plan-versions?**", route => route.fulfill({ json: {
+    items: [], page: { has_more: false, next_cursor: null }
+  } }));
+  await page.route(`**/api/v1/platform/tenants/${secondId}/regulatory-pack-validation-accesses`, route => route.fulfill({ json: {
+    items: [], page: { has_more: false, next_cursor: null }
+  } }));
+  await page.goto("/configuraciones/empresas");
+  await page.getByRole("row", { name: /Empresa primera/ }).getByRole("button", { name: "Ver detalle" }).click();
+  await firstStarted;
+  await page.getByRole("button", { name: "Cerrar detalle" }).click();
+  await page.getByRole("row", { name: /Empresa segunda/ }).getByRole("button", { name: "Ver detalle" }).click();
+  releaseFirst();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog.getByRole("heading", { name: "Empresa segunda" })).toBeVisible();
+  await expect(dialog).toContainText("Sin suscripción vigente");
+  await expect(dialog).not.toContainText("FIRST-PLAN");
+  await dialog.screenshot({ path: `${process.env.TCDX_UI_EVIDENCE_DIR ?? "/tmp"}/company-detail-switch-${testInfo.project.name}.png` });
 });
 
 test("Normas navigates published framework content without creating records", async ({ page }, testInfo) => {
@@ -628,6 +675,30 @@ test("Tenant Admin creates a canonical Subject in company settings", async ({ pa
   await page.screenshot({ path: `${evidenceDirectory}/subjects-admin-${testInfo.project.name}.png`, fullPage: true });
 });
 
+test("C-04W company settings hide retention controls without tenant Privacy permission", async ({ page }) => {
+  await mockRuntime(page, ["TENANT_ADMIN"]);
+  await page.goto("/configuraciones/empresas");
+  const retention = page.getByRole("region", { name: "Retención documental de la empresa" });
+  await expect(retention.getByText("Acceso no autorizado", { exact: true })).toBeVisible();
+  await expect(retention.getByRole("heading", { name: "Políticas de retención" })).toHaveCount(0);
+  await expect(retention.getByRole("heading", { name: "Aplicabilidad de retención" })).toHaveCount(0);
+});
+
+test("C-04W company settings show scoped retention and hide hold release from Tenant Admin", async ({ page }, testInfo) => {
+  await mockRuntime(page, ["TENANT_ADMIN"], [], [
+    "privacy.retention_policy.read", "privacy.retention_policy.create"
+  ]);
+  await page.goto("/configuraciones/empresas");
+  const retention = page.getByRole("region", { name: "Retención documental de la empresa" });
+  await expect(retention.getByRole("heading", { name: "Políticas de retención" })).toBeVisible();
+  await expect(retention.getByRole("heading", { name: "Aplicabilidad de retención" })).toBeVisible();
+  await expect(retention.getByRole("button", { name: "Nuevo registro" })).toHaveCount(2);
+  await retention.getByRole("button", { name: "Ver detalle" }).last().click();
+  const detail = page.getByRole("dialog");
+  await expect(detail.getByRole("button", { name: "Levantar legal hold" })).toHaveCount(0);
+  await page.screenshot({ path: `${evidenceDirectory}/retention-tenant-admin-${testInfo.project.name}.png`, fullPage: true });
+});
+
 test("QA validation content displays its condition and keeps filters tenant-scoped", async ({ page }, testInfo) => {
   await mockRuntime(page, ["TENANT_ADMIN", "CONTROL_OWNER"]);
   const controlQueries: URL[] = [];
@@ -838,7 +909,8 @@ for (const [routeName, heading, screenshot, openDetail] of [
   ["acciones", "Acciones", "acciones", true]
 ] as const) {
   test(`${heading} mantiene la baseline comercial en español`, async ({ page }, testInfo) => {
-    await mockRuntime(page);
+    await mockRuntime(page, ["GRC_MANAGER"], [],
+      heading === "Políticas de retención" ? ["privacy.retention_policy.read"] : []);
     await page.goto(`/${routeName}`);
     await page.getByRole("tab", { name: heading, exact: true }).click();
     await expect(page.getByRole("heading", { name: heading })).toBeVisible();
@@ -1066,4 +1138,34 @@ test("Macro R1 retention remains explicitly pending on missing legal binding; no
  await page.goto('/evidencias');await page.getByRole('tab',{name:'Evidencias',exact:true}).click();await page.getByRole('button',{name:'Nuevo registro',exact:true}).click();const dialog=page.getByRole('dialog');
  await expect(dialog.getByText('La política está pendiente de aplicabilidad jurídica.',{exact:false})).toBeVisible();await expect(dialog.getByLabel('Política de retención',{exact:true}).locator('option')).toHaveCount(1);
  await expect(dialog.locator('input[aria-label="ID de política de retención"]')).toHaveCount(0);await dialog.screenshot({path:`/tmp/tcdx-step6a3-macro-retencion-${info.project.name}.png`});
+});
+
+// Local mocked presentation evidence only; never a legal source or QA acceptance.
+test("INITIAL_SOURCE bind uses backend candidates and preserves Spanish pending-source warning", async ({ page }, info) => {
+  await mockRuntime(page,["TENANT_ADMIN"],[],["privacy.retention_policy.read","privacy.retention_policy.update"]);
+  let submitted=false;
+  const draft={retention_policy_applicability_id:roleId,retention_policy_id:memberId,row_version:1,classification:"confidential",lifecycle_state:"draft",source_evidence_version_id:null,source_clause_ref:null,effective_from:null,effective_to:null,initial_source_bind_allowed:true,custodian_display_name:"Custodio local simulado",initial_source_candidates:[{evidence_version_id:tenantId,version_number:1,evidence_code:"Documento local simulado, sin fuerza jurídica"}]};
+  await page.route('**/api/v1/retention-policy-applicabilities**',async route=>{
+    const request=route.request(),url=new URL(request.url());
+    if(request.method()==='POST') {
+      expect(url.pathname).toBe(`/api/v1/retention-policy-applicabilities/${roleId}:bind-initial-source`);
+      expect(request.headers()['if-match']).toBe('"1"');expect(request.headers()['idempotency-key']).toBeTruthy();
+      expect(request.postDataJSON()).toEqual({source_evidence_version_id:tenantId,source_clause_ref:'Cláusula de prueba local',effective_from:'2026-10-15T12:00:00Z'});
+      submitted=true;await route.fulfill({status:200,json:{result:{...draft,row_version:2,source_evidence_version_id:tenantId}}});return;
+    }
+    await route.fulfill({json:url.pathname.endsWith(roleId)?draft:{items:[draft],page:{has_more:false,next_cursor:null}}});
+  });
+  await page.goto('/configuraciones/empresas');
+  const section=page.getByRole('region',{name:'Retención documental de la empresa'});
+  await section.getByRole('button',{name:'Ver detalle'}).last().click();
+  const dialog=page.getByRole('dialog');
+  await expect(dialog.getByRole('status')).toContainText('Custodia de fuente pendiente');
+  const source=dialog.getByLabel('Fuente inicial aprobada',{exact:true});
+  await source.selectOption(tenantId);await source.focus();await expect(source).toBeFocused();
+  await dialog.getByLabel('Cláusula o disposición aplicable',{exact:true}).fill('Cláusula de prueba local');
+  await dialog.getByLabel('Vigente desde',{exact:true}).fill('2026-10-15T12:00:00Z');
+  expect(await dialog.locator('.drawer-body').evaluate(element=>element.scrollWidth<=element.clientWidth+1)).toBe(true);
+  await dialog.screenshot({path:`docs/phase6a/STEP_6A3/evidence/initial-source-implementation-20261015/LOCAL_SIMULATED_BIND_${info.project.name}.png`});
+  await dialog.getByRole('button',{name:'Vincular fuente inicial',exact:true}).click();
+  await expect.poll(()=>submitted).toBe(true);
 });

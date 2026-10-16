@@ -1,0 +1,19 @@
+{
+  "dbTenantIsolation": "PASS",
+  "tenantIsolationGaps": 0,
+  "results": {
+    "cross_tenant_fk": "PASS",
+    "cross_tenant_object_reference": "PASS",
+    "configuration_override_cross_tenant_scope": "PASS",
+    "audit_objective_cross_tenant_parent": "PASS",
+    "audit_team_cross_tenant_membership": "PASS",
+    "role_assignment_cross_tenant_service": "PASS",
+    "configuration_definition_cross_tenant_service": "PASS",
+    "global_reference_compatibility": "PASS",
+    "idempotency_tenant_separation": "PASS",
+    "idempotency_same_tenant_duplicate": "PASS",
+    "audit_tenant_ownership": "PASS",
+    "outbox_global_ownership": "PASS"
+  },
+  "failures": []
+}

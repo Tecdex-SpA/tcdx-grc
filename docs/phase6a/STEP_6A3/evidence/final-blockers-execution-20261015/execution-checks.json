@@ -1,0 +1,74 @@
+{
+  "recorded_at_utc": "2026-10-15T20:59:55.550849+00:00",
+  "checks": [
+    {
+      "name": "current-step6a3",
+      "exit_code": 0,
+      "log": "current-step6a3.log",
+      "sha256": "7be326b0fc9b62e717bb3bc0c2d35285c3752758d7ba851d288a6d874ecc7ca3",
+      "provenance": "successful command output collected before documentation packaging correction"
+    },
+    {
+      "name": "rector-status",
+      "exit_code": 0,
+      "log": "rector-status.log",
+      "sha256": "4a950b39b20f2de1440a2b45b243b63df607fa3ede7f7e32e9f7e9da71864597",
+      "provenance": "successful command output collected before documentation packaging correction"
+    },
+    {
+      "name": "diff-check",
+      "exit_code": 0,
+      "log": "diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "provenance": "successful command output collected before documentation packaging correction"
+    },
+    {
+      "name": "secrets-scan-corrected",
+      "command": [
+        "/tmp/tcdx-grc-npm-cache/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+        "scripts/foundations/secret-scan.mjs"
+      ],
+      "exit_code": 0,
+      "log": "secrets-scan-corrected.log",
+      "sha256": "785afde26b815831ebbe2ea9b6a7125f5b49cdf400b3697f50d456a5337f0f2d",
+      "supersedes_known_false_positive_log": "secrets-scan.log"
+    },
+    {
+      "name": "final-whitespace",
+      "exit_code": 0
+    },
+    {
+      "name": "previous-sealed-evidence-integrity",
+      "status": "PASS",
+      "files_verified": 63,
+      "manifest_sha256": "02311a2b7ec41171289764d261186a339cdae0a250f3471b2aef7fe2855701c2"
+    },
+    {
+      "name": "new-four-http-receipts",
+      "status": "PASS",
+      "sha256": "915c23d188d06ef1d055b1fc3fbb673e583d4cfedfa7feeb4d56ca7fed2eb8f5",
+      "new_product_mutation": false
+    },
+    {
+      "name": "single-draft-proposal-integrity",
+      "status": "PASS",
+      "proposal_sha256": "1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b",
+      "decision_manifest_sha256": "f3f49ec297e069abb28989f5c039bbe1e654f507d6bf62c8d7cede12300d5582"
+    },
+    {
+      "name": "mutable-status-append-only",
+      "status": "PASS",
+      "previous_full_bytes_preserved": true
+    }
+  ],
+  "rector_v110_initial_output": [
+    "V110_RECTOR_ACTIVATION=PASS",
+    "PROTECTED_V1_9_INTEGRITY=PASS",
+    "APPROVED_51_CANDIDATE_FILES=PASS"
+  ],
+  "v110_provenance": "python3 scripts/verify-v110-governance.py, root cwd, successful tool result in current execution; runtime suites not rerun",
+  "rector_gate": "BLOCKED",
+  "stage": "PARTIAL_BLOCKED",
+  "step6a4": "NOT_STARTED",
+  "unrun_human_tests": "NOT_RUN; authenticated human session transport unavailable"
+}

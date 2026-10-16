@@ -1,0 +1,496 @@
+{
+  "provenance": "LIVE_QA_READ_ONLY",
+  "collected_at_utc": "2026-10-15T20:16:29.570784+00:00",
+  "result": {
+    "observed_at_utc": "2026-10-15T20:16:30.669392+00:00",
+    "kind": "frontend",
+    "image_id": "sha256:552ff3e9412cb1c78bfa3400c26c8835c6a2bfa09a6db1dc72ef18b8a2712eeb",
+    "container_id": "702ffb7d8c574de39754101f5fb4097e718768eb8fca1c0e91bef1e0e4806370",
+    "running": true,
+    "health": "healthy",
+    "restart_count": 0,
+    "started_at": "2026-10-15T19:57:44.385469624Z",
+    "source_sha256": "bac88a14e73d95ed258cd4e3c9a615dce5ec42c7352241b5239fec7e16d45821",
+    "architecture": "amd64",
+    "os": "linux",
+    "log_counts": {
+      "fatal": 0,
+      "sql_errors": 0,
+      "http_5xx": 0
+    },
+    "rollback_containers": [
+      {
+        "name": "tcdx-grc-frontend-rollback-step6a3-c04w-cfgd-ui-es-20261015",
+        "image": "cf5b7d492cdf",
+        "state": "exited"
+      },
+      {
+        "name": "tcdx-grc-frontend-rollback-step6a3-c04w-cfgd-final-20261015",
+        "image": "aeebdb982620",
+        "state": "exited"
+      },
+      {
+        "name": "tcdx-grc-frontend-rollback-step6a3-20261014",
+        "image": "461f6605c6da",
+        "state": "exited"
+      }
+    ],
+    "receipts": [
+      {
+        "remote_path": "/home/tecdex/.config/tcdx-grc/step6a3-c04w-final-20261015/frontend-activation-step6a3-c04w-cfgd-final-20261015.json",
+        "sha256": "3be16126b961d6a327d9a0dedb73377f056d84087a91a7d8de8f3be24ad529f3",
+        "content": {
+          "status": "PASS_QA",
+          "kind": "frontend",
+          "image_id": "sha256:cf5b7d492cdf4030a4603773200aca5b20f1e6c66ce51a51755ab024ce3f9a2f",
+          "container_id": "ff7bbb438d28273d6cb439ac3886f0e1e46b76a11b873ca9b7280decdc619a0b",
+          "previous_image_id": "sha256:aeebdb982620315edb8586bef0aa77d3fe372fc552ee120458abd01ca8fdb5f1",
+          "rollback_container": "tcdx-grc-frontend-rollback-step6a3-c04w-cfgd-final-20261015",
+          "health": "healthy",
+          "release_gate_sha256": "8889ab6a0eaea04c989e4c2540fe5dd6e346e64904bf2a7cfac8cbc1455bfb05"
+        }
+      },
+      {
+        "remote_path": "/home/tecdex/.config/tcdx-grc/step6a3-c04w-final-20261015/frontend-activation-step6a3-c04w-cfgd-ui-es-20261015.json",
+        "sha256": "d2305cd28df8406fab6699c4fee02076ae789d3e7e4bbef21be05fa062dd6298",
+        "content": {
+          "status": "PASS_QA",
+          "kind": "frontend",
+          "image_id": "sha256:552ff3e9412cb1c78bfa3400c26c8835c6a2bfa09a6db1dc72ef18b8a2712eeb",
+          "container_id": "702ffb7d8c574de39754101f5fb4097e718768eb8fca1c0e91bef1e0e4806370",
+          "previous_image_id": "sha256:cf5b7d492cdf4030a4603773200aca5b20f1e6c66ce51a51755ab024ce3f9a2f",
+          "rollback_container": "tcdx-grc-frontend-rollback-step6a3-c04w-cfgd-ui-es-20261015",
+          "health": "healthy",
+          "release_gate_sha256": "b890e34c14abdc47d26f859cb4d13ad393312d59d91b39e9462afef1d05e8621"
+        }
+      },
+      {
+        "remote_path": "/home/tecdex/.config/tcdx-grc/step6a3-c04w-final-20261015/release-gate.json",
+        "sha256": "b890e34c14abdc47d26f859cb4d13ad393312d59d91b39e9462afef1d05e8621",
+        "content": {
+          "release_id": "step6a3-c04w-cfgd-ui-es-20261015",
+          "environment": "qa",
+          "release_authorized": true,
+          "authorization_source": [
+            "Explicit PO continuity/conditional QA deployment instructions in project conversation",
+            "docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/PO_A01_A13_DECISION_RECEIPT_20261015.md"
+          ],
+          "historical_fingerprints_preserved": true,
+          "backend_image_id": "sha256:474e525a3e6b2bcc067dda7a77039b36f2832ca37d138b1424a700644560fc6d",
+          "backend_source_sha256": "879942f159f61a607712fe4c7ba79668343f008285e43a37129159fae821a58e",
+          "frontend_image_id": "sha256:552ff3e9412cb1c78bfa3400c26c8835c6a2bfa09a6db1dc72ef18b8a2712eeb",
+          "frontend_source_sha256": "bac88a14e73d95ed258cd4e3c9a615dce5ec42c7352241b5239fec7e16d45821",
+          "artifacts": {
+            "migration_manifest": {
+              "filename": "migration_manifest.json",
+              "sha256": "df18d813bd0f4d763dd02ef9617fa21e9474e3f7fc155e9b97e8f47eee11002f"
+            },
+            "expected_schema": {
+              "filename": "expected_schema.json",
+              "sha256": "ab9a097c6340c6b5619e6f583adf6b20c1044bdcef49cf97957cd24796630b79"
+            },
+            "physical_publication": {
+              "filename": "physical_publication.json",
+              "sha256": "301e34ace6fd54ff2df9a614b039af33d95acc6fdf3fe67ac50434c379f83d09"
+            },
+            "executable_publication": {
+              "filename": "executable_publication.json",
+              "sha256": "6daf39cc2208542bb44db5c245bacb226aa3d0576fff90618a47db4a7dd41f99"
+            }
+          },
+          "contract_gates": {
+            "physical_publication": "PASS_CONTRACT_EFFECTIVE",
+            "executable_publication": "PASS_CONTRACT_EFFECTIVE"
+          },
+          "state": {
+            "status": "PASS_READONLY",
+            "at": "2026-10-15T19:49:55.290Z",
+            "identity": {
+              "db": "tcdx-grc",
+              "host": "192.168.2.40",
+              "major": 16,
+              "ssl": true
+            },
+            "counts": {
+              "migrations": 34,
+              "active_platform_service_principals": 1,
+              "reference_publication_audits": 132,
+              "r3_audits": 36,
+              "commercial_permissions": 3,
+              "commercial_lifecycle_registry_rows": 3,
+              "v2": 3,
+              "entitlements_v2": 36,
+              "unvalidated_fks": 0,
+              "app_can_provision": true,
+              "app_can_publish": true,
+              "draft_packs": 5,
+              "catalog_audits": 6,
+              "catalog_outbox": 5
+            },
+            "quotas": [
+              {
+                "plan_code": "GRC",
+                "dimension": "ISO",
+                "value": "4.0000000000",
+                "unit": "pack",
+                "open_ended": true
+              },
+              {
+                "plan_code": "GRC",
+                "dimension": "LEGAL",
+                "value": "1.0000000000",
+                "unit": "pack",
+                "open_ended": true
+              },
+              {
+                "plan_code": "GRC",
+                "dimension": "TOTAL",
+                "value": "5.0000000000",
+                "unit": "pack",
+                "open_ended": true
+              },
+              {
+                "plan_code": "ISO",
+                "dimension": "ISO",
+                "value": "2.0000000000",
+                "unit": "pack",
+                "open_ended": true
+              },
+              {
+                "plan_code": "ISO",
+                "dimension": "LEGAL",
+                "value": "0.0000000000",
+                "unit": "pack",
+                "open_ended": true
+              },
+              {
+                "plan_code": "ISO",
+                "dimension": "TOTAL",
+                "value": "2.0000000000",
+                "unit": "pack",
+                "open_ended": true
+              },
+              {
+                "plan_code": "ISO_RIESGO_OPERATIVO",
+                "dimension": "ISO",
+                "value": "3.0000000000",
+                "unit": "pack",
+                "open_ended": true
+              },
+              {
+                "plan_code": "ISO_RIESGO_OPERATIVO",
+                "dimension": "LEGAL",
+                "value": "0.0000000000",
+                "unit": "pack",
+                "open_ended": true
+              },
+              {
+                "plan_code": "ISO_RIESGO_OPERATIVO",
+                "dimension": "TOTAL",
+                "value": "3.0000000000",
+                "unit": "pack",
+                "open_ended": true
+              }
+            ],
+            "publication": {
+              "verified_material_audits": 5,
+              "verified_outbox_aggregates": 5,
+              "completed_publications": 1,
+              "commercial_admin_grants": 3,
+              "unauthorized_commercial_grants": 0,
+              "verified_machine_bindings": 1,
+              "duplicate_reference_audits": 0
+            },
+            "subscriptions_count": 5,
+            "entitlements_v1_count": 36,
+            "fingerprints": {
+              "subscriptions": "8f520289ed8e9b6d2263abbe167f20debe6609dac0baa3b0e3de827a0c23fbb3",
+              "plan_v1": "79240e39b7a88e9953e651101d05c9afef098e8d908141b10e59a33f97dd759d",
+              "entitlements_v1": "9e722f48f8b75531361aa93d1145d9310afc26a8e12aa72e56dfc17c26a49671",
+              "reference_grants": "fc59b90d7e0f72f4086cb290ab6ae6356537c09652ca7ef3db029886b1ece2b0",
+              "roles": "613ce452fea11fa8435fd2b3f3c3ceaaa7dc04f5dd908bc7a225fee554f81422"
+            },
+            "plans": [
+              {
+                "plan_code": "GRC",
+                "version_number": "1",
+                "lifecycle_state": "published",
+                "effective_from": "2026-09-16T00:00:00.000000Z",
+                "published": true
+              },
+              {
+                "plan_code": "GRC",
+                "version_number": "2",
+                "lifecycle_state": "published",
+                "effective_from": "2026-10-14T18:08:21.832000Z",
+                "published": true
+              },
+              {
+                "plan_code": "ISO",
+                "version_number": "1",
+                "lifecycle_state": "published",
+                "effective_from": "2026-09-16T00:00:00.000000Z",
+                "published": true
+              },
+              {
+                "plan_code": "ISO",
+                "version_number": "2",
+                "lifecycle_state": "published",
+                "effective_from": "2026-10-14T18:08:21.832000Z",
+                "published": true
+              },
+              {
+                "plan_code": "ISO_RIESGO_OPERATIVO",
+                "version_number": "1",
+                "lifecycle_state": "published",
+                "effective_from": "2026-09-16T00:00:00.000000Z",
+                "published": true
+              },
+              {
+                "plan_code": "ISO_RIESGO_OPERATIVO",
+                "version_number": "2",
+                "lifecycle_state": "published",
+                "effective_from": "2026-10-14T18:08:21.832000Z",
+                "published": true
+              }
+            ],
+            "migrations": [
+              {
+                "migration_id": "20260916000100",
+                "filename": "20260916000100_bootstrap_schemas_and_ledger.sql",
+                "content_sha256": "4f29910baacf82526fb06226c237024b7315038a4868baa7bbda56ced4779437",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260916000200",
+                "filename": "20260916000200_platform_iam_organization.sql",
+                "content_sha256": "08fce9d08e729f097095a10cfdfbf093c43f9d8cbfbee97d39594691f4ad8f29",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260916000300",
+                "filename": "20260916000300_normative_control_evidence.sql",
+                "content_sha256": "f300aac95b6fba36c09fc6ac77550bf574f953c0ee0ad374a8cbf6fdb338ef9f",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260916000400",
+                "filename": "20260916000400_risk_operations_privacy.sql",
+                "content_sha256": "a38d2a7babbe77d79783d66e8ce909916e967be739d3712f303e51883d85a81b",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260916000500",
+                "filename": "20260916000500_data_integration_reporting_ai.sql",
+                "content_sha256": "bac1e0a421a4d532eb2da27e4bc9453125cfa407a2e8da904c8749c726815764",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260916000600",
+                "filename": "20260916000600_constraints_and_uniqueness.sql",
+                "content_sha256": "7d079aa1234050b6dde06d9fb3cad939144fcbccdf287cc31bbe863c68899bf5",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260916000700",
+                "filename": "20260916000700_foreign_keys.sql",
+                "content_sha256": "d2112e4b402e8789312d5473969b615e6d7ab344a58a2211f790c4423dd4361f",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260916000800",
+                "filename": "20260916000800_required_indexes.sql",
+                "content_sha256": "d3502b9de76209b54b40497e6b9fdf94d463335d1f5441fb0fb924786648336e",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260916000900",
+                "filename": "20260916000900_canonical_seeds.sql",
+                "content_sha256": "94547ff1fa6a9accf56ff6f28be93afeb91b8c290ca9bb224667862c64c8c2e7",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260916001000",
+                "filename": "20260916001000_pre_f4_integrated_audit_model.sql",
+                "content_sha256": "c4247051c223960eb5ca817a0f85650dbc828a7864e48f66a1a73b1d298a224d",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260921000100",
+                "filename": "20260921000100_pre_f5c_executable_physical_reconciliation.sql",
+                "content_sha256": "1181d7ab26718927124de880e351fbaba3f2daaca41267a1ef66d28ac2021680",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260921000200",
+                "filename": "20260921000200_phase5_core_grc_runtime_permissions.sql",
+                "content_sha256": "8cc3d1b2a64a5b00ffd55f93ccfbcdfcde5406ffa9c1fa7f2d2055f505048eb0",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260923000100",
+                "filename": "20260923000100_pre_f5e_platform_authority.sql",
+                "content_sha256": "4ee0b3d24c7d7aa6ea87a8e9a6618cd2a7b164aedf1e3990590c3cf1b512ea82",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260923000200",
+                "filename": "20260923000200_phase5_final_closure.sql",
+                "content_sha256": "96a56b5669cd6e6fd0d751dc12526e3fe6ad2c612e77a8a7e144c847775be96c",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260924000100",
+                "filename": "20260924000100_phase5_subscription_create_catalog.sql",
+                "content_sha256": "a41efa51265d5f95a342674bdbac2faecf37ac31ac1c45aef47b394c7e380f2f",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260924000200",
+                "filename": "20260924000200_phase5_retention_policy_lifecycle.sql",
+                "content_sha256": "751ff47c9644b8d7134bb16148728a075e61af3057fa2a271e280a1fb1cd1728",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260924000300",
+                "filename": "20260924000300_phase5_membership_invitation.sql",
+                "content_sha256": "0942e5eb360f7157a444d7b04fbe7558312e8d782347e60a745a8d4365034806",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260925000100",
+                "filename": "20260925000100_phase5_membership_invitation_platform_authority_reconciliation.sql",
+                "content_sha256": "b66f88a19323d7a92465f6e61e762dffcf511eae55e53456d811c7912d3dad8a",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260928000100",
+                "filename": "20260928000100_phase5_administrative_read_permissions.sql",
+                "content_sha256": "d19c72ce5a0b9e5caa65d8b6b93daec1b2188dee54067551bb8ac3c8c7dcdd35",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260928000200",
+                "filename": "20260928000200_phase5_membership_role_revoke_platform_grant.sql",
+                "content_sha256": "d47e4fa07250092c5b8c063a60713528627acee864f93278b3c5f0ed5dd57cdc",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260928000300",
+                "filename": "20260928000300_phase5_control_assessment_start_tenant_scope.sql",
+                "content_sha256": "4e38ffe74d4c5324d16871228e65e800396d538f45aaf29b052d895bfb5cbe84",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260928000400",
+                "filename": "20260928000400_phase5_regulatory_catalog_contract_alignment.sql",
+                "content_sha256": "1d4e5a51372531a1a5645dd5152cd00742016a3e5a7f3c508193caa65afcb929",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260929000100",
+                "filename": "20260929000100_phase5_subscription_regulatory_pack_authority.sql",
+                "content_sha256": "58db95213900be09348312702659b292f53a5913fe03df99102c444320c70bbd",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260929000200",
+                "filename": "20260929000200_phase5_plus_permissions_applicability.sql",
+                "content_sha256": "58d52157c20f5daa95d533030fa0b2ed4f85d7faea1a0f256a167f608a23ea8d",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20260929000300",
+                "filename": "20260929000300_phase5_plus_subject_validation_access.sql",
+                "content_sha256": "5eb46ac182929c1649fed610a4d66cd92017ea07b473aba933e5c167f5e1dfdb",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20261001000100",
+                "filename": "20261001000100_managed_identity_permissions_publication.sql",
+                "content_sha256": "90503ed1cf626c7d8a3529d323670322e180efde90257ee8bb99efe2736eef07",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20261006000100",
+                "filename": "20261006000100_platform_role_administration_permission_publication.sql",
+                "content_sha256": "2a3c0d14748a9494d6ef60572802782eab2cdf3f4e60bef6026d73c48c1b6399",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20261006000200",
+                "filename": "20261006000200_user_identity_discovery_permission_publication.sql",
+                "content_sha256": "fa7d34a7f33044b8ee02478211c67a6c1c36ee64df0e0d2de57a60101d157c22",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20261007000100",
+                "filename": "20261007000100_platform_tenant_user_onboarding_permission_publication.sql",
+                "content_sha256": "4f91369da1908264eba937e5c9d760a34bcefe3d7de1d726ac558c3f9b138673",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20261007000200",
+                "filename": "20261007000200_phase5_methodology_binding.sql",
+                "content_sha256": "fa178ad731d48045313a11b22f1bdf3c228be502dafa1883136162ad48127850",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20261009000100",
+                "filename": "20261009000100_phase6a3_configuration_integrity.sql",
+                "content_sha256": "b717f0c91f88a4079f791fd68cc08ff5202ef7f0dda6c7cf85ea37cb23441722",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20261009000200",
+                "filename": "20261009000200_phase6a3_reference_read_permissions.sql",
+                "content_sha256": "920ececb9d28e3821a9faf9d2c754db481a26c0e33c53ae0f94b3a0535885ed8",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20261013000100",
+                "filename": "20261013000100_commercial_contract_reconciliation.sql",
+                "content_sha256": "ed6ca86b9234672fcb55293b5e2a69d09e999e84b3c7d75d56ccf0cd86479ae5",
+                "outcome": "applied"
+              },
+              {
+                "migration_id": "20261015000100",
+                "filename": "20261015000100_c04w_applicability_hold_r2.sql",
+                "content_sha256": "b2a5bc73f75d7f95fb7ba5068f1b3ea77a923d7da7501446d05455ee545ec523",
+                "outcome": "applied"
+              }
+            ],
+            "schema": {
+              "database": "tcdx-grc",
+              "postgresql_major": 16,
+              "mismatches": 0,
+              "unvalidated_foreign_keys": 0,
+              "forbidden_delete_cascades": 0,
+              "expected_schema_sha256": "ab9a097c6340c6b5619e6f583adf6b20c1044bdcef49cf97957cd24796630b79",
+              "evidence": "Official verify-schema.ts against live QA, BEGIN READ ONLY"
+            },
+            "c04w_lifecycle": {
+              "exact_bindings_verified": true,
+              "published_rows": 5,
+              "authenticated_publication_audits": 5,
+              "unexpected_scopes_or_effects": 0
+            }
+          },
+          "recovery": {
+            "mode": "CONTAINER_ROLLBACK_WITH_SCHEMA_PRESERVED",
+            "database_ddl_planned": false,
+            "r2_reapplication": false,
+            "rollback_containers": "Retained by promoter under unique release_id",
+            "schema_compatibility": "Approved physical delta preserves historical rows and nullable additions",
+            "existing_backup_receipt": "docs/phase6a/STEP_6A3/C04W_QA_RECOVERY_20261015.json",
+            "backup_scope": "PRE_R2, not a post-R2 rollback",
+            "restore_sha256": "776b79ea7f7f44850a1175441086a95ba8d3a45677b8437abd9557982072f60e"
+          },
+          "human_acceptance": "NOT_CLAIMED",
+          "legal_source": "BLOCKED_HUMAN_ACTION",
+          "correction": "Five C04W field labels translated to Spanish; no schema/permission/methodology change"
+        }
+      }
+    ]
+  }
+}

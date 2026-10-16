@@ -1,3 +1,5 @@
+> CANDIDATE_NOT_EFFECTIVE: snapshot sucesor INITIAL_SOURCE; texto histórico preservado, requiere publicación competente.
+
 # Seed manifests and lifecycle transition registry
 
 | Campo | Valor |
@@ -192,3 +194,28 @@ See [27 — canonical methodology binding](27_PHASE5_METHODOLOGY_BINDING.md) and
 ## STEP6A.3 — publicación local R1/R2
 
 R1 adopta exactamente3 permisos y44 pares de29 (13F/17M/14R), mediante nuevas migraciones31/32. SEED-005 vigente local:175 permisos; 30 migraciones históricas permanecen intactas. SEED-006/010 no concede pares fuera del manifest29, ni derechos de comando por un permiso de lectura. R2 exige audit.iam.role_permission.publish.v1 transaccional por cada materialización/adopción RolePermission y actorServicePrincipal real existente; ningún nuevo actor/credencial es seed de producto. Gate previo de adopción global auditada; sin actor/aprobación/hash/audit completo, DENY y rollback.33 se prepara fuera de manifest activo para nueva adopción de filas candidatas: before.present refleja estado real y no un INSERT retrospectivo.
+
+## STEP_6A3 C-04W — publicación de permisos y aristas
+
+Fuente de diez pares exactos: `candidates/STEP_6A3_C04W_CFGD_v1.10/ROLE_PERMISSIONS.json` SHA-256 `8c9112ae1db21f477cca6f16dba12ccbe0b4956b2d477b77b4097d3ed5727583`. La adopción conserva grants existentes, inserta nueve pares por cada TENANT_ADMIN tenant-owned existente y un par de release por cada LEGAL_REVIEWER tenant-owned, con permiso `privacy.retention_policy.legal_hold.release` tenant, audit de publicación y verificación de tenant/role/permission. La plantilla de bootstrap futura usa el mismo manifest, sin grant global o directo a UserIdentity.
+
+Aristas nuevas: `RetentionPolicy draft→under_review` por `retention_policy.submit_for_review` con update del autor; `RetentionPolicyApplicability draft→under_review→approved→published` por `submit_for_review|review|approve|publish` con los cuatro permisos y códigos AuditEvent de la matriz 03. Las aristas existentes de RetentionPolicy se preservan. `legalHoldRelease` inserta un hecho inmutable y no cambia `lifecycle_state` de policy o applicability.
+
+
+## INITIAL_SOURCE v1.11 — delta candidato
+
+No agrega seeds, permisos, pares de grants o aristas. Las cinco aristas C-04W publicadas/auditadas siguen idénticas. Bind es comando draft→draft y emite su único AuditEvent; no volver a publicar registryM2M.
+
+
+## INITIAL_SOURCE — reconciliación de scope submit, sucesora ejecutable
+
+EvidenceVersion/draft/evidence.submit/v2→submitted conserva permiso evidence.evidence.submit, audit.evidence.evidence.submit.v1 y side effect evidence.evidence.submitted.v1. Scopes: assigned_object,owned_object,tenant. Tenant sólo permite submit por el autor humano real de la cadena INITIAL_SOURCE propia, con scope tenant efectivo, rol Tenant Admin custodio o Evidence Owner, aplicabilidad draft nueva válida, sin source, sin EvidenceLinks, policy ordinaria tenant-owned publicada/vigente, contexto/FK exactos y ausencia de primaria ordinaria. Si sólo tiene tenant y no satisface ese predicado: DENY; la lectura tenant no confiere derechos. No sintetizar scopes en el actor. Antes de CAS y en replay se reautoriza con datos bloqueados actuales. Después de publicación de la aplicabilidad el replay no produce otra transición; comprueba autor/contexto/cadena, sin conceder consumo a un documento sin links.
+
+Owned/assigned ordinarios conservan permiso, scope efectivo, ObjectPolicy y reglas actuales. No se concede tenant-only para Evidence ordinaria o ajena. Review/approve y sus SoD no cambian. El consumo ordinario y bind mantienen guards v1.11. La sucesora usa precondition_policy_ref contract:initial-retention-source-submit:v1.11. La v1 permanece inmutable e inventariada; la elección es por versión publicada superior, conforme al resolver canónico, sin fallback.
+
+## Operador privado y publicación
+
+Nueva operación privada exclusiva QA iam.initial_source.publish dentro del operador existente, sin endpoint HTTP público ni grants nuevos. Reutiliza autenticación real del principal M2M activo y sus proofs actuales. Configuración adicional: par completo TCDX_INITIAL_SOURCE_PUBLICATION_ROOT / TCDX_INITIAL_SOURCE_PUBLICATION_MANIFEST_SHA256; ausencia deshabilita la operación; configuración parcial/no QA/manifest o decisión incoherente DENY. Loaders verifican baseline activa, aprobación exacta, todos los snapshots y binding, recibo predecessor y ledger34/R2 exactos. No añadir credenciales, ServicePrincipal ni permisos; no ejecutar iam.publish/iam.c04w.publish.
+
+Transacción: lock_timeout5s; bloquear registry, scopes y side-effects; resolver proof/principal; verificar predecesora v1 exacta del snapshot QA; insertar únicamente v2 con3scopes y el mismo side-effect requerido ordinal1; insertar una auditoría audit.platform.lifecycle_transition.publish.v1 bajo step6a3InitialSourceLifecyclePublication, con manifest/decisión/hash/principal/correlation, sin secretos. Falla audit o discrepancia revierte todo. Replay exacto verifica v2, scopes/efecto/audit único y retorna0 filas/0audit nuevos; discrepancia es409 y nunca edita v1/v2. Las cinco aristas C04W conservan sus filas/auditorías sin republicación. Bind no crea otra arista.
+

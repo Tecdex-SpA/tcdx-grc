@@ -35,7 +35,66 @@ function tenantPredicate(definition: ResourceDefinition): string {
 }
 
 async function entitledResourcePredicate(executor: Executor, actor: CoreActor, definition: ResourceDefinition, values: unknown[], knownVisibility?: Awaited<ReturnType<typeof packVisibility>>): Promise<string> {
-  if (!["Control", "RequirementApplicability", "RequirementAssessment", "StatementOfApplicability"].includes(definition.name)) return "TRUE";
+  let sourceVisibility="TRUE";
+  if (definition.name === "Evidence" || definition.name === "EvidenceVersion") {
+    values.push(actor.userIdentityId);
+    const user=`$${values.length}::uuid`;
+    const version=definition.name === "EvidenceVersion" ? "sv.evidence_version_id=t.evidence_version_id" : "sv.evidence_id=t.evidence_id";
+    const canReview=actor.permissions.has("evidence.evidence.review") && grantedScopes(actor,"evidence.evidence.review").has("tenant");
+    const custodian=actor.roles.includes("TENANT_ADMIN") && grantedScopes(actor,"evidence.evidence.read").has("tenant");
+    sourceVisibility=`NOT EXISTS (SELECT 1 FROM evidence.evidence_versions sv
+      JOIN privacy.retention_policy_applicabilities sa ON sa.tenant_id=sv.tenant_id AND sa.retention_policy_applicability_id=sv.retention_policy_applicability_id
+      WHERE sv.tenant_id=t.tenant_id AND ${version} AND sa.lifecycle_state<>'published'
+        AND sv.created_by_user_identity_id IS DISTINCT FROM ${user}
+        AND NOT (${canReview ? "TRUE" : "FALSE"} OR (${custodian ? "TRUE" : "FALSE"} AND sa.created_by_user_identity_id=${user})))`;
+  }
+  if (definition.name === "FileObject" || definition.name === "FileUploadIntent") {
+    values.push(actor.userIdentityId);
+    const user=`$${values.length}::uuid`;
+    const sourceReader=definition.name==='FileObject' && ((actor.roles.includes('TENANT_ADMIN') && grantedScopes(actor,'evidence.evidence.read').has('tenant'))
+      || (actor.permissions.has('evidence.evidence.review') && grantedScopes(actor,'evidence.evidence.review').has('tenant')));
+    return `NOT EXISTS (SELECT 1 FROM privacy.retention_policy_applicabilities sa
+      WHERE sa.tenant_id=t.tenant_id AND sa.retention_policy_applicability_id=t.retention_policy_applicability_id
+        AND sa.lifecycle_state<>'published' AND t.created_by_user_identity_id IS DISTINCT FROM ${user}
+        AND NOT (${sourceReader?'TRUE':'FALSE'} AND (sa.created_by_user_identity_id=${user} OR ${actor.permissions.has('evidence.evidence.review')?'TRUE':'FALSE'})))`;
+  }
+  if ((definition.name === "Evidence" || definition.name === "EvidenceVersion")
+      && actor.roles.includes("TENANT_ADMIN") && grantedScopes(actor, "evidence.evidence.read").has("tenant")) {
+    const independentTenantRead = await sql<{ permitted: boolean }>`
+      SELECT EXISTS (
+        SELECT 1 FROM iam.membership_roles mr
+        JOIN iam.roles r ON r.tenant_id=mr.tenant_id AND r.role_id=mr.role_id
+        JOIN iam.role_permissions rp ON rp.tenant_id=r.tenant_id AND rp.role_id=r.role_id
+        JOIN iam.permissions perm ON perm.permission_id=rp.permission_id
+       WHERE mr.tenant_id=${actor.tenantId}::uuid
+         AND mr.tenant_membership_id=${actor.membershipId}::uuid
+         AND mr.scope_kind='tenant'
+         AND mr.valid_from<=transaction_timestamp()
+         AND (mr.valid_to IS NULL OR mr.valid_to>transaction_timestamp())
+         AND r.role_code<>'TENANT_ADMIN'
+         AND r.lifecycle_state='published'
+         AND perm.permission_code='evidence.evidence.read'
+         AND perm.lifecycle_state='published'
+      ) AS permitted
+    `.execute(executor);
+    if (!independentTenantRead.rows[0]?.permitted) {
+      values.push(actor.userIdentityId);
+      const own = `t.created_by_user_identity_id=$${values.length}::uuid`;
+      const linked = definition.name === "Evidence"
+        ? `EXISTS (SELECT 1 FROM evidence.evidence_versions ev
+             JOIN privacy.retention_policy_applicabilities app
+               ON app.tenant_id=ev.tenant_id AND app.source_evidence_version_id=ev.evidence_version_id
+            WHERE ev.tenant_id=t.tenant_id AND ev.evidence_id=t.evidence_id AND app.lifecycle_state='published')`
+        : `EXISTS (SELECT 1 FROM privacy.retention_policy_applicabilities app
+            WHERE app.tenant_id=t.tenant_id AND app.source_evidence_version_id=t.evidence_version_id
+              AND app.lifecycle_state='published')`;
+      const custody=definition.name === "Evidence"
+        ? `EXISTS (SELECT 1 FROM evidence.evidence_versions cv JOIN privacy.retention_policy_applicabilities ca ON ca.tenant_id=cv.tenant_id AND ca.retention_policy_applicability_id=cv.retention_policy_applicability_id WHERE cv.tenant_id=t.tenant_id AND cv.evidence_id=t.evidence_id AND ca.created_by_user_identity_id=$${values.length}::uuid)`
+        : `EXISTS (SELECT 1 FROM privacy.retention_policy_applicabilities ca WHERE ca.tenant_id=t.tenant_id AND ca.retention_policy_applicability_id=t.retention_policy_applicability_id AND ca.created_by_user_identity_id=$${values.length}::uuid)`;
+      return `(${sourceVisibility} AND (${own} OR ${linked} OR ${custody}))`;
+    }
+  }
+  if (!["Control", "RequirementApplicability", "RequirementAssessment", "StatementOfApplicability"].includes(definition.name)) return sourceVisibility;
   const visibility = knownVisibility ?? await packVisibility(executor, actor.tenantId, actor.runtimeEnvironment);
   if (definition.name === "Control") {
     values.push([...visibility.globalControlIds]);
@@ -318,6 +377,42 @@ export async function getResource(executor: Executor, actor: CoreActor, definiti
 
 export async function detailResource(executor: Executor, actor: CoreActor, definition: ResourceDefinition, id: string, policyPermission = definition.permission): Promise<Row> {
   const row = await getResource(executor, actor, definition, id, false, policyPermission);
+  if (definition.name === "RetentionPolicyApplicability") {
+    const context = await sql<{ policy_kind: string; hold_release_id: string | null }>`
+      SELECT p.policy_kind,hr.hold_release_id
+        FROM privacy.retention_policy_applicabilities a
+        JOIN privacy.retention_policies p ON p.tenant_id=a.tenant_id AND p.retention_policy_id=a.retention_policy_id
+        LEFT JOIN privacy.retention_policy_hold_releases hr
+          ON hr.tenant_id=a.tenant_id AND hr.retention_policy_applicability_id=a.retention_policy_applicability_id
+       WHERE a.tenant_id=${actor.tenantId}::uuid AND a.retention_policy_applicability_id=${id}::uuid
+    `.execute(executor);
+    if (context.rows.length !== 1) throw new FoundationError("TCDX.RESOURCE.NOT_FOUND", "Resource not found", 404);
+    row.policy_kind = context.rows[0]!.policy_kind;
+    row.hold_release_id = context.rows[0]!.hold_release_id;
+    const custodian=await sql<{created_by_user_identity_id:string}>`SELECT created_by_user_identity_id
+      FROM privacy.retention_policy_applicabilities WHERE tenant_id=${actor.tenantId}::uuid AND retention_policy_applicability_id=${id}::uuid`.execute(executor);
+    const bindAllowed=row.lifecycle_state==='draft' && !row.source_evidence_version_id && actor.roles.includes('TENANT_ADMIN')
+      && custodian.rows[0]?.created_by_user_identity_id===actor.userIdentityId
+      && actor.capabilityGroups.has('PRIVACY') && grantedScopes(actor,'privacy.retention_policy.update').has('tenant')
+      && actor.capabilityGroups.has('EVIDENCE_DOCUMENTS') && grantedScopes(actor,'evidence.evidence.read').has('tenant');
+    row.initial_source_bind_allowed=bindAllowed;
+    row.custodian_display_name=(await sql<{display_name:string}>`SELECT display_name FROM iam.user_identities WHERE user_identity_id=${custodian.rows[0]!.created_by_user_identity_id}::uuid`.execute(executor)).rows[0]?.display_name;
+
+    row.initial_source_candidates=[];
+    if(bindAllowed) {
+      row.initial_source_candidates=(await sql<Row>`SELECT ev.evidence_version_id,ev.version_number,e.evidence_code,ev.effective_from,ev.effective_to
+        FROM evidence.evidence_versions ev JOIN evidence.evidences e ON e.tenant_id=ev.tenant_id AND e.evidence_id=ev.evidence_id
+        JOIN evidence.file_objects f ON f.tenant_id=ev.tenant_id AND f.file_object_id=ev.file_object_id
+        WHERE ev.tenant_id=${actor.tenantId}::uuid AND ev.retention_policy_applicability_id=${id}::uuid
+          AND f.retention_policy_applicability_id=${id}::uuid AND f.retention_policy_id=${String(row.retention_policy_id)}::uuid
+          AND ev.lifecycle_state='approved' AND f.scan_status='passed' AND ev.effective_from<=transaction_timestamp()
+          AND (ev.effective_to IS NULL OR ev.effective_to>transaction_timestamp()) AND (ev.expires_at IS NULL OR ev.expires_at>transaction_timestamp())
+          AND EXISTS (SELECT 1 FROM evidence.evidence_reviews er JOIN iam.tenant_memberships tm ON tm.tenant_id=er.tenant_id AND tm.tenant_membership_id=er.reviewer_membership_id
+            WHERE er.tenant_id=ev.tenant_id AND er.evidence_version_id=ev.evidence_version_id AND er.decision='approved' AND tm.user_identity_id<>ev.created_by_user_identity_id)
+        ORDER BY e.evidence_code,ev.version_number`.execute(executor)).rows;
+    }
+
+  }
   if (definition.name === "StatementOfApplicability") row.items = (await sql<Row>`SELECT statement_of_applicability_item_id,reference_control_version_id,applicability_decision,justification,implementation_state,tenant_control_id,tenant_control_version_id FROM regulatory.statement_of_applicability_items WHERE tenant_id=${actor.tenantId}::uuid AND statement_of_applicability_id=${id}::uuid ORDER BY created_at,statement_of_applicability_item_id`.execute(executor)).rows;
   if (definition.name === "Control") {
     const visibility = await packVisibility(executor, actor.tenantId, actor.runtimeEnvironment);
@@ -398,8 +493,19 @@ export async function detailResource(executor: Executor, actor: CoreActor, defin
     }
   }
   if (definition.name === "AssuranceTest") row.samples = (await sql<Row>`SELECT assurance_sample_id,assurance_test_id,sample_code,population_count,sample_count,selection_method,sample_period_start,sample_period_end,result_status FROM controls.assurance_samples WHERE tenant_id=${actor.tenantId}::uuid AND assurance_test_id=${id}::uuid ORDER BY created_at`.execute(executor)).rows;
-  if (definition.name === "Evidence") row.versions = (await sql<Row>`SELECT evidence_version_id,row_version,evidence_id,document_version_id,file_object_id,version_number,effective_from,effective_to,published_at,period_start,period_end,lifecycle_state,submitted_at,approved_at,expires_at,superseded_by_id,provenance_ref FROM evidence.evidence_versions WHERE tenant_id=${actor.tenantId}::uuid AND evidence_id=${id}::uuid ORDER BY version_number DESC`.execute(executor)).rows;
+  if (definition.name === "Evidence") row.versions = (await sql<Row>`SELECT evidence_version_id,row_version,evidence_id,document_version_id,file_object_id,retention_policy_applicability_id,version_number,effective_from,effective_to,published_at,period_start,period_end,lifecycle_state,submitted_at,approved_at,expires_at,superseded_by_id,provenance_ref FROM evidence.evidence_versions WHERE tenant_id=${actor.tenantId}::uuid AND evidence_id=${id}::uuid ORDER BY version_number DESC`.execute(executor)).rows;
   if (definition.name === "EvidenceVersion") {
+    const pending=await sql<{pending:boolean}>`SELECT EXISTS (SELECT 1 FROM privacy.retention_policy_applicabilities a
+      WHERE a.tenant_id=${actor.tenantId}::uuid AND a.retention_policy_applicability_id=${String(row.retention_policy_applicability_id ?? "00000000-0000-0000-0000-000000000000")}::uuid
+        AND a.lifecycle_state<>'published') AS pending`.execute(executor);
+    row.ordinary_consumption_allowed=!pending.rows[0]?.pending;
+    const authors=await sql<{document_author_display_name:string;custodian_display_name:string|null}>`SELECT u.display_name AS document_author_display_name,cu.display_name AS custodian_display_name
+      FROM evidence.evidence_versions ev JOIN iam.user_identities u ON u.user_identity_id=ev.created_by_user_identity_id
+      LEFT JOIN privacy.retention_policy_applicabilities a ON a.tenant_id=ev.tenant_id AND a.retention_policy_applicability_id=ev.retention_policy_applicability_id
+      LEFT JOIN iam.user_identities cu ON cu.user_identity_id=a.created_by_user_identity_id
+      WHERE ev.tenant_id=${actor.tenantId}::uuid AND ev.evidence_version_id=${id}::uuid`.execute(executor);
+    Object.assign(row,authors.rows[0]??{});
+
     row.links = (await sql<Row>`SELECT evidence_link_id,evidence_version_id,requirement_id,control_id,control_version_id,requirement_assessment_id,control_assessment_id,assurance_test_id,claim,effective_from,effective_to FROM evidence.evidence_links WHERE tenant_id=${actor.tenantId}::uuid AND evidence_version_id=${id}::uuid ORDER BY created_at`.execute(executor)).rows;
     row.reviews = (await sql<Row>`SELECT evidence_review_id,evidence_id,evidence_version_id,reviewer_membership_id,decision,sufficiency,relevance,rationale,reviewed_at FROM evidence.evidence_reviews WHERE tenant_id=${actor.tenantId}::uuid AND evidence_version_id=${id}::uuid ORDER BY reviewed_at`.execute(executor)).rows;
   }
@@ -455,7 +561,7 @@ export async function casRetentionPolicyTransition(executor: Executor, actor: Co
   return row;
 }
 
-export async function casRetentionPolicyUpdate(executor: Executor, actor: CoreActor, id: string, expectedVersion: number, changes: { retention_seconds: number; is_mandatory: boolean }): Promise<Row> {
+export async function casRetentionPolicyUpdate(executor: Executor, actor: CoreActor, id: string, expectedVersion: number, changes: { retention_seconds: number | null; is_mandatory: boolean }): Promise<Row> {
   const result = await executor.executeQuery<Row>(CompiledQuery.raw(
     `UPDATE privacy.retention_policies SET retention_seconds=$4::bigint,is_mandatory=$5::boolean,row_version=row_version+1 WHERE tenant_id=$1::uuid AND retention_policy_id=$2::uuid AND row_version=$3::bigint AND lifecycle_state='draft' RETURNING *`,
     [actor.tenantId, id, expectedVersion, changes.retention_seconds, changes.is_mandatory]

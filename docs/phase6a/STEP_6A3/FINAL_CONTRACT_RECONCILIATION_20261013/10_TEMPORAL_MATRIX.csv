@@ -1,0 +1,17 @@
+id,origin,destination,packs,expected_result
+V1,active vigente; endsNULL,"publicada y vigente [<=t,NULL)",packs efectivos con expiryNULL,ALLOW si capacidades/familias/cuotas/pack gates completos; nuevaendsNULL; packexpiryNULL
+V2,active vigente; endsE>t,"contiene [t,E)",pack expiryP<=E,ALLOW; nuevaendsE; packexpiryP; viejaends=t
+V3,active vigente; endsE>t,effective_to D<E,cualquier pack,422INVARIANT; preservar duración imposible; rollback
+V4,active vigente; endsNULL,effective_to finito,cualquier pack,422INVARIANT; no convertir contrato abierto en finito
+V5,active vigente; endsE>t,"contiene [t,E)",expiryNULL o P>E,422INVARIANT; no recortar pack ni extender Subscription
+V6,ended/cancelada/no vigente,válido,cualquiera,409TRANSITION_DENIED; excepción sólo replay completado reautorizado
+V7,active t<=starts,válido,asignación t<=effective_from que debe cerrarse,409RESOURCE retryabletrue; no t+epsilon inventado
+V8,active vigente,mismo PlanVersion,cualquiera,409RESOURCE; no mutación
+V9,active vigente,draft/expirada/futura/incompleta,cualquiera,422INVARIANT; no adopción/contratación
+V10,active vigente,válido,assignment active future,409RESOURCE; no cancelar/copiar futuro
+V11,active vigente,válido,vencido/revocado,NO_TRANSFER; historia permanece; cuotas cuentan sólo efectivos
+V12,active vigente,válido,dos versiones efectivas misma raíz,409RESOURCE; no escoger ganadora; resolución competente antes de adopción
+V13,active vigente,válido,cuota total/familiar excedida,409USAGE_EXCEEDED; rollback
+V14,active vigente,válido; familia no admitida,pack efectivo incompatible,422INVARIANT; no traslado parcial
+V15,active vigente,válido,fin de vigencia oficial/licencia no permite intervalo que se preserva,422INVARIANT; no herencia de edición ni obligación legal inferida
+V16,active vigente,contiene vigencia nueva,sin packs,ALLOW sólo si límites total+familias completos; cero packs no prueba unlimited

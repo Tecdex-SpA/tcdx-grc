@@ -1,0 +1,788 @@
+{
+  "backend_loaded": {
+    "loadedImage": "PASS",
+    "imageId": "sha256:59479e69ece15ae654498b637a6be5a66f0d4f0a56e00ffbea7c8cb6d3f22b49",
+    "architecture": "linux/amd64",
+    "revision": "61a00c42e139dde629f8be3f371ddeaf564d9fcd5265d4522cf67469a9960887",
+    "sourceMetadata": {
+      "key": "org.opencontainers.image.source",
+      "securityClassification": "SAFE_PUBLIC_PROVENANCE",
+      "valueValidity": "PASS",
+      "runtimeFunctionalImpact": "NONE_PROVEN",
+      "value": "https://github.com/Tecdex-SpA/tcdx-grc"
+    }
+  },
+  "backend_preflight": {
+    "preflight": "PASS",
+    "rollbackReady": true,
+    "rollbackName": "tcdx-grc-backend-pre-functional-qa30-61a00c42e139",
+    "state": {
+      "name": "tcdx-grc-backend",
+      "containerId": "88d54bee4116a182c41d080ec1bf88f9d58e262056af5715f8c643f0846b6062",
+      "imageId": "sha256:3be791953c806bbb24556526f06adfa73b364f374856a4f8102e5db9521d3cee",
+      "imageRef": "sha256:3be791953c806bbb24556526f06adfa73b364f374856a4f8102e5db9521d3cee",
+      "running": true,
+      "health": "healthy",
+      "restartCount": 0,
+      "startedAt": "2026-10-13T20:18:21.053717181Z",
+      "runtimeUid": 1000,
+      "mountMetadata": [
+        {
+          "source": "/home/tecdex/.config/tcdx-grc/qa-db-public-20261013.pem",
+          "target": "/run/config/qa-db-public.pem",
+          "type": "bind",
+          "readOnly": true
+        },
+        {
+          "source": "/home/tecdex/.secrets/tcdx-grc-qa/object-storage-secret-key",
+          "target": "/run/secrets/object_storage_secret_key",
+          "type": "bind",
+          "readOnly": true
+        },
+        {
+          "source": "/home/tecdex/.secrets/tcdx-grc-qa/application-private.pem",
+          "target": "/run/secrets/app_jwt_private_key",
+          "type": "bind",
+          "readOnly": true
+        },
+        {
+          "source": "/home/tecdex/.secrets/tcdx-grc-qa/application-public.pem",
+          "target": "/run/secrets/app_jwt_public_key",
+          "type": "bind",
+          "readOnly": true
+        },
+        {
+          "source": "/home/tecdex/.secrets/tcdx-grc-qa/object-storage-access-key",
+          "target": "/run/secrets/object_storage_access_key",
+          "type": "bind",
+          "readOnly": true
+        },
+        {
+          "source": "/home/tecdex/.secrets/tcdx-grc-qa/managed-identity-oidc-client-secret",
+          "target": "/run/secrets/managed_identity_oidc_client_secret",
+          "type": "bind",
+          "readOnly": true
+        },
+        {
+          "source": "/home/tecdex/.secrets/tcdx-grc-qa/managed-identity-admin-client-secret",
+          "target": "/run/secrets/managed_identity_admin_client_secret",
+          "type": "bind",
+          "readOnly": true
+        }
+      ]
+    },
+    "candidateLogCapturePolicy": "MANDATORY"
+  },
+  "frontend_loaded": {
+    "loadedImage": "PASS",
+    "imageId": "sha256:461f6605c6dabded45a697d7fea40b534e78faaea9abc1eba678e3e13d117804",
+    "architecture": "linux/amd64",
+    "revision": "61a00c42e139dde629f8be3f371ddeaf564d9fcd5265d4522cf67469a9960887",
+    "sourceMetadata": {
+      "key": "org.opencontainers.image.source",
+      "securityClassification": "SAFE_PUBLIC_PROVENANCE",
+      "valueValidity": "PASS",
+      "runtimeFunctionalImpact": "NONE_PROVEN",
+      "value": "https://github.com/Tecdex-SpA/tcdx-grc"
+    }
+  },
+  "frontend_preflight": {
+    "preflight": "PASS",
+    "rollbackReady": true,
+    "rollbackName": "tcdx-grc-frontend-pre-functional-qa30-61a00c42e139",
+    "state": {
+      "name": "tcdx-grc-frontend",
+      "containerId": "91dd4933c972f0cdf6107a7f643d179f02d2e420fe7f13187d4b07de2c67765c",
+      "imageId": "sha256:2936ac99ed0fea65354f4e55f2b9f3d0fe431ab72a5a4f47c97bc31fc0768ab1",
+      "imageRef": "sha256:2936ac99ed0fea65354f4e55f2b9f3d0fe431ab72a5a4f47c97bc31fc0768ab1",
+      "running": true,
+      "health": "healthy",
+      "restartCount": 0,
+      "startedAt": "2026-10-13T20:18:28.71924361Z",
+      "runtimeUid": 1000,
+      "mountMetadata": []
+    },
+    "candidateLogCapturePolicy": "MANDATORY"
+  },
+  "frontend_park": {
+    "pairBarrier": "FRONTEND_STOPPED_BEFORE_BACKEND_MAJOR_CHANGE",
+    "state": {
+      "name": "tcdx-grc-frontend",
+      "containerId": "91dd4933c972f0cdf6107a7f643d179f02d2e420fe7f13187d4b07de2c67765c",
+      "imageId": "sha256:2936ac99ed0fea65354f4e55f2b9f3d0fe431ab72a5a4f47c97bc31fc0768ab1",
+      "imageRef": "sha256:2936ac99ed0fea65354f4e55f2b9f3d0fe431ab72a5a4f47c97bc31fc0768ab1",
+      "running": false,
+      "health": "unhealthy",
+      "restartCount": 0,
+      "startedAt": "2026-10-13T20:18:28.71924361Z",
+      "runtimeUid": 1000,
+      "mountMetadata": []
+    }
+  },
+  "backend_deploy": {
+    "deploy": "PASS",
+    "deploymentStartedAt": "2026-10-13T20:33:51.652031+00:00",
+    "rollbackTriggered": false,
+    "rollbackRetainedName": "tcdx-grc-backend-pre-functional-qa30-61a00c42e139",
+    "state": {
+      "name": "tcdx-grc-backend",
+      "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6",
+      "imageId": "sha256:59479e69ece15ae654498b637a6be5a66f0d4f0a56e00ffbea7c8cb6d3f22b49",
+      "imageRef": "sha256:59479e69ece15ae654498b637a6be5a66f0d4f0a56e00ffbea7c8cb6d3f22b49",
+      "running": true,
+      "health": "healthy",
+      "restartCount": 0,
+      "startedAt": "2026-10-13T20:33:53.841371869Z",
+      "runtimeUid": 1000,
+      "mountMetadata": [
+        {
+          "source": "/home/tecdex/.secrets/tcdx-grc-qa/object-storage-access-key",
+          "target": "/run/secrets/object_storage_access_key",
+          "type": "bind",
+          "readOnly": true
+        },
+        {
+          "source": "/home/tecdex/.secrets/tcdx-grc-qa/managed-identity-oidc-client-secret",
+          "target": "/run/secrets/managed_identity_oidc_client_secret",
+          "type": "bind",
+          "readOnly": true
+        },
+        {
+          "source": "/home/tecdex/.secrets/tcdx-grc-qa/managed-identity-admin-client-secret",
+          "target": "/run/secrets/managed_identity_admin_client_secret",
+          "type": "bind",
+          "readOnly": true
+        },
+        {
+          "source": "/home/tecdex/.config/tcdx-grc/qa-db-public-20261013.pem",
+          "target": "/run/config/qa-db-public.pem",
+          "type": "bind",
+          "readOnly": true
+        },
+        {
+          "source": "/home/tecdex/.secrets/tcdx-grc-qa/object-storage-secret-key",
+          "target": "/run/secrets/object_storage_secret_key",
+          "type": "bind",
+          "readOnly": true
+        },
+        {
+          "source": "/home/tecdex/.secrets/tcdx-grc-qa/application-private.pem",
+          "target": "/run/secrets/app_jwt_private_key",
+          "type": "bind",
+          "readOnly": true
+        },
+        {
+          "source": "/home/tecdex/.secrets/tcdx-grc-qa/application-public.pem",
+          "target": "/run/secrets/app_jwt_public_key",
+          "type": "bind",
+          "readOnly": true
+        }
+      ]
+    },
+    "configurationProof": {
+      "runtimeConfigEquality": "PASS",
+      "runtimeFunctionalConfigComparison": "PASS",
+      "ociProvenanceAllowlist": [
+        "org.opencontainers.image.source"
+      ],
+      "ociProvenanceAllowlistMatch": true,
+      "ociSourceLabelDifference": "ALLOWED_PROVENANCE_METADATA",
+      "ociAllowedProvenanceDifferences": [
+        {
+          "key": "org.opencontainers.image.source",
+          "beforePresent": false,
+          "afterPresent": true,
+          "classification": "SAFE_PUBLIC_PROVENANCE",
+          "value": "https://github.com/Tecdex-SpA/tcdx-grc"
+        }
+      ],
+      "otherLabelDifferences": 0,
+      "otherLabelDifferenceKeys": [],
+      "unapprovedConfigDifferences": 0,
+      "unapprovedConfigDifferenceFields": [],
+      "allOtherLabelsComparedExactly": true,
+      "rawEnvironmentEqualInMemory": true,
+      "hostConfigurationExact": true,
+      "mountsExact": true,
+      "networkSemanticsExact": true,
+      "rawConfigurationPersisted": false,
+      "approvedTLSRepairApplied": false,
+      "baselinePlaintextRollbackRisk": false
+    },
+    "candidateLogs": {
+      "policy": "MANDATORY",
+      "phase": "POST_DEPLOY_HEALTH_CONFIG",
+      "candidateContainerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6",
+      "imageId": "sha256:59479e69ece15ae654498b637a6be5a66f0d4f0a56e00ffbea7c8cb6d3f22b49",
+      "windowStart": "2026-10-13T20:33:51.652031+00:00",
+      "windowEnd": "2026-10-13T20:34:01.196387+00:00",
+      "startedAt": "2026-10-13T20:33:53.841371869Z",
+      "stoppedAt": "0001-01-01T00:00:00Z",
+      "health": "healthy",
+      "healthChecks": [
+        {
+          "Start": "2026-10-13T20:33:59.998558402Z",
+          "End": "2026-10-13T20:34:00.349642069Z",
+          "ExitCode": 0
+        }
+      ],
+      "events": [
+        {
+          "action": "create",
+          "timeNano": 1791923633673136977,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        },
+        {
+          "action": "start",
+          "timeNano": 1791923634997966656,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        },
+        {
+          "action": "exec_create",
+          "timeNano": 1791923639998732557,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        },
+        {
+          "action": "exec_start",
+          "timeNano": 1791923639998814424,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        },
+        {
+          "action": "exec_die",
+          "timeNano": 1791923640349589957,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        },
+        {
+          "action": "health_status: healthy",
+          "timeNano": 1791923640350869206,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        },
+        {
+          "action": "exec_create",
+          "timeNano": 1791923641049065968,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        },
+        {
+          "action": "exec_start",
+          "timeNano": 1791923641050251309,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        },
+        {
+          "action": "exec_die",
+          "timeNano": 1791923641147842781,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        }
+      ],
+      "restartCount": 0,
+      "sanitizedStdoutStderr": [],
+      "nonemptyLogLines": 0,
+      "warnings": 0,
+      "runtimeErrorRecords": 0,
+      "http5xxUnexpected": 0,
+      "sqlErrorsUnexpected": 0,
+      "fatalErrors": 0,
+      "secretFindings": 0,
+      "rawLogsPersisted": false,
+      "captureComplete": true,
+      "capturedBeforeRemoval": true,
+      "durableRemoteEvidencePath": "/tmp/tcdx-grc-mi-tenant-e2e-candidate-logs-7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6.json"
+    }
+  },
+  "frontend_deploy": {
+    "deploy": "PASS",
+    "deploymentStartedAt": "2026-10-13T20:34:01.989436+00:00",
+    "rollbackTriggered": false,
+    "rollbackRetainedName": "tcdx-grc-frontend-pre-functional-qa30-61a00c42e139",
+    "state": {
+      "name": "tcdx-grc-frontend",
+      "containerId": "659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8",
+      "imageId": "sha256:461f6605c6dabded45a697d7fea40b534e78faaea9abc1eba678e3e13d117804",
+      "imageRef": "sha256:461f6605c6dabded45a697d7fea40b534e78faaea9abc1eba678e3e13d117804",
+      "running": true,
+      "health": "healthy",
+      "restartCount": 0,
+      "startedAt": "2026-10-13T20:34:03.499395965Z",
+      "runtimeUid": 1000,
+      "mountMetadata": []
+    },
+    "configurationProof": {
+      "runtimeConfigEquality": "PASS",
+      "runtimeFunctionalConfigComparison": "PASS",
+      "ociProvenanceAllowlist": [
+        "org.opencontainers.image.source"
+      ],
+      "ociProvenanceAllowlistMatch": true,
+      "ociSourceLabelDifference": "ALLOWED_PROVENANCE_METADATA",
+      "ociAllowedProvenanceDifferences": [
+        {
+          "key": "org.opencontainers.image.source",
+          "beforePresent": false,
+          "afterPresent": true,
+          "classification": "SAFE_PUBLIC_PROVENANCE",
+          "value": "https://github.com/Tecdex-SpA/tcdx-grc"
+        }
+      ],
+      "otherLabelDifferences": 0,
+      "otherLabelDifferenceKeys": [],
+      "unapprovedConfigDifferences": 0,
+      "unapprovedConfigDifferenceFields": [],
+      "allOtherLabelsComparedExactly": true,
+      "rawEnvironmentEqualInMemory": true,
+      "hostConfigurationExact": true,
+      "mountsExact": true,
+      "networkSemanticsExact": true,
+      "rawConfigurationPersisted": false,
+      "approvedTLSRepairApplied": false,
+      "baselinePlaintextRollbackRisk": false
+    },
+    "candidateLogs": {
+      "policy": "MANDATORY",
+      "phase": "POST_DEPLOY_HEALTH_CONFIG",
+      "candidateContainerId": "659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8",
+      "imageId": "sha256:461f6605c6dabded45a697d7fea40b534e78faaea9abc1eba678e3e13d117804",
+      "windowStart": "2026-10-13T20:34:01.989436+00:00",
+      "windowEnd": "2026-10-13T20:34:10.321489+00:00",
+      "startedAt": "2026-10-13T20:34:03.499395965Z",
+      "stoppedAt": "0001-01-01T00:00:00Z",
+      "health": "healthy",
+      "healthChecks": [
+        {
+          "Start": "2026-10-13T20:34:09.125932022Z",
+          "End": "2026-10-13T20:34:09.414220432Z",
+          "ExitCode": 0
+        }
+      ],
+      "events": [
+        {
+          "action": "create",
+          "timeNano": 1791923643188852205,
+          "containerId": "659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8"
+        },
+        {
+          "action": "start",
+          "timeNano": 1791923644125334250,
+          "containerId": "659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8"
+        },
+        {
+          "action": "exec_create",
+          "timeNano": 1791923649126140040,
+          "containerId": "659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8"
+        },
+        {
+          "action": "exec_start",
+          "timeNano": 1791923649126217539,
+          "containerId": "659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8"
+        },
+        {
+          "action": "exec_die",
+          "timeNano": 1791923649414136042,
+          "containerId": "659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8"
+        },
+        {
+          "action": "health_status: healthy",
+          "timeNano": 1791923649415106291,
+          "containerId": "659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8"
+        },
+        {
+          "action": "exec_create",
+          "timeNano": 1791923650173621084,
+          "containerId": "659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8"
+        },
+        {
+          "action": "exec_start",
+          "timeNano": 1791923650174761065,
+          "containerId": "659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8"
+        },
+        {
+          "action": "exec_die",
+          "timeNano": 1791923650269031858,
+          "containerId": "659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8"
+        }
+      ],
+      "restartCount": 0,
+      "sanitizedStdoutStderr": [
+        "2026-10-13T20:34:04.212455525Z TCDX GRC frontend foundation listening on 0.0.0.0:8080"
+      ],
+      "nonemptyLogLines": 1,
+      "warnings": 0,
+      "runtimeErrorRecords": 0,
+      "http5xxUnexpected": 0,
+      "sqlErrorsUnexpected": 0,
+      "fatalErrors": 0,
+      "secretFindings": 0,
+      "rawLogsPersisted": false,
+      "captureComplete": true,
+      "capturedBeforeRemoval": true,
+      "durableRemoteEvidencePath": "/tmp/tcdx-grc-mi-tenant-e2e-candidate-logs-659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8.json"
+    }
+  },
+  "backend_post-config": {
+    "configurationProof": {
+      "runtimeConfigEquality": "PASS",
+      "runtimeFunctionalConfigComparison": "PASS",
+      "ociProvenanceAllowlist": [
+        "org.opencontainers.image.source"
+      ],
+      "ociProvenanceAllowlistMatch": true,
+      "ociSourceLabelDifference": "ALLOWED_PROVENANCE_METADATA",
+      "ociAllowedProvenanceDifferences": [
+        {
+          "key": "org.opencontainers.image.source",
+          "beforePresent": false,
+          "afterPresent": true,
+          "classification": "SAFE_PUBLIC_PROVENANCE",
+          "value": "https://github.com/Tecdex-SpA/tcdx-grc"
+        }
+      ],
+      "otherLabelDifferences": 0,
+      "otherLabelDifferenceKeys": [],
+      "unapprovedConfigDifferences": 0,
+      "unapprovedConfigDifferenceFields": [],
+      "allOtherLabelsComparedExactly": true,
+      "rawEnvironmentEqualInMemory": true,
+      "hostConfigurationExact": true,
+      "mountsExact": true,
+      "networkSemanticsExact": true,
+      "rawConfigurationPersisted": false,
+      "approvedTLSRepairApplied": false,
+      "baselinePlaintextRollbackRisk": false
+    },
+    "state": {
+      "name": "tcdx-grc-backend",
+      "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6",
+      "imageId": "sha256:59479e69ece15ae654498b637a6be5a66f0d4f0a56e00ffbea7c8cb6d3f22b49",
+      "imageRef": "sha256:59479e69ece15ae654498b637a6be5a66f0d4f0a56e00ffbea7c8cb6d3f22b49",
+      "running": true,
+      "health": "healthy",
+      "restartCount": 0,
+      "startedAt": "2026-10-13T20:33:53.841371869Z",
+      "runtimeUid": 1000,
+      "mountMetadata": [
+        {
+          "source": "/home/tecdex/.config/tcdx-grc/qa-db-public-20261013.pem",
+          "target": "/run/config/qa-db-public.pem",
+          "type": "bind",
+          "readOnly": true
+        },
+        {
+          "source": "/home/tecdex/.secrets/tcdx-grc-qa/object-storage-secret-key",
+          "target": "/run/secrets/object_storage_secret_key",
+          "type": "bind",
+          "readOnly": true
+        },
+        {
+          "source": "/home/tecdex/.secrets/tcdx-grc-qa/application-private.pem",
+          "target": "/run/secrets/app_jwt_private_key",
+          "type": "bind",
+          "readOnly": true
+        },
+        {
+          "source": "/home/tecdex/.secrets/tcdx-grc-qa/application-public.pem",
+          "target": "/run/secrets/app_jwt_public_key",
+          "type": "bind",
+          "readOnly": true
+        },
+        {
+          "source": "/home/tecdex/.secrets/tcdx-grc-qa/object-storage-access-key",
+          "target": "/run/secrets/object_storage_access_key",
+          "type": "bind",
+          "readOnly": true
+        },
+        {
+          "source": "/home/tecdex/.secrets/tcdx-grc-qa/managed-identity-oidc-client-secret",
+          "target": "/run/secrets/managed_identity_oidc_client_secret",
+          "type": "bind",
+          "readOnly": true
+        },
+        {
+          "source": "/home/tecdex/.secrets/tcdx-grc-qa/managed-identity-admin-client-secret",
+          "target": "/run/secrets/managed_identity_admin_client_secret",
+          "type": "bind",
+          "readOnly": true
+        }
+      ]
+    },
+    "rollbackStillRetained": true
+  },
+  "frontend_post-config": {
+    "configurationProof": {
+      "runtimeConfigEquality": "PASS",
+      "runtimeFunctionalConfigComparison": "PASS",
+      "ociProvenanceAllowlist": [
+        "org.opencontainers.image.source"
+      ],
+      "ociProvenanceAllowlistMatch": true,
+      "ociSourceLabelDifference": "ALLOWED_PROVENANCE_METADATA",
+      "ociAllowedProvenanceDifferences": [
+        {
+          "key": "org.opencontainers.image.source",
+          "beforePresent": false,
+          "afterPresent": true,
+          "classification": "SAFE_PUBLIC_PROVENANCE",
+          "value": "https://github.com/Tecdex-SpA/tcdx-grc"
+        }
+      ],
+      "otherLabelDifferences": 0,
+      "otherLabelDifferenceKeys": [],
+      "unapprovedConfigDifferences": 0,
+      "unapprovedConfigDifferenceFields": [],
+      "allOtherLabelsComparedExactly": true,
+      "rawEnvironmentEqualInMemory": true,
+      "hostConfigurationExact": true,
+      "mountsExact": true,
+      "networkSemanticsExact": true,
+      "rawConfigurationPersisted": false,
+      "approvedTLSRepairApplied": false,
+      "baselinePlaintextRollbackRisk": false
+    },
+    "state": {
+      "name": "tcdx-grc-frontend",
+      "containerId": "659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8",
+      "imageId": "sha256:461f6605c6dabded45a697d7fea40b534e78faaea9abc1eba678e3e13d117804",
+      "imageRef": "sha256:461f6605c6dabded45a697d7fea40b534e78faaea9abc1eba678e3e13d117804",
+      "running": true,
+      "health": "healthy",
+      "restartCount": 0,
+      "startedAt": "2026-10-13T20:34:03.499395965Z",
+      "runtimeUid": 1000,
+      "mountMetadata": []
+    },
+    "rollbackStillRetained": true
+  },
+  "backendTls": {
+    "result": "PASS_VERIFIED",
+    "ssl": true,
+    "version": "TLSv1.3",
+    "cipher": "TLS_AES_256_GCM_SHA384",
+    "server": "192.168.2.40",
+    "database": "tcdx-grc",
+    "readOnly": "on",
+    "hostname": "db-tecdex",
+    "rejectUnauthorized": true
+  },
+  "backend_capture-logs": {
+    "candidateLogs": {
+      "policy": "MANDATORY",
+      "phase": "COMPLETE_POSTCHECK_WINDOW",
+      "candidateContainerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6",
+      "imageId": "sha256:59479e69ece15ae654498b637a6be5a66f0d4f0a56e00ffbea7c8cb6d3f22b49",
+      "windowStart": "2026-10-13T20:33:52.780216777Z",
+      "windowEnd": "2026-10-13T20:34:14.839941+00:00",
+      "startedAt": "2026-10-13T20:33:53.841371869Z",
+      "stoppedAt": "0001-01-01T00:00:00Z",
+      "health": "healthy",
+      "healthChecks": [
+        {
+          "Start": "2026-10-13T20:33:59.998558402Z",
+          "End": "2026-10-13T20:34:00.349642069Z",
+          "ExitCode": 0
+        },
+        {
+          "Start": "2026-10-13T20:34:10.35100437Z",
+          "End": "2026-10-13T20:34:10.668953127Z",
+          "ExitCode": 0
+        }
+      ],
+      "events": [
+        {
+          "action": "create",
+          "timeNano": 1791923633673136977,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        },
+        {
+          "action": "start",
+          "timeNano": 1791923634997966656,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        },
+        {
+          "action": "exec_create",
+          "timeNano": 1791923639998732557,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        },
+        {
+          "action": "exec_start",
+          "timeNano": 1791923639998814424,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        },
+        {
+          "action": "exec_die",
+          "timeNano": 1791923640349589957,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        },
+        {
+          "action": "health_status: healthy",
+          "timeNano": 1791923640350869206,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        },
+        {
+          "action": "exec_create",
+          "timeNano": 1791923641049065968,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        },
+        {
+          "action": "exec_start",
+          "timeNano": 1791923641050251309,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        },
+        {
+          "action": "exec_die",
+          "timeNano": 1791923641147842781,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        },
+        {
+          "action": "exec_create",
+          "timeNano": 1791923650351173025,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        },
+        {
+          "action": "exec_start",
+          "timeNano": 1791923650351280309,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        },
+        {
+          "action": "exec_die",
+          "timeNano": 1791923650668860530,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        },
+        {
+          "action": "exec_create",
+          "timeNano": 1791923652068066158,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        },
+        {
+          "action": "exec_start",
+          "timeNano": 1791923652069112144,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        },
+        {
+          "action": "exec_die",
+          "timeNano": 1791923652726762890,
+          "containerId": "7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6"
+        }
+      ],
+      "restartCount": 0,
+      "sanitizedStdoutStderr": [],
+      "nonemptyLogLines": 0,
+      "warnings": 0,
+      "runtimeErrorRecords": 0,
+      "http5xxUnexpected": 0,
+      "sqlErrorsUnexpected": 0,
+      "fatalErrors": 0,
+      "secretFindings": 0,
+      "rawLogsPersisted": false,
+      "captureComplete": true,
+      "capturedBeforeRemoval": true,
+      "durableRemoteEvidencePath": "/tmp/tcdx-grc-mi-tenant-e2e-candidate-logs-7ecebfec9a6695133fb10addf7197fec173b8a7b48c7d5454f45f3f2b53e41f6.json"
+    }
+  },
+  "frontend_capture-logs": {
+    "candidateLogs": {
+      "policy": "MANDATORY",
+      "phase": "COMPLETE_POSTCHECK_WINDOW",
+      "candidateContainerId": "659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8",
+      "imageId": "sha256:461f6605c6dabded45a697d7fea40b534e78faaea9abc1eba678e3e13d117804",
+      "windowStart": "2026-10-13T20:34:02.145813936Z",
+      "windowEnd": "2026-10-13T20:34:15.448956+00:00",
+      "startedAt": "2026-10-13T20:34:03.499395965Z",
+      "stoppedAt": "0001-01-01T00:00:00Z",
+      "health": "healthy",
+      "healthChecks": [
+        {
+          "Start": "2026-10-13T20:34:09.125932022Z",
+          "End": "2026-10-13T20:34:09.414220432Z",
+          "ExitCode": 0
+        }
+      ],
+      "events": [
+        {
+          "action": "create",
+          "timeNano": 1791923643188852205,
+          "containerId": "659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8"
+        },
+        {
+          "action": "start",
+          "timeNano": 1791923644125334250,
+          "containerId": "659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8"
+        },
+        {
+          "action": "exec_create",
+          "timeNano": 1791923649126140040,
+          "containerId": "659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8"
+        },
+        {
+          "action": "exec_start",
+          "timeNano": 1791923649126217539,
+          "containerId": "659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8"
+        },
+        {
+          "action": "exec_die",
+          "timeNano": 1791923649414136042,
+          "containerId": "659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8"
+        },
+        {
+          "action": "health_status: healthy",
+          "timeNano": 1791923649415106291,
+          "containerId": "659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8"
+        },
+        {
+          "action": "exec_create",
+          "timeNano": 1791923650173621084,
+          "containerId": "659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8"
+        },
+        {
+          "action": "exec_start",
+          "timeNano": 1791923650174761065,
+          "containerId": "659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8"
+        },
+        {
+          "action": "exec_die",
+          "timeNano": 1791923650269031858,
+          "containerId": "659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8"
+        }
+      ],
+      "restartCount": 0,
+      "sanitizedStdoutStderr": [
+        "2026-10-13T20:34:04.212455525Z TCDX GRC frontend foundation listening on 0.0.0.0:8080"
+      ],
+      "nonemptyLogLines": 1,
+      "warnings": 0,
+      "runtimeErrorRecords": 0,
+      "http5xxUnexpected": 0,
+      "sqlErrorsUnexpected": 0,
+      "fatalErrors": 0,
+      "secretFindings": 0,
+      "rawLogsPersisted": false,
+      "captureComplete": true,
+      "capturedBeforeRemoval": true,
+      "durableRemoteEvidencePath": "/tmp/tcdx-grc-mi-tenant-e2e-candidate-logs-659adc0c82b55f0f3ad66f88ae36ca70059c1c287345dc3a9cf4215fcefb91b8.json"
+    }
+  },
+  "publicSmoke": {
+    "result": "PASS",
+    "paths": {
+      "/": {
+        "status": 200,
+        "bodySHA256": "612771789d8096d7a1ca33577c6290f71ebd45203636e0274f5ee3c492620be0"
+      },
+      "/api/v1/auth/providers": {
+        "status": 200,
+        "bodySHA256": "ca27913beaab96d16b28f0927b17788c12c037274d4db59ce7f3f55ff5a9e6bf"
+      },
+      "/api/v1/auth/me/authorization": {
+        "status": 404,
+        "bodySHA256": "a1d0e67912daf253c93f868b55e988af15cd515eaadbfd94c33ff5ca995784eb"
+      },
+      "/api/v2/auth/me/authorization": {
+        "status": 401,
+        "bodySHA256": "6d59fcf5ee0f8f22c7b53daf65f040561a7ba3e3be77c2d2413c491262878982"
+      },
+      "/api/v1/platform/plan-versions": {
+        "status": 401,
+        "bodySHA256": "570c06ea9b00927e588638774f4bc323d5677e80c57fc0d0da7ceea53d6a63bc"
+      }
+    },
+    "exactFrontendAssets": "PASS",
+    "humanPlanAssignment": "HUMAN_VALIDATION_PENDING"
+  },
+  "QA_DEPLOY_STATUS": "DEPLOYED"
+}

@@ -1,0 +1,252 @@
+--- docs/rector/baseline/00_README_KNOWLEDGE_BASE.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14/00_README_KNOWLEDGE_BASE.md
+@@ -4,7 +4,7 @@
+ 
+ Este paquete constituye la base contractual, funcional y de ingeniería para el nuevo desarrollo **TCDX GRC**.
+ 
+-Baseline vigente: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09`. Las referencias v1.3 siguientes documentan historia semántica; no sustituyen 46/47/49 ni el manifest vigente.
++Baseline de esta versión propuesta: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14`. Su entrada en vigencia requiere activación humana y técnica conforme a 47; la v1.8 es la predecesora íntegra. Las referencias v1.3 siguientes documentan historia semántica; no sustituyen 46/47/49 ni el manifest vigente.
+ 
+ No contiene prompts a ejecutar individualmente. Sus archivos son **fuentes de conocimiento y alineamiento** que deben ser leídas y respetadas por ChatGPT, Codex y desarrolladores antes de diseñar o implementar componentes.
+ 
+@@ -126,8 +126,12 @@
+ 
+ ## Estado del baseline
+ 
+-Sólo los archivos `.md` enumerados 00–45, `PRE_IMPLEMENTATION_GATE_REPORT.md` y `SHA256SUMS.txt` integran el paquete. El verificador exige inventario exacto y rechaza archivos normativos adicionales, ausentes o enlaces simbólicos. Hallazgos, cruces, borradores, archivos adjuntos individualmente y revisiones históricas quedan excluidos y no son normativos. La autoridad corresponde exclusivamente a los archivos extraídos del ZIP cuyo checksum coincide con este manifiesto.
++Sólo los archivos `.md` enumerados 00–49, `PRE_IMPLEMENTATION_GATE_REPORT.md` y `SHA256SUMS.txt` integran una baseline activada. El verificador exige inventario exacto y rechaza archivos normativos adicionales, ausentes o enlaces simbólicos. Hallazgos, cruces, borradores, archivos adjuntos individualmente y revisiones históricas quedan excluidos y no son normativos. Este directorio candidato no adquiere autoridad por existir ni por superar una comprobación de hashes.
+ 
+ ## Enmienda interna v1.8
+ 
+ 49_GOBIERNO_INTERNO_Y_REVISION_UNIPERSONAL.md es fuente vinculante exclusivamente para aprobación interna por funciones acumuladas. No deroga SoD operacional ni obligaciones externas. Activación y alcance en 47; historia v1.7 protegida.
++
++## Candidato comercial v1.9
++
++La decisión humana `DR-STEP6A3-COMMERCIAL-GOVERNANCE-20261013-02` aprobó el diseño y los bytes candidatos de `GP-STEP6A3-COMMERCIAL-20261013-02`; la reconciliación en 07/08/21/22/23/25/29/30/33/34/42 de esta versión es una nueva manifestación por bytes que exige aprobación y publicación propias. Su preparación no cambia la baseline v1.8 previa, los contratos físicos/ejecutables activos ni los estados de STEP 6A.3/6A.4 por sí sola. Se conserva el dominio público `https://grc.tecdex.net/`.
+--- docs/rector/baseline/07_TCDX_GRC_DOMAIN_MODEL.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14/07_TCDX_GRC_DOMAIN_MODEL.md
+@@ -69,3 +69,7 @@
+ ## Addendum - Consumidores y autoridad sobre informacion
+ 
+ Los bounded contexts consumen conceptos canonicos y mantienen una unica autoridad de escritura por concepto. Integrations es responsable de la captura/normalizacion externa; Data & Metrics de mediciones oficiales; Rules/GRC Impact de la evaluacion contractual; cada dominio aplica impactos dentro de su autoridad. Ningun consumidor crea una segunda autoridad sobre el hecho fuente. Ver documentos 14 y 15.
++
++## Reconciliación comercial propuesta por DR-STEP6A3-COMMERCIAL-GOVERNANCE-20261013-02
++
++Tenant & Commercial Entitlements es la única autoridad de escritura de `CommercialFamily`, `PlanVersion`, `UsageLimit`, `Entitlement`, `Subscription` y sus asignaciones de RegulatoryPackVersion. `CommercialFamily` es `PLATFORM_CONTROL`, publicada e inmutable; las relaciones hacia RegulatoryPack y PlanVersion son referencias soporte tipadas, no un catálogo competidor ni un derecho implícito. El cambio de plan es un command comercial atómico sobre la Subscription y sus asignaciones, no una mutación cruzada libre de Regulatory & Compliance. La licencia/publicación del contenido de un RegulatoryPackVersion continúa bajo su propia autoridad.
+--- docs/rector/baseline/08_TCDX_GRC_CANONICAL_DATA_MODEL.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14/08_TCDX_GRC_CANONICAL_DATA_MODEL.md
+@@ -82,3 +82,11 @@
+ ## Separación normativa obligatoria
+ 
+ `NormativeUnit`, `Requirement`, `Control` e `Issue` poseen identidades y responsabilidades distintas. NormativeUnit organiza la fuente; Requirement expresa una obligación atómica evaluable; Control describe el mecanismo; Issue registra la desviación. Se prohíbe una entidad o tabla que los colapse.
++
++## Contrato canónico comercial de la sucesora propuesta
++
++`CommercialFamily` es entidad `PLATFORM_CONTROL` con UUIDv7, código/significado publicados inmutables y retención `IMMUTABLE_RETAIN`. Cada RegulatoryPack raíz elegible nuevo tiene exactamente una clasificación de familia por relación soporte tipada y coherente con su `source_type`; una PlanVersion publicada relaciona explícitamente sus familias. La clasificación no publica ni licencia una edición normativa. Ningún derecho se infiere del nombre, `source_type` o familia.
++
++`UsageLimit` pertenece a una PlanVersion y representa una dimensión total o una familia vinculada explícitamente. La cuota `regulatory_pack_count` total y una por familia cubren la vigencia contractual completa con valor finito, no negativo, constante e inmutable por PlanVersion; cero es explícito y ausencia requerida bloquea. Un cambio material de cuota, elegibilidad o familia exige una nueva PlanVersion publicada, sin editar las versiones ya contratadas.
++
++`Subscription` y `SubscriptionRegulatoryPack` preservan identidad, tenant, intervalos, lineage de predecesor/sucesor y derechos históricos. `subscription.change_plan` conserva el término comercial programado y expiraciones originales, cierra el origen en un corte común y crea sucesores tipados en una transacción auditada. La regla por raíz R-P rige prospectivamente nuevas escrituras/expansiones y preserva solapamientos históricos legítimos sin adjudicar retrospectivamente una versión de regla. La incompatibilidad activa bloquea sólo la adopción afectada hasta decisión competente.
+--- docs/rector/baseline/21_LIFECYCLE_TRANSITION_MATRIX.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14/21_LIFECYCLE_TRANSITION_MATRIX.md
+@@ -126,3 +126,9 @@
+ - Si falla un side effect, la transición confirmada no se revierte mediante escritura compensatoria silenciosa; se registra delivery/retry y, si corresponde, command compensatorio explícito.
+ 
+ El registry concreto se deriva de esta matriz antes de implementar cada command; la ausencia de una arista implica DENY.
++
++## 17. Aristas comerciales propuestas por DR-STEP6A3-COMMERCIAL-GOVERNANCE-20261013-02
++
++`Subscription: active --subscription.change_plan--> ended` se ejecuta sólo mediante `subscriptionChangePlan`, permiso `platform.subscription.update`, scope `platform` y ObjectPolicy `commercial.subscription.change_plan.v1`; crea una nueva Subscription `active` como sucesora con mismo Tenant y término comercial original. `SubscriptionRegulatoryPack: active --subscription_regulatory_pack.transfer_close--> revoked` y la creación de la sucesora `active` mediante `subscription_regulatory_pack.transfer_activate` son efectos internos obligatorios del mismo command, nunca rutas públicas separadas. Usan la misma autoridad humana y conservan la versión y expiración original. Todos los intervalos se cortan en el mismo instante PostgreSQL.
++
++`PlanVersion: draft --commercial_catalog.publish--> published` y publicación de `CommercialFamily` pertenecen a una ceremonia interna separada `commercialCatalogPublication`, permiso `platform.commercial_catalog.publish`, scope `platform` y ObjectPolicy `commercial.catalog.publish.v1`. No hay CRUD genérico ni actor de sistema autorizado para esas publicaciones. Cada arista requiere el mapping exacto de comando, permiso, policy, auditoría, evento, idempotencia y concurrencia del artefacto 08 aprobado, con registro ejecutable posterior antes de operar. Ausencia de arista publicada sigue siendo DENY.
+--- docs/rector/baseline/22_RBAC_PERMISSION_SCOPE_MATRIX.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14/22_RBAC_PERMISSION_SCOPE_MATRIX.md
+@@ -138,3 +138,9 @@
+ La transacción usa aislamiento `READ COMMITTED` y, antes de evaluar las dos condiciones de assignments, obtiene `SELECT ... FOR UPDATE` sobre la única fila canónica `PLATFORM_ADMIN`. Todos los intentos usan la misma fila de serialización. Después del lock, la transacción revalida identidad, catálogo y precondiciones, crea exactamente un assignment abierto con `valid_from=transaction_timestamp()` y emite `audit.iam.platform_role_assignment.bootstrap.v1` en la misma transacción. Si cualquier validación, insert o AuditEvent falla, todo se revierte. Dos intentos concurrentes no pueden observar ambos el estado inicial: el segundo espera el lock, reevalúa con una nueva snapshot `READ COMMITTED` y DENY.
+ 
+ El target es la misma `UserIdentity` autenticada; el caller no aporta `role_id`, email, issuer/subject, tenant ni membership. El rol permitido es exclusivamente `PLATFORM_ADMIN`; `PLATFORM_SUPPORT`, cualquier otro `PLATFORM_CONTROL`, rol tenant o custom producen DENY. Tras el primer commit, todo intento posterior produce DENY, incluso si el grant fue luego revocado.
++
++## 14. Autoridad comercial propuesta
++
++Se añaden al recurso `platform.subscription` las acciones potenciales `read` y `update`, y al recurso `platform.commercial_catalog` la acción potencial `publish`; el permiso `platform.subscription.create` existente y su HTTP 202 permanecen intactos. Los nuevos códigos candidatos son exactamente `platform.subscription.read`, `platform.subscription.update` y `platform.commercial_catalog.publish`, todos con scope `platform`. `update` autoriza exclusivamente `subscriptionChangePlan` y sus dos efectos de transferencia internos; `read` se vincula sólo a `subscriptionCommercialGet`, `subscriptionCommercialList` y `subscriptionPackTransferList`; `publish` sólo a la ceremonia interna `commercialCatalogPublication`. Ninguno autoriza PATCH/PUT/DELETE genérico, autoservicio tenant, grant a Platform Support o publicación de contenido regulatorio.
++
++Los tres grants base candidatos se dirigen exclusivamente a `PLATFORM_ADMIN` humano interactivo con PlatformRoleAssignment vigente, Permission publicada y ObjectPolicy específica. No se concede autoridad por nombre, email, claim no resuelto, ServicePrincipal o impersonation. Tenant Admin y roles custom DENY. La decisión de diseño no ejecuta grants ni los publica en IAM: cada fila/manifest y su acto operacional mantienen gate propio. Todo acceso preserva default DENY, separación Platform/Tenant y auditoría reforzada.
+--- docs/rector/baseline/23_CONTRATO_TEMPORAL_VERSIONADO_RETENCION_RECALCULO.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14/23_CONTRATO_TEMPORAL_VERSIONADO_RETENCION_RECALCULO.md
+@@ -59,3 +59,9 @@
+ La retención efectiva se calcula por precedencia: `legal_hold > mandatory_regulatory_policy > contractual_policy > tenant_policy > product_baseline`. Ante conflicto se aplica la conservación más restrictiva para borrado hasta resolución autorizada. Toda decisión de purge registra policy/version y AuditEvent.
+ 
+ Ningún Regulatory Pack puede prometer automáticamente que una duración satisface una jurisdicción; la obligación debe estar versionada y vinculada a fuente normativa/contractual.
++
++## 9. Temporalidad comercial propuesta
++
++Un cambio de PlanVersion no renueva, acorta ni extiende automáticamente la vigencia comercial acordada. El command conserva el `ends_at` programado del origen en la Subscription sucesora y la expiración original de cada asignación de RegulatoryPackVersion transferida. El origen se cierra en un corte único `t` obtenido de PostgreSQL después de adquirir los locks; la sucesora comienza en `t`. Se conservan IDs e intervalos históricos. La auditoría registra el término original antes de mutar y permite verificar que el sucesor recibió exactamente ese valor.
++
++Las nuevas PlanVersion publicadas, sus familias, entitlements y límites son inmutables. La regla prospectiva R-P se aplica a nuevas escrituras/expansiones por raíz y no recalcula ni reinterpreta asignaciones históricas. Un conflicto de coexistencia activa exige decisión competente por las asignaciones afectadas, sin elegir derechos por fecha o código. Todo corte/expiración sigue representado como intervalo `[from,to)` y no se deriva de la hora de creación técnica.
+--- docs/rector/baseline/25_API_EVENTOS_IDEMPOTENCIA_AUDITORIA.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14/25_API_EVENTOS_IDEMPOTENCIA_AUDITORIA.md
+@@ -59,3 +59,9 @@
+ ## 9. Bulk/import
+ 
+ Procesamiento por job con row-level outcome, partial failure explícito y archivo de errores; no transacciones gigantes opacas.
++
++## 10. Command comercial propuesto
++
++`subscriptionChangePlan` usa `POST /api/v1/platform/subscriptions/{id}:change-plan`, `platform.subscription.update`, `If-Match` fuerte de `Subscription.row_version`, `Idempotency-Key`, schema cerrado y HTTP 200 sólo después de COMMIT. El alta `subscriptionCreate` conserva su HTTP 202. El replay reautoriza al actor y valida el fingerprint antes de evaluar el CAS o el estado posterior del origen; devuelve el cuerpo original persistido y omite ETag tanto en éxito como replay. El GET actual proporciona un ETag fresco para un nuevo command. Un resultado corrupto no se reconstruye desde filas actuales.
++
++El cambio, cierre/alta de asignaciones, lineage, AuditEvent, OutboxEvent e IdempotencyRecord se confirman en una sola transacción. Los códigos, perfiles, payloads y mapeos exactos son los del paquete `GP-STEP6A3-COMMERCIAL-20261013-02`, artefactos 03/07/08/12, que deberán publicarse como contratos ejecutables antes de código. La ceremonia `commercialCatalogPublication` es interna, independiente y exige manifest de datos exactos, actor humano Platform Admin y transacción indivisible; no crea endpoint público de catálogo. La publicación comercial no licencia RegulatoryPackVersion.
+--- docs/rector/baseline/29_CONFIGURACION_PARAMETRIZACION_Y_EXTENSIBILIDAD.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14/29_CONFIGURACION_PARAMETRIZACION_Y_EXTENSIBILIDAD.md
+@@ -49,3 +49,7 @@
+ ## 7. Metadata
+ 
+ JSONB se reserva para atributos abiertos/no index-critical. Campos de dominio necesarios para constraints, joins, filtering, authorization, calculation, policy resolution o lineage deben ser columnas/entidades canónicas.
++
++## 8. Guards comerciales propuestos
++
++La completitud de familias, cuotas y entitlements se valida al publicar una nueva PlanVersion y antes de asignar derechos. `FeatureFlag` no es Entitlement ni sustituye la cuota comercial. Los límites requeridos son datos versionados del contrato publicado, con valor finito y constante por PlanVersion; no se inyectan defaults o máximos en código. El cambio de plan usa una sola autoridad transaccional y no habilita un segundo motor de elegibilidad por frontend, configuración tenant o familia inferida.
+--- docs/rector/baseline/30_MODELO_LOGICO_RELACIONAL_CANONICO.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14/30_MODELO_LOGICO_RELACIONAL_CANONICO.md
+@@ -20,6 +20,11 @@
+ Tenant 1--N Subscription
+ Subscription N--1 PlanVersion
+ PlanVersion N--N Capability mediante Entitlement
++CommercialFamily 1--0..N RegulatoryPack mediante relación soporte tipada; cada raíz nueva elegible posee exactamente una familia, coherente con `source_type`.
++PlanVersion N--N CommercialFamily mediante relación soporte tipada; ninguna familia se hereda de una versión anterior.
++PlanVersion 1--N UsageLimit; cada límite es total o referencia una familia vinculada a esa misma PlanVersion.
++Subscription 0..1--0..1 Subscription sucesora mediante predecesor tipado, mismo Tenant y corte exacto.
++SubscriptionRegulatoryPack 0..1--0..1 asignación sucesora mediante predecesor tipado, mismo Tenant/raíz/versión y corte exacto.
+ 
+ ## 3. Regulatory / Controls
+ 
+@@ -143,6 +148,10 @@
+ - `LifecycleTransitionDefinition` referencia entity type, Permission y códigos de policy/event sin introducir una segunda autoridad del workflow de dominio.
+ - `NormativeUnit` no se usa como Requirement, target de assessment tenant ni Issue; las vistas por unidad agregan descendientes.
+ - Requirement y NormativeUnit comparten FrameworkVersion y tienen business keys separadas; la jerarquía NormativeUnit impide ciclos.
++- los vínculos CommercialFamily–RegulatoryPack y PlanVersion–CommercialFamily conservan FKs tipadas y coherencia de `source_type`; un `UsageLimit` familiar referencia un vínculo de su propia PlanVersion, que debe estar completo antes de publicar;
++- cada dimensión `regulatory_pack_count` total/familiar tiene cobertura completa, finita, no negativa, constante y sin solapamientos durante la vigencia de una nueva PlanVersion publicada; falta de dimensión requerida implica bloqueo, nunca ilimitado;
++- la regla R-P bloquea nuevos intervalos solapados de una misma raíz dentro de una Subscription bajo lock, sin introducir una exclusión retroactiva que invalide historia legítima;
++- los sucesores de Subscription y asignación conservan tenant, IDs de historia, términos comerciales y expiraciones originales; el corte es común y el before auditado permite reconstrucción.
+ - `RequirementControlMapping` expresa contribución al cumplimiento; `NormativeUnitControlMapping` expresa ubicación editorial/provenance y no son intercambiables.
+ - controles `regulatory_reference`/`tcdx_baseline` y `tenant_instantiated`/`tenant_defined` preservan ownership e identidad separados.
+ - crosswalks entre FrameworkVersion usan mappings tipados distintos para NormativeUnit, Requirement y ControlVersion; no usan pares polimórficos sin FK ni fusionan identidades.
+--- docs/rector/baseline/33_CATALOGO_ENTIDADES_CANONICAS.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14/33_CATALOGO_ENTIDADES_CANONICAS.md
+@@ -1,6 +1,6 @@
+-# 33 - Catálogo completo de entidades canónicas por bounded context — v1.7
++# 33 - Catálogo completo de entidades canónicas por bounded context — v1.9
+ 
+-> Active baseline: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23`.
++> Baseline de esta versión: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14`; la v1.8 es su predecesora y no se modifica in situ.
+ 
+ Este catálogo es la autoridad nominal de entidades lógicas. Un término contractual que requiera identidad, versionado, lineage o referencia reproducible debe aparecer aquí, aunque su implementación física pueda consolidarse conforme a la regla final.
+ 
+@@ -12,7 +12,9 @@
+ `PlatformRoleAssignment` es la única relación canónica entre `UserIdentity` y un `Role` `PLATFORM_CONTROL`. Es persistida, auditable y temporal; no posee `tenant_id` ni `tenant_membership_id`. `MembershipRole` permanece como la única asignación humana tenant-owned y requiere `TenantMembership`. Ambas relaciones consumen los mismos catálogos `Role` y `Permission`; no crean un segundo IAM.
+ 
+ ## Tenant & Commercial Entitlements
+-Tenant, Organization, Subscription, Plan, PlanVersion, Capability, Entitlement, UsageLimit, FeatureFlag.
++Tenant, Organization, Subscription, Plan, PlanVersion, CommercialFamily, Capability, Entitlement, UsageLimit, FeatureFlag.
++
++`CommercialFamily` es una entidad `PLATFORM_CONTROL` con UUIDv7, código y significado publicados inmutables y retención `IMMUTABLE_RETAIN`. La autoridad de escritura es Tenant & Commercial Entitlements; no existe una entidad `PackFamily` paralela. Las relaciones RegulatoryPack–CommercialFamily y PlanVersion–CommercialFamily son soportes tipados del modelo 30, no autoridades de catálogo adicionales. `UsageLimit` sigue perteneciendo a una PlanVersion y puede quedar dimensionado por familia explícitamente vinculada; la ausencia de límite requerido bloquea publicación/elegibilidad y nunca significa ilimitado.
+ 
+ ## Organization
+ OrganizationalUnit, Process, Service, Asset, System, Application, DataAsset, Location, Dependency, Subject, Resource.
+--- docs/rector/baseline/34_ARQUITECTURA_LOGICA_COMPONENTES_Y_DEPENDENCIAS.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14/34_ARQUITECTURA_LOGICA_COMPONENTES_Y_DEPENDENCIAS.md
+@@ -54,3 +54,7 @@
+ ## 6. Tecnología
+ 
+ La selección tecnológica está cerrada en 43. Los componentes se abstraen por contratos internos para testabilidad y evolución, pero no quedan proveedores o frameworks pendientes para iniciar. Un cambio futuro requiere ADR y actualización rectora previa.
++
++## 7. Autoridad comercial propuesta
++
++Tenant & Commercial Entitlements coordina una única transacción PostgreSQL para `subscription.change_plan` y sus asignaciones, locks ordenados, CAS, auditoría, outbox y resultado idempotente. El catálogo CommercialFamily/PlanVersion/UsageLimit se publica mediante una ceremonia interna distinta, también transaccional. Regulatory & Compliance conserva autoridad sobre publicación, licencia y contenido del RegulatoryPackVersion; la relación comercial no reemplaza esos gates. El frontend administra únicamente los commands/reads autorizados por backend, sin cálculo propio de cuota o derechos. La transición T0..T10 mantiene barrera operacional hasta GO y apertura pública autorizada.
+--- docs/rector/baseline/42_PLANES_COMERCIALES_Y_ROLES_BASE.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14/42_PLANES_COMERCIALES_Y_ROLES_BASE.md
+@@ -81,6 +81,12 @@
+ 
+ Los tres planes comparten un único modelo de datos. Las capacidades no contratadas quedan inaccesibles por Entitlement y ocultas en UI; no se eliminan tablas ni se crean schemas por plan.
+ 
++### 2.5 Familias y límites comerciales de la sucesora propuesta
++
++`CommercialFamily` constituye un único catálogo `PLATFORM_CONTROL` publicado e inmutable. Las raíces ISO_9001_2015, ISO_9001_2026, ISO_IEC_27001_2022 e ISO_IEC_42001_2023 se clasifican como familia `ISO` y `source_type=standard`; CL_LEY_21719 como `LEGAL` y `source_type=law`, sólo mediante publicación de datos exactos. Esta clasificación no publica ISO 9001:2026, no declara vigente una ley y no concede uso oficial del contenido.
++
++Nuevas versiones de `ISO` e `ISO_RIESGO_OPERATIVO` pueden vincular `ISO`; una nueva versión `GRC` puede vincular `ISO` y `LEGAL`, sin restringir para siempre las clases legales, contractuales o sectoriales de §2.3. Cada PlanVersion publicada declara sus familias y límites total/familia de `regulatory_pack_count` de forma finita e inmutable durante toda su vigencia. Las cantidades, IDs, fechas y adopciones reales requieren manifest comercial separado y aprobación exacta; no se agregan a las PlanVersion v1 publicadas ni se inventan defaults. Cero es un valor comercial explícito; ausencia de cuota requerida bloquea publicación y elegibilidad. El cambio de plan conserva términos e intervalos contratados y no concede derechos por el solo nombre de la familia.
++
+ ## 3. Roles canónicos cerrados
+ 
+ Roles de plataforma: `Platform Admin`, `Platform Support`.
+--- docs/rector/baseline/43_PLAN_MAESTRO_RECTOR_DISENO_Y_DESARROLLO.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14/43_PLAN_MAESTRO_RECTOR_DISENO_Y_DESARROLLO.md
+@@ -1,7 +1,7 @@
+-# 43 — Plan maestro rector de diseño y desarrollo — v1.8
++# 43 — Plan maestro rector de diseño y desarrollo — v1.9
+ 
+-> Active baseline: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09`.
+-> Status: `ACTIVE`; human approval recorded in `docs/governance/amendments/INTERNAL_REVIEW_v1.8_20261009/HUMAN_AUTHORIZATION.md`; las aprobaciones históricas se preservan en history.
++> Baseline de esta versión: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14`.
++> La v1.8 es la predecesora; esta versión sólo entra en vigencia con publicación/activación competente de sus bytes. La aprobación comercial de diseño no sustituye ese gate. Las aprobaciones históricas se preservan en history.
+ 
+ ## 1. Autoridad
+ 
+@@ -36,7 +36,7 @@
+ 
+ ### Fase 0 — Baseline rector
+ 
+-Salida: baseline `TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23`, documentos 00–48 aplicables, con v1.4, v1.5 y v1.6 preservados como históricos verificables. Gate: `RECTOR_BASELINE=PASS`.
++Salida para esta sucesora: baseline `TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14`, documentos 00–49 aplicables, con v1.4–v1.8 preservadas según su historia de activación. Gate humano y técnico: `RECTOR_BASELINE=PASS` para los bytes exactos sucesores. Sin ese gate, esta versión no desplaza a v1.8.
+ 
+ ### Fase 1 — Modelo físico definitivo
+ 
+--- docs/rector/baseline/46_REGENTE_MAESTRO_DEL_DESARROLLO.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14/46_REGENTE_MAESTRO_DEL_DESARROLLO.md
+@@ -4,13 +4,13 @@
+ 
+ Este documento es el punto de entrada obligatorio y la constitución operativa maestra del desarrollo TCDX GRC. Integra y gobierna los documentos 00–49 aplicables de este baseline. No reemplaza sus contratos especializados: fija cómo deben ser interpretados, ejecutados y verificados durante todo el ciclo hasta `MARKET_RELEASE_READY=PASS`.
+ 
+-`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09`
++`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14`
+ 
+ `CODEX_VARIATION_BUDGET=ZERO`
+ 
+ Toda implementación, revisión, migración, API, backend, frontend, integración, IA, prueba, despliegue y release debe demostrar trazabilidad a este baseline. Código, tests, mocks, documentación histórica, convenciones de framework o decisiones de agentes no son fuente de autoridad.
+ 
+-49 gobierna exclusivamente revisión/publicación editorial y metodológica interna y delimita la acumulación humana de funciones. No altera SoD operacional, datos, permisos, fases ni obligaciones superiores. La historia v1.7 permanece inmutable.
++49 gobierna exclusivamente revisión/publicación editorial y metodológica interna y delimita la acumulación humana de funciones. No altera SoD operacional, datos, permisos, fases ni obligaciones superiores. La historia de las baselines anteriores permanece inmutable. Esta copia sucesora no es autoridad activa antes de cumplir 47.
+ 
+ ## 2. Producto y criterio de terminación
+ 
+--- docs/rector/baseline/47_APROBACION_Y_ACTIVACION_BASELINE.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14/47_APROBACION_Y_ACTIVACION_BASELINE.md
+@@ -1,17 +1,21 @@
+-# 47 — Aprobación y activación v1.8
++# 47 — Aprobación y activación de la sucesora comercial v1.9
+ 
+-## Decisión humana
++## Antecedente humano ya aprobado
+ 
+-El mandato expreso del Product Owner del 2026-10-09 autoriza preparar, validar, publicar y activar la enmienda interna precisa, sin nueva aprobación de activación. Fuente: docs/governance/amendments/INTERNAL_REVIEW_v1.8_20261009/HUMAN_AUTHORIZATION.md. Se activa TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09 sobre v1.7, preservada íntegra bajo history.
++`DR-STEP6A3-COMMERCIAL-GOVERNANCE-20261013-02`, firmado por Andrés Barouh el `2026-10-13T23:45:00Z`, aprueba G-01..G-06, C-01..C-12, H-01..H-12 y F-01..F-10 en el alcance exacto de `GP-STEP6A3-COMMERCIAL-20261013-02`. El paquete tiene SHA-256 `489e8cec4b72c2cf464d0315e5ba4f2f5664012b60df2327a07f82882943ba55` y su manifest SHA-256 `b454e3e2475ece966f87a4da1f89c1640f5cf9baf48d7b7d146935edc4db5cc3`. La constancia local está en `docs/phase6a/STEP_6A3/FINAL_CONTRACT_RECONCILIATION_20261013/HUMAN_DECISION_RECEIPT_20261013.md`.
+ 
+-## Alcance
++Esa decisión aprueba diseño y artefactos candidatos presentados. No aprueba por arrastre los bytes de esta baseline sucesora, su manifest, expected-schema activo, publicación/seed manifest ni implementación futura. No cierra las obligaciones H ni STEP 6A.3.
+ 
+-Únicamente 00/22/43/45/46/47/49: revisión humana unipersonal por funciones acumuladas, segunda persona interna no obligatoria por defecto, y author + approve editorial/metodológico interno expresamente permitido. Se preservan íntegros controles operacionales, obligaciones superiores, entidades, contratos de producto, migraciones y fases. SOG v2 no se activa.
++## Alcance de la sucesora propuesta
+ 
+-## Activación comprobable
++Reconciliar el catálogo comercial único, CommercialFamily, sus relaciones soporte, UsageLimit por PlanVersion/familia, transición change-plan, regla prospectiva R-P, permisos/autoridad, temporalidad, auditoría y publicación independiente conforme al paquete aprobado. Las relaciones y contratos derivados son candidatos nuevos hasta aprobación exacta y publicación competente. La v1.8 predecesora no se modifica in situ y debe preservarse como historia verificable si se activa esta sucesora.
+ 
+-La fecha UTC efectiva y SHA-256 del manifest se registran en docs/rector/ACTIVE_ACTIVATION.json tras materializar el delta; su coherencia se comprueba mediante verify-rector-governance.sh y verify-internal-governance.py. BASELINE_ID, BASELINE_STATUS, RECTOR_MANIFEST.sha256 y baseline/SHA256SUMS.txt deben concordar. Una falla bloquea consumidores. La evidencia técnica se conserva fuera de la baseline inmutable. No se declara PASS de gates técnicos antes de ejecutarlos.
++## Condiciones de activación
+ 
+-## Límites
++1. Presentar los archivos completos 00–49, `PRE_IMPLEMENTATION_GATE_REPORT.md` y `SHA256SUMS.txt`, más el delta exacto respecto de v1.8 y el hash de manifest de esta sucesora.
++2. Obtener decisión humana expresa sobre esos bytes nuevos y su alcance, sin volver a someter el diseño del paquete v2 ya aprobado.
++3. Verificar identidad/funciones/fecha, fuentes, dependencias, pruebas positivas y negativas, preservación histórica y ausencia de conflicto material con el rector vigente.
++4. Publicar por la ceremonia rectora: baseline, ID, estado y manifests concordantes, verificador de integridad adaptado a la sucesora, CI y revisión humana antes de integrar main. Ningún cambio aislado de `BASELINE_STATUS` activa el contrato.
++5. Someter después el modelo físico y los contratos ejecutables derivados a sus gates humanos y técnicos propios antes de implementación dependiente.
+ 
+-La publicación de esta enmienda no publica CT01/03/04, CFG-D none, grants ni vocabularios pendientes del manifiesto macro firmado. DDL queda limitado a entorno local aislado descartable expresamente autorizado; no QA, IAM real ni despliegue. La condición CI/revisión humana previa a integración en main permanece.
++La preparación o verificación de este candidato no declara `RECTOR_BASELINE=PASS` para v1.9 ni autoriza DDL/DML compartido, IAM real, grants, commit, push, merge, deploy, STEP 6A.4 o release.

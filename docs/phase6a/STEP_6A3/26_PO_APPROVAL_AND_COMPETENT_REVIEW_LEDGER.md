@@ -262,3 +262,25 @@ Regresión final: 850 PASS/0FAIL/0omitidas, 737unit +113PG en85archivos;16ECSQLR
 | VOC-QA | BLOCKED_EXTERNAL_ACCEPTANCE | PASS_LOCAL_ONLY; QA/IAM real/external E2E and human UI pending |
 
 Las48 cláusulas tienen trazabilidad, pero sólo36 están cerradas en el alcance local. C-04W/CFG-D/contextoIANA y aceptación/operación conservan dependencia exacta. No se edita el manifest firmado ni las etiquetas históricas de candidatos; la vigencia se registra en publicaciones sucesoras.
+
+## Decisión condicional sucesora C-04W / CFG-D — 2026-10-14
+
+El Product Owner aprobó condicionalmente los dos deltas del candidato
+`C04W_CFGD_RESIDUAL_DECISION_CANDIDATE_20261014.md`, SHA-256
+`3487fd9fa032e5d311b37361ff673c335fba63c9736110b2c7200581370fd8dd`,
+verificado localmente. Este acto sustituye la dirección funcional anterior
+de `configuration_mode=none` para las v1 por el reemplazo conservador literal
+del candidato en `CFG-D-COMPLIANCE-V1`, `CFG-D-CONTROLS-V1` y
+`CFG-D-PUBLICATION`. `CFG-D-HISTORY` permanece cerrado. Para C-04W aprueba
+Tenant Admin en su tenant y el vínculo tipado fuente documental ↔
+RetentionPolicy/version ↔ FileUploadIntent/FileObject/Evidence, preservando
+Privacy Manager, SoD, seguridad y evidencias.
+
+Estado del acto: `HUMAN_FUNCTIONAL_DECISION_RECEIVED`;
+`CONTRACT_DERIVATIVES_NOT_APPROVED`; `RECTOR_GATE=BLOCKED`;
+`STEP_6A3=PARTIAL_BLOCKED`. No se inventan hora UTC, firma criptográfica,
+fecha efectiva de publicación ni aprobación de bytes derivados. Las filas
+históricas anteriores permanecen como historia; este recibo no publica una
+baseline sucesora, modelo físico, permiso, grant, DDL, metodología, QA ni
+aceptación macro. El expediente de compatibilidad, brechas y gates es
+`docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/CONDITIONAL_DECISION_AND_TASK_PACKET.md`.

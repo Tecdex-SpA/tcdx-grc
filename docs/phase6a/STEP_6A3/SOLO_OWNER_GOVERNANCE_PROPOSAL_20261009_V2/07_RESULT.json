@@ -8711,7 +8711,7 @@
       "operation": "Append residual_closure_20261009 and CURRENT_EXECUTION_REPORT; all original keys deep equal"
     }
   },
-  "CURRENT_EXECUTION_REPORT": "macro_implementation_20261009",
+  "CURRENT_EXECUTION_REPORT": "v111_initial_source_publication_checkpoint_20261015",
   "governance_consolidation_20261009": {
     "TASK": "STEP6A3_INTERNAL_GOVERNANCE_ACTIVATION_AND_LOCAL_CONSOLIDATION",
     "RECTOR_GATE": "BLOCKED",
@@ -16195,7 +16195,7 @@
     ]
   },
   "LATEST_CONTINUITY_CHECKPOINT_R6_NEXT": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/CONTINUITY_CHECKPOINT_R6_NEXT.md",
-"continuity_r6_next_publication_20261013": {
+  "continuity_r6_next_publication_20261013": {
     "TASK": "STEP6A3_EXACT_OWNER_APPROVED_IANA_LOCAL_PUBLICATION",
     "RECTOR_ACTIVE_VERSION": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09",
     "RECTOR_GATE": "BLOCKED",
@@ -16232,5 +16232,122 @@
     "DEPLOY": 0,
     "QA_PACKAGE": "PREPARED_NOT_AUTHORIZED_NOT_EXECUTED; stillNO_GO on operational inputs/authorization"
   },
-  "LATEST_PUBLICATION_CHECKPOINT_R6_NEXT": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/R6_NEXT_LOCAL_PUBLICATION.md"
+  "LATEST_PUBLICATION_CHECKPOINT_R6_NEXT": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/R6_NEXT_LOCAL_PUBLICATION.md",
+  "rector_v19_activation_checkpoint_20261014": {
+    "RECTOR_ACTIVE_VERSION": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14",
+    "STEP_6A3": "PARTIAL_BLOCKED",
+    "STEP_6A4": "NOT_STARTED",
+    "SOG_V2": "DRAFT_NOT_EFFECTIVE",
+    "RECTOR_GATE": "BLOCKED",
+    "source_checkpoint": "macro_implementation_20261009",
+    "activation_decision_id": "DR-STEP6A3-RECTOR-V19-ACTIVATION-20261014-01"
+  },
+  "qa_runtime_checkpoint_20261014": {
+    "RECTOR_ACTIVE_VERSION": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14",
+    "STEP_6A3": "PARTIAL_BLOCKED",
+    "STEP_6A4": "NOT_STARTED",
+    "SOG_V2": "DRAFT_NOT_EFFECTIVE",
+    "RECTOR_GATE": "BLOCKED",
+    "source_checkpoint": "macro_implementation_20261009",
+    "activation_decision_id": "DR-STEP6A3-RECTOR-V19-ACTIVATION-20261014-01",
+    "runtime_scope": "STEP6A3_IAM_COMMERCIAL_RELEASE_QA",
+    "qa_runtime_acceptance": "PASS_QA",
+    "gates": {
+      "QA": "PASS_QA",
+      "IAM_REAL": "PASS_QA",
+      "E2E_EXTERNAL": "PASS_QA"
+    },
+    "external_execution_evidence": {
+      "path": "docs/phase6a/STEP_6A3/QA_RUNTIME_PUBLICATION_RELEASE_EVIDENCE_20261014.json",
+      "sha256": "bb84b85550d25eae0da195d67e64f0571ffab385ce2a8eaef84751ba6a70dfda"
+    },
+    "human_ui_acceptance_literal": "Recarga correcta y pantalla aceptada",
+    "tenant_admin_acceptance_literal": "todo ok",
+    "global_closure": "BLOCKED_REMAINING_SIGNED_RECTOR_OBLIGATIONS",
+    "remaining_rector_clauses": [
+      "C-04W",
+      "CFG-D-COMPLIANCE-V1",
+      "CFG-D-CONTROLS-V1",
+      "CFG-D-PUBLICATION",
+      "CFG-QA",
+      "VOC-C04",
+      "VOC-QA"
+    ],
+    "observed_at": "2026-10-14T21:44:43.071307+00:00"
+  },
+  "residual_closure_checkpoint_20261014": {
+    "RECTOR_ACTIVE_VERSION": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14",
+    "STEP_6A3": "PARTIAL_BLOCKED",
+    "STEP_6A4": "NOT_STARTED",
+    "SOG_V2": "DRAFT_NOT_EFFECTIVE",
+    "RECTOR_GATE": "BLOCKED",
+    "source_checkpoint": "macro_implementation_20261009",
+    "activation_decision_id": "DR-STEP6A3-RECTOR-V19-ACTIVATION-20261014-01",
+    "runtime_scope": "STEP6A3_IAM_COMMERCIAL_RELEASE_QA",
+    "qa_runtime_acceptance": "PASS_QA",
+    "gates": {
+      "QA": "PASS_QA",
+      "IAM_REAL": "PASS_QA",
+      "E2E_EXTERNAL": "PASS_QA"
+    },
+    "external_execution_evidence": {
+      "path": "docs/phase6a/STEP_6A3/QA_RUNTIME_PUBLICATION_RELEASE_EVIDENCE_20261014.json",
+      "sha256": "8142d36ff4653a65c3836c9b618654d8677663a2528afdc8224f43f8ea520b13"
+    },
+    "human_ui_acceptance_literal": "Recarga correcta y pantalla aceptada",
+    "tenant_admin_acceptance_literal": "todo ok",
+    "global_closure": "BLOCKED_REMAINING_SIGNED_RECTOR_OBLIGATIONS",
+    "remaining_rector_clauses": [
+      "C-04W",
+      "CFG-D-COMPLIANCE-V1",
+      "CFG-D-CONTROLS-V1",
+      "CFG-D-PUBLICATION",
+      "CFG-QA",
+      "VOC-QA"
+    ],
+    "observed_at": "2026-10-14T22:50:07.303993+00:00",
+    "residual_obligations": {
+      "C-04W": "BLOCKED_EXTERNAL_LEGAL_EVIDENCE",
+      "CFG-D": "BLOCKED_OFFICIAL_SUFFICIENCY_AND_VERSIONED_PUBLICATION",
+      "MACRO_ACCEPTANCE": "PARTIAL_ACCEPTED_QA",
+      "VOC-C04": "PASS_QA",
+      "acceptance_receipt_path": "docs/phase6a/STEP_6A3/HUMAN_RESIDUAL_VOC_C04_ACCEPTANCE_RECEIPT_20261014.json",
+      "acceptance_receipt_sha256": "fadc51b1584645ec6a71e1f8f68f2e48c4949d4c5032e72e9661b512f4f49858"
+    }
+  },
+  "v110_activation_checkpoint_20261015": {
+    "RECTOR_ACTIVE_VERSION": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15",
+    "STEP_6A3": "PARTIAL_BLOCKED",
+    "STEP_6A4": "NOT_STARTED",
+    "SOG_V2": "DRAFT_NOT_EFFECTIVE",
+    "RECTOR_GATE": "BLOCKED",
+    "source_checkpoint": "macro_implementation_20261009",
+    "predecessor_checkpoint": "residual_closure_checkpoint_20261014",
+    "activation_decision_id": "DR-STEP6A3-RECTOR-V110-ACTIVATION-20261015-01",
+    "approval_receipt_path": "docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/PO_A01_A13_DECISION_RECEIPT_20261015.md",
+    "approval_receipt_sha256": "08404d70344a57493fe6511d1c61bde10acea7b323032be3f8988202b3ef7b4e",
+    "successor_manifest_sha256": "b9b6bf6930931af5eb32ca1b4027212ad3a82f247fef677b919af24d30ac9060",
+    "C04W_CONTRACT": "PENDING_PHYSICAL_EXECUTABLE_GATES",
+    "CFGD_CONTRACT": "PENDING_EXECUTABLE_GATE",
+    "MACRO_ACCEPTANCE": "PARTIAL_ACCEPTED_QA"
+  },
+  "v111_initial_source_publication_checkpoint_20261015": {
+    "RECTOR_ACTIVE_VERSION": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15",
+    "STEP_6A3": "PARTIAL_BLOCKED",
+    "STEP_6A4": "NOT_STARTED",
+    "SOG_V2": "DRAFT_NOT_EFFECTIVE",
+    "RECTOR_GATE": "BLOCKED",
+    "source_checkpoint": "macro_implementation_20261009",
+    "predecessor_checkpoint": "v110_activation_checkpoint_20261015",
+    "activation_decision_id": "DR-STEP6A3-RECTOR-V110-ACTIVATION-20261015-01",
+    "approval_receipt_path": "docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/COMPETENT_AUTHORITY_FINAL_APPROVAL_20261015.json",
+    "approval_receipt_sha256": "eeac09a5f646deaaaa8f35589710fad6e20d519efa5a2a368ae082759ebdd663",
+    "successor_manifest_sha256": "4599f6e522ed91952ab01296a4c0b9cbe4df8ad4c1a612afd7fd0414215f824b",
+    "C04W_CONTRACT": "PENDING_PHYSICAL_EXECUTABLE_GATES",
+    "CFGD_CONTRACT": "PENDING_EXECUTABLE_GATE",
+    "MACRO_ACCEPTANCE": "PARTIAL_ACCEPTED_QA",
+    "runtime_scope": "STEP6A3_INITIAL_SOURCE_PUBLICATION_NOT_RUNTIME",
+    "qa_new_delta": "NOT_RUN",
+    "release_authority": "AUTHORIZED_CONDITIONAL_TECHNICAL_GATES"
+  }
 }

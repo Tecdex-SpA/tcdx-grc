@@ -1,0 +1,1678 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "STEP6A3 commercial additive contract candidate",
+    "version": "20261013-02",
+    "x-package-id": "GP-STEP6A3-COMMERCIAL-20261013-02",
+    "x-status": "DRAFT_NOT_EFFECTIVE",
+    "description": "No active OpenAPI or HTTP202 subscriptionCreate change. Approval/publication/gates required."
+  },
+  "servers": [
+    {
+      "url": "https://grc.tecdex.net/api/v1"
+    }
+  ],
+  "paths": {
+    "/platform/subscriptions/{id}:change-plan": {
+      "post": {
+        "operationId": "subscriptionChangePlan",
+        "security": [
+          {
+            "ApplicationBearer": []
+          }
+        ],
+        "x-status": "DRAFT_NOT_EFFECTIVE",
+        "x-permission": "platform.subscription.update",
+        "x-scope": "platform",
+        "x-authority": "HUMAN_INTERACTIVE PLATFORM_ADMIN; no impersonation",
+        "x-forbidden-request-headers": [
+          "X-TCDX-Tenant-Id"
+        ],
+        "x-closed-query": true,
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SubscriptionId"
+          },
+          {
+            "$ref": "#/components/parameters/CorrelationId"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          },
+          {
+            "$ref": "#/components/parameters/SubscriptionIfMatch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Completed after COMMIT; original body on authorized replay.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Idempotency-Replayed": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriptionChangePlanResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubscriptionChangePlanRequest"
+              }
+            }
+          }
+        },
+        "x-command-code": "subscription.change_plan",
+        "x-idempotency-profile": "SUBSCRIPTION_CHANGE_PLAN_V1",
+        "x-response-etag": "OMITTED_ON_FIRST_SUCCESS_AND_REPLAY"
+      }
+    },
+    "/platform/subscriptions/{id}": {
+      "get": {
+        "operationId": "subscriptionCommercialGet",
+        "security": [
+          {
+            "ApplicationBearer": []
+          }
+        ],
+        "x-status": "DRAFT_NOT_EFFECTIVE",
+        "x-permission": "platform.subscription.read",
+        "x-scope": "platform",
+        "x-authority": "HUMAN_INTERACTIVE PLATFORM_ADMIN; no impersonation",
+        "x-forbidden-request-headers": [
+          "X-TCDX-Tenant-Id"
+        ],
+        "x-closed-query": true,
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SubscriptionId"
+          },
+          {
+            "$ref": "#/components/parameters/CorrelationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Authorized current read.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string",
+                  "pattern": "^\"[1-9][0-9]*\"$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriptionDetailProjection"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/platform/subscriptions": {
+      "get": {
+        "operationId": "subscriptionCommercialList",
+        "security": [
+          {
+            "ApplicationBearer": []
+          }
+        ],
+        "x-status": "DRAFT_NOT_EFFECTIVE",
+        "x-permission": "platform.subscription.read",
+        "x-scope": "platform",
+        "x-authority": "HUMAN_INTERACTIVE PLATFORM_ADMIN; no impersonation",
+        "x-forbidden-request-headers": [
+          "X-TCDX-Tenant-Id"
+        ],
+        "x-closed-query": true,
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/TenantId"
+          },
+          {
+            "$ref": "#/components/parameters/PageSize"
+          },
+          {
+            "$ref": "#/components/parameters/Cursor"
+          },
+          {
+            "$ref": "#/components/parameters/CorrelationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Authorized current read.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriptionHistoryPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/platform/subscriptions/{id}/pack-transfers": {
+      "get": {
+        "operationId": "subscriptionPackTransferList",
+        "security": [
+          {
+            "ApplicationBearer": []
+          }
+        ],
+        "x-status": "DRAFT_NOT_EFFECTIVE",
+        "x-permission": "platform.subscription.read",
+        "x-scope": "platform",
+        "x-authority": "HUMAN_INTERACTIVE PLATFORM_ADMIN; no impersonation",
+        "x-forbidden-request-headers": [
+          "X-TCDX-Tenant-Id"
+        ],
+        "x-closed-query": true,
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SubscriptionId"
+          },
+          {
+            "$ref": "#/components/parameters/PageSize"
+          },
+          {
+            "$ref": "#/components/parameters/Cursor"
+          },
+          {
+            "$ref": "#/components/parameters/CorrelationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Authorized current read.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriptionPackTransferPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Exact error mapping in 03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md; no SQL/secret disclosure.",
+            "headers": {
+              "X-Correlation-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SubscriptionChangePlanRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "plan_version_id",
+          "subscription_code",
+          "reason"
+        ],
+        "properties": {
+          "plan_version_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "subscription_code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 96,
+            "pattern": "\\S",
+            "description": "Trim server-owned; case/Unicode preserved."
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000,
+            "pattern": "\\S",
+            "description": "Trim; no secrets."
+          }
+        }
+      },
+      "SubscriptionDetailProjection": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "subscription_id",
+          "tenant_id",
+          "subscription_code",
+          "plan_version_id",
+          "plan_id",
+          "plan_code",
+          "plan_name",
+          "plan_version_number",
+          "lifecycle_state",
+          "starts_at",
+          "ends_at",
+          "cancelled_at",
+          "row_version",
+          "previous_subscription_id",
+          "next_subscription_id",
+          "commercial_configuration_status"
+        ],
+        "properties": {
+          "subscription_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "tenant_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "subscription_code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 96
+          },
+          "plan_version_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "plan_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "plan_code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "plan_name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Immutable PlanVersion.display_name, not mutable Plan name."
+          },
+          "plan_version_number": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "lifecycle_state": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 32,
+            "description": "Existing published Subscription vocabulary; change-plan only active/ended. No new lifecycle."
+          },
+          "starts_at": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+          },
+          "ends_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "cancelled_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "row_version": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "previous_subscription_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "next_subscription_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "commercial_configuration_status": {
+            "type": "string",
+            "enum": [
+              "complete",
+              "incomplete",
+              "conflicting"
+            ]
+          }
+        }
+      },
+      "SubscriptionHistoryProjection": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "subscription_id",
+          "tenant_id",
+          "subscription_code",
+          "plan_version_id",
+          "plan_id",
+          "plan_code",
+          "plan_name",
+          "plan_version_number",
+          "lifecycle_state",
+          "starts_at",
+          "ends_at",
+          "cancelled_at",
+          "row_version",
+          "previous_subscription_id",
+          "next_subscription_id",
+          "commercial_configuration_status"
+        ],
+        "properties": {
+          "subscription_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "tenant_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "subscription_code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 96
+          },
+          "plan_version_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "plan_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "plan_code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "plan_name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Immutable PlanVersion.display_name, not mutable Plan name."
+          },
+          "plan_version_number": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "lifecycle_state": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 32,
+            "description": "Existing published Subscription vocabulary; change-plan only active/ended. No new lifecycle."
+          },
+          "starts_at": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+          },
+          "ends_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "cancelled_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "row_version": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "previous_subscription_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "next_subscription_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "commercial_configuration_status": {
+            "type": "string",
+            "enum": [
+              "complete",
+              "incomplete",
+              "conflicting"
+            ]
+          }
+        }
+      },
+      "SubscriptionPackTransferProjection": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "previous_subscription_regulatory_pack_id",
+          "current_subscription_regulatory_pack_id",
+          "regulatory_pack_id",
+          "regulatory_pack_version_id",
+          "previous_subscription_id",
+          "current_subscription_id",
+          "effective_from",
+          "effective_to"
+        ],
+        "properties": {
+          "previous_subscription_regulatory_pack_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "current_subscription_regulatory_pack_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "regulatory_pack_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "regulatory_pack_version_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "previous_subscription_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "current_subscription_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "effective_from": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+          },
+          "effective_to": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "SubscriptionChangePlanResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operation_id",
+          "status",
+          "correlation_id",
+          "resource_id",
+          "result"
+        ],
+        "properties": {
+          "operation_id": {
+            "type": "string",
+            "const": "subscriptionChangePlan"
+          },
+          "status": {
+            "type": "string",
+            "const": "completed"
+          },
+          "correlation_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Original command root, preserved on replay."
+          },
+          "resource_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "result": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "previous_subscription",
+              "current_subscription",
+              "effective_at",
+              "pack_transfers"
+            ],
+            "properties": {
+              "previous_subscription": {
+                "$ref": "#/components/schemas/SubscriptionDetailProjection"
+              },
+              "current_subscription": {
+                "$ref": "#/components/schemas/SubscriptionDetailProjection"
+              },
+              "effective_at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+              },
+              "pack_transfers": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "count",
+                  "href"
+                ],
+                "properties": {
+                  "count": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "href": {
+                    "type": "string",
+                    "pattern": "^/api/v1/platform/subscriptions/[0-9a-f-]{36}/pack-transfers$"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "IdempotencyReplayProfile": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "profile",
+          "http_status",
+          "body"
+        ],
+        "properties": {
+          "profile": {
+            "type": "string",
+            "const": "SUBSCRIPTION_CHANGE_PLAN_V1"
+          },
+          "http_status": {
+            "type": "integer",
+            "const": 200
+          },
+          "body": {
+            "$ref": "#/components/schemas/SubscriptionChangePlanResponse"
+          }
+        }
+      },
+      "CursorPageMetadata": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "next_cursor",
+          "has_more"
+        ],
+        "properties": {
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "has_more": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SubscriptionHistoryPage": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "meta"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "maxItems": 100,
+            "items": {
+              "$ref": "#/components/schemas/SubscriptionHistoryProjection"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/CursorPageMetadata"
+          }
+        }
+      },
+      "SubscriptionPackTransferPage": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "meta"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "maxItems": 100,
+            "items": {
+              "$ref": "#/components/schemas/SubscriptionPackTransferProjection"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/CursorPageMetadata"
+          }
+        }
+      },
+      "ErrorEnvelope": {
+        "$ref": "../../../executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml#/components/schemas/ErrorEnvelope"
+      }
+    },
+    "parameters": {
+      "SubscriptionIfMatch": {
+        "name": "If-Match",
+        "in": "header",
+        "required": true,
+        "description": "Current Subscription.row_version from fresh detail GET. Strong quoted decimal, no body CAS/weak validator.",
+        "schema": {
+          "type": "string",
+          "pattern": "^\"[1-9][0-9]*\"$"
+        }
+      },
+      "IdempotencyKey": {
+        "name": "Idempotency-Key",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        }
+      },
+      "CorrelationId": {
+        "name": "X-Correlation-Id",
+        "in": "header",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "SubscriptionId": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        }
+      },
+      "TenantId": {
+        "name": "tenant_id",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        }
+      },
+      "PageSize": {
+        "name": "page[size]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 25
+        }
+      },
+      "Cursor": {
+        "name": "page[cursor]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      }
+    },
+    "securitySchemes": {
+      "ApplicationBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Existing TCDX application token validation and Platform authority chain; not external provider JWT."
+      }
+    }
+  }
+}

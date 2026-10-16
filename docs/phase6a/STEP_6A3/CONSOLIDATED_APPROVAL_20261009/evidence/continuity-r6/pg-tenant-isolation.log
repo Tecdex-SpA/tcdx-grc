@@ -1,0 +1,28 @@
+/workspace/node_modules/.pnpm/pg@8.23.0/node_modules/pg/lib/client.js:694
+          Error.captureStackTrace(err)
+                ^
+
+error: new row for relation "configuration_definitions" violates check constraint "ck_configuration_definitions__typed_default"
+    at /workspace/node_modules/.pnpm/pg@8.23.0/node_modules/pg/lib/client.js:694:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async file:///workspace/scripts/foundations/verify-tenant-isolation.ts:46:3 {
+  length: 576,
+  severity: 'ERROR',
+  code: '23514',
+  detail: 'Failing row contains (01a13538-e47a-7721-92dd-e7f63d3a9f0b, 2026-10-13 12:24:43.384009+00, null, null, PLATFORM_CONTROL, null, PHASE3_TEST, 1, text, t, t, platform, published, 2026-10-13 12:24:43.384009+00, 2027-10-13 12:24:43.384009+00, 2026-10-13 12:24:43.384009+00, null, null, null, null, null, null, null).',
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: 'config',
+  table: 'configuration_definitions',
+  column: undefined,
+  dataType: undefined,
+  constraint: 'ck_configuration_definitions__typed_default',
+  file: 'execMain.c',
+  line: '2109',
+  routine: 'ExecConstraints'
+}
+
+Node.js v22.23.2

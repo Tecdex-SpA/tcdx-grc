@@ -1,11 +1,27 @@
 import { createHash } from "node:crypto";
-import { CompactSign, compactVerify, SignJWT, importPKCS8, importSPKI, jwtVerify } from "jose";
+import { CompactSign, compactVerify, SignJWT, importPKCS8, importSPKI, jwtVerify, decodeJwt, createRemoteJWKSet, type JWTVerifyGetKey } from "jose";
 import { validate as validateUuid } from "uuid";
 import type { BackendConfig } from "../config.js";
 import { FoundationError } from "../errors.js";
 import type { IdentityVerifier, VerifiedIdentity } from "./authentication.js";
 
 export type ApplicationJwtConfig = Required<Omit<BackendConfig["applicationJwt"], "configured">>;
+
+export type MachineJwtProfile = {
+  decision_id: string; environment: "qa"; issuer: string; client_id: string;
+  principal_code: string; principal_kind: "MACHINE_TO_MACHINE"; display_name: string;
+  ownership_class: "PLATFORM_CONTROL"; tenant_id: null; purpose: "STEP_6A3_IAM_PUBLICATION";
+  audience: string; credential_ref: string; algorithms: ["RS256"];
+  max_lifetime_seconds: number; clock_tolerance_seconds: number;
+};
+export type MachineIdentityProof = {
+  issuerSha256: string; subjectSha256: string; clientId: string; tokenId: string; expiresAt: Date;
+};
+export type MachineJwtSupport = {
+  profile: MachineJwtProfile;
+  resolvePrincipal: (proof: MachineIdentityProof) => Promise<string>;
+  keySet?: JWTVerifyGetKey;
+};
 
 type Session = { principalId: string; expiresAt: Date; revoked: boolean };
 
@@ -53,6 +69,7 @@ export function tokenFingerprint(tokenId: string): string {
 }
 
 export class ApplicationTokenService implements IdentityVerifier {
+  private machine: (MachineJwtSupport & { keySet: JWTVerifyGetKey }) | undefined;
   private constructor(
     readonly config: ApplicationJwtConfig,
     private readonly privateKey: CryptoKey,
@@ -100,6 +117,13 @@ export class ApplicationTokenService implements IdentityVerifier {
 
   async verifyBearerToken(token: string): Promise<VerifiedIdentity> {
     try {
+      // Unverified claims select a verifier only; every selected profile verifies the signature.
+      if (decodeJwt(token).principal_class === "MACHINE_TO_MACHINE") {
+        const proof = await this.verifyMachineProof(token);
+        const principalId = await this.machine!.resolvePrincipal(proof);
+        if (!validateUuid(principalId)) throw authenticationFailure();
+        return { principalClass: "MACHINE_TO_MACHINE", principalId, tokenId: proof.tokenId, expiresAt: proof.expiresAt };
+      }
       const { payload, protectedHeader } = await jwtVerify(token, this.publicKey, {
         issuer: this.config.issuer,
         audience: this.config.audience,
@@ -121,6 +145,67 @@ export class ApplicationTokenService implements IdentityVerifier {
       if (error instanceof FoundationError) throw error;
       throw authenticationFailure();
     }
+  }
+
+  configureMachineProfile(support: MachineJwtSupport, environment: string): void {
+    const p = support.profile;
+    if (environment !== "qa" || p.environment !== "qa" || p.ownership_class !== "PLATFORM_CONTROL"
+      || p.tenant_id !== null || p.principal_kind !== "MACHINE_TO_MACHINE" || p.purpose !== "STEP_6A3_IAM_PUBLICATION"
+      || !p.decision_id || !/^[a-z][a-z0-9-]{0,159}$/.test(p.principal_code)
+      || p.client_id !== p.principal_code || p.audience !== this.config.audience
+      || new URL(p.issuer).protocol !== "https:" || new URL(p.issuer).search || new URL(p.issuer).hash
+      || p.algorithms.length !== 1 || p.algorithms[0] !== "RS256"
+      || !Number.isSafeInteger(p.max_lifetime_seconds) || p.max_lifetime_seconds <= 0 || p.max_lifetime_seconds > 300
+      || !Number.isSafeInteger(p.clock_tolerance_seconds) || p.clock_tolerance_seconds < 0 || p.clock_tolerance_seconds > 5)
+      throw new Error("INVALID_QA_MACHINE_PROFILE");
+    this.machine = { ...support, keySet: support.keySet ?? createRemoteJWKSet(new URL(`${p.issuer}/protocol/openid-connect/certs`),
+      { timeoutDuration: 8_000, cooldownDuration: 30_000 }) };
+  }
+
+  async verifyMachineProof(token: string): Promise<MachineIdentityProof> {
+    try {
+      if (!this.machine) throw authenticationFailure();
+      const p = this.machine.profile;
+      const { payload, protectedHeader } = await jwtVerify(token, this.machine.keySet, {
+        issuer: p.issuer, audience: p.audience, algorithms: p.algorithms,
+        clockTolerance: p.clock_tolerance_seconds, requiredClaims: ["iss", "aud", "sub", "jti", "iat", "exp"]
+      });
+      const now = Math.floor(Date.now() / 1000);
+      const realmAccess = payload.realm_access as { roles?: unknown } | undefined;
+      const resources = payload.resource_access as Record<string, { roles?: unknown }> | undefined;
+      const adminRoles = resources?.["realm-management"]?.roles;
+      const realmRoles = realmAccess?.roles;
+      if (!["JWT", "at+jwt"].includes(protectedHeader.typ ?? "") || !protectedHeader.kid
+        || payload.principal_class !== "MACHINE_TO_MACHINE" || payload.typ !== "Bearer"
+        || payload.azp !== p.client_id || (payload.client_id !== undefined && payload.client_id !== p.client_id)
+        || !payload.sub || payload.sub.length > 512 || !payload.jti || payload.jti.length > 512
+        || typeof payload.iat !== "number" || typeof payload.exp !== "number"
+        || !Number.isInteger(payload.iat) || !Number.isInteger(payload.exp)
+        || payload.iat > now + p.clock_tolerance_seconds || payload.exp <= payload.iat
+        || payload.exp - payload.iat > p.max_lifetime_seconds
+        || (Array.isArray(adminRoles) && adminRoles.length > 0)
+        || (Array.isArray(realmRoles) && realmRoles.some(role => role === "admin" || role === "realm-admin"))) throw authenticationFailure();
+      return { issuerSha256: tokenFingerprint(p.issuer), subjectSha256: tokenFingerprint(payload.sub),
+        clientId: p.client_id, tokenId: payload.jti, expiresAt: new Date(payload.exp * 1000) };
+    } catch { throw authenticationFailure(); }
+  }
+
+  /** Fresh OAuth proof, acquired with the dedicated external credential, never a human exchange. */
+  async authenticateMachine(clientSecret: string, fetcher: typeof fetch = fetch): Promise<MachineIdentityProof> {
+    try {
+      if (!this.machine || !clientSecret || /\s/.test(clientSecret)) throw authenticationFailure();
+      const p = this.machine.profile;
+      const response = await fetcher(`${p.issuer}/protocol/openid-connect/token`, {
+        method: "POST", redirect: "error", signal: AbortSignal.timeout(8_000),
+        headers: { authorization: `Basic ${Buffer.from(`${p.client_id}:${clientSecret}`).toString("base64")}`,
+          "content-type": "application/x-www-form-urlencoded", accept: "application/json" },
+        body: new URLSearchParams({ grant_type: "client_credentials" })
+      });
+      if (!response.ok) throw authenticationFailure();
+      const body = await response.json() as { access_token?: unknown; token_type?: unknown };
+      if (typeof body.access_token !== "string" || body.token_type?.toString().toLowerCase() !== "bearer") throw authenticationFailure();
+      return await this.verifyMachineProof(body.access_token);
+    } catch { throw authenticationFailure(); }
   }
 
   async revoke(identity: VerifiedIdentity): Promise<void> {

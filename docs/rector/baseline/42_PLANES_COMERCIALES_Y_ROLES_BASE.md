@@ -81,6 +81,12 @@ Los límites cuantitativos (usuarios, almacenamiento, ejecuciones, packs, conect
 
 Los tres planes comparten un único modelo de datos. Las capacidades no contratadas quedan inaccesibles por Entitlement y ocultas en UI; no se eliminan tablas ni se crean schemas por plan.
 
+### 2.5 Familias y límites comerciales de la sucesora propuesta
+
+`CommercialFamily` constituye un único catálogo `PLATFORM_CONTROL` publicado e inmutable. Las raíces ISO_9001_2015, ISO_9001_2026, ISO_IEC_27001_2022 e ISO_IEC_42001_2023 se clasifican como familia `ISO` y `source_type=standard`; CL_LEY_21719 como `LEGAL` y `source_type=law`, sólo mediante publicación de datos exactos. Esta clasificación no publica ISO 9001:2026, no declara vigente una ley y no concede uso oficial del contenido.
+
+Nuevas versiones de `ISO` e `ISO_RIESGO_OPERATIVO` pueden vincular `ISO`; una nueva versión `GRC` puede vincular `ISO` y `LEGAL`, sin restringir para siempre las clases legales, contractuales o sectoriales de §2.3. Cada PlanVersion publicada declara sus familias y límites total/familia de `regulatory_pack_count` de forma finita e inmutable durante toda su vigencia. Las cantidades, IDs, fechas y adopciones reales requieren manifest comercial separado y aprobación exacta; no se agregan a las PlanVersion v1 publicadas ni se inventan defaults. Cero es un valor comercial explícito; ausencia de cuota requerida bloquea publicación y elegibilidad. El cambio de plan conserva términos e intervalos contratados y no concede derechos por el solo nombre de la familia.
+
 ## 3. Roles canónicos cerrados
 
 Roles de plataforma: `Platform Admin`, `Platform Support`.

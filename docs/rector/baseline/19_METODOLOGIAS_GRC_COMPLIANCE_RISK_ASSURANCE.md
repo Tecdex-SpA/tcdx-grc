@@ -136,3 +136,9 @@ Finding severity no modifica automáticamente Risk severity. Puede proponer reas
 - considerar evidencia cargada como evidencia aprobada;
 - reutilizar `domain_conclusion` como `result_status`;
 - alterar una escala publicada sin nueva versión.
+
+## 10. Delta conservador CFG-D candidato
+
+Las metodologías v1 publicadas son inmutables. EffectiveConfiguration permanece opcional donde el contrato vigente lo permita; una EC presente debe ser compatible con tenant y dominio. La ausencia de EC no acredita autosuficiencia. Faltando un criterio obligatorio publicado de inputs, evidencia o suficiencia, un cálculo nuevo no puede publicarse valid; se informa el result_status de insuficiencia o dependencia correspondiente y sólo preview si el contrato lo admite. Ningún assessment o snapshot histórico se recalcula, reetiqueta o reemplaza. No se publica configuration_mode=none ni sucesora ficticia.
+
+Fuente exacta del delta: `docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/CONTRACT_PACKET_20261015.md`; SHA-256 `6b87812823472d56a89622eca8119b0cd56606f2f21d635dd84bf903896ba7f2`. Esta copia candidata no es autoridad activa antes del gate 47.

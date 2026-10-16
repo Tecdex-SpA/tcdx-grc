@@ -1,0 +1,20 @@
+{
+  "status": "PASS_LOCAL_BYTES_MATCH_RECOVERED_IMAGE_INPUT_MANIFEST_AND_LIVE_IMAGE_LABEL",
+  "checks": [
+    {
+      "kind": "backend",
+      "image_id": "sha256:474e525a3e6b2bcc067dda7a77039b36f2832ca37d138b1424a700644560fc6d",
+      "source_sha256": "879942f159f61a607712fe4c7ba79668343f008285e43a37129159fae821a58e",
+      "files_compared": 187,
+      "differences": []
+    },
+    {
+      "kind": "frontend",
+      "image_id": "sha256:552ff3e9412cb1c78bfa3400c26c8835c6a2bfa09a6db1dc72ef18b8a2712eeb",
+      "source_sha256": "bac88a14e73d95ed258cd4e3c9a615dce5ec42c7352241b5239fec7e16d45821",
+      "files_compared": 77,
+      "differences": []
+    }
+  ],
+  "limitation": "Build input manifest and image label are not a signed build attestation. No rebuild performed."
+}

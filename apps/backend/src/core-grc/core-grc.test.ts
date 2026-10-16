@@ -176,7 +176,7 @@ describe("Core GRC authorization and data isolation", () => {
 });
 
 describe("Core GRC executable request and route contract", () => {
-  it("matches all 23 approved read routes and their authorization/response extensions", () => {
+  it("matches all 25 approved read routes and their authorization/response extensions", () => {
     const operations = openApiOperations();
     const names = {
       applicability: ["applicabilityList", "applicabilityGet"],
@@ -188,6 +188,7 @@ describe("Core GRC executable request and route contract", () => {
       evidenceRequest: ["evidenceRequestList", "evidenceRequestGet"],
       evidence: ["evidenceList", "evidenceGet"],
       retentionPolicy: ["retentionPolicyList", "retentionPolicyGet"],
+      retentionPolicyApplicability: ["retentionApplicabilityList", "retentionApplicabilityGet"],
       issue: ["issueList", "issueGet"],
       action: ["actionList", "actionGet"]
     } as const;
@@ -216,7 +217,7 @@ describe("Core GRC executable request and route contract", () => {
     expect(version.block).toContain(`x-tcdx-permission: "\`${resources.evidenceVersion.permission}\`"`);
     expect(version.block).toContain(`x-tcdx-capability: "${resources.evidenceVersion.capability}"`);
     expect(contractScopes(version.block)).toEqual([...resources.evidenceVersion.scopes].sort());
-    expect(checked + 1).toBe(23);
+    expect(checked + 1).toBe(25);
   });
 
   it("matches all Phase 5 mutation routes, fields, scopes and extensions", () => {
@@ -237,7 +238,7 @@ describe("Core GRC executable request and route contract", () => {
       expect(operation?.block, `${operationId} transaction`).toContain('x-tcdx-transaction-boundary: "TX"');
       expect(operation?.block, `${operationId} response`).toContain("'202': { $ref: '#/components/responses/OperationSuccess' }");
       const schema = requestSchema(operation!.schema!);
-      const retentionTransition = ["retentionPolicyUpdate", "retentionPolicyReview", "retentionPolicyApprove", "retentionPolicyPublish"].includes(operationId);
+      const retentionTransition = ["retentionPolicyUpdate", "retentionPolicySubmitForReview", "retentionPolicyReview", "retentionPolicyApprove", "retentionPolicyPublish", "retentionApplicabilitySubmitForReview", "retentionApplicabilityReview", "retentionApplicabilityApprove", "retentionApplicabilityPublish", "legalHoldRelease"].includes(operationId);
       const apiAllowed = retentionTransition ? definition.allowedFields.filter((field) => field !== "expected_version") : definition.allowedFields;
       const apiRequired = retentionTransition ? definition.requiredFields.filter((field) => field !== "expected_version") : definition.requiredFields;
       expect([...apiAllowed].sort(), `${operationId} fields`).toEqual(schema.properties.sort());
@@ -333,7 +334,8 @@ describe("Core GRC lifecycle, SoD and optimistic concurrency", () => {
     let versionId = "";
     let linkedVersionId = "";
     const database = executor((query) => {
-      if (query.sql.includes("FROM evidence.file_objects")) return { rows: [{ scan_status: "passed" }] };
+      if (query.sql.includes("FROM evidence.file_objects")) return { rows: [{ scan_status: "passed", retention_policy_id: resourceId, retention_policy_applicability_id: membershipId, classification: "confidential", scope_subject_id: null, processing_activity_id: null }] };
+      if (query.sql.includes("FROM privacy.retention_policy_applicabilities a")) return { rows: [{ retention_policy_applicability_id: membershipId }] };
       if (query.sql.startsWith("SELECT 1 AS found")) return { rows: [{ found: 1 }] };
       if (query.sql.startsWith("INSERT INTO evidence.evidences")) evidenceId = String(query.parameters[0]);
       if (query.sql.startsWith("INSERT INTO evidence.evidence_versions")) versionId = String(query.parameters[0]);

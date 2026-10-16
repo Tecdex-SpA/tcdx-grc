@@ -59,3 +59,22 @@ Derechos de eliminación de datos personales se procesan mediante workflow de Pr
 La retención efectiva se calcula por precedencia: `legal_hold > mandatory_regulatory_policy > contractual_policy > tenant_policy > product_baseline`. Ante conflicto se aplica la conservación más restrictiva para borrado hasta resolución autorizada. Toda decisión de purge registra policy/version y AuditEvent.
 
 Ningún Regulatory Pack puede prometer automáticamente que una duración satisface una jurisdicción; la obligación debe estar versionada y vinculada a fuente normativa/contractual.
+
+## 9. Temporalidad comercial propuesta
+
+Un cambio de PlanVersion no renueva, acorta ni extiende automáticamente la vigencia comercial acordada. El command conserva el `ends_at` programado del origen en la Subscription sucesora y la expiración original de cada asignación de RegulatoryPackVersion transferida. El origen se cierra en un corte único `t` obtenido de PostgreSQL después de adquirir los locks; la sucesora comienza en `t`. Se conservan IDs e intervalos históricos. La auditoría registra el término original antes de mutar y permite verificar que el sucesor recibió exactamente ese valor.
+
+Las nuevas PlanVersion publicadas, sus familias, entitlements y límites son inmutables. La regla prospectiva R-P se aplica a nuevas escrituras/expansiones por raíz y no recalcula ni reinterpreta asignaciones históricas. Un conflicto de coexistencia activa exige decisión competente por las asignaciones afectadas, sin elegir derechos por fecha o código. Todo corte/expiración sigue representado como intervalo `[from,to)` y no se deriva de la hora de creación técnica.
+
+## 10. Enmienda candidata STEP_6A3 C-04W
+
+La RetentionPolicy tenant-owned y su versión continúan siendo la única autoridad de duración, tipo y precedencia. Su RetentionPolicyApplicability publicada declara contexto, clasificación, propósito, alcance y vigencia. El resolver considera todas las obligaciones concurrentes; la FK primaria de un archivo selecciona una aplicabilidad ordinaria inequívoca y jamás elimina un legal hold o una obligación superior. Conflicto no resuelto impide purge. Un legal hold usa retention_seconds=NULL, no expira por vencimiento ordinario y sólo se levanta por RetentionPolicyHoldRelease explícita, autorizada, tenant-owned, insert-only y auditada. La liberación no ejecuta purge. Las filas históricas sin vínculo nuevo conservan su política previa y no se presumen liberadas de hold. La especificación exacta de predicados, transición y pruebas es el paquete aprobado identificado al final.
+
+Fuente exacta del delta: `docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/CONTRACT_PACKET_20261015.md`; SHA-256 `6b87812823472d56a89622eca8119b0cd56606f2f21d635dd84bf903896ba7f2`. Esta copia candidata no es autoridad activa antes del gate 47.
+
+
+## STEP_6A3 — candidata de incorporación inicial de fuente v1.11
+
+`STATUS=DRAFT_NOT_EFFECTIVE; HUMAN_EXACT_BYTES_REVIEW=PENDING`. Baseline candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15, predecesora TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15. Diseño PO aprobado por SHA `1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b`; constancia `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/PO_DESIGN_APPROVAL_RECEIPT_20261015.json`. Esta sección sólo tendrá efecto después de publicación conforme47/49 y gates físico/ejecutable; no autoriza operación QA ni deploy por sí sola.
+
+La custodia de la primera fuente mediante FK a aplicabilidad draft no cambia duración ni precedencia de la policy ordinaria tenant-owned publicada/vigente. Source pendiente se deriva de FK/estado existentes; no es un enum persistido, legal hold, obligación acreditada ni permiso de borrado. Ninguna cadena pendiente habilita consumo de negocio, evaluación oficial, purge o release; todas las obligaciones concurrentes y la historia se conservan. Source e intervalo se revalidan al bind y antes de aprobar/publicar. Los plazos comerciales futuros de12/18/24/36/48/60meses no se implementan por esta sucesora.

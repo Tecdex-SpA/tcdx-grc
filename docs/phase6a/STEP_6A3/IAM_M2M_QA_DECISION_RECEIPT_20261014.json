@@ -1,0 +1,22 @@
+{
+  "decision_id": "DR-STEP6A3-IAM-M2M-QA-20261014-01",
+  "status": "APPROVED",
+  "authority": "Andrés Barouh — Product Owner / Seguridad-IAM / DBA",
+  "source": "Explicit user instruction: GRC TECDEX — CIERRE EJECUTIVO STEP_6A3, DECISIÓN IAM M2M APROBADA — 2026-10-14",
+  "master_regent": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14",
+  "environment": "qa",
+  "principal_code": "grc-qa-iam-publisher",
+  "ownership_class": "PLATFORM_CONTROL",
+  "tenant_id": null,
+  "authentication": "OAuth 2.0 client_credentials",
+  "purpose": "STEP_6A3_IAM_PUBLICATION",
+  "credential_storage": "Existing protected QA secret file mechanism; PostgreSQL stores reference only",
+  "scope": "Canonical ServicePrincipal provision/binding, exact approved R2 reference-grant adoption including tenant instances, existing approved R3 reconciliation required by canonical onboarding, three commercial permissions and PLATFORM_ADMIN grants, applicable commercial lifecycle bindings",
+  "human_commercial_authority_preserved": true,
+  "production_access": false,
+  "schema_changes": false,
+  "new_public_endpoints": false,
+  "audit_codes": ["audit.iam.service_principal.provision.v1", "audit.iam.service_principal.revoke.v1", "audit.iam.permission.publish.v1", "audit.iam.role_permission.publish.v1", "audit.platform.lifecycle_transition.publish.v1"],
+  "lifecycle_mapping": "Persist only bindings with non-null from/to states. transfer_activate remains the approved internal initial-state effect; CommercialFamily publication has no lifecycle state. No invented NULL/sentinel states.",
+  "execution_status": "NOT_RUN"
+}

@@ -957,6 +957,14 @@ export const permissionProjectionCatalog: Readonly<Record<string, { capabilities
       "tenant"
     ]
   },
+  "platform.commercial_catalog.publish": {
+    "capabilities": [
+      "CORE_PLATFORM"
+    ],
+    "scopes": [
+      "platform"
+    ]
+  },
   "platform.impersonation_session.impersonate": {
     "capabilities": [
       "CORE_PLATFORM"
@@ -1157,6 +1165,22 @@ export const permissionProjectionCatalog: Readonly<Record<string, { capabilities
       "platform"
     ]
   },
+  "platform.subscription.read": {
+    "capabilities": [
+      "CORE_PLATFORM"
+    ],
+    "scopes": [
+      "platform"
+    ]
+  },
+  "platform.subscription.update": {
+    "capabilities": [
+      "CORE_PLATFORM"
+    ],
+    "scopes": [
+      "platform"
+    ]
+  },
   "platform.tenant_account_classification.update": {
     "capabilities": [
       "CORE_PLATFORM"
@@ -1317,6 +1341,14 @@ export const permissionProjectionCatalog: Readonly<Record<string, { capabilities
     ]
   },
   "privacy.retention_policy.create": {
+    "capabilities": [
+      "PRIVACY"
+    ],
+    "scopes": [
+      "tenant"
+    ]
+  },
+  "privacy.retention_policy.legal_hold.release": {
     "capabilities": [
       "PRIVACY"
     ],

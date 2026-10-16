@@ -1,9 +1,10 @@
+# CANDIDATE_NOT_EFFECTIVE INITIAL_SOURCE v1.11
 openapi: 3.1.0
 info:
   title: TCDX GRC API Base Contract
   version: 1.0.0-contract-candidate
   description: >-
-    Contrato schema-first aprobado de Fase 2 con las enmiendas PRE-F5, PRE-F5B, PRE-F5C, los cierres compatibles PRE-F5E y las decisiones Subscription, lecturas administrativas y Fase 5+. Publica 165 operaciones que cierran
+    Contrato schema-first aprobado de Fase 2 con las enmiendas PRE-F5, PRE-F5B, PRE-F5C, los cierres compatibles PRE-F5E y las decisiones Subscription, lecturas administrativas y Fase 5+. Publica 174 operaciones que cierran
     trazabilidad rector-capability-permission-audit-idempotency-modelo físico.
     H-003..H-005 autorizan las operaciones mínimas de Configuration,
     privacy retention/erasure y lifecycle-registry sobre entidades existentes.
@@ -2060,6 +2061,7 @@ paths:
   "/files:request-upload":
     post:
       operationId: uploadIntentCreate
+      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
       tags: ["evidence"]
       summary: "EVIDENCE_DOCUMENTS: uploadIntentCreate"
       description: "Phase 5 v1.7 amendment. Creates a durable FileUploadIntent, never an incomplete FileObject. Tenant, bucket, quarantine key, expiry and signed URL are server-controlled."
@@ -2089,6 +2091,7 @@ paths:
   "/file-upload-intents/{id}:finalize":
     post:
       operationId: uploadFinalize
+      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
       tags: ["evidence"]
       summary: "EVIDENCE_DOCUMENTS: uploadFinalize"
       description: "Finalizes one same-tenant FileUploadIntent. Trusted runtime obtains actual size, MIME and SHA-256, performs fail-closed malware scan and promotes only scan-PASS content to a final FileObject."
@@ -2260,13 +2263,14 @@ paths:
   "/evidence-versions/{id}:submit":
     post:
       operationId: evidenceSubmit
+      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
       tags: ["evidence"]
       summary: "EVIDENCE_DOCUMENTS: evidenceSubmit"
       description: "Derived from 21,24. Actor: Evidence Owner. Tenant semantics: scan PASS; typed links; `draft→submitted`. Contract shape: EvidenceSubmitRequest.expected_version → EvidenceVersion."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "EVIDENCE_DOCUMENTS"
       x-tcdx-permission: "`evidence.evidence.submit`"
-      x-tcdx-scope: "owned/assigned"
+      x-tcdx-scope: "owned/assigned/tenant"
       x-tcdx-audit-event: "`audit.evidence.evidence.submit.v1`"
       x-tcdx-domain-events: "`evidence.evidence.submitted.v1`"
       x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
@@ -2286,6 +2290,12 @@ paths:
         '403': { $ref: '#/components/responses/AuthorizationError' }
         '404': { $ref: '#/components/responses/NotFoundError' }
         '409': { $ref: '#/components/responses/ConflictError' }
+      x-tcdx-initial-source-submit-scope:
+        allowed_scopes: [assigned_object, owned_object, tenant]
+        tenant_policy: OWN_INITIAL_SOURCE_ONLY
+        registry_version: 2
+        policy_ref: "contract:initial-retention-source-submit:v1.11"
+
   "/evidence-versions/{id}:start-review":
     post:
       operationId: evidenceReviewStart
@@ -3718,6 +3728,239 @@ paths:
         '403': { $ref: '#/components/responses/AuthorizationError' }
         '404': { $ref: '#/components/responses/NotFoundError' }
         '409': { $ref: '#/components/responses/ConflictError' }
+  "/retention-policies/{id}:submit-for-review":
+    post:
+      operationId: retentionPolicySubmitForReview
+      tags: ["privacy"]
+      summary: "PRIVACY: retentionPolicySubmitForReview"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.update`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.retention_policy.submit_for_review.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.retention_policies`, audit/idempotency"
+      x-tcdx-rector-source: "C-04W; successor v1.10; executable DELTA"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionPolicyTransitionRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  "/retention-policy-applicabilities":
+    get:
+      operationId: retentionApplicabilityList
+      tags: ["privacy"]
+      summary: "PRIVACY: retentionApplicabilityList"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.read`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`"
+      x-tcdx-rector-source: "C-04W; successor v1.10"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/PageSize' }, { $ref: '#/components/parameters/Cursor' }]
+      responses:
+        '200': { $ref: '#/components/responses/OperationSuccess' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+    post:
+      operationId: retentionApplicabilityCreate
+      tags: ["privacy"]
+      summary: "PRIVACY: retentionApplicabilityCreate"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.retention_policy_applicability.create.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`, audit/idempotency"
+      x-tcdx-rector-source: "C-04W; successor v1.10"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionApplicabilityCreateRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  "/retention-policy-applicabilities/{id}":
+    get:
+      operationId: retentionApplicabilityGet
+      tags: ["privacy"]
+      summary: "PRIVACY: retentionApplicabilityGet"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.read`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`"
+      x-tcdx-rector-source: "C-04W; successor v1.10"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/OperationSuccess' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+  "/retention-policy-applicabilities/{id}:submit-for-review":
+    post:
+      operationId: retentionApplicabilitySubmitForReview
+      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
+      tags: ["privacy"]
+      summary: "PRIVACY: retentionApplicabilitySubmitForReview"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.update`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.retention_policy_applicability.submit_for_review.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`, audit/idempotency"
+      x-tcdx-rector-source: "C-04W; successor v1.10; executable DELTA"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionPolicyTransitionRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  "/retention-policy-applicabilities/{id}:review":
+    post:
+      operationId: retentionApplicabilityReview
+      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
+      tags: ["privacy"]
+      summary: "PRIVACY: retentionApplicabilityReview"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.review`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.retention_policy_applicability.review.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`, audit/idempotency"
+      x-tcdx-rector-source: "C-04W; successor v1.10; executable DELTA"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionPolicyTransitionRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  "/retention-policy-applicabilities/{id}:approve":
+    post:
+      operationId: retentionApplicabilityApprove
+      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
+      tags: ["privacy"]
+      summary: "PRIVACY: retentionApplicabilityApprove"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.approve`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.retention_policy_applicability.approve.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`, audit/idempotency"
+      x-tcdx-rector-source: "C-04W; successor v1.10; executable DELTA"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionPolicyTransitionRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  "/retention-policy-applicabilities/{id}:publish":
+    post:
+      operationId: retentionApplicabilityPublish
+      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
+      tags: ["privacy"]
+      summary: "PRIVACY: retentionApplicabilityPublish"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.publish`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.retention_policy_applicability.publish.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`, audit/idempotency"
+      x-tcdx-rector-source: "C-04W; successor v1.10; executable DELTA"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionPolicyTransitionRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  "/retention-policy-applicabilities/{id}:release-hold":
+    post:
+      operationId: legalHoldRelease
+      tags: ["privacy"]
+      summary: "PRIVACY: legalHoldRelease"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.legal_hold.release`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.retention_policy.legal_hold.release.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.retention_policy_hold_releases`, audit/idempotency"
+      x-tcdx-rector-source: "C-04W; successor v1.10; executable DELTA"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/LegalHoldReleaseRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+        '422': { $ref: '#/components/responses/ValidationError' }
   "/data-subject-requests":
     post:
       operationId: dataSubjectRequestCreate
@@ -4207,6 +4450,7 @@ paths:
         '409': { $ref: '#/components/responses/ConflictError' }
     post:
       operationId: evidenceCreate
+      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
       tags: ["evidence"]
       summary: "EVIDENCE_DOCUMENTS: evidenceCreate"
       description: >-
@@ -4870,7 +5114,36 @@ paths:
         "503":
           $ref: "#/components/responses/DependencyError"
 
+  "/retention-policy-applicabilities/{id}:bind-initial-source":
+    post:
+      operationId: retentionApplicabilityBindInitialSource
+      tags: ["privacy"]
+      summary: "PRIVACY: vincular fuente inicial a un borrador propio"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.update`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.retention_policy_applicability.bind_initial_source.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`, audit/idempotency"
+      x-tcdx-rector-source: "INITIAL_SOURCE v1.11 candidate; DELTA.md"
+      description: "Custodian author; draft without source; exact source chain approved independently, current and scan-PASS. Bind updates source/clause/real interval only; no publication. Replay reauthorizes; CAS and transactional audit required."
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionApplicabilityBindInitialSourceRequest' } } }
+      responses:
+        '200': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+        '422': { $ref: '#/components/responses/ValidationError' }
 tags: []
+
 components:
   securitySchemes:
     bearerAuth:
@@ -6696,16 +6969,29 @@ components:
       properties:
         expected_version: { type: integer, format: int64, minimum: 1 }
       description: SoD and reviewed-to-approved state are enforced from authoritative state.
+    RetentionApplicabilityBindInitialSourceRequest:
+      type: object
+      additionalProperties: false
+      required: [source_evidence_version_id, source_clause_ref, effective_from]
+      properties:
+        source_evidence_version_id: { $ref: '#/components/schemas/UuidV7' }
+        source_clause_ref: { type: string, minLength: 1, pattern: '\S' }
+        effective_from: { $ref: '#/components/schemas/UtcTimestamp' }
+        effective_to: { $ref: '#/components/schemas/UtcTimestamp' }
+      description: "Strong If-Match header supplies CAS; expected_version in HTTP body is forbidden. Real intervals require to>from and compatibility with approved source and policy."
     UploadIntentCreateRequest:
       type: object
       additionalProperties: false
-      required: [original_filename, declared_mime, size_bytes, classification, retention_policy_id, source_provenance]
+      required: [original_filename, declared_mime, size_bytes, classification, retention_policy_id, retention_policy_applicability_id, source_provenance]
       properties:
         original_filename: { type: string, minLength: 1 }
         declared_mime: { type: string, minLength: 1, maxLength: 255 }
         size_bytes: { type: integer, format: int64, minimum: 0 }
         classification: { $ref: '#/components/schemas/FileClassification' }
         retention_policy_id: { $ref: '#/components/schemas/UuidV7' }
+        retention_policy_applicability_id: { $ref: '#/components/schemas/UuidV7' }
+        scope_subject_id: { $ref: '#/components/schemas/UuidV7' }
+        processing_activity_id: { $ref: '#/components/schemas/UuidV7' }
         source_provenance: { type: string, minLength: 1 }
         effective_from: { $ref: '#/components/schemas/UtcTimestamp' }
         effective_to: { $ref: '#/components/schemas/UtcTimestamp' }
@@ -6786,7 +7072,7 @@ components:
         provenance_ref: { type: string, minLength: 1 }
         links:
           type: array
-          minItems: 1
+          minItems: 0
           items: { $ref: '#/components/schemas/EvidenceLinkCreateInput' }
       description: FileObject must be finalized, usable and scan-PASS; all objects and policies must be tenant-compatible. Evidence, first draft version and links are created atomically.
     EvidenceSubmitRequest:
@@ -6922,7 +7208,7 @@ components:
     RetentionPolicyCreateRequest:
       type: object
       additionalProperties: false
-      required: [policy_code, version_number, policy_kind, retention_seconds, trigger_event_code, precedence_rank, is_mandatory]
+      required: [policy_code, version_number, policy_kind, trigger_event_code, precedence_rank, is_mandatory]
       properties:
         policy_code: { type: string, minLength: 1, maxLength: 128 }
         version_number: { type: integer, format: int64, minimum: 1 }
@@ -6931,7 +7217,7 @@ components:
         trigger_event_code: { type: string, enum: [expiry_or_closure] }
         precedence_rank: { type: integer, enum: [500, 400, 300, 200, 100] }
         is_mandatory: { type: boolean }
-      description: Precedence must match policy_kind exactly (500/400/300/200/100). effective_from, effective_to, lifecycle, row_version, regulatory source and disposition are not caller-controlled.
+      description: For legal_hold retention_seconds is absent and persisted NULL; for every other kind it is a required nonnegative integer. Precedence must match policy_kind exactly (500/400/300/200/100). effective_from, effective_to, lifecycle, row_version, regulatory source and disposition are not caller-controlled.
     RetentionPolicyTransitionRequest:
       type: object
       additionalProperties: false
@@ -6940,11 +7226,34 @@ components:
     RetentionPolicyUpdateRequest:
       type: object
       additionalProperties: false
-      required: [retention_seconds, is_mandatory]
+      required: [is_mandatory]
       properties:
         retention_seconds: { type: integer, format: int64, minimum: 0 }
         is_mandatory: { type: boolean }
-      description: Draft-only update; strong If-Match supplies row_version. Policy identity, kind, trigger, precedence and lifecycle remain server-controlled.
+      description: Draft-only update; legal_hold omits retention_seconds and all other kinds require it. Strong If-Match supplies row_version. Policy identity, kind, trigger, precedence and lifecycle remain server-controlled.
+    RetentionApplicabilityCreateRequest:
+      type: object
+      additionalProperties: false
+      required: [retention_policy_id, version_number, classification]
+      properties:
+        retention_policy_id: { $ref: '#/components/schemas/UuidV7' }
+        version_number: { type: integer, format: int64, minimum: 1 }
+        classification: { $ref: '#/components/schemas/FileClassification' }
+        scope_subject_id: { $ref: '#/components/schemas/UuidV7' }
+        processing_activity_id: { $ref: '#/components/schemas/UuidV7' }
+        legal_basis_id: { $ref: '#/components/schemas/UuidV7' }
+        source_evidence_version_id: { $ref: '#/components/schemas/UuidV7' }
+        source_clause_ref: { type: string, minLength: 1 }
+        effective_from: { $ref: '#/components/schemas/UtcTimestamp' }
+        effective_to: { $ref: '#/components/schemas/UtcTimestamp' }
+        supersedes_applicability_id: { $ref: '#/components/schemas/UuidV7' }
+    LegalHoldReleaseRequest:
+      type: object
+      additionalProperties: false
+      required: [reason]
+      properties:
+        reason: { type: string, minLength: 1 }
+        release_source_evidence_version_id: { $ref: '#/components/schemas/UuidV7' }
     DomainCommandRequest:
       type: object
       description: Operation-specific schema placeholder constrained by the named request contract in artifact 03; implementations must refine it without adding fields or semantics not traced to that contract.

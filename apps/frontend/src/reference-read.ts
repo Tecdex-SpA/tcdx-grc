@@ -6,10 +6,11 @@ import { publishedOptionLabel, subjectTypeLabel } from "./i18n/display-text.js";
 type Row = Record<string, unknown>;
 export type ReferenceOption = { value: string; label: string; row: Row };
 export type ReferencePage = { options: ReferenceOption[]; nextCursor: string | null };
-export type ReferenceContext = { parentId?: string | undefined; query?: string | undefined; cursor?: string | undefined; subjectType?: string | undefined; timezone?: string | null | undefined };
+export type ReferenceContext = { parentId?: string | undefined; query?: string | undefined; cursor?: string | undefined; subjectType?: string | undefined; initialSource?: boolean | undefined; timezone?: string | null | undefined };
 export const referenceReads = {
   requirement: { operation: "requirementList", path: "/framework-versions/{framework_version_id}/requirements", id: "requirement_id", permission: "compliance.requirement.read", search: true, pathParent: true },
   retentionPolicy: { operation: "retentionPolicyList", path: "/retention-policies", id: "retention_policy_id", permission: "privacy.retention_policy.read" },
+  retentionPolicyApplicability: { operation: "retentionApplicabilityList", path: "/retention-policy-applicabilities", id: "retention_policy_applicability_id", permission: "privacy.retention_policy.read", parent: "retention_policy_id" },
   administrativeMembership: { operation: "membershipList", path: "/memberships", id: "tenant_membership_id", permission: "platform.membership.read" },
   subject: { operation: "subjectList", path: "/subjects", id: "subject_id", permission: "organization.subject.read", search: true },
   control: { operation: "controlList", path: "/controls", id: "control_id", permission: "controls.control.read", search: true },
@@ -28,7 +29,7 @@ export const referenceReads = {
 export type ReferenceEntity = keyof typeof referenceReads;
 const uuid = /\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b/gi;
 export function businessLabel(row: Row, timezone: string | null = null): string {
-  const fields = ["display_name", "control_code", "requirement_code", "test_code", "request_code", "policy_code", "evidence_code", "issue_code", "action_code", "name", "title", "framework_code", "framework_name", "edition"];
+  const fields = ["display_name", "control_code", "requirement_code", "test_code", "request_code", "policy_code", "classification", "evidence_code", "issue_code", "action_code", "name", "title", "framework_code", "framework_name", "edition"];
   const parts = fields.flatMap(field => typeof row[field] === "string" ? [String(row[field]).replace(uuid, "").trim()] : []).filter(Boolean);
   if (typeof row.subject_type === "string") {
     const label = subjectTypeLabel(row.subject_type);
@@ -63,6 +64,7 @@ export async function readReferences(api: ApiClient, entity: ReferenceEntity, co
     if (!("parent" in def)) throw new Error("UNSUPPORTED_REFERENCE_RELATION");
     params.set(`filter[${def.parent}]`, context.parentId);
   }
+  if (entity === "retentionPolicyApplicability" && !context.initialSource) params.set("filter[lifecycle_state]", "published");
   if (context.subjectType) {
     if (entity !== "subject") throw new Error("UNSUPPORTED_REFERENCE_FILTER");
     params.set("filter[subject_type]", context.subjectType);
@@ -80,7 +82,7 @@ export async function readReferences(api: ApiClient, entity: ReferenceEntity, co
       if (typeof minimal.display_name !== "string" || !minimal.display_name.trim()) throw new Error("MEMBERSHIP_DISPLAY_LABEL_UNAVAILABLE");
       return { value: row[def.id] as string, label: businessLabel(minimal, context.timezone), row: minimal };
     }
-    return { value: row[def.id] as string, label: businessLabel(row, context.timezone), row };
+    return { value: row[def.id] as string, label: `${businessLabel(row, context.timezone)}${entity === "retentionPolicyApplicability" && context.initialSource && row.lifecycle_state === "draft" ? " · Fuente pendiente, sin acreditar" : ""}`, row };
   });
   if (result.page.has_more && (!result.page.next_cursor || result.page.next_cursor === context.cursor)) throw new Error("INVALID_REFERENCE_PAGE");
   return { options, nextCursor: result.page.has_more ? result.page.next_cursor : null };
@@ -124,7 +126,7 @@ export async function readEvidenceVersions(api: ApiClient, evidenceId: string, r
     const detail = await api.request<Row>(`/api/v1/evidence-versions/${encodeURIComponent(version.evidence_version_id)}`, signal ? { signal } : {});
     ensureTenant(api, tenant, detail);
     if (detail.evidence_id !== evidenceId || detail.evidence_version_id !== version.evidence_version_id) throw new Error("INCOMPATIBLE_EVIDENCE_VERSION");
-    if (detail.lifecycle_state !== "approved") continue;
+    if (detail.lifecycle_state !== "approved" || detail.ordinary_consumption_allowed === false) continue;
     if (request) {
       const target = targetFields.find(field => request.row[field] != null)!;
       const links = Array.isArray(detail.links) ? detail.links as Row[] : [];

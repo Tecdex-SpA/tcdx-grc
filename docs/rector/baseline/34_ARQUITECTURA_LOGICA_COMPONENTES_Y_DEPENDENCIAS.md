@@ -54,3 +54,7 @@ Read models pueden denormalizarse para UX/reporting, pero se reconstruyen desde 
 ## 6. Tecnología
 
 La selección tecnológica está cerrada en 43. Los componentes se abstraen por contratos internos para testabilidad y evolución, pero no quedan proveedores o frameworks pendientes para iniciar. Un cambio futuro requiere ADR y actualización rectora previa.
+
+## 7. Autoridad comercial propuesta
+
+Tenant & Commercial Entitlements coordina una única transacción PostgreSQL para `subscription.change_plan` y sus asignaciones, locks ordenados, CAS, auditoría, outbox y resultado idempotente. El catálogo CommercialFamily/PlanVersion/UsageLimit se publica mediante una ceremonia interna distinta, también transaccional. Regulatory & Compliance conserva autoridad sobre publicación, licencia y contenido del RegulatoryPackVersion; la relación comercial no reemplaza esos gates. El frontend administra únicamente los commands/reads autorizados por backend, sin cálculo propio de cuota o derechos. La transición T0..T10 mantiene barrera operacional hasta GO y apertura pública autorizada.

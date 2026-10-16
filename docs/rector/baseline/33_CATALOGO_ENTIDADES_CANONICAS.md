@@ -1,6 +1,6 @@
-# 33 - Catálogo completo de entidades canónicas por bounded context — v1.7
+# 33 - Catálogo completo de entidades canónicas por bounded context — v1.9
 
-> Active baseline: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23`.
+> Baseline de esta versión: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14`; la v1.8 es su predecesora y no se modifica in situ.
 
 Este catálogo es la autoridad nominal de entidades lógicas. Un término contractual que requiera identidad, versionado, lineage o referencia reproducible debe aparecer aquí, aunque su implementación física pueda consolidarse conforme a la regla final.
 
@@ -12,7 +12,9 @@ UserIdentity, TenantMembership, Role, Permission, RolePermission, MembershipRole
 `PlatformRoleAssignment` es la única relación canónica entre `UserIdentity` y un `Role` `PLATFORM_CONTROL`. Es persistida, auditable y temporal; no posee `tenant_id` ni `tenant_membership_id`. `MembershipRole` permanece como la única asignación humana tenant-owned y requiere `TenantMembership`. Ambas relaciones consumen los mismos catálogos `Role` y `Permission`; no crean un segundo IAM.
 
 ## Tenant & Commercial Entitlements
-Tenant, Organization, Subscription, Plan, PlanVersion, Capability, Entitlement, UsageLimit, FeatureFlag.
+Tenant, Organization, Subscription, Plan, PlanVersion, CommercialFamily, Capability, Entitlement, UsageLimit, FeatureFlag.
+
+`CommercialFamily` es una entidad `PLATFORM_CONTROL` con UUIDv7, código y significado publicados inmutables y retención `IMMUTABLE_RETAIN`. La autoridad de escritura es Tenant & Commercial Entitlements; no existe una entidad `PackFamily` paralela. Las relaciones RegulatoryPack–CommercialFamily y PlanVersion–CommercialFamily son soportes tipados del modelo 30, no autoridades de catálogo adicionales. `UsageLimit` sigue perteneciendo a una PlanVersion y puede quedar dimensionado por familia explícitamente vinculada; la ausencia de límite requerido bloquea publicación/elegibilidad y nunca significa ilimitado.
 
 ## Organization
 OrganizationalUnit, Process, Service, Asset, System, Application, DataAsset, Location, Dependency, Subject, Resource.
@@ -118,3 +120,9 @@ AuditEvent, IdempotencyRecord, OutboxEvent, JobExecution, SystemHealthEvent, Lif
 Este catálogo es lógico. No implica una tabla por entidad si una implementación preserva identidad, invariantes, relaciones, versionado, auditabilidad y ownership sin fusionar autoridades semánticas distintas.
 
 Queda prohibido que el modelo físico invente una entidad semántica no contenida aquí o elimine una entidad contractual mediante JSONB/ad-hoc storage sin demostrar equivalencia en `PHYSICAL_DATA_MODEL_REVIEW`.
+
+## Delta de catálogo candidato STEP_6A3 C-04W
+
+Privacy incorpora RetentionPolicyApplicability y RetentionPolicyHoldRelease con las identidades, ownership, relaciones y restricciones del paquete aprobado. La primera es la relación versionada entre policy/version, contexto, fuente EvidenceVersion y la cadena FileUploadIntent→FileObject→EvidenceVersion. La segunda registra el levantamiento explícito de una aplicabilidad legal_hold sin modificar historia. No existe una nueva RetentionPolicy ni un agregado de evidencia paralelo.
+
+Fuente exacta del delta: `docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/CONTRACT_PACKET_20261015.md`; SHA-256 `6b87812823472d56a89622eca8119b0cd56606f2f21d635dd84bf903896ba7f2`. Esta copia candidata no es autoridad activa antes del gate 47.

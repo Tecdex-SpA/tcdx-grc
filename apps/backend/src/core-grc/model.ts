@@ -93,19 +93,26 @@ export const resources = {
     name: "FileUploadIntent", table: "evidence.file_upload_intents", idColumn: "file_upload_intent_id",
     permission: "evidence.document.create", capability: "EVIDENCE_DOCUMENTS", ownedByCreator: true,
     scopes: ["tenant", "owned_object"],
-    projection: ["file_upload_intent_id", "row_version", "purpose", "original_filename", "declared_mime", "expected_size_bytes", "classification", "retention_policy_id", "source_provenance", "effective_from", "effective_to", "quarantine_object_key", "lifecycle_state", "expires_at", "uploaded_at", "scan_started_at", "scan_completed_at", "promoted_at", "rejected_at", "expired_at", "cancelled_at", "file_object_id"]
+    projection: ["file_upload_intent_id", "row_version", "purpose", "original_filename", "declared_mime", "expected_size_bytes", "classification", "retention_policy_id", "retention_policy_applicability_id", "source_provenance", "effective_from", "effective_to", "quarantine_object_key", "lifecycle_state", "expires_at", "uploaded_at", "scan_started_at", "scan_completed_at", "promoted_at", "rejected_at", "expired_at", "cancelled_at", "file_object_id"]
   },
   fileObject: {
     name: "FileObject", table: "evidence.file_objects", idColumn: "file_object_id",
     permission: "evidence.evidence.read", capability: "EVIDENCE_DOCUMENTS", ownedByCreator: true,
     scopes: ["tenant", "owned_object", "assigned_object"],
-    projection: ["file_object_id", "row_version", "original_filename", "declared_mime", "detected_mime", "size_bytes", "sha256", "classification", "retention_policy_id", "scan_status", "scan_completed_at", "storage_version", "source_provenance", "effective_from", "effective_to"]
+    projection: ["file_object_id", "row_version", "original_filename", "declared_mime", "detected_mime", "size_bytes", "sha256", "classification", "retention_policy_id", "retention_policy_applicability_id", "scan_status", "scan_completed_at", "storage_version", "source_provenance", "effective_from", "effective_to"]
   },
   retentionPolicy: {
     name: "RetentionPolicy", table: "privacy.retention_policies", idColumn: "retention_policy_id",
     permission: "privacy.retention_policy.read", capability: "PRIVACY", ownedByCreator: false,
     scopes: ["tenant"],
     projection: ["retention_policy_id", "row_version", "ownership_class", "policy_code", "version_number", "policy_kind", "retention_seconds", "trigger_event_code", "precedence_rank", "is_mandatory", "lifecycle_state", "effective_from", "effective_to", "regulatory_source_id"]
+  },
+  retentionPolicyApplicability: {
+    name: "RetentionPolicyApplicability", table: "privacy.retention_policy_applicabilities", idColumn: "retention_policy_applicability_id",
+    permission: "privacy.retention_policy.read", capability: "PRIVACY", ownedByCreator: false,
+    scopes: ["tenant"],
+    projection: ["retention_policy_applicability_id", "retention_policy_id", "version_number", "classification", "purpose", "scope_subject_id", "processing_activity_id", "legal_basis_id", "source_evidence_version_id", "source_clause_ref", "effective_from", "effective_to", "lifecycle_state", "published_at", "supersedes_applicability_id", "row_version"],
+    filters: { "filter[retention_policy_id]": { expression: "t.retention_policy_id", type: "uuid" } }
   },
   evidence: {
     name: "Evidence", table: "evidence.evidences", idColumn: "evidence_id", permission: "evidence.evidence.read", capability: "EVIDENCE_DOCUMENTS",
@@ -116,7 +123,7 @@ export const resources = {
   evidenceVersion: {
     name: "EvidenceVersion", table: "evidence.evidence_versions", idColumn: "evidence_version_id", permission: "evidence.evidence.read", capability: "EVIDENCE_DOCUMENTS",
     scopes: ["tenant", "assigned_object", "owned_object", "audit_engagement"],
-    projection: ["evidence_version_id", "row_version", "evidence_id", "document_version_id", "file_object_id", "version_number", "effective_from", "effective_to", "published_at", "period_start", "period_end", "lifecycle_state", "submitted_at", "approved_at", "expires_at", "superseded_by_id", "provenance_ref"]
+    projection: ["evidence_version_id", "row_version", "evidence_id", "document_version_id", "file_object_id", "retention_policy_applicability_id", "version_number", "effective_from", "effective_to", "published_at", "period_start", "period_end", "lifecycle_state", "submitted_at", "approved_at", "expires_at", "superseded_by_id", "provenance_ref"]
   },
   issue: {
     name: "Issue", table: "remediation.issues", idColumn: "issue_id", permission: "remediation.issue.read", capability: "ISSUES_ACTIONS",

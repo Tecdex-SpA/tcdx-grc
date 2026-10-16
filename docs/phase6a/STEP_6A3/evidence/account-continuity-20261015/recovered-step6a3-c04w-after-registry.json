@@ -1,0 +1,153 @@
+{
+  "status": "PASS_READONLY",
+  "at": "2026-10-15T19:49:55.290Z",
+  "identity": {
+    "db": "tcdx-grc",
+    "host": "192.168.2.40",
+    "major": 16,
+    "ssl": true
+  },
+  "counts": {
+    "migrations": 34,
+    "active_platform_service_principals": 1,
+    "reference_publication_audits": 132,
+    "r3_audits": 36,
+    "commercial_permissions": 3,
+    "commercial_lifecycle_registry_rows": 3,
+    "v2": 3,
+    "entitlements_v2": 36,
+    "unvalidated_fks": 0,
+    "app_can_provision": true,
+    "app_can_publish": true,
+    "draft_packs": 5,
+    "catalog_audits": 6,
+    "catalog_outbox": 5
+  },
+  "quotas": [
+    {
+      "plan_code": "GRC",
+      "dimension": "ISO",
+      "value": "4.0000000000",
+      "unit": "pack",
+      "open_ended": true
+    },
+    {
+      "plan_code": "GRC",
+      "dimension": "LEGAL",
+      "value": "1.0000000000",
+      "unit": "pack",
+      "open_ended": true
+    },
+    {
+      "plan_code": "GRC",
+      "dimension": "TOTAL",
+      "value": "5.0000000000",
+      "unit": "pack",
+      "open_ended": true
+    },
+    {
+      "plan_code": "ISO",
+      "dimension": "ISO",
+      "value": "2.0000000000",
+      "unit": "pack",
+      "open_ended": true
+    },
+    {
+      "plan_code": "ISO",
+      "dimension": "LEGAL",
+      "value": "0.0000000000",
+      "unit": "pack",
+      "open_ended": true
+    },
+    {
+      "plan_code": "ISO",
+      "dimension": "TOTAL",
+      "value": "2.0000000000",
+      "unit": "pack",
+      "open_ended": true
+    },
+    {
+      "plan_code": "ISO_RIESGO_OPERATIVO",
+      "dimension": "ISO",
+      "value": "3.0000000000",
+      "unit": "pack",
+      "open_ended": true
+    },
+    {
+      "plan_code": "ISO_RIESGO_OPERATIVO",
+      "dimension": "LEGAL",
+      "value": "0.0000000000",
+      "unit": "pack",
+      "open_ended": true
+    },
+    {
+      "plan_code": "ISO_RIESGO_OPERATIVO",
+      "dimension": "TOTAL",
+      "value": "3.0000000000",
+      "unit": "pack",
+      "open_ended": true
+    }
+  ],
+  "publication": {
+    "verified_material_audits": 5,
+    "verified_outbox_aggregates": 5,
+    "completed_publications": 1,
+    "commercial_admin_grants": 3,
+    "unauthorized_commercial_grants": 0,
+    "verified_machine_bindings": 1,
+    "duplicate_reference_audits": 0
+  },
+  "subscriptions_count": 5,
+  "entitlements_v1_count": 36,
+  "fingerprints": {
+    "subscriptions": "8f520289ed8e9b6d2263abbe167f20debe6609dac0baa3b0e3de827a0c23fbb3",
+    "plan_v1": "79240e39b7a88e9953e651101d05c9afef098e8d908141b10e59a33f97dd759d",
+    "entitlements_v1": "9e722f48f8b75531361aa93d1145d9310afc26a8e12aa72e56dfc17c26a49671",
+    "reference_grants": "fc59b90d7e0f72f4086cb290ab6ae6356537c09652ca7ef3db029886b1ece2b0",
+    "roles": "613ce452fea11fa8435fd2b3f3c3ceaaa7dc04f5dd908bc7a225fee554f81422"
+  },
+  "plans": [
+    {
+      "plan_code": "GRC",
+      "version_number": "1",
+      "lifecycle_state": "published",
+      "effective_from": "2026-09-16T00:00:00.000000Z",
+      "published": true
+    },
+    {
+      "plan_code": "GRC",
+      "version_number": "2",
+      "lifecycle_state": "published",
+      "effective_from": "2026-10-14T18:08:21.832000Z",
+      "published": true
+    },
+    {
+      "plan_code": "ISO",
+      "version_number": "1",
+      "lifecycle_state": "published",
+      "effective_from": "2026-09-16T00:00:00.000000Z",
+      "published": true
+    },
+    {
+      "plan_code": "ISO",
+      "version_number": "2",
+      "lifecycle_state": "published",
+      "effective_from": "2026-10-14T18:08:21.832000Z",
+      "published": true
+    },
+    {
+      "plan_code": "ISO_RIESGO_OPERATIVO",
+      "version_number": "1",
+      "lifecycle_state": "published",
+      "effective_from": "2026-09-16T00:00:00.000000Z",
+      "published": true
+    },
+    {
+      "plan_code": "ISO_RIESGO_OPERATIVO",
+      "version_number": "2",
+      "lifecycle_state": "published",
+      "effective_from": "2026-10-14T18:08:21.832000Z",
+      "published": true
+    }
+  ]
+}

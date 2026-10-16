@@ -1,0 +1,62 @@
+{
+  "record_type": "C04W_R2_ISOLATED_VALIDATION",
+  "recorded_at_utc": "2026-10-15T16:27:05.273211+00:00",
+  "scope": "STEP_6A3_C04W_R2",
+  "environment": "LOCAL_ISOLATED_POSTGRESQL_16",
+  "qa_execution": false,
+  "source_hashes": {
+    "migration_r2": {
+      "path": "database/migrations/20261015000100_c04w_applicability_hold_r2.sql",
+      "sha256": "b2a5bc73f75d7f95fb7ba5068f1b3ea77a923d7da7501446d05455ee545ec523"
+    },
+    "physical_contract": {
+      "path": "docs/physical-data-model/candidates/STEP_6A3_C04W_v1.10/PHYSICAL_DELTA.md",
+      "sha256": "6c774adeba0bf3deebbad55c3c820f01eef908bdc264f3d97e90af1ee7a88454"
+    },
+    "executable_contract": {
+      "path": "docs/executable-contracts/candidates/STEP_6A3_C04W_CFGD_v1.10/DELTA.md",
+      "sha256": "d22c9a71b77830ac79f940cf0e57514832c7ad66c1cd8f79442a1544ce62cf2b"
+    },
+    "functional_test": {
+      "path": "scripts/phase6a3/validate-c04w-isolated.sql",
+      "sha256": "db25eaf13b502ffdb89bb1f83b0dbf6cccf61f835c891fe60db9dfca3d1e8c42"
+    },
+    "rbac_test": {
+      "path": "apps/backend/src/security/c04w-rbac-publication.postgres.test.ts",
+      "sha256": "0d7a2db53b87de8b4d47dce30ecf5a0f759c4a454ba99e632643c29f2e5d1dcf"
+    }
+  },
+  "observed_results": {
+    "schema_verification": {
+      "status": "PASS",
+      "expected_physical_tables": 242,
+      "actual_physical_tables": 242,
+      "schema_mismatches": 0,
+      "command_exit_code": 0
+    },
+    "functional_constraints": {
+      "status": "PASS",
+      "marker": "C04W_ISOLATED_CONSTRAINTS=PASS",
+      "transaction_end": "ROLLBACK",
+      "command_exit_code": 0
+    },
+    "rbac_publication": {
+      "status": "PASS",
+      "test_files_passed": 1,
+      "tests_passed": 1,
+      "command_exit_code": 0
+    }
+  },
+  "evidence_classification": "USER_REPORTED_TERMINAL_OUTPUT",
+  "limitations": [
+    "No contiene logs originales firmados ni hashes de stdout.",
+    "No acredita pruebas HTTP ni E2E externas.",
+    "No acredita aceptación humana de QA.",
+    "No publica contratos ni permisos.",
+    "No acredita suficiencia metodológica CFG-D."
+  ],
+  "contract_status": "DRAFT_NOT_EFFECTIVE",
+  "step_6a3_status": "PARTIAL_BLOCKED",
+  "rector_gate": "BLOCKED",
+  "step_6a4_status": "NOT_STARTED"
+}

@@ -7,12 +7,13 @@ import {readBusinessReferences,type ReferenceEntity} from "./reference-read.js";
 import {TenantTimezoneContext,TenantInstantPreview,tenantInstantToUtc} from "./tenant-timezone.js";
 import {uiText} from "./i18n/es.js";
 type Row=Record<string,unknown>;
-export function TypedReferenceField({api,field,form,value,onChange}:{api:ApiClient;field:string;form:Record<string,string>;value:string;onChange(value:string):void}) {
- const entities:Record<string,ReferenceEntity>={requirement_applicability_id:"applicability",control_id:"control",requirement_assessment_id:"requirementAssessment",control_assessment_id:"controlAssessment",assurance_test_id:"assuranceTest",evidence_request_id:"evidenceRequest",issue_id:"issue",business_owner_subject_id:"subject",scope_subject_id:"subject"};
+export function TypedReferenceField({api,field,form,value,onChange,onRetentionContext}:{api:ApiClient;field:string;form:Record<string,string>;value:string;onChange(value:string):void;onRetentionContext?(row:Row|undefined):void}) {
+ const entities:Record<string,ReferenceEntity>={requirement_applicability_id:"applicability",retention_policy_applicability_id:"retentionPolicyApplicability",control_id:"control",requirement_assessment_id:"requirementAssessment",control_assessment_id:"controlAssessment",assurance_test_id:"assuranceTest",evidence_request_id:"evidenceRequest",issue_id:"issue",business_owner_subject_id:"subject",scope_subject_id:"subject"};
  if(field==="control_version_id") return <ControlVersionSelect api={api} ownership="tenant" parentControlId={form.control_id??""} disabled={!form.control_id} value={value} onChange={onChange}/>;
  if(field==="requirement_id") return <RequirementReferenceField api={api} value={value} onChange={onChange}/>;
  if(field==="effective_configuration_id") return <div><p className="form-guidance">Configuración efectiva opcional</p><ReferenceState state="MISSING_CONFIGURATION"/></div>;
  if(field==="business_owner_subject_id") return <EntityReferenceSelect api={api} entity="subject" label="Responsable de negocio" value={value} onChange={onChange}/>;
+ if(field==="retention_policy_applicability_id" || field==="supersedes_applicability_id") return <EntityReferenceSelect api={api} entity="retentionPolicyApplicability" label={field==="supersedes_applicability_id"?"Versión anterior de aplicabilidad":"Aplicabilidad de retención"} {...(onRetentionContext?{onOption:onRetentionContext}:{})} context={{parentId:form.retention_policy_id??"",initialSource:field==="retention_policy_applicability_id"}} value={value} onChange={onChange}/>;
  const entity=entities[field];return entity?<EntityReferenceSelect api={api} entity={entity} label={fieldLabel(field)} value={value} onChange={onChange}/>:null;
 }
 export function RequirementReferenceField({api,value,onChange}:{api:ApiClient;value:string;onChange(value:string):void}) {

@@ -1,0 +1,8 @@
+{
+  "recorded_at_utc": "2026-10-15T21:18:00.365620+00:00",
+  "scope": "Candidate YAML document validation, no product code",
+  "result": "FAIL_REPAIRED_BEFORE_SUBMISSION",
+  "cause": "New path was inserted after top-level tags instead of inside paths",
+  "correction": "Move bind path before top-level tags; regenerate candidate diff and review hashes",
+  "active_contracts_changed": false
+}

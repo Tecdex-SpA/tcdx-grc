@@ -1,0 +1,48 @@
+{
+  "oidcUserIdentityBoundary": "PASS",
+  "firstPlatformAdminBootstrap": "PASS",
+  "bootstrapConcurrency": [
+    "fulfilled",
+    "rejected"
+  ],
+  "tenantBootstrap": "PASS",
+  "platformRbac": "PASS",
+  "subscriptionCreate": {
+    "subscription_id": "01a13568-be96-7556-be14-214aecc3da43",
+    "tenant_id": "01a13568-be23-73ef-b341-0e91ebe7c361",
+    "plan_version_id": "01a0a783-6000-73d1-a52c-eaa706d6696a",
+    "subscription_code": "RT-01a13568",
+    "lifecycle_state": "active",
+    "starts_at": "2026-10-13T13:16:59.413Z",
+    "ends_at": null,
+    "cancelled_at": null
+  },
+  "subscriptionReplay": true,
+  "tenantCreateDefaults": {
+    "tenant_id": "01a13568-be23-73ef-b341-0e91ebe7c361",
+    "tenant_code": "RT-400b4aa7fdc8",
+    "legal_name": "Runtime Verification One",
+    "display_name": "Runtime One",
+    "default_timezone": "America/Santiago",
+    "lifecycle_state": "active",
+    "data_classification": "confidential"
+  },
+  "membershipCreateNoAutomaticRole": true,
+  "membershipRoleAssign": {
+    "membership_role_id": "01a13568-bea3-73c6-ac38-b9ce7f84eb91",
+    "tenant_membership_id": "01a13568-bea0-7784-a07b-507a0cdb2258",
+    "role_id": "01a13568-bd62-702b-b6a2-b8008e7d4618",
+    "scope_kind": "tenant",
+    "organizational_unit_id": null,
+    "process_id": null,
+    "service_id": null,
+    "audit_id": null,
+    "valid_from": "2026-10-13T13:16:59.427Z",
+    "valid_to": null,
+    "etag": "5e6c7b446afe22e4c96867e2a9d474d7be4d95d1be1565fb40e31ed70c179ac6"
+  },
+  "accessMeOwnContexts": 2,
+  "tenantAuthorizationDefaultDeny": true,
+  "failures": []
+}
+JSON report written to /workspace/r6-v2-full.json

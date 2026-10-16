@@ -14,6 +14,7 @@ import { recordPrivilegedUse, requirePlatformAccess } from "./platform-authority
 import { membershipRoleEtag } from "./membership-role-etag.js";
 
 type Body = Record<string, unknown>;
+export { subscriptionChangePlan } from "./commercial-subscription.js";
 type ScopeKind = "tenant" | "organizational_unit" | "process" | "service" | "audit_engagement" | "assigned_object" | "owned_object";
 
 const scopeKinds = new Set<ScopeKind>(["tenant", "organizational_unit", "process", "service", "audit_engagement", "assigned_object", "owned_object"]);

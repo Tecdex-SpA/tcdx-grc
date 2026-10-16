@@ -1,0 +1,32 @@
+{
+  "counts": {
+    "plans": 3,
+    "capabilities": 20,
+    "entitlements": 36,
+    "roles": 24,
+    "tenantBaselineRoles": 0,
+    "permissions": 175,
+    "lifecycleDefinitionRows": 140,
+    "lifecycleEdges": 103,
+    "configurationDefaults": 1,
+    "regulatoryPackHeaders": 5,
+    "regulatoryPackVersions": 5,
+    "impactLevels": 5,
+    "likelihoodLevels": 5,
+    "methodologies": 1
+  },
+  "expectedPermissionRows": 175,
+  "phase5RuntimePermissionsApplied": true,
+  "phase5SubscriptionPermissionApplied": true,
+  "phase5MembershipInvitationPermissionsApplied": true,
+  "phase5AdministrativeReadPermissionsApplied": true,
+  "phase5ControlAssessmentStartApplied": true,
+  "tenantBootstrapMaterializations": [],
+  "issueDismissedSources": [
+    "open",
+    "triaged"
+  ],
+  "seedMismatches": 0,
+  "failures": []
+}
+$ node --experimental-strip-types scripts/foundations/verify-seeds.ts

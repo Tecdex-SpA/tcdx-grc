@@ -1,0 +1,21 @@
+{
+  "scope": "STEP_6A3_C04W_R2_QA_MIGRATION",
+  "status": "PASS_QA",
+  "host": "db-v4.tcdx.int",
+  "database": "tcdx-grc",
+  "postgresql_major": 16,
+  "migration_id": "20261015000100",
+  "migration_filename": "20261015000100_c04w_applicability_hold_r2.sql",
+  "migration_sha256": "b2a5bc73f75d7f95fb7ba5068f1b3ea77a923d7da7501446d05455ee545ec523",
+  "backup_sha256": "776b79ea7f7f44850a1175441086a95ba8d3a45677b8437abd9557982072f60e",
+  "qa_before": { "migrations": 33, "tenants": 3, "subscriptions": 5, "entitlements": 72, "retention_policies": 1, "file_upload_intents": 1, "file_objects": 1, "evidence_versions": 1 },
+  "qa_after": { "migrations": 34, "tenants": 3, "subscriptions": 5, "entitlements": 72, "retention_policies": 1, "file_upload_intents": 1, "file_objects": 1, "evidence_versions": 1 },
+  "expected_physical_tables": 242,
+  "actual_physical_tables": 242,
+  "schema_mismatches": 0,
+  "unvalidated_foreign_keys": 0,
+  "forbidden_delete_cascades": 0,
+  "qa_operator_evidence_path": "/var/backups/tcdx-grc/step6a3-basebackup-w5UXYYlC/c04w-r2-qa-migration-verification.txt",
+  "qa_operator_evidence_sha256": "d790e7eb4a8e265a22d4efd19c46ff01e74d43a87b3aef00eb9ba2242ee2f0aa",
+  "source": "2026-10-15 operator terminal output in this execution"
+}

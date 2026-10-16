@@ -1,0 +1,715 @@
+{
+  "profile": "STEP6A3_RESIDUAL_VOC_C04_ACCEPTANCE_CANDIDATE_V1",
+  "status": "PENDING_HUMAN_ACCEPTANCE",
+  "master_regent": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14",
+  "authority_required": "Andrés Barouh, funciones internas Domain Controls/Evidence/Remediation, Architecture, Data Model, Backend, Security & Privacy, QA/Release según rector49",
+  "scope": "VOC-C04 inventario y compatibilidad histórica QA exclusivamente",
+  "reference": "docs/executable-contracts/30_PHASE6A3_VOCABULARIES.md -> docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md §Compatibilidad y versionado firmables; rector23 §§2–3; rector49 §3",
+  "vocabulary_manifest_sha256": "81e559c96f687c319d415bb57b97187f17f91d884b35594b4ce0db7b68862b83",
+  "observed_inventory": {
+    "status": "PASS_READONLY",
+    "at": "2026-10-14T22:43:10.371Z",
+    "identity": {
+      "db": "tcdx-grc",
+      "host": "192.168.2.40",
+      "major": 16,
+      "ssl": true
+    },
+    "methodologies": [
+      {
+        "table": "regulatory.compliance_methodologies",
+        "rows": [
+          {
+            "methodology": {
+              "name": "Compliance rector baseline",
+              "tenant_id": null,
+              "created_at": "2026-10-08T09:58:35.350143+00:00",
+              "effective_to": null,
+              "published_at": "2026-10-08T09:58:35.350143+00:00",
+              "rector_source": "rector 17/19/31/38/39; PHASE5_METHODOLOGY_BINDING_ARCHITECTURE_DECISION_20261007",
+              "effective_from": "2026-10-08T09:58:35.350143+00:00",
+              "rector_version": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23",
+              "version_number": 1,
+              "lifecycle_state": "published",
+              "ownership_class": "PLATFORM_CONTROL",
+              "methodology_code": "BASELINE_COMPLIANCE",
+              "minimum_coverage": 80,
+              "formula_definition_id": "01a11900-0000-7001-8000-000000000003",
+              "compliance_methodology_id": "01a11900-0000-7001-8000-000000000001",
+              "partial_compliance_factor": 0.5
+            },
+            "formula": {
+              "name": "Compliance rector baseline",
+              "tenant_id": null,
+              "created_at": "2026-10-08T09:58:35.350143+00:00",
+              "expression": "compliance_score=sum(weight*status_factor)/sum(weight_of_scored_applicable_requirements)*100;coverage=scored_applicable_requirements/applicable_requirements*100;partial_compliance_factor=methodology.partial_compliance_factor",
+              "output_unit": "percent",
+              "effective_to": null,
+              "formula_code": "BASELINE_COMPLIANCE",
+              "published_at": "2026-10-08T09:58:35.350143+00:00",
+              "effective_from": "2026-10-08T09:58:35.350143+00:00",
+              "version_number": 1,
+              "lifecycle_state": "published",
+              "ownership_class": "GLOBAL_REFERENCE",
+              "expression_language": "TCDX_DETERMINISTIC_EXPRESSION_V1",
+              "formula_definition_id": "01a11900-0000-7001-8000-000000000003"
+            }
+          }
+        ]
+      },
+      {
+        "table": "controls.control_effectiveness_methodologies",
+        "rows": [
+          {
+            "methodology": {
+              "name": "Control effectiveness rector baseline",
+              "tenant_id": null,
+              "created_at": "2026-10-08T09:58:35.350143+00:00",
+              "effective_to": null,
+              "published_at": "2026-10-08T09:58:35.350143+00:00",
+              "rector_source": "rector 17/19/31/38/39; PHASE5_METHODOLOGY_BINDING_ARCHITECTURE_DECISION_20261007",
+              "effective_from": "2026-10-08T09:58:35.350143+00:00",
+              "rector_version": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23",
+              "version_number": 1,
+              "lifecycle_state": "published",
+              "ownership_class": "PLATFORM_CONTROL",
+              "methodology_code": "BASELINE_CONTROL_EFFECTIVENESS",
+              "minimum_coverage": 80,
+              "formula_definition_id": "01a11900-0000-7001-8000-000000000004",
+              "control_effectiveness_methodology_id": "01a11900-0000-7001-8000-000000000002"
+            },
+            "formula": {
+              "name": "Control effectiveness rector baseline",
+              "tenant_id": null,
+              "created_at": "2026-10-08T09:58:35.350143+00:00",
+              "expression": "overall_effectiveness=min(design_effectiveness,operating_effectiveness)",
+              "output_unit": "percent",
+              "effective_to": null,
+              "formula_code": "BASELINE_CONTROL_EFFECTIVENESS",
+              "published_at": "2026-10-08T09:58:35.350143+00:00",
+              "effective_from": "2026-10-08T09:58:35.350143+00:00",
+              "version_number": 1,
+              "lifecycle_state": "published",
+              "ownership_class": "GLOBAL_REFERENCE",
+              "expression_language": "TCDX_DETERMINISTIC_EXPRESSION_V1",
+              "formula_definition_id": "01a11900-0000-7001-8000-000000000004"
+            }
+          }
+        ]
+      }
+    ],
+    "legal_context_columns": [
+      {
+        "table_schema": "controls",
+        "table_name": "control_effectiveness_methodologies",
+        "column_name": "control_effectiveness_methodology_id"
+      },
+      {
+        "table_schema": "controls",
+        "table_name": "control_effectiveness_methodologies",
+        "column_name": "methodology_code"
+      },
+      {
+        "table_schema": "controls",
+        "table_name": "control_effectiveness_methodologies",
+        "column_name": "rector_source"
+      },
+      {
+        "table_schema": "evidence",
+        "table_name": "evidences",
+        "column_name": "business_owner_subject_id"
+      },
+      {
+        "table_schema": "evidence",
+        "table_name": "evidences",
+        "column_name": "retention_policy_id"
+      },
+      {
+        "table_schema": "evidence",
+        "table_name": "evidences",
+        "column_name": "source_kind"
+      },
+      {
+        "table_schema": "evidence",
+        "table_name": "file_objects",
+        "column_name": "retention_policy_id"
+      },
+      {
+        "table_schema": "evidence",
+        "table_name": "file_objects",
+        "column_name": "source_provenance"
+      },
+      {
+        "table_schema": "evidence",
+        "table_name": "file_upload_intents",
+        "column_name": "retention_policy_id"
+      },
+      {
+        "table_schema": "evidence",
+        "table_name": "file_upload_intents",
+        "column_name": "source_provenance"
+      },
+      {
+        "table_schema": "privacy",
+        "table_name": "legal_bases",
+        "column_name": "legal_basis_id"
+      },
+      {
+        "table_schema": "privacy",
+        "table_name": "legal_bases",
+        "column_name": "legal_basis_code"
+      },
+      {
+        "table_schema": "privacy",
+        "table_name": "legal_bases",
+        "column_name": "regulatory_source_id"
+      },
+      {
+        "table_schema": "privacy",
+        "table_name": "privacy_processing_activities",
+        "column_name": "privacy_processing_activity_id"
+      },
+      {
+        "table_schema": "privacy",
+        "table_name": "privacy_processing_activities",
+        "column_name": "business_owner_subject_id"
+      },
+      {
+        "table_schema": "privacy",
+        "table_name": "privacy_processing_activities",
+        "column_name": "retention_policy_id"
+      },
+      {
+        "table_schema": "privacy",
+        "table_name": "processing_activity_legal_bases",
+        "column_name": "processing_activity_legal_base_id"
+      },
+      {
+        "table_schema": "privacy",
+        "table_name": "processing_activity_legal_bases",
+        "column_name": "processing_activity_id"
+      },
+      {
+        "table_schema": "privacy",
+        "table_name": "processing_activity_legal_bases",
+        "column_name": "legal_basis_id"
+      },
+      {
+        "table_schema": "privacy",
+        "table_name": "retention_policies",
+        "column_name": "retention_policy_id"
+      },
+      {
+        "table_schema": "privacy",
+        "table_name": "retention_policies",
+        "column_name": "retention_seconds"
+      },
+      {
+        "table_schema": "privacy",
+        "table_name": "retention_policies",
+        "column_name": "regulatory_source_id"
+      },
+      {
+        "table_schema": "regulatory",
+        "table_name": "compliance_methodologies",
+        "column_name": "compliance_methodology_id"
+      },
+      {
+        "table_schema": "regulatory",
+        "table_name": "compliance_methodologies",
+        "column_name": "methodology_code"
+      },
+      {
+        "table_schema": "regulatory",
+        "table_name": "compliance_methodologies",
+        "column_name": "rector_source"
+      }
+    ],
+    "retention_policy_counts": [
+      {
+        "ownership_class": "TENANT_OWNED",
+        "policy_kind": "tenant_policy",
+        "lifecycle_state": "published",
+        "count": 1
+      }
+    ],
+    "retention_history": {
+      "promoted_pairs": 1,
+      "upload_file_policy_mismatches": 0,
+      "evidence_file_pairs": 1,
+      "evidence_file_policy_mismatches": 0
+    },
+    "vocabulary_manifest_sha256": "81e559c96f687c319d415bb57b97187f17f91d884b35594b4ce0db7b68862b83",
+    "vocabulary_inventory": [
+      {
+        "family": "CV-03",
+        "table": "controls.control_versions",
+        "column": "frequency_code",
+        "version": "version_number",
+        "ownership_column_present": true,
+        "parent_links": [],
+        "total": 213,
+        "rows": [
+          {
+            "ownership_class": "GLOBAL_REFERENCE",
+            "tenant_id": null,
+            "entity_version": "1",
+            "code": "continuous",
+            "count": 131,
+            "classification": "PUBLISHED_CODE"
+          },
+          {
+            "ownership_class": "PLATFORM_CONTROL",
+            "tenant_id": null,
+            "entity_version": "1",
+            "code": "continuous",
+            "count": 81,
+            "classification": "PUBLISHED_CODE"
+          },
+          {
+            "ownership_class": "TENANT_OWNED",
+            "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+            "entity_version": "1",
+            "code": "on_demand",
+            "count": 1,
+            "classification": "HISTORICAL_UNRECOGNIZED_PRESERVE"
+          }
+        ]
+      },
+      {
+        "family": "CV-14",
+        "table": "controls.control_versions",
+        "column": "suggested_owner_role_code",
+        "version": "version_number",
+        "ownership_column_present": true,
+        "parent_links": [],
+        "total": 213,
+        "rows": [
+          {
+            "ownership_class": "GLOBAL_REFERENCE",
+            "tenant_id": null,
+            "entity_version": "1",
+            "code": "COMPLIANCE_MANAGER",
+            "count": 131,
+            "classification": "PUBLISHED_CODE"
+          },
+          {
+            "ownership_class": "PLATFORM_CONTROL",
+            "tenant_id": null,
+            "entity_version": "1",
+            "code": "COMPLIANCE_MANAGER",
+            "count": 81,
+            "classification": "PUBLISHED_CODE"
+          },
+          {
+            "ownership_class": "TENANT_OWNED",
+            "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+            "entity_version": "1",
+            "code": null,
+            "count": 1,
+            "classification": "NULL_OPTIONAL"
+          }
+        ]
+      },
+      {
+        "family": "CV-02",
+        "table": "evidence.evidences",
+        "column": "evidence_type",
+        "version": "row_version",
+        "ownership_column_present": false,
+        "parent_links": [],
+        "total": 1,
+        "rows": [
+          {
+            "ownership_class": null,
+            "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+            "entity_version": "1",
+            "code": "document",
+            "count": 1,
+            "classification": "PUBLISHED_CODE"
+          }
+        ]
+      },
+      {
+        "family": "CV-12",
+        "table": "evidence.evidences",
+        "column": "source_kind",
+        "version": "row_version",
+        "ownership_column_present": false,
+        "parent_links": [],
+        "total": 1,
+        "rows": [
+          {
+            "ownership_class": null,
+            "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+            "entity_version": "1",
+            "code": "file",
+            "count": 1,
+            "classification": "HISTORICAL_UNRECOGNIZED_PRESERVE"
+          }
+        ]
+      },
+      {
+        "family": "CV-01",
+        "table": "evidence.file_upload_intents",
+        "column": "classification",
+        "version": "row_version",
+        "ownership_column_present": false,
+        "parent_links": [],
+        "total": 1,
+        "rows": [
+          {
+            "ownership_class": null,
+            "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+            "entity_version": "2",
+            "code": "internal",
+            "count": 1,
+            "classification": "PUBLISHED_CODE"
+          }
+        ]
+      },
+      {
+        "family": "CV-13",
+        "table": "evidence.evidence_reviews",
+        "column": "sufficiency",
+        "version": null,
+        "ownership_column_present": false,
+        "parent_links": [
+          {
+            "column": "evidence_id",
+            "parent": "evidence.evidences",
+            "parentId": "evidence_id"
+          },
+          {
+            "column": "evidence_version_id",
+            "parent": "evidence.evidence_versions",
+            "parentId": "evidence_version_id"
+          }
+        ],
+        "total": 1,
+        "rows": [
+          {
+            "ownership_class": null,
+            "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+            "entity_version": null,
+            "code": "sufficient",
+            "count": 1,
+            "classification": "PUBLISHED_CODE"
+          }
+        ]
+      },
+      {
+        "family": "CV-09",
+        "table": "evidence.evidence_reviews",
+        "column": "relevance",
+        "version": null,
+        "ownership_column_present": false,
+        "parent_links": [
+          {
+            "column": "evidence_id",
+            "parent": "evidence.evidences",
+            "parentId": "evidence_id"
+          },
+          {
+            "column": "evidence_version_id",
+            "parent": "evidence.evidence_versions",
+            "parentId": "evidence_version_id"
+          }
+        ],
+        "total": 1,
+        "rows": [
+          {
+            "ownership_class": null,
+            "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+            "entity_version": null,
+            "code": "relevant",
+            "count": 1,
+            "classification": "PUBLISHED_CODE"
+          }
+        ]
+      },
+      {
+        "family": "CV-11",
+        "table": "remediation.issues",
+        "column": "severity",
+        "version": "row_version",
+        "ownership_column_present": false,
+        "parent_links": [],
+        "total": 1,
+        "rows": [
+          {
+            "ownership_class": null,
+            "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+            "entity_version": "5",
+            "code": "low",
+            "count": 1,
+            "classification": "HISTORICAL_UNRECOGNIZED_PRESERVE"
+          }
+        ]
+      },
+      {
+        "family": "CV-08",
+        "table": "remediation.issues",
+        "column": "priority",
+        "version": "row_version",
+        "ownership_column_present": false,
+        "parent_links": [],
+        "total": 1,
+        "rows": [
+          {
+            "ownership_class": null,
+            "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+            "entity_version": "5",
+            "code": "low",
+            "count": 1,
+            "classification": "PUBLISHED_CODE"
+          }
+        ]
+      },
+      {
+        "family": "CV-07",
+        "table": "remediation.issue_origins",
+        "column": "origin_role",
+        "version": null,
+        "ownership_column_present": false,
+        "parent_links": [
+          {
+            "column": "issue_id",
+            "parent": "remediation.issues",
+            "parentId": "issue_id"
+          },
+          {
+            "column": "requirement_assessment_id",
+            "parent": "regulatory.requirement_assessments",
+            "parentId": "requirement_assessment_id"
+          },
+          {
+            "column": "control_assessment_id",
+            "parent": "controls.control_assessments",
+            "parentId": "control_assessment_id"
+          },
+          {
+            "column": "assurance_test_id",
+            "parent": "controls.assurance_tests",
+            "parentId": "assurance_test_id"
+          },
+          {
+            "column": "audit_test_id",
+            "parent": "audit.audit_tests",
+            "parentId": "audit_test_id"
+          },
+          {
+            "column": "risk_id",
+            "parent": "risk.risks",
+            "parentId": "risk_id"
+          },
+          {
+            "column": "incident_id",
+            "parent": "operations.incidents",
+            "parentId": "incident_id"
+          },
+          {
+            "column": "supplier_assessment_id",
+            "parent": "third_party.supplier_assessments",
+            "parentId": "supplier_assessment_id"
+          }
+        ],
+        "total": 1,
+        "rows": [
+          {
+            "ownership_class": null,
+            "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+            "entity_version": null,
+            "code": "assurance",
+            "count": 1,
+            "classification": "HISTORICAL_UNRECOGNIZED_PRESERVE"
+          }
+        ]
+      },
+      {
+        "family": "CV-08",
+        "table": "remediation.actions",
+        "column": "priority",
+        "version": "row_version",
+        "ownership_column_present": false,
+        "parent_links": [],
+        "total": 1,
+        "rows": [
+          {
+            "ownership_class": null,
+            "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+            "entity_version": "5",
+            "code": "low",
+            "count": 1,
+            "classification": "PUBLISHED_CODE"
+          }
+        ]
+      },
+      {
+        "family": "CV-06",
+        "table": "remediation.action_evidence_links",
+        "column": "link_role",
+        "version": null,
+        "ownership_column_present": false,
+        "parent_links": [
+          {
+            "column": "action_id",
+            "parent": "remediation.actions",
+            "parentId": "action_id"
+          },
+          {
+            "column": "evidence_version_id",
+            "parent": "evidence.evidence_versions",
+            "parentId": "evidence_version_id"
+          }
+        ],
+        "total": 1,
+        "rows": [
+          {
+            "ownership_class": null,
+            "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+            "entity_version": null,
+            "code": "closure",
+            "count": 1,
+            "classification": "PUBLISHED_CODE"
+          }
+        ]
+      },
+      {
+        "family": "CV-04",
+        "table": "regulatory.statement_of_applicability_items",
+        "column": "applicability_decision",
+        "version": null,
+        "ownership_column_present": false,
+        "parent_links": [
+          {
+            "column": "statement_of_applicability_id",
+            "parent": "regulatory.statements_of_applicability",
+            "parentId": "statement_of_applicability_id"
+          }
+        ],
+        "total": 1,
+        "rows": [
+          {
+            "ownership_class": null,
+            "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+            "entity_version": null,
+            "code": "applicable",
+            "count": 1,
+            "classification": "PUBLISHED_CODE"
+          }
+        ]
+      },
+      {
+        "family": "CV-05",
+        "table": "regulatory.statement_of_applicability_items",
+        "column": "implementation_state",
+        "version": null,
+        "ownership_column_present": false,
+        "parent_links": [
+          {
+            "column": "statement_of_applicability_id",
+            "parent": "regulatory.statements_of_applicability",
+            "parentId": "statement_of_applicability_id"
+          }
+        ],
+        "total": 1,
+        "rows": [
+          {
+            "ownership_class": null,
+            "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+            "entity_version": null,
+            "code": "implemented",
+            "count": 1,
+            "classification": "PUBLISHED_CODE"
+          }
+        ]
+      },
+      {
+        "family": "CV-10",
+        "table": "controls.assurance_samples",
+        "column": "selection_method",
+        "version": null,
+        "ownership_column_present": false,
+        "parent_links": [
+          {
+            "column": "assurance_test_id",
+            "parent": "controls.assurance_tests",
+            "parentId": "assurance_test_id"
+          }
+        ],
+        "total": 0,
+        "rows": []
+      },
+      {
+        "family": "CV-01",
+        "table": "evidence.file_objects",
+        "column": "classification",
+        "version": "row_version",
+        "ownership_column_present": false,
+        "parent_links": [],
+        "total": 1,
+        "rows": [
+          {
+            "ownership_class": null,
+            "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+            "entity_version": "1",
+            "code": "internal",
+            "count": 1,
+            "classification": "PUBLISHED_CODE"
+          }
+        ]
+      }
+    ]
+  },
+  "historical_unrecognized_codes": [
+    {
+      "family": "CV-03",
+      "table": "controls.control_versions",
+      "column": "frequency_code",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "entity_version": "1",
+      "code": "on_demand",
+      "count": 1
+    },
+    {
+      "family": "CV-12",
+      "table": "evidence.evidences",
+      "column": "source_kind",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "entity_version": "1",
+      "code": "file",
+      "count": 1
+    },
+    {
+      "family": "CV-11",
+      "table": "remediation.issues",
+      "column": "severity",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "entity_version": "5",
+      "code": "low",
+      "count": 1
+    },
+    {
+      "family": "CV-07",
+      "table": "remediation.issue_origins",
+      "column": "origin_role",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "entity_version": null,
+      "code": "assurance",
+      "count": 1
+    }
+  ],
+  "acceptance_text": "Acepto el inventario agregado QA y su compatibilidad histórica para VOC-C04: conservar literalmente on_demand (CV-03), file (CV-12), low como severidad (CV-11) y assurance (CV-07), sin homologación, renombrado, backfill ni ampliación de opciones de escritura. La ausencia de procedencia contractual histórica permanece desconocida explícita. Esta aceptación no certifica C-04W, CFG-D, VOC-QA completo ni el cierre global STEP_6A3.",
+  "permitted_options": [
+    "Aceptar exactamente el inventario y la conservación histórica descritos",
+    "Indicar una discrepancia concreta de inventario; no transformar datos ni aprobar compatibilidad hasta resolverla"
+  ],
+  "technical_limits": {
+    "qa_read_only": true,
+    "no_pii_export": true,
+    "no_model_contract_or_runtime_change": true,
+    "no_new_methodology_mode": true,
+    "no_global_step_closure": true
+  }
+}
