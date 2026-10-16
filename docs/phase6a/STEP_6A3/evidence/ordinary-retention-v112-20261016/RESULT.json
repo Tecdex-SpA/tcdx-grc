@@ -67,7 +67,7 @@
       "observation": "Playwright command exit 0; 6 passed (10.4s)"
     }
   },
-  "qa_new_delta": "NOT_DEPLOYED_NOT_RUN",
+  "qa_new_delta": "PASS_QA_DEPLOYED; FUNCTIONAL_ACCEPTANCE_PENDING",
   "HUMAN_UI_REVIEW": "PENDING_FOR_NEW_DELTA",
   "legal_source": "NOT_A_UNIVERSAL_ORDINARY_OPERATION_BLOCKER; formal dependent workflows retain guards; H01-H10 not promoted",
   "layers_changed": [
@@ -195,5 +195,35 @@
     "functional_acceptance": "PENDING_USER_CONFIRMATION",
     "STEP_6A3": "PARTIAL_BLOCKED",
     "STEP_6A4": "NOT_STARTED"
+  },
+  "deployment": {
+    "observed_at_utc": "2026-10-16T16:20:29.976417+00:00",
+    "release_id": "step6a3-initial-source-ordinary-retention-v112-20261016",
+    "gate_sha256": "9ef4283c247c3be2303e200136293115095cb919bac17f56ddd72bfc2f594525",
+    "backend": {
+      "image_id": "sha256:a1f961a946aceb844fb27355a193782fafbd923f62b3cc761f37398ef329e076",
+      "container_id": "2ee650b1360785066e5309f90c0d842cd86f1b50cddd4ae03865e7c6675014a7",
+      "health": "healthy",
+      "rollback": "tcdx-grc-backend-rollback-step6a3-initial-source-ordinary-retention-v112-20261016",
+      "readiness": {
+        "state": "up",
+        "database": "up"
+      }
+    },
+    "frontend": {
+      "image_id": "sha256:139315238e16d78aaf7d3d27b76e802713c43da299084240ac48c94463a40a9c",
+      "container_id": "2c51b32f142e5b52ae0cbb3dd331a8011dc665c41949f2a602826e73f020fa02",
+      "health": "healthy",
+      "rollback": "tcdx-grc-frontend-rollback-step6a3-initial-source-ordinary-retention-v112-20261016"
+    },
+    "public_url": "https://grc.tecdex.net/",
+    "public_access": "NOT_CONFIRMED; curl cannot connect to DNS target 181.212.166.187:443 from local runner or frontend VM; external web fetch also inaccessible",
+    "integration": "BRANCH_PUSHED; MAIN_NOT_MERGED; rector46 section10 requires PR and user explicitly excludes PR; no protection bypass",
+    "tests_rerun": false,
+    "database_schema_iam_infrastructure_modified": false,
+    "frontend_promoter": "Existing repository version copied over stale 33-migration promoter; previous script retained; no source changes",
+    "STEP_6A3": "PARTIAL_BLOCKED",
+    "STEP_6A4": "NOT_STARTED",
+    "functional_acceptance": "PENDING_USER"
   }
 }
