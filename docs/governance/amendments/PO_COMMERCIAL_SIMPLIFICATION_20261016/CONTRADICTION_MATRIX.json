@@ -1,0 +1,89 @@
+{
+  "status": "PROPOSED_RECONCILIATION_NOT_EFFECTIVE",
+  "items": [
+    {
+      "id": "R01",
+      "decision": "DR001.1/3",
+      "affected_clauses": "01,42,43; ejecutables25/26",
+      "prior_conflict": "Onboarding sin límite expreso de autoalta/contratación por fase",
+      "candidate_resolution": "Alta asistida por Platform hasta completar Fase10; autoalta/checkout fuera de alcance"
+    },
+    {
+      "id": "R02",
+      "decision": "DR001.2",
+      "affected_clauses": "09,22,42; 03/05/25/26",
+      "prior_conflict": "La asistencia Platform o un scope union podría interpretarse como autoridad sobre cualquier operación tenant",
+      "candidate_resolution": "Autonomía Tenant con permisos propios; Platform sólo por comandos/autoridad efectiva explícitos; cero grants nuevos"
+    },
+    {
+      "id": "R03",
+      "decision": "DR001.4",
+      "affected_clauses": "24§9; 14/29; encabezados INITIAL_SOURCE",
+      "prior_conflict": "Fuente jurídica y revisión formal se convierten en requisito universal de configuración/carga",
+      "candidate_resolution": "Separar preferencia CORE_PLATFORM, primaria operativa técnica y acreditación formal; fuente opcional ya modelada no acredita legalidad"
+    },
+    {
+      "id": "R04",
+      "decision": "DR001.4; DR003.7",
+      "affected_clauses": "21/22; 05/09/14",
+      "prior_conflict": "Confundir autonomía/configuración ordinaria con supresión de SoD operacional",
+      "candidate_resolution": "Config ordinaria no obliga a usar workflow formal; los comandos sensibles existentes preservan su SoD"
+    },
+    {
+      "id": "R05",
+      "decision": "DR001.5",
+      "affected_clauses": "23§§6/8/11; 42§7; 09",
+      "prior_conflict": "Opción12meses puede interpretarse como retención universal o como ya implementada",
+      "candidate_resolution": "Propuesta12/18/24/36/48/60; pisos/eventos de categoría y toda obligación/hold preservados; no purge ni default persistido"
+    },
+    {
+      "id": "R06",
+      "decision": "DR002.1/2; DR003.5",
+      "affected_clauses": "46§12; 40§2",
+      "prior_conflict": "Toda contradicción interna detiene incluso preparar el cambio solicitado",
+      "candidate_resolution": "Preparar delta formal mínimo y continuar; v1.11 no se altera ni candidata se autoactiva"
+    },
+    {
+      "id": "R07",
+      "decision": "DR003.1/2/3/4",
+      "affected_clauses": "43§§4–6;45§§2/4/6;46;47;49",
+      "prior_conflict": "Varios owners, nuevas firmas por hashes futuros y task packets se vuelven autorizaciones adicionales",
+      "candidate_resolution": "Instrucción PO suficiente dentro de alcance; registrar bytes/hashes sin firma atribuida ni ratificación interna"
+    },
+    {
+      "id": "R08",
+      "decision": "DR003.7/8/9",
+      "affected_clauses": "28 G15;40§4;45/49",
+      "prior_conflict": "Bloquear toda ejecución por opciones técnicas o imponer revisión interna en cambio ya autorizado",
+      "candidate_resolution": "Resolver ejecución dentro de arquitectura/alcance; aislar sólo acto no resoluble/externo concreto/excluido; no alterar arquitectura"
+    },
+    {
+      "id": "R09",
+      "decision": "DR002.5; DR003.6/8",
+      "affected_clauses": "45/47/49",
+      "prior_conflict": "Inventar obligación externa o independencia humana por el nombre del rol",
+      "candidate_resolution": "Citar fuente/cláusula, aplicabilidad, objeto, consecuencia y alternativa; sin fuente demostrada no inventar veto"
+    },
+    {
+      "id": "R10",
+      "decision": "DR002.6; DR003.1/2",
+      "affected_clauses": "49§§1–3 y declaraciones administrativas de funciones en43/47",
+      "prior_conflict": "Exigir que el PO firme de nuevo declarando Architecture/Data/Security para una actividad interna incluida",
+      "candidate_resolution": "Autoridad única declarada; competencias técnicas verificables, sin funciones/firmas simuladas ni declaración adicional obligatoria"
+    },
+    {
+      "id": "R11",
+      "decision": "DR001/002 instrucción6A3; DR003 límites",
+      "affected_clauses": "43/47/49; checklistH01–H10 histórico",
+      "prior_conflict": "Exigir completar H01–H10 durante la preparación o declarar su cierre por cambio documental",
+      "candidate_resolution": "Suspender ejecución actual; reclasificar prospectivamente por objetivo; no PASS retroactivo, no cierre6A3/inicio6A4"
+    },
+    {
+      "id": "R12",
+      "decision": "DR003 integración y límites de esta tarea",
+      "affected_clauses": "AGENTS/enforcement/status propuestos; 00/20 ejecutables",
+      "prior_conflict": "Autorización integral general se interpreta como permiso de implementar/activar ahora",
+      "candidate_resolution": "La exclusión documental concreta permanece: sólo candidatos, sin código/DB/Git publicación/runtime"
+    }
+  ]
+}

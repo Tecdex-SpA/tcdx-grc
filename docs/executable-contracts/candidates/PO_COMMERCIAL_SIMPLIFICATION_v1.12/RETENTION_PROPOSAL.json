@@ -1,0 +1,29 @@
+{
+  "status": "PROPOSED_NOT_IMPLEMENTED",
+  "source": "DR-GRC-20261016-001.5",
+  "default_option_months": 12,
+  "option_months": [
+    12,
+    18,
+    24,
+    36,
+    48,
+    60
+  ],
+  "persisted_default_created": false,
+  "month_to_seconds_rule": "NOT_INFERRED",
+  "commercial_binding": "NO_BINDING_DEMONSTRATED_FOR_THIS_SELECTION",
+  "retention_policy_authority": "UNCHANGED_SINGLE_AUTHORITY",
+  "preserve_category_floors": true,
+  "preserve_all_applicable_obligations": true,
+  "hold_without_authorized_release": "DENY_PURGE",
+  "unresolved_obligation_or_anchor": "DENY_PURGE",
+  "purge_authorized_by_this_package": false,
+  "existing_contracts_shortened": false,
+  "implementation_inputs_required": [
+    "exact_versioned_data_binding",
+    "temporal_unit_and_anchor",
+    "timezone_and_month_end_rule",
+    "closed_parameter_input_contract"
+  ]
+}
