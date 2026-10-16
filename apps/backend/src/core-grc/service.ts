@@ -622,16 +622,36 @@ function retentionApplicabilityTransition(fromState: string, command: string, ap
     if (approve && author.rows[0]?.created_by_user_identity_id === actor.userIdentityId) {
       throw new FoundationError("TCDX.AUTHORIZATION.DENIED", "Access denied", 403);
     }
-    const source = await sql<{ source_evidence_version_id: string | null; source_clause_ref: string | null; effective_from: string | null; effective_to: string | null }>`
-      SELECT source_evidence_version_id,source_clause_ref,effective_from::text,effective_to::text
-      FROM privacy.retention_policy_applicabilities WHERE tenant_id=${actor.tenantId}::uuid
-        AND retention_policy_applicability_id=${targetId}::uuid`.execute(tx);
-    const legal=source.rows[0];
-    if (!legal?.source_evidence_version_id || !legal.source_clause_ref?.trim() || !legal.effective_from) {
-      throw new FoundationError("TCDX.INVARIANT.VIOLATION", "A valid legal source must be bound before review or publication", 422);
+    const source = await sql<{
+      source_evidence_version_id: string | null; source_clause_ref: string | null;
+      effective_from: string | null; effective_to: string | null; ordinary_without_source: boolean;
+    }>`
+      SELECT a.source_evidence_version_id,a.source_clause_ref,a.effective_from::text,a.effective_to::text,
+             (p.policy_kind IN ('tenant_policy','product_baseline') AND p.is_mandatory=false
+              AND p.regulatory_source_id IS NULL AND a.legal_basis_id IS NULL
+              AND a.source_evidence_version_id IS NULL AND a.source_clause_ref IS NULL
+              AND NOT EXISTS (SELECT 1 FROM evidence.file_upload_intents pending
+                WHERE pending.tenant_id=a.tenant_id
+                  AND pending.retention_policy_applicability_id=a.retention_policy_applicability_id)) AS ordinary_without_source
+      FROM privacy.retention_policy_applicabilities a
+      JOIN privacy.retention_policies p ON p.tenant_id=a.tenant_id AND p.retention_policy_id=a.retention_policy_id
+      WHERE a.tenant_id=${actor.tenantId}::uuid AND a.retention_policy_applicability_id=${targetId}::uuid
+        AND p.ownership_class='TENANT_OWNED' AND p.lifecycle_state='published'
+        AND p.effective_from<=transaction_timestamp() AND p.effective_from<=a.effective_from
+        AND (p.effective_to IS NULL OR (p.effective_to>transaction_timestamp()
+          AND a.effective_to IS NOT NULL AND p.effective_to>=a.effective_to))
+      FOR SHARE OF p`.execute(tx);
+    const legal = source.rows[0];
+    // v1.12 distinguishes ordinary operation from formal accreditation using
+    // persisted policy and source links, never a caller-controlled exemption.
+    if (!legal?.effective_from || (!legal.ordinary_without_source
+        && (!legal.source_evidence_version_id || !legal.source_clause_ref?.trim()))) {
+      throw new FoundationError("TCDX.INVARIANT.VIOLATION", "Explicit validity and any required formal source must be bound before review or publication", 422);
     }
-    await assertLegalSource(tx, actor.tenantId, targetId, legal.source_evidence_version_id,
-      legal.effective_from, legal.effective_to, false);
+    if (legal.source_evidence_version_id) {
+      await assertLegalSource(tx, actor.tenantId, targetId, legal.source_evidence_version_id,
+        legal.effective_from, legal.effective_to, false);
+    }
     const edge = await assertLifecycleEdge(tx, actor, {
       entityType: "RetentionPolicyApplicability", fromState, commandCode: command, permission
     });

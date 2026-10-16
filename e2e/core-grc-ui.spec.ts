@@ -1133,15 +1133,37 @@ test("Macro R1 responsible selection binds purpose and selected Issue; vocabular
  await expect.poll(()=>read).toBe(true);await dialog.getByLabel('Prioridad',{exact:true}).selectOption('normal');await expect(dialog.getByLabel('Prioridad',{exact:true}).getByRole('option',{name:'Normal',exact:true})).toHaveCount(1);
  await expect(dialog).not.toContainText(memberId);await dialog.screenshot({path:`/tmp/tcdx-step6a3-macro-responsable-${info.project.name}.png`});
 });
-test("Macro R1 retention remains explicitly pending on missing legal binding; no fabricated option",async({page},info)=>{
+test("v1.12 retention reports missing operational applicability without requiring legal accreditation",async({page},info)=>{
  await mockRuntime(page,['EVIDENCE_OWNER']);await page.route('**/api/v1/retention-policy-references?**',route=>route.fulfill({status:422,json:{code:'TCDX.INVARIANT.VIOLATION',message:'Policy is not eligible',correlation_id:tenantId,retryable:false}}));
  await page.goto('/evidencias');await page.getByRole('tab',{name:'Evidencias',exact:true}).click();await page.getByRole('button',{name:'Nuevo registro',exact:true}).click();const dialog=page.getByRole('dialog');
- await expect(dialog.getByText('La política está pendiente de aplicabilidad jurídica.',{exact:false})).toBeVisible();await expect(dialog.getByLabel('Política de retención',{exact:true}).locator('option')).toHaveCount(1);
- await expect(dialog.locator('input[aria-label="ID de política de retención"]')).toHaveCount(0);await dialog.screenshot({path:`/tmp/tcdx-step6a3-macro-retencion-${info.project.name}.png`});
+ await expect(dialog.getByText('No hay una aplicabilidad operativa elegible para este contexto.',{exact:false})).toBeVisible();await expect(dialog.getByLabel('Política de retención',{exact:true}).locator('option')).toHaveCount(1);
+ await expect(dialog.locator('input[aria-label="ID de política de retención"]')).toHaveCount(0);await dialog.screenshot({path:`docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/missing-applicability-${info.project.name}.png`});
+});
+
+test("v1.12 ordinary retention remains selectable without legal accreditation", async ({ page }, info) => {
+  await mockRuntime(page, ['EVIDENCE_OWNER']);
+  await page.route('**/api/v1/retention-policy-references?**', route => route.fulfill({json:{
+    items:[{retention_policy_id:tenantId,tenant_id:tenantId,policy_code:'Retención operativa ordinaria',version_number:1,
+      policy_kind:'tenant_policy',is_mandatory:false,source_evidence_version_id:null,selectable:true}],
+    page:{has_more:false,next_cursor:null}
+  }}));
+  await page.goto('/evidencias');
+  await page.getByRole('tab',{name:'Evidencias',exact:true}).click();
+  await page.getByRole('button',{name:'Nuevo registro',exact:true}).click();
+  const dialog=page.getByRole('dialog');
+  const policy=dialog.getByLabel('Política de retención',{exact:true});
+  await policy.selectOption(tenantId);
+  await expect(policy).toHaveValue(tenantId);
+  await expect(dialog.getByText('La configuración ordinaria no requiere una fuente jurídica;', {exact:false})).toBeVisible();
+  await expect(dialog.getByText('No hay una aplicabilidad operativa elegible', {exact:false})).toHaveCount(0);
+  await expect(dialog.locator('input[aria-label="ID de política de retención"]')).toHaveCount(0);
+  await policy.focus();
+  await expect(policy).toBeFocused();
+  await dialog.screenshot({path:`docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/ordinary-retention-${info.project.name}.png`});
 });
 
 // Local mocked presentation evidence only; never a legal source or QA acceptance.
-test("INITIAL_SOURCE bind uses backend candidates and preserves Spanish pending-source warning", async ({ page }, info) => {
+test("INITIAL_SOURCE bind uses backend candidates and distinguishes formal source from ordinary operation", async ({ page }, info) => {
   await mockRuntime(page,["TENANT_ADMIN"],[],["privacy.retention_policy.read","privacy.retention_policy.update"]);
   let submitted=false;
   const draft={retention_policy_applicability_id:roleId,retention_policy_id:memberId,row_version:1,classification:"confidential",lifecycle_state:"draft",source_evidence_version_id:null,source_clause_ref:null,effective_from:null,effective_to:null,initial_source_bind_allowed:true,custodian_display_name:"Custodio local simulado",initial_source_candidates:[{evidence_version_id:tenantId,version_number:1,evidence_code:"Documento local simulado, sin fuerza jurídica"}]};
@@ -1159,13 +1181,13 @@ test("INITIAL_SOURCE bind uses backend candidates and preserves Spanish pending-
   const section=page.getByRole('region',{name:'Retención documental de la empresa'});
   await section.getByRole('button',{name:'Ver detalle'}).last().click();
   const dialog=page.getByRole('dialog');
-  await expect(dialog.getByRole('status')).toContainText('Custodia de fuente pendiente');
+  await expect(dialog.getByRole('status').filter({hasText:'La fuente inicial formal requiere'})).toBeVisible();
   const source=dialog.getByLabel('Fuente inicial aprobada',{exact:true});
   await source.selectOption(tenantId);await source.focus();await expect(source).toBeFocused();
   await dialog.getByLabel('Cláusula o disposición aplicable',{exact:true}).fill('Cláusula de prueba local');
   await dialog.getByLabel('Vigente desde',{exact:true}).fill('2026-10-15T12:00:00Z');
   expect(await dialog.locator('.drawer-body').evaluate(element=>element.scrollWidth<=element.clientWidth+1)).toBe(true);
-  await dialog.screenshot({path:`docs/phase6a/STEP_6A3/evidence/initial-source-implementation-20261015/LOCAL_SIMULATED_BIND_${info.project.name}.png`});
+  await dialog.screenshot({path:`docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/LOCAL_SIMULATED_BIND_${info.project.name}.png`});
   await dialog.getByRole('button',{name:'Vincular fuente inicial',exact:true}).click();
   await expect.poll(()=>submitted).toBe(true);
 });

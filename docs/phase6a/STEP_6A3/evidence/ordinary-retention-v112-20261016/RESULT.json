@@ -1,0 +1,199 @@
+{
+  "recorded_at_utc": "2026-10-16T16:04:42.348897+00:00",
+  "baseline": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "branch": "fix/step6a3-v112-continuity-20261016",
+  "base_commit": "32ede0646b5489a0068dcfd41c13157ffbada057",
+  "STEP_6A3": "PARTIAL_BLOCKED",
+  "RECTOR_GATE": "BLOCKED_FOR_GLOBAL_CLOSURE",
+  "implementation": "PASS_LOCAL",
+  "checks": [
+    {
+      "check": "unit",
+      "exit_code": 0
+    },
+    {
+      "check": "backend-build",
+      "exit_code": 0
+    },
+    {
+      "check": "frontend-typecheck",
+      "exit_code": 0
+    },
+    {
+      "check": "frontend-build",
+      "exit_code": 0
+    },
+    {
+      "check": "contracts",
+      "exit_code": 0
+    },
+    {
+      "check": "secrets",
+      "exit_code": 0
+    },
+    {
+      "check": "whitespace",
+      "exit_code": 0
+    }
+  ],
+  "tests": {
+    "unit": {
+      "passed": 37,
+      "failed": 0,
+      "skipped": 0,
+      "report": "unit.json",
+      "sha256": "4e25a1745bd2930e9d4b9bd3594fbfd6fa92496efe8cc3659a0dc801958bf4a7"
+    },
+    "postgres": {
+      "passed": 17,
+      "failed": 0,
+      "skipped": 0,
+      "report": "postgres.json",
+      "sha256": "e52951455a395be4b96767692ef4c02771c7fafc3aa4e8f9d4f93e6676c04703"
+    },
+    "playwright": {
+      "passed": 6,
+      "failed": 0,
+      "viewports": [
+        "1536x1024",
+        "390x844"
+      ],
+      "evidence_kind": "LOCAL_MOCKED_PRESENTATION; not real QA",
+      "cases": [
+        "ordinary eligible selection without source",
+        "missing operational applicability",
+        "formal independent source bind"
+      ],
+      "observation": "Playwright command exit 0; 6 passed (10.4s)"
+    }
+  },
+  "qa_new_delta": "NOT_DEPLOYED_NOT_RUN",
+  "HUMAN_UI_REVIEW": "PENDING_FOR_NEW_DELTA",
+  "legal_source": "NOT_A_UNIVERSAL_ORDINARY_OPERATION_BLOCKER; formal dependent workflows retain guards; H01-H10 not promoted",
+  "layers_changed": [
+    "backend",
+    "frontend_text",
+    "executable_semantic_amendment",
+    "tests",
+    "execution_status"
+  ],
+  "layers_unchanged": [
+    "physical_schema",
+    "database_migrations",
+    "IAM_RBAC",
+    "infrastructure",
+    "deployment_contracts"
+  ],
+  "preservation": {
+    "branch": "preserve/local-step6a3-20261016",
+    "commit": "f83b97a16dd0b9f681524f957f8a688257f68c7f",
+    "files_verified": 468,
+    "original_branch": "fix/qa-functional-commercial-onboarding-20261013",
+    "agent_transfer_archive": ".continuity-preservation/step6a3-20261016/agent-changes.tar.gz",
+    "external_worktree": "RETAINED_UNUSED; six exclusive agent files archived and transferred by SHA256"
+  },
+  "next_stage": {
+    "id": "STEP_6A4",
+    "gate": "UX_BUSINESS_FORMS",
+    "state": "NOT_STARTED",
+    "dependency": "STEP_6A3_PASS",
+    "contract": "docs/phase6a/STEP_6A2/10_PHASE6A_ACCEPTANCE_GATES.md"
+  },
+  "evidence": [
+    {
+      "path": "docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/LOCAL_SIMULATED_BIND_chromium-desktop.png",
+      "sha256": "27d10033fc5efa710e343c8f6fd54f8560c31aa2c566eaec50fdbc0da3ce84af"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/LOCAL_SIMULATED_BIND_chromium-narrow.png",
+      "sha256": "e2469c5152d3223dd17114a6c4cd37bd45cf5a3be065f53c5f3404d996cda172"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/missing-applicability-chromium-desktop.png",
+      "sha256": "330fec4cdebe45e54db01c86aed063bdcf132b8ae3137d547c506c20585b5f8f"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/missing-applicability-chromium-narrow.png",
+      "sha256": "e366b7363b1bbbe95991abd1c0a91e55178fcacc71a4f5c5ea877367cf158de9"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/ordinary-retention-chromium-desktop.png",
+      "sha256": "650ea76998d98d2372b76e63da17d4c645571fbafd3cd696705f2456e6e867f4"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/ordinary-retention-chromium-narrow.png",
+      "sha256": "217526fa594afc2bee25f66caf568d78a212941933f757030344ee065a5c9f2c"
+    }
+  ],
+  "traceability": {
+    "rector": "24 ordinary operation DR001; 43/45/49 DR003",
+    "contract": "docs/executable-contracts/amendments/STEP_6A3_ORDINARY_RETENTION_v1.12/DELTA.md",
+    "backend": "apps/backend/src/core-grc/service.ts#retentionApplicabilityTransition",
+    "persistence_test": "apps/backend/src/core-grc/initial-retention-source.postgres.test.ts",
+    "ui": [
+      "apps/frontend/src/core-grc.tsx",
+      "apps/frontend/src/i18n/es.ts"
+    ],
+    "e2e": "e2e/core-grc-ui.spec.ts"
+  },
+  "images": {
+    "backend": {
+      "tag": "tcdx-grc-backend:ordinary-retention-v112-20261016",
+      "id": "sha256:a1f961a946aceb844fb27355a193782fafbd923f62b3cc761f37398ef329e076",
+      "architecture": "amd64",
+      "os": "linux",
+      "source_sha256": "a6c7fa94da6927f64742d332174883be8a9df315d18acdd84a07355d3651a686",
+      "source_tar": ".continuity-preservation/step6a3-20261016/build/backend-source.tar",
+      "verification": "docker inspect final labels matched source tar; build PASS_LOCAL_NOT_DEPLOYED"
+    },
+    "frontend": {
+      "tag": "tcdx-grc-frontend:ordinary-retention-v112-20261016",
+      "id": "sha256:139315238e16d78aaf7d3d27b76e802713c43da299084240ac48c94463a40a9c",
+      "architecture": "amd64",
+      "os": "linux",
+      "source_sha256": "80b92e9032fbce1aca1f4ed11e29781c2d7e6e098ea641c58c97a41402964b54",
+      "source_tar": ".continuity-preservation/step6a3-20261016/build/frontend-source.tar",
+      "verification": "docker inspect final labels matched source tar; build PASS_LOCAL_NOT_DEPLOYED"
+    }
+  },
+  "changed_files": [
+    {
+      "path": "apps/backend/src/core-grc/initial-retention-source.postgres.test.ts",
+      "sha256": "57ed01ae97dc5b1164737584ec089eb756812ef26e4d4d29c98e02bab6217eef"
+    },
+    {
+      "path": "apps/backend/src/core-grc/service.ts",
+      "sha256": "881a69f9e173ab0e08edd68a5799e83c970f16dfd953fd45571458826a5b67f2"
+    },
+    {
+      "path": "apps/frontend/src/core-grc.tsx",
+      "sha256": "b077b5c187621499031b7b41220649e15548dbcd90ac378673a47f943ff69e6a"
+    },
+    {
+      "path": "apps/frontend/src/i18n/es.ts",
+      "sha256": "26b0194b1b99e99cab66833c855d4d5ece34636d6e0f79b263a708c479ad6bfc"
+    },
+    {
+      "path": "docs/governance/MASTER_EXECUTION_STATUS.md",
+      "sha256": "c84354d4720b000f1995fba0cd00137d8caa4391d9c832cc759531adc2a4d076"
+    },
+    {
+      "path": "e2e/core-grc-ui.spec.ts",
+      "sha256": "6604ca31d042ec882bccfaa4e1a70598b815f527a64e33f4da27d0968cf53f19"
+    }
+  ],
+  "contract_sha256": "3de1a04df409cd84bb774a343a07d1f6912c7d7f65dea2bc18392aaf6d9f2ca1",
+  "final_checks": {
+    "current_step6a3_ledger": "PASS_PRESERVED_HISTORICAL_CHECKPOINT",
+    "secret_findings": 0,
+    "whitespace": "PASS",
+    "rector_integrity_log": ".continuity-preservation/step6a3-20261016/rector.log"
+  },
+  "qa_deployment_authorization": {
+    "source": "PO instruction in this conversation, 2026-10-16",
+    "scope": "commit/push/PR integration/main and deploy both existing AMD64 ordinary-retention-v112-20261016 images to QA",
+    "functional_acceptance": "PENDING_USER_CONFIRMATION",
+    "STEP_6A3": "PARTIAL_BLOCKED",
+    "STEP_6A4": "NOT_STARTED"
+  }
+}
