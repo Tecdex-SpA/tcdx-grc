@@ -1,0 +1,17 @@
+{
+  "rector25_clause": "API tenant business usa /api/v1/... . Breaking change requiere nueva major version.",
+  "closed_old_keys": [
+    "permissions",
+    "tenant_id"
+  ],
+  "closed_new_keys": [
+    "default_timezone",
+    "permissions",
+    "tenant_id"
+  ],
+  "old_openapi_sha256": "739ba3c21aaa58f892e95c69fe3c8415dbf46798ebf07cc61753660479d2ac67",
+  "old_parser_sha256": "e2db616e31ddf0a3fe18a25ca0789f7d5b5c2944879b2ea6eb6c388857cc1960",
+  "new_parser_sha256": "abf571b120259b42ba844b1664a65d012f3647f6ad03f948bdba41fd19928f56",
+  "proof": "old schema additionalProperties=false rejects the new field; old parser exact keys reject it. New schema requires the field, new parser rejects missing. Matching-pair deployment does not itself satisfy rector25 major rule.",
+  "state": "BLOCKED_API_MAJOR_FOR_PUBLICATION; candidate source retained for review; not effective publication"
+}

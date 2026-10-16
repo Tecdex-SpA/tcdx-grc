@@ -23,11 +23,11 @@ describe("MI7 frontend projection boundaries", () => {
     const read = parseCurrentAuthorization({ ...base, platform_permissions: ["platform.managed_identity.read"] }, null);
     expect([...managedIdentityEligibility(read)]).toEqual(["platform.managed_identity.read"]);
     const tenantOnly = parseCurrentAuthorization({ ...base, tenant_permissions: {
-      tenant_id: tenantId, permissions: { "platform.role.read": [{ scope_kind: "tenant" }] }
+      tenant_id: tenantId, default_timezone: "Europe/Berlin", permissions: { "platform.role.read": [{ scope_kind: "tenant" }] }
     } }, tenantId);
     expect(managedIdentityEligibility(tenantOnly).size).toBe(0);
     expect(parseCurrentAuthorization({ ...base, effective_platform_role_codes: ["PLATFORM_ADMIN"] }, null)).toBeNull();
-    expect(parseCurrentAuthorization({ ...base, tenant_permissions: { tenant_id: tenantId,
+    expect(parseCurrentAuthorization({ ...base, tenant_permissions: { tenant_id: tenantId, default_timezone: "Europe/Berlin",
       permissions: { "platform.managed_identity.administer": [{ scope_kind: "tenant" }] } } }, tenantId)).toBeNull();
     expect(managedIdentityEligibility(parseCurrentAuthorization({ ...base, platform_permissions: ["platform.managed_identity.create", "platform.managed_identity.administer"] }, null)).size).toBe(2);
     expect(managedIdentityEligibility(null).size).toBe(0);

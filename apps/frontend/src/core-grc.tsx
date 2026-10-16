@@ -1,3 +1,6 @@
+import { HistoricalReferenceLabel, ApprovedEvidenceReferenceField, StructuredCollectionEditor, TypedReferenceField, RequirementReferenceField } from "./structured-reference-fields.js";
+import { TenantTimezoneContext, TenantInstantPreview, normalizeSamplePeriods, selectedTenantTimezone, explicitUtcInstant } from "./tenant-timezone.js";
+import { BusinessReferenceSelect, EntityReferenceSelect, ContractVocabularySelect, ControlVersionSelect, SubjectSelect, MethodologySelect } from "./reference-selectors.js";
 import { AddTenantUser, InitialCompanyWizard, TenantUserIntent, tenantPresentationPermission } from "./tenant-onboarding.js";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { CONTROL_NATURES, CONTROL_TYPES } from "@tcdx-grc/shared-types";
@@ -6,7 +9,7 @@ import { BrowserSession, receiveApplicationToken, receiveInvitationApplicationTo
 import { displayValue, fieldLabel, fieldPlaceholder, roleLabel } from "./i18n/display-text.js";
 import { moduleLabels, uiText } from "./i18n/es.js";
 import { statusLabel, statusTone } from "./i18n/status-labels.js";
-import type { CurrentPrincipalAuthorization } from "@tcdx-grc/contracts";
+import { FORM_VOCABULARIES, type FormVocabularyKey, type CurrentPrincipalAuthorization } from "@tcdx-grc/contracts";
 import { parseCurrentAuthorization, managedIdentityEligibility } from "./frontend-auth-projections.js";
 import { BrandLogo, brandNames } from "./branding.js";
 import { LoginEntry } from "./login-entry.js";
@@ -67,10 +70,19 @@ const workflowActions: Readonly<Record<string, readonly WorkflowAction[]>> = {
     { state: "under_review", label: uiText.actions.reject, suffix: "reject", fields: ["sufficiency", "relevance", "rationale"], versionResource: true }
   ],
   retencion: [
-    { state: "draft", label: "Actualizar borrador", suffix: "update", fields: ["retention_seconds", "is_mandatory"] },
+    { state: "draft", label: "Actualizar borrador", suffix: "update", fields: ["retention_seconds", "is_mandatory"], optionalFields: ["retention_seconds"] },
+    { state: "draft", label: "Enviar a revisión", suffix: "submit-for-review" },
     { state: "draft", label: uiText.actions.review, suffix: "review" },
     { state: "under_review", label: uiText.actions.approve, suffix: "approve" },
     { state: "approved", label: uiText.actions.publish, suffix: "publish" }
+  ],
+  "aplicabilidad-retencion": [
+    { state: "draft", label: "Vincular fuente inicial", suffix: "bind-initial-source", fields: ["source_evidence_version_id", "source_clause_ref", "effective_from", "effective_to"], optionalFields: ["effective_to"] },
+    { state: "draft", label: "Enviar a revisión", suffix: "submit-for-review" },
+    { state: "draft", label: uiText.actions.review, suffix: "review" },
+    { state: "under_review", label: uiText.actions.approve, suffix: "approve" },
+    { state: "approved", label: uiText.actions.publish, suffix: "publish" },
+    { state: "published", label: "Levantar legal hold", suffix: "release-hold", fields: ["reason"], optionalFields: [] }
   ],
   issues: [
     { state: "open", label: uiText.actions.triage, suffix: "triage", fields: ["severity", "priority", "business_owner_subject_id", "due_date"] },
@@ -89,7 +101,21 @@ const workflowActions: Readonly<Record<string, readonly WorkflowAction[]>> = {
 export function availableWorkflowActions(definition: ModuleDefinition, row: Row): readonly WorkflowAction[] {
   const version = definition.id === "evidencias" && Array.isArray(row.versions) ? row.versions[0] as Row | undefined : undefined;
   const state = String(version?.lifecycle_state ?? row[definition.stateField] ?? "");
-  return (workflowActions[definition.id] ?? []).filter((action) => action.state === state);
+  return (workflowActions[definition.id] ?? []).filter((action) => action.state === state &&
+    (action.suffix !== "bind-initial-source" || row.initial_source_bind_allowed === true) &&
+    (action.suffix !== "release-hold" || (row.policy_kind === "legal_hold" && !row.hold_release_id)));
+}
+
+export function retentionActionPermission(suffix: string): string | null {
+  return ({
+    "bind-initial-source": "privacy.retention_policy.update",
+    update: "privacy.retention_policy.update",
+    "submit-for-review": "privacy.retention_policy.update",
+    review: "privacy.retention_policy.review",
+    approve: "privacy.retention_policy.approve",
+    publish: "privacy.retention_policy.publish",
+    "release-hold": "privacy.retention_policy.legal_hold.release"
+  } as Record<string, string>)[suffix] ?? null;
 }
 
 type CreateContract = { path: string; fields: readonly string[]; jsonFields?: readonly string[]; pathField?: string };
@@ -101,8 +127,9 @@ const createContracts: Readonly<Record<string, CreateContract>> = {
   "evaluaciones-control": { path: "/control-assessments", fields: ["control_id", "control_version_id", "methodology_version_ref", "effective_configuration_id"] },
   pruebas: { path: "/assurance-tests", fields: ["control_id", "control_version_id", "test_code", "planned_at"] },
   "solicitudes-evidencia": { path: "/evidence-requests", fields: ["request_code", "requirement_id", "control_id", "requirement_assessment_id", "control_assessment_id", "assurance_test_id", "assigned_membership_id", "due_at"] },
-  evidencias: { path: "/evidence", fields: ["evidence_code", "evidence_type", "business_owner_subject_id", "valid_from", "valid_to", "retention_policy_id", "source_kind", "file_object_id", "period_start", "period_end", "effective_from", "effective_to", "expires_at", "provenance_ref", "links"], jsonFields: ["links"] },
+  evidencias: { path: "/evidence", fields: ["evidence_code", "evidence_type", "business_owner_subject_id", "valid_from", "valid_to", "retention_policy_id", "retention_policy_applicability_id", "source_kind", "file_object_id", "period_start", "period_end", "effective_from", "effective_to", "expires_at", "provenance_ref", "links"], jsonFields: ["links"] },
   retencion: { path: "/retention-policies", fields: ["policy_code", "version_number", "policy_kind", "retention_seconds", "trigger_event_code", "precedence_rank", "is_mandatory"] },
+  "aplicabilidad-retencion": { path: "/retention-policy-applicabilities", fields: ["retention_policy_id", "version_number", "classification", "scope_subject_id", "source_evidence_version_id", "source_clause_ref", "effective_from", "effective_to", "supersedes_applicability_id"] },
   issues: { path: "/issues", fields: ["issue_code", "issue_kind", "title", "description", "severity", "priority", "business_owner_subject_id", "due_date", "requirement_assessment_id", "control_assessment_id", "assurance_test_id", "origin_role"] },
   acciones: { path: "/issues/{issue_id}/actions", pathField: "issue_id", fields: ["issue_id", "action_code", "title", "description", "priority", "assigned_membership_id", "due_date"] }
 };
@@ -119,12 +146,13 @@ export const modules: ModuleDefinition[] = [
   { id: "solicitudes-evidencia", label: moduleLabels["solicitudes-evidencia"], path: "/evidence-requests", idField: "evidence_request_id", titleField: "request_code", stateField: "lifecycle_state" },
   { id: "evidencias", label: moduleLabels.evidencias, path: "/evidence", idField: "evidence_id", titleField: "evidence_code", stateField: "lifecycle_state" },
   { id: "retencion", label: moduleLabels.retencion, path: "/retention-policies", idField: "retention_policy_id", titleField: "policy_code", stateField: "lifecycle_state" },
+  { id: "aplicabilidad-retencion", label: moduleLabels["aplicabilidad-retencion"], path: "/retention-policy-applicabilities", idField: "retention_policy_applicability_id", titleField: "classification", stateField: "lifecycle_state" },
   { id: "issues", label: moduleLabels.issues, path: "/issues", idField: "issue_id", titleField: "title", stateField: "lifecycle_state" },
   { id: "acciones", label: moduleLabels.acciones, path: "/actions", idField: "action_id", titleField: "title", stateField: "lifecycle_state" }
 ];
 
 const nav = [
-  ["dashboard", uiText.navigation.dashboard, "grid"], ["cumplimiento", uiText.navigation.compliance, "check"], ["requisitos", uiText.navigation.requirements, "list"],
+  ["dashboard", uiText.navigation.dashboard, "grid"], ["normas", uiText.navigation.norms, "list"], ["cumplimiento", uiText.navigation.compliance, "check"], ["requisitos", uiText.navigation.requirements, "list"],
   ["controles", uiText.navigation.controls, "shield"], ["evidencias", uiText.navigation.evidence, "file"], ["acciones", uiText.navigation.actions, "task"]
 ] as const;
 
@@ -180,17 +208,15 @@ export function StatusBadge({ value }: { value: unknown }) {
   return <span className={`status ${tone}`}><i aria-hidden="true"/>{text}</span>;
 }
 
-function usePage(api: ApiClient, definition: ModuleDefinition, enabled = true, lifecycleState = "", search = "", frameworkVersionId = "", applicability = "", implementation = ""): [LoadState, () => void, () => void] {
+function usePage(api: ApiClient, definition: ModuleDefinition, enabled = true, lifecycleState = "", search = "", frameworkVersionId = ""): [LoadState, () => void, () => void] {
   const [nonce, setNonce] = useState(0);
   const [state, setState] = useState<LoadState>({ state: "loading" });
   const load = (cursor?: string, append = false, signal?: AbortSignal) => {
     const query = new URLSearchParams({ "page[size]": "100" });
     if (cursor) query.set("page[cursor]", cursor);
-    if (lifecycleState) query.set("filter[lifecycle_state]", lifecycleState);
+    if (lifecycleState && definition.id !== "controles") query.set("filter[lifecycle_state]", lifecycleState);
     if (search && definition.id === "controles") query.set("filter[query]", search);
     if (frameworkVersionId && definition.id === "controles") query.set("filter[framework_version_id]", frameworkVersionId);
-    if (applicability && definition.id === "controles") query.set("filter[applicability]", applicability);
-    if (implementation && definition.id === "controles") query.set("filter[implementation]", implementation);
     return api.request<Page>(`/api/v1${definition.path}?${query}`, signal ? { signal } : {}).then((page) => setState((current) => ({
       state: "ready",
       data: append && current.state === "ready" ? [...current.data, ...page.items] : page.items,
@@ -211,7 +237,7 @@ function usePage(api: ApiClient, definition: ModuleDefinition, enabled = true, l
       setState({ state: "error", message: uiText.states.unexpected, unauthorized: problem?.status === 401 || problem?.status === 403 });
     });
     return () => controller.abort();
-  }, [api, definition, enabled, lifecycleState, search, frameworkVersionId, applicability, implementation, nonce]);
+  }, [api, definition, enabled, lifecycleState, search, frameworkVersionId, nonce]);
   const loadMore = () => {
     if (state.state !== "ready" || !state.page.next_cursor || state.loadingMore) return;
     const cursor = state.page.next_cursor;
@@ -225,7 +251,7 @@ const lifecycleStates: Readonly<Record<string, readonly string[]>> = {
   cumplimiento: ["draft", "submitted", "approved", "superseded"], requisitos: ["not_assessed", "in_progress", "assessed", "approved", "superseded"],
   soa: ["draft", "published", "superseded"], controles: ["draft", "active", "archived"],
   "evaluaciones-control": ["planned", "in_progress", "completed", "reviewed", "approved"], pruebas: ["planned", "in_progress", "completed", "reviewed", "approved"],
-  "solicitudes-evidencia": ["open", "fulfilled", "cancelled", "expired"], evidencias: ["draft", "submitted", "under_review", "approved", "rejected", "expired", "superseded"], retencion: ["draft", "under_review", "approved", "published"],
+  "solicitudes-evidencia": ["open", "fulfilled", "cancelled", "expired"], evidencias: ["draft", "submitted", "under_review", "approved", "rejected", "expired", "superseded"], retencion: ["draft", "under_review", "approved", "published"], "aplicabilidad-retencion": ["draft", "under_review", "approved", "published"],
   issues: ["open", "triaged", "remediation_in_progress", "pending_verification", "verified_closed", "dismissed", "reopened"],
   acciones: ["pending", "in_progress", "in_review", "completed", "verified", "reopened", "cancelled"]
 };
@@ -238,14 +264,15 @@ export function TableShell({ label, children }: { label: string; children: React
   return <section className="data-card table-card" aria-label={label}>{children}</section>;
 }
 
-function ModuleTable({ api, definition }: { api: ApiClient; definition: ModuleDefinition }) {
+function ModuleTable({ api, definition, allowCreate = true, allowAction = () => true }: {
+  api: ApiClient; definition: ModuleDefinition; allowCreate?: boolean;
+  allowAction?: ((action: WorkflowAction) => boolean) | undefined;
+}) {
   const [stateFilter, setStateFilter] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [search, setSearch] = useState("");
   const [frameworkVersionId, setFrameworkVersionId] = useState("");
-  const [applicabilityFilter, setApplicabilityFilter] = useState("");
-  const [implementationFilter, setImplementationFilter] = useState("");
-  const [load, retry, loadMore] = usePage(api, definition, true, stateFilter, search, frameworkVersionId, applicabilityFilter, implementationFilter);
+  const [load, retry, loadMore] = usePage(api, definition, true, stateFilter, search, frameworkVersionId);
   const [selected, setSelected] = useState<Row | null>(null);
   const [creating, setCreating] = useState(false);
   if (load.state === "loading") return <LoadingState/>;
@@ -253,8 +280,8 @@ function ModuleTable({ api, definition }: { api: ApiClient; definition: ModuleDe
   return <>
     <PageHeader
       title={definition.label}
-      action={canCreate(definition) ? <button className="button primary" onClick={() => setCreating(true)}>{uiText.modules.newRecord}</button> : undefined}
-      filter={<>{definition.id === "controles" && <><form onSubmit={(event) => { event.preventDefault(); if (searchInput.trim().length === 0 || searchInput.trim().length >= 2) setSearch(searchInput.trim()); }}><label>Buscar controles<input aria-label="Buscar controles por nombre, código o referencia normativa" value={searchInput} onChange={(event) => setSearchInput(event.target.value)} placeholder="Nombre, código o referencia"/></label><button className="button secondary" disabled={searchInput.trim().length === 1} type="submit">Buscar</button></form><label>Norma o ley<select aria-label="Filtrar por norma o ley" value={frameworkVersionId} onChange={(event) => setFrameworkVersionId(event.target.value)}><option value="">Todos los marcos habilitados</option>{load.frameworkFilters.map((framework) => <option key={framework.framework_version_id} value={framework.framework_version_id}>{framework.framework_name} · {framework.edition}{framework.access_mode === "non_authoritative_validation" ? " · Validación provisional" : ""}</option>)}</select></label><label>Aplicabilidad<select aria-label="Filtrar por aplicabilidad" value={applicabilityFilter} onChange={(event) => setApplicabilityFilter(event.target.value)}><option value="">Todas</option><option value="applicable">Aplicable</option><option value="not_applicable">No aplica</option></select></label><label>Implementación<select aria-label="Filtrar por implementación" value={implementationFilter} onChange={(event) => setImplementationFilter(event.target.value)}><option value="">Todas</option><option value="implemented">Implementado</option><option value="unimplemented">Sin implementar</option></select></label></>}<label>{uiText.common.status}<select aria-label={uiText.common.filterStatus} value={stateFilter} onChange={(event) => setStateFilter(event.target.value)}><option value="">{uiText.common.all}</option>{(lifecycleStates[definition.id] ?? []).map((state) => <option value={state} key={state}>{statusLabel(state)}</option>)}</select></label></>}
+      action={allowCreate && canCreate(definition) ? <button className="button primary" onClick={() => setCreating(true)}>{uiText.modules.newRecord}</button> : undefined}
+      filter={<>{definition.id === "controles" && <><form onSubmit={(event) => { event.preventDefault(); if (searchInput.trim().length === 0 || searchInput.trim().length >= 2) setSearch(searchInput.trim()); }}><label>Buscar controles<input aria-label="Buscar controles por nombre, código o referencia normativa" value={searchInput} onChange={(event) => setSearchInput(event.target.value)} placeholder="Nombre, código o referencia"/></label><button className="button secondary" disabled={searchInput.trim().length === 1} type="submit">Buscar</button></form><label>Norma o ley<select aria-label="Filtrar por norma o ley" value={frameworkVersionId} onChange={(event) => setFrameworkVersionId(event.target.value)}><option value="">Todos los marcos habilitados</option>{load.frameworkFilters.map((framework) => <option key={framework.framework_version_id} value={framework.framework_version_id}>{framework.framework_name} · {framework.edition}{framework.access_mode === "non_authoritative_validation" ? " · Validación provisional" : ""}</option>)}</select></label></>}<label>{uiText.common.status}<select aria-label={uiText.common.filterStatus} aria-describedby={definition.id === "controles" ? "control-status-filter-unavailable" : undefined} disabled={definition.id === "controles"} value={definition.id === "controles" ? "" : stateFilter} onChange={(event) => setStateFilter(event.target.value)}><option value="">{uiText.common.all}</option>{definition.id !== "controles" && (lifecycleStates[definition.id] ?? []).map((state) => <option value={state} key={state}>{statusLabel(state)}</option>)}</select></label>{definition.id === "controles" && <p id="control-status-filter-unavailable" className="form-guidance" role="status">{uiText.references.controlLifecycleUnavailable}</p>}</>}
     />
     {definition.id === "controles" && load.data.some(hasProvisionalFramework) &&
       <p className="form-guidance" role="note">{provisionalWarning}</p>}
@@ -268,9 +295,9 @@ function ModuleTable({ api, definition }: { api: ApiClient; definition: ModuleDe
     </TableShell>
     {load.page.has_more && <div className="pagination"><button className="button secondary" disabled={load.loadingMore} onClick={loadMore}>{load.loadingMore ? uiText.actions.loadingMore : uiText.actions.loadMore}</button></div>}
     {selected && (
-      <DetailDrawer api={api} definition={definition} row={selected} close={() => setSelected(null)} completed={() => { setSelected(null); retry(); }}/>
+      <DetailDrawer api={api} definition={definition} row={selected} allowAction={allowAction} close={() => setSelected(null)} completed={() => { setSelected(null); retry(); }}/>
     )}
-    {creating && (
+    {creating && allowCreate && (
       <CreateDrawer api={api} definition={definition} close={() => setCreating(false)} completed={() => { setCreating(false); retry(); }}/>
     )}
   </>;
@@ -282,77 +309,6 @@ function hasProvisionalFramework(row: Row): boolean {
       .some((framework) => framework.access_mode === "non_authoritative_validation"));
 }
 
-function ControlVersionSelect({ api, value, onChange }: { api: ApiClient; value: string; onChange(value: string): void }) {
-  const [searchInput, setSearchInput] = useState("");
-  const [search, setSearch] = useState("");
-  const [controls, setControls] = useState<Row[]>([]);
-  const [controlId, setControlId] = useState("");
-  const [versions, setVersions] = useState<Row[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-  useEffect(() => {
-    const controller = new AbortController();
-    const query = new URLSearchParams({ "page[size]": "100" });
-    if (search) query.set("filter[query]", search);
-    setLoading(true); setError(false);
-    void api.request<Page>(`/api/v1/controls?${query}`, { signal: controller.signal }).then((page) => {
-      setControls(page.items.filter((item) => item.ownership_class === "PLATFORM_CONTROL" || item.ownership_class === "GLOBAL_REFERENCE"));
-      setLoading(false);
-    }).catch(() => { if (!controller.signal.aborted) { setError(true); setLoading(false); } });
-    return () => controller.abort();
-  }, [api, search]);
-  useEffect(() => {
-    if (!controlId) { setVersions([]); onChange(""); return; }
-    const controller = new AbortController();
-    void api.request<Row>(`/api/v1/controls/${encodeURIComponent(controlId)}`, { signal: controller.signal }).then((detail) => {
-      const allowed = Array.isArray(detail.versions) ? detail.versions as Row[] : [];
-      setVersions(allowed);
-      onChange(typeof allowed[0]?.control_version_id === "string" ? allowed[0].control_version_id : "");
-    }).catch(() => { if (!controller.signal.aborted) { setVersions([]); onChange(""); setError(true); } });
-    return () => controller.abort();
-  }, [api, controlId]);
-  return <div className="control-version-selector"><form onSubmit={(event) => { event.preventDefault(); if (searchInput.trim().length === 0 || searchInput.trim().length >= 2) setSearch(searchInput.trim()); }}><label><span>Buscar control base</span><input aria-label="Buscar control base" value={searchInput} onChange={(event) => setSearchInput(event.target.value)} placeholder="Código, nombre o norma"/></label><button className="button secondary" type="submit" disabled={searchInput.trim().length === 1}>Buscar</button></form>{controls.some(hasProvisionalFramework) && <p className="form-guidance" role="note">{provisionalWarning}</p>}<label><span>Control base autorizado</span><select aria-label="Control base autorizado" value={controlId} onChange={(event) => setControlId(event.target.value)} disabled={loading || error}><option value="">{loading ? "Cargando controles…" : "Selecciona un control"}</option>{controls.map((control) => <option value={String(control.control_id)} key={String(control.control_id)}>{String(control.control_code)} · {String(control.name)}{hasProvisionalFramework(control) ? " · Validación provisional" : ""}{Array.isArray(control.normative_frameworks) && control.normative_frameworks.length ? ` · ${(control.normative_frameworks as Row[]).map((framework) => String(framework.framework_name)).join(", ")}` : ""}</option>)}</select></label>{versions.length > 1 && <label><span>Versión base</span><select aria-label="Versión base" value={value} onChange={(event) => onChange(event.target.value)}>{versions.map((version) => <option key={String(version.control_version_id)} value={String(version.control_version_id)}>v{String(version.version_number)}</option>)}</select></label>}{error && <p className="form-error" role="alert">No fue posible cargar controles autorizados.</p>}{!loading && !error && controls.length === 0 && <p className="form-guidance">Sin controles base visibles. Revisa los marcos habilitados o la búsqueda.</p>}</div>;
-}
-
-function SubjectSelect({ api, value, onChange }: { api: ApiClient; value: string; onChange(value: string): void }) {
-  const [query, setQuery] = useState("");
-  const [subjects, setSubjects] = useState<Row[]>([]);
-  const [error, setError] = useState(false);
-  useEffect(() => {
-    const controller = new AbortController();
-    const params = new URLSearchParams({ "page[size]": "100" });
-    if (query.trim().length >= 2) params.set("filter[query]", query.trim());
-    void api.request<Page>(`/api/v1/subjects?${params}`, { signal: controller.signal })
-      .then((page) => { setSubjects(page.items); setError(false); })
-      .catch(() => { if (!controller.signal.aborted) { setSubjects([]); setError(true); } });
-    return () => controller.abort();
-  }, [api, query]);
-  return <div className="control-version-selector"><label><span>Buscar responsable</span><input type="search" aria-label="Buscar Subject por nombre o clave" value={query} onChange={(event) => setQuery(event.target.value)}/></label><label><span>Responsable de negocio</span><select aria-label="Responsable de negocio" value={value} onChange={(event) => onChange(event.target.value)}><option value="">Selecciona un Subject</option>{subjects.map((subject) => <option key={String(subject.subject_id)} value={String(subject.subject_id)}>{String(subject.display_name)} · {String(subject.subject_type)} · {String(subject.canonical_key)}</option>)}</select></label>{error && <p className="form-error" role="alert">No fue posible cargar Subjects autorizados.</p>}</div>;
-}
-
-function MethodologySelect({ api, domain, value, onChange }: { api: ApiClient; domain: "compliance" | "controls"; value: string; onChange(value: string): void }) {
-  const [items, setItems] = useState<Row[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-  useEffect(() => {
-    const controller = new AbortController();
-    setLoading(true); setError(false);
-    void (async () => {
-      const available: Row[] = [];
-      let cursor: string | null = null;
-      do {
-        const query = new URLSearchParams({ "page[size]": "100" });
-        if (cursor) query.set("page[cursor]", cursor);
-        const page = await api.request<Page>(`/api/v1/${domain}-methodologies?${query}`, { signal: controller.signal });
-        available.push(...page.items); cursor = page.page.has_more ? page.page.next_cursor : null;
-      } while (cursor);
-      setItems(available); setLoading(false);
-    })().catch(() => { if (!controller.signal.aborted) { setItems([]); setError(true); setLoading(false); } });
-    return () => controller.abort();
-  }, [api, domain]);
-  return <label><span>{fieldLabel("methodology_version_ref")}</span><select aria-label={fieldLabel("methodology_version_ref")} value={value} disabled={loading || error} onChange={(event) => onChange(event.target.value)}><option value="">{loading ? "Cargando metodologías…" : "Selecciona una metodología publicada"}</option>{items.map((item) => <option key={String(item.methodology_version_ref)} value={String(item.methodology_version_ref)}>{String(item.name)} · v{String(item.version_number)}</option>)}</select>{error && <span role="alert">No fue posible cargar metodologías autorizadas.</span>}{!loading && !error && items.length === 0 && <span>Sin metodologías publicadas disponibles.</span>}</label>;
-}
-
 function CreateDrawer({ api, definition, close, completed }: { api: ApiClient; definition: ModuleDefinition; close(): void; completed(): void }) {
   const contract = createContracts[definition.id]!;
   const [form, setForm] = useState<Record<string, string>>({});
@@ -361,6 +317,10 @@ function CreateDrawer({ api, definition, close, completed }: { api: ApiClient; d
   const [file, setFile] = useState<File>();
   const [classification, setClassification] = useState("");
   const [sourceProvenance, setSourceProvenance] = useState("");
+  const [retentionContext,setRetentionContext]=useState<Row>();
+  const createSchema:Record<string,string>={controles:"ControlInstantiateRequest",evidencias:"EvidenceCreateRequest",issues:"IssueCreateRequest",acciones:"ActionCreateRequest",cumplimiento:"ApplicabilityCreateRequest",retencion:"RetentionPolicyCreateRequest"};
+  const vocabularyField=(field:string):FormVocabularyKey|undefined=> {const key=`${createSchema[definition.id]}.${field}`;return Object.hasOwn(FORM_VOCABULARIES,key)?key as FormVocabularyKey:undefined;};
+  const assignmentParents=definition.id==="acciones"?{issue_id:form.issue_id??""}:Object.fromEntries(["requirement_id","control_id","requirement_assessment_id","control_assessment_id","assurance_test_id"].filter(key=>form[key]).map(key=>[key,form[key]!]));
   const submit = async () => {
     const body: Row = Object.fromEntries(Object.entries(form).filter(([, value]) => value !== ""));
     if (definition.id === "controles" && !body.based_on_control_version_id) { setError("Selecciona un control base autorizado."); return; }
@@ -372,8 +332,10 @@ function CreateDrawer({ api, definition, close, completed }: { api: ApiClient; d
     }
     if (definition.id === "retencion") {
       for (const field of ["version_number", "retention_seconds", "precedence_rank"]) if (body[field] !== undefined) body[field] = Number(body[field]);
+      if (body.policy_kind === "legal_hold") delete body.retention_seconds;
       if (body.is_mandatory === "true" || body.is_mandatory === "false") body.is_mandatory = body.is_mandatory === "true";
     }
+    if (definition.id === "aplicabilidad-retencion" && body.version_number !== undefined) body.version_number = Number(body.version_number);
     let path = contract.path;
     if (contract.pathField) {
       const value = String(body[contract.pathField] ?? "");
@@ -383,16 +345,20 @@ function CreateDrawer({ api, definition, close, completed }: { api: ApiClient; d
     setBusy(true); setError(undefined);
     try {
       if (definition.id === "evidencias" && file && !body.file_object_id) {
-        if (!body.retention_policy_id || !classification || !sourceProvenance) { setError(uiText.forms.requiredField); setBusy(false); return; }
-        body.file_object_id = await api.uploadEvidenceFile(file, String(body.retention_policy_id), classification, sourceProvenance);
+        if (!body.retention_policy_id || !body.retention_policy_applicability_id || !classification || !sourceProvenance) { setError(uiText.forms.requiredField); setBusy(false); return; }
+        body.file_object_id = await api.uploadEvidenceFile(file, String(body.retention_policy_id), String(body.retention_policy_applicability_id), classification, sourceProvenance, {scope_subject_id:retentionContext?.scope_subject_id as string|null,processing_activity_id:retentionContext?.processing_activity_id as string|null});
         setForm((value) => ({ ...value, file_object_id: String(body.file_object_id) }));
+      }
+      if (definition.id === "evidencias") {
+        delete body.retention_policy_applicability_id;
+        if (!body.links) body.links = [];
       }
       await api.post(`/api/v1${path}`, body); completed();
     } catch { setError(file ? uiText.forms.fileError : uiText.forms.createError); setBusy(false); }
   };
   return <div className="drawer-backdrop" role="presentation" onMouseDown={close}><aside className="drawer" role="dialog" aria-modal="true" aria-labelledby="create-title" onMouseDown={(event) => event.stopPropagation()}>
     <header className="drawer-header"><div><p className="eyebrow">{uiText.forms.createEyebrow}</p><h2 id="create-title">{definition.label}</h2></div><button className="icon-button" onClick={close} aria-label={uiText.forms.closeCreate}>×</button></header>
-    <div className="drawer-body"><p className="form-guidance">{uiText.forms.guidance}</p><div className="create-form">{definition.id === "evidencias" && <><label><span>{uiText.forms.uploadFile}</span><input type="file" onChange={(event) => setFile(event.target.files?.[0])}/></label><label><span>{uiText.forms.fileClassification}</span><select value={classification} onChange={(event) => setClassification(event.target.value)}><option value="">—</option>{["public", "internal", "confidential", "restricted"].map((value) => <option key={value} value={value}>{value}</option>)}</select></label><label><span>{uiText.forms.fileProvenance}</span><input value={sourceProvenance} onChange={(event) => setSourceProvenance(event.target.value)}/></label></>}{contract.fields.map((field) => field === "methodology_version_ref" ? <MethodologySelect key={field} api={api} domain={definition.id === "requisitos" ? "compliance" : "controls"} value={form[field] ?? ""} onChange={(value) => setForm((current) => ({ ...current, [field]: value }))}/> : definition.id === "controles" && field === "based_on_control_version_id" ? <ControlVersionSelect key={field} api={api} value={form[field] ?? ""} onChange={(value) => setForm((current) => ({ ...current, [field]: value }))}/> : definition.id === "controles" && field === "business_owner_subject_id" ? <SubjectSelect key={field} api={api} value={form[field] ?? ""} onChange={(value) => setForm((current) => ({ ...current, [field]: value }))}/> : <label key={field}><span>{fieldLabel(field)}</span>{definition.id === "cumplimiento" && field === "applicability_decision" ? <select aria-label={fieldLabel(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}><option value="">Selecciona una decisión</option><option value="applicable">Aplicable</option><option value="not_applicable">No aplica</option></select> : definition.id === "controles" && (field === "control_type" || field === "nature") ? <select aria-label={fieldLabel(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}><option value="">Selecciona una opción</option>{(field === "control_type" ? CONTROL_TYPES : CONTROL_NATURES).map((value) => <option value={value} key={value}>{displayValue(value)}</option>)}</select> : contract.jsonFields?.includes(field) ? <textarea aria-label={fieldLabel(field)} placeholder={fieldPlaceholder(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}/> : <input aria-label={fieldLabel(field)} placeholder={fieldPlaceholder(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}/>}</label>)}</div>{error && <p className="inline-feedback error" role="alert">{error}</p>}</div>
+    <div className="drawer-body"><p className="form-guidance">{uiText.forms.guidance}</p><div className="create-form">{definition.id === "evidencias" && <><label><span>{uiText.forms.uploadFile}</span><input type="file" onChange={(event) => setFile(event.target.files?.[0])}/></label><ContractVocabularySelect schemaField="UploadIntentCreateRequest.classification" label={uiText.forms.fileClassification} value={classification} onChange={setClassification}/><label><span>{uiText.forms.fileProvenance}</span><input value={sourceProvenance} onChange={(event) => setSourceProvenance(event.target.value)}/></label></>}{contract.fields.map((field) => field === "framework_version_id" ? <BusinessReferenceSelect key={field} api={api} label="Versión normativa" context={{kind:"framework",purpose:"select"}} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : field === "assigned_membership_id" ? <BusinessReferenceSelect key={field} api={api} label="Responsable" disabled={Object.values(assignmentParents).filter(Boolean).length!==1} context={{kind:"membership",purpose:definition.id==="acciones"?"action-assignment":"evidence-request-assignment",parents:assignmentParents}} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : (field === "retention_policy_applicability_id" || field === "supersedes_applicability_id") ? <TypedReferenceField key={field} api={api} field={field} form={form} onRetentionContext={setRetentionContext} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : field === "source_evidence_version_id" ? <ApprovedEvidenceReferenceField key={field} api={api} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : field === "retention_policy_id" && definition.id === "aplicabilidad-retencion" ? <EntityReferenceSelect key={field} api={api} entity="retentionPolicy" label="Política de retención" value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : field === "retention_policy_id" ? <React.Fragment key={field}><BusinessReferenceSelect key={field} api={api} label="Política de retención" context={{kind:"retention",purpose:file?"upload":"evidence",...(form.file_object_id?{parents:{file_object_id:form.file_object_id}}:{})}} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/><p className="form-guidance" role="status">Retención pendiente hasta disponer de una política jurídicamente aplicable. No se declara cumplimiento.</p></React.Fragment> : field === "issue_id" ? <EntityReferenceSelect key={field} api={api} entity="issue" label="Hallazgo" value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : vocabularyField(field) ? <ContractVocabularySelect key={field} schemaField={vocabularyField(field)!} label={fieldLabel(field)} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : ["items","links"].includes(field) ? <StructuredCollectionEditor key={field} api={api} kind={field as "items"|"links"} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : field === "requirement_id" ? <RequirementReferenceField key={field} api={api} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : ["control_id","control_version_id","requirement_applicability_id","requirement_assessment_id","control_assessment_id","assurance_test_id","evidence_request_id","scope_subject_id","business_owner_subject_id","effective_configuration_id"].includes(field) ? <TypedReferenceField key={field} api={api} field={field} form={form} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : field === "file_object_id" ? <p key={field} className="form-guidance">{file ? `Archivo seleccionado: ${file.name}` : "Selecciona el archivo que deseas cargar."}</p> : field === "methodology_version_ref" ? <MethodologySelect key={field} api={api} domain={definition.id === "requisitos" ? "compliance" : "controls"} value={form[field] ?? ""} onChange={(value) => setForm((current) => ({ ...current, [field]: value }))}/> : definition.id === "controles" && field === "based_on_control_version_id" ? <ControlVersionSelect key={field} api={api} value={form[field] ?? ""} onChange={(value) => setForm((current) => ({ ...current, [field]: value }))}/> : definition.id === "controles" && field === "business_owner_subject_id" ? <SubjectSelect key={field} api={api} value={form[field] ?? ""} onChange={(value) => setForm((current) => ({ ...current, [field]: value }))}/> : <label key={field}><span>{fieldLabel(field)}</span>{definition.id === "cumplimiento" && field === "applicability_decision" ? <select aria-label={fieldLabel(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}><option value="">Selecciona una decisión</option><option value="applicable">Aplicable</option><option value="not_applicable">No aplica</option></select> : definition.id === "controles" && (field === "control_type" || field === "nature") ? <select aria-label={fieldLabel(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}><option value="">Selecciona una opción</option>{(field === "control_type" ? CONTROL_TYPES : CONTROL_NATURES).map((value) => <option value={value} key={value}>{displayValue(value)}</option>)}</select> : contract.jsonFields?.includes(field) ? <textarea aria-label={fieldLabel(field)} placeholder={fieldPlaceholder(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}/> : <input aria-label={fieldLabel(field)} placeholder={fieldPlaceholder(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}/>}</label>)}</div>{error && <p className="inline-feedback error" role="alert">{error}</p>}</div>
     <footer className="drawer-footer"><button className="button primary" disabled={busy} onClick={() => void submit()}>{busy ? uiText.actions.creating : uiText.actions.create}</button></footer>
   </aside></div>;
 }
@@ -412,7 +378,11 @@ function ControlDetailContent({ row }: { row: Row }) {
   </>;
 }
 
-function DetailDrawer({ api, definition, row: summary, close, completed }: { api: ApiClient; definition: ModuleDefinition; row: Row; close(): void; completed(): void }) {
+function DetailDrawer({ api, definition, row: summary, allowAction, close, completed }: {
+  api: ApiClient; definition: ModuleDefinition; row: Row;
+  allowAction: (action: WorkflowAction) => boolean; close(): void; completed(): void;
+}) {
+  const timezone = React.useContext(TenantTimezoneContext);
   const [detail, setDetail] = useState<{ loading: boolean; row: Row; error?: string }>({ loading: true, row: summary });
   const [form, setForm] = useState<Record<string, string>>({});
   const [feedback, setFeedback] = useState<{ kind: "error" | "success"; message: string }>();
@@ -425,7 +395,20 @@ function DetailDrawer({ api, definition, row: summary, close, completed }: { api
     return () => controller.abort();
   }, [api, definition, id, summary]);
   const row = detail.row;
-  const actions = availableWorkflowActions(definition, row);
+  const vocabularyProvenance=Array.isArray(row.contract_provenance)?row.contract_provenance:[];
+  const historicalReference=(field:string,value:unknown)=> {
+    if(typeof value!=="string") return displayValue(value);
+    if (/^\d{4}-\d{2}-\d{2}T.*Z$/.test(value)) return <TenantInstantPreview value={value}/>;
+    if(field==="framework_version_id" && definition.id==="soa") return <HistoricalReferenceLabel api={api} kind="framework" purpose="history" parent={{statement_of_applicability_id:id}} filter={{framework_version_id:value}}/>;
+    if(["assigned_membership_id","requested_by_membership_id","executor_membership_id","reviewer_membership_id"].includes(field)) {
+      const types:Record<string,[string,string]>={acciones:["action-history","action_id"],"solicitudes-evidencia":["evidence-request-history","evidence_request_id"],pruebas:["assurance-test-history","assurance_test_id"]};
+      const type=types[definition.id];if(type)return <HistoricalReferenceLabel api={api} kind="membership" purpose={type[0]} parent={{[type[1]]:id}} filter={{tenant_membership_id:value}}/>;
+    }
+    if(field==="retention_policy_id" && definition.id==="evidencias") return <HistoricalReferenceLabel api={api} kind="retention" purpose="history" parent={{evidence_id:id}} filter={{retention_policy_id:value}}/>;
+    if (field.endsWith("_id") || field === "methodology_version_ref") return "Referencia vinculada";
+    return displayValue(value);
+  };
+  const actions = detail.error ? [] : availableWorkflowActions(definition, row).filter(allowAction);
   const version = definition.id === "evidencias" && Array.isArray(row.versions) ? row.versions[0] as Row | undefined : undefined;
   const state = version?.lifecycle_state ?? row[definition.stateField];
   const download = async () => {
@@ -439,6 +422,10 @@ function DetailDrawer({ api, definition, row: summary, close, completed }: { api
       setTimeout(() => URL.revokeObjectURL(url), 0);
     } catch { setFeedback({ kind: "error", message: uiText.forms.fileError }); }
   };
+  const workflowVocabulary=(action:WorkflowAction,field:string):FormVocabularyKey|undefined=> {
+    const schemas:Record<string,string>={requisitos:"RequirementAssessmentSubmitRequest","evaluaciones-control":"ControlAssessmentSubmitRequest",pruebas:"AssuranceTestExecuteRequest",evidencias:action.suffix==="reject"?"EvidenceRejectRequest":"EvidenceApproveRequest",issues:"IssueTriageRequest",acciones:action.suffix==="complete"?"ActionCompleteRequest":"ActionVerifyRequest"};
+    const key=`${schemas[definition.id]}.${field}`;return Object.hasOwn(FORM_VOCABULARIES,key)?key as FormVocabularyKey:undefined;
+  };
   const submit = async (action: WorkflowAction) => {
     const missing = (action.fields ?? []).find((field) => !action.optionalFields?.includes(field) && !form[field]);
     if (missing) { setFeedback({ kind: "error", message: `${uiText.forms.requiredField} ${fieldLabel(missing)}` }); return; }
@@ -446,10 +433,15 @@ function DetailDrawer({ api, definition, row: summary, close, completed }: { api
     const targetPath = action.versionResource ? "/evidence-versions" : definition.path;
     const body: Row = { expected_version: Number(version?.row_version ?? row.row_version), ...Object.fromEntries((action.fields ?? []).filter((field) => form[field] !== undefined && form[field] !== "").map((field) => [field, form[field]])) };
     for (const field of ["coverage_percent", "design_effectiveness", "operating_effectiveness"]) if (body[field] !== undefined) body[field] = Number(body[field]);
-    if (typeof body.samples === "string") { try { body.samples = JSON.parse(body.samples); } catch { setFeedback({ kind: "error", message: uiText.forms.invalidJson }); return; } }
+    if (typeof body.samples === "string") {
+      try { body.samples = normalizeSamplePeriods(JSON.parse(body.samples), timezone); }
+      catch { setFeedback({ kind: "error", message: uiText.temporal.invalidInstant }); return; }
+    }
     try {
-      if (definition.id === "retencion") {
-        const payload = action.suffix === "update" ? { retention_seconds: Number(form.retention_seconds), is_mandatory: form.is_mandatory === "true" } : {};
+      if (definition.id === "retencion" || definition.id === "aplicabilidad-retencion") {
+        const payload = definition.id === "retencion" && action.suffix === "update"
+          ? { ...(row.policy_kind === "legal_hold" ? {} : { retention_seconds: Number(form.retention_seconds) }), is_mandatory: form.is_mandatory === "true" }
+          : Object.fromEntries(Object.entries(body).filter(([key]) => key !== "expected_version"));
         await api.request(`/api/v1${targetPath}/${targetId}:${action.suffix}`, { method: "POST", headers: { "Idempotency-Key": crypto.randomUUID(), "If-Match": `"${Number(row.row_version)}"` }, body: JSON.stringify(payload) });
       } else await api.post(`/api/v1${targetPath}/${targetId}:${action.suffix}`, body);
       setFeedback({ kind: "success", message: uiText.forms.operationSuccess }); completed();
@@ -460,7 +452,7 @@ function DetailDrawer({ api, definition, row: summary, close, completed }: { api
   };
   return <div className="drawer-backdrop" role="presentation" onMouseDown={close}><aside className="drawer" role="dialog" aria-modal="true" aria-labelledby="detail-title" onMouseDown={(event) => event.stopPropagation()}>
     <header className="drawer-header"><div><p className="eyebrow">{uiText.forms.detailEyebrow}</p><h2 id="detail-title">{displayValue(row[definition.titleField] ?? definition.label)}</h2></div><button className="icon-button" onClick={close} aria-label={uiText.forms.closeDetail}>×</button></header>
-    <div className="drawer-body">{detail.loading ? <LoadingState/> : <>{definition.id === "controles" ? <ControlDetailContent row={row}/> : <><StatusBadge value={state}/><dl>{Object.entries(row).filter(([, value]) => !Array.isArray(value) && typeof value !== "object").map(([key, value]) => <React.Fragment key={key}><dt>{fieldLabel(key)}</dt><dd>{displayValue(value)}</dd></React.Fragment>)}</dl></>}{detail.error && <p className="inline-feedback error" role="alert">{detail.error}</p>}{typeof version?.file_object_id === "string" && <button className="button secondary" onClick={() => void download()}>{uiText.forms.downloadFile}</button>}{actions.map((action) => <section className="workflow-action" key={action.suffix}><h3>{action.label}</h3>{action.fields?.map((field) => <label key={field}><span>{fieldLabel(field)}</span><input aria-label={fieldLabel(field)} placeholder={fieldPlaceholder(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}/></label>)}<button className="button primary" onClick={() => void submit(action)}>{action.label}</button></section>)}{actions.length === 0 && <p className="read-only-note">{uiText.forms.noActions}</p>}{feedback && <p className={`inline-feedback ${feedback.kind}`} role={feedback.kind === "error" ? "alert" : "status"}>{feedback.message}</p>}</>}</div>
+    <div className="drawer-body">{definition.id === "aplicabilidad-retencion" && row.lifecycle_state === "draft" && !row.source_evidence_version_id && <p className="form-guidance" role="status">Custodia de fuente pendiente: no acredita obligación jurídica ni cumplimiento. El autor documental y el custodio conservan su autoría; se requiere revisión independiente y vinculación antes de publicar.</p>}<p className="form-guidance">{vocabularyProvenance.length?"Procedencia del vocabulario contractual registrada":"Procedencia del vocabulario contractual no registrada"}</p>{detail.loading ? <LoadingState/> : <>{definition.id === "controles" ? <ControlDetailContent row={row}/> : <><StatusBadge value={state}/><dl>{Object.entries(row).filter(([, value]) => !Array.isArray(value) && typeof value !== "object").map(([key, value]) => <React.Fragment key={key}><dt>{fieldLabel(key)}</dt><dd>{historicalReference(key,value)}</dd></React.Fragment>)}</dl></>}{detail.error && <p className="inline-feedback error" role="alert">{detail.error}</p>}{typeof version?.file_object_id === "string" && <button className="button secondary" onClick={() => void download()}>{uiText.forms.downloadFile}</button>}{actions.map((action) => <section className="workflow-action" key={action.suffix}><h3>{action.label}</h3>{action.fields?.map((field) => field === "source_evidence_version_id" && action.suffix === "bind-initial-source" ? <label key={field}><span>Fuente inicial aprobada</span><select aria-label="Fuente inicial aprobada" value={form[field]??""} onChange={event=>setForm(current=>({...current,[field]:event.target.value}))}><option value="">Selecciona la fuente aprobada</option>{(Array.isArray(row.initial_source_candidates)?row.initial_source_candidates as Row[]:[]).map(source=><option key={String(source.evidence_version_id)} value={String(source.evidence_version_id)}>{String(source.evidence_code)} · v{String(source.version_number)}</option>)}</select>{(!Array.isArray(row.initial_source_candidates)||row.initial_source_candidates.length===0)&&<span className="form-guidance">No hay fuente vigente aprobada por una persona distinta de su autor.</span>}</label> : field === "samples" ? <StructuredCollectionEditor key={field} api={api} kind="samples" value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : field === "evidence_version_id" ? <ApprovedEvidenceReferenceField key={field} api={api} {...(definition.id==="solicitudes-evidencia"?{requestId:id}:{})} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : field === "business_owner_subject_id" ? <SubjectSelect key={field} api={api} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : workflowVocabulary(action,field) ? <ContractVocabularySelect key={field} schemaField={workflowVocabulary(action,field)!} label={fieldLabel(field)} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : <label key={field}><span>{fieldLabel(field)}</span><input aria-label={fieldLabel(field)} placeholder={fieldPlaceholder(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}/></label>)}<button className="button primary" onClick={() => void submit(action)}>{action.label}</button></section>)}{actions.length === 0 && <p className="read-only-note">{uiText.forms.noActions}</p>}{feedback && <p className={`inline-feedback ${feedback.kind}`} role={feedback.kind === "error" ? "alert" : "status"}>{feedback.message}</p>}</>}</div>
   </aside></div>;
 }
 
@@ -554,9 +546,9 @@ function Dashboard({ api }: { api: ApiClient }) {
   </>;
 }
 
-function Sidebar({ active, open, close, platformAdmin, tenantAdmin, hasTenant, managedIdentity }: { active: string; open: boolean; close(): void; platformAdmin: boolean; tenantAdmin: boolean; hasTenant: boolean; managedIdentity: boolean }) {
+function Sidebar({ active, open, close, platformAdmin, tenantAdmin, hasTenant, managedIdentity, normsAvailable }: { active: string; open: boolean; close(): void; platformAdmin: boolean; tenantAdmin: boolean; hasTenant: boolean; managedIdentity: boolean; normsAvailable: boolean }) {
   return <aside className={`sidebar ${open ? "open" : ""}`}><div className="brand"><BrandLogo/><span>GRC</span></div><nav aria-label={uiText.navigation.mainAria}>
-    {hasTenant && nav.map(([id, label, icon]) => <button key={id} className={active === id ? "active" : ""} onClick={() => { navigate(id); close(); }}><Icon name={icon}/><span>{label}</span></button>)}
+    {hasTenant && nav.filter(([id]) => id !== "normas" || normsAvailable).map(([id, label, icon]) => <button key={id} className={active === id ? "active" : ""} onClick={() => { navigate(id); close(); }}><Icon name={icon}/><span>{label}</span></button>)}
     {(platformAdmin || tenantAdmin || managedIdentity) && <p className="sidebar-section-label">{uiText.navigation.settings}</p>}
     {(platformAdmin || tenantAdmin) && <><button className={active === settingsRoutes.companies ? "active" : ""} onClick={() => { navigate(settingsRoutes.companies); close(); }}><Icon name="building"/><span>{uiText.navigation.companies}</span></button><button className={active === settingsRoutes.users ? "active" : ""} onClick={() => { navigate(settingsRoutes.users); close(); }}><Icon name="users"/><span>{uiText.navigation.users}</span></button></>}
     {managedIdentity && <button className={active === settingsRoutes.managedIdentities ? "active" : ""} onClick={() => { navigate(settingsRoutes.managedIdentities); close(); }}><Icon name="shield"/><span>Identidades gestionadas</span></button>}
@@ -565,18 +557,68 @@ function Sidebar({ active, open, close, platformAdmin, tenantAdmin, hasTenant, m
 
 const workspaceGroups: Readonly<Record<string, readonly string[]>> = {
   cumplimiento: ["cumplimiento", "soa"], requisitos: ["requisitos"], controles: ["controles", "evaluaciones-control", "pruebas"],
-  evidencias: ["solicitudes-evidencia", "evidencias", "retencion"], acciones: ["issues", "acciones"]
+  evidencias: ["solicitudes-evidencia", "evidencias", "retencion", "aplicabilidad-retencion"], acciones: ["issues", "acciones"]
 };
 
-function ModuleWorkspace({ api, active }: { api: ApiClient; active: string }) {
+function NormativeContent({ api, frameworkId, kind, title }: { api: ApiClient; frameworkId: string; kind: "normative-units" | "requirements"; title: string }) {
+  const [state, setState] = useState<"loading" | "ready" | "denied" | "error">("loading");
+  const [items, setItems] = useState<Row[]>([]);
+  const [cursor, setCursor] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const path = `/api/v1/framework-versions/${encodeURIComponent(frameworkId)}/${kind}`;
+  const load = async (next?: string, signal?: AbortSignal) => {
+    const query = new URLSearchParams({ "page[size]": "100" });
+    if (next) query.set("page[cursor]", next);
+    const page = await api.request<Page>(`${path}?${query}`, signal ? { signal } : {});
+    setItems((current) => next ? [...current, ...page.items] : page.items);
+    setCursor(page.page.next_cursor);
+    setState("ready");
+  };
+  useEffect(() => {
+    const controller = new AbortController();
+    setState("loading"); setItems([]); setCursor(null);
+    void load(undefined, controller.signal).catch((error: unknown) => {
+      if (!controller.signal.aborted) setState(error instanceof ApiProblem && [401, 403].includes(error.status) ? "denied" : "error");
+    });
+    return () => controller.abort();
+  }, [api, path]);
+  return <DataCard title={title} className="admin-section">
+    {state === "loading" ? <LoadingState/> : state === "denied" ? <StatePanel kind="permission-denied"/> :
+      state === "error" ? <StatePanel kind="error" detail={`No fue posible consultar ${title.toLowerCase()}.`} retry={() => { setState("loading"); void load().catch(() => setState("error")); }}/> :
+      items.length === 0 ? <StatePanel kind="empty" detail="No hay contenido normativo publicado y habilitado para esta versión. Comprueba la publicación y contratación del marco."/> :
+      <><div className="table-scroll"><table><thead><tr><th>Código</th><th>Contenido</th><th><span className="sr-only">Detalle</span></th></tr></thead><tbody>{items.map((item) => {
+        const id = String(item[kind === "requirements" ? "requirement_id" : "normative_unit_id"]);
+        const code = String(item[kind === "requirements" ? "requirement_code" : "unit_code"] ?? "");
+        const name = String(item[kind === "requirements" ? "editorial_summary" : "title"] ?? "");
+        return <tr key={id}><td>{code}</td><td>{name}</td><td><details><summary>Ver detalle</summary><dl>{Object.entries(item).filter(([field, value]) => value != null && !field.endsWith("_id") && !["unit_code", "requirement_code", "title", "editorial_summary"].includes(field)).map(([field, value]) => <React.Fragment key={field}><dt>{fieldLabel(field)}</dt><dd>{displayValue(value)}</dd></React.Fragment>)}</dl></details></td></tr>;
+      })}</tbody></table></div>{cursor && <button className="button secondary" disabled={busy} onClick={() => { setBusy(true); void load(cursor).catch(() => setState("error")).finally(() => setBusy(false)); }}>{busy ? uiText.actions.loadingMore : uiText.actions.loadMore}</button>}</>}
+  </DataCard>;
+}
+
+function NormsWorkspace({ api }: { api: ApiClient }) {
+  const [frameworkId, setFrameworkId] = useState("");
+  return <><PageHeader title={uiText.navigation.norms}/><DataCard title="Marcos normativos habilitados" className="admin-section">
+    <BusinessReferenceSelect api={api} label="Norma o marco publicado" context={{ kind: "framework", purpose: "select" }} value={frameworkId} onChange={setFrameworkId}/>
+    <p className="form-guidance">Se muestran únicamente versiones publicadas y disponibles para la empresa seleccionada.</p>
+  </DataCard>{frameworkId ? <><NormativeContent key={`${frameworkId}:units`} api={api} frameworkId={frameworkId} kind="normative-units" title="Unidades normativas"/><NormativeContent key={`${frameworkId}:requirements`} api={api} frameworkId={frameworkId} kind="requirements" title="Requisitos de la norma"/></> : null}</>;
+}
+
+function ModuleWorkspace({ api, active, authorization, tenantId }: {
+  api: ApiClient; active: string; authorization: CurrentPrincipalAuthorization | null; tenantId: string;
+}) {
+  const mayReadRetention = tenantPresentationPermission(authorization, tenantId, "privacy.retention_policy.read");
   const choices = (workspaceGroups[active] ?? [active])
     .map((id) => modules.find((module) => module.id === id))
-    .filter((definition): definition is ModuleDefinition => Boolean(definition));
+    .filter((definition): definition is ModuleDefinition => Boolean(definition))
+    .filter((definition) => !["retencion", "aplicabilidad-retencion"].includes(definition.id) || mayReadRetention);
   const [selectedId, setSelectedId] = useState(choices[0]?.id ?? "");
   useEffect(() => setSelectedId(choices[0]?.id ?? ""), [active]);
   const selected = choices.find((choice) => choice.id === selectedId) ?? choices[0];
   if (!selected) return <ErrorState unauthorized retry={() => undefined}/>;
-  return <><div className="module-tabs" role="tablist" aria-label={uiText.navigation.submodulesAria}>{choices.map((choice) => <button role="tab" aria-selected={selected.id === choice.id} className={selected.id === choice.id ? "active" : ""} key={choice.id} onClick={() => setSelectedId(choice.id)}>{choice.label}</button>)}</div><ModuleTable api={api} definition={selected}/></>;
+  const retention = ["retencion", "aplicabilidad-retencion"].includes(selected.id);
+  return <><div className="module-tabs" role="tablist" aria-label={uiText.navigation.submodulesAria}>{choices.map((choice) => <button role="tab" aria-selected={selected.id === choice.id} className={selected.id === choice.id ? "active" : ""} key={choice.id} onClick={() => setSelectedId(choice.id)}>{choice.label}</button>)}</div><ModuleTable api={api} definition={selected}
+    allowCreate={!retention || tenantPresentationPermission(authorization, tenantId, "privacy.retention_policy.create")}
+    allowAction={retention ? (action) => { const permission = retentionActionPermission(action.suffix); return !!permission && tenantPresentationPermission(authorization, tenantId, permission); } : undefined}/></>;
 }
 
 type InvitationCreateEnvelope = {
@@ -665,9 +707,9 @@ function AdminPageBody({ state, retry, loadMore, children }: { state: AdminPageS
   return <>{children(state.page.items)}{state.page.page.has_more && <div className="pagination"><button className="button secondary" onClick={loadMore}>{uiText.actions.loadMore}</button></div>}</>;
 }
 
-function adminDate(value: unknown): string {
+function adminDate(value: unknown): React.ReactNode {
   if (typeof value !== "string" || Number.isNaN(Date.parse(value))) return uiText.common.noData;
-  return new Intl.DateTimeFormat("es-CL", { dateStyle: "medium", timeStyle: "short" }).format(new Date(value));
+  return <TenantInstantPreview value={value}/>;
 }
 
 function readableRole(code: unknown, name?: unknown): string {
@@ -675,10 +717,11 @@ function readableRole(code: unknown, name?: unknown): string {
   return localized === "Rol personalizado" && typeof name === "string" && name.trim() ? name : localized;
 }
 
-function ContractedPacks({ api, subscriptionId, platform }: { api: ApiClient; subscriptionId?: string; platform: boolean }) {
+function ContractedPacks({ api, subscriptionId, platform, canActivate = false, canRevoke = false }: { api: ApiClient; subscriptionId?: string; platform: boolean; canActivate?: boolean; canRevoke?: boolean }) {
   const [items, setItems] = useState<Row[]>([]);
   const [page, setPage] = useState<PageMeta>({ has_more: false, next_cursor: null });
   const [versions, setVersions] = useState<Row[]>([]);
+  const [catalogState, setCatalogState] = useState<"loading" | "ready" | "denied" | "error">("loading");
   const [versionId, setVersionId] = useState("");
   const [effectiveFrom, setEffectiveFrom] = useState("");
   const [feedback, setFeedback] = useState("");
@@ -690,16 +733,21 @@ function ContractedPacks({ api, subscriptionId, platform }: { api: ApiClient; su
     const controller = new AbortController();
     void (platform ? api.platformGet<Page>(path, { signal: controller.signal }) : api.request<Page>(path, { signal: controller.signal }))
       .then((result) => { setItems(result.items); setPage(result.page); }).catch(() => { if (!controller.signal.aborted) setFeedback("No fue posible cargar los marcos contratados."); });
-    if (platform) void api.platformGet<Page>("/api/v1/platform/regulatory-pack-versions", { signal: controller.signal })
-      .then((page) => setVersions(page.items)).catch(() => { if (!controller.signal.aborted) setFeedback("No fue posible cargar versiones disponibles."); });
+    if (platform && canActivate) void api.platformGet<Page>("/api/v1/platform/regulatory-pack-versions", { signal: controller.signal })
+      .then((page) => { setVersions(page.items); setCatalogState("ready"); }).catch((error: unknown) => { if (!controller.signal.aborted) setCatalogState(error instanceof ApiProblem && [401, 403].includes(error.status) ? "denied" : "error"); });
     return () => controller.abort();
-  }, [api, path, platform, subscriptionId, nonce]);
+  }, [api, path, platform, subscriptionId, canActivate, nonce]);
   const activate = async () => {
     if (!versionId || !effectiveFrom || !subscriptionId) { setFeedback("Selecciona una versión y fecha de inicio."); return; }
     try {
-      await api.platformPost(path, { regulatory_pack_version_id: versionId, effective_from: new Date(effectiveFrom).toISOString() });
+      const instant = explicitUtcInstant(effectiveFrom);
+      if (!instant) { setFeedback(uiText.temporal.invalidInstant); return; }
+      await api.platformPost(path, { regulatory_pack_version_id: versionId, effective_from: instant });
       setFeedback("Marco activado."); setNonce((value) => value + 1);
-    } catch { setFeedback("No fue posible activar el marco."); }
+    } catch (error) {
+      const status = error instanceof ApiProblem ? error.status : 0;
+      setFeedback(status === 403 ? "No tienes autorización para activar este marco." : status === 404 ? "La suscripción o versión del marco ya no está disponible." : status === 409 ? "El marco ya está contratado o la vigencia entra en conflicto." : "No fue posible activar el marco.");
+    }
   };
   const loadMore = async () => {
     if (!page.next_cursor) return;
@@ -721,9 +769,9 @@ function ContractedPacks({ api, subscriptionId, platform }: { api: ApiClient; su
   };
   return <DataCard title="Marcos contratados" className="admin-section">
     {feedback && <p className="inline-feedback" role="status">{feedback}</p>}
-    {items.length === 0 ? <p>Sin marcos contratados.</p> : <div className="table-scroll"><table><thead><tr><th>Pack</th><th>Edición</th><th>Licencia</th><th>Contrato</th><th>Vigencia</th><th>Desde</th><th>Hasta</th>{platform && <th>Acción</th>}</tr></thead><tbody>{items.map((item) => <tr key={String(item.subscription_regulatory_pack_id)}><td><strong>{String(item.name)}</strong><small className="admin-secondary">{String(item.pack_code)}</small></td><td>{String(item.edition)}</td><td>{displayValue(item.license_classification)}</td><td><StatusBadge value={item.lifecycle_state}/></td><td><StatusBadge value={item.effective_state}/></td><td>{adminDate(item.effective_from)}</td><td>{item.effective_to ? adminDate(item.effective_to) : "—"}</td>{platform && <td>{item.effective_state === "effective" && <button className="link-button" onClick={() => void revoke(item)}>Revocar</button>}</td>}</tr>)}</tbody></table></div>}
+    {items.length === 0 ? <p>Sin marcos contratados.</p> : <div className="table-scroll"><table><thead><tr><th>Pack</th><th>Edición</th><th>Licencia</th><th>Contrato</th><th>Vigencia</th><th>Desde</th><th>Hasta</th>{platform && <th>Acción</th>}</tr></thead><tbody>{items.map((item) => <tr key={String(item.subscription_regulatory_pack_id)}><td><strong>{String(item.name)}</strong><small className="admin-secondary">{String(item.pack_code)}</small></td><td>{String(item.edition)}</td><td>{displayValue(item.license_classification)}</td><td><StatusBadge value={item.lifecycle_state}/></td><td><StatusBadge value={item.effective_state}/></td><td>{adminDate(item.effective_from)}</td><td>{item.effective_to ? adminDate(item.effective_to) : "—"}</td>{platform && <td>{canRevoke && item.effective_state === "effective" && <button className="link-button" onClick={() => void revoke(item)}>Revocar</button>}</td>}</tr>)}</tbody></table></div>}
     {page.has_more && <button className="button secondary" onClick={() => void loadMore()}>{uiText.actions.loadMore}</button>}
-    {platform && subscriptionId && <form className="admin-form" onSubmit={(event) => { event.preventDefault(); void activate(); }}><label><span>Versión del marco</span><select value={versionId} onChange={(event) => setVersionId(event.target.value)}><option value="">Selecciona una versión publicada</option>{versions.map((version) => <option key={String(version.regulatory_pack_version_id)} value={String(version.regulatory_pack_version_id)}>{String(version.name)} · {String(version.edition)}</option>)}</select></label><label><span>Vigente desde</span><input type="datetime-local" value={effectiveFrom} onChange={(event) => setEffectiveFrom(event.target.value)}/></label><button className="button primary" type="submit">Activar marco</button></form>}
+    {platform && subscriptionId && canActivate && (catalogState === "loading" ? <LoadingState/> : catalogState === "denied" ? <StatePanel kind="permission-denied" detail="No tienes acceso al catálogo de marcos publicables."/> : catalogState === "error" ? <StatePanel kind="error" detail="No fue posible consultar los marcos publicables."/> : versions.length === 0 ? <StatePanel kind="empty" detail="No hay versiones de marco publicadas y vigentes para contratar. Solicita la publicación oficial del catálogo."/> : <form className="admin-form" onSubmit={(event) => { event.preventDefault(); void activate(); }}><label><span>Versión del marco</span><select value={versionId} onChange={(event) => setVersionId(event.target.value)}><option value="">Selecciona una versión publicada</option>{versions.map((version) => <option key={String(version.regulatory_pack_version_id)} value={String(version.regulatory_pack_version_id)}>{String(version.name)} · {String(version.edition)}</option>)}</select></label><label><span>Vigente desde</span><input type="text" placeholder="AAAA-MM-DDTHH:mm:ssZ" value={effectiveFrom} onChange={(event) => setEffectiveFrom(event.target.value)}/></label><button className="button primary" type="submit">Activar marco</button></form>)}
   </DataCard>;
 }
 
@@ -747,9 +795,7 @@ type CandidateState = { state: "loading" } | { state: "error" } |
   { state: "ready"; items: ValidationCandidate[]; page: PageMeta; loadingMore?: boolean };
 
 function accessInstant(value: string): string | undefined {
-  if (!value) return undefined;
-  const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? undefined : date.toISOString();
+  return explicitUtcInstant(value);
 }
 
 function validationCreateError(cause: unknown): string {
@@ -894,9 +940,9 @@ function ValidationPacks({ api, tenantId, platform }: { api: ApiClient; tenantId
     {feedback && <p className={`inline-feedback ${feedback.kind}`} role={feedback.kind === "error" ? "alert" : "status"}>{feedback.message}</p>}
     {platform && tenantId && creating && <form className="admin-form" onSubmit={(event) => { event.preventDefault(); void create(); }}>
       <p className="form-guidance" role="note">{uiText.validation.nonAuthoritativeDetail}</p>
-      <label><span>{uiText.validation.requestedFrom}</span><input type="datetime-local" required value={accessFrom}
+      <label><span>{uiText.validation.requestedFrom}</span><input type="text" placeholder="AAAA-MM-DDTHH:mm:ssZ" required value={accessFrom}
         onChange={(event) => setAccessFrom(event.target.value)}/></label>
-      <label><span>{uiText.validation.requestedTo}</span><input type="datetime-local" value={accessTo}
+      <label><span>{uiText.validation.requestedTo}</span><input type="text" placeholder="AAAA-MM-DDTHH:mm:ssZ" value={accessTo}
         onChange={(event) => setAccessTo(event.target.value)}/></label>
       {candidateState.state === "loading" ? <StatePanel kind="loading" detail={uiText.validation.loadingCandidates}/> :
         candidateState.state === "error" ? <StatePanel kind="error" detail={uiText.validation.candidatesError}
@@ -973,8 +1019,129 @@ function SubjectsAdmin({ api }: { api: ApiClient }) {
   </DataCard>;
 }
 
-function TenantCompany({ api, context }: { api: ApiClient; context: TenantContext }) {
-  return <><PageHeader title={uiText.navigation.companies}/><DataCard title={context.tenant_display_name}><ContractedPacks api={api} platform={false}/><ValidationPacks api={api} platform={false}/><SubjectsAdmin api={api}/></DataCard></>;
+function TenantCompany({ api, context, authorization }: {
+  api: ApiClient; context: TenantContext; authorization: CurrentPrincipalAuthorization | null;
+}) {
+  const mayReadRetention = tenantPresentationPermission(authorization, context.tenant_id, "privacy.retention_policy.read");
+  const mayCreateRetention = tenantPresentationPermission(authorization, context.tenant_id, "privacy.retention_policy.create");
+  const allowRetentionAction = (action: WorkflowAction) => {
+    const permission = retentionActionPermission(action.suffix);
+    return !!permission && tenantPresentationPermission(authorization, context.tenant_id, permission);
+  };
+  return <>
+    <PageHeader title={uiText.navigation.companies}/>
+    <DataCard title={context.tenant_display_name}>
+      <ContractedPacks api={api} platform={false}/><ValidationPacks api={api} platform={false}/><SubjectsAdmin api={api}/>
+    </DataCard>
+    <section aria-label="Retención documental de la empresa">
+      <p className="form-guidance">La empresa define sus plazos y aporta las fuentes que los sustentan. Una fuente cargada no acredita por sí sola cumplimiento jurídico.</p>
+      {mayReadRetention ? <>
+        <ModuleTable api={api} definition={modules.find((item) => item.id === "retencion")!}
+          allowCreate={mayCreateRetention} allowAction={allowRetentionAction}/>
+        <ModuleTable api={api} definition={modules.find((item) => item.id === "aplicabilidad-retencion")!}
+          allowCreate={mayCreateRetention} allowAction={allowRetentionAction}/>
+      </> : <StatePanel kind="permission-denied"/>}
+    </section>
+  </>;
+}
+
+type PublishedPlanVersion = { plan_version_id: string; plan_code: string; plan_name: string; version_number: number; display_name: string };
+
+function PlanAssignment({ api, tenantId, subscriptionId, authorizeFresh, created }: { api: ApiClient; tenantId: string; subscriptionId?: string; authorizeFresh(code: string): Promise<boolean>; created(): void }) {
+  const [catalog, setCatalog] = useState<PublishedPlanVersion[]>([]);
+  const [cursor, setCursor] = useState<string | null>(null);
+  const [state, setState] = useState<"loading" | "ready" | "denied" | "error">("loading");
+  const [planVersionId, setPlanVersionId] = useState("");
+  const [subscriptionCode, setSubscriptionCode] = useState("");
+  const [reason, setReason] = useState("");
+  const [confirmed, setConfirmed] = useState(false);
+  const [currentPlan, setCurrentPlan] = useState<Row>();
+  const etag = useRef<string | undefined>(undefined);
+  const [feedback, setFeedback] = useState("");
+  const [busy, setBusy] = useState(false);
+  const key = useRef(crypto.randomUUID());
+  const sending = useRef(false);
+  const mounted = useRef(true);
+  const changePlan = Boolean(subscriptionId);
+  useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
+  const load = async (next?: string, signal?: AbortSignal) => {
+    const query = new URLSearchParams({ "page[size]": "100" });
+    if (next) query.set("page[cursor]", next);
+    const result = await api.platformGet<{ items: PublishedPlanVersion[]; page: PageMeta }>(`/api/v1/platform/plan-versions?${query}`, signal ? { signal } : {});
+    if (signal?.aborted || !mounted.current) return;
+    if (subscriptionId && !next) {
+      const detail = await api.platformRepresentation<Row>(`/api/v1/platform/subscriptions/${encodeURIComponent(subscriptionId)}`, signal ? { signal, cache: "no-store" } : { cache: "no-store" });
+      if (signal?.aborted || !mounted.current) return;
+      const freshEtag = detail.headers.get("etag");
+      if (detail.body.tenant_id !== tenantId || detail.body.subscription_id !== subscriptionId || !freshEtag || !/^"[1-9][0-9]*"$/.test(freshEtag)) throw new Error("INVALID_SUBSCRIPTION_DETAIL");
+      etag.current = freshEtag; setCurrentPlan(detail.body);
+    }
+    setCatalog((current) => next ? [...current, ...result.items] : result.items);
+    setCursor(result.page.next_cursor);
+    setState("ready");
+  };
+  useEffect(() => {
+    const controller = new AbortController();
+    setState("loading");
+    void load(undefined, controller.signal).catch((error: unknown) => {
+      if (!controller.signal.aborted) setState(error instanceof ApiProblem && [401, 403].includes(error.status) ? "denied" : "error");
+    });
+    return () => controller.abort();
+  }, [api, tenantId, subscriptionId]);
+  const submit = async () => {
+    if (sending.current || !planVersionId || !subscriptionCode.trim() || (changePlan && (!reason.trim() || !confirmed || !etag.current))) return;
+    sending.current = true;
+    setBusy(true); setFeedback("");
+    try {
+      if (!await authorizeFresh(changePlan ? "platform.subscription.update" : "platform.subscription.create")) { if (mounted.current) setFeedback("Tu sesión no tiene permiso vigente para operar planes."); return; }
+      if (!mounted.current) return;
+      if (subscriptionId) {
+        const result = await api.platformPost<{ operation_id: string; status: string; result: { current_subscription: Row } }>(`/api/v1/platform/subscriptions/${encodeURIComponent(subscriptionId)}:change-plan`, {
+          plan_version_id: planVersionId, subscription_code: subscriptionCode.trim(), reason: reason.trim()
+        }, key.current, etag.current);
+        if (result.operation_id !== "subscriptionChangePlan" || result.status !== "completed" || result.result.current_subscription.tenant_id !== tenantId || result.result.current_subscription.plan_version_id !== planVersionId) throw new Error("INVALID_CHANGE_PLAN_RESPONSE");
+      } else {
+        await api.platformPost("/api/v1/platform/subscriptions", {
+          tenant_id: tenantId, plan_version_id: planVersionId, subscription_code: subscriptionCode.trim()
+        }, key.current);
+      }
+      if (!mounted.current) return;
+      key.current = crypto.randomUUID();
+      created();
+    } catch (error) {
+      if (!mounted.current) return;
+      const status = error instanceof ApiProblem ? error.status : 0;
+      if (changePlan && error instanceof ApiProblem) {
+        setFeedback(`${error.problem.message} (${error.problem.code})`);
+        if (error.problem.code === "TCDX.CONFLICT.CONCURRENCY") {
+          key.current = crypto.randomUUID(); setConfirmed(false);
+          await load().catch(() => { if (mounted.current) setState("error"); });
+        }
+        if (status === 409 && error.problem.code !== "TCDX.CONFLICT.IDEMPOTENCY") created();
+        return;
+      }
+      setFeedback(({ 400: "Revisa el código y la versión de plan seleccionada.", 401: "La sesión expiró; vuelve a iniciar sesión.",
+        403: "No tienes autorización para asignar planes.", 404: "La empresa o versión de plan ya no está disponible.",
+        409: uiText.administration.subscriptionConflict, 422: "La versión del plan ya no está publicada." } as Record<number, string>)[status]
+        ?? "No se pudo confirmar la suscripción. Reintenta sin cambiar la selección para conservar la misma solicitud.");
+      if (status === 409) created();
+    } finally { sending.current = false; if (mounted.current) setBusy(false); }
+  };
+  const resetIntent = () => { key.current = crypto.randomUUID(); setConfirmed(false); };
+  return <DataCard title={changePlan ? "Cambiar plan" : "Asignar plan"} className="admin-section">
+    {currentPlan && <p>Plan actual: {String(currentPlan.plan_name)} · v{String(currentPlan.plan_version_number)}</p>}
+    {state === "loading" ? <LoadingState/> : state === "denied" ? <StatePanel kind="permission-denied" detail="No tienes acceso al catálogo de planes publicados."/> :
+      state === "error" ? <StatePanel kind="error" detail="No fue posible cargar el catálogo de planes." retry={() => { setState("loading"); void load().catch(() => setState("error")); }}/> :
+      catalog.length === 0 ? <StatePanel kind="empty" detail="No hay versiones de plan publicadas y vigentes. Solicita su publicación al administrador de plataforma."/> :
+      <form className="admin-form" onSubmit={(event) => { event.preventDefault(); void submit(); }}>
+        <label><span>Versión de plan publicada</span><select required disabled={busy} value={planVersionId} onChange={(event) => { setPlanVersionId(event.target.value); resetIntent(); }}><option value="">Selecciona un plan</option>{catalog.filter(v => v.plan_version_id !== currentPlan?.plan_version_id).map((version) => <option key={version.plan_version_id} value={version.plan_version_id}>{version.plan_name} · v{version.version_number} · {version.display_name}</option>)}</select></label>
+        {cursor && <button type="button" disabled={busy} className="button secondary" onClick={() => { void load(cursor).catch(() => setFeedback("No fue posible continuar el catálogo de planes.")); }}>Cargar más planes</button>}
+        <label><span>Código de suscripción</span><input required disabled={busy} maxLength={96} value={subscriptionCode} onChange={(event) => { setSubscriptionCode(event.target.value); resetIntent(); }}/></label>
+        {changePlan && <><label><span>Motivo del cambio</span><textarea required disabled={busy} maxLength={2000} value={reason} onChange={event => { setReason(event.target.value); resetIntent(); }}/></label><label className="admin-confirmation"><input type="checkbox" disabled={busy} checked={confirmed} onChange={event => setConfirmed(event.target.checked)}/><span>Confirmo el cambio de plan de esta empresa.</span></label></>}
+        {feedback && <p className="inline-feedback error" role="alert">{feedback}</p>}
+        <button className="button primary" type="submit" disabled={busy || !planVersionId || !subscriptionCode.trim() || (changePlan && (!reason.trim() || !confirmed || !etag.current))}>{busy ? changePlan ? "Cambiando…" : "Asignando…" : changePlan ? "Cambiar plan" : "Asignar plan"}</button>
+      </form>}
+  </DataCard>;
 }
 
 function CompaniesAdmin({ api, authorization, authorizeFresh }: { api: ApiClient; authorization: CurrentPrincipalAuthorization | null; authorizeFresh(code: string): Promise<boolean> }) {
@@ -982,13 +1149,26 @@ function CompaniesAdmin({ api, authorization, authorizeFresh }: { api: ApiClient
   const [selectedId, setSelectedId] = useState<string>();
   const [detail, setDetail] = useState<Row>();
   const [detailError, setDetailError] = useState(false);
+  const detailRequest = useRef(0);
   useEffect(() => {
+    const generation = ++detailRequest.current;
     if (!selectedId) { setDetail(undefined); return; }
+    const controller = new AbortController();
     setDetail(undefined); setDetailError(false);
-    void api.platformGet<Row>(`/api/v1/platform/tenants/${encodeURIComponent(selectedId)}`)
-      .then(setDetail).catch(() => setDetailError(true));
+    void api.platformGet<Row>(`/api/v1/platform/tenants/${encodeURIComponent(selectedId)}`, { signal: controller.signal })
+      .then((next) => { if (!controller.signal.aborted && generation === detailRequest.current) setDetail(next); })
+      .catch(() => { if (!controller.signal.aborted && generation === detailRequest.current) setDetailError(true); });
+    return () => { controller.abort(); detailRequest.current += 1; };
   }, [api, selectedId]);
   const refetch = async () => { await api.platformGet("/api/v1/platform/tenants"); retry(); };
+  const refreshDetail = () => {
+    if (!selectedId) return;
+    const generation = ++detailRequest.current;
+    void api.platformGet<Row>(`/api/v1/platform/tenants/${encodeURIComponent(selectedId)}`)
+      .then((next) => { if (generation === detailRequest.current) { setDetail(next); retry(); } })
+      .catch(() => { if (generation === detailRequest.current) setDetailError(true); });
+  };
+  const visibleDetail = detail?.tenant_id === selectedId ? detail : undefined;
   return <>
     <div className="page-heading"><div><p className="eyebrow">{uiText.navigation.settings}</p><h1>{uiText.navigation.companies}</h1><p>{uiText.administration.companiesDetail}</p></div></div>
     <InitialCompanyWizard api={api} permissions={new Set(authorization?.platform_permissions ?? [])} authorizeFresh={authorizeFresh} refetch={refetch}/>
@@ -996,7 +1176,7 @@ function CompaniesAdmin({ api, authorization, authorizeFresh }: { api: ApiClient
       const subscription = item.current_subscription as Row | null;
       return <tr key={String(item.tenant_id)}><td><strong>{String(item.display_name)}</strong><small className="admin-secondary">{String(item.legal_name)}</small></td><td><StatusBadge value={item.lifecycle_state}/></td><td>{subscription ? `${String(subscription.plan_name)} · v${String(subscription.plan_version_number)}` : uiText.administration.noPlan}</td><td><button className="link-button" onClick={() => setSelectedId(String(item.tenant_id))}>{uiText.actions.viewDetail}</button></td></tr>;
     })}</tbody></table></div>}</TableShell>}</AdminPageBody>
-    {selectedId && <div className="drawer-backdrop" role="presentation" onMouseDown={() => setSelectedId(undefined)}><aside className="drawer" role="dialog" aria-modal="true" aria-labelledby="company-detail-title" onMouseDown={(event) => event.stopPropagation()}><header className="drawer-header"><div><p className="eyebrow">{uiText.navigation.settings}</p><h2 id="company-detail-title">{detail ? String(detail.display_name) : uiText.navigation.companies}</h2></div><button className="icon-button" onClick={() => setSelectedId(undefined)} aria-label={uiText.forms.closeDetail}>×</button></header><div className="drawer-body">{detailError ? <StatePanel kind="error" detail={uiText.administration.loadError}/> : !detail ? <LoadingState/> : <><p>{String(detail.legal_name)}</p><p><StatusBadge value={detail.lifecycle_state}/></p><p>{uiText.administration.companyCode}: {String(detail.tenant_code)}</p><p>{uiText.administration.timezone}: {String(detail.default_timezone)}</p><p>{uiText.administration.plan}: {detail.current_subscription ? String((detail.current_subscription as Row).plan_name) : uiText.administration.noPlan}</p>{detail.current_subscription && <ContractedPacks api={api} platform subscriptionId={String((detail.current_subscription as Row).subscription_id)}/>}<ValidationPacks key={selectedId} api={api} platform tenantId={selectedId}/><button className="button secondary" onClick={() => { navigate(`${settingsRoutes.users}?tenant_id=${encodeURIComponent(selectedId)}`); setSelectedId(undefined); }}>{uiText.administration.viewUsers}</button></>}</div></aside></div>}
+    {selectedId && <div className="drawer-backdrop" role="presentation" onMouseDown={() => setSelectedId(undefined)}><aside className="drawer" role="dialog" aria-modal="true" aria-labelledby="company-detail-title" onMouseDown={(event) => event.stopPropagation()}><header className="drawer-header"><div><p className="eyebrow">{uiText.navigation.settings}</p><h2 id="company-detail-title">{visibleDetail ? String(visibleDetail.display_name) : uiText.navigation.companies}</h2></div><button className="icon-button" onClick={() => setSelectedId(undefined)} aria-label={uiText.forms.closeDetail}>×</button></header><div className="drawer-body">{detailError ? <StatePanel kind="error" detail={uiText.administration.loadError} retry={refreshDetail}/> : !visibleDetail ? <LoadingState/> : <><p>{String(visibleDetail.legal_name)}</p><p><StatusBadge value={visibleDetail.lifecycle_state}/></p><p>{uiText.administration.companyCode}: {String(visibleDetail.tenant_code)}</p><p>{uiText.administration.timezone}: {String(visibleDetail.default_timezone)}</p><p>{uiText.administration.plan}: {visibleDetail.current_subscription ? `${String((visibleDetail.current_subscription as Row).plan_name)} · v${String((visibleDetail.current_subscription as Row).plan_version_number)}` : uiText.administration.noPlan}</p>{visibleDetail.current_subscription && <><p>{uiText.administration.subscriptionCode}: {String((visibleDetail.current_subscription as Row).subscription_code)}</p><p>{uiText.administration.subscriptionStatus}: <StatusBadge value={(visibleDetail.current_subscription as Row).lifecycle_state}/></p></>}{visibleDetail.current_subscription ? <> {authorization?.platform_permissions.includes("platform.subscription.update") && authorization.platform_permissions.includes("platform.subscription.read") && <PlanAssignment key={`change-plan-${selectedId}-${String((visibleDetail.current_subscription as Row).subscription_id)}`} api={api} tenantId={selectedId} subscriptionId={String((visibleDetail.current_subscription as Row).subscription_id)} authorizeFresh={authorizeFresh} created={refreshDetail}/>}<ContractedPacks key={`contracted-${String((visibleDetail.current_subscription as Row).subscription_id)}`} api={api} platform subscriptionId={String((visibleDetail.current_subscription as Row).subscription_id)} canActivate={Boolean(authorization?.platform_permissions.includes("platform.subscription_regulatory_pack.create"))} canRevoke={Boolean(authorization?.platform_permissions.includes("platform.subscription_regulatory_pack.archive"))}/></> : authorization?.platform_permissions.includes("platform.subscription.create") ? <PlanAssignment key={`plan-${selectedId}`} api={api} tenantId={selectedId} authorizeFresh={authorizeFresh} created={refreshDetail}/> : <StatePanel kind="permission-denied" detail="Se requiere autorización de plataforma para asignar un plan."/>}<ValidationPacks key={`validation-${selectedId}`} api={api} platform tenantId={selectedId}/><button className="button secondary" onClick={() => { navigate(`${settingsRoutes.users}?tenant_id=${encodeURIComponent(selectedId)}`); setSelectedId(undefined); }}>{uiText.administration.viewUsers}</button></>}</div></aside></div>}
   </>;
 }
 
@@ -1231,11 +1411,12 @@ export function CoreGrcApp({ api, session, apiOrigin }: { api: ApiClient; sessio
   const effectiveRoles = [...access.value.effective_platform_role_codes, ...(context?.effective_role_codes ?? [])];
   const roleSummary = effectiveRoles.map((role) => roleLabel(role)).join(" · ") || uiText.administration.noRoles;
   const administrativePage = active === settingsRoutes.companies || active === settingsRoutes.users || active === settingsRoutes.managedIdentities;
-  return <div className="app-shell"><Sidebar active={active} open={menu} close={() => setMenu(false)} platformAdmin={platformAdmin} tenantAdmin={tenantAdmin} hasTenant={Boolean(context)} managedIdentity={managedIdentity}/><div className="app-column"><header className="topbar"><button className="menu-button" aria-label={uiText.navigation.open} onClick={() => setMenu(!menu)}>☰</button><label className="search"><span className="sr-only">{uiText.shell.searchLabel}</span><input type="search" placeholder={uiText.shell.searchPlaceholder}/></label>{context ? <label className="tenant-context"><span>{uiText.shell.tenant}</span><select aria-label={uiText.tenant.selectorLabel} value={context.tenant_id} onChange={(event) => { session.selectTenant(event.target.value); setContextVersion((value) => value + 1); }}>{contexts.map((item) => <option value={item.tenant_id} key={item.tenant_id}>{item.tenant_display_name}</option>)}</select></label> : <span className="context-pill">{uiText.administration.platformContext}</span>}<div className="user-context"><span className="avatar">U</span><div><strong>{uiText.shell.authorizedUser}</strong><span className="user-role-summary" title={roleSummary}>{platformAdmin && `${uiText.administration.platformContext} · `}{context ? `${context.tenant_display_name} · ` : ""}{roleSummary}</span></div><button className="link-button" onClick={() => void logout()}>{uiText.auth.logout}</button></div></header><main className="workspace" key={`${context?.tenant_id ?? "platform"}:${contextVersion}`}>
+  const normsAvailable = Boolean(authorization?.tenant_permissions && Object.hasOwn(authorization.tenant_permissions.permissions, "compliance.framework.read"));
+  return <div className="app-shell"><Sidebar active={active} open={menu} close={() => setMenu(false)} platformAdmin={platformAdmin} tenantAdmin={tenantAdmin} hasTenant={Boolean(context)} managedIdentity={managedIdentity} normsAvailable={normsAvailable}/><div className="app-column"><header className="topbar"><button className="menu-button" aria-label={uiText.navigation.open} onClick={() => setMenu(!menu)}>☰</button><label className="search"><span className="sr-only">{uiText.shell.searchLabel}</span><input type="search" placeholder={uiText.shell.searchPlaceholder}/></label>{context ? <label className="tenant-context"><span>{uiText.shell.tenant}</span><select aria-label={uiText.tenant.selectorLabel} value={context.tenant_id} onChange={(event) => { session.selectTenant(event.target.value); setContextVersion((value) => value + 1); }}>{contexts.map((item) => <option value={item.tenant_id} key={item.tenant_id}>{item.tenant_display_name}</option>)}</select></label> : <span className="context-pill">{uiText.administration.platformContext}</span>}<div className="user-context"><span className="avatar">U</span><div><strong>{uiText.shell.authorizedUser}</strong><span className="user-role-summary" title={roleSummary}>{platformAdmin ? `${uiText.administration.platformContext} · ` : ""}{context ? `${context.tenant_display_name} · ` : ""}{roleSummary}</span></div><button className="link-button" onClick={() => void logout()}>{uiText.auth.logout}</button></div></header><main className="workspace" key={`${context?.tenant_id ?? "platform"}:${contextVersion}`}>
     {active === settingsRoutes.managedIdentities ? managedIdentity ? <ManagedIdentityWorkspace api={api} permissions={new Set(authorization?.platform_permissions ?? [])} authorizeFresh={refreshAuthorization}/> : <StatePanel kind="permission-denied"/> :
-    active === settingsRoutes.companies ? platformAdmin ? <CompaniesAdmin api={api} authorization={authorization} authorizeFresh={refreshAuthorization}/> : tenantAdmin && context ? <TenantCompany api={api} context={context}/> : <StatePanel kind="permission-denied"/> :
+    active === settingsRoutes.companies ? platformAdmin ? <CompaniesAdmin api={api} authorization={authorization} authorizeFresh={refreshAuthorization}/> : tenantAdmin && context ? <TenantCompany api={api} context={context} authorization={authorization}/> : <StatePanel kind="permission-denied"/> :
       active === settingsRoutes.users ? platformAdmin || tenantAdmin ? <UsersAdmin api={api} platformAdmin={platformAdmin} authorization={authorization} authorizeTenantFresh={authorizeTenantFresh} authorizePlatformFresh={refreshAuthorization} {...(context ? { context } : {})}/> : <StatePanel kind="permission-denied"/> :
-      context ? active === "dashboard" ? <Dashboard api={api}/> : <ModuleWorkspace api={api} active={active}/> :
+      context ? <TenantTimezoneContext.Provider value={selectedTenantTimezone(authorization, selectedId ?? null)}>{active === "dashboard" ? <Dashboard api={api}/> : active === "normas" ? normsAvailable ? <NormsWorkspace api={api}/> : <StatePanel kind="permission-denied"/> : <ModuleWorkspace api={api} active={active} authorization={authorization} tenantId={context.tenant_id}/>}</TenantTimezoneContext.Provider> :
       <StatePanel kind={administrativePage ? "permission-denied" : "not-available"} detail={uiText.tenant.selectDetail}/>}
   </main></div>{menu && <button className="sidebar-scrim" aria-label={uiText.navigation.close} onClick={() => setMenu(false)}/>}</div>;
 }

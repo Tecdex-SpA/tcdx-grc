@@ -1,0 +1,11 @@
+# CT04 / C-04G-B y C-04W — dependencia tipada exacta
+
+Estado: BLOCKED_CANONICAL_BINDING_NOT_DEFINED; no es falta de segundo revisor.
+
+Hallazgo: RetentionPolicy tiene Source opcional y referencias/reglas de duración/estado/vigencia. PrivacyProcessingActivity posee retention_policy_id y legal_bases normalizadas, pero no existe una relación tipada desde FileUploadIntent/FileObject/Evidence al contexto legal de PrivacyProcessingActivity que demuestre aplicabilidad por objeto, clasificación/jurisdicción/prioridad/hold. Igualdad de policy_id no prueba un contexto legal. Una política global product_baseline o normativa descubierta con Source→ImportManifest→Pack no aplica automáticamente al objeto.
+
+El reader CT04 publicado local devuelve422 para candidatos no vinculados en selección,200 vacío para conjunto realmente vacío y referencias históricas exactas no seleccionables. La UI expresa PENDIENTE y no declara cumplimiento. Esto no satisface C-04W: createUploadIntent/createEvidence/finalize actuales conservan checks de existencia/tenant, sin un predicado canónico completo de aplicación legal. La UI nunca sustituye la autoridad backend y no se considera esa brecha cerrada por impedir selección en UI.
+
+Operaciones bloqueadas: habilitar nueva selección/aplicación de política, proclamar cierre C-04W o desplegar este slice en QA. Los contratos mantienen retention_policy_id obligatorio en FileUploadIntent/FileObject/Evidence; no se quita la FK para representar PENDIENTE y no se añade un DENY universal que altere flujos ya publicados.
+
+Entrada mínima requerida al PO Privacy/Legal + Architecture/Data Model, bajo funciones acumuladas: definir qué entidad/contexto canónico es la autoridad legal para cada FileUploadIntent/FileObject/Evidence y la relación tipada gobernada que debe unirlos; identificar fuente oficial/contrato externo aplicable y criterios de conflicto/prioridad/hold. Opciones para decisión posterior: reutilizar PrivacyProcessingActivity sólo si el vínculo y su semántica se aprueban formalmente, o delta canónico propio; no se adopta ninguna por intuición. No se solicita aprobar parámetros legales inventados ni se consulta QA. Después del texto exacto, preparar delta/migración nueva y guard backend transaccional con tests en DB descartable; aplicación externa requiere plan separado.

@@ -1,0 +1,333 @@
+> CANDIDATE_NOT_EFFECTIVE: snapshot sucesor INITIAL_SOURCE; texto histórico preservado, requiere publicación competente.
+
+# Permission, capability and base-role catalog
+
+## MI6A contract-approved, runtime-unpublished permissions
+
+The human STEP 23L-MI6A decision approves the following `CORE_PLATFORM` Permission definitions at `platform` scope. They are deliberately outside the existing runtime-seed table below: `CONTRACT_PERMISSION_APPROVED=YES`, `RUNTIME_PERMISSION_PUBLISHED=NO`. MI6 must materialize them through the existing Permission/RolePermission model without a new entity or schema; a forward-only catalog seed/migration may be required **in MI6**, subject to its own gate, and is not executed here. The sole initial grant target is the existing `PLATFORM_ADMIN` Platform role; Tenant Admin and Platform Support receive none. Default DENY remains until physical publication and the canonical Platform grant chain succeeds.
+
+| Permission definition | Contract meaning |
+|---|---|
+| platform.managed_identity.read | List/read only nonsecret global identity metadata. |
+| platform.managed_identity.create | Provision one named human; no membership or role grant. |
+| platform.managed_identity.update | Nonsecret metadata only; MI6A publishes no corresponding operation or API. |
+| platform.managed_identity.administer | Sensitive disable, enable, password reset, MFA reset and session revoke only, with reason and reinforced audit. |
+
+The `platform.managed_identity` resource extends rector 22 §10's **initial** Platform resource vocabulary by this explicit human decision. The four action names are already in that rector section's allowed Platform action set. Contract 22 and the API/operation matrix bind the exact approved commands; the presence of a Permission definition never creates a command by itself.
+
+PRE-F5E does not add a Permission or role catalog. Platform grants resolve through persisted `iam.platform_role_assignments` to existing `Role(PLATFORM_CONTROL)` rows and this same Permission catalog; tenant grants continue through active TenantMembership and MembershipRole. Email and runtime allowlists are never grant authority.
+
+| Campo | Valor |
+|---|---|
+| Contract owner | Security & Privacy Reviewer |
+| Approving human roles | Product Owner/CPO, Architecture Owner, Security & Privacy Reviewer, domain owners |
+| Status | `CONTRACT_DEFINED` |
+
+Authorization is always `identity → active membership → entitlement/capability → permission → scope → object policy → SoD → ALLOW`, otherwise DENY. Plan, capability, entitlement, role, permission, scope and ownership remain separate.
+
+## Atomic capabilities
+
+Fase 2 uses one atomic capability per closed capability group, with `capability_code=capability_group`. This is an exact, non-expanding decomposition of rector 42. Plan entitlements are exactly the yes/no matrix in that source: ISO gets the first seven ISO groups; ISO_RIESGO_OPERATIVO adds OPERATIONAL_RISK and INCIDENTS_LOSS; GRC gets all twenty.
+
+`CORE_PLATFORM, ISO_COMPLIANCE, CONTROLS_ASSURANCE, EVIDENCE_DOCUMENTS, ISSUES_ACTIONS, AUDIT, ISO_REPORTING, OPERATIONAL_RISK, INCIDENTS_LOSS, INTEGRATION_HUB, DATA_TRUST, RULES_IMPACT, THIRD_PARTIES, RESILIENCE, PRIVACY, SURVEYS, REPORT_STUDIO, REGULATORY_INTELLIGENCE, AI_ASSISTANCE, GOVERNED_AUTOMATION`.
+
+## Published permissions used by operations
+
+Scopes abbreviate exact rector scopes. `tenant*` means tenant plus narrower object-derived scopes listed; it never broadens access. Base-role grants are minimum grants supported directly by rector responsibilities; every grant remains entitlement- and scope-bound.
+
+| permission_code | capability | action/resource | allowed scopes | tenant boundary | base roles containing it | entitlement / SoD / sensitive / audit | rector source |
+|---|---|---|---|---|---|---|---|
+| `platform.tenant.create` | CORE_PLATFORM | create tenant | platform | platform target, no tenant actor context | Platform Admin | entitlement N/A; sensitive; reinforced audit | 22,42 |
+| `platform.tenant.read` | CORE_PLATFORM | list/detail Tenant | platform | global Platform authority; no tenant membership or global Tenant Admin enumeration | Platform Admin | metadata-only projection; default DENY | Human Phase 5 administrative-read decision 2026-09-28 |
+| `platform.subscription.create` | CORE_PLATFORM | create/assign Subscription to an existing published PlanVersion | platform | target tenant explicit; no tenant actor context; no caller-supplied capability or entitlement | Platform Admin | entitlement N/A for Platform command; sensitive; reinforced audit; default DENY | Phase 5 Subscription decision 2026-09-24; 09,22,25,42 |
+| `platform.subscription_regulatory_pack.read` | CORE_PLATFORM | read exact Subscription–RegulatoryPackVersion assignments | platform for Platform Admin; tenant for Tenant Admin | tenant read resolves authenticated tenant only | Platform Admin; Tenant Admin | commercial metadata only; default DENY | Human Phase 5+ resolution 2026-09-29; 22,37,42 |
+| `platform.subscription_regulatory_pack.create` | CORE_PLATFORM | activate an exact published RegulatoryPackVersion | platform | no tenant command context | Platform Admin | forward-only effective interval, idempotency and audit | Human Phase 5+ resolution 2026-09-29; 22,37,42 |
+| `platform.subscription_regulatory_pack.archive` | CORE_PLATFORM | revoke an effective assignment without DELETE | platform | no tenant command context | Platform Admin | If-Match/CAS, reason, audit, preserved history | Human Phase 5+ resolution 2026-09-29; 22,37,42 |
+| `organization.subject.read` | CORE_PLATFORM | select active effective org.Subject | tenant | authenticated tenant only; no sensitive metadata | Tenant Admin, GRC Manager, Quality Manager, Compliance Manager, CISO/Security Manager, AI Governance Manager, Privacy Manager, Process Owner, Control Owner | read only; no Viewer grant; default DENY | Human Phase 5+ resolution 2026-09-29; 16,22,44 |
+| `organization.subject.create` | CORE_PLATFORM | create canonical tenant Subject | tenant | authenticated tenant only; server-owned UUID, lifecycle and interval | Tenant Admin exclusively | idempotency, audit; Control Owner has no create grant | Human Phase 5+ architecture resolution 2026-09-29; 16,22,25 |
+| `platform.tenant_account_classification.update` | CORE_PLATFORM | version tenant account classification override | platform | exact tenant; persisted EffectiveConfiguration | Platform Admin exclusively | closed commercial/demo/test, default commercial; idempotency and audit | Human Phase 5+ architecture resolution 2026-09-29 |
+| `platform.regulatory_pack_validation_access.read` | CORE_PLATFORM | read non-authoritative access; Platform Admin may discover eligible draft version/provenance candidate metadata | platform for Platform Admin; authenticated tenant for Tenant Admin | tenant read cannot enumerate others or global candidates | Platform Admin, Tenant Admin | explicitly separate from commercial pack read; no new grant | Human Phase 5+ architecture resolution 2026-09-29; STEP 22J 2026-09-30 |
+| `platform.regulatory_pack_validation_access.create` | CORE_PLATFORM | approve provenance and grant exact validation access | platform | nonproduction and classified demo/test tenant | Platform Admin exclusively | no publication/licence assertion; idempotency and audit | Human Phase 5+ architecture resolution 2026-09-29 |
+| `platform.regulatory_pack_validation_access.archive` | CORE_PLATFORM | revoke exact validation access | platform | active relation, If-Match | Platform Admin exclusively | closes interval, retains history; idempotency and audit | Human Phase 5+ architecture resolution 2026-09-29 |
+| `platform.tenant.archive` | CORE_PLATFORM | archive tenant | platform | target explicit; no destructive delete | Platform Admin | sensitive; reason; reinforced audit | 22,23,42 |
+| `platform.membership.create` | CORE_PLATFORM | create membership | tenant | selected tenant only | Tenant Admin | CORE_PLATFORM; audit | 22,42 |
+| `platform.membership.read` | CORE_PLATFORM | list/detail membership and role assignments | platform, tenant | explicit canonical tenant for Platform Admin; active authenticated tenant for Tenant Admin | Platform Admin, Tenant Admin | minimal UserIdentity attributes; no identity key or credential; default DENY | Human Phase 5 administrative-read decision 2026-09-28 |
+| `platform.membership_invitation.read` | CORE_PLATFORM | list/detail membership invitation | platform | explicit selected tenant; invitation remains tenant-owned | Platform Admin exclusively | effective expiry derived; token and digest excluded; default DENY | Human Phase 5 administrative-read decision 2026-09-28 |
+| `platform.membership_invitation.create` | CORE_PLATFORM | create/send membership invitation | platform | explicit active tenant; resulting invitation is TENANT_OWNED | Platform Admin exclusively | PT24H one-time digest; no role grant; reinforced audit; default DENY | DR-PHASE5-CANONICAL-TENANT-USER-ENROLLMENT-2026-09-24 |
+| `platform.membership_invitation.update` | CORE_PLATFORM | revoke membership invitation | platform | target tenant resolved from the pending TENANT_OWNED invitation | Platform Admin exclusively | If-Match; reinforced audit; acceptance has no Platform authority; default DENY | DR-PHASE5-CANONICAL-TENANT-USER-ENROLLMENT-2026-09-24 |
+| `platform.role.assign` | CORE_PLATFORM | assign/revoke tenant MembershipRole | platform, tenant | membership, assignment and TENANT_OWNED role must belong to selected/validated tenant; never PlatformRoleAssignment | Tenant Admin within active tenant for assign/revoke; Platform Admin through separate Platform grant and explicit target tenant for revoke only | assign remains tenant-only; revoke closes validity only with reason, CAS/If-Match and idempotency; audit/outbox; catalog context union never grants Platform assignment authority | 22,42; human Phase 5 revoke decision 2026-09-28 |
+| `platform.role.read` | CORE_PLATFORM | list/detail Role catalog | platform, tenant | Platform Admin selects tenant for tenant roles; Tenant Admin sees only its active tenant roles | Platform Admin, Tenant Admin | no permission or direct UserIdentity grant projection; default DENY | Human Phase 5 administrative-read decision 2026-09-28 |
+| `platform.impersonation_session.impersonate` | CORE_PLATFORM | impersonate | platform | target tenant explicit | Platform Admin | SoD/regulatory restrictions remain; sensitive; reinforced audit | 22 §8/12 |
+| `compliance.normative_unit.read` | ISO_COMPLIANCE | read normative unit | tenant | global pack must be entitled/licensed; tenant content same tenant | Viewer, Report Viewer, Executive/Board Viewer, GRC Manager, Quality Manager, Compliance Manager, CISO/Security Manager, AI Governance Manager, Privacy Manager, Legal Reviewer, Regulatory Content Steward | read-only; pack gate; audit only for protected export/access policy | 22,41,42,44 |
+| `compliance.requirement.read` | ISO_COMPLIANCE | read requirement | tenant | same as above | same as normative-unit readers | read-only; pack gate | 22,41,42,44 |
+| `compliance.applicability.create` | ISO_COMPLIANCE | create applicability | tenant, organizational_unit, process, service | Subject scope resolved; same tenant | Compliance Manager, Quality Manager, CISO/Security Manager, AI Governance Manager, Privacy Manager | pack-specific responsibility; audit | 22,41,42,44 |
+| `compliance.applicability.submit` | ISO_COMPLIANCE | submit applicability | tenant, assigned_object, owned_object | same tenant | same as create | submitter cannot self-approve where policy applies | 22,44 |
+| `compliance.applicability.approve` | ISO_COMPLIANCE | approve applicability | tenant | same tenant | Compliance Manager; pack coapprover role when required | sensitive; SoD; reinforced audit | 22,41 |
+| `compliance.requirement_assessment.create` | ISO_COMPLIANCE | create assessment | tenant, organizational_unit, process, service | applicability same tenant | Compliance Manager, Quality Manager, CISO/Security Manager, AI Governance Manager, Privacy Manager | capability+pack; audit | 22,42 |
+| `compliance.requirement_assessment.update` | ISO_COMPLIANCE | start/update assessment | assigned_object, owned_object, tenant | same tenant | same domain managers | object policy; audit | 21,22 |
+| `compliance.requirement_assessment.submit` | ISO_COMPLIANCE | submit assessment | assigned_object, owned_object, tenant | same tenant | same domain managers | no conclusion coercion; audit | 21,22,38 |
+| `compliance.requirement_assessment.approve` | ISO_COMPLIANCE | approve assessment | tenant | same tenant | Compliance Manager plus required pack coapprover | sensitive; SoD; reinforced audit | 21,22,41 |
+| `compliance.soa.publish` | ISO_COMPLIANCE | publish SoA | tenant | same tenant/version | GRC Manager, Compliance Manager | sensitive; complete approvals; reinforced audit | 22,41,44 |
+| `knowledge.regulatory_pack.publish` | REGULATORY_INTELLIGENCE | publish pack | platform | global/platform only | GRC Manager | requires Regulatory Content Steward import and pack-specific coapprovals; sensitive | 37,41,42 |
+| `controls.control.create` | CONTROLS_ASSURANCE | create/instantiate control | tenant, organizational_unit, process, service | tenant control only; global ref immutable | GRC Manager, Control Owner | entitlement; audit | 22,42,44 |
+| `controls.control_assessment.create` | CONTROLS_ASSURANCE | create assessment | tenant, assigned_object, owned_object | control same tenant | Control Owner, GRC Manager | audit | 21,22,42 |
+| `controls.control_assessment.submit` | CONTROLS_ASSURANCE | complete/submit assessment | owned_object, tenant | same tenant; owned only from canonical Control ownership; creator never implies owner | Control Owner | tenant scope only when its MembershipRole is explicitly tenant-scoped; cannot self-approve by default; default DENY | Phase 5 final human decision 2026-09-23; 21,22 |
+| `controls.control_assessment.review` | CONTROLS_ASSURANCE | review assessment | tenant, assigned_object | same tenant | GRC Manager, Auditor | independence policy | 21,22 |
+| `controls.control_assessment.approve` | CONTROLS_ASSURANCE | approve assessment | tenant | same tenant | GRC Manager | sensitive; SoD; reinforced audit | 21,22 |
+| `controls.assurance_test.execute` | CONTROLS_ASSURANCE | execute assurance test | assigned_object, audit_engagement | same tenant | Auditor, Control Owner | executor/final approver separation when required | 21,22 |
+| `evidence.document.create` | EVIDENCE_DOCUMENTS | request upload/create document | tenant, assigned_object, owned_object | same tenant | Evidence Owner, Control Owner, Auditor | classification/scan; audit | 22,24,42 |
+| `evidence.document.update` | EVIDENCE_DOCUMENTS | finalize/version document | assigned_object, owned_object | same tenant | Evidence Owner | no binary authority in DB; audit | 22,24 |
+| `evidence.evidence_request.create` | EVIDENCE_DOCUMENTS | create evidence request | tenant, assigned_object | typed target same tenant/global accessible | GRC Manager, Compliance Manager, Control Owner, Auditor Lead, Auditor | audit | 22,24 |
+| `evidence.evidence_request.submit` | EVIDENCE_DOCUMENTS | fulfill request | assigned_object, tenant | same tenant | Evidence Owner | exact target-compatible evidence; audit | 21,22,24 |
+| `evidence.evidence.submit` | EVIDENCE_DOCUMENTS | submit evidence | assigned_object, owned_object | same tenant | Evidence Owner | submitter not default approver | 21,22,24 |
+| `evidence.evidence.review` | EVIDENCE_DOCUMENTS | review evidence | assigned_object, tenant | same tenant | GRC Manager, Compliance Manager, Auditor | reviewer eligible; audit | 21,22 |
+| `evidence.evidence.approve` | EVIDENCE_DOCUMENTS | approve evidence | tenant | same tenant | GRC Manager, Compliance Manager | sensitive; submitter≠approver; reinforced audit | 21,22,24 |
+| `evidence.evidence.reject` | EVIDENCE_DOCUMENTS | reject evidence | tenant | same tenant | GRC Manager, Compliance Manager | reason; audit | 21,22 |
+| `remediation.issue.create` | ISSUES_ACTIONS | create issue | tenant, audit_engagement, assigned_object | typed origin same tenant | GRC Manager, Quality Manager, Compliance Manager, Risk Manager, Auditor | audit | 21,42,44 |
+| `remediation.issue.transition` | ISSUES_ACTIONS | transition issue | tenant, assigned_object, owned_object | same tenant | GRC Manager, Issue assignee through custom role grant | exact lifecycle; reason for dismiss/reopen | 21,22 |
+| `remediation.action.create` | ISSUES_ACTIONS | create action | tenant, assigned_object | issue same tenant | GRC Manager, Quality Manager, Compliance Manager, Risk Manager, Auditor Lead | audit | 21,42 |
+| `remediation.action.transition` | ISSUES_ACTIONS | start/submit-for-review/complete/reopen/cancel action | assigned_object, owned_object | same tenant | Action Owner | exact published lifecycle edge; completed≠verified; audit | 21,22,42; DR-PRE-F5B-2026-09-21-004 |
+| `remediation.action.verify` | ISSUES_ACTIONS | verify action | tenant, assigned_object | same tenant | GRC Manager, Auditor Lead | completer≠verifier where policy applies; sensitive | 21,22,42 |
+| `risk.risk.create` | OPERATIONAL_RISK | create risk | tenant, organizational_unit, process, service | same tenant | Risk Manager | entitlement; audit | 22,39,42 |
+| `risk.risk_assessment.create` | OPERATIONAL_RISK | create assessment | tenant, assigned_object | same tenant | Risk Manager | methodology/config versioned | 19,39 |
+| `risk.risk_assessment.submit` | OPERATIONAL_RISK | submit assessment | assigned_object, owned_object | same tenant | Risk Manager | values/status/lineage; audit | 38,39 |
+| `risk.treatment.create` | OPERATIONAL_RISK | create treatment | tenant, assigned_object | same tenant | Risk Manager | audit | 21,42 |
+| `risk.treatment.approve` | OPERATIONAL_RISK | approve treatment | tenant | same tenant | Risk Manager, GRC Manager | sensitive; SoD | 21,22 |
+| `risk.acceptance.create` | OPERATIONAL_RISK | request acceptance | tenant, assigned_object | same tenant | Risk Manager | rationale/expiry/review; audit | 22,39 |
+| `risk.acceptance.approve` | OPERATIONAL_RISK | approve acceptance | tenant | same tenant | GRC Manager | requester≠approver; sensitive | 22,39 |
+| `operations.incident.create` | INCIDENTS_LOSS | report incident | tenant, process, service, assigned_object | same tenant | Risk Manager, CISO/Security Manager, Process Owner | audit | 21,42 |
+| `operations.supplier_assessment.create` | THIRD_PARTIES | create supplier assessment | tenant, assigned_object | Supplier same tenant; Third Parties write owner | Supplier Manager | entitlement; audit | 07,21,42 |
+| `operations.continuity_plan.create` | RESILIENCE | create continuity plan | tenant, process, service | same tenant | Continuity Manager | entitlement; audit | 21,42 |
+| `operations.survey.create` | SURVEYS | create campaign | tenant | same tenant | GRC Manager; domain manager by approved campaign owner | entitlement; audit | 21,42 |
+| `operations.survey.submit` | SURVEYS | submit response | assigned_object | same tenant | assigned respondent through role/custom grant | immutable submitted response; audit | 21 |
+| `audit.audit.create` | AUDIT | create audit | tenant | same tenant | Auditor Lead | audit scope/team; audit event | 21,42 |
+| `audit.audit.approve` | AUDIT | approve audit | tenant | same tenant | Auditor Lead | independence; sensitive | 21,22 |
+| `audit.audit_test.execute` | AUDIT | execute audit test | audit_engagement | same tenant | Auditor | no administrative right over target | 07,22,42 |
+| `integration.integration.configure` | INTEGRATION_HUB | configure integration | tenant | connector version published | Data Admin | credential ref only; sensitive audit | 20,22,26,42 |
+| `integration.sync_run.execute` | INTEGRATION_HUB | start sync | tenant | same tenant/provider contract gate | Data Admin, least-privilege ServicePrincipal | idempotent/checkpointed; audit | 20,22,26 |
+| `data.measurement.execute` | DATA_TRUST | execute calculation | tenant | inputs/config same tenant/access-compatible | Data Admin, ServicePrincipal | no manual result editing; audit | 14,17,22,38 |
+| `data.lineage.review` | DATA_TRUST | create/review source resolution | tenant | candidates same tenant | Data Admin | no last-write-wins; audit | 22,35 |
+| `data.rule.execute` | RULES_IMPACT | execute rule | tenant | inputs/mappings compatible | Data Admin, ServicePrincipal | AutomationPolicy limits; audit | 18,22,36 |
+| `data.snapshot.read` | DATA_TRUST | read snapshot | tenant, organizational_unit, process, service | same tenant and drilldown permission-limited | Report Viewer, Viewer, Executive/Board Viewer, GRC Manager, Data Admin | read-only | 22,27,42 |
+| `reporting.report_run.execute` | ISO_REPORTING or REPORT_STUDIO | run report | tenant | capability by definition | GRC Manager, Report Viewer | snapshot-bound; audit | 22,27,42 |
+| `reporting.report.approve` | ISO_REPORTING or REPORT_STUDIO | approve report | tenant | same tenant | GRC Manager | reviewer SoD; sensitive | 21,22,27 |
+| `reporting.report.publish` | ISO_REPORTING or REPORT_STUDIO | publish report | tenant | same tenant/classification | GRC Manager | sensitive; reinforced audit | 21,22,27 |
+| `ai.ai_recommendation.create` | AI_ASSISTANCE | request recommendation | tenant, assigned_object, owned_object | authorized/minimized context | AI Governance Manager, GRC Manager | no authority; audit | 22,26,36,42 |
+| `ai.ai_recommendation.review` | AI_ASSISTANCE | review recommendation | tenant, assigned_object | same tenant | AI Governance Manager, GRC Manager | accepted recommendation still needs target-domain permission | 22,36 |
+
+## PRE-F5 approved read-permission additions
+
+These ten permissions materialize `DR-PHASE5-API-READ-2026-09-17-002`. They are read-only, entitlement-bound and default-DENY. A listed base role receives no tenant-wide visibility from the role name alone: effective access still requires the selected tenant, enabled capability, the granted permission, an allowed scope, object policy and SoD. Viewer, Report Viewer and Executive/Board Viewer remain read-only and can see only the objects permitted by their existing scope/object policy. Domain managers and owners receive only the reads required for their authorized objects.
+
+The permission codes use HTML code markup in this PRE-F5 table to keep them outside the frozen Phase 3 seed parser. This contract-only step is expressly prohibited from modifying `database/`; runtime Permission/RolePermission materialization belongs to the later authorized Phase 5 implementation packet.
+
+| permission_code | capability | action/resource | allowed scopes | tenant boundary | base roles containing it | entitlement / SoD / sensitive / audit | rector source |
+|---|---|---|---|---|---|---|---|
+| <code>compliance.applicability.read</code> | ISO_COMPLIANCE | read RequirementApplicability | tenant, organizational_unit, process, service, assigned_object, owned_object | selected tenant; Requirement visibility and same-tenant Subject scope enforced | Viewer, Report Viewer, Executive/Board Viewer, GRC Manager, Quality Manager, Compliance Manager, CISO/Security Manager, AI Governance Manager, Privacy Manager, Legal Reviewer, Auditor Lead, Auditor | read-only; ISO_COMPLIANCE entitlement; scope/object policy; protected access audit only when existing policy requires | DR-PHASE5-API-READ-2026-09-17-002; 09,22,42,44 |
+| <code>compliance.requirement_assessment.read</code> | ISO_COMPLIANCE | read RequirementAssessment | tenant, organizational_unit, process, service, assigned_object, owned_object | assessment and its RequirementApplicability remain in selected tenant and authorized scope | Viewer, Report Viewer, Executive/Board Viewer, GRC Manager, Quality Manager, Compliance Manager, CISO/Security Manager, AI Governance Manager, Privacy Manager, Legal Reviewer, Auditor Lead, Auditor | read-only; no approval authority; result_status and domain_conclusion remain distinct | DR-PHASE5-API-READ-2026-09-17-002; 09,22,38,42,44 |
+| <code>compliance.soa.read</code> | ISO_COMPLIANCE | read StatementOfApplicability and authorized items | tenant | selected tenant; entitled FrameworkVersion/control content visibility enforced | Viewer, Report Viewer, Executive/Board Viewer, GRC Manager, Quality Manager, Compliance Manager, CISO/Security Manager, AI Governance Manager, Privacy Manager, Legal Reviewer, Auditor Lead, Auditor | read-only; published/draft visibility follows object policy; no publish authority | DR-PHASE5-API-READ-2026-09-17-002; 09,22,41,42,44 |
+| <code>controls.control.read</code> | CONTROLS_ASSURANCE | read Control, authorized ControlVersion/objective/scope references | tenant, organizational_unit, process, service, assigned_object, owned_object, audit_engagement | tenant controls same tenant; global references require entitlement/content visibility | Viewer, Report Viewer, Executive/Board Viewer, GRC Manager, Quality Manager, Compliance Manager, CISO/Security Manager, AI Governance Manager, Privacy Manager, Auditor Lead, Auditor, Process Owner, Control Owner | read-only; global reference does not prove tenant implementation | DR-PHASE5-API-READ-2026-09-17-002; 09,22,42,44 |
+| <code>controls.control_assessment.read</code> | CONTROLS_ASSURANCE | read ControlAssessment | tenant, organizational_unit, process, service, assigned_object, owned_object, audit_engagement | assessment and Control/ControlVersion visibility resolved without cross-tenant disclosure | Viewer, Report Viewer, Executive/Board Viewer, GRC Manager, Quality Manager, Compliance Manager, CISO/Security Manager, AI Governance Manager, Privacy Manager, Auditor Lead, Auditor, Process Owner, Control Owner | read-only; no submit/review/approve authority; result_status and domain_conclusion remain distinct | DR-PHASE5-API-READ-2026-09-17-002; 09,22,38,42 |
+| <code>controls.assurance_test.read</code> | CONTROLS_ASSURANCE | read AssuranceTest and authorized samples/result details | tenant, assigned_object, owned_object, audit_engagement | selected tenant; engagement, assignment and target Control policy enforced | Viewer, Report Viewer, Executive/Board Viewer, GRC Manager, Quality Manager, Compliance Manager, CISO/Security Manager, AI Governance Manager, Privacy Manager, Auditor Lead, Auditor, Control Owner | read-only; no execute/review/approve authority; sample/result fields permission-limited | DR-PHASE5-API-READ-2026-09-17-002; 09,22,38,42 |
+| <code>evidence.evidence_request.read</code> | EVIDENCE_DOCUMENTS | read EvidenceRequest | tenant, assigned_object, owned_object, audit_engagement | selected tenant; typed target, requester/assignee and target-object visibility enforced | Viewer, Report Viewer, Executive/Board Viewer, GRC Manager, Quality Manager, Compliance Manager, CISO/Security Manager, AI Governance Manager, Privacy Manager, Legal Reviewer, Auditor Lead, Auditor, Control Owner, Evidence Owner | read-only; request read does not grant target-object or evidence-binary access | DR-PHASE5-API-READ-2026-09-17-002; 09,22,24,42,44 |
+| <code>evidence.evidence.read</code> | EVIDENCE_DOCUMENTS | read Evidence/EvidenceVersion and authorized links/reviews | tenant, assigned_object, owned_object, audit_engagement | selected tenant; classification, aggregate ownership, typed link and object policy enforced | Viewer, Report Viewer, Executive/Board Viewer, GRC Manager, Quality Manager, Compliance Manager, CISO/Security Manager, AI Governance Manager, Privacy Manager, Legal Reviewer, Auditor Lead, Auditor, Control Owner, Evidence Owner | read-only; no secret/blob/signed URL; version/link/review fields remain permission-limited | DR-PHASE5-API-READ-2026-09-17-002; 09,22,24,42,44 |
+| <code>remediation.issue.read</code> | ISSUES_ACTIONS | read Issue and authorized typed origins | tenant, assigned_object, owned_object, audit_engagement | selected tenant; origin object visibility and object policy enforced | Viewer, Report Viewer, Executive/Board Viewer, GRC Manager, Quality Manager, Compliance Manager, Risk Manager, CISO/Security Manager, AI Governance Manager, Privacy Manager, Legal Reviewer, Auditor Lead, Auditor, Process Owner, Control Owner, Action Owner | read-only; typed origin projection cannot expand access to source object | DR-PHASE5-API-READ-2026-09-17-002; 09,22,42,44 |
+| <code>remediation.action.read</code> | ISSUES_ACTIONS | read Action and authorized evidence-link/verification metadata | tenant, assigned_object, owned_object, audit_engagement | selected tenant; parent Issue visibility, assignment and object policy enforced | Viewer, Report Viewer, Executive/Board Viewer, GRC Manager, Quality Manager, Compliance Manager, Risk Manager, CISO/Security Manager, AI Governance Manager, Privacy Manager, Legal Reviewer, Auditor Lead, Auditor, Process Owner, Control Owner, Evidence Owner, Action Owner | read-only; no transition/verify authority; linked Evidence still requires evidence read authority | DR-PHASE5-API-READ-2026-09-17-002; 09,22,24,42 |
+
+## PRE-F5B Evidence materialization permission
+
+The explicit Evidence materialization command cannot reuse Document/FileObject authority without collapsing the identities kept separate by rector 24. Rector 22 §5/§10 assigns Evidence Owner the create/send responsibility and permits the canonical `create` action on resource `evidence`. Therefore DR-PRE-F5B-2026-09-21-004 materializes exactly this contract-only permission; it creates no capability, scope or runtime seed in this task.
+
+| permission_code | capability | action/resource | allowed scopes | tenant boundary | base roles containing it | entitlement / SoD / sensitive / audit | rector source |
+|---|---|---|---|---|---|---|---|
+| <code>evidence.evidence.create</code> | EVIDENCE_DOCUMENTS | materialize Evidence + first EvidenceVersion + typed EvidenceLinks from finalized FileObject | tenant, assigned_object, owned_object | FileObject, Evidence, version, links, owner, retention policy and tenant targets must be same tenant; global targets independently accessible | Evidence Owner | FileObject finalized/usable/scan PASS; typed-target validation; no binary duplication or signed URL persistence; audit/outbox/idempotency same transaction | DR-PRE-F5B-2026-09-21-004; 22 §5/§10; 24; 25; 30 §4; 44 §8 |
+
+## PRE-F5C executability permissions
+
+These two permissions are the only permission additions authorized by DR-PRE-F5C-2026-09-21-005. Their runtime Permission and baseline RolePermission rows are included in the governed PRE-F5C incremental migration. Role mappings resolve by `permission_code` and `role_code`; absence remains DENY.
+
+| permission_code | capability | action/resource | allowed scopes | tenant boundary | base roles containing it | entitlement / SoD / sensitive / audit | rector source |
+|---|---|---|---|---|---|---|---|
+| <code>compliance.soa.create</code> | ISO_COMPLIANCE | create a complete draft StatementOfApplicability header and immutable item set | tenant | FrameworkVersion and all referenced controls are accessible; tenant controls/versions, when present, belong to the selected tenant | GRC Manager, Compliance Manager | creation only; publish remains separately authorized and audited | DR-PRE-F5C-2026-09-21-005; 21,22,23,30,44 |
+| <code>controls.assurance_test.create</code> | CONTROLS_ASSURANCE | create AssuranceTest in `planned` | tenant, audit_engagement | target Control/ControlVersion and assignment context are tenant-compatible | GRC Manager, Auditor Lead, Auditor | creation only; execute/review/approve remain separate; SoD preserved | DR-PRE-F5C-2026-09-21-005; 21,22,30 |
+
+```text
+PRE_F5_READ_PERMISSION_ADDITIONS=10
+PRE_F5B_PERMISSION_ADDITIONS=1
+PRE_F5C_PERMISSION_ADDITIONS=2
+PHASE_5_SUBSCRIPTION_PERMISSION_ADDITIONS=1
+TOTAL_EXECUTABLE_PERMISSIONS=154
+PHASE_3_SEED_PERMISSION_ROWS=134
+PRE_F5C_RUNTIME_PERMISSION_ROWS=2
+DATABASE_CONTRACT_CHANGED=1
+```
+
+## Additional lifecycle-registry permissions
+
+These rows are exact actions permitted by rector 22 §10 and required by the unambiguous edges in seed manifest SEED-007. They do not create product capabilities.
+
+| permission_code | capability | action/resource | allowed scopes | tenant boundary | base roles containing it | entitlement / SoD / sensitive / audit | rector source |
+|---|---|---|---|---|---|---|---|
+| `audit.audit.transition` | AUDIT | transition audit | tenant | same tenant; global definitions remain immutable | Auditor Lead | capability required; object policy; audit; SoD on review/approve/verify | 21,22,42 |
+| `audit.audit.update` | AUDIT | update/plan audit | tenant | same tenant; global definitions remain immutable | Auditor Lead | capability required; object policy; audit; SoD on review/approve/verify | 21,22,42 |
+| `compliance.requirement_assessment.archive` | ISO_COMPLIANCE | archive/supersede assessment | tenant | same tenant; global definitions remain immutable | Compliance Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `controls.assurance_test.approve` | CONTROLS_ASSURANCE | approve assurance test | tenant | same tenant; global definitions remain immutable | GRC Manager, Auditor Lead | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `controls.assurance_test.review` | CONTROLS_ASSURANCE | review assurance test | tenant, audit_engagement | same tenant; global definitions remain immutable | Auditor, GRC Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `controls.control_assessment.update` | CONTROLS_ASSURANCE | start control assessment | tenant | same tenant; global definitions remain immutable; no assignee/creator ownership inference | Control Owner | capability required; object policy; audit; SoD on review/approve/verify | Human Phase 5 Start decision 2026-09-28; 21,22 |
+| `evidence.evidence.archive` | EVIDENCE_DOCUMENTS | expire/supersede evidence | tenant | same tenant; global definitions remain immutable | GRC Manager, Compliance Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22,24 |
+| `evidence.evidence.update` | EVIDENCE_DOCUMENTS | revise rejected evidence | assigned_object, owned_object | same tenant; global definitions remain immutable | Evidence Owner | capability required; object policy; audit; SoD on review/approve/verify | 21,22,24 |
+| `evidence.evidence_request.archive` | EVIDENCE_DOCUMENTS | cancel/expire request | tenant, assigned_object | same tenant; global definitions remain immutable | GRC Manager, Compliance Manager, Control Owner, Auditor Lead | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `evidence.evidence_request.update` | EVIDENCE_DOCUMENTS | cancel request | tenant, assigned_object | same tenant; global definitions remain immutable | GRC Manager, Compliance Manager, Control Owner, Auditor Lead | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `integration.integration.archive` | INTEGRATION_HUB | disable integration | tenant | same tenant; global definitions remain immutable | Data Admin | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `integration.integration.update` | INTEGRATION_HUB | authorize/connect integration | tenant | same tenant; global definitions remain immutable | Data Admin | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `operations.bia.approve` | RESILIENCE | approve BIA | tenant | same tenant; global definitions remain immutable | Continuity Manager, GRC Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22,42 |
+| `operations.bia.archive` | RESILIENCE | supersede BIA | tenant | same tenant; global definitions remain immutable | Continuity Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `operations.bia.review` | RESILIENCE | review BIA | tenant, process, service | same tenant; global definitions remain immutable | Continuity Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `operations.bia.transition` | RESILIENCE | transition BIA | tenant, process, service | same tenant; global definitions remain immutable | Continuity Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `operations.bia.verify` | RESILIENCE | record BIA test | tenant, process, service | same tenant; global definitions remain immutable | Continuity Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `operations.continuity_plan.approve` | RESILIENCE | approve continuity plan | tenant | same tenant; global definitions remain immutable | Continuity Manager, GRC Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22,42 |
+| `operations.continuity_plan.archive` | RESILIENCE | supersede continuity plan | tenant | same tenant; global definitions remain immutable | Continuity Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `operations.continuity_plan.review` | RESILIENCE | review continuity plan | tenant, process, service | same tenant; global definitions remain immutable | Continuity Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `operations.continuity_plan.transition` | RESILIENCE | transition continuity plan | tenant, process, service | same tenant; global definitions remain immutable | Continuity Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `operations.continuity_plan.verify` | RESILIENCE | record continuity test | tenant, process, service | same tenant; global definitions remain immutable | Continuity Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `operations.incident.transition` | INCIDENTS_LOSS | transition incident | tenant, assigned_object | same tenant; global definitions remain immutable | Risk Manager, CISO/Security Manager, Process Owner | capability required; object policy; audit; SoD on review/approve/verify | 21,22,42 |
+| `operations.supplier_assessment.approve` | THIRD_PARTIES | approve supplier assessment | tenant | same tenant; global definitions remain immutable | Supplier Manager, GRC Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22,42 |
+| `operations.supplier_assessment.archive` | THIRD_PARTIES | expire supplier assessment | tenant | same tenant; global definitions remain immutable | Supplier Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `operations.supplier_assessment.review` | THIRD_PARTIES | review supplier assessment | tenant, assigned_object | same tenant; global definitions remain immutable | Supplier Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `operations.supplier_assessment.submit` | THIRD_PARTIES | request/submit supplier assessment | tenant, assigned_object | same tenant; global definitions remain immutable | Supplier Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `operations.supplier_assessment.transition` | THIRD_PARTIES | transition supplier assessment | tenant, assigned_object | same tenant; global definitions remain immutable | Supplier Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `operations.survey.approve` | SURVEYS | publish/accept survey object | tenant | same tenant; global definitions remain immutable | GRC Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22,42 |
+| `operations.survey.archive` | SURVEYS | retire survey definition | tenant | same tenant; global definitions remain immutable | GRC Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `operations.survey.reject` | SURVEYS | invalidate survey response | tenant, assigned_object | same tenant; global definitions remain immutable | GRC Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `operations.survey.review` | SURVEYS | analyze survey campaign | tenant | same tenant; global definitions remain immutable | GRC Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `operations.survey.transition` | SURVEYS | activate/close survey campaign | tenant | same tenant; global definitions remain immutable | GRC Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `operations.survey.update` | SURVEYS | schedule survey campaign | tenant | same tenant; global definitions remain immutable | GRC Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `reporting.report.archive` | ISO_REPORTING or REPORT_STUDIO | supersede report | tenant | same tenant; global definitions remain immutable | GRC Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22,27 |
+| `reporting.report.review` | ISO_REPORTING or REPORT_STUDIO | review report | tenant | same tenant; global definitions remain immutable | GRC Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22,27 |
+| `risk.risk.transition` | OPERATIONAL_RISK | transition risk | tenant, assigned_object, owned_object | same tenant; global definitions remain immutable | Risk Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22,42 |
+| `risk.treatment.transition` | OPERATIONAL_RISK | transition treatment | tenant, assigned_object | same tenant; global definitions remain immutable | Risk Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+| `risk.treatment.verify` | OPERATIONAL_RISK | verify treatment | tenant | same tenant; global definitions remain immutable | GRC Manager, Risk Manager | capability required; object policy; audit; SoD on review/approve/verify | 21,22 |
+
+`PUBLISHED_PERMISSION_ROWS_BEFORE_FINAL_DECISIONS=100`; 61 operation-catalog permissions plus 39 additional lifecycle-registry permissions were already published.
+
+## Human-approved final permission resources
+
+H-003..H-005 authorize these Permission rows over existing entities and capabilities. They add no entitlement/capability or physical entity. `NONE` means the Permission is published without a base-role grant; custom roles still require an explicit governed grant.
+
+| permission_code | capability | action/resource | allowed scopes | tenant boundary | base roles containing it | entitlement / SoD / sensitive / audit | source |
+|---|---|---|---|---|---|---|---|
+| `configuration.configuration_definition.read` | CORE_PLATFORM | read configuration definition | platform | global/platform definitions only | Platform Admin | no tenant content authority; audit by access policy | 29,33,39; H-003 |
+| `configuration.configuration_definition.create` | CORE_PLATFORM | create configuration definition | platform | global/platform definitions only | Platform Admin | author/reviewer/approver/publisher SoD; reinforced audit | 22,29,39; H-003 |
+| `configuration.configuration_definition.update` | CORE_PLATFORM | update draft configuration definition | platform | published definition immutable | Platform Admin | author/reviewer/approver/publisher SoD; reinforced audit | 22,29,39; H-003 |
+| `configuration.configuration_definition.review` | CORE_PLATFORM | review configuration definition | platform | global/platform definitions only | Platform Admin | reviewer distinct where SoD requires; reinforced audit | 22,29,39; H-003 |
+| `configuration.configuration_definition.approve` | CORE_PLATFORM | approve configuration definition | platform | global/platform definitions only | Platform Admin | approver distinct where SoD requires; reinforced audit | 22,29,39; H-003 |
+| `configuration.configuration_definition.publish` | CORE_PLATFORM | publish configuration definition | platform | published version immutable | Platform Admin | author/review/approve/publish SoD; reinforced audit | 22,29,39; H-003 |
+| `configuration.configuration_definition.archive` | CORE_PLATFORM | archive configuration definition | platform | no destructive delete or history rewrite | Platform Admin | reason and reinforced audit | 23,29,39; H-003 |
+| `configuration.configuration_override.read` | CORE_PLATFORM | read configuration override | tenant, organizational_unit, process, service, assigned_object, owned_object | always tenant-scoped; definition must allow override | GRC Manager, Tenant Admin, Data Admin | CORE_PLATFORM; object policy; audit by access policy | 29,39,42; H-003 |
+| `configuration.configuration_override.create` | CORE_PLATFORM | create configuration override | tenant, organizational_unit, process, service, assigned_object, owned_object | always tenant-scoped; never mutates global definition | GRC Manager, Tenant Admin | definition flags/type/scope enforced; audit | 29,39,42; H-003 |
+| `configuration.configuration_override.update` | CORE_PLATFORM | update draft configuration override | tenant, organizational_unit, process, service, assigned_object, owned_object | same tenant and definition | GRC Manager, Tenant Admin | row version; audit | 22,29,39; H-003 |
+| `configuration.configuration_override.review` | CORE_PLATFORM | review configuration override | tenant, organizational_unit, process, service | same tenant | GRC Manager | author/reviewer SoD; reinforced audit | 22,29,39; H-003 |
+| `configuration.configuration_override.approve` | CORE_PLATFORM | approve configuration override | tenant | same tenant | NONE | Permission exists without base grant; SoD; reinforced audit | 22,29,39; H-003 |
+| `configuration.configuration_override.archive` | CORE_PLATFORM | archive configuration override | tenant | same tenant; preserves history | NONE | Permission exists without base grant; reason; audit | 23,29,39; H-003 |
+| `configuration.effective_configuration.read` | CORE_PLATFORM | read resolved EffectiveConfiguration | tenant, organizational_unit, process, service, assigned_object, owned_object | TENANT_DERIVED; inputs same tenant | Data Admin | resolution is read-only; conflicts explicit; no direct write | 29,33,39; H-003 |
+| `privacy.retention_policy.read` | PRIVACY | read retention policy | tenant | tenant policy/content only; global policy visibility does not grant mutation | Privacy Manager, Legal Reviewer, GRC Manager | PRIVACY entitlement; minimized access | 23,39,42; H-004 |
+| `privacy.retention_policy.create` | PRIVACY | create retention policy | tenant | tenant-owned policy only | Privacy Manager | legal/regulatory precedence preserved; audit | 23,39,42; H-004 |
+| `privacy.retention_policy.update` | PRIVACY | update draft retention policy | tenant | tenant-owned draft only | Privacy Manager | published immutable; audit | 23,39; H-004 |
+| `privacy.retention_policy.review` | PRIVACY | review retention policy | tenant | same tenant | Privacy Manager, Legal Reviewer | author/reviewer SoD; legal exception/hold review; reinforced audit | 22,23,39; H-004 |
+| `privacy.retention_policy.approve` | PRIVACY | approve retention policy | tenant | same tenant | Legal Reviewer | legal decision; author/approver SoD; reinforced audit | 22,23,42; H-004 |
+| `privacy.retention_policy.publish` | PRIVACY | publish retention policy | tenant | same tenant; cannot weaken mandatory/contractual policy | Privacy Manager | approval required; reinforced audit | 22,23,39; H-004 |
+| `privacy.retention_policy.archive` | PRIVACY | archive retention policy | tenant | same tenant; history retained | Privacy Manager | no purge authorization by itself; reason; audit | 23,39; H-004 |
+| `privacy.retention_policy.legal_hold.release` | PRIVACY | release published legal hold applicability | tenant | tenant-owned Legal Reviewer; same tenant; distinct author | Legal Reviewer | reason, strong If-Match, idempotency, valid optional source and transactional audit; no purge | 22,23,24; STEP_6A3 C-04W |
+| `privacy.data_subject_request.read` | PRIVACY | read data-subject request | tenant | same tenant; personal content minimized | Privacy Manager, Legal Reviewer, GRC Manager | restricted; reinforced access audit by policy | 26,39,42; H-004 |
+| `privacy.data_subject_request.create` | PRIVACY | create data-subject request | tenant | same tenant | Privacy Manager | request identity minimized; audit | 33,39,42; H-004 |
+| `privacy.data_subject_request.update` | PRIVACY | update data-subject request | tenant, assigned_object | same tenant | Privacy Manager | lifecycle/object policy; audit | 22,39; H-004 |
+| `privacy.data_subject_request.review` | PRIVACY | review data-subject request | tenant, assigned_object | same tenant | Privacy Manager, Legal Reviewer | legal decision/exception review; SoD; reinforced audit | 22,39,42; H-004 |
+| `privacy.data_subject_request.approve` | PRIVACY | approve data-subject request decision | tenant | same tenant | Legal Reviewer | author/approver SoD; reinforced audit | 22,39,42; H-004 |
+| `privacy.data_subject_request.transition` | PRIVACY | execute an explicitly published request transition | tenant, assigned_object | same tenant; no generic status write | Privacy Manager | only registry edge; reason where required; audit | 21,22,39; H-004 |
+| `privacy.data_subject_request.archive` | PRIVACY | archive data-subject request | tenant | same tenant; protected history retained | Privacy Manager | no destructive delete; reason; audit | 23,39; H-004 |
+| `privacy.erasure_execution.read` | PRIVACY | read erasure execution | tenant | same tenant; record must not reintroduce erased data | Privacy Manager, Legal Reviewer, GRC Manager | restricted; retention/legal hold enforced | 23,39,42; H-004 |
+| `privacy.erasure_execution.execute` | PRIVACY | execute controlled erasure | tenant, assigned_object | same tenant; per-object policy/action | Privacy Manager | approved workflow; retention/legal hold; executor/reviewer SoD; reinforced audit | 22,23,39; H-004 |
+| `privacy.erasure_execution.review` | PRIVACY | review erasure execution | tenant | same tenant | Privacy Manager, Legal Reviewer | reviewer distinct from executor; legal exceptions/hold; reinforced audit | 22,23,39,42; H-004 |
+| `platform.lifecycle_transition.read` | CORE_PLATFORM | read LifecycleTransitionDefinition registry | platform | PLATFORM_CONTROL; no tenant registry | Platform Admin | read registry only; administering is separate | 21,33; H-005 |
+| `platform.lifecycle_transition.administer` | CORE_PLATFORM | administer draft registry definition | platform | PLATFORM_CONTROL; no tenant variant entity | Platform Admin | versioned; no arbitrary executable rules; reinforced audit | 21,22,33; H-005 |
+| `platform.lifecycle_transition.publish` | CORE_PLATFORM | publish registry definition | platform | PLATFORM_CONTROL; published immutable | Platform Admin | review/publish SoD; reinforced audit; not domain transition execution | 21,22,33; H-005 |
+
+`PHASE_3_RUNTIME_PERMISSION_ROWS=134`; `PRE_F5C_RUNTIME_PERMISSION_ROWS=2`; `PHASE_5_RUNTIME_PERMISSION_ROWS=11`; `PHASE_5_SUBSCRIPTION_PERMISSION_ROWS=1`; `PHASE_5_MEMBERSHIP_INVITATION_PERMISSION_ROWS=2`; `PHASE_5_ADMINISTRATIVE_READ_PERMISSION_ROWS=4`; `PHASE_5_PLUS_PERMISSION_ROWS=4`; `PHASE_5_PLUS_VALIDATION_PERMISSION_ROWS=5`; `TOTAL_EXECUTABLE_PERMISSIONS=163`. The previous Phase 5+ delta is the three `platform.subscription_regulatory_pack` operations and `organization.subject.read`. The nine Subject read grants remain unchanged. Subject create has `TENANT_ADMIN` only. Validation read has `PLATFORM_ADMIN` platform and `TENANT_ADMIN` tenant; create/archive and classification update have `PLATFORM_ADMIN` platform only. No direct UserIdentity grant exists. Every authorization remains default DENY and entitlement/scope/object-policy/SoD constrained.
+
+## Grant rules
+
+- Base grants above are minimum; no role receives every action in its domain implicitly.
+- Viewer roles remain read-only. Platform Support has no impersonation. Tenant Admin has no blanket approval. Evidence Owner does not approve own evidence; Action Owner does not verify own action.
+- Pack-specific coapproval is enforced by object policy/SoD in addition to Permission.
+- Custom roles may compose only published Permission rows and are tenant-owned; baseline roles are immutable.
+- Exports require the resource `export` permission when later published and inherit read scope; no export operation is published in this iteration.
+
+`PERMISSION_CATALOG=PASS` as a Phase 2 contract candidate.
+
+## Approved P2A PlatformRoleAssignment administration
+
+Human approval: Andrés Barouh, STEP 23L-MI10-P2A, 2026-10-06. New definition is a local publication candidate; QA remains167 published permissions. Exactly one new grant to canonical PLATFORM_ADMIN only; no grant to Platform Support, Tenant Admin, tenant/custom roles or MembershipRole. platform.role.assign remains tenant-only. KEYCLOAK_AS_AUTHORITY=NO. Executable24 closes operation semantics.
+
+| permission_code | capability | action/resource | allowed scopes | tenant boundary | base roles containing it | entitlement / SoD / sensitive / audit | source |
+|---|---|---|---|---|---|---|---|
+| <code>platform.role.administer</code> | CORE_PLATFORM | administer platform.role | platform | PlatformRoleAssignment only; no tenant authority | Platform Admin | mutations: reason required, reinforced audit and last active administrator protected; P2E target assignment read only within this same administrative surface | Human P2A; 09,22,25,42; executable24 |
+
+## STEP 23L-MI10-P2E existing permission mapping
+
+Human P2E authorizes read closure only. platformRoleAssignmentList reuses `platform.role.administer` over the same PlatformRoleAssignment administrative object as assign/revoke. Inspecting the exact active assignment IDs is a prerequisite for those already-authorized commands; no additional object, action grant, tenant scope or grantee is introduced. The existing `platform.role.read` contract is Role catalog list/detail and explicitly excludes direct UserIdentity grants, so it cannot authorize target assignment disclosure. `platform.role.assign` remains MembershipRole only.
+
+The existing roleList operation retains `platform.role.read`; optional `assignable_family=platform` restricts its already-authorized platform catalog to published baseline functional platform roles. Existing Platform Admin object policy and current effective permission remain required. Tenant roles/templates and tenant context are excluded in this mode. No Permission, RolePermission, seed or migration is changed; runtime published catalog remains168 permissions,27 migrations.
+
+
+## STEP 23L-TENANT-ONBOARDING-D1-R
+
+Human-approved **contract-only, runtime-unpublished** definition follows the MI6A staging pattern above. It is outside the existing materialized seed/projection table: no generated backend catalog or SQL data changes in D1-R. Executable25 is the exact scope/mode/grant/privacy contract; default DENY until separate authorized publication and implementation.
+
+| Permission definition | resource | action | capability | allowed scopes | approved grants | publication |
+|---|---|---|---|---|---|---|
+| platform.user_identity.read | platform.user_identity (physical resource_code=user_identity) | read | CORE_PLATFORM | platform, tenant | PLATFORM_ADMIN/platform; TENANT_ADMIN/own tenant exact mode, template plus canonical tenant instances | LOCAL_CONTRACT_ONLY; runtime deferred |
+
+Permission has no physical scope column; RolePermission ownership and Role/MembershipRole context plus endpoint predicates select boundary. The tenant grant cannot invoke global directory mode. No new constrained_tenant scope, direct user grant, other-role grant or Managed Identity provisioning grant for Tenant Admin. One definition is approved; global Permission existence is not authorization. Future publication is data-only and separately authorized; no migration28 or historical SQL/seed rewrite here.
+
+## Central Platform tenant-user onboarding — human approved 2026-10-07
+
+The explicit human E2E packet §§8–11 and executable26 approve one bounded
+Platform capability after reuse analysis. No ordinary tenant command broadens.
+
+| Permission definition | resource | action | capability | allowed scopes | approved grants | publication |
+|---|---|---|---|---|---|---|
+| platform.tenant_user.onboard | platform.tenant_user (physical resource_code=tenant_user) | onboard | CORE_PLATFORM | platform | PLATFORM_ADMIN ONLY; no Support, Tenant Admin, tenant template, tenant/custom Role or MembershipRole | DATA_ONLY_CANONICAL_RUNNER |
+
+Existing platform.membership.read authorizes the target-identity tenant-access
+read. Existing platform.role.read and platform.tenant.read authorize runtime
+catalogs. Existing explicit-target membershipRoleRevoke retains platform.role.assign;
+membershipRoleAssign remains own-tenant only. Projection metadata for the new
+permission is CORE_PLATFORM/platform only; endpoint revalidates all predicates.
+
+## Human-approved Phase 5 methodology binding
+
+| Permission | Capability | Operation | Scope | Policy | Roles | Controls | Authority |
+|---|---|---|---|---|---|---|---|
+| `compliance.methodology.read` | ISO_COMPLIANCE | select published methodology | tenant | published, effective, compatible domain; no global edit | existing assessment-create roles only | default DENY; tenant entitlement required | PHASE5_METHODOLOGY_BINDING_ARCHITECTURE_DECISION_20261007; 19,31,39 |
+| `controls.methodology.read` | CONTROLS_ASSURANCE | select published methodology | tenant | published, effective, compatible domain; no global edit | existing assessment-create roles only | default DENY; tenant entitlement required | PHASE5_METHODOLOGY_BINDING_ARCHITECTURE_DECISION_20261007; 19,31,39 |
+
+## STEP 6A.3 — publicación local v1, aprobación macro R1
+
+Autoridad: contrato29 y recibo MACRO-STEP6A3-20261009-R1-APPROVAL. Grants físicos requieren su operación autorizada; scope procede de MembershipRole.
+
+| Permission | Capability | Resource | Scopes | Action | Roles | Policy | Source |
+|---|---|---|---|---|---|---|---|
+| `compliance.framework.read` | ISO_COMPLIANCE | framework | tenant | read | EXECUTIVE_BOARD_VIEWER, GRC_MANAGER, QUALITY_MANAGER, COMPLIANCE_MANAGER, CISO_SECURITY_MANAGER, AI_GOVERNANCE_MANAGER, PRIVACY_MANAGER, LEGAL_REVIEWER, AUDITOR_LEAD, AUDITOR, REGULATORY_CONTENT_STEWARD, REPORT_VIEWER, VIEWER | actor tenant; additional purpose capability + parent permission + real scope + SoD; no Platform enumeration | executable29; MACRO R1 |
+| `platform.membership_reference.read` | CORE_PLATFORM | membership_reference | tenant,assigned_object,owned_object,audit_engagement; exact parent only | read | EXECUTIVE_BOARD_VIEWER, GRC_MANAGER, QUALITY_MANAGER, COMPLIANCE_MANAGER, RISK_MANAGER, CISO_SECURITY_MANAGER, AI_GOVERNANCE_MANAGER, PRIVACY_MANAGER, LEGAL_REVIEWER, AUDITOR_LEAD, AUDITOR, PROCESS_OWNER, CONTROL_OWNER, EVIDENCE_OWNER, ACTION_OWNER, REPORT_VIEWER, VIEWER | actor tenant; additional purpose capability + parent permission + real scope + SoD; no Platform enumeration | executable29; MACRO R1 |
+| `privacy.retention_policy_reference.read` | EVIDENCE_DOCUMENTS | retention_policy_reference | tenant,assigned_object,owned_object; exact parent/command only | read | EXECUTIVE_BOARD_VIEWER, GRC_MANAGER, QUALITY_MANAGER, COMPLIANCE_MANAGER, CISO_SECURITY_MANAGER, AI_GOVERNANCE_MANAGER, PRIVACY_MANAGER, LEGAL_REVIEWER, AUDITOR_LEAD, AUDITOR, CONTROL_OWNER, EVIDENCE_OWNER, REPORT_VIEWER, VIEWER | actor tenant; additional purpose capability + parent permission + real scope + SoD; no Platform enumeration | executable29; MACRO R1 |
+
+## STEP_6A3 C-04W — asignaciones cerradas
+
+El manifest exacto `candidates/STEP_6A3_C04W_CFGD_v1.10/ROLE_PERMISSIONS.json` SHA-256 `8c9112ae1db21f477cca6f16dba12ccbe0b4956b2d477b77b4097d3ed5727583` define nueve permisos existentes para TENANT_ADMIN tenant-owned y el permiso nuevo `privacy.retention_policy.legal_hold.release` para LEGAL_REVIEWER tenant-owned, todos con `MembershipRole.scope_kind=tenant`. El permiso nuevo pertenece a PRIVACY, acción de release de hold publicado, y exige mismo tenant, actor humano distinto del autor, razón, CAS, idempotencia, fuente invocada válida y AuditEvent. No concede archive ni purge. Las nueve asignaciones Tenant Admin no cambian permisos de roles ajenos ni otorgan Platform authority; los dos scopes tenant añadidos a `evidence.document.update` y `evidence.evidence.submit` sólo admiten la fuente propia del flujo C-04W mediante ObjectPolicy backend. La capability PRIVACY sigue limitada por el plan GRC publicado.
+
+
+## INITIAL_SOURCE v1.11 — delta candidato
+
+Se mantienen todos los Permission/RolePermission/MembershipRole existentes. Tenant Admin humano es custodio y autor del draft; el autor documental puede ser ese custodio o Evidence Owner humano del mismo tenant con scope tenant y permisos efectivos de cada operación. Upload/finalize/create/submit sólo admiten su cadena documental exacta; finalize/submit permanecen del autor documental. Bind es del Tenant Admin custodio autor con privacy.retention_policy.update y PRIVACY. EvidenceReview debe ser de identidad distinta del autor documental; la aprobación de aplicabilidad debe ser de identidad distinta del autor del draft. Ser autor del draft no impide revisar Evidence ajena si el permiso existe. Ninguna acumulación editorial conforme49 sustituye estas separaciones. M2M/Platform, identidad ajena, falta de permiso/entitlement/scope y objeto de otro tenant: DENY. No se conceden grants ni lectura documental general.
+
+Nuevo bind usa exclusivamente privacy.retention_policy.update tenant. EVIDENCE_DOCUMENTS permanece requisito de comandos documentales; PRIVACY del custodio/binder no se concede por arrastre al autor documental. Ninguna Permission nueva.

@@ -2,6 +2,7 @@ import type { FastifyInstance, FastifyRequest } from "fastify";
 import { sql, type Kysely } from "kysely";
 import { validate as validateUuid, version as uuidVersion } from "uuid";
 import type { CurrentPrincipalAuthorization, TenantPermissionScope } from "@tcdx-grc/contracts";
+import { isIanaTimezone } from "@tcdx-grc/contracts";
 import type { FoundationDatabase } from "../database.js";
 import { FoundationError } from "../errors.js";
 import { resolveAuthenticatedIdentity } from "../core-grc/security.js";
@@ -54,7 +55,7 @@ export function registerFrontendProjectionRoutes(app: FastifyInstance, dependenc
   if (!dependencies.database || !dependencies.identityVerifier) return;
   const database = dependencies.database;
   const verifier = dependencies.identityVerifier;
-  app.get("/api/v1/auth/me/authorization", async (request) => {
+  app.get("/api/v2/auth/me/authorization", async (request) => {
     rejectUnexpectedRequest(request, true);
     const tenantHeader = request.headers["x-tcdx-tenant-id"];
     if (tenantHeader !== undefined && (typeof tenantHeader !== "string" || !validateUuid(tenantHeader)
@@ -74,8 +75,8 @@ export function registerFrontendProjectionRoutes(app: FastifyInstance, dependenc
           permissionProjectionCatalog[code]?.scopes.includes("platform")).sort();
         let tenant_permissions: CurrentPrincipalAuthorization["tenant_permissions"] = null;
         if (tenantHeader) {
-          const contexts = await sql<{ membership_state: string; tenant_state: string; ended_at: Date | null }>`
-            SELECT m.membership_state,t.lifecycle_state AS tenant_state,m.ended_at
+          const contexts = await sql<{ membership_state: string; tenant_state: string; ended_at: Date | null; default_timezone: string }>`
+            SELECT m.membership_state,t.lifecycle_state AS tenant_state,m.ended_at,t.default_timezone
               FROM iam.tenant_memberships m JOIN platform.tenants t ON t.tenant_id=m.tenant_id
              WHERE m.tenant_id=${tenantHeader}::uuid AND m.user_identity_id=${identity.principalId}::uuid
           `.execute(transaction);
@@ -85,6 +86,7 @@ export function registerFrontendProjectionRoutes(app: FastifyInstance, dependenc
             || (context.ended_at && context.ended_at <= evaluated.rows[0]!.evaluated_at)) {
             throw new FoundationError("TCDX.AUTHORIZATION.DENIED", "Access denied", 403);
           }
+          if (!isIanaTimezone(context.default_timezone)) throw dependencyUnavailable();
           const capabilities = await sql<{ capability_group: string }>`
             SELECT DISTINCT c.capability_group FROM platform.subscriptions s
               JOIN platform.plan_versions pv ON pv.plan_version_id=s.plan_version_id AND pv.lifecycle_state='published'
@@ -134,7 +136,7 @@ export function registerFrontendProjectionRoutes(app: FastifyInstance, dependenc
           const permissions = Object.fromEntries([...permissionScopes].sort(([a], [b]) => a.localeCompare(b))
             .map(([code, scopes]) => [code, [...scopes.values()].sort((a, b) =>
               JSON.stringify(a).localeCompare(JSON.stringify(b)))]));
-          tenant_permissions = { tenant_id: tenantHeader, permissions };
+          tenant_permissions = { tenant_id: tenantHeader, permissions, default_timezone: context.default_timezone };
         }
         return { evaluated_at: evaluated.rows[0]!.evaluated_at.toISOString(), platform_permissions, tenant_permissions };
       });

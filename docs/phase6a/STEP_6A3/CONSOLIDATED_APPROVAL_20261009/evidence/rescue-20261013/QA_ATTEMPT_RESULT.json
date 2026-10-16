@@ -1,0 +1,47 @@
+{
+  "GITHUB_WORK_PRESERVED": "PASS",
+  "QA_IANA_VISIBLE": "FAIL",
+  "QA_DEPLOY_STATUS": "ROLLED_BACK",
+  "QA_SMOKE": "NOT_RUN_FOR_COMPLETE_CANDIDATE_PAIR",
+  "PUBLIC_RECOVERY_SMOKE": "PASS",
+  "QA30_COMPATIBILITY": "PASS",
+  "TLS_BACKEND_TO_DB": "PASS_VERIFIED_CANDIDATE",
+  "CURRENT_QA_TLS_MODE": "disable_RESTORED_ORIGINAL_BASELINE_PER_EXACT_GO",
+  "ROLLBACK_PAIR_ACTUAL": "PASS_SAME_IDS_IMAGES_CONFIGURATION_FINGERPRINTS_HEALTHY",
+  "QA_DEPLOY_AUTHORIZATION": "VALID_FOR_R1_ONLY_R2_REQUIRES_EXACT_GO",
+  "approved_r1_driver_sha256": "553d6a6765617cfcd66cce7a7bf05f96c4587654337e3b20a2282c66643f1c28",
+  "corrected_r2_driver_sha256": "e1678c292a076ec81afb9c32bdff9cf23fe25c1659785244f6e5387519a5fd49",
+  "failures": [
+    {
+      "id": "FRONTEND_PARK_HEALTH_PRECONDITION",
+      "actual": "Docker changes stopped frontend Health.Status to unhealthy",
+      "r1_problem": "precheck required healthy even for the approved parked frontend",
+      "resolution": "R2 permits only the exact stopped/exited frontend during paired deploy; active unhealthy containers still rejected"
+    },
+    {
+      "id": "BACKEND_MANUAL_START_RESTART_COUNTER",
+      "actual": "RestartCount reset from 1 to 0 after explicit Engine start of the retained original backend",
+      "r1_problem": "wait_healthy required the pre-stop counter1 and timed out despite the backend being healthy",
+      "resolution": "R2 records counter before explicit start, expects reset0 after start and rejects growth; refreshed baseline0 recorded honestly"
+    }
+  ],
+  "evidence": {
+    "attempt": "qa-execution.json",
+    "actual_pair_recovery": "qa-recovery-readonly.json",
+    "immediate_frontend_recovery": "qa-immediate-frontend-recovery.json",
+    "public_visual": "qa-public-visual-smoke.json",
+    "r2_directed_tests": "r2-operational-tests.json",
+    "r1_GO": "EXACT_GO_RECEIPT.json"
+  },
+  "source_or_image_rebuilds": 0,
+  "QA_DDL": 0,
+  "QA_DML": 0,
+  "QA_GRANTS": 0,
+  "QA_IAM_CHANGES": 0,
+  "CADDY_DNS_CHANGES": 0,
+  "STEP_6A3": "PARTIAL_BLOCKED",
+  "STEP_6A4": "NOT_STARTED",
+  "HUMAN_UI_ACCEPTANCE": "PENDING",
+  "commercial_flow": "Human authenticated Zoho tenant flow remains unvalidated; 12 governed clauses remain open, no commercial readiness declared",
+  "next_single_blocker": "PO adoption of corrected R2 driver exact SHA and fresh immediate15minute window; no image rebuild or repeated P0 needed"
+}

@@ -1,0 +1,134 @@
+{
+  "status": "RECORDED_ACTUAL_LOCAL_COMMANDS",
+  "commands": [
+    {
+      "gate": "RECTOR_PREFLIGHT",
+      "command": "bash scripts/verify-rector-governance.sh",
+      "result": "PASS",
+      "log": "r3-preflight-rector.log"
+    },
+    {
+      "gate": "R3_NATIVE",
+      "command": "TCDX_DISPOSABLE_INSTANCE_ATTESTATION=<task>/INSTANCE.json TCDX_DISPOSABLE_INSTANCE_ID=60906c8a477e3c8659f058a97ee831d8014e654856943fe9688c2832e09186e9 node scripts/foundations/test-phase6a3-rbac-resolution-r3.mjs",
+      "result": "PASS",
+      "cases": 12,
+      "log": "r3-rbac-native.json",
+      "node": "v26.4.0"
+    },
+    {
+      "gate": "SOURCE_CURRENT",
+      "command": "docker exec -w /workspace <own-runner-id> node /source/verify-runner-source.mjs",
+      "result": "PASS",
+      "log": "r3-runner-source-check.log",
+      "notes": "863 current text source hashes checked; initial stale targeted run and no-files command excluded from final test evidence"
+    },
+    {
+      "gate": "FULL_REGRESSION",
+      "command": "docker exec -w /workspace [isolated environment below] tcdx-step6a3-v18-runner2-20261009 vitest run --config vitest.config.ts --no-file-parallelism --reporter=json --outputFile=/evidence/r3-full-tests.json",
+      "result": "PASS",
+      "log": "r3-full-tests.json",
+      "node": "22.23.2",
+      "environment": {
+        "DATABASE_HOST": "127.0.0.1",
+        "DATABASE_PORT": "55432 (inside own PG network namespace; host55436)",
+        "DATABASE_NAME": "tcdx-grc",
+        "DATABASE_USER": "postgres (disposable trust, no secret)",
+        "DATABASE_SSL_MODE": "disable",
+        "TCDX_ISOLATED_REBUILD": "true",
+        "TCDX_SECURITY_INTEGRATION": "true",
+        "TCDX_PHASE5_LIFECYCLE_INTEGRATION": "true",
+        "TCDX_EC_READONLY_POSTGRES": "true",
+        "TCDX_STEP6A3_REFERENCE_POSTGRES": "true",
+        "TCDX_STEP6A3_PG_SYSTEM_IDENTIFIER": "7694735811590922280"
+      }
+    },
+    {
+      "gate": "TYPECHECK",
+      "command": "PATH=<locked Node22 bin>:$PATH pnpm typecheck",
+      "result": "PASS",
+      "log": "r3-typecheck.log"
+    },
+    {
+      "gate": "LINT",
+      "command": "PATH=<locked Node22 bin>:$PATH pnpm lint",
+      "result": "PASS",
+      "log": "r3-lint.log"
+    },
+    {
+      "gate": "BUILD",
+      "command": "PATH=<locked Node22 bin>:$PATH pnpm build",
+      "result": "PASS",
+      "log": "r3-build.log"
+    },
+    {
+      "gate": "CONTRACTS",
+      "command": "node scripts/foundations/generate-contract-assets.mjs --check",
+      "result": "PASS",
+      "log": "r3-contracts.log"
+    },
+    {
+      "gate": "VOCAB_ASSET",
+      "command": "node scripts/foundations/generate-phase6a-vocabularies.mjs --check",
+      "result": "PASS",
+      "log": "r3-vocabulary.log"
+    },
+    {
+      "gate": "OFFLINE_RECONCILIATION",
+      "command": "python3 scripts/foundations/verify-phase6a3-residuals.py",
+      "result": "PASS",
+      "log": "r3-residuals.json"
+    },
+    {
+      "gate": "NATIVE_44_52_INVENTORY",
+      "command": "[own disposable attestation] node scripts/foundations/verify-phase6a3-local-candidates.mjs --published",
+      "result": "PASS",
+      "log": "r3-native-rbac-vocab.json",
+      "notes": "32-stage fixture, R3 delta tested separately and rolled back; not a claim of persistent R3 activation"
+    },
+    {
+      "gate": "GOVERNANCE_NEGATIVES",
+      "command": "python3 scripts/verify-internal-governance.py --negative-tests",
+      "result": "PASS",
+      "cases": 6,
+      "log": "r3-governance-negative.log"
+    },
+    {
+      "gate": "PYTHON_OPTIMIZATION_FAIL_CLOSED",
+      "command": "python3 -O scripts/verify-internal-governance.py",
+      "result": "PASS_EXPECTED_REJECTION",
+      "exit_code": 1,
+      "log": "r3-python-optimized.json"
+    },
+    {
+      "gate": "SECRETS",
+      "command": "node scripts/foundations/secret-scan.mjs",
+      "result": "PASS",
+      "log": "r3-secret.log"
+    },
+    {
+      "gate": "WHITESPACE",
+      "command": "git diff --check",
+      "result": "PASS",
+      "log": "r3-whitespace.log"
+    },
+    {
+      "gate": "READONLY_FINAL_STATE",
+      "command": "node <task>/native-final-read.mjs",
+      "result": "PASS",
+      "log": "r2-native-final-read.json"
+    }
+  ],
+  "earlier_unchanged_evidence": [
+    "38 native UQ approved tests unchanged, not repeated",
+    "460 local browser mockAPI/IAM tests unchanged by R3 backend-only grant delta; no external E2E",
+    "R2 audit8 actual PostgreSQL cases unchanged; candidate33 SQL unchanged"
+  ],
+  "not_executed": [
+    "QA",
+    "IAM real",
+    "non-disposable DDL",
+    "deploy",
+    "Git commit/push/PR/merge"
+  ],
+  "notes": "One exact full850 regression is counted, its R3 targeted/superset overlaps are not distinct. 16 SQL RO are included, not added. 12 R3 and8 R2 native script cases and38 UQ separate; browser460 synthetic separate."
+}

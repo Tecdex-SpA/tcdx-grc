@@ -23,7 +23,7 @@ COPY docs/ui/assets/brand docs/ui/assets/brand
 ARG VITE_API_ORIGIN=https://grc.tecdex.net
 ENV VITE_API_ORIGIN=$VITE_API_ORIGIN
 
-RUN pnpm --filter @tcdx-grc/frontend build
+RUN pnpm --filter @tcdx-grc/frontend... build
 
 
 FROM node:22.23.2-bookworm-slim@sha256:48e4b67d85f87bd551df43704e24d252f56cc5f8e9718841aace50f19948f0f9 AS runtime

@@ -15,6 +15,7 @@ describe("Phase 5 Core GRC route surface", () => {
       ["GET", "/api/v1/access/me"],
       ["POST", "/api/v1/platform/tenants"],
       ["POST", "/api/v1/platform/subscriptions"],
+      ["GET", "/api/v1/platform/plan-versions"],
       ["POST", "/api/v1/platform/membership-invitations"],
       ["POST", "/api/v1/platform/membership-invitations/018f47f2-6170-7bd0-9d43-12f644a2b111/revoke"],
       ["POST", "/api/v1/memberships"],
@@ -33,6 +34,15 @@ describe("Phase 5 Core GRC route surface", () => {
       ["GET", "/api/v1/retention-policies"],
       ["GET", "/api/v1/retention-policies/018f47f2-6170-7bd0-9d43-12f644a2b111"],
       ["POST", "/api/v1/retention-policies/018f47f2-6170-7bd0-9d43-12f644a2b111:update"],
+      ["POST", "/api/v1/retention-policies/018f47f2-6170-7bd0-9d43-12f644a2b111:submit-for-review"],
+      ["GET", "/api/v1/retention-policy-applicabilities"],
+      ["GET", "/api/v1/retention-policy-applicabilities/018f47f2-6170-7bd0-9d43-12f644a2b111"],
+      ["POST", "/api/v1/retention-policy-applicabilities"],
+      ["POST", "/api/v1/retention-policy-applicabilities/018f47f2-6170-7bd0-9d43-12f644a2b111:submit-for-review"],
+      ["POST", "/api/v1/retention-policy-applicabilities/018f47f2-6170-7bd0-9d43-12f644a2b111:review"],
+      ["POST", "/api/v1/retention-policy-applicabilities/018f47f2-6170-7bd0-9d43-12f644a2b111:approve"],
+      ["POST", "/api/v1/retention-policy-applicabilities/018f47f2-6170-7bd0-9d43-12f644a2b111:publish"],
+      ["POST", "/api/v1/retention-policy-applicabilities/018f47f2-6170-7bd0-9d43-12f644a2b111:release-hold"],
       ["POST", "/api/v1/evidence-requests/018f47f2-6170-7bd0-9d43-12f644a2b111:fulfill"],
       ["POST", "/api/v1/control-assessments/018f47f2-6170-7bd0-9d43-12f644a2b111:complete"],
       ["GET", "/api/v1/evidence-versions/018f47f2-6170-7bd0-9d43-12f644a2b111"]
@@ -41,7 +51,7 @@ describe("Phase 5 Core GRC route surface", () => {
       const response = await app.inject({ method, url, ...(method === "POST" ? { payload: {}, headers: { "idempotency-key": "test" } } : {}), ...(method === "PUT" ? { payload: Buffer.from("test"), headers: { "content-type": "application/octet-stream" } } : {}) });
       expect(response.statusCode, `${method} ${url}`).toBe(401);
     }
-    expect(mutations.size).toBe(44);
+    expect(mutations.size).toBe(51);
     await app.close();
   });
 });

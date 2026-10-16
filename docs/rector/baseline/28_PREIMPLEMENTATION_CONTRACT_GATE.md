@@ -87,7 +87,7 @@ El scan debe verificar específicamente:
 - ownership_class/tenant_id en eventos globales, plataforma y tenant;
 - Tenant como ownership vs Organization/Subject como scope.
 - decisiones abiertas que Codex podría resolver por preferencia técnica;
-- alternativas múltiples sin Decision Record humano aprobado;
+- decisiones de producto fuera del alcance PO o alternativas técnicas no resolubles dentro de la arquitectura/autorización; no se exige otro Decision Record para lo ya instruido por el PO;
 - task packets sin archivos permitidos, contratos afectados, criterio de aceptación o acciones prohibidas;
 - gates o ADR que dependan exclusivamente de autoaprobación de Codex.
 
@@ -100,3 +100,7 @@ El gate debe generar `PRE_IMPLEMENTATION_GATE_REPORT.md` con una fila explícita
 PASS sólo si `39_DECISIONES_SEMANTICAS_FINALES_PRE_MODELO_FISICO.md`, `40_CIERRE_INTEGRIDAD_SEMANTICA_Y_CONTRATOS_FISICOS.md` y `44_CONTRATO_ESTRUCTURA_NORMATIVA_REQUISITOS_CONTROLES.md` están vigentes y el diseño físico puede derivar sin inventar decisiones sobre effectiveness, escalas de riesgo, appetite/tolerance, Data Trust, source precedence, Subject identity, erasure, timezone, IDs, tenant ownership, configuration precedence, result semantics, deletion policy, estructura normativa, atomicidad de Requirements, origen de Controls o crosswalks.
 
 `PASS_FOR_PHYSICAL_MODEL_DESIGN` autoriza exclusivamente diseño/revisión física. No autoriza migrations ni funcionalidad runtime.
+
+## Gobierno de la verificación sucesora — DR003
+
+G1–G15 siguen verificándose técnicamente por alcance. Las firmas internas o comités no son otro gate: la instrucción PO basta para actividades incluidas. Una contradicción interna se reconcilia; no se declara vigente una candidata. Fuente externa concreta, riesgo técnico no resoluble o exclusión expresa acotan sólo el acto afectado. Esta preparación no afirma PASS_FOR_IMPLEMENTATION ni reemplaza pruebas futuras.

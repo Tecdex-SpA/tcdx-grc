@@ -395,6 +395,8 @@ try {
     failures
   }, null, 2)}\n`);
 } finally {
+  // Own disposable fixtures include ServicePrincipal publication audits, not only human audits.
+  await sql`DELETE FROM ops_audit.audit_events WHERE tenant_id = ANY(${createdTenants}::uuid[])`.execute(database);
   await sql`DELETE FROM ops_audit.outbox_events WHERE actor_user_identity_id IN (${ids.first}::uuid,${ids.second}::uuid,${ids.target}::uuid,${ids.bootstrapTarget}::uuid,${ids.unprivileged}::uuid)`.execute(database).catch(() => undefined);
   await sql`DELETE FROM ops_audit.audit_events WHERE actor_user_identity_id IN (${ids.first}::uuid,${ids.second}::uuid,${ids.target}::uuid,${ids.bootstrapTarget}::uuid,${ids.unprivileged}::uuid)`.execute(database).catch(() => undefined);
   await sql`DELETE FROM ops_audit.idempotency_records WHERE actor_user_identity_id IN (${ids.first}::uuid,${ids.second}::uuid,${ids.target}::uuid,${ids.bootstrapTarget}::uuid,${ids.unprivileged}::uuid)`.execute(database).catch(() => undefined);
@@ -407,6 +409,8 @@ try {
   await sql`DELETE FROM iam.platform_role_assignments WHERE platform_role_assignment_id = ANY(${createdAssignments}::uuid[])`.execute(database).catch(() => undefined);
   await sql`DELETE FROM iam.user_identities WHERE user_identity_id = ANY(${oidcIdentityIds}::uuid[])`.execute(database).catch(() => undefined);
   await sql`DELETE FROM iam.user_identities WHERE user_identity_id IN (${ids.first}::uuid,${ids.second}::uuid,${ids.target}::uuid,${ids.bootstrapTarget}::uuid,${ids.unprivileged}::uuid)`.execute(database).catch(() => undefined);
+  const residue=await sql<{n:number}>`SELECT count(*)::int AS n FROM platform.tenants WHERE tenant_id=ANY(${createdTenants}::uuid[])`.execute(database);
+  expect(residue.rows[0]?.n).toBe(0);
   await database.destroy();
 }
 

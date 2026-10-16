@@ -1,0 +1,633 @@
+--- a/apps/backend/src/security/frontend-projections.postgres.test.ts
++++ b/apps/backend/src/security/frontend-projections.postgres.test.ts
+@@ -10,7 +10,7 @@
+     if (process.env.DATABASE_HOST !== "127.0.0.1" || process.env.DATABASE_PORT !== "55432"
+       || process.env.TCDX_ISOLATED_REBUILD !== "true") throw new Error("MI7A_REQUIRES_ISOLATED_LOCAL_POSTGRES");
+     const database = createDatabase(loadConfig(process.env));
+-    const ids = { user: newUuidV7(), tenant: newUuidV7(), membership: newUuidV7(), role: newUuidV7(),
++    const ids = { user: newUuidV7(), tenant: newUuidV7(), membership: newUuidV7(), otherTenant: newUuidV7(), otherMembership: newUuidV7(), role: newUuidV7(),
+       assignment: newUuidV7(), platform: newUuidV7(), subscription: newUuidV7(), grant: newUuidV7(), badGrant: newUuidV7(), roleGrant: newUuidV7() };
+     const verifier = { verifyBearerToken: async () => ({ principalClass: "HUMAN_INTERACTIVE" as const,
+       principalId: ids.user, tokenId: newUuidV7(), expiresAt: new Date(Date.now() + 60_000) }) };
+@@ -48,7 +48,7 @@
+       expect(noTenant.json()).toMatchObject({ platform_permissions: [], tenant_permissions: null });
+       const tenant = await app.inject({ url: "/api/v1/auth/me/authorization", headers: { ...headers, "x-tcdx-tenant-id": ids.tenant } });
+       expect(tenant.statusCode).toBe(200);
+-      expect(tenant.json().tenant_permissions).toEqual({ tenant_id: ids.tenant,
++      expect(tenant.json().tenant_permissions).toEqual({ tenant_id: ids.tenant, default_timezone: "America/Santiago",
+         permissions: { "organization.subject.read": [{ scope_kind: "tenant" }], "platform.role.assign": [{ scope_kind: "tenant" }] } });
+       expect(tenant.json().platform_permissions).toEqual([]);
+       expect(JSON.stringify(tenant.json())).not.toContain("platform.managed_identity");
+@@ -61,12 +61,42 @@
+       expect(platform.json().tenant_permissions).toBeNull();
+       const foreign = await app.inject({ url: "/api/v1/auth/me/authorization", headers: { ...headers, "x-tcdx-tenant-id": newUuidV7() } });
+       expect(foreign.statusCode).toBe(404);
++      // The selected tenant's persisted value is re-read in the same snapshot.
++      for (const zone of ["Europe/Berlin", "Pacific/Auckland", "Asia/Kathmandu", "UTC"]) {
++        await sql`UPDATE platform.tenants SET default_timezone=${zone} WHERE tenant_id=${ids.tenant}::uuid`.execute(database);
++        const response = await app.inject({ url: "/api/v1/auth/me/authorization", headers: { ...headers, "x-tcdx-tenant-id": ids.tenant } });
++        expect(response.statusCode).toBe(200);
++        expect(response.json().tenant_permissions.default_timezone).toBe(zone);
++        expect(response.json().tenant_permissions.permissions).not.toHaveProperty("platform.tenant.read");
++        expect(response.json().evaluated_at).toMatch(/Z$/);
++      }
++      for (const zone of ["invalid/zone", "+02:00", "", "x".repeat(64)]) {
++        await sql`UPDATE platform.tenants SET default_timezone=${zone} WHERE tenant_id=${ids.tenant}::uuid`.execute(database);
++        const response = await app.inject({ url: "/api/v1/auth/me/authorization", headers: { ...headers, "x-tcdx-tenant-id": ids.tenant } });
++        expect(response.statusCode).toBe(503);
++        expect(response.headers["cache-control"]).toBe("no-store");
++        expect(response.body).not.toContain(zone || "default_timezone");
++      }
++      await sql`UPDATE platform.tenants SET default_timezone='UTC',lifecycle_state='inactive' WHERE tenant_id=${ids.tenant}::uuid`.execute(database);
++      expect((await app.inject({ url: "/api/v1/auth/me/authorization", headers: { ...headers, "x-tcdx-tenant-id": ids.tenant } })).statusCode).toBe(403);
++      await sql`UPDATE platform.tenants SET lifecycle_state='active' WHERE tenant_id=${ids.tenant}::uuid`.execute(database);
++      await sql`INSERT INTO platform.tenants (tenant_id,tenant_code,legal_name,display_name,default_timezone,lifecycle_state,data_classification)
++        VALUES (${ids.otherTenant}::uuid,${`MI7R-B-${ids.otherTenant.slice(-12)}`},'Other isolated tenant','Other isolated tenant','Asia/Tokyo','active','confidential')`.execute(database);
++      await sql`INSERT INTO iam.tenant_memberships (tenant_membership_id,tenant_id,user_identity_id,membership_state,joined_at)
++        VALUES (${ids.otherMembership}::uuid,${ids.otherTenant}::uuid,${ids.user}::uuid,'active',transaction_timestamp())`.execute(database);
++      const selectedB = await app.inject({ url: "/api/v1/auth/me/authorization", headers: { ...headers, "x-tcdx-tenant-id": ids.otherTenant } });
++      expect(selectedB.statusCode).toBe(200);
++      expect(selectedB.json().tenant_permissions).toEqual({ tenant_id: ids.otherTenant, default_timezone: "Asia/Tokyo", permissions: {} });
++      const selectedA = await app.inject({ url: "/api/v1/auth/me/authorization", headers: { ...headers, "x-tcdx-tenant-id": ids.tenant } });
++      expect(selectedA.json().tenant_permissions.default_timezone).toBe("UTC");
+       await sql`UPDATE iam.platform_role_assignments SET valid_to=transaction_timestamp() WHERE platform_role_assignment_id=${ids.platform}::uuid`.execute(database);
+       expect((await app.inject({ url: "/api/v1/auth/me/authorization", headers })).json().platform_permissions).toEqual([]);
+       await sql`UPDATE iam.tenant_memberships SET membership_state='inactive' WHERE tenant_membership_id=${ids.membership}::uuid`.execute(database);
+       expect((await app.inject({ url: "/api/v1/auth/me/authorization", headers: { ...headers, "x-tcdx-tenant-id": ids.tenant } })).statusCode).toBe(403);
+     } finally {
+       if (app) await app.close();
++      await sql`DELETE FROM iam.tenant_memberships WHERE tenant_membership_id=${ids.otherMembership}::uuid`.execute(database).catch(() => undefined);
++      await sql`DELETE FROM platform.tenants WHERE tenant_id=${ids.otherTenant}::uuid`.execute(database).catch(() => undefined);
+       await sql`DELETE FROM iam.platform_role_assignments WHERE platform_role_assignment_id=${ids.platform}::uuid`.execute(database).catch(() => undefined);
+       await sql`DELETE FROM iam.role_permissions WHERE role_permission_id IN (${ids.grant}::uuid,${ids.badGrant}::uuid,${ids.roleGrant}::uuid)`.execute(database).catch(() => undefined);
+       await sql`DELETE FROM iam.membership_roles WHERE membership_role_id=${ids.assignment}::uuid`.execute(database).catch(() => undefined);
+--- a/apps/backend/src/security/frontend-projections.test.ts
++++ b/apps/backend/src/security/frontend-projections.test.ts
+@@ -1,6 +1,8 @@
+ import { describe, expect, it } from "vitest";
+ import { buildApp } from "../app.js";
+ import { UnavailableFileStoragePort } from "../ports/file-storage.js";
++import { tenantCreate } from "./platform-iam-service.js";
++import type { PlatformActor } from "./platform-authority.js";
+ 
+ const providers = ["ZOHO", "MICROSOFT_ENTRA_ID", "GOOGLE_WORKSPACE", "TCDX_MANAGED_IDENTITY"];
+ 
+@@ -56,6 +58,13 @@
+ });
+ 
+ describe("MI7A current principal authorization boundary", () => {
++  it.each(["+02:00", "-05:00", "Invalid/Timezone"])("rejects non-IANA creation value %s before persistence", async zone => {
++    // Shape-only unit actor; never an operational identity or grant.
++    const actor: PlatformActor = { identity: { principalClass: "HUMAN_INTERACTIVE", principalId: "01900000-0000-7000-8000-000000000001",
++      tokenId: "shape-only", expiresAt: new Date(Date.now()+60_000) }, roles: [], permissions: new Set(["platform.tenant.create"]) };
++    await expect(tenantCreate({} as never, actor, { body: { tenant_code: "SHAPE_ONLY", legal_name: "Shape", display_name: "Shape", default_timezone: zone }, correlationId: "shape-only" }))
++      .rejects.toMatchObject({ code: "TCDX.VALIDATION.FAILED", statusCode: 400 });
++  });
+   it("requires an application session and rejects incompatible principals", async () => {
+     const app = buildApp(async () => true, {
+       database: {} as never,
+--- a/apps/backend/src/security/frontend-projections.ts
++++ b/apps/backend/src/security/frontend-projections.ts
+@@ -2,6 +2,7 @@
+ import { sql, type Kysely } from "kysely";
+ import { validate as validateUuid, version as uuidVersion } from "uuid";
+ import type { CurrentPrincipalAuthorization, TenantPermissionScope } from "@tcdx-grc/contracts";
++import { isIanaTimezone } from "@tcdx-grc/contracts";
+ import type { FoundationDatabase } from "../database.js";
+ import { FoundationError } from "../errors.js";
+ import { resolveAuthenticatedIdentity } from "../core-grc/security.js";
+@@ -74,8 +75,8 @@
+           permissionProjectionCatalog[code]?.scopes.includes("platform")).sort();
+         let tenant_permissions: CurrentPrincipalAuthorization["tenant_permissions"] = null;
+         if (tenantHeader) {
+-          const contexts = await sql<{ membership_state: string; tenant_state: string; ended_at: Date | null }>`
+-            SELECT m.membership_state,t.lifecycle_state AS tenant_state,m.ended_at
++          const contexts = await sql<{ membership_state: string; tenant_state: string; ended_at: Date | null; default_timezone: string }>`
++            SELECT m.membership_state,t.lifecycle_state AS tenant_state,m.ended_at,t.default_timezone
+               FROM iam.tenant_memberships m JOIN platform.tenants t ON t.tenant_id=m.tenant_id
+              WHERE m.tenant_id=${tenantHeader}::uuid AND m.user_identity_id=${identity.principalId}::uuid
+           `.execute(transaction);
+@@ -85,6 +86,7 @@
+             || (context.ended_at && context.ended_at <= evaluated.rows[0]!.evaluated_at)) {
+             throw new FoundationError("TCDX.AUTHORIZATION.DENIED", "Access denied", 403);
+           }
++          if (!isIanaTimezone(context.default_timezone)) throw dependencyUnavailable();
+           const capabilities = await sql<{ capability_group: string }>`
+             SELECT DISTINCT c.capability_group FROM platform.subscriptions s
+               JOIN platform.plan_versions pv ON pv.plan_version_id=s.plan_version_id AND pv.lifecycle_state='published'
+@@ -134,7 +136,7 @@
+           const permissions = Object.fromEntries([...permissionScopes].sort(([a], [b]) => a.localeCompare(b))
+             .map(([code, scopes]) => [code, [...scopes.values()].sort((a, b) =>
+               JSON.stringify(a).localeCompare(JSON.stringify(b)))]));
+-          tenant_permissions = { tenant_id: tenantHeader, permissions };
++          tenant_permissions = { tenant_id: tenantHeader, permissions, default_timezone: context.default_timezone };
+         }
+         return { evaluated_at: evaluated.rows[0]!.evaluated_at.toISOString(), platform_permissions, tenant_permissions };
+       });
+--- a/apps/backend/src/security/platform-iam-service.ts
++++ b/apps/backend/src/security/platform-iam-service.ts
+@@ -1,4 +1,4 @@
+-import {ROLE_PERMISSION_PUBLICATION,RBAC_RESOLUTION_R3} from "@tcdx-grc/contracts";
++import {ROLE_PERMISSION_PUBLICATION,RBAC_RESOLUTION_R3,isIanaTimezone} from "@tcdx-grc/contracts";
+ import {requireReferencePublication,requireRbacResolutionR3} from "./reference-publication.js";
+ import { createHash, randomBytes } from "node:crypto";
+ import { sql, type Kysely, type Transaction } from "kysely";
+@@ -595,7 +595,7 @@
+   const legalName = text(input.body, "legal_name");
+   const displayName = text(input.body, "display_name");
+   const timezone = text(input.body, "default_timezone", 64);
+-  try { new Intl.DateTimeFormat("en", { timeZone: timezone }).format(); } catch {
++  if (!isIanaTimezone(timezone)) {
+     throw new FoundationError("TCDX.VALIDATION.FAILED", "Invalid IANA timezone", 400, false, { field: "default_timezone" });
+   }
+   const key = idempotencyKey(input.key);
+--- a/apps/backend/src/security/role-assign-projection-scope.postgres.test.ts
++++ b/apps/backend/src/security/role-assign-projection-scope.postgres.test.ts
+@@ -115,7 +115,7 @@
+     const result = await projection(ids.admin, ids.tenant);
+     expect(result.statusCode).toBe(200);
+     expect(result.json().platform_permissions).toEqual([]);
+-    expect(result.json().tenant_permissions).toEqual({ tenant_id: ids.tenant,
++    expect(result.json().tenant_permissions).toEqual({ tenant_id: ids.tenant, default_timezone: "UTC",
+       permissions: { "platform.role.assign": [{ scope_kind: "tenant" }] } });
+     expect((await projection(ids.admin, ids.foreign)).statusCode).toBe(404);
+     expect((await assign(ids.admin, ids.foreign)).statusCode).toBe(404);
+--- a/apps/frontend/src/core-grc.tsx
++++ b/apps/frontend/src/core-grc.tsx
+@@ -1,4 +1,5 @@
+ import { HistoricalReferenceLabel, ApprovedEvidenceReferenceField, StructuredCollectionEditor, TypedReferenceField, RequirementReferenceField } from "./structured-reference-fields.js";
++import { TenantTimezoneContext, TenantInstantPreview, normalizeSamplePeriods, selectedTenantTimezone } from "./tenant-timezone.js";
+ import { BusinessReferenceSelect, EntityReferenceSelect, ContractVocabularySelect, ControlVersionSelect, SubjectSelect, MethodologySelect } from "./reference-selectors.js";
+ import { AddTenantUser, InitialCompanyWizard, TenantUserIntent, tenantPresentationPermission } from "./tenant-onboarding.js";
+ import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+@@ -343,6 +344,7 @@
+ }
+ 
+ function DetailDrawer({ api, definition, row: summary, close, completed }: { api: ApiClient; definition: ModuleDefinition; row: Row; close(): void; completed(): void }) {
++  const timezone = React.useContext(TenantTimezoneContext);
+   const [detail, setDetail] = useState<{ loading: boolean; row: Row; error?: string }>({ loading: true, row: summary });
+   const [form, setForm] = useState<Record<string, string>>({});
+   const [feedback, setFeedback] = useState<{ kind: "error" | "success"; message: string }>();
+@@ -358,6 +360,7 @@
+   const vocabularyProvenance=Array.isArray(row.contract_provenance)?row.contract_provenance:[];
+   const historicalReference=(field:string,value:unknown)=> {
+     if(typeof value!=="string") return displayValue(value);
++    if (/^\d{4}-\d{2}-\d{2}T.*Z$/.test(value)) return <TenantInstantPreview value={value}/>;
+     if(field==="framework_version_id" && definition.id==="soa") return <HistoricalReferenceLabel api={api} kind="framework" purpose="history" parent={{statement_of_applicability_id:id}} filter={{framework_version_id:value}}/>;
+     if(["assigned_membership_id","requested_by_membership_id","executor_membership_id","reviewer_membership_id"].includes(field)) {
+       const types:Record<string,[string,string]>={acciones:["action-history","action_id"],"solicitudes-evidencia":["evidence-request-history","evidence_request_id"],pruebas:["assurance-test-history","assurance_test_id"]};
+@@ -392,7 +395,10 @@
+     const targetPath = action.versionResource ? "/evidence-versions" : definition.path;
+     const body: Row = { expected_version: Number(version?.row_version ?? row.row_version), ...Object.fromEntries((action.fields ?? []).filter((field) => form[field] !== undefined && form[field] !== "").map((field) => [field, form[field]])) };
+     for (const field of ["coverage_percent", "design_effectiveness", "operating_effectiveness"]) if (body[field] !== undefined) body[field] = Number(body[field]);
+-    if (typeof body.samples === "string") { try { body.samples = JSON.parse(body.samples); } catch { setFeedback({ kind: "error", message: uiText.forms.invalidJson }); return; } }
++    if (typeof body.samples === "string") {
++      try { body.samples = normalizeSamplePeriods(JSON.parse(body.samples), timezone); }
++      catch { setFeedback({ kind: "error", message: uiText.temporal.invalidInstant }); return; }
++    }
+     try {
+       if (definition.id === "retencion") {
+         const payload = action.suffix === "update" ? { retention_seconds: Number(form.retention_seconds), is_mandatory: form.is_mandatory === "true" } : {};
+@@ -611,9 +617,9 @@
+   return <>{children(state.page.items)}{state.page.page.has_more && <div className="pagination"><button className="button secondary" onClick={loadMore}>{uiText.actions.loadMore}</button></div>}</>;
+ }
+ 
+-function adminDate(value: unknown): string {
++function adminDate(value: unknown): React.ReactNode {
+   if (typeof value !== "string" || Number.isNaN(Date.parse(value))) return uiText.common.noData;
+-  return new Intl.DateTimeFormat("es-CL", { dateStyle: "medium", timeStyle: "short" }).format(new Date(value));
++  return <TenantInstantPreview value={value}/>;
+ }
+ 
+ function readableRole(code: unknown, name?: unknown): string {
+@@ -1181,7 +1187,7 @@
+     {active === settingsRoutes.managedIdentities ? managedIdentity ? <ManagedIdentityWorkspace api={api} permissions={new Set(authorization?.platform_permissions ?? [])} authorizeFresh={refreshAuthorization}/> : <StatePanel kind="permission-denied"/> :
+     active === settingsRoutes.companies ? platformAdmin ? <CompaniesAdmin api={api} authorization={authorization} authorizeFresh={refreshAuthorization}/> : tenantAdmin && context ? <TenantCompany api={api} context={context}/> : <StatePanel kind="permission-denied"/> :
+       active === settingsRoutes.users ? platformAdmin || tenantAdmin ? <UsersAdmin api={api} platformAdmin={platformAdmin} authorization={authorization} authorizeTenantFresh={authorizeTenantFresh} authorizePlatformFresh={refreshAuthorization} {...(context ? { context } : {})}/> : <StatePanel kind="permission-denied"/> :
+-      context ? active === "dashboard" ? <Dashboard api={api}/> : <ModuleWorkspace api={api} active={active}/> :
++      context ? <TenantTimezoneContext.Provider value={selectedTenantTimezone(authorization, selectedId ?? null)}>{active === "dashboard" ? <Dashboard api={api}/> : <ModuleWorkspace api={api} active={active}/>}</TenantTimezoneContext.Provider> :
+       <StatePanel kind={administrativePage ? "permission-denied" : "not-available"} detail={uiText.tenant.selectDetail}/>}
+   </main></div>{menu && <button className="sidebar-scrim" aria-label={uiText.navigation.close} onClick={() => setMenu(false)}/>}</div>;
+ }
+--- a/apps/frontend/src/frontend-auth-projections.test.tsx
++++ b/apps/frontend/src/frontend-auth-projections.test.tsx
+@@ -23,11 +23,11 @@
+     const read = parseCurrentAuthorization({ ...base, platform_permissions: ["platform.managed_identity.read"] }, null);
+     expect([...managedIdentityEligibility(read)]).toEqual(["platform.managed_identity.read"]);
+     const tenantOnly = parseCurrentAuthorization({ ...base, tenant_permissions: {
+-      tenant_id: tenantId, permissions: { "platform.role.read": [{ scope_kind: "tenant" }] }
++      tenant_id: tenantId, default_timezone: "Europe/Berlin", permissions: { "platform.role.read": [{ scope_kind: "tenant" }] }
+     } }, tenantId);
+     expect(managedIdentityEligibility(tenantOnly).size).toBe(0);
+     expect(parseCurrentAuthorization({ ...base, effective_platform_role_codes: ["PLATFORM_ADMIN"] }, null)).toBeNull();
+-    expect(parseCurrentAuthorization({ ...base, tenant_permissions: { tenant_id: tenantId,
++    expect(parseCurrentAuthorization({ ...base, tenant_permissions: { tenant_id: tenantId, default_timezone: "Europe/Berlin",
+       permissions: { "platform.managed_identity.administer": [{ scope_kind: "tenant" }] } } }, tenantId)).toBeNull();
+     expect(managedIdentityEligibility(parseCurrentAuthorization({ ...base, platform_permissions: ["platform.managed_identity.create", "platform.managed_identity.administer"] }, null)).size).toBe(2);
+     expect(managedIdentityEligibility(null).size).toBe(0);
+--- a/apps/frontend/src/frontend-auth-projections.ts
++++ b/apps/frontend/src/frontend-auth-projections.ts
+@@ -1,4 +1,5 @@
+ import type { AuthenticationProvider, AuthenticationProviderAvailability, CurrentPrincipalAuthorization } from "@tcdx-grc/contracts";
++import { isIanaTimezone } from "@tcdx-grc/contracts";
+ import { brandNames } from "./branding.js";
+ 
+ export const providerLabels: Readonly<Record<AuthenticationProvider, string>> = {
+@@ -45,7 +46,8 @@
+   } else {
+     if (!tenant || typeof tenant !== "object" || Array.isArray(tenant)) return null;
+     const projection = tenant as Record<string, unknown>;
+-    if (Object.keys(projection).sort().join(",") !== "permissions,tenant_id" || projection.tenant_id !== expectedTenant
++    if (Object.keys(projection).sort().join(",") !== "default_timezone,permissions,tenant_id" || projection.tenant_id !== expectedTenant
++      || !isIanaTimezone(projection.default_timezone)
+       || !projection.permissions || typeof projection.permissions !== "object" || Array.isArray(projection.permissions)) return null;
+     if (Object.keys(projection.permissions).some((code) => managedCodes.has(code))) return null;
+   }
+--- a/apps/frontend/src/i18n/es.ts
++++ b/apps/frontend/src/i18n/es.ts
+@@ -13,6 +13,12 @@
+ } as const;
+ 
+ export const uiText = {
++  temporal: {
++    contextPending: "pendiente de contexto de zona horaria de la empresa.",
++    instantPlaceholder: "AAAA-MM-DDTHH:mm:ss±HH:mm",
++    instantGuidance: "Indica fecha, hora y desfase explícito válido para la zona de la empresa, o un instante UTC terminado en Z.",
++    invalidInstant: "La fecha y hora necesitan un instante inequívoco válido. Revisa el desfase y la transición de horario de verano."
++  },
+   references: {
+     messages: {
+       NO_RECORDS: "No hay registros disponibles en este contexto.",
+--- a/apps/frontend/src/structured-reference-fields.tsx
++++ b/apps/frontend/src/structured-reference-fields.tsx
+@@ -4,6 +4,8 @@
+ import {BusinessReferenceSelect,ContractVocabularySelect,ControlVersionSelect,EvidenceVersionSelect,EntityReferenceSelect,ReferenceState} from "./reference-selectors.js";
+ import {fieldLabel} from "./i18n/display-text.js";
+ import {readBusinessReferences,type ReferenceEntity} from "./reference-read.js";
++import {TenantTimezoneContext,TenantInstantPreview,tenantInstantToUtc} from "./tenant-timezone.js";
++import {uiText} from "./i18n/es.js";
+ type Row=Record<string,unknown>;
+ export function TypedReferenceField({api,field,form,value,onChange}:{api:ApiClient;field:string;form:Record<string,string>;value:string;onChange(value:string):void}) {
+  const entities:Record<string,ReferenceEntity>={requirement_applicability_id:"applicability",control_id:"control",requirement_assessment_id:"requirementAssessment",control_assessment_id:"controlAssessment",assurance_test_id:"assuranceTest",evidence_request_id:"evidenceRequest",issue_id:"issue",business_owner_subject_id:"subject",scope_subject_id:"subject"};
+@@ -22,6 +24,8 @@
+ const sampleFields=["sample_code","population_count","sample_count","selection_method","sample_period_start","sample_period_end","result_status"];
+ /** Structured editing of published request arrays. JSON is transport only, never a user input. */
+ export function StructuredCollectionEditor({api,kind,value,onChange}:{api:ApiClient;kind:"items"|"links"|"samples";value:string;onChange(value:string):void}) {
++ const timezone=React.useContext(TenantTimezoneContext);
++ const temporalId=React.useId();
+  const records:Row[]=value?JSON.parse(value) as Row[]:[];
+  const change=(index:number,field:string,next:unknown)=>{const copy=records.map(row=>({...row}));if(next==="" && !linkTargets.includes(field))delete copy[index]![field];else copy[index]![field]=next;onChange(JSON.stringify(copy));};
+  const fields=kind==="items"?soaFields:kind==="samples"?sampleFields:[];
+@@ -32,7 +36,12 @@
+  if(field==="tenant_control_version_id")return <ControlVersionSelect key={field} api={api} ownership="tenant" value={String(record[field]??"")} onParentControlChange={id=>{const copy=records.map(row=>({...row}));if(id)copy[index]!.tenant_control_id=id;else delete copy[index]!.tenant_control_id;delete copy[index]!.tenant_control_version_id;onChange(JSON.stringify(copy));}} onChange={v=>change(index,field,v)}/>;
+  if(field==="reference_control_version_id")return <ControlVersionSelect key={field} api={api} value={String(record[field]??"")} onChange={v=>change(index,field,v)}/>;
+  const numeric=["population_count","sample_count"].includes(field);
+- if(field.startsWith("sample_period_"))return <p key={field} className="form-guidance">{fieldLabel(field)}: pendiente de contexto de zona horaria de la empresa.</p>;
++ if(field.startsWith("sample_period_")) {
++  if(!timezone)return <p key={field} className="form-guidance">{fieldLabel(field)}: {uiText.temporal.contextPending}</p>;
++  const raw=String(record[field]??"");const invalid=!!raw&&!tenantInstantToUtc(raw,timezone);
++  const descriptionId=`${temporalId}-${index}-${field}`;
++  return <label key={field}>{fieldLabel(field)}<input type="text" value={raw} aria-invalid={invalid||undefined} aria-describedby={`${descriptionId}${invalid?` ${descriptionId}-error`:""}`} placeholder={uiText.temporal.instantPlaceholder} onChange={e=>change(index,field,e.target.value)}/><span id={descriptionId} className="form-guidance">{uiText.temporal.instantGuidance} · {timezone}</span>{invalid?<span id={`${descriptionId}-error`} role="alert" className="form-error">{uiText.temporal.invalidInstant}</span>:<TenantInstantPreview value={raw}/>}</label>;
++ }
+  const numericInvalid=numeric&&record[field]!==undefined&&typeof record[field]!=="number";
+  return <label key={field}>{fieldLabel(field)}<input type={numeric?"number":"text"} aria-invalid={numericInvalid||undefined} min={numeric?0:undefined} step={numeric?1:undefined} value={String(record[field]??"")} onChange={e=>{const raw=e.target.value;const parsed=Number(raw);change(index,field,raw===""?"":numeric&&/^\d+$/.test(raw)&&Number.isSafeInteger(parsed)?parsed:raw);}}/>{numericInvalid&&<span role="alert" className="form-error">Ingresa un número entero representable sin pérdida de precisión.</span>}</label>;
+  })}<button type="button" className="button secondary" onClick={()=>onChange(JSON.stringify(records.filter((_,i)=>i!==index)))}>Quitar elemento</button></fieldset>)}<button type="button" className="button secondary" onClick={()=>onChange(JSON.stringify([...records,{}]))}>Agregar elemento</button></fieldset>;
+--- a/apps/frontend/src/tenant-onboarding.test.tsx
++++ b/apps/frontend/src/tenant-onboarding.test.tsx
+@@ -6,7 +6,7 @@
+ import source from "./tenant-onboarding.tsx?raw";
+ const tenant = "tenant-fixture", person = "person-fixture", memberId = "membership-fixture";
+ const identity = { user_identity_id: person, display_name: "Persona controlada", provider_display: "Proveedor controlado", lifecycle_state: "active" as const };
+-const projection = (codes: readonly string[], id = tenant): CurrentPrincipalAuthorization => ({ evaluated_at: new Date().toISOString(), platform_permissions: [], tenant_permissions: { tenant_id: id, permissions: Object.fromEntries(codes.map(code => [code, [{ scope_kind: "tenant" }]])) } });
++const projection = (codes: readonly string[], id = tenant): CurrentPrincipalAuthorization => ({ evaluated_at: new Date().toISOString(), platform_permissions: [], tenant_permissions: { tenant_id: id, default_timezone: "Europe/Berlin", permissions: Object.fromEntries(codes.map(code => [code, [{ scope_kind: "tenant" }]])) } });
+ const fakeApi = (functions: Record<string, unknown>) => functions as unknown as ApiClient;
+ const page = (items: unknown[], cursor: string | null = null) => ({ items, page: { has_more: cursor !== null, next_cursor: cursor } });
+ afterEach(() => vi.restoreAllMocks());
+--- a/apps/frontend/src/tenant-onboarding.tsx
++++ b/apps/frontend/src/tenant-onboarding.tsx
+@@ -1,5 +1,6 @@
+ import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+ import type { CurrentPrincipalAuthorization } from "@tcdx-grc/contracts";
++import { isIanaTimezone } from "@tcdx-grc/contracts";
+ import { ApiClient, ApiProblem } from "./api-client.js";
+ import { ManagedIdentityWorkspace } from "./managed-identity.js";
+ 
+@@ -166,7 +167,7 @@
+     {open && <section className="data-card onboarding-wizard" aria-labelledby="onboarding-title">
+       <h2 ref={title} tabIndex={-1} id="onboarding-title">{["Datos de empresa", "Administrador inicial", "Resumen", "Resultado"][step]}</h2>
+       <ol className="onboarding-steps" aria-label="Pasos de creación"><li aria-current={step === 0 ? "step" : undefined}>Datos de empresa</li><li aria-current={step === 1 ? "step" : undefined}>Administrador inicial</li><li aria-current={step === 2 ? "step" : undefined}>Resumen</li><li aria-current={step === 3 ? "step" : undefined}>Resultado</li></ol>
+-      {step === 0 && <form className="admin-form" onSubmit={e => { e.preventDefault(); try { new Intl.DateTimeFormat("es", { timeZone: company.default_timezone }); setMessage(""); setStep(1); } catch { setMessage("Ingresa una zona horaria IANA válida."); } }} aria-describedby={message ? "onboarding-feedback" : undefined}>
++      {step === 0 && <form className="admin-form" onSubmit={e => { e.preventDefault(); if (isIanaTimezone(company.default_timezone)) { setMessage(""); setStep(1); } else { setMessage("Ingresa una zona horaria IANA válida."); } }} aria-describedby={message ? "onboarding-feedback" : undefined}>
+         {([["tenant_code", "Código de empresa"], ["legal_name", "Razón social"], ["display_name", "Nombre visible de empresa"], ["default_timezone", "Zona horaria IANA"]] as const).map(([field, label]) => <label key={field}>{label}<input required value={company[field]} maxLength={field === "tenant_code" || field === "default_timezone" ? 64 : undefined} onChange={e => setCompany(current => ({ ...current, [field]: e.target.value }))}/></label>)}
+         <button className="button primary" type="submit">Continuar</button>
+       </form>}
+--- a/docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml
++++ b/docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml
+@@ -5262,9 +5262,15 @@
+     CurrentPrincipalTenantPermissions:
+       type: object
+       additionalProperties: false
+-      required: [tenant_id, permissions]
++      required: [tenant_id, permissions, default_timezone]
+       properties:
+         tenant_id: { $ref: '#/components/schemas/UuidV7' }
++        default_timezone:
++          type: string
++          minLength: 1
++          maxLength: 64
++          format: iana-time-zone
++          description: "Own selected active tenant's persisted IANA zone, read in the authorization snapshot; ephemeral presentation context, never permission authority. STEP6A3 D3 approved 2026-10-13."
+         permissions:
+           type: object
+           propertyNames:
+--- a/docs/executable-contracts/23_FRONTEND_AUTHENTICATION_AUTHORIZATION_PROJECTIONS.md
++++ b/docs/executable-contracts/23_FRONTEND_AUTHENTICATION_AUTHORIZATION_PROJECTIONS.md
+@@ -255,3 +255,7 @@
+ ## Managed Identity tenant onboarding E2E — 2026-10-07
+ 
+ Executable26 adds presentation binding platform.tenant_user.onboard with CORE_PLATFORM/platform only. Fresh effective Platform projection controls central tenant-user onboarding. Tenant projections, role names, email and username never authorize it; backend revalidates. Existing D3-A membershipRoleAssign/revoke scopes remain unchanged.
++
++## STEP6A3 D3 successor delta — 2026-10-13
++
++Contract33_PHASE6A3_TENANT_TIMEZONE_PROJECTION.md contains the exact PO-approved delta SHA2566205faaafa3cb0cbd4d0cf34cd9c8343ccca64392e638a833e10fa7db8c73375. After its applicable gates and local publication metadata, selected tenant_permissions is the closed tuple {tenant_id,permissions,default_timezone}; all other semantics above are preserved. Backend reads the persisted own tenant zone in the same read-only repeatable-read snapshot. This append supersedes only the former tuple and its temporal presentation consumers. No extra Permission, grant, physical schema or read audit. Historical MI7A authority remains recorded; external rollout is not authorized.
+--- a/e2e/core-grc-ui.spec.ts
++++ b/e2e/core-grc-ui.spec.ts
+@@ -40,7 +40,7 @@
+     }
+     if (url.pathname.endsWith("/auth/me/authorization")) {
+       await route.fulfill({ json: { evaluated_at: new Date().toISOString(), platform_permissions: platformRoles.includes("PLATFORM_ADMIN") ? ["platform.tenant.read", "platform.tenant.create", "platform.user_identity.read", "platform.membership.read", "platform.membership_invitation.read", "platform.membership_invitation.create", "platform.membership_invitation.update", "platform.role.read", "platform.role.assign"] : [],
+-        tenant_permissions: { tenant_id: tenantId, permissions: roles.includes("TENANT_ADMIN") ? Object.fromEntries(["platform.membership.read", "platform.membership.create", "platform.role.read", "platform.role.assign", "platform.user_identity.read"].map(code => [code, [{scope_kind:"tenant"}]])) : {} } } });
++        tenant_permissions: { tenant_id: tenantId, default_timezone: "Europe/Berlin", permissions: roles.includes("TENANT_ADMIN") ? Object.fromEntries(["platform.membership.read", "platform.membership.create", "platform.role.read", "platform.role.assign", "platform.user_identity.read"].map(code => [code, [{scope_kind:"tenant"}]])) : {} } } });
+       return;
+     }
+     if (route.request().method() === "POST") {
+@@ -137,6 +137,36 @@
+ 
+ test.beforeAll(async () => { await mkdir(evidenceDirectory, { recursive: true }); });
+ test.beforeEach(({page})=>{page.on("pageerror",error=>console.error("BROWSER_ERROR",error.message));});
++
++test("D3 IANA rejects a DST gap and serializes an explicit overlapping instant in UTC", async ({ page }) => {
++  await mockRuntime(page);
++  const item = { assurance_test_id: tenantId, row_version: 2, test_code: "IANA-LOCAL-SIMULATED", lifecycle_state: "in_progress" };
++  let body: Record<string, unknown> | undefined;
++  await page.route("**/api/v1/assurance-tests**", async route => {
++    if (route.request().method() === "POST") {
++      body = route.request().postDataJSON();
++      await route.fulfill({ status: 202, json: { operation_id: "assuranceTestExecute", status: "completed", result: {} } });
++    } else await route.fulfill({ json: new URL(route.request().url()).pathname === "/api/v1/assurance-tests" ? { items: [item], page: { has_more: false, next_cursor: null } } : item });
++  });
++  await page.goto("/pruebas");
++  await page.getByRole("button", { name: "Ver detalle" }).click();
++  await page.getByRole("button", { name: "Agregar elemento" }).click();
++  const period = page.getByLabel(/^Inicio del período de muestra/);
++  await expect(period).toBeVisible();
++  await period.fill("2026-03-29T02:30:00+01:00");
++  await expect(period).toHaveAttribute("aria-invalid", "true");
++  await period.fill("2026-10-25T02:30:00+02:00");
++  await expect(period).not.toHaveAttribute("aria-invalid", "true");
++  await expect(page.getByText(/Europe\/Berlin/).first()).toBeVisible();
++  await page.getByLabel("Código de muestra", { exact: true }).fill("SIMULATED-SHAPE");
++  await page.getByLabel("Tamaño de la muestra", { exact: true }).fill("1");
++  await page.getByLabel("Método de selección", { exact: true }).selectOption({ index: 1 });
++  for (const select of await page.locator('.workflow-action > label select').all()) await select.selectOption({ index: 1 });
++  await page.screenshot({ path: `${evidenceDirectory}/r6-iana-${test.info().project.name}.png`, fullPage: true });
++  await page.getByRole("button", { name: "Ejecutar", exact: true }).click();
++  await expect.poll(() => body).toBeDefined();
++  expect((body!.samples as Array<Record<string, unknown>>)[0]!.sample_period_start).toBe("2026-10-25T00:30:00Z");
++});
+ 
+ test("Control base selector resolves an authorized ControlVersion without a human UUID field", async ({ page }) => {
+   await mockRuntime(page);
+--- a/packages/contracts/src/frontend-auth-projections.ts
++++ b/packages/contracts/src/frontend-auth-projections.ts
+@@ -28,6 +28,7 @@
+   platform_permissions: string[];
+   tenant_permissions: null | {
+     tenant_id: string;
++    default_timezone: string;
+     permissions: Record<string, TenantPermissionScope[]>;
+   };
+ };
+--- a/packages/contracts/src/index.ts
++++ b/packages/contracts/src/index.ts
+@@ -1,4 +1,5 @@
+ export type FieldError = { field: string; code: string; message: string };
++export { isIanaTimezone } from "./iana-timezone.js";
+ 
+ export type {
+   AuthenticationProvider,
+--- a/packages/contracts/src/mi7a-frontend-projections.test.ts
++++ b/packages/contracts/src/mi7a-frontend-projections.test.ts
+@@ -205,7 +205,7 @@
+   it("keeps denied platform access separate from tenant permission grants and preserves scope references", () => {
+     expect(authorizationValidator(authorizationFixture())).toBe(true);
+     const scopes: TenantPermissionScope[] = [{ scope_kind: "tenant" }, { scope_kind: "organizational_unit", organizational_unit_id: tenantId }, { scope_kind: "process", process_id: tenantId }, { scope_kind: "service", service_id: tenantId }, { scope_kind: "audit_engagement", audit_id: tenantId }, { scope_kind: "assigned_object" }, { scope_kind: "owned_object" }];
+-    const tenantOnly: CurrentPrincipalAuthorization = { ...authorizationFixture(), tenant_permissions: { tenant_id: tenantId, permissions: { "controls.control.read": scopes } } };
++    const tenantOnly: CurrentPrincipalAuthorization = { ...authorizationFixture(), tenant_permissions: { tenant_id: tenantId, default_timezone: "Europe/Berlin", permissions: { "controls.control.read": scopes } } };
+     expect(authorizationValidator(tenantOnly)).toBe(true);
+     expect(tenantOnly.platform_permissions).toEqual([]);
+     expect(authorizationValidator({ ...authorizationFixture(), platform_permissions: miPermissions })).toBe(true);
+@@ -213,7 +213,7 @@
+   });
+ 
+   it.each(miPermissions)("rejects platform-only MI permission %s in a tenant projection", (permission) => {
+-    expect(authorizationValidator({ ...authorizationFixture(), tenant_permissions: { tenant_id: tenantId, permissions: { [permission]: [{ scope_kind: "tenant" }] } } })).toBe(false);
++    expect(authorizationValidator({ ...authorizationFixture(), tenant_permissions: { tenant_id: tenantId, default_timezone: "Europe/Berlin", permissions: { [permission]: [{ scope_kind: "tenant" }] } } })).toBe(false);
+   });
+ 
+   it("rejects scope widening, missing/foreign fields, duplicate/empty scopes and role names as permissions", () => {
+@@ -224,7 +224,7 @@
+     expect(scopeValidator({ scope_kind: "owned_object", object_id: tenantId })).toBe(false);
+     expect(scopeValidator({ scope_kind: "service", service_id: "invalid" })).toBe(false);
+     for (const permissions of [{ "controls.control.read": [] }, { "controls.control.read": [{ scope_kind: "tenant" }, { scope_kind: "tenant" }] }, { PLATFORM_ADMIN: [{ scope_kind: "tenant" }] }]) {
+-      expect(authorizationValidator({ ...authorizationFixture(), tenant_permissions: { tenant_id: tenantId, permissions } })).toBe(false);
++      expect(authorizationValidator({ ...authorizationFixture(), tenant_permissions: { tenant_id: tenantId, default_timezone: "Europe/Berlin", permissions } })).toBe(false);
+     }
+     expect(authorizationValidator({ ...authorizationFixture(), platform_permissions: [miPermissions[0], miPermissions[0]] })).toBe(false);
+     expect(authorizationValidator({ ...authorizationFixture(), platform_permissions: ["PLATFORM_ADMIN"] })).toBe(false);
+--- a/packages/contracts/src/testing/schema-validator.ts
++++ b/packages/contracts/src/testing/schema-validator.ts
+@@ -1,6 +1,7 @@
+ import { Ajv, type AnySchemaObject } from "ajv";
+ import { Ajv2020 } from "ajv/dist/2020.js";
+ import addFormats from "ajv-formats";
++import { isIanaTimezone } from "../iana-timezone.js";
+ 
+ // Test infrastructure only. Published schemas remain byte-for-byte intact.
+ export function contractSchemaValidator(schemas: Record<string, AnySchemaObject>) {
+@@ -10,6 +11,7 @@
+   };
+   for (const compiler of Object.values(compilers)) {
+     (addFormats as unknown as (instance: Ajv | Ajv2020) => void)(compiler);
++    compiler.addFormat("iana-time-zone", isIanaTimezone);
+     compiler.addSchema({ $id: "urn:tcdx:test:openapi", components: { schemas } });
+   }
+   const compilerFor = (name: string) => {
+--- a/scripts/foundations/verify-tenant-isolation.ts
++++ b/scripts/foundations/verify-tenant-isolation.ts
+@@ -43,7 +43,7 @@
+   await client.query("INSERT INTO iam.tenant_memberships (tenant_membership_id,tenant_id,user_identity_id,membership_state,joined_at) VALUES ($1,$2,$3,'active',CURRENT_TIMESTAMP),($4,$5,$6,'active',CURRENT_TIMESTAMP)", [membershipA, tenantA, userA, membershipB, tenantB, userB]);
+   await client.query("INSERT INTO iam.roles (role_id,ownership_class,tenant_id,role_code,name,is_baseline,lifecycle_state) VALUES ($1,'TENANT_OWNED',$2,'CUSTOM_A','Custom A',false,'published'),($3,'TENANT_OWNED',$4,'CUSTOM_B','Custom B',false,'published')", [roleA, tenantA, roleB, tenantB]);
+   await client.query("INSERT INTO org.subjects (subject_id,tenant_id,subject_type,canonical_key,display_name,lifecycle_state,effective_from,metadata) VALUES ($1,$2,'process','subject-b','Subject B','active',CURRENT_TIMESTAMP,'{}'::jsonb)", [subjectB, tenantB]);
+-  await client.query("INSERT INTO config.configuration_definitions (configuration_definition_id,ownership_class,tenant_id,configuration_code,version_number,value_type,tenant_overridable,object_overridable,owner_domain,lifecycle_state,effective_from,effective_to,published_at) VALUES ($1,'PLATFORM_CONTROL',NULL,'PHASE3_TEST',1,'text',true,true,'platform','published',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP + interval '1 year',CURRENT_TIMESTAMP)", [configurationDefinition]);
++  await client.query("INSERT INTO config.configuration_definitions (configuration_definition_id,ownership_class,tenant_id,configuration_code,version_number,value_type,tenant_overridable,object_overridable,owner_domain,lifecycle_state,effective_from,effective_to,published_at,default_text_value) VALUES ($1,'PLATFORM_CONTROL',NULL,'PHASE3_TEST',1,'text',true,true,'platform','published',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP + interval '1 year',CURRENT_TIMESTAMP,'isolation fixture')", [configurationDefinition]);
+   await client.query("INSERT INTO audit.audits (audit_id,tenant_id,audit_code,title,lifecycle_state) VALUES ($1,$2,'AUDIT-TENANT-A','Audit tenant A','draft')", [auditA, tenantA]);
+ 
+   await expectDatabaseRejection(
+--- /dev/null
++++ b/packages/contracts/src/iana-timezone.ts
+@@ -0,0 +1,8 @@
++/** STEP6A3 D3: named IANA identifiers, including database links such as UTC.
++ * Offset literals are not tenant IANA identifiers. No normalization or default.
++ */
++export function isIanaTimezone(value: unknown): value is string {
++  if (typeof value !== "string" || value.length < 1 || value.length > 64 || /^[+-]/.test(value)) return false;
++  try { new Intl.DateTimeFormat("en", { timeZone: value }); return true; }
++  catch { return false; }
++}
+--- /dev/null
++++ b/packages/contracts/src/phase6a3-iana-contract.test.ts
+@@ -0,0 +1,23 @@
++import approvedText from "../../../docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/iana-approved.txt?raw";
++import { parseDocument } from "yaml";
++import { describe, expect, it } from "vitest";
++import { contractSchemaValidator } from "./testing/schema-validator.js";
++import source from "../../../docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml?raw";
++
++const api = parseDocument(source).toJS();
++const validate = contractSchemaValidator(api.components.schemas).compile("CurrentPrincipalTenantPermissions");
++const fixture = { tenant_id: "01900000-0000-7000-8000-000000000001", permissions: {}, default_timezone: "Europe/Berlin" };
++describe("exact approved STEP6A3 D3 contract", () => {
++  it("retains the exact approved UTF8 bytes and adds only the required zone field", async () => {
++    const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(approvedText));
++    expect(Array.from(new Uint8Array(digest), x => x.toString(16).padStart(2, "0")).join("")).toBe("6205faaafa3cb0cbd4d0cf34cd9c8343ccca64392e638a833e10fa7db8c73375");
++    expect(Object.keys(api.components.schemas.CurrentPrincipalTenantPermissions.properties).sort()).toEqual(["default_timezone", "permissions", "tenant_id"]);
++    expect(validate(fixture)).toBe(true);
++    expect(validate({ ...fixture, extra: true })).toBe(false);
++    const { default_timezone: _zone, ...old } = fixture;
++    expect(validate(old)).toBe(false);
++  });
++  it.each([null, "", "+02:00", "Invalid/Timezone", "x".repeat(65)])("denies invalid IANA shape %s", zone => {
++    expect(validate({ ...fixture, default_timezone: zone })).toBe(false);
++  });
++});
+--- /dev/null
++++ b/apps/frontend/src/tenant-timezone.tsx
+@@ -0,0 +1,65 @@
++import React, { createContext, useContext } from "react";
++import { isIanaTimezone, type CurrentPrincipalAuthorization } from "@tcdx-grc/contracts";
++import { uiText } from "./i18n/es.js";
++
++export const TenantTimezoneContext = createContext<string | null>(null);
++
++export function selectedTenantTimezone(projection: CurrentPrincipalAuthorization | null, tenantId: string | null): string | null {
++  const own = projection?.tenant_permissions;
++  return tenantId && own?.tenant_id === tenantId && isIanaTimezone(own.default_timezone) ? own.default_timezone : null;
++}
++
++/** Require an explicit instant; never pick an offset for a local wall clock.
++ * A supplied local offset must round-trip in the tenant zone, including DST.
++ * Fractions are retained lexically instead of silently rounding to milliseconds.
++ */
++export function tenantInstantToUtc(value: string, zone: string | null): string | null {
++  if (!isIanaTimezone(zone)) return null;
++  const m = /^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2}):(\d{2})(\.\d+)?(Z|[+-]\d{2}:\d{2})$/.exec(value);
++  if (!m || m[6] === "-00:00") return null;
++  const wall = `${m[1]}T${m[2]}:${m[3]}:${m[4]}`;
++  const naive = new Date(`${wall}Z`);
++  if (!Number.isFinite(naive.getTime()) || naive.toISOString().slice(0, 19) !== wall) return null;
++  const offset = m[6]!;
++  const hours = offset === "Z" ? 0 : Number(offset.slice(1, 3));
++  const minutes = offset === "Z" ? 0 : Number(offset.slice(4, 6));
++  if (hours > 23 || minutes > 59) return null;
++  const delta = (offset.startsWith("-") ? -1 : 1) * (hours * 60 + minutes);
++  const instant = new Date(naive.getTime() - delta * 60_000);
++  if (!Number.isFinite(instant.getTime())) return null;
++  if (offset !== "Z") {
++    const parts = new Intl.DateTimeFormat("en-CA", { timeZone: zone, calendar: "iso8601", numberingSystem: "latn",
++      year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23" })
++      .formatToParts(instant);
++    const p = Object.fromEntries(parts.map(x => [x.type, x.value]));
++    if (`${p.year!.padStart(4, "0")}-${p.month}-${p.day}T${p.hour}:${p.minute}:${p.second}` !== wall) return null;
++  }
++  return `${instant.toISOString().slice(0, 19)}${m[5] ?? ""}Z`;
++}
++
++export function formatTenantInstant(value: string, zone: string | null): string | null {
++  const utc = tenantInstantToUtc(value, zone);
++  if (!utc || !zone) return null;
++  return new Intl.DateTimeFormat("es", { timeZone: zone, dateStyle: "medium", timeStyle: "long" }).format(new Date(utc));
++}
++
++export function normalizeSamplePeriods(samples: unknown, zone: string | null): unknown {
++  if (!Array.isArray(samples)) throw new Error("INVALID_SAMPLE_PERIOD");
++  return samples.map(row => {
++    if (!row || typeof row !== "object" || Array.isArray(row)) throw new Error("INVALID_SAMPLE_PERIOD");
++    const next = { ...row } as Record<string, unknown>;
++    for (const field of ["sample_period_start", "sample_period_end"]) {
++      if (next[field] === undefined) continue;
++      const utc = typeof next[field] === "string" ? tenantInstantToUtc(next[field], zone) : null;
++      if (!utc) throw new Error("INVALID_SAMPLE_PERIOD");
++      next[field] = utc;
++    }
++    return next;
++  });
++}
++
++export function TenantInstantPreview({ value }: { value: string }) {
++  const zone = useContext(TenantTimezoneContext);
++  const display = formatTenantInstant(value, zone);
++  return display ? <span>{display} · {zone}</span> : value ? <span>{value.endsWith("Z") ? `${value} · ` : ""}{uiText.temporal.contextPending}</span> : null;
++}
+--- /dev/null
++++ b/apps/frontend/src/tenant-timezone.test.tsx
+@@ -0,0 +1,49 @@
++import React from "react";
++import { renderToStaticMarkup } from "react-dom/server";
++import { describe, it, expect } from "vitest";
++import { parseCurrentAuthorization } from "./frontend-auth-projections.js";
++import { TenantTimezoneContext, TenantInstantPreview, selectedTenantTimezone, tenantInstantToUtc, normalizeSamplePeriods } from "./tenant-timezone.js";
++
++const tenant = "01900000-0000-7000-8000-000000000001";
++const projection = (zone: unknown) => ({ evaluated_at: "2026-10-13T12:00:00Z", platform_permissions: [],
++  tenant_permissions: { tenant_id: tenant, default_timezone: zone, permissions: {} } });
++
++describe("STEP6A3 D3 tenant temporal context", () => {
++  it("accepts a persisted zone with zero grants without inventing Tenant.read", () => {
++    const own = parseCurrentAuthorization(projection("Pacific/Auckland"), tenant);
++    expect(own?.tenant_permissions?.permissions).toEqual({});
++    expect(selectedTenantTimezone(own, tenant)).toBe("Pacific/Auckland");
++    expect(selectedTenantTimezone(own, "01900000-0000-7000-8000-000000000002")).toBeNull();
++    expect(selectedTenantTimezone(own, null)).toBeNull();
++    expect(selectedTenantTimezone(null, tenant)).toBeNull();
++  });
++  it.each([undefined, null, "", "+02:00", "invalid/zone", "x".repeat(65)])("rejects malformed or missing zone %s", zone => {
++    expect(parseCurrentAuthorization(projection(zone), tenant)).toBeNull();
++  });
++  it("rejects ambiguous and nonexistent local clocks without an explicit instant", () => {
++    expect(tenantInstantToUtc("2026-03-29T02:30:00", "Europe/Berlin")).toBeNull();
++    expect(tenantInstantToUtc("2026-03-29T02:30:00+01:00", "Europe/Berlin")).toBeNull();
++    expect(tenantInstantToUtc("2026-03-29T02:30:00+02:00", "Europe/Berlin")).toBeNull();
++    expect(tenantInstantToUtc("2026-10-25T02:30:00", "Europe/Berlin")).toBeNull();
++    expect(tenantInstantToUtc("2026-10-25T02:30:00+02:00", "Europe/Berlin")).toBe("2026-10-25T00:30:00Z");
++    expect(tenantInstantToUtc("2026-10-25T02:30:00+01:00", "Europe/Berlin")).toBe("2026-10-25T01:30:00Z");
++  });
++  it("preserves fractional precision and validates nonhour offsets/calendar/unknown offset", () => {
++    expect(tenantInstantToUtc("2026-10-13T12:00:00.123456+05:45", "Asia/Kathmandu")).toBe("2026-10-13T06:15:00.123456Z");
++    expect(tenantInstantToUtc("2026-02-30T12:00:00Z", "UTC")).toBeNull();
++    expect(tenantInstantToUtc("2026-10-13T12:00:00-00:00", "UTC")).toBeNull();
++    expect(tenantInstantToUtc("2026-10-13T12:00:00+24:00", "UTC")).toBeNull();
++    expect(tenantInstantToUtc("2026-10-13T12:00:00Z", null)).toBeNull();
++  });
++  it("shows the tenant zone and cannot serialize periods after context loss", () => {
++    const samples = [{ sample_code: "shape-only", sample_period_start: "2026-10-25T02:30:00+02:00" }];
++    expect(normalizeSamplePeriods(samples, "Europe/Berlin")).toEqual([{ sample_code: "shape-only", sample_period_start: "2026-10-25T00:30:00Z" }]);
++    expect(() => normalizeSamplePeriods(samples, null)).toThrow("INVALID_SAMPLE_PERIOD");
++    expect(normalizeSamplePeriods([{ sample_code: "shape-only" }], null)).toEqual([{ sample_code: "shape-only" }]);
++    const markup = renderToStaticMarkup(<TenantTimezoneContext.Provider value="Europe/Berlin"><TenantInstantPreview value="2026-10-25T00:30:00Z"/></TenantTimezoneContext.Provider>);
++    expect(markup).toContain("Europe/Berlin");
++    const lost = renderToStaticMarkup(<TenantTimezoneContext.Provider value={null}><TenantInstantPreview value="2026-10-25T00:30:00Z"/></TenantTimezoneContext.Provider>);
++    expect(lost).not.toContain("Europe/Berlin");
++    expect(lost).toContain("pendiente");
++  });
++});

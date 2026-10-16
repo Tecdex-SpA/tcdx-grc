@@ -1,3 +1,5 @@
+> CANDIDATE_NOT_EFFECTIVE: snapshot sucesor INITIAL_SOURCE; texto histórico preservado, requiere publicación competente.
+
 # Audit event catalog
 
 | Campo | Valor |
@@ -106,3 +108,19 @@ No new outbox event. Existing INTERNAL TENANT_BOOTSTRAP keeps audit.iam.applicat
 ## Approved Phase 5 methodology amendment
 
 See [27 — canonical methodology binding](27_PHASE5_METHODOLOGY_BINDING.md) and the explicit human architecture approval. Migration `20261007000200` produces 30 migrations / 237 physical tables / 172 permissions. Seeds: separate Compliance and Control Effectiveness version 1, two compatible FormulaDefinitions, two narrowly scoped read permissions; publication audit `audit.compliance.methodology.publish.v1` and `audit.controls.methodology.publish.v1`. No historical migration or immutable rector file is changed.
+
+
+## STEP6A.3 — aprobación macro R2
+
+[31](31_PHASE6A3_RESIDUAL_DELTAS_R2.md) publica audit.iam.role_permission.publish.v1 para la ceremonia interna phase6a3RolePermissionPublication y el perfil aditivo CONTRACT_VOCABULARY_PROVENANCE_V1 del audit material existente de las escrituras26. R2manifestSHA 2dd41de880d445963c5c74917751d58490c63d7364ec1ad2179bbe39c5187ed8. No aumenta el catálogo materializado en QA ni crea endpoint/outbox. Actor de publicación: ServicePrincipal PLATFORM_CONTROL activo real, no seed ficticio; aprobación humana y actor de ejecución son distintos conceptos. Publicación reforzada atomiza adopción y AuditEvent. Procedencia de vocabulario se reconstruye desde manifestSHA y IDs/versiones reales de raíz/hijos; la identidad inmutable TI es su revisión canónica y no se inventa row_version para esos hijos. Ausencia histórica del perfil sigue explícita, sin backfill.
+
+## STEP_6A3 C-04W — delta de auditoría v1.10
+
+El contrato de operaciones 03 y OpenAPI 02 vincula exactamente siete códigos nuevos: `audit.privacy.retention_policy.submit_for_review.v1`, `audit.privacy.retention_policy_applicability.create.v1`, `audit.privacy.retention_policy_applicability.submit_for_review.v1`, `audit.privacy.retention_policy_applicability.review.v1`, `audit.privacy.retention_policy_applicability.approve.v1`, `audit.privacy.retention_policy_applicability.publish.v1` y `audit.privacy.retention_policy.legal_hold.release.v1`. Cada mutación produce un único AuditEvent material en su transacción; el levantamiento conserva razón, actor Legal Reviewer, tenant, aplicabilidad, estado previo y resultante, hora PostgreSQL y fuente opcional. Las lecturas nuevas no generan AuditEvent material. Los conteos de cobertura anteriores describen el catálogo histórico; no se promueven hasta la publicación y verificación QA de estos códigos.
+
+
+## INITIAL_SOURCE v1.11 — delta candidato
+
+Se propone retentionApplicabilityBindInitialSource en POST /api/v1/retention-policy-applicabilities/{id}:bind-initial-source. Body cerrado: source_evidence_version_id, source_clause_ref no vacío, effective_from real; effective_to opcional posterior a from. X-TCDX-Tenant-Id, bearer humano, Idempotency-Key e If-Match fuerte obligatorios; expected_version no se acepta en body HTTP. COMMIT devuelve200. Source approved/vigente/scan-PASS y EvidenceReview independiente, cadena idéntica y draft del custodio se revalidan transaccionalmente. Se actualizan sólo source/cláusula/intervalo/row_version; AuditEvent único audit.privacy.retention_policy_applicability.bind_initial_source.v1, before/after mínimos, tenant/actor/correlation sin blob/secreto. Sin domain event/outbox nuevo; replay reautoriza sin versión/audit nuevos; payload distinto, estado/CAS conflictivo:409; falta de autoridad:403; cadena/source/intervalo inválidos:422. Falla de auditoría revierte el cambio.
+
+Los AuditEvent existentes de upload/finalize/Evidence permanecen únicos por comando. El nuevo código de bind describe actualización draft y no publicación jurídica; no existe segundo evento lifecycle para la misma escritura.

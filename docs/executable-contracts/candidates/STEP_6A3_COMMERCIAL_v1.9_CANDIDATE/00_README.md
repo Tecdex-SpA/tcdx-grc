@@ -1,0 +1,7 @@
+# Contratos ejecutables comerciales — candidato sin publicar
+
+Los archivos 03/07/08/12/17/18 copiados desde el paquete aprobado conservan bytes exactos. `02_OPENAPI_COMMERCIAL_MERGED_CANDIDATE.json` es una derivación nueva para revisión: integra las cuatro operaciones del artefacto 07 en una copia JSON completa del OpenAPI activo; preserva las operaciones existentes y el HTTP 202 de `subscriptionCreate`. `materialize-openapi.mjs` reproduce la derivación y verifica colisiones. El cursor comercial tiene nombre de componente distinto para conservar su máximo 2048 sin alterar el cursor activo; parámetros base semánticamente idénticos se reutilizan. El servidor público candidato es únicamente `https://grc.tecdex.net/api/v1`.
+
+Esta derivación, catálogo de Permission/grants, ObjectPolicy, registry, audit/event/idempotency, seed/publication manifest y contratos tipados necesitan aprobación exacta y publicación propia antes de código. Los tres grants son candidatos, no filas IAM. Los schemas 17/18 describen estructura de un manifest comercial futuro; no aportan IDs, cantidades ni actor real. No se publica una cuota ni una versión de plan por copiar estos archivos.
+
+`docs/executable-contracts/` activo, `packages/contracts/`, backend y frontend siguen sin cambios por este expediente. `EXECUTABLE_CONTRACTS=PASS` para esta ampliación requiere review humano de bytes nuevos y gates técnicos aplicables. Las dependencias legales/metodológicas y aceptación externa de H permanecen separadas.

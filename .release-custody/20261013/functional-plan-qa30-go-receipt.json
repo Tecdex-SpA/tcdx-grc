@@ -1,0 +1,79 @@
+{
+  "decision": "GO",
+  "operator": "tecdex",
+  "human_approval_record": {
+    "role": "Product Owner",
+    "source": "Current user response to exact QA30 functional-plan GO prompt",
+    "response": "Autorizo este GO exacto",
+    "question_id": "call_7yvsD3OklGXSJgyyBEarJrZo",
+    "scope": "Exact backend/frontend image pair, R2-derived corrected driver, 192.168.2.45 and 192.168.2.46, 15-minute immediate window, paired rollback, no DB/IAM/DNS/Caddy mutation",
+    "window_clock": "Conservative start one minute before receipt generation; expiry within requested immediate 15-minute window"
+  },
+  "driver_sha256": "34262bdd63addea3adea8f46bbaa279b178245f404492525f666cc5b9cf7d4ca",
+  "specs": {
+    "tcdx-grc-backend": {
+      "component": "backend",
+      "host": "tecdex@192.168.2.45",
+      "name": "tcdx-grc-backend",
+      "containerId": "88d54bee4116a182c41d080ec1bf88f9d58e262056af5715f8c643f0846b6062",
+      "oldImage": "sha256:3be791953c806bbb24556526f06adfa73b364f374856a4f8102e5db9521d3cee",
+      "configurationFingerprint": "bb38eaccfde4358078c853c0ef61292468fcb71ffce2760b2fad6dfd7888d71f",
+      "baselineRestartCount": 0,
+      "imageId": "sha256:59479e69ece15ae654498b637a6be5a66f0d4f0a56e00ffbea7c8cb6d3f22b49",
+      "tag": "tcdx-grc-backend:functional-plan-qa30-8da37de",
+      "sourceFingerprint": "61a00c42e139dde629f8be3f371ddeaf564d9fcd5265d4522cf67469a9960887",
+      "tlsRepair": {
+        "caHostFile": "/home/tecdex/.config/tcdx-grc/qa-db-public-20261013.pem",
+        "caContainerFile": "/run/config/qa-db-public.pem",
+        "caSHA256": "0a99469321c1117cdf3154a7e5c5e50dd42f719af7b8b1a647fa0bb55179519b",
+        "databaseHost": "db-tecdex",
+        "databaseAddress": "192.168.2.40",
+        "databaseSSLMode": "require"
+      }
+    },
+    "tcdx-grc-frontend": {
+      "component": "frontend",
+      "host": "tecdex@192.168.2.46",
+      "name": "tcdx-grc-frontend",
+      "containerId": "91dd4933c972f0cdf6107a7f643d179f02d2e420fe7f13187d4b07de2c67765c",
+      "oldImage": "sha256:2936ac99ed0fea65354f4e55f2b9f3d0fe431ab72a5a4f47c97bc31fc0768ab1",
+      "configurationFingerprint": "51b2ede72d576a3e840cb3787d626075820197b4422a8ad4eda038910e44b465",
+      "baselineRestartCount": 0,
+      "imageId": "sha256:461f6605c6dabded45a697d7fea40b534e78faaea9abc1eba678e3e13d117804",
+      "tag": "tcdx-grc-frontend:functional-plan-qa30-8da37de",
+      "sourceFingerprint": "61a00c42e139dde629f8be3f371ddeaf564d9fcd5265d4522cf67469a9960887",
+      "pairBarrier": true
+    }
+  },
+  "authorized_actions": [
+    "park",
+    "deploy",
+    "rollback"
+  ],
+  "gates": {
+    "RELEASE_SCOPE": "PASS",
+    "SECURITY_RUNTIME_TLS": "PASS",
+    "BACKUP_RECOVERY_REFERENCE": "PASS",
+    "ROLLBACK_PAIR": "PASS"
+  },
+  "gate_evidence": [
+    "functional-plan-qa30-package.json",
+    "functional-plan-qa30-operational-specs.json",
+    "functional-qa30-runtime-driver.py",
+    "QA30 read-only custody PASS for both components"
+  ],
+  "window_start_utc": "2026-10-13T20:14:35.835298+00:00",
+  "window_end_utc": "2026-10-13T20:29:35.835298+00:00",
+  "exclusions": [
+    "migrations",
+    "DDL",
+    "DML",
+    "grants",
+    "IAM",
+    "DNS",
+    "Caddy",
+    "other STEP6A3 features",
+    "main"
+  ],
+  "execution": "Transport exact local images; park frontend; deploy backend then frontend; verify TLS, health, public assets; paired rollback on failure"
+}

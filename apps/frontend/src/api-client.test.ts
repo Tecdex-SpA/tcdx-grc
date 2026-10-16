@@ -14,10 +14,22 @@ afterEach(() => {
 });
 
 describe("frontend backend-authoritative session boundary", () => {
+  it("requests the proposed major v2 own projection with the selected context and no v1 fallback", async () => {
+    const tenantId = "01900000-0000-7000-8000-000000000001";
+    const fetcher = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+      expect(String(input)).toBe("https://grc.tecdex.net/api/v2/auth/me/authorization");
+      expect(new Headers(init?.headers).get("x-tcdx-tenant-id")).toBe(tenantId);
+      return new Response(JSON.stringify({ evaluated_at: "2026-10-13T00:00:00Z", platform_permissions: [], tenant_permissions: null }), { status: 200 });
+    });
+    vi.stubGlobal("fetch", fetcher);
+    await new ApiClient("https://grc.tecdex.net", tokens, () => ({ tenantId })).currentAuthorization(tenantId);
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
   it("uses only GRC HTTPS endpoints for file upload and download", async () => {
     const tenantId = "01900000-0000-7000-8000-000000000001";
     const intentId = "01900000-0000-7000-8000-000000000002";
     const fileId = "01900000-0000-7000-8000-000000000003";
+    const applicabilityId = "01900000-0000-7000-8000-000000000005";
     const visited: string[] = [];
     vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
       const url = String(input);
@@ -25,7 +37,10 @@ describe("frontend backend-authoritative session boundary", () => {
       expect(url).toMatch(/^https:\/\/grc\.tecdex\.net\/api\/v1\//);
       expect(new Headers(init?.headers).get("x-tcdx-tenant-id")).toBe(tenantId);
       expect(new Headers(init?.headers).get("authorization")).toBe("Bearer tcdx-token");
-      if (url.endsWith("/files:request-upload")) return new Response(JSON.stringify({ result: { upload_intent_id: intentId, upload_url: `/api/v1/file-upload-intents/${intentId}/content` } }), { status: 202 });
+      if (url.endsWith("/files:request-upload")) {
+        expect(JSON.parse(String(init?.body))).toMatchObject({ retention_policy_applicability_id: applicabilityId });
+        return new Response(JSON.stringify({ result: { upload_intent_id: intentId, upload_url: `/api/v1/file-upload-intents/${intentId}/content` } }), { status: 202 });
+      }
       if (url.endsWith("/content") && init?.method === "PUT") {
         expect(new Headers(init.headers).get("content-type")).toBe("application/octet-stream");
         expect(init.body).toBeInstanceOf(File);
@@ -36,7 +51,7 @@ describe("frontend backend-authoritative session boundary", () => {
     }));
     const api = new ApiClient("https://grc.tecdex.net", tokens, () => ({ tenantId }));
     const file = new File(["%PDF-test"], "safe.pdf", { type: "application/pdf" });
-    await expect(api.uploadEvidenceFile(file, "01900000-0000-7000-8000-000000000004", "confidential", "test provenance")).resolves.toBe(fileId);
+    await expect(api.uploadEvidenceFile(file, "01900000-0000-7000-8000-000000000004", applicabilityId, "confidential", "test provenance")).resolves.toBe(fileId);
     await expect(api.downloadFileObject(fileId)).resolves.toMatchObject({ filename: "safe.pdf" });
     expect(visited).toHaveLength(4);
     expect(visited.join(" ")).not.toContain("minio");

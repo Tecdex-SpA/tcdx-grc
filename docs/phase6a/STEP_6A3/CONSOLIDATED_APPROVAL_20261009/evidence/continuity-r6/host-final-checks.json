@@ -1,0 +1,139 @@
+[
+  {
+    "gate": "typecheck",
+    "command": [
+      "pnpm",
+      "typecheck"
+    ],
+    "at": "2026-10-13T12:41:02.327414+00:00",
+    "duration": 2.059,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/typecheck-final.log",
+    "sha256": "adfa82c0097b47a22d55cf7d6016e046788805862d9d46b149e897e14f180f28"
+  },
+  {
+    "gate": "lint",
+    "command": [
+      "pnpm",
+      "lint"
+    ],
+    "at": "2026-10-13T12:41:04.388511+00:00",
+    "duration": 1.496,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/lint-final.log",
+    "sha256": "ee0ccd4ec2121decde2f45b9fc4e39aa4fd4e6d5ca4253e04748c3e7b9450c2b"
+  },
+  {
+    "gate": "build",
+    "command": [
+      "pnpm",
+      "build"
+    ],
+    "at": "2026-10-13T12:41:05.885623+00:00",
+    "duration": 2.106,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/build-final.log",
+    "sha256": "259a1d2c8027228a80623ca0d0d385ad4608c405dff04e1eb844c7ca300d6150"
+  },
+  {
+    "gate": "contract-assets",
+    "command": [
+      "node",
+      "scripts/foundations/generate-contract-assets.mjs",
+      "--check"
+    ],
+    "at": "2026-10-13T12:41:07.993341+00:00",
+    "duration": 0.119,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/contract-assets-final.log",
+    "sha256": "6b23028285d3508b88246bfaf068d1c124204ef566bf5065a39cdcf841fc8976"
+  },
+  {
+    "gate": "vocabulary",
+    "command": [
+      "node",
+      "scripts/foundations/generate-phase6a-vocabularies.mjs",
+      "--check"
+    ],
+    "at": "2026-10-13T12:41:08.113767+00:00",
+    "duration": 0.247,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/vocabulary-final.log",
+    "sha256": "712684f1e3b9a46e0b8fb6e9333573ec75e4a38f571ca1a587fbba6126af6001"
+  },
+  {
+    "gate": "secret-scan",
+    "command": [
+      "node",
+      "scripts/foundations/secret-scan.mjs"
+    ],
+    "at": "2026-10-13T12:41:08.362623+00:00",
+    "duration": 1.708,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/secret-scan-final.log",
+    "sha256": "785afde26b815831ebbe2ea9b6a7125f5b49cdf400b3697f50d456a5337f0f2d"
+  },
+  {
+    "gate": "rector",
+    "command": [
+      "bash",
+      "scripts/verify-rector-governance.sh"
+    ],
+    "at": "2026-10-13T12:41:10.072874+00:00",
+    "duration": 0.592,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/rector-final.log",
+    "sha256": "be827f42eb6ea9aa9359e7f5e925cc56b81bf1dbc9f7f0b6337292b1c38192ff"
+  },
+  {
+    "gate": "rector-status",
+    "command": [
+      "bash",
+      "scripts/test-rector-governance-status.sh"
+    ],
+    "at": "2026-10-13T12:41:10.667208+00:00",
+    "duration": 2.01,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/rector-status-final.log",
+    "sha256": "4a950b39b20f2de1440a2b45b243b63df607fa3ede7f7e32e9f7e9da71864597"
+  },
+  {
+    "gate": "whitespace",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "at": "2026-10-13T12:41:12.679056+00:00",
+    "duration": 0.174,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/whitespace-final.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "gate": "browser-simulated",
+    "command": [
+      "pnpm",
+      "exec",
+      "playwright",
+      "test",
+      "e2e/core-grc-ui.spec.ts",
+      "--reporter=json"
+    ],
+    "at": "2026-10-13T12:41:12.854772+00:00",
+    "duration": 62.651,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/browser-simulated-final.log",
+    "sha256": "e19fafdaeef5f49a3380344f267893e4056d8e201ea08f076fcc5958c9a729a4"
+  }
+]

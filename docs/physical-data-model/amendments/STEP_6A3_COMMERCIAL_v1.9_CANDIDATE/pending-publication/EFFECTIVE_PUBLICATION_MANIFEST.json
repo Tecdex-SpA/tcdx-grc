@@ -1,0 +1,51 @@
+{
+  "status": "PREPARED_NOT_APPROVED_OR_ACTIVE",
+  "decision_needed": "Exact-byte publication approval for six effective artifacts and their destinations",
+  "predecessor_decision": "DR-STEP6A3-COMMERCIAL-PHYSICAL-EXECUTABLE-20261014-01",
+  "predecessor_manifest_sha256": "d8968b18a70bcb7268114cb294acc31436740f1819a61f4a6d517bc0b958bf76",
+  "artifacts": [
+    {
+      "source": "docs/physical-data-model/amendments/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/02_PHYSICAL_MODEL_CANDIDATE.md",
+      "staged": "docs/physical-data-model/amendments/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/pending-publication/effective/02_PHYSICAL_MODEL.md",
+      "target": "docs/physical-data-model/amendments/STEP_6A3_COMMERCIAL_v1.9/02_PHYSICAL_MODEL.md",
+      "sha256": "dc60633ab393352dcd25d4bb2bc01612858883c10d7f6fd2f6d5654f06bcc1fc"
+    },
+    {
+      "source": "docs/executable-contracts/candidates/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md",
+      "staged": "docs/physical-data-model/amendments/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/pending-publication/effective/03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md",
+      "target": "docs/executable-contracts/amendments/STEP_6A3_COMMERCIAL_v1.9/03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md",
+      "sha256": "7fa1c212cfa39602b971b6cb522a64e7fb80032312801cc30ed1f39fbf9c8fab"
+    },
+    {
+      "source": "docs/executable-contracts/candidates/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/07_OPENAPI_COMMERCIAL_CANDIDATE.json",
+      "staged": "docs/physical-data-model/amendments/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/pending-publication/effective/07_OPENAPI_COMMERCIAL.json",
+      "target": "docs/executable-contracts/amendments/STEP_6A3_COMMERCIAL_v1.9/07_OPENAPI_COMMERCIAL.json",
+      "sha256": "2d9f419ebaa12fa2da1406d6032a24952bbe200f3879c402b2a4d67044c1d4d5"
+    },
+    {
+      "source": "docs/executable-contracts/candidates/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/02_OPENAPI_COMMERCIAL_MERGED_CANDIDATE.json",
+      "staged": "docs/physical-data-model/amendments/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/pending-publication/effective/02_OPENAPI_COMMERCIAL_MERGED.json",
+      "target": "docs/executable-contracts/amendments/STEP_6A3_COMMERCIAL_v1.9/02_OPENAPI_COMMERCIAL_MERGED.json",
+      "sha256": "afbfe174fb8085457090c65f26e4fd74ac060986d5aa43f531758988ebfab95a"
+    },
+    {
+      "source": "docs/executable-contracts/candidates/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/08_COMMAND_PERMISSION_LIFECYCLE_AUDIT_BINDINGS.json",
+      "staged": "docs/physical-data-model/amendments/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/pending-publication/effective/08_COMMAND_PERMISSION_LIFECYCLE_AUDIT_BINDINGS.json",
+      "target": "docs/executable-contracts/amendments/STEP_6A3_COMMERCIAL_v1.9/08_COMMAND_PERMISSION_LIFECYCLE_AUDIT_BINDINGS.json",
+      "sha256": "93d647004b9eae9121ab626bdc9057b9cf7494dd285e50a4d804081a7cfed224"
+    },
+    {
+      "source": "docs/physical-data-model/amendments/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/pending-publication/EXPECTED_SCHEMA_COMMERCIAL_CANDIDATE.json",
+      "staged": "docs/physical-data-model/amendments/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/pending-publication/EXPECTED_SCHEMA_COMMERCIAL_CANDIDATE.json",
+      "target": "database/expected-schema.json",
+      "sha256": "df51a9ed83329df8f006a6aaeece5b2e69c33fc68cb1e65005ad14c56c0082ee"
+    }
+  ],
+  "exclusions": [
+    "No QA shared DDL/DML",
+    "No IAM or grants",
+    "No commit, push, merge or deploy",
+    "No active migration manifest or SQL placement by this publication",
+    "No STEP 6A.4"
+  ]
+}

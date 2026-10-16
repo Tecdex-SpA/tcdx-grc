@@ -1,0 +1,13 @@
+{
+  "checked_at": "2026-10-13T13:55:59.032972+00:00",
+  "command": [
+    "lsof",
+    "-nP",
+    "-iTCP:4193",
+    "-sTCP:LISTEN"
+  ],
+  "output": "",
+  "result": "NO_LISTENER_OWN_PORT",
+  "qa_connections": 0,
+  "new_docker_or_PG_resources": 0
+}

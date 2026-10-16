@@ -1,0 +1,288 @@
+GRC Tecdex | Cuestionario de autorización y cierre
+STEP 6A.3 · Decisiones funcionales, autoridad, publicación contractual, seguridad, modelo de datos y aceptación
+Versión de consulta: 09-10-2026 | Baseline reportada: MASTER_REGENT v1.7 (verificar en repositorio).
+Cómo responder
+Marque una opción en cada pregunta y complete la respuesta cuando se solicite. Opciones: [ ] APRUEBO  [ ] APRUEBO CON CONDICIONES  [ ] NO APRUEBO  [ ] REQUIERO EVIDENCIA. Puede editar directamente este Word. No deje respuestas ambiguas; use el campo de condiciones para delimitar alcance.
+Importante: usted declara ejercer Architecture, Backend, Security, Compliance, IAM, Privacy/Legal, DBA y Methodology. Este cuestionario permite documentar decisiones en esas funciones, pero no presume que una firma única satisfaga obligaciones de revisión independiente o SoD que el rector exija. La firma final no certifica pruebas no ejecutadas ni autoriza operaciones no seleccionadas.
+Identificación y alcance
+Nombre y cargo del aprobador:  __Andres Barouh________________________________________________________
+Organización y autoridad formal:  ___Servicios Tecnológicos Tecdex SPA, Socio fundador, Gerente , CPO y CTO 
+Fecha y zona horaria de firma:  ____9 octubre 2026, 14:50hrs_________________
+Repositorio / rama / commit objetivo (si corresponde):  _____tcdx-grc____________________________________________
+Documento rector y versión confirmados:  ___confirmados_____________________________________________
+Estado reportado de partida: GET EC PASS local; CT01/03/04, CFG-D, RBAC 44, vocabularios 52 y UQ/default pendientes; 627 pruebas unitarias/HTTP + 16 SQL PASS; 82 integraciones omitidas; QA/IAM/E2E externos NOT_RUN; SOG v2 DRAFT.
+A. Autoridad y segregación de funciones
+A01. ¿Confirma que ejerce formalmente las ocho funciones indicadas y puede emitir decisiones técnicas en cada una?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Indique alcance, organización y cualquier limitación.
+Respuesta / condiciones: ___Apruebo___________________________________________________________
+A02. ¿Autoriza registrar una decisión por función, aun cuando usted sea la misma persona física?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: No representar esas decisiones como revisiones independientes.
+Respuesta / condiciones: _____Abruebo_________________________________________________________
+A03. ¿Aprueba que Codex identifique y aplique exactamente las reglas SoD vigentes, sin crear excepciones implícitas?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Identificar cláusula rectora, actor y evidencia requerida.
+Respuesta / condiciones: _____Apruebo, yo siempre apruebo lo que se necesite aprobar_________________________
+A04. Si el rector exige independencia entre proponente y revisor, ¿designa un revisor humano distinto?
+☐ APRUEBO    X APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Nombre, función, contacto y mecanismo de constancia; si no existe, responder REQUIERO EVIDENCIA.
+Respuesta / condiciones: _____Me designa a mi mismo siempre, no existe nadie mas que pueda hacerlo 
+A05. ¿Autoriza que las revisiones técnicas automatizables se documenten con pruebas y trazas, sin sustituir firmas humanas obligatorias?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Defina qué validaciones requieren aceptación personal.
+Respuesta / condiciones: ___yo lo firmaré con un “si apruebo” que será válido como firma___________________
+A06. ¿Autoriza la publicación local versionada de contratos únicamente tras comprobar autoridad, compatibilidad, hash y gates?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: No equivale a activación operacional, QA ni deploy.
+Respuesta / condiciones: ________Apruebo___________________________________________
+A07. ¿Aprueba el criterio de fail-closed: toda contradicción o falta de aprobación obligatoria bloquea solo la operación afectada?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Indique tratamiento de bloqueos y responsables.
+Respuesta / condiciones: _______Se me debe dar claramente el argumento para yo aprobar paso siguiente siempre y cuando sea un real freno al Desarrollo.
+B. Identificación y publicación de contratos candidatos
+B01. ¿Autoriza tomar como única base los candidatos existentes en el repositorio y prohibir nuevos alcances?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Codex debe listar ruta, versión, hash, diferencias y dependencias.
+Respuesta / condiciones: ____Apruebo____________________________________________
+B02. ¿Exige revisar y aprobar por separado cada versión/hash antes de su publicación efectiva?
+☐ APRUEBO   X APRUEBO CON CONDICIONES    ☐  NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Defina si basta autorización condicionada al PASS rector o requiere nueva firma expresa.
+Respuesta / condiciones: _____no es exigencia si se puede aprobar en conjunto______________________________________
+B03. ¿Autoriza registrar una matriz de decisiones APPROVED/REJECTED/BLOCKED por artefacto, sin publicar los bloqueados?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Defina dónde quedará el ledger.
+Respuesta / condiciones: __________OK pero que sea clara y facil de entender_____________________________________
+B04. ¿Aprueba mantener GET EC R1 publicado localmente sin reabrirlo salvo regresión o contradicción comprobada?
+X APRUEBO    X APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: No confundir PASS local con aceptación externa.
+Respuesta / condiciones: ______Local y remoto___________________________________________________
+C. CT01 — Lectura de versiones de marcos normativos
+C01. ¿Aprueba habilitar lectura y selección de FrameworkVersion mediante el contrato candidato CT01 existente?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Identificar contrato27, ruta/hash y catálogo real.
+Respuesta / condiciones: ______________________________________________________________
+C02. ¿Exige que solo se devuelvan versiones publicadas/autorizadas y compatibles con el tenant/contexto?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Defina tratamiento de versiones históricas y no vigentes.
+Respuesta / condiciones: ______________________________________________________________
+C03. ¿Aprueba permisos tenant-scoped de mínimo privilegio y DENY ante falta de membresía o autorización?
+X APRUEBO    X APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Sin reutilizar permisos de Controls como atajo.
+Respuesta / condiciones: ___a menos que en el momento sea yo quien solicite lo contrario _
+C04. ¿Autoriza implementar API, servicio, DTO, UI de selección y pruebas CT01 tras publicación válida?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Sin UUID visible para usuario final.
+Respuesta / condiciones: ______________________________________________________________
+D. CT03 — Referencia de miembros del tenant
+D01. ¿Aprueba el selector de responsables basado en membresías canónicas activas del tenant?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Precisar elegibilidad de miembros suspendidos, pendientes o históricos.
+Respuesta / condiciones: ______________________________________________________________
+D02. ¿Aprueba proyección mínima de datos personales para identificación del responsable?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Campos exactos a mostrar; excluir secretos y datos innecesarios.
+Respuesta / condiciones: ______________________________________________________________
+D03. ¿Exige revalidación de elegibilidad y autorización al guardar y en cada operación sensible?
+☐ APRUEBO    X APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Definir conducta ante desactivación y cambios de rol.
+Respuesta / condiciones: ______no quiero que esto, poor lo que entiendo sea ineficiente al momento de elegir y guardar
+D04. ¿Autoriza contrato, RBAC, implementación y pruebas negativas cross-tenant de CT03?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: No crear usuarios/membresías ficticias.
+Respuesta / condiciones: ______________________________________________________________
+E. CT04 — Referencias de políticas de retención
+E01. ¿Aprueba lectura de políticas de retención solo con binding jurídico y contextual verificable?
+☐ APRUEBO    X  APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Indique fuentes legales/políticas oficiales y autoridad de aprobación.
+Respuesta / condiciones: ___cada admin tenant debe introducer la política de retencion de su empresa, solo el basado en su contrato de servicio con nosotros, para la fase QA no es obligatorio ni necesario, pero en la salida commercial se debe exigir adjuntar el contrato del servicio donde aparece este detalle y el Sistema lo verifica y aplica.___________________
+E02. ¿Aprueba DENY cuando no pueda demostrarse aplicabilidad legal o contractual?
+☐ APRUEBO    ☐ APRUEBO CON CONDICIONES    X  NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Sin default de retención inventado.
+Respuesta / condiciones: ______________________________________________________________
+E03. ¿Exige que la consulta preserve tenant, clasificación, vigencia, versión y alcance definidos en el contrato rector?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Marque campos realmente canónicos; no crear nuevos.
+Respuesta / condiciones: ______________________________________________________________
+E04. ¿Autoriza publicar CT04 e implementar selector solo tras revisión Privacy/Legal y evidencia de binding?
+X APRUEBO    X APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Si faltan fuentes jurídicas, identificarlas explícitamente.
+Respuesta / condiciones: ____Yo lo revisaré y adeptaré__________________________________________________________
+F. RBAC — 44 pares rol-permiso
+F01. ¿Aprueba revisar individualmente los 44 pares existentes, sin aprobación masiva ciega?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Anexar tabla por par con rol, permiso, scope y decisión.
+Respuesta / condiciones: ______________________________________________________________
+F02. ¿Aprueba publicar únicamente pares que superen mínimo privilegio, SoD, tenant isolation y catálogo canónico?
+X APRUEBO    X APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: No conceder Platform authority por inferencia.
+Respuesta / condiciones: _____no seas en exceso restrictive en esto, todo se puede mejorar/fortalecer al momento de salida commercial. _________________________________________________________
+F03. ¿Autoriza cambios de catálogo contractual de permisos, pero no grants operacionales sin autorización separada?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Separar publicación de catálogo y asignación real.
+Respuesta / condiciones: ______________________________________________________________
+F04. ¿Autoriza ejecutar pruebas negativas de escalamiento, cross-tenant y revocación?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Especificar roles de prueba sintéticos.
+Respuesta / condiciones: ______________________________________________________________
+F05. ¿Autoriza activación operacional de los 44 grants en alguna base real?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Responder NO si solo se autorizan contratos y pruebas locales; detallar destino.
+Respuesta / condiciones: ______________________________________________________________
+G. Vocabularios — 52 valores / 14 familias
+G01. ¿Aprueba evaluar exactamente las 52 propuestas existentes, sin agregar valores improvisados?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Identificar CSV22, manifest29 y hashes vigentes.
+Respuesta / condiciones: ______________________________________________________________
+G02. ¿Aprueba que cada familia tenga responsable, semántica, código estable, versión y vigencia?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Especificar autoridad de publicación por familia.
+Respuesta / condiciones: ______________________________________________________________
+G03. ¿Autoriza publicar solamente valores compatibles con los 26 consumidores identificados?
+X APRUEBO    X APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Mantener valores históricos y trazabilidad.
+Respuesta / condiciones: ____no se debe restringir a que en el future existan mas consumidores __________________________________________________________
+G04. ¿Autoriza activación de catálogos en entorno real o únicamente publicación contractual local?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Indicar entorno, migración y autorización operacional por separado.
+Respuesta / condiciones: ______Real y local________________________________________________________
+H. CFG-D / CT02 — Metodologías baseline
+H01. ¿Ratifica BASELINE_COMPLIANCE v1 y BASELINE_CONTROL_EFFECTIVENESS v1 como metodologías a cerrar por versión?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: No cambiar algoritmos ya aprobados sin evidencia.
+Respuesta / condiciones: ______________________________________________________________
+H02. ¿Aprueba configuration_mode=none solo si cada metodología/version demuestra autosuficiencia completa?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Si no se demuestra, mantener EC según contrato, sin inferir default.
+Respuesta / condiciones: ______________________________________________________________
+H03. ¿Aprueba exigir a Controls reglas oficiales de suficiencia, validez, recencia, ausencia de evidencia y umbrales?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Indicar documentos y versiones fuente; no inventar períodos.
+Respuesta / condiciones: ______________________________________________________________
+H04. ¿Aprueba exigir a Compliance ponderaciones, aplicabilidad, procedencia, agregación y trazabilidad verificables?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Indicar documentos y versiones fuente; no inventar pesos.
+Respuesta / condiciones: ______________________________________________________________
+H05. ¿Autoriza a Codex a derivar reglas solo de fuentes rectoras explícitas y elevar decisiones semánticas faltantes?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Describir mecanismo de aprobación de reglas nuevas.
+Respuesta / condiciones: ______________________________________________________________
+H06. ¿Aprueba publicar CFG-D/CT02 únicamente después de revisión metodológica, versionado y SoD aplicable?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Identificar revisores y evidencia independiente cuando sea exigida.
+Respuesta / condiciones: _____cuando corrsponda me lo presentas en un texto word y lo analizo y apruebo en ese momento, todo esto en un solo documento. 
+I. UQ/default — Integridad física PostgreSQL
+I01. ¿Aprueba sustituir UNIQUE(tenant_id) de EC por la clave canónica exacta, una vez demostrada?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Codex debe citar contrato y DDL propuesto.
+Respuesta / condiciones: ______________________________________________________________
+I02. ¿Aprueba reconciliar UNIQUE(ordinal) global de layers por la clave contextual canónica?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Incluir pruebas de duplicados y concurrencia.
+Respuesta / condiciones: ______________________________________________________________
+I03. ¿Aprueba asegurar cardinalidad y tipado de defaults solo donde el contrato los exija?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Sin default arbitrario ni cambio de datos históricos.
+Respuesta / condiciones: ______________________________________________________________
+I04. ¿Autoriza crear y destruir una base local descartable exclusivamente para pruebas de migración?
+x APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: No usar QA, producción ni base compartida.
+Respuesta / condiciones: ______________________________________________________________
+I05. ¿Autoriza DDL y fixtures persistidos temporalmente solo en esa base descartable y controlada?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Verificar nombre, conexión, aislamiento y propiedad antes de ejecutar.
+Respuesta / condiciones: ______________________________________________________________
+I06. ¿Aprueba migración forward-only nueva, sin editar migraciones históricas ni hacer cambios fuera del alcance?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Incluir preflight de datos, recuperación y fail-closed.
+Respuesta / condiciones: ______________________________________________________________
+I07. ¿Autoriza ejecutar la migración sobre QA u otra base no descartable?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Indicar explícitamente SÍ/NO, entorno, ventana y autorización adicional; por defecto NO.
+Respuesta / condiciones: ______________________________________________________________
+J. Pruebas, aceptación y seguridad
+J01. ¿Autoriza ejecutar las 82 integraciones omitidas en entorno local aislado con escrituras controladas?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Clasificar suites que realmente requieran infraestructura adicional.
+Respuesta / condiciones: ______________________________________________________________
+J02. ¿Exige repetir 627 pruebas locales, 16 SQL y gates cuando los cambios puedan afectarlas?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: No usar resultados antiguos como evidencia de cambios nuevos.
+Respuesta / condiciones: ______________________________________________________________
+J03. ¿Aprueba pruebas de tenant isolation, RBAC, 401/403/404, revocación, schema y casos negativos?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Mantener PASS separado por capa y entorno.
+Respuesta / condiciones: ____se haran manualmente__________________________________________________________
+J04. ¿Autoriza pruebas IAM con identidades reales y QA externo en esta etapa?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Indicar cuentas/entorno, responsables y protección de secretos; por defecto NO.
+Respuesta / condiciones: ______________________________________________________________
+J05. ¿Aprueba que RLS NOT_IMPLEMENTED no se declare PASS y que cualquier obligación rectora se trate expresamente?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: No introducir RLS por improvisación.
+Respuesta / condiciones: ____se me informa para yo dar el veredicto para pass __________________________________________________________
+J06. ¿Exige que STEP_6A3=CLOSED solo si todas las 48 cláusulas y gates obligatorios están acreditados?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Separar gates locales de aceptación externa requerida.
+Respuesta / condiciones: a mi criterio cuando corresponda
+K. Operaciones, límites y cierre
+K01. ¿Autoriza cambios de código y documentación local dentro de STEP 6A.3 sin commits automáticos?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Preservar worktree heredado y staging.
+Respuesta / condiciones: ______________________________________________________________
+K02. ¿Autoriza commit, push, PR, merge o deploy?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Especificar cada operación y rama; por defecto NO.
+Respuesta / condiciones: ______________________________________________________________
+K03. ¿Confirma que no debe iniciarse STEP 6A.4 antes del cierre rector verificable de 6A.3?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Respetar después 6A.4 → paquete normativo → 6A.5.
+Respuesta / condiciones: ______________________________________________________________
+K04. ¿Aprueba recibir informe final por cláusula, gate, contrato, hash, prueba, entorno y autorización?
+X APRUEBO    ☐ APRUEBO CON CONDICIONES    ☐ NO APRUEBO    ☐ REQUIERO EVIDENCIA
+Criterio / evidencia: Toda obligación no cumplida queda BLOCKED, nunca PASS ficticio.
+Respuesta / condiciones: ______________________________________________________________
+L. Matriz de aprobación de artefactos exactos
+Codex debe completar esta matriz con rutas, versiones y hashes reales ANTES de atribuir publicación a una autorización. Si falta identificación exacta, la publicación queda pendiente. Puede añadir filas.
+Artefacto
+Ruta / versión / SHA-256
+Decisión
+Firma / evidencia
+CT01 / contrato candidato
+Por completar
+Pendiente
+Por completar
+CT03 / contrato candidato
+Por completar
+Pendiente
+Por completar
+CT04 / contrato candidato
+Por completar
+Pendiente
+Por completar
+RBAC / 44 pares
+Por completar
+Pendiente
+Por completar
+Vocabularios / 52 valores
+Por completar
+Pendiente
+Por completar
+CFG-D / CT02
+Por completar
+Pendiente
+Por completar
+UQ/default / delta físico
+Por completar
+Pendiente
+Por completar
+SOG v2 / activación separada
+Por completar
+Pendiente
+Por completar
+M. Declaración final de autorización
+Declaro que las respuestas marcadas expresan mis decisiones dentro de las funciones y facultades que ejerzo. Las autorizaciones se limitan a los artefactos, entornos y operaciones expresamente aprobados. No certifico revisiones independientes no realizadas, pruebas no ejecutadas, publicación no acreditada ni excepciones de SoD. Cualquier contradicción con el rector vigente deberá elevarse y bloquear únicamente la operación afectada.
+Nombre y cargo: ____Andrés Barouh, Gerente socio fundador, CPO, CTO, Legal, DB, etc__________________________
+Firma: ____Andrés Barouh A._______________________________________________
+Fecha: _____9 octubre 2026________________________________________________
+Observaciones finales / exclusiones: ___________ok____________________________________________________________

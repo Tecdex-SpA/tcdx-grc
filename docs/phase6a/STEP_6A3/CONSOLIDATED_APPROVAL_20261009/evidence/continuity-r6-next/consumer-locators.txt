@@ -1,0 +1,42 @@
+e2e/branding.spec.ts:45:  await page.route(url => url.pathname.startsWith("/api/v1/") || url.pathname === "/api/v2/auth/me/authorization", (route) => {
+e2e/branding.spec.ts:50:    if (pathname === "/api/v2/auth/me/authorization") return route.fulfill({ json: {
+e2e/core-grc-ui.spec.ts:34:  await page.route(url => url.pathname.startsWith("/api/v1/") || url.pathname === "/api/v2/auth/me/authorization", async (route: Route) => {
+e2e/core-grc-ui.spec.ts:41:    if (url.pathname === "/api/v2/auth/me/authorization") {
+e2e/core-grc-ui.spec.ts:180:  await page.route("**/api/v2/auth/me/authorization", route => {
+e2e/tenant-onboarding-ui.spec.ts:20:  await page.route(url => url.pathname.startsWith("/api/v1/") || url.pathname === "/api/v2/auth/me/authorization", async route => {
+e2e/tenant-onboarding-ui.spec.ts:25:    if (path === "/api/v2/auth/me/authorization") return route.fulfill({ json: { evaluated_at: new Date().toISOString(), platform_permissions: options.platform ? platformCodes.filter(code => (!options.noPlatformAssign || code !== "platform.role.assign") && (!options.tenantReadsOnly || !["platform.membership.read", "platform.role.read"].includes(code))) : [], tenant_permissions: options.platform && !options.dual ? null : { tenant_id: options.wrongTenant ? personId : tenantId, default_timezone: "Europe/Berlin", permissions: options.missing ? {} : Object.fromEntries(tenantCodes.map(code => [code, [{ scope_kind: "tenant" }]])) } } });
+e2e/platform-role-ui.spec.ts:12:  await page.route(url => url.pathname.startsWith("/api/v1/") || url.pathname === "/api/v2/auth/me/authorization",async route=>{
+e2e/platform-role-ui.spec.ts:16:    if(path==='/api/v2/auth/me/authorization'){
+e2e/managed-identity-ui.spec.ts:25:  await page.route("**/api/v2/auth/me/authorization", (route) => route.fulfill({ json: {
+e2e/managed-identity-ui.spec.ts:240:  await page.route("**/api/v2/auth/me/authorization", (route) => route.fulfill({ json: {
+e2e/managed-identity-ui.spec.ts:251:  await page.route("**/api/v2/auth/me/authorization", (route) => route.fulfill({ status: 503,
+e2e/managed-identity-tenant-access.spec.ts:15:  await page.route(url => url.pathname.startsWith("/api/v1/") || url.pathname === "/api/v2/auth/me/authorization",async route=>{
+e2e/managed-identity-tenant-access.spec.ts:20:    if(path==='/api/v2/auth/me/authorization')return route.fulfill({json:{evaluated_at:new Date().toISOString(),platform_permissions:state.permissions,tenant_permissions:null}});
+packages/contracts/src/mi7a-frontend-projections.test.ts:154:    const own = api.paths["/auth/me/authorization"]!.get!;
+packages/contracts/src/mi7a-frontend-projections.test.ts:258:    const own = api.paths["/auth/me/authorization"]!.get!;
+packages/contracts/src/phase6a3-iana-contract.test.ts:21:    expect(api.paths["/auth/me/authorization"].get.servers).toEqual([{ url: "/api/v2" }]);
+packages/contracts/src/phase6a3-iana-contract.test.ts:22:    expect(api.paths["/auth/me/authorization"].get.operationId).toBe("currentPrincipalAuthorizationRead");
+apps/backend/src/app.ts:30:    if (request.url.startsWith("/api/v1/auth/providers") || request.url.startsWith("/api/v2/auth/me/authorization")
+apps/backend/src/app.ts:42:    const authorizationProjection = referenceProjection || request.url.startsWith("/api/v2/auth/me/authorization");
+apps/backend/src/security/platform-role-service.postgres.test.ts:145:      const projection = await app.inject({ url: '/api/v2/auth/me/authorization', headers });
+apps/frontend/src/api-client.ts:64:    return this.request<CurrentPrincipalAuthorization>("/api/v2/auth/me/authorization", {
+apps/backend/src/security/frontend-projections.test.ts:71:      const old = await app.inject("/api/v1/auth/me/authorization");
+apps/backend/src/security/frontend-projections.test.ts:74:      expect((await app.inject("/api/v2/auth/me/authorization")).statusCode).toBe(401);
+apps/backend/src/security/frontend-projections.test.ts:86:      const missing = await app.inject("/api/v2/auth/me/authorization");
+apps/backend/src/security/frontend-projections.test.ts:90:      const incompatible = await app.inject({ url: "/api/v2/auth/me/authorization", headers: { authorization: "Bearer application-token" } });
+apps/backend/src/security/frontend-projections.test.ts:92:      expect((await app.inject({ url: "/api/v2/auth/me/authorization?user_id=someone", headers: { authorization: "Bearer application-token" } })).statusCode).toBe(400);
+apps/backend/src/security/frontend-projections.test.ts:93:      expect((await app.inject({ url: "/api/v2/auth/me/authorization", headers: { authorization: "Bearer application-token", "x-tcdx-tenant-id": "invalid" } })).statusCode).toBe(400);
+apps/frontend/src/api-client.test.ts:20:      expect(String(input)).toBe("https://grc.tecdex.net/api/v2/auth/me/authorization");
+apps/backend/src/security/role-assign-projection-scope.postgres.test.ts:23:    url: "/api/v2/auth/me/authorization", headers: headers(actor, tenant) });
+apps/backend/src/security/frontend-projections.ts:58:  app.get("/api/v2/auth/me/authorization", async (request) => {
+apps/backend/src/security/frontend-projections.postgres.test.ts:46:      const noTenant = await app.inject({ url: "/api/v2/auth/me/authorization", headers });
+apps/backend/src/security/frontend-projections.postgres.test.ts:49:      const tenant = await app.inject({ url: "/api/v2/auth/me/authorization", headers: { ...headers, "x-tcdx-tenant-id": ids.tenant } });
+apps/backend/src/security/frontend-projections.postgres.test.ts:57:      const platform = await app.inject({ url: "/api/v2/auth/me/authorization", headers });
+apps/backend/src/security/frontend-projections.postgres.test.ts:62:      const foreign = await app.inject({ url: "/api/v2/auth/me/authorization", headers: { ...headers, "x-tcdx-tenant-id": newUuidV7() } });
+apps/backend/src/security/frontend-projections.postgres.test.ts:67:        const response = await app.inject({ url: "/api/v2/auth/me/authorization", headers: { ...headers, "x-tcdx-tenant-id": ids.tenant } });
+apps/backend/src/security/frontend-projections.postgres.test.ts:75:        const response = await app.inject({ url: "/api/v2/auth/me/authorization", headers: { ...headers, "x-tcdx-tenant-id": ids.tenant } });
+apps/backend/src/security/frontend-projections.postgres.test.ts:81:      expect((await app.inject({ url: "/api/v2/auth/me/authorization", headers: { ...headers, "x-tcdx-tenant-id": ids.tenant } })).statusCode).toBe(403);
+apps/backend/src/security/frontend-projections.postgres.test.ts:87:      const selectedB = await app.inject({ url: "/api/v2/auth/me/authorization", headers: { ...headers, "x-tcdx-tenant-id": ids.otherTenant } });
+apps/backend/src/security/frontend-projections.postgres.test.ts:90:      const selectedA = await app.inject({ url: "/api/v2/auth/me/authorization", headers: { ...headers, "x-tcdx-tenant-id": ids.tenant } });
+apps/backend/src/security/frontend-projections.postgres.test.ts:93:      expect((await app.inject({ url: "/api/v2/auth/me/authorization", headers })).json().platform_permissions).toEqual([]);
+apps/backend/src/security/frontend-projections.postgres.test.ts:95:      expect((await app.inject({ url: "/api/v2/auth/me/authorization", headers: { ...headers, "x-tcdx-tenant-id": ids.tenant } })).statusCode).toBe(403);

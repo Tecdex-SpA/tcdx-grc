@@ -1,0 +1,58 @@
+{
+  "status": "APPROVED_EXACT_SCOPE_SUCCESSOR_CONTRACT",
+  "baseline": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15",
+  "baseline_manifest_sha256": "4599f6e522ed91952ab01296a4c0b9cbe4df8ad4c1a612afd7fd0414215f824b",
+  "decision": {
+    "path": "docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/SUBMIT_SCOPE_EXACT_BYTES_APPROVAL_20261015.json",
+    "sha256": "5120485a206d26522fa038071c508f87ee4ed3723351a71efbd8725e25bbd9a8"
+  },
+  "review_manifest": {
+    "path": "docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/SUBMIT_SCOPE_SUCCESSOR_REVIEW_MANIFEST.json",
+    "sha256": "df66515d794942c6f18e8a61fb3d398fb679c7b2111ea225571a77e605b8f19b"
+  },
+  "approved_files": [
+    {
+      "path": "docs/executable-contracts/candidates/STEP_6A3_INITIAL_SOURCE_SUBMIT_SCOPE_v1.11/DELTA.md",
+      "sha256": "ab51e697905b1d6d67eff435564741758d6da022a1ec5420c38555a2fa05f022"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/STEP_6A3_INITIAL_SOURCE_SUBMIT_SCOPE_v1.11/LIFECYCLE_BINDING.json",
+      "sha256": "577e47f4041c954a9d7ea5f0185e7c88e0232d735177c91560d60a6cdbe7cc0d"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/STEP_6A3_INITIAL_SOURCE_SUBMIT_SCOPE_v1.11/QA_PREDECESSOR.json",
+      "sha256": "44297f813a8d4f0ffb381f26d068064a808472e917ebe6ee8f2e9cb7ea79d38e"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/STEP_6A3_INITIAL_SOURCE_SUBMIT_SCOPE_v1.11/snapshots/02_OPENAPI_BASE_CONTRACT.yaml",
+      "sha256": "32b02f7d817f70e41507c2d464e2bcf647034e0c152877eb2ffdd148a4a02620"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/STEP_6A3_INITIAL_SOURCE_SUBMIT_SCOPE_v1.11/snapshots/03_API_RESOURCE_OPERATION_MATRIX.md",
+      "sha256": "78f30795699f5a5af49dabf18f1fc61406a6c11dd3f0d862034c2082f19bb75c"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/STEP_6A3_INITIAL_SOURCE_SUBMIT_SCOPE_v1.11/snapshots/05_PERMISSION_CATALOG.md",
+      "sha256": "e7b3c9eb15bb6b8f61a4ff9fa04978bedafc3485bcfb3e713f7c379589865cd1"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/STEP_6A3_INITIAL_SOURCE_SUBMIT_SCOPE_v1.11/snapshots/09_SEED_MANIFESTS.md",
+      "sha256": "6f227a1674ef09abad17dba8f3cafccb7722ef05461d4d02f76063c581ddeeec"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/STEP_6A3_INITIAL_SOURCE_SUBMIT_SCOPE_v1.11/snapshots/14_FILE_EVIDENCE_STORAGE_CONTRACT.md",
+      "sha256": "a8bcdcb84db7671f0cecb14e57423481499d322ef8031125ed294e0d01880405"
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "database/migrations/manifest.json",
+      "sha256": "df18d813bd0f4d763dd02ef9617fa21e9474e3f7fc155e9b97e8f47eee11002f"
+    },
+    {
+      "path": "database/migrations/20261015000100_c04w_applicability_hold_r2.sql",
+      "sha256": "b2a5bc73f75d7f95fb7ba5068f1b3ea77a923d7da7501446d05455ee545ec523"
+    }
+  ],
+  "scope": "EvidenceVersion/draft/evidence.submit/v2 only; no role grants, no DDL, no C04W5 republication"
+}

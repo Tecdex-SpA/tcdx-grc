@@ -82,3 +82,11 @@ Subjects/Observations se detallan en 16; métricas y Data Trust en 17; rules/imp
 ## Separación normativa obligatoria
 
 `NormativeUnit`, `Requirement`, `Control` e `Issue` poseen identidades y responsabilidades distintas. NormativeUnit organiza la fuente; Requirement expresa una obligación atómica evaluable; Control describe el mecanismo; Issue registra la desviación. Se prohíbe una entidad o tabla que los colapse.
+
+## Contrato canónico comercial de la sucesora propuesta
+
+`CommercialFamily` es entidad `PLATFORM_CONTROL` con UUIDv7, código/significado publicados inmutables y retención `IMMUTABLE_RETAIN`. Cada RegulatoryPack raíz elegible nuevo tiene exactamente una clasificación de familia por relación soporte tipada y coherente con su `source_type`; una PlanVersion publicada relaciona explícitamente sus familias. La clasificación no publica ni licencia una edición normativa. Ningún derecho se infiere del nombre, `source_type` o familia.
+
+`UsageLimit` pertenece a una PlanVersion y representa una dimensión total o una familia vinculada explícitamente. La cuota `regulatory_pack_count` total y una por familia cubren la vigencia contractual completa con valor finito, no negativo, constante e inmutable por PlanVersion; cero es explícito y ausencia requerida bloquea. Un cambio material de cuota, elegibilidad o familia exige una nueva PlanVersion publicada, sin editar las versiones ya contratadas.
+
+`Subscription` y `SubscriptionRegulatoryPack` preservan identidad, tenant, intervalos, lineage de predecesor/sucesor y derechos históricos. `subscription.change_plan` conserva el término comercial programado y expiraciones originales, cierra el origen en un corte común y crea sucesores tipados en una transacción auditada. La regla por raíz R-P rige prospectivamente nuevas escrituras/expansiones y preserva solapamientos históricos legítimos sin adjudicar retrospectivamente una versión de regla. La incompatibilidad activa bloquea sólo la adopción afectada hasta decisión competente.

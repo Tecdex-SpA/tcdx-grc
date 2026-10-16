@@ -1,0 +1,22 @@
+{
+  "check": "subscription-postgres",
+  "command": [
+    "pnpm",
+    "exec",
+    "vitest",
+    "run",
+    "--config",
+    "vitest.integration.config.ts",
+    "apps/backend/src/security/platform-subscription.postgres.test.ts",
+    "--reporter=json",
+    "--outputFile=/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/subscription-postgres-results.json"
+  ],
+  "started_at": "2026-10-13T22:12:15.022879+00:00",
+  "finished_at": "2026-10-13T22:12:16.946160+00:00",
+  "exit_code": 0,
+  "status": "PASS",
+  "node": "22.23.2",
+  "database_target": "127.0.0.1:55432/tcdx-grc",
+  "shared_qa_mutations": 0,
+  "log_sha256": "e8d41fb0a2ad4e3c89a84c1f0bbcbcf7541e06429727ec6110b7c8a9a1740b8c"
+}

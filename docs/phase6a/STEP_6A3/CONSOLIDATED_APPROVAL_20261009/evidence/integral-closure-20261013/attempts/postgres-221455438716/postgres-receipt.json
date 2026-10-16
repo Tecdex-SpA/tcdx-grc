@@ -1,0 +1,22 @@
+{
+  "check": "postgres",
+  "command": [
+    "pnpm",
+    "exec",
+    "vitest",
+    "run",
+    "--config",
+    "vitest.integration.config.ts",
+    "--no-file-parallelism",
+    "--reporter=json",
+    "--outputFile=/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/postgres-results.json"
+  ],
+  "started_at": "2026-10-13T22:12:16.948864+00:00",
+  "finished_at": "2026-10-13T22:12:25.907657+00:00",
+  "exit_code": 1,
+  "status": "FAIL",
+  "node": "22.23.2",
+  "database_target": "127.0.0.1:55432/tcdx-grc",
+  "shared_qa_mutations": 0,
+  "log_sha256": "ffe37a6bfd1bf12bda21cb8c5a69b8ebae019cb8e038e26ad70161694c8400de"
+}

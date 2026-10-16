@@ -1,0 +1,31 @@
+{
+  "zip_path": "/Users/andresbarouh/Downloads/TCDX_GRC_RECTOR_BASELINE_v1.1_2026-09-15.zip",
+  "zip_sha256": "e08519a2216828d58296a47c3ff1b549db98d02ac37ea35ee51e037295fc807e",
+  "members": [
+    {
+      "zip_member": "TCDX_GRC_RECTOR_BASELINE_v1.1_2026-09-15/22_RBAC_PERMISSION_SCOPE_MATRIX.md",
+      "original_sha256": "05056625117650108bde03a9ffd81f02fc42dd08f1efe43da03233df2df77af4",
+      "active_path": "docs/rector/baseline/22_RBAC_PERMISSION_SCOPE_MATRIX.md",
+      "active_sha256": "d47a594ee78863b2b294128f7cb3696b36d991d5f653a2836ee57896ed1b23f9"
+    },
+    {
+      "zip_member": "TCDX_GRC_RECTOR_BASELINE_v1.1_2026-09-15/43_PLAN_MAESTRO_RECTOR_DISENO_Y_DESARROLLO.md",
+      "original_sha256": "6daae534e1dcc9b57932b7f1bd49a994eed327f55f70e2cd529231f5baa033b6",
+      "active_path": "docs/rector/baseline/43_PLAN_MAESTRO_RECTOR_DISENO_Y_DESARROLLO.md",
+      "active_sha256": "edb36d061f027c4f69fc57cdd95ae19fed2a33af1cd519d7161f63aee0a28af6"
+    },
+    {
+      "zip_member": "TCDX_GRC_RECTOR_BASELINE_v1.1_2026-09-15/44_CONTRATO_ESTRUCTURA_NORMATIVA_REQUISITOS_CONTROLES.md",
+      "original_sha256": "1ff043f90929737fa897b82fc42741aed565e1e4455ac67e4a406b93a7d02b75",
+      "active_path": "docs/rector/baseline/44_CONTRATO_ESTRUCTURA_NORMATIVA_REQUISITOS_CONTROLES.md",
+      "active_sha256": "6f19fd4e83862252dc039c23609a73d7cdbaab6cce8c8c0875ae254c71ebfe60"
+    }
+  ],
+  "authority": "HISTORICAL_READ_ONLY_NOT_REACTIVATED",
+  "findings": [
+    "22\u00a76 historical author+approve internal restriction superseded by active49 narrow exception; operational SoD preserved",
+    "43\u00a76 role accumulation amended for internal review only; UTC/IANA unchanged",
+    "Historical ia-grc deployment instruction is superseded by active43/46; no separate AI runtime",
+    "44 structure NormativeUnit/Requirement/Control retained as active contract; no normative ingestion"
+  ]
+}

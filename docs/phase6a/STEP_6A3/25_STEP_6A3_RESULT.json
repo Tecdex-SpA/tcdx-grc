@@ -1,0 +1,765 @@
+{
+  "TASK_ID": "STEP_6A3_INTEGRAL_P_RBAC_P_CONFIG_P_VOC_20261008",
+  "MASTER_REGENT": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23",
+  "CODEX_VARIATION_BUDGET": "ZERO",
+  "STEP_6A3": "PARTIAL_BLOCKED",
+  "RECTOR_GATE": "BLOCKED",
+  "TASK_PACKET_STATUS": "COMPLETE_FOR_AUTHORIZED_RESEARCH_COPY_AND_PROPOSALS;BLOCKED_FOR_RESIDUAL_PUBLICATION",
+  "ASSUMPTIONS_INTRODUCED": "NONE_AS_AUTHORITY; NEW_VALUES_ROUTES_RELATIONS_EXPLICIT_PROPOSALS",
+  "UNRESOLVED_RECTOR_MATERIAL_DISCREPANCIES": 5,
+  "preflight": {
+    "root_verified": true,
+    "remote": "https://github.com/Tecdex-SpA/tcdx-grc.git",
+    "branch": "main",
+    "HEAD": "6af66387aa03fa185ef139584de07700f247b903",
+    "differs_from_historical_HEAD": false,
+    "rector_zip": "NOT_AVAILABLE_LOCALLY",
+    "authority_used": "LOCAL_ACTIVE_IMMUTABLE_BASELINE_VERIFIED",
+    "normative_zip": "RESERVED_NOT_OPENED_OR_USED",
+    "artifacts_6A1_6A2_6A3": "PRESENT",
+    "memory_used_as_authority": false,
+    "network_context_recovery": false,
+    "new_dependencies": 0,
+    "node": "22.23.2",
+    "pnpm": "12.4.1"
+  },
+  "phase": {
+    "PHASE_5": "PASS_RECORDED_NOT_QA_REEXECUTED",
+    "PHASE_5_CLOSED": "YES_RECORDED",
+    "PHASE_6A": "IN_PROGRESS",
+    "STEP_6A1": "PASS_DOCUMENTARY_PRESERVED",
+    "STEP_6A2": "PASS_DOCUMENTARY_PRESERVED",
+    "STEP_6A4": "NOT_STARTED",
+    "STEP_6A5": "NOT_STARTED",
+    "STEP_6A6": "NOT_STARTED",
+    "RISK_RUNTIME": "NOT_STARTED",
+    "INCIDENTS_LOSS_RUNTIME": "NOT_STARTED",
+    "MARKET_RELEASE_READY": "NOT_APPROVED_BY_THIS_EXECUTION"
+  },
+  "classification": {
+    "IMPLEMENTED_AUTHORIZED": "SIX_CENTRAL_SPANISH_COPY_VALUES; CF_PREEXISTING_REVALIDATED",
+    "READY_FOR_HUMAN_SIGNOFF": [
+      "P-RBAC_CT01_CT03_CT04",
+      "P-CONFIG_CFG_A_B_C_D",
+      "P-VOC_14_FAMILIES_52_VALUES"
+    ],
+    "BLOCKED_MISSING_CANONICAL_BINDING": [
+      "CT-02",
+      "CT-04_GLOBAL_CONTRACTUAL_HOLD_AND_OBJECT_LEGAL_APPLICABILITY"
+    ],
+    "PROPOSED_NOT_PUBLISHED": {
+      "permissions": 3,
+      "collection_operations": 3,
+      "configuration_context_operation": 1,
+      "RolePermission_pairs_per_template_set": 44,
+      "value_proposals": 52
+    }
+  },
+  "CT": {
+    "CT-01": {
+      "status": "READY_FOR_HUMAN_SIGNOFF",
+      "publication": "PROPOSED_NOT_PUBLISHED",
+      "existing_equivalent": false,
+      "permission_proposed": "compliance.framework.read",
+      "proposed_template_grants": 13,
+      "effective_grants_published": 0,
+      "packet": "20_P_RBAC_PUBLICATION_DECISION_PACKET.md"
+    },
+    "CT-02": {
+      "status": "BLOCKED_MISSING_CANONICAL_BINDING",
+      "research": "NO_BINDING_DEMONSTRATED",
+      "decision_packet": "READY_FOR_HUMAN_SIGNOFF",
+      "publication": "PROPOSED_NOT_PUBLISHED",
+      "existing_permission": "configuration.effective_configuration.read",
+      "existing_detail": "PUBLISHED_DECLARATION_HANDLER_NOT_DEMONSTRATED",
+      "options": [
+        "CFG-A",
+        "CFG-B",
+        "CFG-C",
+        "CFG-D"
+      ],
+      "packet": "21_P_CONFIG_BINDING_EVIDENCE_AND_ARCHITECTURE_OPTIONS.md"
+    },
+    "CT-03": {
+      "status": "READY_FOR_HUMAN_SIGNOFF",
+      "publication": "PROPOSED_NOT_PUBLISHED",
+      "existing_equivalent": false,
+      "permission_proposed": "platform.membership_reference.read",
+      "proposed_template_grants": 17,
+      "effective_grants_published": 0,
+      "packet": "20_P_RBAC_PUBLICATION_DECISION_PACKET.md",
+      "picker_creator_templates": 7,
+      "history": "PARENT_READ_AND_EXACT_FK_ONLY"
+    },
+    "CT-04": {
+      "status": "READY_FOR_HUMAN_SIGNOFF",
+      "publication": "PROPOSED_NOT_PUBLISHED",
+      "existing_equivalent": false,
+      "permission_proposed": "privacy.retention_policy_reference.read",
+      "proposed_template_grants": 14,
+      "effective_grants_published": 0,
+      "packet": "20_P_RBAC_PUBLICATION_DECISION_PACKET.md",
+      "picker_creator_templates": 3,
+      "history": "PARENT_READ_AND_EXACT_FK_ONLY",
+      "binding": "GLOBAL_OBJECT_LEGAL_APPLICABILITY_NO_BINDING_DEMONSTRATED",
+      "regulatory_candidate_without_binding": "SELECTABLE_FALSE_PROPOSED"
+    }
+  },
+  "CV": {
+    "CV-01": {
+      "functional_definition": "APPROVED_BY_PO",
+      "decision_packet": "READY_FOR_HUMAN_SIGNOFF",
+      "publication": "PROPOSED_NOT_PUBLISHED",
+      "classification": "EXISTENTE_PERO_REQUIERE_MAPEO_AUTORIZADO",
+      "occurrences": 1,
+      "field_ids": [
+        "F-0223"
+      ],
+      "proposed_values_count": 4,
+      "runtime_values_activated": 0,
+      "owners": [
+        "Evidence + Security & Privacy Reviewer"
+      ]
+    },
+    "CV-02": {
+      "functional_definition": "APPROVED_BY_PO",
+      "decision_packet": "READY_FOR_HUMAN_SIGNOFF",
+      "publication": "PROPOSED_NOT_PUBLISHED",
+      "classification": "NUEVO_CONTRATO_PROPUESTO",
+      "occurrences": 2,
+      "field_ids": [
+        "F-0208",
+        "F-0234"
+      ],
+      "proposed_values_count": 4,
+      "runtime_values_activated": 0,
+      "owners": [
+        "Evidence Domain Owner"
+      ]
+    },
+    "CV-03": {
+      "functional_definition": "APPROVED_BY_PO",
+      "decision_packet": "READY_FOR_HUMAN_SIGNOFF",
+      "publication": "PROPOSED_NOT_PUBLISHED",
+      "classification": "NUEVO_CONTRATO_PROPUESTO",
+      "occurrences": 2,
+      "field_ids": [
+        "F-0075",
+        "F-0090"
+      ],
+      "proposed_values_count": 8,
+      "runtime_values_activated": 0,
+      "owners": [
+        "Controls Domain Owner"
+      ]
+    },
+    "CV-04": {
+      "functional_definition": "APPROVED_BY_PO",
+      "decision_packet": "READY_FOR_HUMAN_SIGNOFF",
+      "publication": "PROPOSED_NOT_PUBLISHED",
+      "classification": "EXISTENTE_PERO_REQUIERE_MAPEO_AUTORIZADO",
+      "occurrences": 1,
+      "field_ids": [
+        "F-0341"
+      ],
+      "proposed_values_count": 2,
+      "runtime_values_activated": 0,
+      "owners": [
+        "Compliance Domain Owner"
+      ]
+    },
+    "CV-05": {
+      "functional_definition": "APPROVED_BY_PO",
+      "decision_packet": "READY_FOR_HUMAN_SIGNOFF",
+      "publication": "PROPOSED_NOT_PUBLISHED",
+      "classification": "NUEVO_CONTRATO_PROPUESTO",
+      "occurrences": 1,
+      "field_ids": [
+        "F-0343"
+      ],
+      "proposed_values_count": 4,
+      "runtime_values_activated": 0,
+      "owners": [
+        "Compliance + Controls Domain Owners"
+      ]
+    },
+    "CV-06": {
+      "functional_definition": "APPROVED_BY_PO",
+      "decision_packet": "READY_FOR_HUMAN_SIGNOFF",
+      "publication": "PROPOSED_NOT_PUBLISHED",
+      "classification": "NUEVO_CONTRATO_PROPUESTO",
+      "occurrences": 1,
+      "field_ids": [
+        "F-0318"
+      ],
+      "proposed_values_count": 1,
+      "runtime_values_activated": 0,
+      "owners": [
+        "Actions + Evidence Domain Owners"
+      ]
+    },
+    "CV-07": {
+      "functional_definition": "APPROVED_BY_PO",
+      "decision_packet": "READY_FOR_HUMAN_SIGNOFF",
+      "publication": "PROPOSED_NOT_PUBLISHED",
+      "classification": "NUEVO_CONTRATO_PROPUESTO",
+      "occurrences": 1,
+      "field_ids": [
+        "F-0285"
+      ],
+      "proposed_values_count": 1,
+      "runtime_values_activated": 0,
+      "owners": [
+        "Actions Domain Owner"
+      ]
+    },
+    "CV-08": {
+      "functional_definition": "APPROVED_BY_PO",
+      "decision_packet": "READY_FOR_HUMAN_SIGNOFF",
+      "publication": "PROPOSED_NOT_PUBLISHED",
+      "classification": "NUEVO_CONTRATO_PROPUESTO",
+      "occurrences": 5,
+      "field_ids": [
+        "F-0279",
+        "F-0287",
+        "F-0300",
+        "F-0314",
+        "F-0329"
+      ],
+      "proposed_values_count": 4,
+      "runtime_values_activated": 0,
+      "owners": [
+        "Actions Domain Owner"
+      ]
+    },
+    "CV-09": {
+      "functional_definition": "APPROVED_BY_PO",
+      "decision_packet": "READY_FOR_HUMAN_SIGNOFF",
+      "publication": "PROPOSED_NOT_PUBLISHED",
+      "classification": "NUEVO_CONTRATO_PROPUESTO",
+      "occurrences": 2,
+      "field_ids": [
+        "F-0226",
+        "F-0229"
+      ],
+      "proposed_values_count": 3,
+      "runtime_values_activated": 0,
+      "owners": [
+        "Evidence Domain Owner"
+      ]
+    },
+    "CV-10": {
+      "functional_definition": "APPROVED_BY_PO",
+      "decision_packet": "READY_FOR_HUMAN_SIGNOFF",
+      "publication": "PROPOSED_NOT_PUBLISHED",
+      "classification": "NUEVO_CONTRATO_PROPUESTO",
+      "occurrences": 1,
+      "field_ids": [
+        "F-0358"
+      ],
+      "proposed_values_count": 5,
+      "runtime_values_activated": 0,
+      "owners": [
+        "Assurance Domain Owner"
+      ]
+    },
+    "CV-11": {
+      "functional_definition": "APPROVED_BY_PO",
+      "decision_packet": "READY_FOR_HUMAN_SIGNOFF",
+      "publication": "PROPOSED_NOT_PUBLISHED",
+      "classification": "NUEVO_CONTRATO_PROPUESTO",
+      "occurrences": 3,
+      "field_ids": [
+        "F-0278",
+        "F-0286",
+        "F-0299"
+      ],
+      "proposed_values_count": 4,
+      "runtime_values_activated": 0,
+      "owners": [
+        "Actions / Finding Domain Owner"
+      ]
+    },
+    "CV-12": {
+      "functional_definition": "APPROVED_BY_PO",
+      "decision_packet": "READY_FOR_HUMAN_SIGNOFF",
+      "publication": "PROPOSED_NOT_PUBLISHED",
+      "classification": "NUEVO_CONTRATO_PROPUESTO",
+      "occurrences": 2,
+      "field_ids": [
+        "F-0213",
+        "F-0240"
+      ],
+      "proposed_values_count": 4,
+      "runtime_values_activated": 0,
+      "owners": [
+        "Evidence Domain Owner"
+      ]
+    },
+    "CV-13": {
+      "functional_definition": "APPROVED_BY_PO",
+      "decision_packet": "READY_FOR_HUMAN_SIGNOFF",
+      "publication": "PROPOSED_NOT_PUBLISHED",
+      "classification": "NUEVO_CONTRATO_PROPUESTO",
+      "occurrences": 2,
+      "field_ids": [
+        "F-0225",
+        "F-0228"
+      ],
+      "proposed_values_count": 3,
+      "runtime_values_activated": 0,
+      "owners": [
+        "Evidence Domain Owner"
+      ]
+    },
+    "CV-14": {
+      "functional_definition": "APPROVED_BY_PO",
+      "decision_packet": "READY_FOR_HUMAN_SIGNOFF",
+      "publication": "PROPOSED_NOT_PUBLISHED",
+      "classification": "EXISTENTE_PERO_REQUIERE_MAPEO_AUTORIZADO",
+      "occurrences": 2,
+      "field_ids": [
+        "F-0079",
+        "F-0094"
+      ],
+      "proposed_values_count": 5,
+      "runtime_values_activated": 0,
+      "owners": [
+        "Controls Domain Owner + Security Reviewer"
+      ]
+    }
+  },
+  "CF": {
+    "CF-01": {
+      "status": "IMPLEMENTED_AUTHORIZED_PREEXISTING_REVALIDATED",
+      "field_ids": [
+        "F-0119",
+        "F-0120"
+      ]
+    },
+    "CF-02": {
+      "status": "IMPLEMENTED_AUTHORIZED_PREEXISTING_REVALIDATED",
+      "field_ids": [
+        "F-0116"
+      ]
+    }
+  },
+  "counts": {
+    "forms": 42,
+    "fields": 361,
+    "internal_ids_total": 95,
+    "internal_ids_ready_for_6A4": 76,
+    "internal_ids_blocked": 18,
+    "internal_ids_not_applicable": 1,
+    "internal_ids_not_applicable_field_id": "F-0268",
+    "internal_ids_removed_from_forms_this_execution": 0,
+    "vocab_occurrences_total": 89,
+    "vocab_published_sources_prepared": 60,
+    "vocab_CF_behaviors_resolved": 3,
+    "vocab_resolved_projection": 63,
+    "vocab_pending_CV": 26,
+    "CV_families": 14,
+    "CV_occurrences_by_classification": {
+      "PUBLICADO_Y_REUTILIZABLE": 0,
+      "EXISTENTE_PERO_REQUIERE_MAPEO_AUTORIZADO": 4,
+      "NUEVO_CONTRATO_PROPUESTO": 22,
+      "TEXTO_LIBRE_SOLO_SI_OWNER_LO_AUTORIZA_ADOPTED": 0
+    },
+    "value_proposals": 52,
+    "new_values_activated": 0,
+    "json_fields": 3,
+    "contextual_links": 29,
+    "canonical_dependencies": 38,
+    "new_read_capabilities_implemented": 0,
+    "new_read_capabilities_blocked": 4,
+    "template_grants_proposed": [
+      13,
+      17,
+      14
+    ],
+    "template_grants_effective_published": 0
+  },
+  "gates": {
+    "RECTOR_BASELINE_INTEGRITY": "PASS",
+    "RECTOR_TASK": "BLOCKED",
+    "CONTRACT_VERIFY": "PASS_EXISTING_UNCHANGED",
+    "OPENAPI_OPERATION_PERMISSION": "PASS_EXISTING_CONTRACT_ASSERTIONS_ONLY",
+    "RBAC": "PASS_EXISTING_TEST_SCOPE;PROPOSED_GRANTS_UNAPPROVED",
+    "TENANT_ISOLATION": "PASS_EXISTING_LOCAL_TEST_SCOPE",
+    "SPANISH_UI": "PASS_SCOPED_CENTRAL_COPY_AND_PREPARED_SELECTORS",
+    "SPANISH_UI_GLOBAL": "NOT_COMPLETE_GAPS_RECORDED",
+    "VISUAL_ASSET_INTEGRITY": "PASS",
+    "VISUAL_REGRESSION_LOCAL": "PASS_CAPTURED_84_FOUR_VIEWPORTS",
+    "HUMAN_UI_REVIEW": "PENDING_NOT_SELF_APPROVED",
+    "SECURITY_REVIEW": "PENDING_COMPETENT_OWNER_FOR_PROPOSALS",
+    "PHYSICAL_DATA_MODEL_AMENDMENT": "PENDING_REVIEW_NOT_IMPLEMENTED",
+    "TYPECHECK": "PASS",
+    "LINT_STATIC": "PASS",
+    "SECRET_SCAN": "PASS_ZERO_FINDINGS",
+    "DOMAIN_SCAN": "PASS_ACTIVE_SOURCE_CONFIGURATION",
+    "DOCUMENT_VALIDATION": "PASS",
+    "GIT_DIFF_CHECK": "PASS",
+    "WORKTREE_PRESERVATION": "PASS_EXPECTED_AUTHORIZED_EDITS_AND_APPEND_ONLY"
+  },
+  "tests": {
+    "unit": {
+      "status": "PASS",
+      "passed": 509,
+      "failed": 0,
+      "skipped_postgres": 82,
+      "frontend_subset": 102,
+      "contract_subset": 107,
+      "security_unit_subset": 184,
+      "delta_vs_19": 0,
+      "receipt": "/private/tmp/step6a3-final-unit.json"
+    },
+    "postgres_isolated": {
+      "status": "PASS",
+      "passed": 82,
+      "failed": 0,
+      "skipped": 0,
+      "files": 15,
+      "target": "127.0.0.1:55432/tcdx-grc",
+      "DDL_or_rebuild_executed": false,
+      "delta_vs_19": 0,
+      "receipt": "/private/tmp/step6a3-pg.json"
+    },
+    "GRC_E2E": {
+      "status": "PASS_LOCAL_API_FIXTURES",
+      "passed": 448,
+      "failed": 0,
+      "flaky": 0,
+      "skipped": 0,
+      "viewports": 4,
+      "duration_ms": 105370.06,
+      "screenshots": 84,
+      "receipt": "/private/tmp/step6a3-e2e-unsandboxed.json",
+      "IAM_UI_subset": 256,
+      "IAM_UI_subset_delta_vs_19": 0,
+      "delta_vs_19": 0,
+      "real_QA_or_IAM_runtime": false
+    },
+    "IAM_real_21_historical": "NOT_RUN_NO_REAL_IAM_CHANGE_OR_RUNTIME_AUTHORIZATION",
+    "new_CT_CV_CFG_tests": "NOT_RUN_PROPOSED_NOT_PUBLISHED_NOT_IMPLEMENTED",
+    "typecheck": {
+      "status": "PASS",
+      "exit_code": 0
+    },
+    "lint": {
+      "status": "PASS",
+      "exit_code": 0,
+      "mechanism": "EXISTING_TYPESCRIPT_STATIC_CHECKS"
+    },
+    "contracts_verify": {
+      "status": "PASS",
+      "exit_code": 0,
+      "physicalTables": 237,
+      "publishedPermissions": 172,
+      "migrations": 30,
+      "operations": 161,
+      "readOperations": 56
+    },
+    "attempts_preserved": {
+      "unit_initial_cli": "EXIT_2_REPORTER_PNPM_PARSE_BEFORE_VITEST_CORRECTED",
+      "E2E_sandbox": "448_BROWSER_LAUNCH_FAILURES_ZERO_PRODUCT_TESTS_EXECUTED",
+      "E2E_authorized_before_copy_change": "448_PASS",
+      "E2E_authorized_final_after_copy_change": "448_PASS"
+    }
+  },
+  "isolated_read_evidence": {
+    "scope": "EXISTING_ISOLATED_POSTGRES_READ_ONLY_NOT_QA",
+    "target": "127.0.0.1:55432/tcdx-grc",
+    "identity": {
+      "database": "tcdx-grc",
+      "version": "16.15 (Debian 16.15-1.pgdg13+2)"
+    },
+    "indexes": [
+      {
+        "indexname": "uq_effective_configuration_layers__ordinal",
+        "indexdef": "CREATE UNIQUE INDEX uq_effective_configuration_layers__ordinal ON config.effective_configuration_layers USING btree (ordinal)"
+      },
+      {
+        "indexname": "uq_effective_configurations__tenant_id",
+        "indexdef": "CREATE UNIQUE INDEX uq_effective_configurations__tenant_id ON config.effective_configurations USING btree (tenant_id) NULLS NOT DISTINCT"
+      }
+    ],
+    "permission_role_counts": [
+      {
+        "permission_code": "compliance.requirement.read",
+        "grant_count": 0,
+        "roles": null
+      },
+      {
+        "permission_code": "configuration.effective_configuration.read",
+        "grant_count": 1,
+        "roles": [
+          "DATA_ADMIN"
+        ]
+      },
+      {
+        "permission_code": "remediation.action.create",
+        "grant_count": 6,
+        "roles": [
+          "AUDITOR",
+          "AUDITOR_LEAD",
+          "COMPLIANCE_MANAGER",
+          "GRC_MANAGER",
+          "QUALITY_MANAGER",
+          "RISK_MANAGER"
+        ]
+      }
+    ]
+  },
+  "discrepancies": [
+    {
+      "id": "RBAC-D01",
+      "status": "OPEN",
+      "owner": "Security/Architecture/Remediation",
+      "evidence": "actionCreate catalog5roles vs migration seed6 includingAUDITOR; isolated READ ONLY confirms6"
+    },
+    {
+      "id": "RBAC-D02",
+      "status": "OPEN",
+      "owner": "Security/Architecture/Compliance/Backend",
+      "evidence": "requirement.read catalog11 readers vs0RolePermission in seeds and isolated READ ONLY"
+    },
+    {
+      "id": "CFG-UQ1",
+      "status": "OPEN",
+      "owner": "Data Model/Architecture/Backend",
+      "evidence": "physical01:228 compound business key vs migration006:797 UNIQUE(tenant_id); isolated index confirmed"
+    },
+    {
+      "id": "CFG-UQ2",
+      "status": "OPEN",
+      "owner": "Data Model/Architecture/Backend",
+      "evidence": "physical01:229 EC+level+ordinal vs migration006:800 UNIQUE(ordinal)global; isolated index confirmed"
+    },
+    {
+      "id": "CFG-DEFAULT",
+      "status": "OPEN",
+      "owner": "Data Model/Configuration",
+      "evidence": "physical01:224 exactly one typed default vs migration006:772 <=1"
+    },
+    {
+      "id": "RBAC-D03",
+      "status": "RECONCILED_BY_APPROVED_AMENDMENT_PRECEDENCE",
+      "evidence": "RetentionPolicy draft effective dates nullable under IDM-P05/20260924000200"
+    },
+    {
+      "id": "VOC-PROVENANCE",
+      "status": "CORRECTED_IN_23_ORIGINAL_17_PRESERVED",
+      "evidence": "26 occurrences real columns and optional CV09/CV13"
+    }
+  ],
+  "pending_decisions": {
+    "P_RBAC": "Competent clause review20 C01..08 and exact F/M/R differential; reconcileD01/D02; global object legal bindingC04G/W",
+    "P_CONFIG": "Select signedCFG-A/B/C/D; real binding/mode/version;Subject/effective_at; physicalUQs/default;hash/lineage;schema/existingPermission",
+    "P_VOC": "Review52rows22 and23 clauses; historical inventory and version lineage before enforcement",
+    "signatures_required": [
+      "Architecture",
+      "Backend",
+      "Security",
+      "Domain Compliance",
+      "Domain Controls/Assurance",
+      "Domain Evidence",
+      "Domain Remediation",
+      "IAM for CT03",
+      "Privacy/Legal for CT04",
+      "Data Model",
+      "Configuration/Methodology for CT02"
+    ],
+    "PO_functional_reapproval_required": false,
+    "human_signatures_fabricated": 0,
+    "operational_publication_authorization": "NOT_GRANTED_THIS_EXECUTION"
+  },
+  "files": {
+    "created": [
+      "docs/phase6a/STEP_6A3/20_P_RBAC_PUBLICATION_DECISION_PACKET.md",
+      "docs/phase6a/STEP_6A3/21_P_CONFIG_BINDING_EVIDENCE_AND_ARCHITECTURE_OPTIONS.md",
+      "docs/phase6a/STEP_6A3/22_P_VOC_CANONICAL_VALUE_PROPOSALS.csv",
+      "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md",
+      "docs/phase6a/STEP_6A3/24_STEP_6A3_RECONCILIATION_REPORT.md",
+      "docs/phase6a/STEP_6A3/25_STEP_6A3_RESULT.json"
+    ],
+    "modified_since_preflight": [
+      "apps/frontend/src/i18n/display-text.ts",
+      "apps/frontend/src/i18n/es.ts",
+      "docs/governance/MASTER_EXECUTION_STATUS.md",
+      "e2e/core-grc-ui.spec.ts"
+    ],
+    "matrix17": "UNCHANGED",
+    "artifacts1_19": "UNCHANGED",
+    "files_outside_scope_modified": [],
+    "sha256_artifacts20_24": {
+      "docs/phase6a/STEP_6A3/20_P_RBAC_PUBLICATION_DECISION_PACKET.md": "5d6768ed6b806f5795d387dd3bd48ba0f744c60002c4e36d1a1452a69ea592af",
+      "docs/phase6a/STEP_6A3/21_P_CONFIG_BINDING_EVIDENCE_AND_ARCHITECTURE_OPTIONS.md": "afda666e389ff53e29f6646459b67b6d3b67c43e85dde94159c08a74fd94fc51",
+      "docs/phase6a/STEP_6A3/22_P_VOC_CANONICAL_VALUE_PROPOSALS.csv": "8a9669d3389eba33be3640756777c35642a5d910567082cdd1fc12bf91c66239",
+      "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md": "de3feae44235a7cdc905671f75769d3606f5c61b7bf8314f0fd32be87df7bab3",
+      "docs/phase6a/STEP_6A3/24_STEP_6A3_RECONCILIATION_REPORT.md": "c7b88af994c6cfee4ebcb30e7eed38972abd41f0de19dea4815939a738189fe1"
+    },
+    "sha256_modified_since_preflight": {
+      "apps/frontend/src/i18n/display-text.ts": "3f8390837eb6baa1f5ab710e01b4f09ef081547909385e0f5a73828d0422ccf8",
+      "apps/frontend/src/i18n/es.ts": "42d4aaf24e440d10f3d5ebca56c87b743a7a0cbcf9adb025d386ced32a6cd42f",
+      "docs/governance/MASTER_EXECUTION_STATUS.md": "84ffaf90b4662eaf12733064528877488aceb64196d73638c9f5fe90ff3f4663",
+      "e2e/core-grc-ui.spec.ts": "557dffef0f1f08c74dfdd47cfb8770ec819f79a398dac17c0cd30181469818c7"
+    }
+  },
+  "preservation": {
+    "preexisting_modified_untracked_files": 60,
+    "unchanged_sha256_files": 56,
+    "expected_changed_files": [
+      "apps/frontend/src/i18n/display-text.ts",
+      "apps/frontend/src/i18n/es.ts",
+      "docs/governance/MASTER_EXECUTION_STATUS.md",
+      "e2e/core-grc-ui.spec.ts"
+    ],
+    "initial_sha256_map": {
+      "apps/frontend/src/api-client.ts": "c406f09272a5655e96e0e9fbea123ed14553cecf14ce42c65fa42ca84679723e",
+      "apps/frontend/src/core-grc.tsx": "456cac14bd7d20c388fb5628c3daae0dfa986c862dcafe555aad5859d508c8ec",
+      "apps/frontend/src/i18n/display-text.ts": "04cb1eead71bb1856118dcc0f9e502e2ceb28a23dfcf781b49a894f965c5de3c",
+      "apps/frontend/src/i18n/es.ts": "72cff2402aca959363dff7d2aa0d2786ee9e95302b0fdf71c7943bd16a5c24da",
+      "apps/frontend/src/reference-read.test.ts": "4a8a09225a9cacf3ea9c8c23bfce15ac285f042f22c1ef11b20218b8e8c56ee8",
+      "apps/frontend/src/reference-read.ts": "fa7374a2e91da99a1c84f11cab8cf3ac9029dffe2c0d061b1fb2f807f3bfd8be",
+      "apps/frontend/src/reference-selectors.test.tsx": "48df27432c1e3cf02f06f069374e4933ad9b41a576a7e5210bf80472d45c21c3",
+      "apps/frontend/src/reference-selectors.tsx": "6d7fc1c278f87a60d2eda56fac326fb731a53d07cc8fa1c42b3c5cead04e8e39",
+      "apps/frontend/src/styles.css": "f0341a528e3196fc3ff5af42e1800dc50f2a4d2ac3f6de2ff03a1a3cc5d6bb73",
+      "artifacts/phase5-iam-ui/step23l-managed-identity-tenant-onboarding-e2e/snapshot.mjs": "af5a24ad58d54b50ba6db188efc6d58f1469e71e30e75c167195e2c1b057988f",
+      "data/regulatory/catalogs/_archives/TCDX_Unified_Compliance_Control_Catalog_v1.1_CANONICAL_IMPORT_READY_2026-09-28.zip": "fc7180b39e9edb891b0d3126e4d0e8526bcac862b6faba834a1e75a8aba0eec1",
+      "data/regulatory/catalogs/_archives/TCDX_Unified_Compliance_Control_Catalog_v1_2026-09-28.zip": "f32c8373542b4fef9dabe95c6087bbfbf7bc7351c4af638bb7a072907591d6be",
+      "docs/governance/MASTER_EXECUTION_STATUS.md": "f5aa4fd9815d53b2d437546433748c01fb1cc664f656c3e62975954d09fbc19b",
+      "docs/normative-sources/incoming/GRC_Tecdex_Paquete_Normativo_Unificado_Preparacion_Post6A4_v2_2026-10-08.zip": "76f31d9effc174e0d9133615c1e979a13f9b1f1c1b1ef291197ea2c4f129d68c",
+      "docs/phase6a/STEP_6A1/01_SOURCE_INVENTORY.md": "3a1230cb9a450e7839cc451d2ec74d84f5b97671599d5fb46539d97d627a73d8",
+      "docs/phase6a/STEP_6A1/02_FORM_FIELD_MATRIX.csv": "09c9b57d34aed51418b86f2f7007cc24772ad85db8e24b2d984f0e3d360ec212",
+      "docs/phase6a/STEP_6A1/03_CANONICAL_REFERENCE_RESOLUTION.md": "64c46ea9af96f28e692024f2e836a6f6e429e01c32b76b0480e3cbc689e78322",
+      "docs/phase6a/STEP_6A1/04_WORKFLOW_DEPENDENCY_MAP.md": "97b5d8e09b5fca3abcb645ac4f90b81f2c6a5cbf9ce7a0ee355427e66dbf0153",
+      "docs/phase6a/STEP_6A1/05_JSON_AND_VOCABULARY_AUDIT.md": "accc2efcbd23f76bcfed4df26c4e20c156ac1fa51cf498528f2e0d8e8df9ae98",
+      "docs/phase6a/STEP_6A1/06_UX_FINDINGS_AND_PRIORITIES.md": "bb7af50b907c2b8075cc2cfaece0de258a47f6d0d35de773f97e0ab0cfed35a6",
+      "docs/phase6a/STEP_6A1/07_PHASE6A_IMPLEMENTATION_BACKLOG.md": "ec0218d20c714cfe99eee68addf16cd04f7bd2492f80dbe092f3009dc2de2b49",
+      "docs/phase6a/STEP_6A1/08_BUSINESS_ACCEPTANCE_CRITERIA.md": "2aeeefd11a1657f525e8e417bd47b22f6d799356e90ba859a57f63c25326af57",
+      "docs/phase6a/STEP_6A1/09_STEP_6A1_AUDIT_REPORT.md": "ad06699d2f691d0da6b8d719784846255bc12b79528f47fc60f956dadaea94b4",
+      "docs/phase6a/STEP_6A1/10_STEP_6A1_RESULT.json": "4ce6df0521405c9594f01551803286ac4118c604fe2858ff3725500a591e5c47",
+      "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md": "7a42cb16f5836205cddaf49e17018560a858c89de4fd4698e3c9dcdf4bde6e5c",
+      "docs/phase6a/STEP_6A2/02_CONTEXTUAL_LINK_MATRIX.csv": "ca2acdeda7b759561c17b78f0681a8044630eda87d06dac46cc561e3e8724e62",
+      "docs/phase6a/STEP_6A2/03_REFERENCE_SELECTOR_DESIGN.csv": "c92c23c5cdc61ff8f7b57fe6e595bdaa75927b6d37b376dfdd2f7064e3865499",
+      "docs/phase6a/STEP_6A2/04_MISSING_READ_CAPABILITIES.md": "fb386ff25a3a4ddb05d552e71df1d1687764adbe81f64c77a8aa40fe6c2a0fb0",
+      "docs/phase6a/STEP_6A2/05_VOCABULARY_RESOLUTION_DESIGN.md": "ba7cb70510bd81f82b0eec0279f2598e66c953c7d2118522ceaefc058546e5c8",
+      "docs/phase6a/STEP_6A2/06_STRUCTURED_JSON_FORM_DESIGN.md": "5d18f44c076d46201eeebd4513ec9548c51be79dd63c0454165dde9c08af46f4",
+      "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv": "5e14768ef98376923a11408768cf7c52318400d1e0711c7ed661f0491a4df779",
+      "docs/phase6a/STEP_6A2/08_EMPTY_STATES_AND_RBAC.md": "383c47e22b4687cf5785dbf312356b78c973e3f7c9c32ad0ea846d5ec3dc292f",
+      "docs/phase6a/STEP_6A2/09_IMPLEMENTATION_BACKLOG.md": "b88ffca82deb56b2f911f2b773d3c8fdbd67bfe348c8730c4315da3e0638469f",
+      "docs/phase6a/STEP_6A2/10_PHASE6A_ACCEPTANCE_GATES.md": "f9a6ed3028a6e29fe04cbcd833e1216d8a3602d54f6aa80457e6922864bb607b",
+      "docs/phase6a/STEP_6A2/11_STEP_6A2_DESIGN_REPORT.md": "e6f82211737308450611ce208ddeae3e30e99c54b125faadb220fb90bb7f9b0d",
+      "docs/phase6a/STEP_6A2/12_STEP_6A2_RESULT.json": "dd5565dd5ff04b15e6814937072e5ed3bc381fc5d23b608129f21610de9b4a18",
+      "docs/phase6a/STEP_6A3/01_IMPLEMENTATION_MANIFEST.md": "053ee05dac8da5905bfc3becac275021fbfd7abc841c6286622c417be2edd5b2",
+      "docs/phase6a/STEP_6A3/02_READ_CAPABILITIES_IMPLEMENTATION.md": "93a3ce2697c3ca95b80dcbdde2831308ac2714eb794ba7d0f3ba6381fee21bde",
+      "docs/phase6a/STEP_6A3/03_SELECTOR_COMPONENTS.md": "c32b973154b0c0f8b72420eccecde995e376869aeab3bfa1fcd5443265407fed",
+      "docs/phase6a/STEP_6A3/04_VOCABULARY_RESOLUTION.md": "aed94c07b921fb06bcebde2a3c3887186dc047d485e8b6196783baaa3f7bc888",
+      "docs/phase6a/STEP_6A3/05_FORM_ADOPTION_MATRIX.csv": "0978b1f81f6be7635ab68871f842bf6596c2d9bd6b36d0afe79640321c373250",
+      "docs/phase6a/STEP_6A3/06_SECURITY_AND_TENANT_ISOLATION.md": "6988cb7c3ec1911994eb6452133bb40253d646084ab5b8fbc2611791321f4d88",
+      "docs/phase6a/STEP_6A3/07_TEST_AND_CONTRACT_RESULTS.md": "3fbdd5c83c0afb33cd1b2ee28a8ee051ca682424f30916d4c6a1d3599d8f38ad",
+      "docs/phase6a/STEP_6A3/08_OPEN_DECISIONS.md": "f638d020fe488f583fb96c425ced99afe3850e0342af0c3884d467804f027a80",
+      "docs/phase6a/STEP_6A3/09_STEP_6A3_IMPLEMENTATION_REPORT.md": "0e768dcbf46fd67d2e58e50015652f735892c6686fdc69a8b68e28930070444c",
+      "docs/phase6a/STEP_6A3/10_STEP_6A3_RESULT.json": "5fe7f2e08e4d135158f0a9231f98f03191c853b19127ff42c1df2d51b1487b5b",
+      "docs/phase6a/STEP_6A3/11_CORRECTIVE_CONTRACT_DECISION_PACKET.md": "ac6707e27e58a1a804527ff3a74efdaae2319ae691479a398fc0a0698a14d42b",
+      "docs/phase6a/STEP_6A3/12_CORRECTIVE_VOCABULARY_MATRIX.csv": "a931cdc2df860c4181b59dd122d69eed01107b47ad99e6aa6d8c3865d849aa6c",
+      "docs/phase6a/STEP_6A3/13_CORRECTIVE_CLOSURE_REPORT.md": "cf63f51959ff06ba3fe1417580aaf5c6563575c525596a97cc30bf1e2528c10c",
+      "docs/phase6a/STEP_6A3/14_STEP_6A3_CORRECTIVE_RESULT.json": "5fb55fc9f76238df3e39ba3412e776997751e02dd2220b136581aa4048a6ec6c",
+      "docs/phase6a/STEP_6A3/15_DR_6A3_TECHNICAL_20261008.md": "7e4ce411b88b8666a61f149bb093bc7f1f1f861f0c9a5ebeb5078ccf5439d20d",
+      "docs/phase6a/STEP_6A3/16_TECHNICAL_READ_CAPABILITY_MATRIX.csv": "eaae8023bc6e27e5bafcb7558057eabedb890954c96e1f8f4872c39bc05c5436",
+      "docs/phase6a/STEP_6A3/17_TECHNICAL_VOCABULARY_FIELD_MATRIX.csv": "ba4f9e92c822760c0c6b75903979560f3f7272be7828246c53f0e5626f882ee6",
+      "docs/phase6a/STEP_6A3/18_TECHNICAL_LOCALIZATION_AND_GATE_REPORT.md": "02dd03d8f021c0b10034ff4e7a4afd180b30723d58b896cb77dd477472fd8f0c",
+      "docs/phase6a/STEP_6A3/19_STEP_6A3_TECHNICAL_RESULT.json": "947b55c0aeae810dd367663350c98d35660a4d77db7502d4fcdafc7f2511bc74",
+      "e2e/core-grc-ui.spec.ts": "0c9fb06567022dae87f77fe0929d8155e9122f8ba516ae08203b503d00839aae",
+      "packages/contracts/src/index.ts": "b83f72d9c3d80aef44c823b3f320092f833e407b4373e574abeec3d58a5bc09d",
+      "packages/contracts/src/phase6a-reference-resolution.test.ts": "e7ed80890ae36ec6060b6018e5271c606ec74358343bdb7249d7c8e0651e3681",
+      "packages/contracts/src/phase6a-vocabularies.ts": "482f53148716c843055d3d05acd6d15784cee1520cd31041e5178857df499c21",
+      "scripts/foundations/generate-phase6a-vocabularies.mjs": "609ff55591b21ae8f0f2d4d3122977daa3892d37411fe2323affa1331f75cc28"
+    },
+    "index_sha256_initial": "a60dbdd87c2e7bd8a438f590df890096bcf2e3b67c9a874edbd1cd8ccf7a7066",
+    "index_sha256_final": "a60dbdd87c2e7bd8a438f590df890096bcf2e3b67c9a874edbd1cd8ccf7a7066",
+    "HEAD_initial": "6af66387aa03fa185ef139584de07700f247b903",
+    "HEAD_final": "6af66387aa03fa185ef139584de07700f247b903",
+    "status_prefix_bytes": 431593,
+    "status_prefix_sha256": "f5aa4fd9815d53b2d437546433748c01fb1cc664f656c3e62975954d09fbc19b",
+    "status_prefix_preserved": true
+  },
+  "receipt_files_sha256": {
+    "/private/tmp/step6a3-final-unit.json": "3c814d6ed2d2dbd01c1923d8778affd13f84a7ae6aec341aaa1708a09f7bb6c1",
+    "/private/tmp/step6a3-final-unit.log": "1b4ddbabd4f8e8818feef5878b6f924eff828a9eae9aeb915e64999e923e6335",
+    "/private/tmp/step6a3-pg.json": "85c3bd762abc8e7274bdd7e2794d11bb464558c9b1695a42e9164bda74e7fb2d",
+    "/private/tmp/step6a3-pg.log": "13e51ddeda18a3b1009030e35636984560d29e720bac4484adca3ee8afffe4dc",
+    "/private/tmp/step6a3-e2e.json": "96f529316a8826ee20b08362c8c2f117e290d99ee5c555b15c28f08c68ad1c93",
+    "/private/tmp/step6a3-e2e-before-copy-adjustment.json": "37c5a5ce41455508145a6338c32c9c8ae79ac1dad87f69eb60a6a66e303b7ff9",
+    "/private/tmp/step6a3-e2e-unsandboxed.json": "38c5ee6b34eeb3b0c4d0edd0ce708020a4381c2bca1599491a4b7fa37b45f0e0",
+    "/private/tmp/step6a3-e2e-unsandboxed.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/private/tmp/step6a3-contracts.log": "3b1db8edc2d317b056ee164b5cae869afaffa6cb0db50b7e9b1fe607c482ed7b",
+    "/private/tmp/step6a3-final-typecheck.log": "75392e5f0a2222f90dad20884dcfbd52c94389949636e3bc34de6a7ed2d64246",
+    "/private/tmp/step6a3-final-lint.log": "aa06e7796c252ac39e972f3463284f8c2cc5b468aa36b766d1f920e5b757056c",
+    "/private/tmp/step6a3-isolated-read-receipt.json": "80e7da47f72c652cb637db00f3afef24a6f3706b97755772f15f5dd43659868e",
+    "/private/tmp/step6a3-final-rector.log": "c873d0aca12c3a33cc74df1e37fd4473c24857723253f02c81c9663019f4b32a",
+    "/private/tmp/step6a3-final-secrets.json": "785afde26b815831ebbe2ea9b6a7125f5b49cdf400b3697f50d456a5337f0f2d",
+    "/private/tmp/step6a3-final-validation.json": "5251a05303918f42bf9747366555923839c05a95b9b543d93f81576839b4aeff"
+  },
+  "changed_layers": {
+    "database_schema": false,
+    "migrations": false,
+    "executable_contracts": false,
+    "effective_permissions_or_grants": false,
+    "backend": false,
+    "frontend": "SIX_CENTRAL_COPY_VALUES",
+    "tests": "TWO_EXISTING_E2E_COPY_EXPECTATIONS",
+    "infrastructure": false,
+    "IAM": false,
+    "deployment_contracts": false
+  },
+  "operational_actions": {
+    "commits": 0,
+    "push": false,
+    "PR": false,
+    "merge": false,
+    "QA_mutations": 0,
+    "QA_access": false,
+    "deploy": "NO",
+    "DDL": 0,
+    "new_migrations": 0,
+    "new_runtime_business_data": 0,
+    "IAM_mutations": 0,
+    "infrastructure_changes": 0,
+    "isolated_PG_fixture_tests_executed": true,
+    "STEP_6A4_started": false
+  },
+  "commits": 0,
+  "QA_mutations": 0,
+  "deploy": "NO",
+  "NEXT_REQUIRED_ACTION": "COMPETENT_CLAUSE_REVIEW_AND_CANONICAL_PUBLICATION_AUTHORIZATION_WITHIN_STEP_6A3",
+  "final_validation": {
+    "document_validation": "PASS",
+    "full_path_line_references_checked": 310,
+    "source_reference_errors": [],
+    "value_rows": 52,
+    "CV_field_ids": 26,
+    "role_rows": 24,
+    "proposed_grants": [
+      13,
+      17,
+      14
+    ],
+    "internal_ids": 95,
+    "vocab_occurrences": 89,
+    "visual_asset_integrity": "PASS",
+    "visual_assets_verified": [
+      "docs/ui/baselines/dashboard/TCDX_GRC_DASHBOARD_BASELINE_v1.0.png",
+      "docs/ui/assets/brand/tecdex-logo-light.svg"
+    ],
+    "domain_scan": "PASS_ACTIVE_SOURCE_CONFIGURATION_NO_MISSPELLED_DOMAIN",
+    "domain_scan_hits": [],
+    "worktree_preservation": "PASS",
+    "git_diff_check": "PASS",
+    "HEAD_index": "PRESERVED",
+    "secret_findings": 0,
+    "rector_integrity": "PASS",
+    "artifact_whitespace": "PASS",
+    "future_contract_execution": "NOT_RUN_PROPOSED_NOT_PUBLISHED_NOT_IMPLEMENTED"
+  }
+}

@@ -1,0 +1,240 @@
+{
+  "observed_at_utc": "2026-10-13T23:43:00.090921+00:00",
+  "checks": [
+    {
+      "check": "inherited_files_preserved",
+      "result": "PASS",
+      "evidence": {
+        "files": 2091,
+        "differences": []
+      }
+    },
+    {
+      "check": "branch_and_head_preserved",
+      "result": "PASS",
+      "evidence": "23c7b50468213b8c0769ca2607349e04f4c32eae"
+    },
+    {
+      "check": "artifact_hashes",
+      "result": "PASS",
+      "evidence": {
+        "count": 30,
+        "differences": []
+      }
+    },
+    {
+      "check": "source_hashes",
+      "result": "PASS",
+      "evidence": {
+        "count": 250,
+        "differences": []
+      }
+    },
+    {
+      "check": "original_package_source_manifest",
+      "result": "PASS",
+      "evidence": {
+        "rows": 27,
+        "differences": []
+      }
+    },
+    {
+      "check": "historical_rescue_manifest",
+      "result": "PASS",
+      "evidence": {
+        "entries": 79,
+        "differences": [],
+        "scope": "hash reuse only; not new product evidence"
+      }
+    },
+    {
+      "check": "all_thirty_unique_dispositions",
+      "result": "PASS",
+      "evidence": "6G+12C+12H; all contractual fields present"
+    },
+    {
+      "check": "disposition_contract_fields",
+      "result": "PASS",
+      "evidence": [
+        "authority",
+        "decision",
+        "canonical_model",
+        "physical_model",
+        "executable_contract",
+        "dependencies",
+        "tests",
+        "risk",
+        "evidence_required",
+        "human_authority",
+        "publication_condition",
+        "operation_condition",
+        "acceptance_condition"
+      ]
+    },
+    {
+      "check": "all_ten_findings",
+      "result": "PASS",
+      "evidence": "Each has resolution and explicit residual condition"
+    },
+    {
+      "check": "scenario_matrix_unique_and_not_pass",
+      "result": "PASS",
+      "evidence": {
+        "rows": 84,
+        "product_tests_executed": 0
+      }
+    },
+    {
+      "check": "json_schema_closed_objects_and_local_refs",
+      "result": "PASS",
+      "evidence": {
+        "internal_refs": 60,
+        "external_refs": [
+          "../../../executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml#/components/schemas/ErrorEnvelope",
+          "../../../executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml#/components/schemas/ErrorEnvelope"
+        ],
+        "limitation": "External YAML target schema existence checked by reference text below; not full OpenAPI/JSON-Schema validator or API test"
+      }
+    },
+    {
+      "check": "external_error_schema_target",
+      "result": "PASS",
+      "evidence": "unchanged active OpenAPI ErrorEnvelope"
+    },
+    {
+      "check": "sync_http200_no202",
+      "result": "PASS",
+      "evidence": "subscriptionCreate active contract remains untouched"
+    },
+    {
+      "check": "no_historical_response_etag",
+      "result": "PASS",
+      "evidence": "success and replay omit ETag; GET detail has fresh CAS"
+    },
+    {
+      "check": "subscription_if_match_specific",
+      "result": "PASS",
+      "evidence": "no RetentionPolicy component reused"
+    },
+    {
+      "check": "canonical_url",
+      "result": "PASS",
+      "evidence": "new artifacts use canonical public host"
+    },
+    {
+      "check": "no_wrong_domain_new_artifacts",
+      "result": "PASS",
+      "evidence": []
+    },
+    {
+      "check": "ddl_no_catalog_or_iam_seed",
+      "result": "PASS",
+      "evidence": "only FK-derived root backfill; no commercial amounts seeded"
+    },
+    {
+      "check": "ddl_no_destructive_history",
+      "result": "PASS",
+      "evidence": "forward structural delta; original migrations unchanged"
+    },
+    {
+      "check": "ddl_prospective_root_not_retroactive_exclusion",
+      "result": "PASS",
+      "evidence": "R-P new INSERT guard; history preserved; concurrency proof pending"
+    },
+    {
+      "check": "ddl_finite_nullsafe_coverage",
+      "result": "PASS",
+      "evidence": "lexical candidate validation only; SQL NOT executed/compiled by PostgreSQL"
+    },
+    {
+      "check": "migration_source_entries_intact",
+      "result": "PASS",
+      "evidence": {
+        "source_migrations": 32,
+        "candidate_migrations": 33,
+        "qa_inventory_current": "NOT_RUN"
+      }
+    },
+    {
+      "check": "candidate_schema_compilation",
+      "result": "PASS",
+      "evidence": {
+        "command": [
+          "node",
+          "docs/phase6a/STEP_6A3/FINAL_CONTRACT_RECONCILIATION_20261013/verify-candidate-schemas.mjs"
+        ],
+        "exit_code": 0,
+        "log": "docs/phase6a/STEP_6A3/FINAL_CONTRACT_RECONCILIATION_20261013/candidate_schema_compilation.log",
+        "sha256": "2c718217feb340c74e61262958a2670f40d8c9e72fcdafc818c0cdc13c7f2017",
+        "scope": "documentary/current contracts; not new product evidence"
+      }
+    },
+    {
+      "check": "rector_governance",
+      "result": "PASS",
+      "evidence": {
+        "command": [
+          "bash",
+          "scripts/verify-rector-governance.sh"
+        ],
+        "exit_code": 0,
+        "log": "docs/phase6a/STEP_6A3/FINAL_CONTRACT_RECONCILIATION_20261013/rector_governance.log",
+        "sha256": "be827f42eb6ea9aa9359e7f5e925cc56b81bf1dbc9f7f0b6337292b1c38192ff",
+        "scope": "documentary/current contracts; not new product evidence"
+      }
+    },
+    {
+      "check": "active_contract_asset_check",
+      "result": "PASS",
+      "evidence": {
+        "command": [
+          "node",
+          "scripts/foundations/generate-contract-assets.mjs",
+          "--check"
+        ],
+        "exit_code": 0,
+        "log": "docs/phase6a/STEP_6A3/FINAL_CONTRACT_RECONCILIATION_20261013/active_contract_asset_check.log",
+        "sha256": "a524c850545fa0a9eb0ab42da0779561c4f6608ea9337687039e30e67f703462",
+        "scope": "documentary/current contracts; not new product evidence"
+      }
+    },
+    {
+      "check": "secret_scan",
+      "result": "PASS",
+      "evidence": {
+        "command": [
+          "node",
+          "scripts/foundations/secret-scan.mjs"
+        ],
+        "exit_code": 0,
+        "log": "docs/phase6a/STEP_6A3/FINAL_CONTRACT_RECONCILIATION_20261013/secret_scan.log",
+        "sha256": "785afde26b815831ebbe2ea9b6a7125f5b49cdf400b3697f50d456a5337f0f2d",
+        "scope": "documentary/current contracts; not new product evidence"
+      }
+    },
+    {
+      "check": "tracked_whitespace",
+      "result": "PASS",
+      "evidence": {
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exit_code": 0,
+        "log": "docs/phase6a/STEP_6A3/FINAL_CONTRACT_RECONCILIATION_20261013/tracked_whitespace.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "documentary/current contracts; not new product evidence"
+      }
+    }
+  ],
+  "documentary_check_result": "PASS",
+  "RECTOR_INTEGRITY_SCRIPT": "PASS",
+  "RECTOR_GATE_FOR_ACTIVATION_AND_CLOSURE": "BLOCKED",
+  "product_tests_executed": 0,
+  "ddl_executed": 0,
+  "qa_connections": 0,
+  "human_approvals_obtained": 0,
+  "STEP_6A3": "PARTIAL_BLOCKED",
+  "STEP_6A4": "NOT_STARTED"
+}

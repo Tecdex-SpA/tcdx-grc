@@ -1,0 +1,23 @@
+# Publicación ejecutable sucesora — scope EvidenceVersion.submit
+
+STATUS=STAGED_NOT_EFFECTIVE
+
+Fuente: corrección PO aprobada mediante SUBMIT_SCOPE_PO_DECISION_RECEIPT_20261015.json y manifest eb3b667724283db7aeae4888a987cb72c7757f3425050cf2b332f14efa82467d. Consume baseline activa v1.11 (manifest4599f6e522ed91952ab01296a4c0b9cbe4df8ad4c1a612afd7fd0414215f824b), especialmente21 §16,22,24 y la custodia inicial publicada. No altera bytes rectores ni el modelo de dominio; materializa la arista derivada omitida, cuya publicación/condición ejecutable se aprueba por este paquete exacto.
+
+## Condición de transición cerrada
+
+EvidenceVersion/draft/evidence.submit/v2→submitted conserva permiso evidence.evidence.submit, audit.evidence.evidence.submit.v1 y side effect evidence.evidence.submitted.v1. Scopes: assigned_object,owned_object,tenant. Tenant sólo permite submit por el autor humano real de la cadena INITIAL_SOURCE propia, con scope tenant efectivo, rol Tenant Admin custodio o Evidence Owner, aplicabilidad draft nueva válida, sin source, sin EvidenceLinks, policy ordinaria tenant-owned publicada/vigente, contexto/FK exactos y ausencia de primaria ordinaria. Si sólo tiene tenant y no satisface ese predicado: DENY; la lectura tenant no confiere derechos. No sintetizar scopes en el actor. Antes de CAS y en replay se reautoriza con datos bloqueados actuales. Después de publicación de la aplicabilidad el replay no produce otra transición; comprueba autor/contexto/cadena, sin conceder consumo a un documento sin links.
+
+Owned/assigned ordinarios conservan permiso, scope efectivo, ObjectPolicy y reglas actuales. No se concede tenant-only para Evidence ordinaria o ajena. Review/approve y sus SoD no cambian. El consumo ordinario y bind mantienen guards v1.11. La sucesora usa precondition_policy_ref contract:initial-retention-source-submit:v1.11. La v1 permanece inmutable e inventariada; la elección es por versión publicada superior, conforme al resolver canónico, sin fallback.
+
+## Operador privado y publicación
+
+Nueva operación privada exclusiva QA iam.initial_source.publish dentro del operador existente, sin endpoint HTTP público ni grants nuevos. Reutiliza autenticación real del principal M2M activo y sus proofs actuales. Configuración adicional: par completo TCDX_INITIAL_SOURCE_PUBLICATION_ROOT / TCDX_INITIAL_SOURCE_PUBLICATION_MANIFEST_SHA256; ausencia deshabilita la operación; configuración parcial/no QA/manifest o decisión incoherente DENY. Loaders verifican baseline activa, aprobación exacta, todos los snapshots y binding, recibo predecessor y ledger34/R2 exactos. No añadir credenciales, ServicePrincipal ni permisos; no ejecutar iam.publish/iam.c04w.publish.
+
+Transacción: lock_timeout5s; bloquear registry, scopes y side-effects; resolver proof/principal; verificar predecesora v1 exacta del snapshot QA; insertar únicamente v2 con3scopes y el mismo side-effect requerido ordinal1; insertar una auditoría audit.platform.lifecycle_transition.publish.v1 bajo step6a3InitialSourceLifecyclePublication, con manifest/decisión/hash/principal/correlation, sin secretos. Falla audit o discrepancia revierte todo. Replay exacto verifica v2, scopes/efecto/audit único y retorna0 filas/0audit nuevos; discrepancia es409 y nunca edita v1/v2. Las cinco aristas C04W conservan sus filas/auditorías sin republicación. Bind no crea otra arista.
+
+## Despliegue y orden técnico
+
+Publicación contractual válida→código mínimo y pruebas PG16 aisladas→build inmutable. Para publicar registry antes del preflight de promoción se puede ejecutar el nuevo operador privado desde la imagen candidata en un contenedor efímero QA sin servidor HTTP, usando configuración secreta existente montada protegida; no reemplaza backend activo, IAM/grants ni configuración DNS/infra. Guardar digest/source, comando privado, audit y replay0. El promotor verifica además registryv2/audit exactos antes de promover backend/frontend. Mantener rollback anterior, health,smoke y fingerprints históricos. Autorización Release humana condicional ya registrada; no equivale a gates PASS ni aceptación de UI.
+
+Sin DDL, migraciones, nuevos RolePermission/MembershipRole, nuevas entidades/flags, políticas jurídicas ficticias, purga ni ampliación de etapa. Pruebas obligatorias: tenant-only propio positivo; tenant-only ordinario/ajeno/cross-tenant DENY; regresión owned/assigned; ausencia de permiso/entitlement; source/contexto/CAS/replay/carreras/scan; idempotencia y rollback de audit del operador y de producto; conservación R2/34/5/historia. QA jurídica sólo H01 auténtico y sesiones legítimas. Si faltan, NOT_RUN; no simular consentimiento.

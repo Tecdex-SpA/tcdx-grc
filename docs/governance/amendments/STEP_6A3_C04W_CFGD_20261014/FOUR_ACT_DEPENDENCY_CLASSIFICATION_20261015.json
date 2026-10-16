@@ -1,0 +1,84 @@
+{
+  "decision_reference": "docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/PO_FOUR_CANDIDATES_EDITORIAL_APPROVAL_20261015.json",
+  "decision_sha256": "d71b0d5ccb56d12e73ac214bda5ff51b85b1a6faaa9c9e26aff14661e7838e15",
+  "entries": [
+    {
+      "path": "docs/executable-contracts/candidates/STEP_6A3_C04W_CFGD_v1.10/ROLE_PERMISSIONS.json",
+      "sha256": "8c9112ae1db21f477cca6f16dba12ccbe0b4956b2d477b77b4097d3ed5727583",
+      "classification": "PREVIOUS_CANDIDATE_AND_REFERENCED_DEPENDENCY",
+      "basis": "A01 receipt references the original successor request with exact 8c9112...; approved executable DELTA references this manifest; exact QA pairs were previously verified. This act adds no RolePermission approval or grant.",
+      "approved_by_current_four_file_act": false
+    },
+    {
+      "path": "database/migrations/20261015000100_c04w_applicability_hold_r2.sql",
+      "sha256": "b2a5bc73f75d7f95fb7ba5068f1b3ea77a923d7da7501446d05455ee545ec523",
+      "classification": "PREVIOUS_EXACT_OPERATIONAL_AUTHORIZATION",
+      "basis": "Exact approved R2 SHA incorporated in the approved physical delta and existing QA migration receipt; not executed again.",
+      "approved_by_current_four_file_act": false
+    },
+    {
+      "path": "database/migrations/manifest.json",
+      "sha256": "df18d813bd0f4d763dd02ef9617fa21e9474e3f7fc155e9b97e8f47eee11002f",
+      "classification": "TECHNICAL_LEDGER_INDEX",
+      "basis": "34 exact rows matched live QA; procedural append of approved R2, not a new operation authorized by this editorial act.",
+      "approved_by_current_four_file_act": false
+    },
+    {
+      "path": "database/expected-schema.json",
+      "sha256": "ab9a097c6340c6b5619e6f583adf6b20c1044bdcef49cf97957cd24796630b79",
+      "classification": "TECHNICAL_PHYSICAL_PROJECTION",
+      "basis": "Existing isolated db:verify zero differences and live QA table set; consumes the R2 physical contract, not a new material model decision.",
+      "approved_by_current_four_file_act": false
+    },
+    {
+      "path": "docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml",
+      "sha256": "d0cf391c78c194466f978d78bbabef49c48120cc8ec910dfcd82fff572e36f2b",
+      "classification": "NEW_DERIVED_EXECUTABLE_BYTES_REQUIRING_EXACT_REVIEW",
+      "basis": "No receipt approving the current full snapshot hash was found in the applicable publication and approval packet sources. Changes introduce C-04W operations/scopes/audit/seed/storage contract content; the four-file approval does not extend to this snapshot.",
+      "approved_by_current_four_file_act": false
+    },
+    {
+      "path": "docs/executable-contracts/03_API_RESOURCE_OPERATION_MATRIX.md",
+      "sha256": "2370893e307d01c6102665bb5cbb488aa171ea93a91e1064480b6274098da5de",
+      "classification": "NEW_DERIVED_EXECUTABLE_BYTES_REQUIRING_EXACT_REVIEW",
+      "basis": "No receipt approving the current full snapshot hash was found in the applicable publication and approval packet sources. Changes introduce C-04W operations/scopes/audit/seed/storage contract content; the four-file approval does not extend to this snapshot.",
+      "approved_by_current_four_file_act": false
+    },
+    {
+      "path": "docs/executable-contracts/05_PERMISSION_CATALOG.md",
+      "sha256": "aa589f77a8b126be5f89067158a00ec8870ed6d54400f45bad0e4e99297bfb3e",
+      "classification": "NEW_DERIVED_EXECUTABLE_BYTES_REQUIRING_EXACT_REVIEW",
+      "basis": "No receipt approving the current full snapshot hash was found in the applicable publication and approval packet sources. Changes introduce C-04W operations/scopes/audit/seed/storage contract content; the four-file approval does not extend to this snapshot.",
+      "approved_by_current_four_file_act": false
+    },
+    {
+      "path": "docs/executable-contracts/08_AUDIT_EVENT_CATALOG.md",
+      "sha256": "557f839a2b5a31520607d0d3af9e1f71d92cf5c50356d2d41bbab901a062a862",
+      "classification": "NEW_DERIVED_EXECUTABLE_BYTES_REQUIRING_EXACT_REVIEW",
+      "basis": "No receipt approving the current full snapshot hash was found in the applicable publication and approval packet sources. Changes introduce C-04W operations/scopes/audit/seed/storage contract content; the four-file approval does not extend to this snapshot.",
+      "approved_by_current_four_file_act": false
+    },
+    {
+      "path": "docs/executable-contracts/09_SEED_MANIFESTS.md",
+      "sha256": "7c8edee72870834b7594d9d9cbf455c463cafdd0951f7f3757c1741f88d7a5e6",
+      "classification": "NEW_DERIVED_EXECUTABLE_BYTES_REQUIRING_EXACT_REVIEW",
+      "basis": "No receipt approving the current full snapshot hash was found in the applicable publication and approval packet sources. Changes introduce C-04W operations/scopes/audit/seed/storage contract content; the four-file approval does not extend to this snapshot.",
+      "approved_by_current_four_file_act": false
+    },
+    {
+      "path": "docs/executable-contracts/14_FILE_EVIDENCE_STORAGE_CONTRACT.md",
+      "sha256": "6342c314fa21e0d285f923b4cf5b4b8573649f0caa51c2d9dd59f836638b3e81",
+      "classification": "NEW_DERIVED_EXECUTABLE_BYTES_REQUIRING_EXACT_REVIEW",
+      "basis": "No receipt approving the current full snapshot hash was found in the applicable publication and approval packet sources. Changes introduce C-04W operations/scopes/audit/seed/storage contract content; the four-file approval does not extend to this snapshot.",
+      "approved_by_current_four_file_act": false
+    },
+    {
+      "path": "scripts/phase6a3/qa-promote-step6a3.py",
+      "sha256": "009e4237b84984834b478e5948d7abd7e519e699e4cffd22cfc61a6c14d81e9a",
+      "classification": "OPERATIONAL_TOOL_IMPLEMENTATION",
+      "basis": "User explicitly authorized reconciliation and use after gates; eight offline tests PASS; not a product contract and no release execution authorized by a counter or label.",
+      "approved_by_current_four_file_act": false
+    }
+  ],
+  "automatic_extension_to_remaining_11": false
+}

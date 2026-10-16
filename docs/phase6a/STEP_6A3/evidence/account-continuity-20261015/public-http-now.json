@@ -1,0 +1,25 @@
+{
+  "observed_at_utc": "2026-10-15T20:20:27.257806+00:00",
+  "provenance": "LIVE_PUBLIC_HTTPS_NO_AUTHENTICATION",
+  "checks": [
+    {
+      "path": "/",
+      "method": "GET",
+      "http_status": "200",
+      "exit_code": 0
+    },
+    {
+      "path": "/api/v1/retention-policy-applicabilities",
+      "method": "GET",
+      "http_status": "401",
+      "exit_code": 0
+    },
+    {
+      "path": "/api/v1/control-assessments",
+      "method": "GET",
+      "http_status": "401",
+      "exit_code": 0
+    }
+  ],
+  "authentication": "NOT_ATTEMPTED"
+}

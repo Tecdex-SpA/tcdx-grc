@@ -1,3 +1,4 @@
+import { predecessorReferenceCatalog } from "./testing/historical-catalog-stage.js";
 import { restorePreMethodologyFixture } from "./methodology-predecessor-fixture.js";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { createHash } from "node:crypto";
@@ -57,6 +58,7 @@ describe.skipIf(process.env.TCDX_SECURITY_INTEGRATION !== "true")("D2 isolated P
     if (!db) return;
     try {
       const tenants = (await sql<{ tenant_id: string }>`SELECT tenant_id FROM platform.tenants WHERE created_by_user_identity_id=${ids.platform}::uuid`.execute(db)).rows.map((row) => row.tenant_id);
+      await sql`DELETE FROM ops_audit.audit_events WHERE tenant_id=ANY(${tenants}::uuid[])`.execute(db);
       await sql`DELETE FROM ops_audit.audit_events WHERE actor_user_identity_id=ANY(${identities}::uuid[])`.execute(db);
       await sql`DELETE FROM ops_audit.outbox_events WHERE actor_user_identity_id=ANY(${identities}::uuid[])`.execute(db);
       await sql`DELETE FROM ops_audit.idempotency_records WHERE actor_user_identity_id=ANY(${identities}::uuid[])`.execute(db);
@@ -72,6 +74,7 @@ describe.skipIf(process.env.TCDX_SECURITY_INTEGRATION !== "true")("D2 isolated P
   it("publishes exactly one physical Permission, approved template/tenant grants and no schema delta", async () => {
     const rollback = Symbol("rollback isolated data publication proof");
     await db.transaction().execute(async (tx) => {
+      await predecessorReferenceCatalog(tx);
       await restorePreMethodologyFixture(tx);
       const structure = async () => (await sql`SELECT n.nspname,c.relname,c.relkind,a.attname,a.atttypid,a.attnotnull,a.attnum,pg_get_expr(d.adbin,d.adrelid) AS default_expression
         FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace LEFT JOIN pg_attribute a ON a.attrelid=c.oid AND a.attnum>0 AND NOT a.attisdropped

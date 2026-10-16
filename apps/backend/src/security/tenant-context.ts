@@ -1,4 +1,5 @@
 import { sql, type Kysely } from "kysely";
+import { validate as validateUuid } from "uuid";
 import type { FoundationDatabase } from "../database.js";
 import { FoundationError } from "../errors.js";
 import type { VerifiedIdentity } from "./authentication.js";
@@ -12,6 +13,7 @@ export type TenantContext = {
 export async function resolveTenantContext(database: Kysely<FoundationDatabase>, identity: VerifiedIdentity, candidateTenantId: string | undefined): Promise<TenantContext> {
   if (!candidateTenantId) throw new FoundationError("TCDX.AUTHORIZATION.DENIED", "Access denied", 403);
   if (identity.principalClass !== "HUMAN_INTERACTIVE") throw new FoundationError("TCDX.AUTHORIZATION.DENIED", "Access denied", 403);
+  if (!validateUuid(candidateTenantId)) throw new FoundationError("TCDX.VALIDATION.FAILED", "Validation failed", 400, false, { field: "X-TCDX-Tenant-Id" });
   const result = await sql<{ tenant_membership_id: string }>`
     SELECT tenant_membership_id
       FROM iam.tenant_memberships

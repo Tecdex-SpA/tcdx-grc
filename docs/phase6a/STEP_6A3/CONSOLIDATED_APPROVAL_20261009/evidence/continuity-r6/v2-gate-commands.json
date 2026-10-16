@@ -1,0 +1,173 @@
+[
+  {
+    "gate": "v2-typecheck",
+    "command": [
+      "pnpm",
+      "typecheck"
+    ],
+    "at": "2026-10-13T13:16:40.553919+00:00",
+    "duration": 1.867,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/v2-typecheck.log",
+    "sha256": "2bbea0ac79ff705bff631821dca05cbcceb110aaf170850e70396aa2cbdd1cdd"
+  },
+  {
+    "gate": "v2-lint",
+    "command": [
+      "pnpm",
+      "lint"
+    ],
+    "at": "2026-10-13T13:16:42.422172+00:00",
+    "duration": 1.348,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/v2-lint.log",
+    "sha256": "e0370991751f44e2dae1bdc67babec016bb132b34cbe2d78d2f3b018f854f4a3"
+  },
+  {
+    "gate": "v2-build",
+    "command": [
+      "pnpm",
+      "build"
+    ],
+    "at": "2026-10-13T13:16:43.770712+00:00",
+    "duration": 1.949,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/v2-build.log",
+    "sha256": "8d22a6c6f69806a1a7125793a73af192d4fa789f92597f319dd82a9c45047322"
+  },
+  {
+    "gate": "v2-contract-assets",
+    "command": [
+      "node",
+      "scripts/foundations/generate-contract-assets.mjs",
+      "--check"
+    ],
+    "at": "2026-10-13T13:16:45.721708+00:00",
+    "duration": 0.101,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/v2-contract-assets.log",
+    "sha256": "6b23028285d3508b88246bfaf068d1c124204ef566bf5065a39cdcf841fc8976"
+  },
+  {
+    "gate": "v2-vocabulary",
+    "command": [
+      "node",
+      "scripts/foundations/generate-phase6a-vocabularies.mjs",
+      "--check"
+    ],
+    "at": "2026-10-13T13:16:45.823572+00:00",
+    "duration": 0.21,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/v2-vocabulary.log",
+    "sha256": "712684f1e3b9a46e0b8fb6e9333573ec75e4a38f571ca1a587fbba6126af6001"
+  },
+  {
+    "gate": "v2-secrets",
+    "command": [
+      "node",
+      "scripts/foundations/secret-scan.mjs"
+    ],
+    "at": "2026-10-13T13:16:46.035117+00:00",
+    "duration": 1.618,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/v2-secrets.log",
+    "sha256": "785afde26b815831ebbe2ea9b6a7125f5b49cdf400b3697f50d456a5337f0f2d"
+  },
+  {
+    "gate": "v2-rector",
+    "command": [
+      "bash",
+      "scripts/verify-rector-governance.sh"
+    ],
+    "at": "2026-10-13T13:16:47.654113+00:00",
+    "duration": 0.323,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/v2-rector.log",
+    "sha256": "be827f42eb6ea9aa9359e7f5e925cc56b81bf1dbc9f7f0b6337292b1c38192ff"
+  },
+  {
+    "gate": "v2-rector-status",
+    "command": [
+      "bash",
+      "scripts/test-rector-governance-status.sh"
+    ],
+    "at": "2026-10-13T13:16:47.978601+00:00",
+    "duration": 1.428,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/v2-rector-status.log",
+    "sha256": "4a950b39b20f2de1440a2b45b243b63df607fa3ede7f7e32e9f7e9da71864597"
+  },
+  {
+    "gate": "v2-whitespace",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "at": "2026-10-13T13:16:49.410208+00:00",
+    "duration": 0.144,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/v2-whitespace.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "gate": "v2-integral-regression",
+    "command": [
+      "docker",
+      "exec",
+      "f006b8e7e8220181ea71bf717506f6b9a28f123fb7fa761082c25a54b526abb4",
+      "env",
+      "DATABASE_HOST=127.0.0.1",
+      "DATABASE_PORT=55432",
+      "DATABASE_NAME=tcdx-grc",
+      "DATABASE_USER=postgres",
+      "DATABASE_SSL_MODE=disable",
+      "TCDX_ISOLATED_REBUILD=true",
+      "TCDX_SECURITY_INTEGRATION=true",
+      "TCDX_PHASE5_LIFECYCLE_INTEGRATION=true",
+      "TCDX_EC_READONLY_POSTGRES=true",
+      "TCDX_STEP6A3_REFERENCE_POSTGRES=true",
+      "TCDX_STEP6A3_PG_SYSTEM_IDENTIFIER=7696125537008902190",
+      "pnpm",
+      "exec",
+      "vitest",
+      "run",
+      "--config",
+      "vitest.config.ts",
+      "--no-file-parallelism",
+      "--reporter=json",
+      "--outputFile=/workspace/r6-v2-full.json"
+    ],
+    "at": "2026-10-13T13:16:49.555434+00:00",
+    "duration": 42.85,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/v2-integral-regression.log",
+    "sha256": "496c45ceef9f322db98afeed0d88ae875480fee630f1d8d1cb2914409ea35fbb"
+  },
+  {
+    "gate": "v2-browser-simulated-all",
+    "command": [
+      "pnpm",
+      "exec",
+      "playwright",
+      "test",
+      "--reporter=json"
+    ],
+    "at": "2026-10-13T13:17:32.413052+00:00",
+    "duration": 557.792,
+    "exit_code": 130,
+    "result": "FAIL",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/v2-browser-simulated-all.log",
+    "sha256": "ee0ec905019bcbdfc3ab81bc216b1ac99c0d9830b26e387649f689aae135c8a4"
+  }
+]

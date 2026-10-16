@@ -1,11 +1,11 @@
 {
   "contract": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.5_2026-09-16",
-  "rectorCandidate": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23",
+  "rectorCandidate": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15",
   "physicalModelCommit": "a822bb92d0d585edd84adc8a1c65ec280923cc8e",
   "physicalModelAmendmentCommit": "6a31034ae1ecc1f9ee551431fb2a504a25fb52ce",
   "preF5cDecision": "DR-PRE-F5C-2026-09-21-005",
   "preF5eDecisionDate": "2026-09-23",
-  "tableCount": 237,
+  "tableCount": 242,
   "tables": [
     {
       "name": "platform.tenants",
@@ -648,13 +648,20 @@
           "type": "timestamptz",
           "nullable": true,
           "default": null
+        },
+        {
+          "name": "previous_subscription_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
         }
       ],
       "checks": [
         "row_version_positive",
         "created_actor_one",
         "updated_actor_one",
-        "starts_at_ends_at"
+        "starts_at_ends_at",
+        "previous_not_self"
       ],
       "uniqueConstraints": [
         [
@@ -733,15 +740,27 @@
           "type": "timestamptz",
           "nullable": true,
           "default": null
+        },
+        {
+          "name": "commercial_family_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
         }
       ],
       "checks": [
         "created_actor_one",
-        "effective_from_effective_to"
+        "effective_from_effective_to",
+        "family_code",
+        "finite_nonnegative",
+        "pack_value_unit"
       ],
       "uniqueConstraints": [
         [
-          "limit_code"
+          "plan_version_id",
+          "limit_code",
+          "commercial_family_id",
+          "effective_from"
         ]
       ]
     },
@@ -7108,6 +7127,12 @@
           "type": "text",
           "nullable": false,
           "default": null
+        },
+        {
+          "name": "retention_policy_applicability_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
         }
       ],
       "checks": [
@@ -7628,6 +7653,12 @@
         {
           "name": "effective_to",
           "type": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "retention_policy_applicability_id",
+          "type": "uuid",
           "nullable": true,
           "default": null
         }
@@ -13627,7 +13658,8 @@
         "precedence_rank",
         "trigger_event",
         "lifecycle",
-        "publication_effective_from"
+        "publication_effective_from",
+        "kind_duration_c04w"
       ],
       "uniqueConstraints": [
         [
@@ -18352,7 +18384,7 @@
         "tenant_ownership",
         "effective_from_effective_to",
         "default_duration_seconds_value_nonnegative",
-        "default_value_count"
+        "typed_default"
       ],
       "uniqueConstraints": [
         [
@@ -18856,7 +18888,11 @@
           "effective_configuration_id"
         ],
         [
-          "tenant_id"
+          "tenant_id",
+          "configuration_definition_id",
+          "resolved_for_subject_id",
+          "effective_at",
+          "input_hash"
         ]
       ]
     },
@@ -18943,6 +18979,8 @@
           "effective_configuration_layer_id"
         ],
         [
+          "effective_configuration_id",
+          "precedence_level",
           "ordinal"
         ]
       ]
@@ -26141,6 +26179,12 @@
           "type": "uuid",
           "nullable": true,
           "default": null
+        },
+        {
+          "name": "retention_policy_applicability_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
         }
       ],
       "checks": [
@@ -26258,6 +26302,18 @@
           "type": "timestamptz",
           "nullable": true,
           "default": null
+        },
+        {
+          "name": "regulatory_pack_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "previous_subscription_regulatory_pack_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
         }
       ],
       "checks": [
@@ -26266,7 +26322,8 @@
         "updated_actor_one",
         "effective_from_effective_to",
         "lifecycle",
-        "interval_state"
+        "interval_state",
+        "previous_not_self"
       ],
       "uniqueConstraints": [
         [
@@ -26707,7 +26764,437 @@
           "version_number"
         ]
       ]
+    },
+    {
+      "name": "platform.commercial_families",
+      "profile": "I",
+      "primaryKey": [
+        "commercial_family_id"
+      ],
+      "columns": [
+        {
+          "name": "commercial_family_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "family_code",
+          "type": "varchar(96)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "source_type",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "published_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "publication_manifest_sha256",
+          "type": "char(64)",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "checks": [
+        "created_actor_one",
+        "manifest_hash",
+        "required_text"
+      ],
+      "uniqueConstraints": [
+        [
+          "family_code"
+        ],
+        [
+          "commercial_family_id",
+          "source_type"
+        ]
+      ]
+    },
+    {
+      "name": "platform.plan_version_commercial_family_links",
+      "profile": "I",
+      "primaryKey": [
+        "plan_version_commercial_family_link_id"
+      ],
+      "columns": [
+        {
+          "name": "plan_version_commercial_family_link_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "plan_version_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "commercial_family_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "checks": [
+        "created_actor_one"
+      ],
+      "uniqueConstraints": [
+        [
+          "plan_version_id",
+          "commercial_family_id"
+        ]
+      ]
+    },
+    {
+      "name": "platform.regulatory_pack_commercial_family_links",
+      "profile": "I",
+      "primaryKey": [
+        "regulatory_pack_commercial_family_link_id"
+      ],
+      "columns": [
+        {
+          "name": "regulatory_pack_commercial_family_link_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "regulatory_pack_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "commercial_family_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "source_type",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "checks": [
+        "created_actor_one"
+      ],
+      "uniqueConstraints": [
+        [
+          "regulatory_pack_id"
+        ]
+      ]
+    },
+    {
+      "name": "privacy.retention_policy_applicabilities",
+      "profile": "TV",
+      "primaryKey": [
+        "retention_policy_applicability_id"
+      ],
+      "checks": [
+        "actor",
+        "interval",
+        "publication",
+        "source_clause",
+        "classification",
+        "lifecycle_state",
+        "purpose",
+        "row_version",
+        "version_number"
+      ],
+      "uniqueConstraints": [
+        [
+          "supersedes_applicability_id"
+        ],
+        [
+          "tenant_id",
+          "retention_policy_applicability_id"
+        ],
+        [
+          "tenant_id",
+          "retention_policy_applicability_id",
+          "retention_policy_id"
+        ],
+        [
+          "tenant_id",
+          "retention_policy_id",
+          "scope_subject_id",
+          "processing_activity_id",
+          "classification",
+          "purpose",
+          "version_number"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "retention_policy_applicability_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "retention_policy_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "version_number",
+          "type": "bigint",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "classification",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "purpose",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "scope_subject_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "processing_activity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "legal_basis_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "source_evidence_version_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "source_clause_ref",
+          "type": "text",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "effective_from",
+          "type": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "effective_to",
+          "type": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "published_at",
+          "type": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "supersedes_applicability_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "transaction_timestamp()"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "row_version",
+          "type": "bigint",
+          "nullable": false,
+          "default": "1"
+        }
+      ]
+    },
+    {
+      "name": "privacy.retention_policy_hold_releases",
+      "profile": "TI",
+      "primaryKey": [
+        "hold_release_id"
+      ],
+      "checks": [
+        "reason"
+      ],
+      "uniqueConstraints": [
+        [
+          "audit_event_id"
+        ],
+        [
+          "retention_policy_applicability_id"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "hold_release_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "retention_policy_applicability_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "released_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "transaction_timestamp()"
+        },
+        {
+          "name": "released_by_membership_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "release_source_evidence_version_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "audit_event_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "transaction_timestamp()"
+        }
+      ]
     }
   ],
-  "methodologyAmendment": "PHASE5_METHODOLOGY_BINDING_ARCHITECTURE_DECISION_20261007"
+  "methodologyAmendment": "PHASE5_METHODOLOGY_BINDING_ARCHITECTURE_DECISION_20261007",
+  "phase6a3Amendment": "MACRO-STEP6A3-20261009-R1",
+  "commercialAmendmentDecision": "DR-STEP6A3-COMMERCIAL-PHYSICAL-EXECUTABLE-20261014-01",
+  "commercialSourceMigrationSha256": "ed6ca86b9234672fcb55293b5e2a69d09e999e84b3c7d75d56ccf0cd86479ae5"
 }

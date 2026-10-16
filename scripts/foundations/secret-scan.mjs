@@ -42,10 +42,21 @@ const approvedFalsePositives = new Map([
 ]);
 const approvedHits = new Set();
 const fingerprint = (value) => createHash("sha256").update(value).digest("hex");
+// A checksummed staging copy inherits only the already reviewed line fingerprints
+// of its canonical target. Any changed copy byte or secret value is scanned normally.
+const stagedAliases = new Map();
+const stagingDirectory = "docs/phase6a/STEP_6A3/ACTIVATION_PACKAGE_20261014";
+const staging = JSON.parse(readFileSync(resolve(root, stagingDirectory, "ACTIVATION_STAGING_MANIFEST.json"), "utf8"));
+for (const artifact of staging.staged_files) {
+  if (!approvedFalsePositives.has(artifact.target_path)) continue;
+  const copyPath = relative(root, resolve(root, stagingDirectory, artifact.path));
+  if (fingerprint(readFileSync(resolve(root, copyPath))) === artifact.sha256) stagedAliases.set(copyPath, artifact.target_path);
+}
 const approvedKey = (path, lineHash) => `${path}:${lineHash}`;
 const isApprovedFalsePositive = (path, line) => {
   const lineHash = fingerprint(line);
-  const approved = approvedFalsePositives.get(path)?.has(lineHash) ?? false;
+  const canonicalPath = stagedAliases.get(path) ?? path;
+  const approved = approvedFalsePositives.get(canonicalPath)?.has(lineHash) ?? false;
   if (approved) approvedHits.add(approvedKey(path, lineHash));
   return approved;
 };
@@ -53,13 +64,14 @@ const isApprovedFalsePositive = (path, line) => {
 const assignedSecretPatterns = patterns.filter(([kind]) => kind === "quoted-secret" || kind === "environment-secret");
 const detects = (value) => assignedSecretPatterns.some(([, pattern]) => pattern.test(value));
 const canaryValue = "abcdefgh" + "ijklmnop";
-const approvedWithoutRecording = (path, line) => approvedFalsePositives.get(path)?.has(fingerprint(line)) ?? false;
+const approvedWithoutRecording = (path, line) => approvedFalsePositives.get(stagedAliases.get(path) ?? path)?.has(fingerprint(line)) ?? false;
 if (!detects(`password: "${canaryValue}"`)
   || !detects(`DATABASE_PASSWORD=${canaryValue}`)
   || detects("password: databasePassword")
   || isApprovedFalsePositive("synthetic.env", `DATABASE_PASSWORD=${canaryValue}`)
   || !approvedWithoutRecording("deploy/qa/.env.example", "OBJECT_STORAGE_SECRET_KEY_FILE=/run/secrets/object_storage_secret_key")
-  || approvedWithoutRecording("deploy/qa/.env.example", `OBJECT_STORAGE_SECRET_KEY=${canaryValue}`)) {
+  || approvedWithoutRecording("deploy/qa/.env.example", `OBJECT_STORAGE_SECRET_KEY=${canaryValue}`)
+  || [...stagedAliases.keys()].some(path => approvedWithoutRecording(path, `DATABASE_PASSWORD=${canaryValue}`))) {
   findings.push({ path: "scripts/foundations/secret-scan.mjs", kind: "scanner-self-test" });
 }
 

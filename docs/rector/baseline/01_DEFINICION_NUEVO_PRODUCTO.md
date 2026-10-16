@@ -109,3 +109,8 @@ Una capacidad no se considera terminada porque exista una pantalla. Debe poseer 
 ## Addendum - Producto basado en hechos trazables
 
 TCDX GRC transforma informacion real y declarativa en resultados GRC explicables mediante una cadena canonica de ingesta, normalizacion, observacion, medicion, reglas, impacto, remediacion, evidencia, verificacion y reporting. El producto no se limita a registrar cumplimiento: debe poder explicar el origen y calculo de cada resultado relevante. Aplican obligatoriamente los contratos 14 y 15 de esta base.
+
+## Administración SaaS e incorporación asistida — DR001 §§1–4
+
+Hasta completar la Fase10, Platform Admin realiza la incorporación asistida: crea la empresa cliente, incorpora su primer Tenant Admin mediante IAM/RBAC existentes, asigna la PlanVersion publicada y habilita módulos/capabilities/normas conforme al catálogo y oferta autorizados. Habilitar una norma no publica contenido regulatorio ni elude su gate. El Tenant Admin administra autónomamente usuarios, roles y configuraciones operativas autorizadas dentro de su tenant; la asistencia Platform no sustituye esa autonomía. Platform sólo opera donde tiene permisos efectivos y objetivo tenant explícito validado. No adquiere Membership implícita.
+Autoatención, contratación autoservida y creación autónoma de empresas por clientes quedan fuera de Fases1–10; su evaluación posterior no constituye autorización anticipada. La configuración operativa y la operación GRC no requieren universalmente fuente jurídica auténtica ni revisión independiente. Acreditación formal, resultados oficiales y controles operacionales conservan las fuentes, revisiones y SoD que les correspondan. No se presenta configuración como certificación o cumplimiento legal.

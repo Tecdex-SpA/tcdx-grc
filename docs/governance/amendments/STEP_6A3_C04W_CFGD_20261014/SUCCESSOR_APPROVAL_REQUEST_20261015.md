@@ -1,0 +1,84 @@
+# Solicitud única de aprobación de bytes — sucesora STEP_6A3
+
+`STATUS=CANDIDATE_NOT_EFFECTIVE`
+`PREDECESSOR=TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14`
+`SUCCESSOR=TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15`
+`SUCCESSOR_MANIFEST_SHA256=b9b6bf6930931af5eb32ca1b4027212ad3a82f247fef677b919af24d30ac9060`
+`SOURCE_PACKET_SHA256=6b87812823472d56a89622eca8119b0cd56606f2f21d635dd84bf903896ba7f2`
+
+La sucesora completa está en `docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15/`. El manifest exacto de sus 51 archivos sigue a continuación. Los cambios funcionales están acotados a C-04W y CFG-D en rectores 17, 19, 21–24, 30, 33 y 38; 00, 46 y 47 registran identidad, predecesora y ceremonia sin borrar el antecedente v1.9. Se preservan metodologías v1 y datos históricos.
+
+## Manifest completo
+
+```text
+98ce111b4b21501186d88ca285e134fb19b7845828a57c1b477e8205f1f9bc12  00_README_KNOWLEDGE_BASE.md
+fbad6b9f4fe649b2690c4c7eb4da0786a1068e73f5227e1ab5ddbb986bc7428a  01_DEFINICION_NUEVO_PRODUCTO.md
+847ae4c7fd0fdd4aaba24b046a2c14ee7679decf9ae77b9f4a6712764564c9c6  02_DEFINICION_BASE_DATOS_MODELO_DATOS.md
+6a49c8347f3d59d9f0acfc629aa6b11d547276432655832105c6e20ecc324d90  03_RELACION_ENTRE_ESTADOS.md
+524ee7d0347af8ce04ed9a13598f178ec40ef8750bdd8f7b432db01c20546904  04_DEFINICION_FUNCIONAMIENTO.md
+be7d087f1747b49555bc7b955213570a58e1e1f901517c2e44cadffa3b24c968  05_MAPA_FUNCIONAMIENTO.md
+23fd50c8728c7f9f9ab6ebdbf7830d8aef81dfd881ef7f5fa44f5040d8a33223  06_CONSIDERACIONES_ENGINEERING_CONSTITUTION.md
+da29764b7afd83dd9961dea2e79cd182e742cc4bc27257c79b044e380f1e2eec  07_TCDX_GRC_DOMAIN_MODEL.md
+d1fed26f73627de8d686f44ad19b2b4a902541c9716b285b93dae461608af04d  08_TCDX_GRC_CANONICAL_DATA_MODEL.md
+f2091d5fc3e5257bbb7cbdd47eb0f56e002c40b4dcb345f9b4288571438e9fff  09_TCDX_GRC_RBAC_MODEL.md
+bb7474eeb476c15e8cbf94104c3cdb172d66c9ec67f61c16ca114ca49620492c  10_TCDX_GRC_TRACEABILITY_MATRIX.md
+a0f8ddbbbf0c5f3106324078b5b59e106d461099d57954f418bd91f78591b3f0  11_ALINEAMIENTO_DESARROLLO.md
+7221e43483a71d2fe4d5b27e1b424db4a6d117ebfcea94da27351163311424c2  12_INFRAESTRUCTURA_Y_LIMITES.md
+073c2d852eb9a43e03ea539d44efb89147fab428c918d6356054100fe641f556  13_CHECKLIST_ANTI_REGRESION.md
+8eb2ee104f59493359318a8ca7c7dda761805c24d1515a6971ed7268d2778e76  14_CONTRATO_CANONICO_INGESTA_CALCULO_RESULTADOS.md
+c58240683527e25e4037ef954e006c76968b887d332ebaeab2e8f2e5cd8c58f0  15_MODULOS_CONSUMIDORES_Y_MATRIZ_DE_INFORMACION.md
+ff8d04bc386e3ba3ce0a529d51e90665d7ef88a9a19e51f1f61b247f33a2bf4d  16_CATALOGO_CANONICO_OBSERVACIONES_Y_SUBJECTS.md
+26238d0597c49e58e7fa7e4e2bcedb2aa6e8630676e50230655b9138882514b7  17_CATALOGO_METRICAS_FORMULAS_Y_AGREGACIONES.md
+c5c219785fe9d5cd2bc42e3b3ddcb36fbf98f9068da6c872d04288fecbab5dff  18_RULES_ENGINE_GRC_IMPACT_CONTRACT.md
+38adcf00f78a69a15d1c8b55f3a8e0afe77b8ab51bc96bd07d3167eafaaf0be1  19_METODOLOGIAS_GRC_COMPLIANCE_RISK_ASSURANCE.md
+729e07f9831aa31dc8b8431f501edd10fb17a3ecc9d267d712e6fb7ceac7b66f  20_MATRIZ_CONECTORES_DATOS_OBSERVACIONES_IMPACTO.md
+f95bb8f76a19d004e708b9ef0cb7178477618d7c7c19ffc8f3f434c6342c281d  21_LIFECYCLE_TRANSITION_MATRIX.md
+26c0d6c665e27d2aa72cd42edc953b4bf0e4a611cfc2962a732ff4aafdd0fd5e  22_RBAC_PERMISSION_SCOPE_MATRIX.md
+6f6fa3bf3aa85c14e8b148f3034ee781cc26e194ac830a045decdff1e2632caf  23_CONTRATO_TEMPORAL_VERSIONADO_RETENCION_RECALCULO.md
+8929114eaf877f5ff95ec1a194e238cf23bbba8b8f47ea104757c30a12abd0a2  24_CONTRATO_EVIDENCIA_DOCUMENTOS_ARCHIVOS.md
+7f6d2bced7e696ca07ba68b0d3ba89f97cf9c88effb0e8beb02b92aa15b3edd0  25_API_EVENTOS_IDEMPOTENCIA_AUDITORIA.md
+6bd7535ac7314da4b3b48284f57d42095af1a200f04d0dcbbaa732a552987af9  26_NON_FUNCTIONAL_SECURITY_RELIABILITY_OBSERVABILITY.md
+8c5ade951e818d456b7c01dc428536f49bac49cc71ed19a92ff58e8336c2ff52  27_REPORTING_UX_RESULTADOS_DRILLDOWN.md
+dbb5400dc858730bdf0e940ff1ce0b47e95335590dd7c616efdf8099f770a92b  28_PREIMPLEMENTATION_CONTRACT_GATE.md
+d6a74dfd81d5377def627056504c23436bfc80b4063ef18d47afcc94454c1dd2  29_CONFIGURACION_PARAMETRIZACION_Y_EXTENSIBILIDAD.md
+abea25bc1aa53723eed014997fbe3e9e3658100e1909973699b0f928e601bb95  30_MODELO_LOGICO_RELACIONAL_CANONICO.md
+d7d1fb0ab645f15366902f8a3a358a44d42aeeb1c083a5464297c2b6c385f2fa  31_DECISIONES_FUNDACIONALES_CERRADAS.md
+6a8cb31930b410bd9260100688b4b6d2112f78b312ba2c3fd0066bd6fbabc2c2  32_GLOSARIO_SEMANTICO_Y_NOMENCLATURA.md
+c3764f193866974a9fd8266aa1cd411ed32325e56d22511759d827a9c5892ba9  33_CATALOGO_ENTIDADES_CANONICAS.md
+14cf0fbe85a045761fcba75fcbfb7d609829b121680be98ba716cffa21cab76d  34_ARQUITECTURA_LOGICA_COMPONENTES_Y_DEPENDENCIAS.md
+66f646b1620630c517146210b61530f3a93b42cce6f41a8c72a478ae769fb67e  35_SOURCE_PRECEDENCE_CONFLICT_RESOLUTION_POLICY.md
+d8ed5c606dca321f12226e511aea6ba7ed6fc09487d34c660d2f330526c6d639  36_AUTOMATION_POLICY_AND_HUMAN_OVERSIGHT.md
+a04d8134e1f620f7b2e3d543f65543f46cdd5bc052075e19b7365e7873be093b  37_REGULATORY_PACK_CONTRACT.md
+134e69c083f26f168891c358e79ce0cf94d76dea36e08ffb0c158bf44d444e9a  38_RESULT_STATUS_AND_DATA_SUFFICIENCY_CONTRACT.md
+a66b2ac97332ae7fe864659dc791b1997ab4741d1e9063e5cc4c57c9592389de  39_DECISIONES_SEMANTICAS_FINALES_PRE_MODELO_FISICO.md
+5b6050c3b4cb20d095bfee40dd8d4efe24e17e5a614ab8dff4a5e006f2fb06e5  40_CIERRE_INTEGRIDAD_SEMANTICA_Y_CONTRATOS_FISICOS.md
+b521642a0772306ea00213edb981311c2adc2d8c3a46750d6d3ca0e6ec4a145a  41_BASELINE_REGULATORIO_OBLIGATORIO.md
+4306d89ca7129ff2aa3fe45b3372e894fbf79b5b914433e2de528ec46ec0b8f4  42_PLANES_COMERCIALES_Y_ROLES_BASE.md
+6d0294a1471f193d3ceb73e7d5d81567c4faef1db3bac7f89d24259ef3e45260  43_PLAN_MAESTRO_RECTOR_DISENO_Y_DESARROLLO.md
+6f19fd4e83862252dc039c23609a73d7cdbaab6cce8c8c0875ae254c71ebfe60  44_CONTRATO_ESTRUCTURA_NORMATIVA_REQUISITOS_CONTROLES.md
+e283b2a059aa7f1a563fb3ac1fc242eab6156232cb183217b38afe02a196d7ba  45_CONTRATO_DESARROLLO_CERRADO_Y_NO_INFERENCIA.md
+13fb1cb3383e541d70b9fbceaa336024ffc5246e76ae47367548b9b6293adeba  46_REGENTE_MAESTRO_DEL_DESARROLLO.md
+1ca5c690030c365bf4fcc8144d10e51c8ae6ee961ed3128d5968642f0b344666  47_APROBACION_Y_ACTIVACION_BASELINE.md
+84b7b4cd357d3b6d3d47f1e3b58e4a90ce994c0d385bba2045d70e605e3185c6  48_CONTRATO_AUDITORIA_INTEGRADA_ISO_19011.md
+544fd5083cf38ba5df954152d83cd02b65be3ce3f57e634ff47c685373de8c1b  49_GOBIERNO_INTERNO_Y_REVISION_UNIPERSONAL.md
+b96788093d8266f882a0d57f4496c02a427922b5cd76ae9666678c957e23d265  PRE_IMPLEMENTATION_GATE_REPORT.md
+```
+
+## Contratos derivados exactos candidatos
+
+- Delta físico: `docs/physical-data-model/candidates/STEP_6A3_C04W_v1.10/PHYSICAL_DELTA.md`, SHA-256 `fcc165afff739d61d6136d0bdb4fe35070a21774797f2e3aa0f289378eeee738`.
+- SQL forward-only, no ejecutado: `database/migrations/candidates/STEP_6A3_C04W_v1.10/20261015000100_c04w_applicability_hold.sql`, SHA-256 `cb629b2b3c27f4caf5fd4bd76a58f49fe7588d6d5e0cbf398be2d53755dfe674`.
+- Delta ejecutable: `docs/executable-contracts/candidates/STEP_6A3_C04W_CFGD_v1.10/DELTA.md`, SHA-256 `d22c9a71b77830ac79f940cf0e57514832c7ad66c1cd8f79442a1544ce62cf2b`.
+- Diez filas RolePermission candidatas, nueve TENANT_ADMIN y una LEGAL_REVIEWER para release: `docs/executable-contracts/candidates/STEP_6A3_C04W_CFGD_v1.10/ROLE_PERMISSIONS.json`, SHA-256 `8c9112ae1db21f477cca6f16dba12ccbe0b4956b2d477b77b4097d3ed5727583`.
+
+El delta físico previsto contiene dos tablas, tres FK nullable para la cadena histórica, un CHECK de duración por tipo, claves, índices y guards; no hay backfill de historia. El delta ejecutable agrega relación tipada y versión, aristas de revisión y aprobación, ObjectPolicy de fuente propia, release autorizado y guard CFG-D conservador. `PRIVACY` continúa sólo en GRC y no se cambia catálogo comercial, Platform grants, Privacy Manager, metodología v1, producción ni tenants ajenos.
+
+## Preparación, riesgos y acciones posteriores
+
+Checks preparatorios locales: integridad del paquete fuente exacta; manifest candidato 51/51; typecheck backend y frontend; build backend y frontend; 39 pruebas dirigidas C-04W/CFG-D/API y ObjectPolicy PASS, 38 de frontend afectado PASS, 10 de runtime de upload afectado PASS y dos E2E visuales dirigidas PASS en Chromium de escritorio con API simulada. El test contractual contra contratos **activos** tiene tres fallos esperados por operaciones, scopes y auditorías aún no publicadas; no se presentan como PASS. PostgreSQL 16, tenant/RBAC/evidencia real y QA no ejecutados. La fuente jurídica QA auténtica no está acreditada en este expediente.
+
+Riesgos materiales pendientes: revisión física frente al esquema PostgreSQL 16 real y preflight de duración histórica; publicación de OpenAPI, matrices de operación/lifecycle, permiso de release y RolePermission exactos; resolver concurrente/global y purge con hold; guards completos por versión, prueba de fuente auténtica, aislamiento/RBAC real y release QA. `HUMAN_UI_REVIEW` para la nueva vista permanece pendiente; la captura local con API simulada está en `artifacts/phase5-iam-ui/local-playwright/subjects-admin-chromium-desktop.png` y no acredita QA. La implementación está sólo en la rama aislada `codex/step6a3-c04w-cfgd-prep-20261015`; el checkout y la baseline activa no se sustituyen por esta solicitud.
+
+Si se aprueban estos bytes en un solo acto, la secuencia es: publicar sucesora por rector 47 con verificador/manifest/status concordantes; completar y superar gates físico y ejecutable; validar SQL en PostgreSQL 16 aislado y preflight; entonces autorizar/aplicar migración y grants conforme a sus gates; terminar pruebas afectadas y gates de seguridad; solicitar autorización de QA sólo si el gate de release la exige, desplegar y validar runtime; acreditar aceptación macro y cerrar STEP_6A3 antes de STEP_6A4. Esta decisión no autoriza por sí sola DDL, grants, despliegue o PASS.
+
+**Texto de decisión para el Product Owner:** «Apruebo los bytes exactos de `TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15` con manifest SHA-256 `b9b6bf6930931af5eb32ca1b4027212ad3a82f247fef677b919af24d30ac9060` y los cuatro artefactos derivados con SHA-256 indicados en esta solicitud, exclusivamente como contratos candidatos C-04W/CFG-D. Ejerzo las funciones competentes del rector 49; identifico mi identidad real y fecha UTC en el recibo rector. Mantengo los gates físico, ejecutable, de seguridad, migración, grants y QA antes de su activación correspondiente».

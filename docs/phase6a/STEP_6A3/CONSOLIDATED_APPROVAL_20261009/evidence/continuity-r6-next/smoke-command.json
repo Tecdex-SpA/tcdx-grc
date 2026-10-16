@@ -1,0 +1,18 @@
+{
+  "command": [
+    "pnpm",
+    "exec",
+    "playwright",
+    "test",
+    "--config",
+    "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/playwright.r6-next.config.ts",
+    "--project=chromium-desktop",
+    "--grep",
+    "D3 IANA|permission projection governs|wrong tenant projection|fresh permission revocation|dashboard branding|C: tenant explicit lookup",
+    "--reporter=line,json"
+  ],
+  "at": "2026-10-13T13:40:51.726594+00:00",
+  "duration": 35.87187695805915,
+  "exit_code": 1,
+  "log_sha256": "82ed52a085ab77fed4dec1a1e4d095a64eb2ade206f922adb0af176bfcd071cf"
+}

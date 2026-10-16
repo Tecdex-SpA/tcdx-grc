@@ -1,0 +1,49 @@
+{
+  "result": "PASS",
+  "scope": "DOCUMENTARY_CANDIDATE_ONLY",
+  "active_baseline": "v1.11 unchanged",
+  "candidate": "v1.12 DRAFT_NOT_EFFECTIVE",
+  "decision_records": [
+    "DR001",
+    "DR002",
+    "DR003"
+  ],
+  "protected_preexisting_files": 3156,
+  "baseline_documents": 51,
+  "full_inventory_and_sha256": "PASS",
+  "canonical_schema_migrations_backend_frontend_history": "UNCHANGED",
+  "operational_SoD_and_retention_floors": "UNCHANGED",
+  "source_PR_commit_blob_and_DR003_receipt": "PASS",
+  "G1_G15_and_H01_H10_mapping": "COMPLETE",
+  "difference_report": "REPRODUCIBLE",
+  "future_test_scenarios_NOT_RUN": 18,
+  "openapi": {
+    "result": "PASS",
+    "scope": "DOCUMENTARY_ONLY",
+    "yaml_parser": "existing transitive yaml@2.9.1; no installation",
+    "operations": 175,
+    "resolved_local_references": 2344,
+    "annotated_operations": 15,
+    "transport_security_permissions_scopes_schemas_effects_unchanged": true,
+    "negative_compatibility_controls_rejected": [
+      "permission",
+      "scope",
+      "security",
+      "request-schema",
+      "new-route",
+      "audit-event"
+    ]
+  },
+  "negative_integrity_controls_rejected": [
+    "changed-artifact",
+    "unmanifested-extra",
+    "missing-artifact",
+    "unsafe-manifest-path",
+    "incomplete-baseline-inventory"
+  ],
+  "activation_commit_push_merge_deploy_DB_runtime_acceptance": "NOT_EXECUTED",
+  "active_governance": "PASS",
+  "active_status_test": "PASS",
+  "secret_scan_findings": 0,
+  "tracked_diff_check_exit": 0
+}

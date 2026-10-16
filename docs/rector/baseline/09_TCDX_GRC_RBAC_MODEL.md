@@ -79,3 +79,7 @@ La IA recibe únicamente el contexto que el usuario puede consultar. No expande 
 ## Matriz vinculante
 
 La convención de permissions, scopes y SoD se completa en `22_RBAC_PERMISSION_SCOPE_MATRIX.md`. Todo endpoint/command futuro debe declarar permission y scope antes de implementarse.
+
+## Administración asistida y autonomía tenant — DR001
+
+La incorporación inicial usa el command Platform tenantInitialOnboardingCreate y el bootstrap interno existente; usuarios posteriores usan tenantUserOnboardingCreate o los comandos tenant propios conforme a contratos25/26. Platform puede administrar accesos sólo por sus permisos publicados y predicados explícitos; la unión de scopes de un catálogo no extiende un comando. Tenant Admin opera su tenant con Membership/roles/entitlements efectivos. El nombre del rol no concede todos los permisos, aprobación de evidencia ni autoridad Platform. No hay autoservicio de alta de empresas antes de completar Fase10.

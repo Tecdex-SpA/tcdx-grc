@@ -1,0 +1,66 @@
+{
+  "status": "LOCAL_CANDIDATE_NOT_DEPLOYED",
+  "scope": "Published PlanVersion listing and tenant subscription assignment only; norms navigation remains on the integral fix branch because its reference route requires QA32",
+  "source": {
+    "qa30_release_branch": "release/iana-v2-qa30-20261013",
+    "qa30_release_commit": "7dfb176843b968aad4be56d2149bde0e5dfc4b70",
+    "reproducer": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/rescue-20261013/reproduce-qa30.py",
+    "base_verified_paths": 183,
+    "commercial_commit": "8da37de39b42a260737a02bb59411d4c43e8ae2e",
+    "patch": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/rescue-20261013/functional-plan-qa30.patch.gz",
+    "patch_compression": "gzip -n; decompress before applying with patch -p1",
+    "patch_compressed_sha256": "a361d72cd526a05b8a71bba3d3df4e3c747349db3f2150cc6e4fbf43bcc5763e",
+    "patch_sha256": "01c7a3672102bd84561497dfb169586c1c2d14c89f6ee84887e7808ce7c0afea",
+    "patch_paths": [
+      "apps/backend/src/core-grc/routes.ts",
+      "apps/backend/src/security/administrative-read.ts",
+      "apps/frontend/src/core-grc.tsx"
+    ],
+    "tree_fingerprint_algorithm": "SHA256 of sorted UTF-8 relative path, NUL, binary SHA256 of contents for each of 183 files",
+    "tree_fingerprint_sha256": "61a00c42e139dde629f8be3f371ddeaf564d9fcd5265d4522cf67469a9960887"
+  },
+  "build": {
+    "architecture": "linux/amd64",
+    "docker_build_options": "--platform linux/amd64 --provenance=false --load --label org.opencontainers.image.source=https://github.com/Tecdex-SpA/tcdx-grc",
+    "backend": {
+      "dockerfile": "apps/backend/Dockerfile",
+      "tag": "tcdx-grc-backend:functional-plan-qa30-8da37de",
+      "image_id": "sha256:59479e69ece15ae654498b637a6be5a66f0d4f0a56e00ffbea7c8cb6d3f22b49",
+      "transport_path": ".release-custody/20261013/backend-functional-plan-qa30-8da37de.tar",
+      "transport_sha256": "f6fd52c7d4746f087c3c4f6d2ea325d44ba8a0ffd8a5afbec066d98eeda4da9d",
+      "compiled_database_js_sha256": "865b2d8b1b8ce87790059abb70b1af021aebbc06640ad5f85ab4c37a6fb17a61"
+    },
+    "frontend": {
+      "dockerfile": "apps/frontend/Dockerfile",
+      "tag": "tcdx-grc-frontend:functional-plan-qa30-8da37de",
+      "image_id": "sha256:461f6605c6dabded45a697d7fea40b534e78faaea9abc1eba678e3e13d117804",
+      "transport_path": ".release-custody/20261013/frontend-functional-plan-qa30-8da37de.tar",
+      "transport_sha256": "b924a23a5d30ddcb6489dff0d88891a5aee070a84ae82e2b807316ab9e20ccc3",
+      "assets": [
+        {"path": "/assets/index-BmB4OoCc.css", "sha256": "3d81569dbc230cad03aca1fb1cf9b231151c0aed9bab803fdc0021e465076299"},
+        {"path": "/assets/index-CQZtaU3i.js", "sha256": "a6ade9ee3ad031a52165951b5234055f803be11b666aad4bf63daefbefc6fde2"}
+      ]
+    }
+  },
+  "qa30_contract": {
+    "new_migrations": 0,
+    "new_grants": 0,
+    "other_v1_routes_preserved": true,
+    "v1_self": 404,
+    "v2_self_anonymous": 401,
+    "qa32_framework_reference_route": 404,
+    "database_connection_change": false,
+    "baseline_tls": "db-tecdex/require/public CA verified in QA30 runtime"
+  },
+  "rollback": {
+    "backend_image_id": "sha256:3be791953c806bbb24556526f06adfa73b364f374856a4f8102e5db9521d3cee",
+    "frontend_image_id": "sha256:2936ac99ed0fea65354f4e55f2b9f3d0fe431ab72a5a4f47c97bc31fc0768ab1",
+    "previous_images_available_in_qa": true,
+    "database_restore_required": false,
+    "driver": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/rescue-20261013/functional-qa30-runtime-driver.py",
+    "driver_sha256": "34262bdd63addea3adea8f46bbaa279b178245f404492525f666cc5b9cf7d4ca",
+    "promoter": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/rescue-20261013/promote-functional-plan-qa30.py",
+    "promoter_sha256": "eb463353a2394ba082ef5e0d610df0b6f1715b7ca8291b1c9f2a6cf1fde57171"
+  },
+  "authorization": "REQUIRES_NEW_EXACT_GO_FOR_THIS_IMAGE_PAIR"
+}

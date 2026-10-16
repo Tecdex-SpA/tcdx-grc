@@ -1,0 +1,20 @@
+{
+  "image": "sha256:3be791953c806bbb24556526f06adfa73b364f374856a4f8102e5db9521d3cee",
+  "OTHER_V1_ROUTE_CHANGED": "CLOSED_PASS",
+  "allOtherRegisteredMethodPaths": "PASS_IDENTICAL",
+  "removed": [
+    "/api/v1/auth/me/authorization (GET, HEAD)"
+  ],
+  "added": [
+    "/api/v2/auth/me/authorization (GET, HEAD)"
+  ],
+  "statuses": {
+    "/api/v1/auth/me/authorization": 404,
+    "/api/v2/auth/me/authorization": 401,
+    "/api/v1/auth/providers": 200
+  },
+  "network": "none",
+  "databaseQueries": 0,
+  "historicalRouteTreeSHA": "8c87b7ecba278a0ba5e1ef0810298861f90b1dc4d458c566f8a4def2a30da190",
+  "currentRouteTreeSHA": "ba3215ed9b94f56e99b157dd83ed085e2c613bb0fc12d41e3879257658be1065"
+}

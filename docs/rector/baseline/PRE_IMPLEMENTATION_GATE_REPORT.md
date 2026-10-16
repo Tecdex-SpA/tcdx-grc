@@ -1,133 +1,44 @@
-# PRE_IMPLEMENTATION_GATE_REPORT — TCDX GRC
+# Revisión preimplementación — candidata v1.12
 
-Fecha de cierre rector: 2026-09-15
+`CANDIDATE_BASELINE=TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16`; `STATUS=DRAFT_NOT_EFFECTIVE`.
+`RECTOR_SUCCESSOR_CANDIDATE=READY_FOR_PO_REVIEW` significa paquete documental verificable; no aprobación/activación ni implementación.
+Fuentes DR001/002 verificadas por GitHub commit/PR/blob; DR003 registrada literalmente desde instrucción PO. No se solicita segunda aprobación conceptual ni se crea firma humana.
 
-Baseline ID candidato: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.4_2026-09-15`.
+## Alcance derivado
 
-## Resultado y alcance
+Administración asistida Platform hasta Fase10; autonomía Tenant dentro de permisos; separación configuración/acreditación; propuesta de meses sin reducir obligaciones; autoridad única/continuidad y prohibición de doble aprobación interna. Matriz detallada y criterios6A3 en el expediente PO_COMMERCIAL_SIMPLIFICATION_20261016.
 
-`RECTOR_BASELINE=PASS`
+## Compatibilidad y límites
 
-`SEMANTIC_PRE_PHYSICAL_GATE=PASS`
+Modelo canónico/físico, entidades/estados/permisos/scopes y contratos de transporte no cambian. Fuente opcional ya representable en Applicability; FK/cadena/hold/SoD siguen vigentes. No se garantiza compatibilidad runtime nueva sin implementación y pruebas posteriores. Binding de datos comerciales y semántica mes/ancla deben concretarse antes de implementar esa selección; no impiden preparar la sucesora ni reabren la decisión PO. Baseline activa/punteros, historia, backend/frontend y DB permanecen íntegros.
 
-`PRE_IMPLEMENTATION_CONTRACT_GATE=PASS_FOR_PHYSICAL_MODEL_DESIGN`
+## Gate de esta ejecución
 
-`PHYSICAL_MODEL_DESIGN=AUTHORIZED`
+Verificaciones documentales y de preservación se registran en CHECKS.json y se reproducen con verify_candidate.py del expediente. No se ejecutan nuevas pruebas de aceptación, migraciones o despliegues. Activación y publicación Git están expresamente excluidas. STEP_6A3=PARTIAL_BLOCKED; STEP_6A4=NOT_STARTED; HUMAN_UI_REVIEW no se declara PASS. Restricciones residuales y alternativas se especifican por operación en IMPACT_ANALYSIS.md.
 
-`PHYSICAL_DATA_MODEL_REVIEW=PENDING`
+## Matriz G1–G15 — alcance documental de la propuesta
 
-`EXECUTABLE_CONTRACTS=PENDING`
+No es PASS_FOR_IMPLEMENTATION, ni aprobación humana, ni repetición de pruebas de
+producto. PASS_DOCUMENTARY significa consistencia/preparación dentro de este alcance.
 
-`MIGRATIONS=BLOCKED`
-
-`FUNCTIONAL_DEVELOPMENT=BLOCKED`
-
-La revisión semántica pre-física permanece satisfecha. Este baseline maestro, una vez publicado con aprobación humana registrada en el repositorio, autoriza exclusivamente `PHYSICAL_MODEL_DESIGN=AUTHORIZED`; no equivale a `PASS_FOR_IMPLEMENTATION`, no autoriza migraciones y no autoriza desarrollo funcional.
-
-## Matriz obligatoria G1–G15
-
-| Gate | Alcance evaluado | Estado | Evidencia y cierre |
-|---|---|---|---|
-| G1 Product Scope | pre-físico | PASS | 01 define dominios, experiencias, producto terminado y exclusiones; 42 fija planes `ISO`, `ISO_RIESGO_OPERATIVO` y `GRC` sin planes heredados |
-| G2 Domain Ownership | pre-físico | PASS | 07 fija write owner único; Supplier queda exclusivamente en Third Parties; writes inter-domain usan commands/events |
-| G3 Canonical Model | pre-físico | PASS | 08, 30, 33, 39 y 44 definen entidades, relaciones, IDs, ownership classes, scope tenant/Subject, temporalidad, versionado, invariantes y deletion policies; NormativeUnit, Requirement, Control e Issue quedan separados |
-| G4 Integration Representation | pre-físico | PASS | 14, 16, 20, 30 y 35 representan fuentes, RawRecord, Subject binding, Observation, precedence y lineage sin schema por proveedor |
-| G5 Metrics & Methodology | pre-físico | PASS | 17, 19, 38 y 39 separan formulas, escalas, coverage, Data Trust, calculation_status, result_status y domain_conclusion |
-| G6 Rules & Impact | pre-físico | PASS | 18 y 36 delimitan RuleEvaluation, GRCImpact, mappings, automatización y decisiones humanas |
-| G7 Lifecycle | pre-físico | PASS | 03 y 21 fijan estados y `LifecycleTransitionDefinition`; aristas ejecutables quedan obligatoriamente para `EXECUTABLE_CONTRACTS` |
-| G8 RBAC | pre-físico | PASS | 09, 22 y 42 fijan Permission, scopes, roles, SoD y autorización; mapping command→permission queda para `EXECUTABLE_CONTRACTS` |
-| G9 Temporal/Retention | pre-físico | PASS | 23 y 39 cierran effective time, correction, recalculation, retention, legal hold, archive, supersession y erasure |
-| G10 Evidence | pre-físico | PASS | 24 y 30 cierran FileObject, malware scan, acceso, review, vigencia, expiración, EvidenceLink Control/ControlVersion y targets tipados de EvidenceRequest |
-| G11 API/Event Integrity | pre-físico | PASS | 25 define estructuras físicas e invariantes de idempotencia, concurrency, outbox, audit, ownership_class/tenant context y error model sin tenant artificial; catálogos concretos quedan para `EXECUTABLE_CONTRACTS` |
-| G12 Non-functional | pre-físico | PASS | 26 y 43 fijan aislamiento, secretos, observabilidad, performance, disponibilidad, RPO/RTO, seguridad y accesibilidad |
-| G13 Connectors | representabilidad pre-física | PASS | 20 demuestra representación por core y fija `ConnectorVersion` contractual; ningún adapter está autorizado sin su gate específico |
-| G14 Traceability | conceptual pre-física | PASS | 10 contiene una fila conceptual por cada experiencia crítica y la cadena FrameworkVersion→NormativeUnit→Requirement→Control→Evidence→Issue→Action; DB/API/event/test IDs se completan en `EXECUTABLE_CONTRACTS` |
-| G15 Semantic Integrity | pre-físico | PASS TÉCNICO | 32–45 reconcilian nomenclatura, catálogo, precedence, automation, packs, estructura normativa, resultados, planes, secuencia y no inferencia; la adopción permanece pendiente de aprobación humana |
-
-## Reconciliaciones finales verificadas
-
-| Área | Cierre |
-|---|---|
-| Catálogo contractual | Se incorpora `LifecycleTransitionDefinition` y se eliminan divergencias nominales de Permission y ConnectorVersion |
-| Supplier ownership | Third Parties es write owner único; otros dominios sólo referencian |
-| RBAC actions | `publish` e `impersonate` forman parte del vocabulario canónico y la impersonation posee permission/scope explícitos |
-| Planes comerciales | Sólo existen ISO, ISO + Riesgo Operativo y GRC; Issue/Action quedan juntos y las capabilities están delimitadas |
-| Regulatory gating | Cada pack tiene gate independiente; un pack pendiente no bloquea capacidades no dependientes |
-| Result semantics | Result/DomainResult permanecen como envelopes, no entidades/tablas genéricas |
-| Status y propagación | 38 separa calculation_status, result_status y domain_conclusion y define precedencia determinística |
-| Risk y Data Trust | escalas, residual 0..25, appetite/tolerance, coverage y DataQualityAssessment permanecen versionados y reproducibles |
-| Source/configuration/privacy | SourceResolution, EffectiveConfiguration y ErasureExecutionRecord quedan canónicos y trazables |
-| Artefactos obsoletos | Sólo el contenido de este paquete integra el baseline; adjuntos individuales, auxiliares e históricos son NON_NORMATIVE |
-| Estructura normativa | NormativeUnit, Requirement, Control e Issue poseen identidades separadas; Clause es una presentación de NormativeUnit |
-| Mappings regulatorios | RequirementControlMapping expresa contribución al cumplimiento; NormativeUnitControlMapping expresa ubicación/provenance de controles de referencia |
-| Controles globales/tenant | Regulatory reference, baseline TCDX, instancia tenant y definición tenant conservan origin y ownership explícitos |
-| Crosswalks | FrameworkCrosswalk usa mappings tipados separados para NormativeUnit, Requirement y ControlVersion |
-| SoA | StatementOfApplicabilityItem queda separado de RequirementApplicability y enlaza controles de referencia con implementación tenant |
-| Applicability scope | RequirementApplicability conserva ownership tenant y define scope tenant-wide o Subject del mismo tenant; múltiples scopes generan applicabilities separados |
-| Evidence targets | EvidenceLink distingue Control tenant de ControlVersion; EvidenceRequest admite sólo targets contractuales con integridad referencial |
-| Issue origin | IssueOrigin queda limitado a RequirementAssessment, ControlAssessment, AssuranceTest, AuditTest, Risk, Incident o SupplierAssessment con integridad referencial |
-| Event ownership | ownership_class gobierna contexto; tenant_id es obligatorio sólo para TENANT_* y se prohíbe SYSTEM_TENANT_ID |
-| Tenant vs Organization | Tenant es aislamiento/ownership; Organization/Subject son scope y no fuerzan organization_id universal |
-| Discrecionalidad de Codex | 45 fija `CODEX_VARIATION_BUDGET=ZERO`; alternativas múltiples, vacíos o task packets incompletos producen BLOCKED |
-| Decisiones físicas | Codex no elige normalización, índices, particionado, vistas o caches entre alternativas válidas; Data Model Owner y Architecture Owner deciden |
-| Aprobaciones | Codex prepara evidencia DRAFT, pero no aprueba baseline, modelo físico, contratos, seguridad, runtime ni release |
-| Stack ejecutable | Las elecciones de plataforma permanecen cerradas; paquetes, versiones y toolchain exactos se congelan en `IMPLEMENTATION_DECISION_MANIFEST` antes de desarrollo funcional |
-| Capability groups | El catálogo inicial deja de ser mínimo abierto y pasa a ser exacto |
-| Topología | DB `192.168.2.40`, backend `192.168.2.45` / `grc-bk.tcdx.int`, frontend `192.168.2.46` / `grc-www.tcdx.int` y consumo IA `ia2.tcdx.int` quedan explícitamente fijados; no existe despliegue `ia-grc` separado |
-| Dependencias regulatorias | Cada slice/release declara packs requeridos en `RELEASE_DEPENDENCY_MANIFEST`; un gate no pasa con dependencias pendientes |
-| Integridad del paquete | El verificador del governance gate exige inventario exacto y rechaza archivos extra o symlinks dentro de docs/rector |
-
-## Contradicciones abiertas
-
-No quedan contradicciones materiales conocidas que impidan derivar el modelo físico una vez aprobada v1.3. Las contradicciones detectadas en v1.1 quedaron reconciliadas en v1.2; v1.3 cierra la discrecionalidad de ejecución sin ampliar alcance funcional. La aprobación humana de esta revisión está pendiente. Cualquier necesidad de inventar una entidad, enum, ownership, lifecycle, fórmula, policy, plan, capability o elección técnica revierte la tarea afectada a BLOCKED.
-
-## Decision log
-
-| ID | Decisión | Consecuencia |
+| Gate | Alcance / evidencia | Resultado de preparación / límite |
 |---|---|---|
-| D-001 | Autorizar sólo diseño físico | migrations y funcionalidad continúan bloqueadas |
-| D-002 | Usar `Permission` como entidad canónica | no se crea PermissionDefinition separada |
-| D-003 | Usar `ConnectorVersion` como contrato canónico | no se crea ConnectorContractVersion separada |
-| D-004 | Incorporar `LifecycleTransitionDefinition` | el modelo físico debe representar el registry de aristas |
-| D-005 | Asignar Supplier a Third Parties | Organization y otros dominios sólo referencian |
-| D-006 | Adoptar planes ISO, ISO + Riesgo Operativo y GRC | quedan prohibidos Foundation, Professional y Enterprise |
-| D-007 | Mantener Issue y Action juntos en todos los planes que habiliten remediación | no existe Action huérfana de la capability de Issues |
-| D-008 | Separar gates regulatorios por pack | la falta de un pack no paraliza el desarrollo no dependiente |
-| D-009 | Diferenciar gate semántico de contratos ejecutables | G7/G8/G11/G14 se completan a nivel command/API/test antes de migrations |
-| D-010 | Establecer este paquete como única fuente normativa | copias individuales anteriores quedan obsoletas |
-| D-011 | Incorporar NormativeUnit como estructura editorial genérica | cláusulas, artículos y anexos no se modelan como Requirements |
-| D-012 | Mantener Requirement como obligación atómica evaluable | applicability y assessments no operan sobre unidades estructurales |
-| D-013 | Separar ambos mappings de controles | ubicación normativa no se confunde con contribución al cumplimiento |
-| D-014 | Distinguir controles de referencia y controles tenant | un control publicado no se presenta como implementado por una organización |
-| D-015 | Representar gaps exclusivamente como Issue | Requirement no almacena brecha ni remediación |
-| D-016 | Tipar los items de FrameworkCrosswalk | se preservan FKs y semántica distinta para unidades, Requirements y Controls |
-| D-017 | Incorporar StatementOfApplicabilityItem | la SoA no queda como blob ni se confunde con applicability de Requirements |
-| D-018 | Cerrar RequirementApplicability por tenant + scope Subject opcional | tenant define ownership; Subject define alcance; no se crea estructura paralela |
-| D-019 | Distinguir EvidenceLink→Control y →ControlVersion | evidencia de implementación tenant no se atribuye sólo al control de referencia |
-| D-020 | Cerrar targets de EvidenceRequest | no existe target polimórfico sin integridad |
-| D-021 | Cerrar orígenes de IssueOrigin | no existe source object polimórfico libre |
-| D-022 | Hacer tenant_id condicional a ownership_class en eventos/audit | eventos globales/plataforma no requieren tenant artificial |
-| D-023 | Separar Tenant ownership de Organization/Subject scope | no se propaga organization_id indiscriminadamente |
-| D-024 | Fijar presupuesto de variación cero | Codex no completa vacíos ni elige alternativas |
-| D-025 | Reservar aprobación de gates a owners humanos | evidencia automática no equivale a aprobación |
-| D-026 | Exigir task packet completo | alcance, archivos, contratos, aceptación y prohibiciones son explícitos |
-| D-027 | Exigir Decision Record para alternativas | ninguna preferencia técnica se vuelve contrato por defecto |
-| D-028 | Cerrar catálogo inicial de capability groups | no se agregan grupos bajo la expresión “al menos” |
-| D-029 | Separar componente, FQDN e IP | se elimina ambigüedad de nombres de infraestructura |
-| D-030 | Congelar toolchain ejecutable en Fase 2 | el stack general no autoriza seleccionar paquetes por iniciativa |
-| D-031 | Declarar dependencias regulatorias por release | ningún gate usa packs pendientes de forma implícita |
-| D-032 | Fortalecer integridad a inventario exacto | un archivo adicional no puede convertirse en fuente rectora silenciosa |
+| G1 Product Scope | DR001/003; 01/42/43; autoalta excluida hasta Fase10 | PASS_DOCUMENTARY |
+| G2 Domain Ownership | 07/08/30/33/34 sin cambio; ningún write owner añadido | PASS_DOCUMENTARY |
+| G3 Canonical Model | hashes del modelo y expected-schema intactos | PASS_DOCUMENTARY |
+| G4 Integration Representation | sin conector o fuente externa nuevos | PASS_UNCHANGED_SCOPE |
+| G5 Metrics & Methodology | 17/19/38 y contrato27 sin cambio; sin inferencia none/valid | PASS_UNCHANGED_SCOPE |
+| G6 Rules & Impact | sin regla/efecto automático nuevo; C3/C4 preservan hold | PASS_DOCUMENTARY |
+| G7 Lifecycle | estados/aristas/scopes no cambian en esta preparación; publicación futura si requiere cambio de policy | PASS_DOCUMENTARY; runtime NOT_RUN |
+| G8 RBAC | 09/22 y catálogo05; permisos/grants/scopes intactos | PASS_DOCUMENTARY; runtime NOT_RUN |
+| G9 Temporal/Retention |23§§6/8 intactos; §11/RETENTION_PROPOSAL; unidad/ancla/binding meses no inferidos | PASS_FOR_PREPARATION; MONTH_SELECTION_IMPLEMENTATION_NOT_CLOSED |
+| G10 Evidence |24/14; source nullable existente y cadena/scan/SoD preservadas | PASS_DOCUMENTARY; nuevos flujos NOT_RUN |
+| G11 API/Event Integrity | comparación estructural175 operaciones, components, seguridad/audit/eventos | PASS_DOCUMENTARY; ningún transporte nuevo |
+| G12 Non-functional |26/43 y visualv1.0 preservados; sin nuevo runtime | PASS_UNCHANGED_SCOPE; runtime NOT_RUN |
+| G13 Connectors | ningún conector o contrato proveedor nuevo | PASS_UNCHANGED_SCOPE |
+| G14 Traceability | CONTRADICTION_MATRIX y STEP_6A3_ACCEPTANCE_DELTA, SOURCE_MAP y manifest | PASS_DOCUMENTARY |
+| G15 Semantic Integrity | gobierno interno separado de SoD, configuración de acreditación y oferta de conservación | PASS_DOCUMENTARY; límites explícitos en IMPACT_ANALYSIS |
 
-## Gate siguiente
-
-Primero debe registrarse la aprobación humana de v1.3 y activarse el governance gate v1.1. Después puede derivarse el modelo físico PostgreSQL completo y someterlo a revisión contra 00–45.
-
-Sólo tras:
-
-`PHYSICAL_DATA_MODEL_REVIEW=PASS`
-
-se congelan los contratos ejecutables. Sólo:
-
-`EXECUTABLE_CONTRACTS=PASS`
-
-autoriza las migrations definitivas conforme a 43. Cada conector mantiene además `CONNECTOR_CONTRACT_<PROVIDER>=PASS` antes de implementación.
+La selección comercial mensual sólo es propuesta contractual. Se preserva
+NO_BINDING_DEMONSTRATED para su dato específico; no se inventa código/unidad ni
+se transforma este resultado en autorización de implementarla sin cerrar inputs.

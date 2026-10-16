@@ -1,20 +1,23 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { validate as validateUuid } from "uuid";
+import { parseReferenceQuery, readReferencePage, type ReferenceKind } from "./reference-reads.js";
 import { sql } from "kysely";
 import type { Readable } from "node:stream";
 import { FoundationError } from "../errors.js";
 import type { CoreGrcDependencies, ResourceKey } from "./model.js";
 import { resources } from "./model.js";
 import { detailResource, getResource, listResource } from "./repository.js";
-import { availablePlatformRoleCodes, availableTenantContexts, grantedScopes, requireAccess, resolveAuthenticatedIdentity, resolveCoreActor } from "./security.js";
+import { availablePlatformRoleCodes, availableTenantContexts, grantedScopes, requireAccess, resolveAuthenticatedIdentity, resolveCoreActor, resolveTenantActor } from "./security.js";
 import type { AuthorizedFileAccess } from "../ports/file-storage.js";
 import { executeMutation, mutations } from "./service.js";
 import { membershipCreate, membershipInvitationCreate, membershipInvitationRevoke, membershipRoleAssign, membershipRoleRevoke, subscriptionCreate, tenantCreate } from "../security/platform-iam-service.js";
 import { recordPrivilegedUse, requirePlatformAccess, resolvePlatformActor } from "../security/platform-authority.js";
+import { commercialCanonicalJson, subscriptionChangePlan, subscriptionCommercialGet, subscriptionCommercialPage } from "../security/commercial-subscription.js";
 import { administrativeRead } from "../security/administrative-read.js";
 import { listTenantNormativeContent } from "../regulatory/tenant-read.js";
 import { listValidationAccessCandidates } from "../regulatory/validation-candidates.js";
 import { listMethodologies } from "./methodologies.js";
+import { readEffectiveConfiguration } from "../configuration/effective-read.js";
 import { listSelectableSubjects } from "./subject-read.js";
 import { subjectCreate } from "./subject-create.js";
 import { activatePack, listPackAssignments, packAssignmentDetail, packUuid, revokePack } from "../regulatory/pack-contract.js";
@@ -24,6 +27,13 @@ import { listValidationAccesses, validationAccessCreate, validationAccessRevoke,
 type Params = { id?: string; issue_id?: string; file_object_id?: string; framework_version_id?: string; idCommand?: string };
 
 function correlation(reply: FastifyReply): string { return String(reply.getHeader("x-correlation-id")); }
+async function commercialRead<T>(read: () => Promise<T>): Promise<T> {
+  try { return await read(); }
+  catch (error) {
+    if (error instanceof FoundationError) throw error;
+    throw new FoundationError("TCDX.DEPENDENCY.UNAVAILABLE", "Commercial read unavailable", 503, true);
+  }
+}
 function validId(value: string | undefined): string {
   if (!value || !validateUuid(value)) throw new FoundationError("TCDX.VALIDATION.FAILED", "Invalid identifier", 400);
   return value;
@@ -45,7 +55,7 @@ function membershipRoleIfMatch(request: FastifyRequest): string {
   return match[1]!;
 }
 
-const retentionPolicyTransitions = new Set(["retentionPolicyUpdate", "retentionPolicyReview", "retentionPolicyApprove", "retentionPolicyPublish"]);
+const retentionPolicyTransitions = new Set(["retentionApplicabilityBindInitialSource","retentionPolicyUpdate", "retentionPolicySubmitForReview", "retentionPolicyReview", "retentionPolicyApprove", "retentionPolicyPublish", "retentionApplicabilitySubmitForReview", "retentionApplicabilityReview", "retentionApplicabilityApprove", "retentionApplicabilityPublish", "legalHoldRelease"]);
 
 export function retentionIfMatch(operationId: string, request: FastifyRequest<{ Params: Params; Body: Record<string, unknown> }>): Record<string, unknown> {
   const body = request.body ?? {};
@@ -70,7 +80,8 @@ export const coreGrcReadRoutes: Array<[ResourceKey, string, string]> = [
   ["evidence", "/api/v1/evidence", "/api/v1/evidence/:id"],
   ["issue", "/api/v1/issues", "/api/v1/issues/:id"],
   ["action", "/api/v1/actions", "/api/v1/actions/:id"],
-  ["retentionPolicy", "/api/v1/retention-policies", "/api/v1/retention-policies/:id"]
+  ["retentionPolicy", "/api/v1/retention-policies", "/api/v1/retention-policies/:id"],
+  ["retentionPolicyApplicability", "/api/v1/retention-policy-applicabilities", "/api/v1/retention-policy-applicabilities/:id"]
 ];
 
 export const coreGrcCommandRoutes: Array<[string, string, "target" | "parent" | "none"]> = [
@@ -97,9 +108,17 @@ export const coreGrcCommandRoutes: Array<[string, string, "target" | "parent" | 
   ["uploadFinalize", "/api/v1/file-upload-intents/:id\\:finalize", "target"],
   ["retentionPolicyCreate", "/api/v1/retention-policies", "none"],
   ["retentionPolicyUpdate", "/api/v1/retention-policies/:id\\:update", "target"],
+  ["retentionPolicySubmitForReview", "/api/v1/retention-policies/:id\\:submit-for-review", "target"],
   ["retentionPolicyReview", "/api/v1/retention-policies/:id\\:review", "target"],
   ["retentionPolicyApprove", "/api/v1/retention-policies/:id\\:approve", "target"],
   ["retentionPolicyPublish", "/api/v1/retention-policies/:id\\:publish", "target"],
+  ["retentionApplicabilityBindInitialSource", "/api/v1/retention-policy-applicabilities/:id\\:bind-initial-source", "target"],
+  ["retentionApplicabilityCreate", "/api/v1/retention-policy-applicabilities", "none"],
+  ["retentionApplicabilitySubmitForReview", "/api/v1/retention-policy-applicabilities/:id\\:submit-for-review", "target"],
+  ["retentionApplicabilityReview", "/api/v1/retention-policy-applicabilities/:id\\:review", "target"],
+  ["retentionApplicabilityApprove", "/api/v1/retention-policy-applicabilities/:id\\:approve", "target"],
+  ["retentionApplicabilityPublish", "/api/v1/retention-policy-applicabilities/:id\\:publish", "target"],
+  ["legalHoldRelease", "/api/v1/retention-policy-applicabilities/:id\\:release-hold", "target"],
   ["evidenceRequestCreate", "/api/v1/evidence-requests", "none"],
   ["evidenceRequestFulfill", "/api/v1/evidence-requests/:id\\:fulfill", "target"],
   ["evidenceCreate", "/api/v1/evidence", "none"],
@@ -121,6 +140,24 @@ export const coreGrcCommandRoutes: Array<[string, string, "target" | "parent" | 
 ];
 
 export function registerCoreGrcRoutes(app: FastifyInstance, dependencies: CoreGrcDependencies): void {
+  for (const [kind, path] of [["framework", "framework-version-references"], ["membership", "membership-references"], ["retention", "retention-policy-references"]] as const) {
+    app.get(`/api/v1/${path}`, async (request, reply) => {
+      reply.header("cache-control", "no-store").header("vary", "Authorization, X-TCDX-Tenant-Id");
+      const identity = await resolveAuthenticatedIdentity(dependencies.identityVerifier, request);
+      const query = parseReferenceQuery(kind as ReferenceKind, request.raw.url ?? request.url);
+      const actor = await resolveTenantActor(dependencies.database, identity, request.headers["x-tcdx-tenant-id"]);
+      return readReferencePage(dependencies.database, actor, kind, query, dependencies.referenceCursor);
+    });
+  }
+  app.get("/api/v1/effective-configurations/:id", async (request: FastifyRequest<{ Params: Params; Querystring: Record<string, unknown> }>, reply) => {
+    reply.header("cache-control", "no-store").header("vary", "Authorization, X-TCDX-Tenant-Id");
+    const identity = await resolveAuthenticatedIdentity(dependencies.identityVerifier, request);
+    const id = validId(request.params.id);
+    if (Object.keys(request.query).length) throw new FoundationError("TCDX.VALIDATION.FAILED", "Unsupported query", 400);
+    const actor = await resolveTenantActor(dependencies.database, identity, request.headers["x-tcdx-tenant-id"]);
+    const result = await readEffectiveConfiguration(dependencies.database, actor, id);
+    return { operation_id: "effectiveConfigurationGet", status: "completed", correlation_id: correlation(reply), result };
+  });
   for (const domain of ["compliance", "controls"] as const) {
     app.get(`/api/v1/${domain}-methodologies`, async (request: FastifyRequest<{ Querystring: Record<string, unknown> }>) => {
       const actor = await resolveCoreActor(dependencies.database, dependencies.identityVerifier, request);
@@ -348,6 +385,7 @@ export function registerCoreGrcRoutes(app: FastifyInstance, dependencies: CoreGr
   });
 
   const administrativeRoutes = [
+    ["planVersionList", "/api/v1/platform/plan-versions"],
     ["tenantList", "/api/v1/platform/tenants"],
     ["tenantGet", "/api/v1/platform/tenants/:id"],
     ["membershipList", "/api/v1/memberships"],
@@ -407,6 +445,51 @@ export function registerCoreGrcRoutes(app: FastifyInstance, dependencies: CoreGr
     }
     if (result.replayed) reply.header("idempotency-replayed", "true");
     return reply.code(202).send({ operation_id: "subscriptionCreate", status: "completed", correlation_id: correlation(reply), resource_id: result.result.subscription_id, result: result.result });
+  });
+
+  app.get("/api/v1/platform/subscriptions/:id", async (request: FastifyRequest<{ Params: Params; Querystring: Record<string, unknown> }>, reply) => commercialRead(async () => {
+    const actor = await resolvePlatformActor(dependencies.database, await resolveAuthenticatedIdentity(dependencies.identityVerifier, request));
+    if (request.headers["x-tcdx-tenant-id"] !== undefined) throw new FoundationError("TCDX.AUTHORIZATION.DENIED", "Access denied", 403);
+    if (Object.keys(request.query ?? {}).length) throw new FoundationError("TCDX.VALIDATION.FAILED", "Unsupported query", 400);
+    const result = await subscriptionCommercialGet(dependencies.database, actor, validId(request.params.id));
+    // Preserve the canonical row-version ETag through HTTP content encoders.
+    return reply.header("cache-control", "no-store, no-transform").header("etag", `"${result.row_version}"`).send(result);
+  }));
+  for (const [path, operation] of [["/api/v1/platform/subscriptions", "subscriptionCommercialList"],
+    ["/api/v1/platform/subscriptions/:id/pack-transfers", "subscriptionPackTransferList"]] as const) {
+    app.get(path, async (request: FastifyRequest<{ Params: Params; Querystring: Record<string, unknown> }>, reply) => commercialRead(async () => {
+      const actor = await resolvePlatformActor(dependencies.database, await resolveAuthenticatedIdentity(dependencies.identityVerifier, request));
+      if (request.headers["x-tcdx-tenant-id"] !== undefined) throw new FoundationError("TCDX.AUTHORIZATION.DENIED", "Access denied", 403);
+      const result = await subscriptionCommercialPage(dependencies.database, actor, operation, request.query ?? {}, dependencies.referenceCursor, request.params.id);
+      return reply.header("cache-control", "no-store").send(result);
+    }));
+  }
+  app.post("/api/v1/platform/subscriptions/:id(.*)::change-plan", async (request: FastifyRequest<{ Params: Params; Body: unknown }>, reply) => {
+    const identity = await resolveAuthenticatedIdentity(dependencies.identityVerifier, request);
+    const actor = await commercialRead(() => resolvePlatformActor(dependencies.database, identity));
+    if (request.headers["x-tcdx-tenant-id"] !== undefined) throw new FoundationError("TCDX.AUTHORIZATION.DENIED", "Access denied", 403);
+    if (Object.keys(request.query ?? {}).length) throw new FoundationError("TCDX.VALIDATION.FAILED", "Unsupported query", 400);
+    const key = request.headers["idempotency-key"];
+    try {
+      const result = await dependencies.database.transaction().setIsolationLevel("read committed").execute(tx => subscriptionChangePlan(tx, actor, {
+        id: request.params.id ?? "", body: request.body, ...(typeof key === "string" ? { key } : {}),
+        ifMatch: request.headers["if-match"], correlationId: correlation(reply)
+      }));
+      return reply.header("cache-control", "no-store").header("idempotency-replayed", String(result.replayed)).code(200).type("application/json").send(commercialCanonicalJson(result.body));
+    } catch (error) {
+      if (error instanceof FoundationError) {
+        if (error.code === "TCDX.AUTHORIZATION.DENIED") await dependencies.database.transaction().execute(tx => recordPrivilegedUse(tx, {
+          actor, correlationId: correlation(reply), aggregateType: "UserIdentity", aggregateId: actor.identity.principalId,
+          commandCode: "subscription.change_plan", outcome: "denied"
+        }));
+        throw error;
+      }
+      const pgCode = (error as { code?: string }).code;
+      if (pgCode === "40P01" || pgCode === "40001") throw new FoundationError("TCDX.CONFLICT.CONCURRENCY", "Concurrent commercial operation", 409, true);
+      if (pgCode === "23505" || pgCode === "23P01") throw new FoundationError("TCDX.CONFLICT.RESOURCE", "Commercial resource conflict", 409);
+      if (pgCode?.startsWith("08") || ["57014", "55P03", "23514"].includes(pgCode ?? "")) throw new FoundationError("TCDX.DEPENDENCY.UNAVAILABLE", "Commercial persistence unavailable", 503, true);
+      throw error;
+    }
   });
 
   app.post("/api/v1/memberships", async (request: FastifyRequest<{ Body: Record<string, unknown> }>, reply) => {
@@ -581,7 +664,7 @@ export function registerCoreGrcRoutes(app: FastifyInstance, dependencies: CoreGr
       const resourceId = result.response.upload_intent_id
         ?? Object.values(resources).map((resource) => result.response[resource.idColumn]).find((value) => typeof value === "string")
         ?? null;
-      return reply.code(202).send({
+      return reply.code(operationId === "retentionApplicabilityBindInitialSource" ? 200 : 202).send({
         operation_id: operationId,
         status: "completed",
         correlation_id: correlation(reply),

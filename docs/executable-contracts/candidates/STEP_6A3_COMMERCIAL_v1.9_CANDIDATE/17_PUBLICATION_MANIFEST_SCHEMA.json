@@ -1,0 +1,282 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile",
+    "decision_record_ref",
+    "decision_record_sha256",
+    "families",
+    "root_links",
+    "plan_versions"
+  ],
+  "properties": {
+    "profile": {
+      "type": "string",
+      "const": "COMMERCIAL_CATALOG_PUBLICATION_V1"
+    },
+    "decision_record_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "decision_record_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "families": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "commercial_family_id",
+          "family_code",
+          "name",
+          "source_type"
+        ],
+        "properties": {
+          "commercial_family_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "family_code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 96
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_type": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 32
+          }
+        }
+      }
+    },
+    "root_links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "regulatory_pack_commercial_family_link_id",
+          "regulatory_pack_id",
+          "commercial_family_id",
+          "source_type"
+        ],
+        "properties": {
+          "regulatory_pack_commercial_family_link_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "regulatory_pack_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "commercial_family_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "source_type": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 32
+          }
+        }
+      }
+    },
+    "plan_versions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "plan_version_id",
+          "plan_id",
+          "version_number",
+          "display_name",
+          "commercial_terms_ref",
+          "effective_from",
+          "effective_to",
+          "family_links",
+          "usage_limits",
+          "entitlements"
+        ],
+        "properties": {
+          "plan_version_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "plan_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "version_number": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "display_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "commercial_terms_ref": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "effective_from": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+          },
+          "effective_to": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "family_links": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "plan_version_commercial_family_link_id",
+                "commercial_family_id"
+              ],
+              "properties": {
+                "plan_version_commercial_family_link_id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                },
+                "commercial_family_id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                }
+              }
+            }
+          },
+          "usage_limits": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "usage_limit_id",
+                "commercial_family_id",
+                "limit_code",
+                "limit_value",
+                "unit",
+                "effective_from",
+                "effective_to"
+              ],
+              "properties": {
+                "usage_limit_id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                },
+                "commercial_family_id": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "uuid",
+                      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "limit_code": {
+                  "type": "string",
+                  "const": "regulatory_pack_count"
+                },
+                "limit_value": {
+                  "type": "string",
+                  "pattern": "^(0|[1-9][0-9]{0,19})$",
+                  "description": "Approved commercial amount, exact integer for numeric(30,10); no default."
+                },
+                "unit": {
+                  "type": "string",
+                  "const": "pack"
+                },
+                "effective_from": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+                },
+                "effective_to": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "entitlements": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "entitlement_id",
+                "capability_id",
+                "is_enabled"
+              ],
+              "properties": {
+                "entitlement_id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                },
+                "capability_id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                },
+                "is_enabled": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Proposed closed data publication input schema; no real commercial rows/amounts approved or seeded. IDs, quantities, entitlement matrix and source types require competent publication. Human approval references the canonical UTF8 SHA256; no self hash field."
+}

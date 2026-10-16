@@ -101,6 +101,14 @@ export const permissionProjectionCatalog: Readonly<Record<string, { capabilities
       "owned_object"
     ]
   },
+  "compliance.framework.read": {
+    "capabilities": [
+      "ISO_COMPLIANCE"
+    ],
+    "scopes": [
+      "tenant"
+    ]
+  },
   "compliance.methodology.read": {
     "capabilities": [
       "ISO_COMPLIANCE"
@@ -949,6 +957,14 @@ export const permissionProjectionCatalog: Readonly<Record<string, { capabilities
       "tenant"
     ]
   },
+  "platform.commercial_catalog.publish": {
+    "capabilities": [
+      "CORE_PLATFORM"
+    ],
+    "scopes": [
+      "platform"
+    ]
+  },
   "platform.impersonation_session.impersonate": {
     "capabilities": [
       "CORE_PLATFORM"
@@ -1035,6 +1051,17 @@ export const permissionProjectionCatalog: Readonly<Record<string, { capabilities
     ],
     "scopes": [
       "platform"
+    ]
+  },
+  "platform.membership_reference.read": {
+    "capabilities": [
+      "CORE_PLATFORM"
+    ],
+    "scopes": [
+      "tenant",
+      "audit_engagement",
+      "assigned_object",
+      "owned_object"
     ]
   },
   "platform.membership.create": {
@@ -1131,6 +1158,22 @@ export const permissionProjectionCatalog: Readonly<Record<string, { capabilities
     ]
   },
   "platform.subscription.create": {
+    "capabilities": [
+      "CORE_PLATFORM"
+    ],
+    "scopes": [
+      "platform"
+    ]
+  },
+  "platform.subscription.read": {
+    "capabilities": [
+      "CORE_PLATFORM"
+    ],
+    "scopes": [
+      "platform"
+    ]
+  },
+  "platform.subscription.update": {
     "capabilities": [
       "CORE_PLATFORM"
     ],
@@ -1271,6 +1314,16 @@ export const permissionProjectionCatalog: Readonly<Record<string, { capabilities
       "tenant"
     ]
   },
+  "privacy.retention_policy_reference.read": {
+    "capabilities": [
+      "EVIDENCE_DOCUMENTS"
+    ],
+    "scopes": [
+      "tenant",
+      "assigned_object",
+      "owned_object"
+    ]
+  },
   "privacy.retention_policy.approve": {
     "capabilities": [
       "PRIVACY"
@@ -1288,6 +1341,14 @@ export const permissionProjectionCatalog: Readonly<Record<string, { capabilities
     ]
   },
   "privacy.retention_policy.create": {
+    "capabilities": [
+      "PRIVACY"
+    ],
+    "scopes": [
+      "tenant"
+    ]
+  },
+  "privacy.retention_policy.legal_hold.release": {
     "capabilities": [
       "PRIVACY"
     ],

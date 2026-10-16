@@ -1,0 +1,65 @@
+[
+  {
+    "gate": "rector",
+    "command": "bash scripts/verify-rector-governance.sh",
+    "at": "2026-10-09T22:01:28.019521+00:00",
+    "duration_seconds": 0.414,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "rector.log"
+  },
+  {
+    "gate": "status",
+    "command": "bash scripts/test-rector-governance-status.sh",
+    "at": "2026-10-09T22:01:28.433293+00:00",
+    "duration_seconds": 1.559,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "status.log"
+  },
+  {
+    "gate": "contracts",
+    "command": "node scripts/foundations/generate-contract-assets.mjs --check",
+    "at": "2026-10-09T22:01:29.992410+00:00",
+    "duration_seconds": 0.064,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "contracts.log"
+  },
+  {
+    "gate": "vocabulary",
+    "command": "node scripts/foundations/generate-phase6a-vocabularies.mjs --check",
+    "at": "2026-10-09T22:01:30.056366+00:00",
+    "duration_seconds": 0.178,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "vocabulary.log"
+  },
+  {
+    "gate": "governance-negatives",
+    "command": "python3 scripts/verify-internal-governance.py --negative-tests",
+    "at": "2026-10-09T22:01:30.234618+00:00",
+    "duration_seconds": 0.073,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "governance-negatives.log"
+  },
+  {
+    "gate": "residuals",
+    "command": "python3 scripts/foundations/verify-phase6a3-residuals.py",
+    "at": "2026-10-09T22:01:30.307251+00:00",
+    "duration_seconds": 0.144,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "residuals.log"
+  },
+  {
+    "gate": "whitespace",
+    "command": "git diff --check",
+    "at": "2026-10-09T22:01:30.451054+00:00",
+    "duration_seconds": 0.122,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "whitespace.log"
+  }
+]

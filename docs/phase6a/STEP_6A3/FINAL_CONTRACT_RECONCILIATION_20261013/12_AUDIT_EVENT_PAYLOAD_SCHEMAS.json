@@ -1,0 +1,852 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tcdx:step6a3:commercial:audit:20261013:02",
+  "$defs": {
+    "SubscriptionChangePlanRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "plan_version_id",
+        "subscription_code",
+        "reason"
+      ],
+      "properties": {
+        "plan_version_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "subscription_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96,
+          "pattern": "\\S",
+          "description": "Trim server-owned; case/Unicode preserved."
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000,
+          "pattern": "\\S",
+          "description": "Trim; no secrets."
+        }
+      }
+    },
+    "SubscriptionDetailProjection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "subscription_id",
+        "tenant_id",
+        "subscription_code",
+        "plan_version_id",
+        "plan_id",
+        "plan_code",
+        "plan_name",
+        "plan_version_number",
+        "lifecycle_state",
+        "starts_at",
+        "ends_at",
+        "cancelled_at",
+        "row_version",
+        "previous_subscription_id",
+        "next_subscription_id",
+        "commercial_configuration_status"
+      ],
+      "properties": {
+        "subscription_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "tenant_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "subscription_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96
+        },
+        "plan_version_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "plan_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "plan_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "plan_name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Immutable PlanVersion.display_name, not mutable Plan name."
+        },
+        "plan_version_number": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "lifecycle_state": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32,
+          "description": "Existing published Subscription vocabulary; change-plan only active/ended. No new lifecycle."
+        },
+        "starts_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+        },
+        "ends_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cancelled_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "row_version": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "previous_subscription_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "next_subscription_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "commercial_configuration_status": {
+          "type": "string",
+          "enum": [
+            "complete",
+            "incomplete",
+            "conflicting"
+          ]
+        }
+      }
+    },
+    "SubscriptionHistoryProjection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "subscription_id",
+        "tenant_id",
+        "subscription_code",
+        "plan_version_id",
+        "plan_id",
+        "plan_code",
+        "plan_name",
+        "plan_version_number",
+        "lifecycle_state",
+        "starts_at",
+        "ends_at",
+        "cancelled_at",
+        "row_version",
+        "previous_subscription_id",
+        "next_subscription_id",
+        "commercial_configuration_status"
+      ],
+      "properties": {
+        "subscription_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "tenant_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "subscription_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 96
+        },
+        "plan_version_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "plan_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "plan_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "plan_name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Immutable PlanVersion.display_name, not mutable Plan name."
+        },
+        "plan_version_number": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "lifecycle_state": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32,
+          "description": "Existing published Subscription vocabulary; change-plan only active/ended. No new lifecycle."
+        },
+        "starts_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+        },
+        "ends_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cancelled_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "row_version": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "previous_subscription_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "next_subscription_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "commercial_configuration_status": {
+          "type": "string",
+          "enum": [
+            "complete",
+            "incomplete",
+            "conflicting"
+          ]
+        }
+      }
+    },
+    "SubscriptionPackTransferProjection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "previous_subscription_regulatory_pack_id",
+        "current_subscription_regulatory_pack_id",
+        "regulatory_pack_id",
+        "regulatory_pack_version_id",
+        "previous_subscription_id",
+        "current_subscription_id",
+        "effective_from",
+        "effective_to"
+      ],
+      "properties": {
+        "previous_subscription_regulatory_pack_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "current_subscription_regulatory_pack_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "regulatory_pack_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "regulatory_pack_version_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "previous_subscription_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "current_subscription_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "effective_from": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+        },
+        "effective_to": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "SubscriptionChangePlanResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "status",
+        "correlation_id",
+        "resource_id",
+        "result"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "const": "subscriptionChangePlan"
+        },
+        "status": {
+          "type": "string",
+          "const": "completed"
+        },
+        "correlation_id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Original command root, preserved on replay."
+        },
+        "resource_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "result": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "previous_subscription",
+            "current_subscription",
+            "effective_at",
+            "pack_transfers"
+          ],
+          "properties": {
+            "previous_subscription": {
+              "$ref": "#/$defs/SubscriptionDetailProjection"
+            },
+            "current_subscription": {
+              "$ref": "#/$defs/SubscriptionDetailProjection"
+            },
+            "effective_at": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+            },
+            "pack_transfers": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "count",
+                "href"
+              ],
+              "properties": {
+                "count": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "href": {
+                  "type": "string",
+                  "pattern": "^/api/v1/platform/subscriptions/[0-9a-f-]{36}/pack-transfers$"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "IdempotencyReplayProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "http_status",
+        "body"
+      ],
+      "properties": {
+        "profile": {
+          "type": "string",
+          "const": "SUBSCRIPTION_CHANGE_PLAN_V1"
+        },
+        "http_status": {
+          "type": "integer",
+          "const": 200
+        },
+        "body": {
+          "$ref": "#/$defs/SubscriptionChangePlanResponse"
+        }
+      }
+    },
+    "CursorPageMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "next_cursor",
+        "has_more"
+      ],
+      "properties": {
+        "next_cursor": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "has_more": {
+          "type": "boolean"
+        }
+      }
+    },
+    "SubscriptionHistoryPage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "items",
+        "meta"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "$ref": "#/$defs/SubscriptionHistoryProjection"
+          }
+        },
+        "meta": {
+          "$ref": "#/$defs/CursorPageMetadata"
+        }
+      }
+    },
+    "SubscriptionPackTransferPage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "items",
+        "meta"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "$ref": "#/$defs/SubscriptionPackTransferProjection"
+          }
+        },
+        "meta": {
+          "$ref": "#/$defs/CursorPageMetadata"
+        }
+      }
+    },
+    "ErrorEnvelope": {
+      "$ref": "../../../executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml#/components/schemas/ErrorEnvelope"
+    },
+    "ParentAuditBefore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "subscription",
+        "scheduled_ends_at"
+      ],
+      "properties": {
+        "subscription": {
+          "$ref": "#/$defs/SubscriptionDetailProjection"
+        },
+        "scheduled_ends_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "ParentAuditAfter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "previous_subscription_id",
+        "current_subscription_id",
+        "old_plan_version_id",
+        "new_plan_version_id",
+        "tenant_id",
+        "effective_at",
+        "preserved_ends_at",
+        "reason",
+        "evaluated_configuration_sha256",
+        "evaluated_limits",
+        "transfer_count",
+        "operation_id"
+      ],
+      "properties": {
+        "previous_subscription_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "current_subscription_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "old_plan_version_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "new_plan_version_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "tenant_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "effective_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+        },
+        "preserved_ends_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "evaluated_configuration_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "evaluated_limits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "usage_limit_id",
+              "commercial_family_id",
+              "limit_value",
+              "evaluated_root_count"
+            ],
+            "properties": {
+              "usage_limit_id": {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              },
+              "commercial_family_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "limit_value": {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]*)$"
+              },
+              "evaluated_root_count": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        "transfer_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "operation_id": {
+          "type": "string",
+          "const": "subscriptionChangePlan"
+        }
+      }
+    },
+    "ChildAuditBefore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "assignment_id",
+        "subscription_id",
+        "regulatory_pack_id",
+        "regulatory_pack_version_id",
+        "lifecycle_state",
+        "effective_from",
+        "original_effective_to",
+        "row_version"
+      ],
+      "properties": {
+        "assignment_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "subscription_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "regulatory_pack_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "regulatory_pack_version_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "lifecycle_state": {
+          "type": "string",
+          "const": "active"
+        },
+        "effective_from": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+        },
+        "original_effective_to": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "row_version": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        }
+      }
+    },
+    "ChildAuditAfter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "previous_assignment_id",
+        "current_assignment_id",
+        "previous_subscription_id",
+        "current_subscription_id",
+        "regulatory_pack_id",
+        "regulatory_pack_version_id",
+        "effective_at",
+        "preserved_effective_to",
+        "parent_command"
+      ],
+      "properties": {
+        "previous_assignment_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "current_assignment_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "previous_subscription_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "current_subscription_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "regulatory_pack_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "regulatory_pack_version_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "effective_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+        },
+        "preserved_effective_to": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "parent_command": {
+          "type": "string",
+          "const": "subscription.change_plan"
+        }
+      }
+    },
+    "PlanChangedEventPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "previous_subscription_id",
+        "current_subscription_id",
+        "tenant_id",
+        "old_plan_version_id",
+        "new_plan_version_id",
+        "effective_at",
+        "transfer_count"
+      ],
+      "properties": {
+        "previous_subscription_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "current_subscription_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "tenant_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "old_plan_version_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "new_plan_version_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "effective_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{6}Z$"
+        },
+        "transfer_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  },
+  "description": "Draft payload schemas only; existing Audit/Outbox envelopes retained with exact ownership binding08. Publication manifests carry rows/hashes; parent holds per-dimension evaluations, children hold transfer pairs, no unbounded pack-pair blob."
+}

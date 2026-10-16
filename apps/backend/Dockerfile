@@ -20,7 +20,7 @@ COPY apps/backend apps/backend
 COPY packages/contracts packages/contracts
 COPY packages/shared-types packages/shared-types
 
-RUN pnpm --filter @tcdx-grc/backend build
+RUN pnpm --filter @tcdx-grc/backend... build
 
 USER node
 

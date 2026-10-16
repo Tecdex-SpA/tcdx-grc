@@ -1,3 +1,4 @@
+import { predecessorReferenceCatalog } from "./testing/historical-catalog-stage.js";
 import { restorePreMethodologyFixture } from "./methodology-predecessor-fixture.js";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
@@ -42,6 +43,7 @@ describe.skipIf(process.env.TCDX_SECURITY_INTEGRATION !== "true")("P2A isolated 
   it("proves exact DATA-ONLY permission publication and zero catalog schema delta", async () => {
     const rollback = Symbol("local publication proof rollback");
     await db.transaction().execute(async tx => {
+      await predecessorReferenceCatalog(tx);
       await restorePreMethodologyFixture(tx);
       // Reconstruct the approved migration26 predecessor, excluding later additive D2 data.
       // Restore the historical predecessor only inside this rolled-back publication test.
@@ -140,7 +142,7 @@ describe.skipIf(process.env.TCDX_SECURITY_INTEGRATION !== "true")("P2A isolated 
       const url = `/api/v1/platform/user-identities/${target}/platform-roles`;
       const headers = { authorization: "Bearer local-actor", "idempotency-key": newUuidV7() };
       const payload = { role_code: "PLATFORM_SUPPORT", reason: "Local HTTP contract check" };
-      const projection = await app.inject({ url: '/api/v1/auth/me/authorization', headers });
+      const projection = await app.inject({ url: '/api/v2/auth/me/authorization', headers });
       expect(projection.statusCode).toBe(200);
       expect(projection.json().platform_permissions).toContain('platform.role.administer');
       expect(projection.json().tenant_permissions).toBeNull();

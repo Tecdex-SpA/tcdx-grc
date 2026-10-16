@@ -1,0 +1,44 @@
+{
+  "status": "PASS_DISPOSABLE_ONLY",
+  "cases": 8,
+  "results": [
+    {
+      "name": "missing actor",
+      "result": "PASS_FAIL_CLOSED_NO_AUDIT_WRITE"
+    },
+    {
+      "name": "unknown actor",
+      "result": "PASS_FAIL_CLOSED_NO_AUDIT_WRITE"
+    },
+    {
+      "name": "inactive actor",
+      "result": "PASS_FAIL_CLOSED"
+    },
+    {
+      "name": "same exact adoption replay",
+      "result": "PASS_NO_DUPLICATE"
+    },
+    {
+      "name": "wrong existing publication hash",
+      "result": "PASS_NO_FAKE_REPAIR"
+    },
+    {
+      "name": "actual audit INSERT failure with disposable transaction-only trigger",
+      "result": "PASS_ROLLBACK_PRESERVES_EVIDENCE"
+    },
+    {
+      "name": "new44 adoption UUIDv7 uses actual UTC and unique per-grant entropy; replay no duplicate",
+      "result": "PASS_ROLLBACK_NO_CONSTANT_ID_OR_DATE"
+    },
+    {
+      "name": "exact44 actual preexisting states with XOR service actor",
+      "result": "PASS"
+    }
+  ],
+  "system_identifier": "7694735811590922280",
+  "transaction_end": "ROLLBACK",
+  "persistent_test_writes": 0,
+  "ddl": "FAULT_INJECTION_ONLY_TRANSACTION_ROLLED_BACK",
+  "qa": "NOT_RUN",
+  "iam_real": "NOT_RUN"
+}

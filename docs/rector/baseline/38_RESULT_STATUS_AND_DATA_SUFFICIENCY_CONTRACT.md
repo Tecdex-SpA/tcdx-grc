@@ -110,3 +110,16 @@ Un resultado con `result_status != valid` no se presenta como resultado oficial 
 ## 9. Comparabilidad
 
 Resultados sólo son comparables si metric/formula/methodology versions, población, escala, horizonte temporal y semántica de subject son compatibles. Cambios incompatibles producen `break_in_series` explícito en metadata; no se fuerzan comparaciones.
+
+## 10. Guard conservador CFG-D candidato
+
+Los comandos de assessment no aceptan result_status=valid declarado por el caller como prueba de suficiencia. Evalúan población, inputs, evidencia, cobertura, procedencia, conflictos, recencia sólo si hay umbral publicado y calidad sólo si hay criterio publicado, según metodología/version. Se conserva el orden de precedencia existente para componentes blocking; ausencia de dato no equivale a cero. Sin inventario publicado de criterios requeridos para una v1, el resultado nuevo queda insufficient_data/dependency_pending y no valid oficial. Historia inmutable; EC NULL no implica none.
+
+Fuente exacta del delta: `docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/CONTRACT_PACKET_20261015.md`; SHA-256 `6b87812823472d56a89622eca8119b0cd56606f2f21d635dd84bf903896ba7f2`. Esta copia candidata no es autoridad activa antes del gate 47.
+
+
+## STEP_6A3 — candidata de incorporación inicial de fuente v1.11
+
+`STATUS=DRAFT_NOT_EFFECTIVE; HUMAN_EXACT_BYTES_REVIEW=PENDING`. Baseline candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15, predecesora TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15. Diseño PO aprobado por SHA `1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b`; constancia `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/PO_DESIGN_APPROVAL_RECEIPT_20261015.json`. Esta sección sólo tendrá efecto después de publicación conforme47/49 y gates físico/ejecutable; no autoriza operación QA ni deploy por sí sola.
+
+EvidenceVersion ligada a aplicabilidad no publicada y usada como fuente pendiente no puede consumirse como evidencia ordinaria en resultados, controles/requisitos ni evaluaciones. Su aprobación documental permite únicamente la vinculación de fuente por el custodio; no es valid oficial ni publica metodología. Publicar posteriormente la aplicabilidad no crea EvidenceLinks de negocio ni elimina las comprobaciones ordinarias. Se preservan las metodologíasv1, CFG-D conservador, EC opcional sin none y todos los resultados históricos.

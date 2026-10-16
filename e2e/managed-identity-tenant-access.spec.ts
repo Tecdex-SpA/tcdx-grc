@@ -12,12 +12,12 @@ async function fixture(page:Page,options:{existing?:boolean;partial?:boolean;den
   const state={permissions:options.noOnboard?permissions.filter(p=>p!=='platform.tenant_user.onboard'):[...permissions],provisions:0,posts:[] as {body:Record<string,unknown>;key:string}[],reads:0,roleReads:0,revokePosts:0,assigned:options.existing?[0]:[] as number[],hasMember:!!options.existing,partial:!!options.partial,readFailure:!!options.readFailure};
   const credential=`local-fixture-${crypto.randomUUID()}`;
   await page.addInitScript(()=>sessionStorage.setItem('tcdx.access_token','central-isolated-session'));
-  await page.route('**/api/v1/**',async route=>{
+  await page.route(url => url.pathname.startsWith("/api/v1/") || url.pathname === "/api/v2/auth/me/authorization",async route=>{
     const request=route.request(),url=new URL(request.url()),path=url.pathname,method=request.method();
     const problem=(status:number,details?:unknown)=>route.fulfill({status,json:{code:status===403?'TCDX.AUTHORIZATION.DENIED':'TCDX.DEPENDENCY.UNAVAILABLE',message:'Unsafe internal detail',correlation_id:person,retryable:status>=500,...(details?{details}:{})}});
     const progress=(pending:string[]=[])=>({tenant_id:tenant,user_identity_id:person,membership_id:member,completed_roles:state.assigned.map(i=>({role_code:roleCodes[i],membership_role_id:roleIds[i]})),pending_role_codes:pending});
     if(path==='/api/v1/access/me')return route.fulfill({json:{available_tenant_contexts:[],effective_platform_role_codes:['UNTRUSTED_ROLE_DISPLAY']}});
-    if(path==='/api/v1/auth/me/authorization')return route.fulfill({json:{evaluated_at:new Date().toISOString(),platform_permissions:state.permissions,tenant_permissions:null}});
+    if(path==='/api/v2/auth/me/authorization')return route.fulfill({json:{evaluated_at:new Date().toISOString(),platform_permissions:state.permissions,tenant_permissions:null}});
     if(path==='/api/v1/platform/managed-identities'&&method==='POST'){
       state.provisions++;expect(request.headers()['x-tcdx-tenant-id']).toBeUndefined();
       expect(request.postDataJSON()).toEqual({display_name:'Persona local',username:'local.person',person_verification_ref:'Verificación local'});
@@ -73,7 +73,7 @@ for(const chosen of [[0],[0,1]])test(`B/C provision plus ${chosen.length} runtim
   await expect(page.getByRole('option',{name:'Empresa local · LOCAL'})).toHaveCount(1);await expect(page.getByRole('checkbox',{name:/PLATFORM/})).toHaveCount(0);
   await page.getByRole('button',{name:'Incorporar a empresa',exact:true}).dblclick();await expect(page.getByRole('list',{name:'Empresas de esta identidad'})).toContainText(names[0]!);await expect(page.getByRole('alert',{name:'Resultado de acceso a empresas'})).toContainText('confirmados desde el servidor');
   expect(state.posts).toHaveLength(1);expect(state.reads).toBeGreaterThan(1);expect(state.provisions).toBe(1);
-  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);await page.screenshot({path:`/tmp/tcdx-grc-mi-tenant-e2e-provision-${chosen.length}-${info.project.name}.png`,fullPage:true,mask:[page.getByLabel('Credencial temporal emitida')]});
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);await page.screenshot({path:`${process.env.TCDX_UI_EVIDENCE_DIR ?? "/tmp"}/tcdx-grc-mi-tenant-e2e-provision-${chosen.length}-${info.project.name}.png`,fullPage:true,mask:[page.getByLabel('Credencial temporal emitida')]});
 });
 test('D existing identity adds company access without reprovision or UUID labels',async({page})=>{const {state}=await fixture(page);await open(page);await association(page);await page.getByRole('button',{name:'Incorporar a empresa',exact:true}).click();
   await expect(page.getByRole('list',{name:'Empresas de esta identidad'})).toContainText('Membresía activa');expect(state.provisions).toBe(0);await expect(page.getByRole('dialog')).not.toContainText(tenant);await expect(page.getByRole('dialog')).not.toContainText(member);
@@ -108,5 +108,5 @@ test('governed tenant role revocation uses explicit target, ETag, reason, idempo
 test('M/N/O separated access sections preserve branding, responsive containment and keyboard focus',async({page},info)=>{await fixture(page,{existing:true});await open(page);await expect(page.getByRole('heading',{name:'Roles de plataforma',exact:true})).toBeVisible();await expect(page.getByRole('dialog')).not.toContainText('Keycloak');await expect(page.getByRole('dialog')).not.toContainText('TCDX Managed Identity');
   await page.getByRole('button',{name:'Agregar acceso a empresa'}).click();await expect(page.getByLabel('Empresa',{exact:true})).toBeFocused();await page.keyboard.press('Tab');await expect(page.getByLabel('Motivo de incorporación')).toBeFocused();
   await page.getByRole('button',{name:'Cerrar acceso a empresa'}).click();await expect(page.getByRole('button',{name:'Agregar acceso a empresa'})).toBeFocused();
-  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);await page.screenshot({path:`/tmp/tcdx-grc-mi-tenant-e2e-detail-${info.project.name}.png`,fullPage:true});await page.keyboard.press('Escape');await expect(page.getByRole('dialog')).toHaveCount(0);await expect(page.getByRole('button',{name:'Ver detalle'})).toBeFocused();
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);await page.screenshot({path:`${process.env.TCDX_UI_EVIDENCE_DIR ?? "/tmp"}/tcdx-grc-mi-tenant-e2e-detail-${info.project.name}.png`,fullPage:true});await page.keyboard.press('Escape');await expect(page.getByRole('dialog')).toHaveCount(0);await expect(page.getByRole('button',{name:'Ver detalle'})).toBeFocused();
 });

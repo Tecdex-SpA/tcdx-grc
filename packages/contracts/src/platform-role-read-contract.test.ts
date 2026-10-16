@@ -1,15 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { parse } from "yaml";
-import { Ajv2020 } from "ajv/dist/2020.js";
-import addFormats from "ajv-formats";
+import { contractSchemaValidator } from "./testing/schema-validator.js";
 import openapi from "../../../docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml?raw";
 import matrix from "../../../docs/executable-contracts/03_API_RESOURCE_OPERATION_MATRIX.md?raw";
 import catalog from "../../../docs/executable-contracts/05_PERMISSION_CATALOG.md?raw";
 import manifest from "../../../database/migrations/manifest.json?raw";
 const api = parse(openapi);
-const ajv = new Ajv2020({ strict: false, allErrors: true });
-(addFormats as unknown as (instance: Ajv2020) => void)(ajv);
-for (const [name, schema] of Object.entries(api.components.schemas)) ajv.addSchema(schema as object, `#/components/schemas/${name}`);
+const schemas = contractSchemaValidator(api.components.schemas);
 describe("P2E canonical platform administrative read contracts", () => {
   it("reuses exact existing assignment administration authority without tenant or mutation semantics", () => {
     const op = api.paths['/platform/user-identities/{user_identity_id}/platform-roles'].get;
@@ -29,7 +26,7 @@ describe("P2E canonical platform administrative read contracts", () => {
     expect(api.paths['/platform/user-identities/{user_identity_id}/platform-roles'].post.operationId).toBe('platformRoleAssign');
   });
   it("validates empty and active temporal projections, exact revoke identifier and closed fields", () => {
-    const validate = ajv.getSchema('#/components/schemas/PlatformRoleAssignmentList')!;
+    const validate = schemas.compile('PlatformRoleAssignmentList');
     const item = { platform_role_assignment_id: '0199bf70-2890-75c4-9563-a7c128d014ca',
       user_identity_id: '0199bf70-2891-75c4-9563-a7c128d014ca', role_code: 'PLATFORM_SUPPORT', role_name: 'Platform Support',
       valid_from: '2026-10-06T00:00:00Z', valid_to: null };

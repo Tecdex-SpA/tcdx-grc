@@ -1,0 +1,27 @@
+{
+  "result": "PASS",
+  "frontend_actual_public_bundle": {
+    "asset": "/assets/index-SoxsEvVE.js",
+    "sha256": "cd8d38e14789576295fe7ca5857015b8b8cc7fee6f3114b8441585aa1b9c14d2",
+    "v2AuthorizationEndpoint": true,
+    "retiredV1AuthorizationEndpoint": false
+  },
+  "routes": {
+    "/api/v1/auth/me/authorization": {
+      "status": 404,
+      "redirect": false,
+      "cacheControl": null,
+      "vary": null,
+      "wwwAuthenticate": null
+    },
+    "/api/v2/auth/me/authorization": {
+      "status": 401,
+      "redirect": false,
+      "cacheControl": "no-store",
+      "vary": "Authorization, X-TCDX-Tenant-Id",
+      "wwwAuthenticate": "Bearer"
+    }
+  },
+  "authentication": "NO_SESSION; authenticated tenant flow HUMAN_VALIDATION_PENDING",
+  "databaseMutations": 0
+}

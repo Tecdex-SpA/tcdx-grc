@@ -152,10 +152,10 @@ describe("PRE-F5B executable-contract closure", () => {
   it("keeps cumulative operation counts after the approved Phase 5 additions", () => {
     expect(operations.size).toBe(Number(matrix.match(/`CONTRACTUAL_OPERATIONS=(\d+)`/)?.[1]));
     expect([...operations.values()].filter(({ method }) => method === "get")).toHaveLength(Number(matrix.match(/`PUBLIC_READ_OPERATIONS=(\d+)`/)?.[1]));
-    expect([...operations.values()].filter(({ method }) => method === "post")).toHaveLength(104);
+    expect([...operations.values()].filter(({ method }) => method === "post")).toHaveLength(111);
     expect([...operations.values()].filter(({ method }) => method === "put")).toHaveLength(1);
     expect(matrix).toContain(`\`CONTRACTUAL_OPERATIONS=${operations.size}\``);
-    expect(matrix).toContain("`PUBLIC_MUTATING_OPERATIONS=105`");
+    expect(matrix).toContain("`PUBLIC_MUTATING_OPERATIONS=112`");
   });
 
   it("keeps every operation ID, method and path aligned between OpenAPI and the matrix", () => {
@@ -185,9 +185,9 @@ describe("PRE-F5B executable-contract closure", () => {
       }
     }
     expect(versionedF5Mutations.size).toBe(28);
-    expect(schemaBlock("IssueCreateRequest")).toContain("priority: { type: string, minLength: 1, maxLength: 32 }");
-    expect(schemaBlock("IssueTriageRequest")).toContain("priority: { type: string, minLength: 1, maxLength: 32 }");
-    expect(schemaBlock("ActionCreateRequest")).toContain("priority: { type: string, minLength: 1, maxLength: 32 }");
+    expect(schemaBlock("IssueCreateRequest")).toContain("priority: { $ref: '#/components/schemas/IssuePriority' }");
+    expect(schemaBlock("IssueTriageRequest")).toContain("priority: { $ref: '#/components/schemas/IssuePriority' }");
+    expect(schemaBlock("ActionCreateRequest")).toContain("priority: { $ref: '#/components/schemas/ActionPriority' }");
   });
 
   it("keeps operation permission, audit, event and idempotency decisions internally closed", () => {
@@ -296,7 +296,7 @@ describe("PRE-F5B executable-contract closure", () => {
 
   it("preserves PRE-F5B's historical no-runtime-seed claim within the cumulative table inventory", () => {
     const expectedSchema = JSON.parse(expectedSchemaSource) as { tables: Array<{ name: string }> };
-    expect(expectedSchema.tables).toHaveLength(237);
+    expect(expectedSchema.tables).toHaveLength(242);
     for (const table of ["evidence.file_objects", "evidence.evidences", "evidence.evidence_versions", "evidence.evidence_links"]) {
       expect(expectedSchema.tables.some(({ name }) => name === table), table).toBe(true);
     }

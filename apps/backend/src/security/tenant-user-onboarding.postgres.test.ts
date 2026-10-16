@@ -1,3 +1,4 @@
+import { predecessorReferenceCatalog } from "./testing/historical-catalog-stage.js";
 import { restorePreMethodologyFixture } from "./methodology-predecessor-fixture.js";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { readFileSync } from "node:fs";
@@ -47,6 +48,7 @@ describe.skipIf(process.env.TCDX_SECURITY_INTEGRATION!=="true")("Central onboard
     if(!db)return;vi.restoreAllMocks();
     try{
       const tenants=(await sql<{tenant_id:string}>`SELECT tenant_id FROM platform.tenants WHERE created_by_user_identity_id=${ids.platform}::uuid`.execute(db)).rows.map(x=>x.tenant_id);
+      await sql`DELETE FROM ops_audit.audit_events WHERE tenant_id=ANY(${tenants}::uuid[])`.execute(db);
       for(const table of ['ops_audit.audit_events','ops_audit.outbox_events','ops_audit.idempotency_records'])await sql`DELETE FROM ${sql.table(table)} WHERE actor_user_identity_id=ANY(${people}::uuid[])`.execute(db);
       for(const table of ['iam.membership_roles','iam.role_permissions','iam.tenant_memberships','iam.roles','platform.subscriptions'])await sql`DELETE FROM ${sql.table(table)} WHERE tenant_id=ANY(${tenants}::uuid[])`.execute(db);
       await sql`DELETE FROM platform.tenants WHERE tenant_id=ANY(${tenants}::uuid[])`.execute(db);
@@ -56,6 +58,7 @@ describe.skipIf(process.env.TCDX_SECURITY_INTEGRATION!=="true")("Central onboard
   });
   it('publishes one Permission/PlatformAdmin grant with no DDL/schema delta',async()=>{
     const rollback=Symbol();await db.transaction().execute(async tx=>{
+      await predecessorReferenceCatalog(tx);
       await restorePreMethodologyFixture(tx);
       const schema=async()=>(await sql`SELECT n.nspname,c.relname,a.attname,a.atttypid,a.attnotnull FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
         JOIN pg_attribute a ON a.attrelid=c.oid AND a.attnum>0 WHERE n.nspname NOT LIKE 'pg_%' ORDER BY 1,2,3`.execute(tx)).rows;

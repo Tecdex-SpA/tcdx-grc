@@ -1,0 +1,24 @@
+{
+  "status": "STRUCTURAL_RECONCILIATION_ONLY_NOT_EXPECTED_SCHEMA",
+  "active_expected_schema_path": "database/expected-schema.json",
+  "active_expected_schema_sha256": "f920bf882a8b7ab0e91e2d43929bb161ca0ffeab100f0b640cf621a70ec2d7d3",
+  "candidate_migration_path": "docs/physical-data-model/amendments/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/20261013000100_commercial_contract_reconciliation.sql",
+  "candidate_migration_sha256": "ed6ca86b9234672fcb55293b5e2a69d09e999e84b3c7d75d56ccf0cd86479ae5",
+  "new_tables_from_approved_candidate": [
+    "platform.commercial_families",
+    "platform.regulatory_pack_commercial_family_links",
+    "platform.plan_version_commercial_family_links"
+  ],
+  "existing_relations_with_structural_delta": [
+    "regulatory.regulatory_packs",
+    "regulatory.regulatory_pack_versions",
+    "platform.usage_limits",
+    "platform.subscriptions",
+    "platform.subscription_regulatory_packs",
+    "platform.plan_versions",
+    "platform.entitlements"
+  ],
+  "required_full_expected_schema_output": "PENDING_AUTHORIZED_POSTGRESQL_MATERIALIZATION_AND_EXACT_BYTE_REVIEW",
+  "postgresql_ddl_executed": false,
+  "active_expected_schema_changed": false
+}

@@ -20,6 +20,11 @@ Plan 1--N PlanVersion
 Tenant 1--N Subscription
 Subscription N--1 PlanVersion
 PlanVersion N--N Capability mediante Entitlement
+CommercialFamily 1--0..N RegulatoryPack mediante relación soporte tipada; cada raíz nueva elegible posee exactamente una familia, coherente con `source_type`.
+PlanVersion N--N CommercialFamily mediante relación soporte tipada; ninguna familia se hereda de una versión anterior.
+PlanVersion 1--N UsageLimit; cada límite es total o referencia una familia vinculada a esa misma PlanVersion.
+Subscription 0..1--0..1 Subscription sucesora mediante predecesor tipado, mismo Tenant y corte exacto.
+SubscriptionRegulatoryPack 0..1--0..1 asignación sucesora mediante predecesor tipado, mismo Tenant/raíz/versión y corte exacto.
 
 ## 3. Regulatory / Controls
 
@@ -143,6 +148,10 @@ AIRecommendation N--1 actor context, N--N source objects mediante provenance lin
 - `LifecycleTransitionDefinition` referencia entity type, Permission y códigos de policy/event sin introducir una segunda autoridad del workflow de dominio.
 - `NormativeUnit` no se usa como Requirement, target de assessment tenant ni Issue; las vistas por unidad agregan descendientes.
 - Requirement y NormativeUnit comparten FrameworkVersion y tienen business keys separadas; la jerarquía NormativeUnit impide ciclos.
+- los vínculos CommercialFamily–RegulatoryPack y PlanVersion–CommercialFamily conservan FKs tipadas y coherencia de `source_type`; un `UsageLimit` familiar referencia un vínculo de su propia PlanVersion, que debe estar completo antes de publicar;
+- cada dimensión `regulatory_pack_count` total/familiar tiene cobertura completa, finita, no negativa, constante y sin solapamientos durante la vigencia de una nueva PlanVersion publicada; falta de dimensión requerida implica bloqueo, nunca ilimitado;
+- la regla R-P bloquea nuevos intervalos solapados de una misma raíz dentro de una Subscription bajo lock, sin introducir una exclusión retroactiva que invalide historia legítima;
+- los sucesores de Subscription y asignación conservan tenant, IDs de historia, términos comerciales y expiraciones originales; el corte es común y el before auditado permite reconstrucción.
 - `RequirementControlMapping` expresa contribución al cumplimiento; `NormativeUnitControlMapping` expresa ubicación editorial/provenance y no son intercambiables.
 - controles `regulatory_reference`/`tcdx_baseline` y `tenant_instantiated`/`tenant_defined` preservan ownership e identidad separados.
 - crosswalks entre FrameworkVersion usan mappings tipados distintos para NormativeUnit, Requirement y ControlVersion; no usan pares polimórficos sin FK ni fusionan identidades.
@@ -151,3 +160,9 @@ AIRecommendation N--1 actor context, N--N source objects mediante provenance lin
 - Tenant es frontera de ownership/aislamiento; Organization y Subject expresan alcance. Ninguna entidad pierde `tenant_id` por estar scoped a Organization/Subject y no se añade `organization_id` indiscriminadamente.
 - EvidenceLink distingue Control tenant de ControlVersion; evidencia de implementación tenant debe apuntar al Control tenant cuando la afirmación depende de esa implementación.
 - EvidenceRequest e IssueOrigin sólo admiten targets/orígenes enumerados por contrato y deben conservar integridad referencial física; no se autorizan referencias polimórficas débiles.
+
+## 14. Delta canónico candidato STEP_6A3 C-04W
+
+Se incorporan exactamente dos identidades Privacy: RetentionPolicyApplicability tenant-owned, versionada e inmutable tras publicación, y RetentionPolicyHoldRelease tenant-owned, insert-only. Tenant 1:N Applicability; RetentionPolicy/version 1:N Applicability; EvidenceVersion 0:N Applicability como fuente; LegalBasis 0:N Applicability; Applicability 1:N FileUploadIntent, 1:N FileObject, 1:N EvidenceVersion; Applicability legal_hold 1:0..1 HoldRelease. FK compuestas incorporan tenant y, para intent/FileObject, retention_policy_id. Las columnas nuevas de cadena son nullable sólo para historia previa; comandos nuevos las exigen. No se duplica duración, fuente binaria, hash ni un motor de retención. Predicados, cardinalidades, constraints, temporalidad, backfill prohibido y contratos de aprobación son exactamente los del paquete aprobado indicado al final.
+
+Fuente exacta del delta: `docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/CONTRACT_PACKET_20261015.md`; SHA-256 `6b87812823472d56a89622eca8119b0cd56606f2f21d635dd84bf903896ba7f2`. Esta copia candidata no es autoridad activa antes del gate 47.

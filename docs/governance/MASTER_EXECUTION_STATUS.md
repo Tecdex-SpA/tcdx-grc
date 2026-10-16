@@ -1,6 +1,6 @@
 # TCDX GRC — Master Execution Status
 
-`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23`
+`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16`
 `BASELINE_STATUS=ACTIVE`
 `RECTOR_BASELINE=PASS`
 `RECTOR_DOCUMENT_CONSISTENCY=PASS`
@@ -5001,3 +5001,403 @@ IAM_MUTATIONS=0
 NEXT_REQUIRED_ACTION=REQUEST_EXPLICIT_PHASE6_START_AUTHORIZATION
 
 The owner reports the Caddy machine restored. Fresh independent canonical public HTTPS/OIDC/JWKS/deny surfaces pass from agent and QA frontend VM, with release bundle/logo parity and backend health PASS. All application images/configuration/container identities/restarts, DB30/237/172/schema/ledger, all237 current table fingerprints, authorized andres.grc1/1/0/OTP1, exact MFA/maxAge600/CookieDISABLED and Core records/audits are unchanged. Fresh final main7225f1e485/81/82/428/21 and mandatory code/static/security/Git regressions PASS. The sole later transport incident is RESOLVED; preserve its earlier blocked observation and prior PASS history. Documentation-only recovery followup publishes these facts through protected PR/required rector CI with preserved source/history. No agent QA SQL write/deploy/IAM mutation and no Phase6. Evidence: artifacts/phase5-integration/PHASE5_FINAL_RECOVERY_CLOSURE.md, PHASE5_FINAL_MAIN_CODE_REGRESSION.json, PHASE5_FINAL_QA_RECOVERY_PROOF.json and current full PHASE5_INTEGRATION_RESULT.json.
+
+## 2026-10-08 — Human authorization and STEP 6A.1 canonical UX audit
+
+MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23
+RECTOR_GATE=PASS
+CODEX_VARIATION_BUDGET=ZERO
+UNRESOLVED_RECTOR_CONFLICTS=0
+PHASE_5=PASS
+PHASE_5_CLOSED=YES
+PHASE_5_INTEGRATION=PASS
+STEP_23M_PHASE5_GIT_INTEGRATION=PASS
+CORE_GRC_SLICE=PASS
+PHASE_6=AUTHORIZED
+PHASE_6A=AUTHORIZED
+PHASE_6A_STEP_6A1=AUTHORIZED
+STEP_6A1_EXECUTION_MODE=READ_ONLY_AUDIT
+STEP_6A1=PASS
+AUDIT_DOCUMENTATION_CHECKS=PASS
+CSV_VALIDATION=PASS
+JSON_VALIDATION=PASS
+SOURCE_PATH_VALIDATION=PASS
+GIT_DIFF_CHECK=PASS
+SECRET_SCAN=PASS
+SCOPE_CHECK=PASS
+STEP_6A2_STARTED=NO
+RISK_RUNTIME=NOT_STARTED
+INCIDENTS_LOSS_RUNTIME=NOT_STARTED
+APPLICATION_SOURCE_FILES_MODIFIED=0
+DATABASE_MUTATIONS=0
+IAM_MUTATIONS=0
+QA_DEPLOY=NO
+NEW_COMMITS=0
+GIT_PUSH_PERFORMED=NO
+MERGE_PERFORMED=NO
+
+The Product Owner explicitly authorized Phase 6A operational UX enablement at the beginning of Phase 6 through the current 2026-10-08 STEP 6A.1 task packet. Only read-only source/contract analysis and versionable audit documentation are authorized in this step. The original rector Phase 6 scope remains Risk + Incidents/Loss; neither domain is started. This prospective audit preserves Phase 5 closure and all historical PASS evidence. The older “Current authorized phase” section remains historical tooling input; it does not replace this later human authorization or the latest STEP 23M closure evidence.
+
+Mandatory transversal product acceptance: “Ningún módulo de Tecdex GRC podrá considerarse funcionalmente terminado si sus operaciones habituales requieren que el usuario empresarial conozca identificadores técnicos, estructuras JSON o relaciones internas de la base de datos.” Canonical UUID persistence, typed API contracts, tenant isolation, RBAC, audit, idempotency and workflow authority remain mandatory.
+
+Audit baseline: main at 6af66387aa03fa185ef139584de07700f247b903. Evidence is in docs/phase6a/STEP_6A1/01_SOURCE_INVENTORY.md through 10_STEP_6A1_RESULT.json. The audit inventories Compliance, Controls, Evidence and Actions plus necessary reference contracts. Missing/restricted reads and vocabulary ownership are precise verification prerequisites for later stages; no new endpoint, grant, catalog, model, automatic business-code generation or runtime semantics are approved. No source, executable contract, migration, database, IAM, infrastructure or deployment contract changed. No QA access, dependency installation, Docker, staging, commit, push, merge or automatic STEP 6A.2 execution.
+
+Documentation checks passed: 42 forms, 361 field occurrences, 95 exposed reference occurrences, three business JSON editors, 89 reviewed vocabulary occurrences (61 confirmed and 28 explicitly unresolved), 112 inventoried source files and 2188 CSV source references. Findings: nine P0, nine P1 and two P2. Four missing/restricted read-capability families and precise vocabulary/filter/runtime verification prerequisites remain documented for later stages. Audit PASS certifies coverage and documentation validation, not remediation or human UI acceptance. Historical status text is preserved byte-for-byte; current HEAD/index and unrelated work remain preserved. The next required action is EXECUTE_STEP_6A2_NAVIGATION_AND_DEPENDENCY_DESIGN; it is not started here. Future implementation remains subject to its own authorized task packet and any dependent human contract/visual/runtime gates.
+
+
+## 2026-10-08 — Phase 6A / STEP 6A.2 business navigation and canonical dependency design
+
+Authorization: Product Owner explicitly authorized STEP_6A2=DESIGN after STEP_6A1=PASS. Documentation-only; no source/runtime implementation or initiation of STEP6A.3.
+
+- `STEP_6A2=PASS` (documentary completeness/validation, not approval of DRAFT executable contracts or human runtime gates).
+- `RECTOR_GATE=PASS`; `MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23`; `UNRESOLVED_RECTOR_CONFLICTS=0` in authorized design scope.
+- `BASELINE_BRANCH=main`; `BASELINE_HEAD=6af66387aa03fa185ef139584de07700f247b903` verified unchanged.
+- `PHASE_5=PASS`; `PHASE_5_CLOSED=YES`; previous Phase5/CORE_GRC_SLICE integration and closure evidence preserved.
+- `PHASE_6A=IN_PROGRESS`; `STEP_6A1=PASS`; `STEP_6A3=NOT_STARTED`; `STEP_6A4=NOT_STARTED`; `STEP_6A5=NOT_STARTED`; `STEP_6A6=NOT_STARTED`.
+- `RISK_RUNTIME=NOT_STARTED`; `INCIDENTS_LOSS_RUNTIME=NOT_STARTED`.
+- Designed: 42 forms, 95 internal references (26 grouped adapters), 3 structured JSON fields, 89 vocabulary occurrences (61 confirmed/28 precise owner-closure requirements), 29 contextual links, 4 missing read capability families with partial existing reuse, 38 confirmed dependencies; 2 unsupported direct relations rejected.
+- Coverage: all 9 P0 / 9 P1 / 2 P2 findings traced to 18 implementable tasks. No historical audit numbers reinterpreted or evidence overwritten.
+- Mandatory transversal business UX acceptance: “Ningún módulo de Tecdex GRC podrá considerarse funcionalmente terminado si sus operaciones habituales requieren que el usuario empresarial conozca identificadores técnicos, estructuras JSON o relaciones internas de la base de datos.” Canonical IDs/contracts/RBAC remain preserved.
+- DRAFT contract dependencies RR-G01..04, U-VOC and U-FILTER must be closed by named human owners and published before affected implementation. Proposed reads confer no permissions or approval; no four new endpoints presumed. U-DYNAMIC remains runtime acceptance requirement and historical U-ZIP identity limitation remains explicit.
+- Checks: rector integrity, CSV/JSON parse/counts, FORM/FIELD/LINK/VOC/task reference integrity, source paths/line ranges, tracked/new-doc whitespace, new-document secret scan and authorized scope/preservation all PASS. No full test suites, QA access or deployment.
+- `APPLICATION_SOURCE_FILES_MODIFIED=0`; database/executable contracts/backend/frontend/IAM/infrastructure/deployment contracts changed=0; `QA_DEPLOY=NO`; `NEW_COMMITS=0`; `GIT_PUSH_PERFORMED=NO`; `MERGE_PERFORMED=NO`.
+- Evidence: `docs/phase6a/STEP_6A2/11_STEP_6A2_DESIGN_REPORT.md`, `docs/phase6a/STEP_6A2/12_STEP_6A2_RESULT.json` and the ten referenced design matrices/contracts in that directory. Original 6A.1 files unchanged.
+- `NEXT_REQUIRED_ACTION=EXECUTE_STEP_6A3_CANONICAL_REFERENCE_RESOLUTION`; not started automatically. This entry authorizes no implementation, QA/deploy, commit/push/merge or human-gate approval.
+
+
+## 2026-10-08 — Phase6A / STEP6A.3 canonical reference infrastructure, partial completion
+
+Product Owner explicitly authorized implementation/tests/documentation for STEP6A.3 after6A.1/2PASS; no commit/push/merge/deploy/QA mutation/IAM runtime modification/new migration.
+
+- `STEP_6A3=PARTIAL_BLOCKED`; `PHASE_6A=IN_PROGRESS`; `STEP_6A4=NOT_STARTED`; `STEP_6A5=NOT_STARTED`; `STEP_6A6=NOT_STARTED`; `STEP_6A4_READY=NO`.
+- `RECTOR_GATE=BLOCKED` for mandatory new authority/contract closure; `RECTOR_INTEGRITY=PASS`; `UNRESOLVED_RECTOR_CONFLICTS=0` (no contradictory sources; missing decisions remain explicit).
+- `MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23`; `BASELINE_BRANCH=main`; `BASELINE_HEAD=6af66387aa03fa185ef139584de07700f247b903`, unchanged.
+- `PHASE_5=PASS`; `PHASE_5_CLOSED=YES`; previous integration and CORE_GRC_SLICE closure untouched. Audit/design reports6A.1/2 preserved exactly.
+- `RISK_RUNTIME=NOT_STARTED`; `INCIDENTS_LOSS_RUNTIME=NOT_STARTED`.
+- Independent work complete:20 of21 existing source families reused (guarded partial administrative/Privacy/Controls reuse included),8 public picker/state components,18 reference kinds, canonical request enum/registry assets generated with --check. No new endpoint/Permission/API-write contract/backend/IAM/migration.
+- Four mandatory read capabilities remain `BLOCKED_HUMAN_CONTRACT_DECISION`: RR-G01 framework discovery for Compliance, RR-G02 contextual EffectiveConfiguration binding, RR-G03 business assignee policy, RR-G04 global/same-tenant selectable retention policy. Their DRAFT contracts are not approved by stage authorization alone; partial existing reads confer no domain-wide grant.
+- Readiness:95 reference occurrences =76 READY_FOR_6A4 +18 BLOCKED_CONTRACT_DECISION +1 non-selectable provenance.51 input/JSON-member occurrences have source interfaces ready; none of95manual-ID exposures claimed removed.42forms not redesigned,3JSON fields unchanged,29contextual links not implemented.
+- Vocabulary89:60sources ready,29human-decision pending; preserve original61confirmed/28unknown audit counts. Additional publication gap F-0116 Control lifecycle filter discovered via specific contract/seed inspection and read-only isolated registry query (0published Control/ControlVersion/TenantControl transitions). No invented state options.20 grouped human decisions:4RR+14semantic vocab families+1U-FILTER+1Control lifecycle metadata.
+- Tests executed:505unit/contract PASS;98frontend PASS (subset ofunit);82PostgreSQL isolated PASS at127.0.0.1:55432;444local application browser cases PASS across4viewports, including256IAM UI fixture cases as subset. Historical21IAMruntime suite not executed; no mocked result claimed as QA/runtime closure.
+- OpenAPI/operation/Permission/scope existing-contract checks PASS; contracts:verify reports161operations/56reads/172permissions/237tables/30migrations. Typecheck/lint/static/rector integrity/generated vocab checks/CSV/JSON/source/reference/secret/domain/whitespace/scope checks PASS. ACTIVE_BAD_DOMAIN_REFERENCES=0.
+- Security: backend authorization remains authoritative; typed read adapters reject tenant changes/foreign row contexts/unsupported parent filters, version compatibility and fulfillment target checked; pagination401/403 drops cached choices/selection. No Platform-to-Tenant escalation or frontend-only isolation.
+- Visual authorityv1.0 and brand hashes preserved; scoped selector responsive/keyboard/error screenshots/tests executed locally, HUMAN_UI_REVIEW=PENDING_HUMAN. Existing shell overflow outside picker scope not presented as repaired. No historical versioned Phase5 evidence rewritten.
+- `APPLICATION_SOURCE_FILES_MODIFIED=7` runtime/shared files;4test files +1generator. `BACKEND_CHANGED=NO`; `FRONTEND_CHANGED=YES`; `MIGRATIONS_CREATED=0`; `QA_DATABASE_MUTATIONS=0`; `QA_DEPLOY=NO`; `NEW_COMMITS=0`; `GIT_PUSH_PERFORMED=NO`; `MERGE_PERFORMED=NO`.
+- Evidence: `docs/phase6a/STEP_6A3/09_STEP_6A3_IMPLEMENTATION_REPORT.md`, `docs/phase6a/STEP_6A3/10_STEP_6A3_RESULT.json`, manifest/read/component/vocabulary/security/test/decision reports and FIELD_ID/FORM_ID adoption CSV in that directory.
+- Mandatory transversal rule remains unchanged: business operations must not require technical IDs/JSON/database relationships, while canonical identities/persistence/API/RBAC remain preserved. Partial infrastructure is not functional business completion.
+- `NEXT_REQUIRED_ACTION=CLOSE_HUMAN_CONTRACT_DECISIONS_AND_COMPLETE_STEP_6A3`. STEP6A.4 not started. No additional stage, release or authority granted by this entry.
+
+
+## STEP 6A.3 — corrective contract review, 2026-10-08
+
+STEP_6A3=PARTIAL_BLOCKED
+PHASE_6A=IN_PROGRESS
+STEP_6A4=NOT_STARTED
+STEP_6A5=NOT_STARTED
+STEP_6A6=NOT_STARTED
+RISK_RUNTIME=NOT_STARTED
+INCIDENTS_LOSS_RUNTIME=NOT_STARTED
+PHASE_5=PASS
+PHASE_5_CLOSED=YES
+
+Functional/architectural RR-G01..04 approval explicitly recorded; new permissions/grants/endpoints/vocabulary contents are not implicitly approved.20 technical decision groups remain pending in `docs/phase6a/STEP_6A3/11_CORRECTIVE_CONTRACT_DECISION_PACKET.md`,29field matrix in12. Fresh505unit/98frontend/82isolatedPG/444localbrowser(256IAMUIsubset),contracts/rector/typecheck/lint PASS for existing implemented scope. No new source/DB/IAM/HTTPcontracts/migrations/deploy/commits; previous work/evidence preserved. No human runtime/UI gate self-approved. Current machine-readable result: `docs/phase6a/STEP_6A3/14_STEP_6A3_CORRECTIVE_RESULT.json`. Next: exact human technical decisions/publication and completion6A.3; no6A.4 activation.
+
+
+## STEP 6A.3 — technical corrective authorization and Spanish UI rule, 2026-10-08
+
+MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23
+STEP_6A3=PARTIAL_BLOCKED
+PHASE_6A=IN_PROGRESS
+PHASE_5=PASS
+PHASE_5_CLOSED=YES
+STEP_6A4=NOT_STARTED
+STEP_6A5=NOT_STARTED
+STEP_6A6=NOT_STARTED
+RISK_RUNTIME=NOT_STARTED
+INCIDENTS_LOSS_RUNTIME=NOT_STARTED
+SPANISH_BUSINESS_UI=MANDATORY_PRESENTATION_ONLY
+
+ProductOwner technicaldirection approved2026-10-08;DR15 distinguishes missing technicalowner/publication approval. CF01/02implemented/tested, columns/data preserved and unpublished filter queries removed;Controlsstatusdisabled withSpanish explanation. CentralSpanish labels andunavailabletranslations failclosed inpreparedselectors.63vocaboccurrences resolved(60sources+3CFbehavior),26CVblocked;4CTblocked;18residualdefinitions in3specificreviewpackets.509unit/102frontendsubset/82isolatedPG/448localbrowser(256IAMUIsubset)PASS;realIAM21NOT_EXECUTED. Newcode5runtimefrontend+3tests; no newHTTPcontracts/grants/backend/DB/IAM/migrations/QA/deploy/commits. Priorhistorypreserved; currentmachine result `docs/phase6a/STEP_6A3/19_STEP_6A3_TECHNICAL_RESULT.json`. IntegrationofnormativeZIPafter6A.4/before6A.5isaseparatetask,nointernalworkflowstateauthority. Next:3specificresidualpackets review/publication andcomplete6A.3; no6A.4activation.
+
+
+## 2026-10-08 — STEP 6A.3: reconciliación integral P-RBAC/P-CONFIG/P-VOC
+
+MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23
+CODEX_VARIATION_BUDGET=ZERO
+RECTOR_GATE=BLOCKED
+STEP_6A3=PARTIAL_BLOCKED
+PHASE_6A=IN_PROGRESS
+PHASE_5=PASS
+PHASE_5_CLOSED=YES
+STEP_6A4=NOT_STARTED
+STEP_6A5=NOT_STARTED
+STEP_6A6=NOT_STARTED
+RISK_RUNTIME=NOT_STARTED
+INCIDENTS_LOSS_RUNTIME=NOT_STARTED
+
+Las definiciones funcionales CV-01..14 están aprobadas por el PO; no se atribuyen firmas Architecture/Security/Domain/Backend/Data Model. Los paquetes20–23 preparan lecturas, grants, alternativas de binding y52 valores concretos: todos PROPOSED_NOT_PUBLISHED. CT02 sigue NO_BINDING_DEMONSTRATED; CT04 conserva el residuo jurídico global por objeto. Cinco discrepancias materiales exigen reconciliación competente, sin DDL ni reparación automática. Inventario exacto:95 IDs=76 preparados+18 bloqueados+1 no aplicable;89 vocab=60 fuentes preparadas+3 comportamientos CF resueltos+26 CV pendientes. Cuatro ocurrencias tienen mapping candidato y22 contrato nuevo propuesto, sin valores activados.
+
+Se corrigieron seis textos centrales en español y dos expectativas E2E; CF01/02 heredados se revalidaron. Ejecución final:509 unit,102 frontend subset,82 PG aislado,448 browser local (256 IAM UI subset) PASS;107 assertions de contratos y184 de seguridad incluidas. El fallo de Chromium dentro del sandbox se conserva separado; repetición local autorizada PASS. IAM21 real NOT_RUN. No cambian backend, contratos ejecutables, permisos/grants efectivos, migraciones, schema, IAM, infraestructura o contratos de despliegue. QA mutations=0, commits=0, deploy=NO, push/PR/merge=NO. Worktree preservado salvo los textos/prueba autorizados y este append; index/HEAD intactos. Reporte portable: docs/phase6a/STEP_6A3/24_STEP_6A3_RECONCILIATION_REPORT.md y25_STEP_6A3_RESULT.json.
+
+NEXT_REQUIRED_ACTION=COMPETENT_CLAUSE_REVIEW_AND_CANONICAL_PUBLICATION_AUTHORIZATION_WITHIN_STEP_6A3
+STEP_6A4_READY=NO
+
+
+## 2026-10-08 — STEP 6A.3: reconciliación contractual tras aprobación PO
+
+MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23
+CODEX_VARIATION_BUDGET=ZERO
+PO_DECISION=APPROVED_2026_10_08
+COMPETENT_SIGNOFF=PENDING_REVIEW
+RECTOR_BASELINE_INTEGRITY=PASS
+RECTOR_GATE=BLOCKED
+STEP_6A3=PARTIAL_BLOCKED
+PHASE_6A=IN_PROGRESS
+PHASE_5=PASS
+PHASE_5_CLOSED=YES
+STEP_6A4=NOT_STARTED
+STEP_6A5=NOT_STARTED
+STEP_6A6=NOT_STARTED
+CT01=BLOCKED_SIGNOFF_PUBLICATION
+CT02=BLOCKED_CONDITIONAL_CFGD_SIGNOFF_PUBLICATION
+CT03=BLOCKED_SIGNOFF_PUBLICATION_COMMAND_SYMMETRY
+CT04=BLOCKED_SIGNOFF_PUBLICATION_LEGAL_BINDING
+RBAC_CANDIDATE_GRANTS=44
+EFFECTIVE_GRANTS_PUBLISHED=0
+VOC_PROPOSED_VALUES=52
+VOC_FAMILIES=14
+VOC_OCCURRENCES=26
+VOC_PUBLISHED=0
+CFG_D_BASELINE_COMPLIANCE_V1=CONDITIONAL_PENDING_REVIEW
+CFG_D_BASELINE_CONTROL_EFFECTIVENESS_V1=CONDITIONAL_PENDING_REVIEW
+PHYSICAL_UQ_RECONCILIATION=DRAFT_FORWARD_ONLY_PENDING_REVIEW_NO_DDL
+COMMITS=0
+QA_MUTATIONS=0
+DEPLOY=NO
+
+Task packet actual autoriza exclusivamente reconciliación candidata y correcciones independientes estrictas, sin publicar permisos/grants, schema, migraciones ni endpoints. PO aprobó las52 propuestas exactasCSV22, las3proyecciones y preferenciaCFG-D condicionada por metodología; no se atribuyen firmas competentes. Registro único26:48cláusulas PENDING_REVIEW;27 contratos/grants mínimos por propósito/historia;28 CFG-D individual y UQ/default;29 manifestDRAFT sin vigencia inventada;30 compatibilidad/occurrences;31 reporte;32 resultado. D01/D02/UQ1/UQ2/default permanecen discrepancias abiertas con resolución candidata concreta, sin aplicación. CT04 Source/Pack sólo discovery; global contractual/hold DENY sin binding. ECGet declaraciónHTTP no demuestra handler. Cero catálogos propuestos en runtime.
+
+Checks actuales:509unit PASS (102frontend/107contract subsets),82PG skipped; typecheck/lint/contracts:verify/generated-vocab/rector/documentos/secret/diff/scope/preservaciónPASS. PG/E2E/IAM/visual/QA/runtime nuevosNOT_RUN por alcance documental/capacidades no publicadas; anteriores509/102/82/448/256 conservan carácter histórico. Documentación únicamente:7archivos nuevos y esteappend; ninguna fuente/BD/executable contract/backend/frontend/infra/deployment contract cambiado. Fase5 cierre y trabajo heredado/HEAD/index/prefijo gobernanza íntegros. Sin redQA, importaciónZIP, Git operativo o deploy.
+
+NEXT_REQUIRED_ACTION=REVIEW_LEDGER26_C01_C02_C03AB_C04G_W_C06FMR_D01_D02_CFGD_PER_METHOD_HISTORY_PUBLICATION_UQ_DEFAULT_VOCC01_06_CV01_14_CV08IAC_QA_WITH_NAMED_OWNERS
+STEP_6A4_READY=NO
+
+
+## 2026-10-09 — STEP6A.3 EC detail R1: contrato local e implementación autorizada
+
+MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23
+PO_DECISION_RECORDED=EC-DETAIL-READ-v1-L03-R1_2026_10_09
+CONTRACT_PUBLICATION_AUTHORITY=HUMAN_DECLARED_ARCHITECTURE_BACKEND_SECURITY_PRIVACY_ROLES_RECORDED_IN_LEDGER26
+EC_CONTRACT_GATE=PASS_LOCAL_SCOPE_ONLY
+GET_EC_CONTRACT=PUBLISHED_LOCAL_CONTRACT_V1
+GET_EC_RUNTIME=200_ACTIVE_BUILDAPP_FASTIFY_INJECT_SYNTHETIC_FIXTURE
+L03_R1_INTEGRATION=APPLIED_ACTIVE_CHECKOUT
+RECTOR_BASELINE_INTEGRITY=PASS
+RECTOR_GATE=BLOCKED_RESIDUAL_STEP6A3_ONLY
+STEP_6A3=PARTIAL_BLOCKED
+STEP_6A4=NOT_STARTED
+PHASE_5=PASS
+PHASE_5_CLOSED=YES
+SOG_V2=DRAFT_NOT_EFFECTIVE
+POSTGRES_SQL=PASS_16_READ_ONLY_CTE_FIXTURE_TESTS
+POSTGRES_RLS=NOT_IMPLEMENTED_BY_CURRENT_MODEL_05_SECTION32
+QA=NOT_RUN
+IAM_REAL=NOT_RUN
+E2E_EXTERNAL=NOT_RUN
+COMMITS=0
+QA_MUTATIONS=0
+DDL_EXECUTIONS=0
+GRANTS_PUBLISHED=0
+VOC_PUBLISHED=0
+DEPLOY=NO
+
+MandatoPOadoptaR1texto/schema SHA159c2fac9a5d2006900f49ee020521146f2e85baeec9233c8a8f07429bc28163; autorizaciónposteriorliteralArchitecture/Backend/Security &Privacy parapublicar registrada en26 bajoDR-STEP6A3-EC-DETAIL-R1-20261009. Unaautoridadhumana declarada, funcionesinternas acumulables43:116; noidentidades distintas/credenciales/independencia/firmascriptográficas atribuidas. Publicación localOpenAPI02/matriz03/contrato28, noactosdeambiente.
+
+GET canónico integrado: DTOcerrado,int64string exacto,1lecturaSQLcoherente,ObjectPolicytenant yDENYscopesnovinculados,referenciasausentes/foreign404,metadatahistórica200,estructural409,fallo500,no-store/Vary yBearerchallenge. Serviceassessment refuerzaownership/referencias conservandoECopcional/compatible; no mode none/bindinginventado.130pruebasactivasPASS (64GET+60regresión+6guard),16PostgreSQLread-onlyCTEPASS,19schemachecksPASS;typecheck/lint/rector/contracts/secret/diffPASS. Nofixturespersistidos/DML/DDL/QA/IAM/deploy. Mocks/CTEs nopublicanruntimeofficial;RLSfutura explícita.
+
+48/48cláusulas inventariadas: A1/B44/C?3 intactas;1implementadalocal,41candidataspendientesautoridad,6decisionesmaterialespendientes. Ledger48 estadosnoalterados. CT01/03/04 y44grants siguen candidatos;CT02 contextual/CFG-D/SoD noresueltos;52valores/14familias/26ocurrencias siguenpropuestos,cero publicados,4mapping/22nuevocontrato; UQ1/UQ2/default planforward-only canónico sinDDL. Preferencianone no bypass; propuestas52 no rediseñadas; defaultsnoarbitrarios. Informeúnico actualizado04/06/07SOGv2 conserva historia, sin activarSOG.
+
+NEXT_REQUIRED_ACTION=CFG_D_BASELINE_V1_OFFICIAL_SUFFICIENCY_VERSIONED_PUBLICATION_AND_AUTHORSHIP_SOD_DECISION_BY_METHODOLOGY_COMPLIANCE_CONTROLS_CONFIGURATION_ARCHITECTURE
+Normativepackwindow=AFTER_VALID_STEP6A4_BEFORE_STEP6A5; ZIPdepositadonoseabrió/importó. No6A.4hasta cierre válido6A.3.
+
+
+### STEP 6A.3 — cierre residual y resolución IPC — 2026-10-09
+
+Continuidad actual: `docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261009_V2/07_RESULT.json#residual_closure_20261009`; conserva íntegros los resultados anteriores como historia. GET EC R1 sigue PUBLISHED_LOCAL_V1 (contrato28: PUBLISHED_LOCAL_CONTRACT), aprobación/hash exactos preservados;64 pruebas HTTP/mock aprobadas. **SQL_LOCAL_EC_READONLY=PASS,16/16 PG16.15** sobre contenedor local tcdx-grc-phase3-postgres-16/127.0.0.1:55432/tcdx-grc, fixtures CTE sin DML/DDL/escrituras persistentes. Causa IPC comprobada:32/32 segmentos, ENOSPC shmget; sólo segmento propio48103455 retirado, sin servicios/configuración global ajenos. No extender PASS a RLS, QA, IAM ni E2E externo.
+
+Validador de pruebas JSON Schema corregido por dialecto,13 negativos nuevos,627 pruebas unit/HTTP aprobadas/0fallos;16SQL ejecutadas aparte,643 casos Vitest únicos,82 integraciones restantes omitidas por autorización.15 escenarios UQ read-only con datos no vacíos aprobados sólo para predicados. Typecheck/lint/build PASS.44 pares/52 propuestas reconciliados sin publicación;48 cláusulas trazadas,1 local satisfecha/47 materiales pendientes. Aprobaciones funcionales CFG-D y UQ/default registradas en26 sin publicación/SoD/DDL inferida. Delta UQ/default R2 y tests nativos preparados fuera de migraciones activas; no ejecutados.
+
+`RECTOR_GATE=BLOCKED` por firmas/publicación y aceptación dependientes; `RECTOR_INTEGRITY=PASS`; `MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23`; `SOG_V2=DRAFT_NOT_EFFECTIVE`; `STEP_6A3=PARTIAL_BLOCKED`; `STEP_6A4=NOT_STARTED`. CT01/03/04 pendientes de publicación y policies; CFG-D pendiente de autosuficiencia/versionado/SoD competente; UQ/default pendiente de revisión y autorización DDL; QA/IAM real/E2E externo NOT_RUN; RLS no implementado. Paquete único de cinco grupos firmables en06 (UQ R2 reemplaza sólo candidato R1); ledger de recepción26. No commits/push/PR/merge/grants/vocabularios publicados, DDL/product DML, QA/IAM mutations ni deploy. Se preserva índice/HEAD y trabajo heredado.
+
+
+Preservación del índice en esta continuidad: staging vacío antes/después; las1212 entradas actuales (modo, blob y stage0) son idénticas a HEAD. El SHA-256 binario de .git/index cambió de15ed313729a935da362cb433a5a7425cb0de9a4f36cc13c7f13d5dcf714f7562 a e6fef6de4e630ad7f84d2ee637943f997592f0c79380247f156a04cc52df449e durante la ejecución. No se atribuye una causa no comprobada ni se afirma identidad binaria; la evidencia prueba preservación de contenido/staging, compatible con refresco de metadata/cache. No hubo git add/reset/restore/stash/commit ni escritura manual del índice, y no se lo sobrescribió para restaurar un checksum. HEAD sin cambios;1295/1302 archivos iniciales byte-idénticos, otros7 modificados sólo como test infrastructure y apéndices de continuidad; cero eliminaciones.
+
+
+## Activación humana acotada v1.8 — 2026-10-09
+
+`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09`
+
+Autoridad expresa DR-INTERNAL-REVIEW-V18-20261009; activación materializada en ACTIVE_ACTIVATION.json. Gobierno editorial/metodológico interno unipersonal; SoD operacional y obligaciones superiores preservadas. SOG v2 DRAFT_NOT_EFFECTIVE. Este asiento sucede el estado de autoridad v1.7 sin borrar registros históricos. Los hashes macro STEP6A3 permanecen pendientes de revisión/firma según cuestionario complementario C16; no se inventan revisores ni se publica none por aprobación funcional. QA/IAM real/DDL QA/deploy/push/PR no ejecutados. Evidencia técnica final se registra tras ejecutar los verificadores.
+
+
+## STEP6A3 — consolidación definitiva de gobierno interno, 2026-10-09
+
+`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09`
+`AMENDMENT_STATUS=ACTIVE_VERIFIED`
+`RECTOR_INTEGRITY=PASS`
+`RECTOR_GATE=BLOCKED`
+`STEP_6A3=PARTIAL_BLOCKED`
+`STEP_6A4=NOT_STARTED`
+`SOG_V2=DRAFT_NOT_EFFECTIVE`
+
+Estado actual: docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261009_V2/07_RESULT.json → governance_consolidation_20261009; no borra ni adopta el candidato SOGv2. La activación expresa de v1.8 ocurrió2026-10-09T18:23:58.855422Z, manifestSHAe51f6539df119775b2feb8839907c8cd690623b82707b399aa15a31d59196533. Se protege íntegra v1.7 y SoD operacional; onehuman no se representa como dos personas.49 controla sólo editorial/metodología interna; no permisos o actos de usuarios GRC.
+
+725pruebas finalesPASS/0FAIL/0omitidas sobre Node22.23.2/PostgreSQL16.15,79archivos:627unit+82integración+16SQLRO.38casos nativos UQ/default con datos existentes/concurrencia/rollback/failclosedPASS.6negativas de integridad+Python-O rechazadoPASS;361checksreconciliaciónPASS. Typecheck/lint/build/contractschema/--check/rectorstatus/secret0/whitespacePASS. GETECR1 conserva bytes/hash/autorización y64inject+16SQLregresiónPASS. No sumar suites/casos solapados ni extenderSQLPASS aQA/IAM/RLS/E2E externo.
+
+Se preserve ambos cuestionarios firmados; manifiesto macroR1 conSHA5b8c02385615fe6b5c825b18619d0cf1d493b7b7880e47530cc02893b3c953c4 yWord único preparado; firma posterior pendiente porC16. No otra aprobación para la enmienda ya activa. CT01/03/04,44grants y52voc dependen sólo de decisiones exactas/publicación pendientes;CFG-D requiere además suficiencia oficial y vínculo versionado todavía no demostrado, no sólo revisión humana. UQforwardcandidate testeado, fuera de migraciones activas; migracioneshistóricas intactas. Paquete operacionalQA preparado/noejecutado. RLS físico no implementado; QA/IAM_REAL/E2E_EXTERNAL NOT_RUN. Commit/push/PR/merge/QA mutations/deploy0;DDL únicamente propia instancia descartable. Trabajo heredado ystaging se verifican mediante snapshot/deep-preservation evidence; mainnointegrado.
+
+
+## STEP6A.3 — implementación local exacta R1/R2/R3 y consolidación, 2026-10-09T21:38:11.768851+00:00
+
+`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09`
+`AMENDMENT_STATUS=ACTIVE_VERIFIED`
+`STEP6A3_RECTOR_INTEGRITY=PASS`
+`STEP_6A3=PARTIAL_BLOCKED`
+`STEP_6A4=NOT_STARTED`
+`SOG_V2=DRAFT_NOT_EFFECTIVE`
+
+Estado vigente: docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261009_V2/07_RESULT.json → macro_implementation_20261009, consumido por verify-phase6a3-current.py y el gate rector/status. Los historiales Phase5 QA no son aceptación STEP6A3.
+
+R1 SHA5b8c02385615fe6b5c825b18619d0cf1d493b7b7880e47530cc02893b3c953c4 y R2 SHA2dd41de880d445963c5c74917751d58490c63d7364ec1ad2179bbe39c5187ed8 aprobados exactamente; C16 satisfecho para textos presentados.29/30/31/32 PUBLISHED_LOCAL_V1.3lectores/44pares/52valores14familias26ocurrencias implementados donde el contrato está cerrado; UI empresarial sin entrada UUID/JSON para selectores. CursorM2 acotado porjoinedAt/ID y microsegundos, firmas completas; F/R1 intactos.44 auditorías de adopción reforzadas comprobadas sólo en fixtures propios; candidato33 permanece fuera de manifest activo hasta planreal deactor, no seed. Procedencia tipada enAuditEvent existente, FK/RETURNING/CAS reales; hijos usan explícitamente versión de su raíz vinculada, nunca UUID convertido en versión; históricos sin perfil no se backfillean. Backend sigue autoridad única.
+
+850PASS/0FAIL/0omitidas en85archivos: 737unit +113PG, incluidos82integración antes omitidas,16EC SQLRO y12refs nativas. Los627unit anteriores están cubiertos por la misma regresión, no se suman otra vez. 460browserPASS/0FAIL/0SKIP en4viewports conAPI/IAMsimulados; noHumanUI PASS.38UQ/defaultnativas de candidato sellado no se repiten al no haber cambios;8nativasRBAC R2 +12R3 de auditoría/failclosed/replay/rollback/concurrenciaPASS;3 tests R3 adicionales incluidos en regresión. Validación JSONSchema por dialecto declarado conserva contratos correctos; nuevas negativas niegan overflow/familia/hash/PII/ruta/version. Typecheck/lint/build4proyectos,contracts--check/generator,integridad/status/secret0/whitespace yschema/seeds/migrationgatesPASS locales. Fallos de fixtures por nuevos auditsServicePrincipal corregidos y regresión completa rehecha sobre reconstrucción tmpfs propia; tenants/memberships/platformassignments/auditsTenant finales0.
+
+GETECR1 bytes/autorización conservados,64inject+16SQL realRO regresiónPASS; gate SQL local exclusivamentePASS. IPC original ENOSPC/EPERM y su resolución se preservan con logSHaf555c20de581631a68e7e76ab276bc40b2142d5b8cead4e4664d14f93009cda6; instancia propiaPG16.15/privateIPC/shm128MB/buffers32MB/maxconn30/tmpfs512MB.16SQL sinDDL/DML/fixtures; operaciones separadas deDDL/fixtures sóloenBDpropia descartable, no datos compartidos.
+
+48/48trazadas, 36cerradaslocalmente/12pendientes. Bloqueos: CFG-Dinputs oficiales/binding/publicación none no demostrado; C-04Wcontextolegal tipado ausente; operaciónreal de R3/candidato34; QAinventory/actor33/runtime/HumanUI/realIAM/E2Eexterno. No otro revisor humano por defecto; una firma no inventa entradas ni relaciones. UQ/defaultmigration31 yRBAC32 locales conprecondiciones/forwardrecovery;30históricasintactas. PaqueteQA R3 preparado/noautorizado/noejecutado, guardado conhashes exactos; ceroQA/IAMreal/sharedDDL/commit/push/PR/merge/deploy. La activaciónv1.8 efectiva UTC18:23:58.855422Z permanece verificada; SOGv2generalnoactivo,6A4noiniciada, ZIPnormativo noingerido.
+
+### Evidencia final R3 y retiro de instancia propia
+
+MACRO-STEP6A3-RBAC-D01-D02-20261009-R3 SHA-256 17eeb65269bc2dc9727c605999f1fd0c5c343cab3b6653a372c3d879618daed9 aprobado con respuesta literal «Apruebo R3 y su texto exacto», recibo MACRO_APPROVAL_RECEIPT_R3.json. Contrato32 PUBLISHED_LOCAL_V1; candidato34 fuera del manifest activo32. D01/D02 cerrados localmente con12 pruebas SQL rollback y3 tests PostgreSQL de datos existentes/bootstrap/HTTP; roles custom y MembershipRole preservados. Los11 lectores reciben200; negativosscope/entitlement/revocación403. Regresión850PASS/0FAIL/0omitidas sobre863 hashes de fuente sincronizados; no se cuenta el primer intento de snapshot antiguo como evidencia R3.
+
+36/48 cláusulas cerradas localmente,12 pendientes; trazabilidad48/48.07_RESULT.json es fuente única. Se destruyeron exclusivamente runner03b75e591afd yPG60906c8a477e propios, incluyendo tmpfs deBD;4contenedores ajenos preservan ID/StartedAt/Running.16EC SQLRO y12R3DMLrollback no dejan escrituras persistentes; fixtures/setup propios separados fueron eliminados contmpfs. Índice conserva contenidos/modos/blobs/path idénticos alHEAD ystaging0; SHA bruto cambió por caché/stat deGit, registrado sin reemplazar índice.66valores históricos originales de07 intactos;1244de1308paths deentrada bytesidénticos,64modificados enalcance condiff atribuible;153SQL preexistentes,29PNG y3ECR1 fuente/tests intactos.
+
+PaqueteQA R3 preparado NO_READY/NO_AUTHORIZED/NO_EXECUTED, incluye31/32/33/34, checksums/identidadrealpendiente/preflight/backup/recuperación. NoNuevaFirmaInterna, no none, ningún bloqueador técnico se sustituye con aprobación genérica. CeroQA/IAMreal/DDLcompartido/Git remoto/commit/deploy;6A4 NOT_STARTED/SOGv2 DRAFT_NOT_EFFECTIVE.
+
+
+## STEP_6A3 — rescate integral comercial 2026-10-13
+
+MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09. STEP_6A3=PARTIAL_BLOCKED; STEP_6A4=NOT_STARTED; STEP_6A4_READY=BLOCKED. No se inició intermedio normativo ni STEP_6A5. Informe: [STEP_6A3_INTEGRAL_CLOSURE_REPORT_20261013.md](../phase6a/STEP_6A3/STEP_6A3_INTEGRAL_CLOSURE_REPORT_20261013.md).
+
+QA PostgreSQL16 READ ONLY/TLSv1.3 revalidó30migraciones hasta20261007000200,172permisos y ausencia de familias/límites/permiso change-plan. Sin DDL/DML QA. Instancia descartable local32migraciones:771unit/contractPASS y120PostgreSQLPASS, incluyendo7pruebas nuevas de alta real, RBAC/API, concurrencia, replay y rollback de auditoría. Fixtures locales existentes R6/R3 reutilizados, no IAM real ni ZIP normativo. No frontend/código funcional/contratos activos nuevos.
+
+Enmienda comercial consolidada DRAFT con modelo/relaciones/UsageLimit/transiciones/lecturas/auditoría/migración; aprobación exacta requerida por45§6/46/49§3. Hallazgo UL-01: UsageLimit usa UNIQUE(limit_code) sin CHECK de no negatividad en SQL/QA, divergente del diccionario; no se corrigió fuera de gate. Las12cláusulas pendientes previas permanecen. RECTOR_BASELINE_INTEGRITY=PASS; RECTOR_GATE=BLOCKED para ampliación y cierre. No commit/push/merge/deploy/promoción. Evidencia: evidence/integral-closure-20261013 bajo CONSOLIDATED_APPROVAL_20261009.
+
+## Rector v1.9 activation checkpoint
+
+`RECTOR_ACTIVE_VERSION=TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14`
+`STEP6A3_CURRENT_STATUS=PARTIAL_BLOCKED`
+`STEP6A4_CURRENT_STATUS=NOT_STARTED`
+`PHYSICAL_DATA_MODEL_REVIEW_COMMERCIAL=APPROVED_PENDING_EFFECTIVE_PUBLICATION`
+`EXECUTABLE_CONTRACTS_COMMERCIAL=APPROVED_PENDING_EFFECTIVE_PUBLICATION`
+`EXPECTED_SCHEMA_COMMERCIAL=CANDIDATE_VERIFIED_ISOLATED_NOT_ACTIVE`
+`COMMERCIAL_IMPLEMENTATION=NOT_STARTED_DEPENDENT_GATES`
+
+Decision `DR-STEP6A3-COMMERCIAL-PHYSICAL-EXECUTABLE-20261014-01`, signed by Andrés Barouh at `2026-10-14T13:59:55Z`, approved the 13 exact bytes in manifest SHA-256 `d8968b18a70bcb7268114cb294acc31436740f1819a61f4a6d517bc0b958bf76`, including the corrected inventory and physical trigger strategy. Byte-identical copies are staged in the physical and executable amendment directories; the copied contracts still contain `DRAFT_NOT_EFFECTIVE` and are not active. `docs/physical-data-model/amendments/STEP_6A3_COMMERCIAL_v1.9/CONTRACT_PUBLICATION_RECEIPT.json` maps the staged copies. The official migration runner applied entry 33 to a restored isolated PostgreSQL 16 database and verified its reapplication checksum; the proposed 240-table expected-schema returned zero mismatches. Active migration manifest and expected-schema remain unchanged pending their separate exact-byte gates. QA shared DDL/DML, IAM, grants, commit, push, merge and deploy remain unauthorized. STEP 6A.3 stays PARTIAL_BLOCKED and STEP 6A.4 NOT_STARTED. Historical v1.8 statements above remain historical evidence.
+
+## STEP_6A3 — effective commercial contracts checkpoint, 2026-10-14
+
+`PHYSICAL_DATA_MODEL_REVIEW_COMMERCIAL=PASS_CONTRACT_EFFECTIVE`
+`EXECUTABLE_CONTRACTS_COMMERCIAL=PASS_CONTRACT_EFFECTIVE`
+`EXPECTED_SCHEMA_COMMERCIAL=APPROVED_PENDING_ACTIVE_MIGRATION_MANIFEST`
+`COMMERCIAL_IMPLEMENTATION=AUTHORIZED_IN_PROGRESS`
+`STEP_6A3=PARTIAL_BLOCKED`
+`STEP_6A4=NOT_STARTED`
+
+Andrés Barouh replied literally «aprobado ahora» for the six exact destinations in `EFFECTIVE_PUBLICATION_MANIFEST.json` SHA-256 `c2946efef509f1173920209d1f2a993049b7a8d64246a20fd7ab2875cf76bafb`. Receipt `HUMAN_EFFECTIVE_PUBLICATION_DECISION_RECEIPT_20261014.json` records observed receipt time, without asserting an unstated signature time. Five effective physical/executable contract bytes now match approved hashes. The sixth approved byte, `database/expected-schema.json`, remains pending while the active migration manifest describes 32 migrations; isolated PostgreSQL with migration 33 verified its 240-table schema with zero mismatches. No QA shared DDL/DML, IAM, grants, commit, push, merge or deploy.
+
+## STEP_6A3 — commercial change-plan local execution, 2026-10-14
+
+`COMMERCIAL_MIGRATION_33=INTEGRATED_EXACT_APPROVED_BYTES`; `EXPECTED_SCHEMA_COMMERCIAL=ACTIVE_APPROVED_240_TABLES_ZERO_MISMATCHES`; `COMMERCIAL_IMPLEMENTATION=FUNCTIONAL_LOCAL`; `STEP_6A3=PARTIAL_BLOCKED`; `STEP_6A4=NOT_STARTED`; `QA_DEPLOYED=NO`; `QA_AUTHENTICATED=NOT_RUN`; `HUMAN_UI_REVIEW=PENDING`.
+
+Traceability: effective commercial contracts03/07/08/12 → database migration20261013000100 + exact expected-schema → security/commercial-subscription.ts + existing Platform service/routes/projection → frontend/core-grc.tsx + api-client.ts. Node22.23.2: subscription-change-plan.postgres.test.ts25PASS; affected unit/contract regression142PASS; subscription-change-plan.real.spec.ts8PASS with signed JWT/real backend/PostgreSQL16; affected core-grc-ui.spec.ts8PASS with simulated API, only UI race/initial-create evidence. Original33-migration isolated schema retained; fixture writes confined to task-owned disposable127.0.0.1:55434. Creation transfer_activate is an internal initial-state effect per rector21§17/binding08, separate from the mandatory persisted transfer_close edge; no NULL lifecycle definition or schema exception. Operational publication of permissions/grants/edges and exact commercial catalog remains a separate gate; no QA/IAM real/commit/push/merge/deploy.
+
+Checks finales: rector/integridadPASS; contracts:verifyPASS(240tablas/33migraciones/169operaciones); typecheck/buildPASS en4proyectos; secrets:scan0; git diff --checkPASS. Release local linux/amd64 preparado, tags tcdx-grc-backend/frontend:commercial-change-plan-20261014; image IDs backend sha256:e4af5742300ceb52041f7740b9bf0cc9b964f3ff9291cc1a05472dace46ecbd9 y frontend sha256:aeebdb982620315edb8586bef0aa77d3fe372fc552ee120458abd01ca8fdb5f1. Sin promoción QA ni aprobación visual humana.
+
+## STEP_6A3 — publicación IAM/comercial y release QA, 2026-10-14
+
+`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14`; `STEP_6A3=PARTIAL_BLOCKED`; `STEP_6A4=NOT_STARTED`; `QA_DEPLOYED=PASS_QA`; `HUMAN_UI_REVIEW=PENDING`.
+
+Decisión humana DR-STEP6A3-IAM-M2M-QA-20261014-01 ejecutada con client_credentials real y ServicePrincipal Platform activo. QA:44 grants globales +88 instancias tenant preservadas/132 auditorías de publicación; replay sin auditorías nuevas;3 permisos comerciales;3 transiciones persistibles +transfer_activate como efecto interno inicial contractual. Publicación comercial ejecutada personalmente por Platform Admin y verificada en PostgreSQL QA:3 versiones v2,36 entitlements v2,36 v1 y3 suscripciones históricas byte-equivalentes por fingerprints,6 auditorías/5 outbox.33 migraciones preservadas/cero FK sin validar;5 packs continúan draft.
+
+Backend final AMD64 sha256:e636c667c37a62105e297248db0c3077de865d3b24799333f0475eaa94ef695a y frontend sha256:aeebdb982620315edb8586bef0aa77d3fe372fc552ee120458abd01ca8fdb5f1 activos/healthy con rollback retenido. Corrección del ETag de concurrencia:respuesta real200 traía "1-zstd";detail ahora declara no-store,no-transform sin modificar Caddy, contratos ni esquema.126 pruebas afectadas únicas PASS(89unit/37PG aislado);regresión corregida25/25 incluida en ese total;typecheck/build/integridad/secrets0/whitespace PASS. Evidencia:docs/phase6a/STEP_6A3/QA_RUNTIME_PUBLICATION_RELEASE_EVIDENCE_20261014.json. El macro firmado anterior permanece histórico intacto. No commit/push/merge ni producción.
+
+`QA_AUTHENTICATED=PASS_QA`; `CHANGE_PLAN_QA=PASS_QA`. El operador confirmó que el formulario carga después de la corrección y ejecutó dos cambios reales sobre Acme 2. PostgreSQL verifica sus dos sucesoras, auditoría material/privilegiada y un outbox por operación; exactamente una suscripción activa por empresa. Acme 2 era una de las tres originales:el operador aceptó expresamente «Aceptar Acme 2 como excepción QA auditada». Se conservan las tres filas originales, dos intactas y la de Acme 2 finalizada mediante lifecycle canónico con historia enlazada;no se afirma igualdad de fingerprints después de esa prueba. Publicación/deploy preservaron3/3 antes de la intervención humana. Recarga de sesión/aislamiento Tenant real y aceptación visual humana pendientes;el checkpoint rector firmado no se auto-promueve.
+
+Aceptación posterior explícita de Andrés Barouh:«Recarga correcta y pantalla aceptada» y«todo ok» para la prueba con Tenant Admin real sin Platform y aislamiento entre empresas. `SESSION_RELOAD_QA=PASS_QA`; `TENANT_ISOLATION_QA=PASS_QA`; `HUMAN_UI_REVIEW=PASS` para Empresas/Cambiar plan desplegados, sin cambiar bytes de baseline visual. `STEP6A3_IAM_COMMERCIAL_RELEASE_QA=PASS_QA`. Checkpoint actual:07_RESULT.json#qa_runtime_checkpoint_20261014, con SHA de evidencia real y macro firmado preservado. `STEP_6A3=PARTIAL_BLOCKED`; `RECTOR_GATE=BLOCKED` para cierre global:C-04W/CFG-D y aceptación macro restante no se sustituyen por pruebas comerciales ni se inventan relaciones legales, entradas metodológicas oficiales o resultados externos. `STEP_6A4=NOT_STARTED`.
+
+## STEP_6A3 — cierre residual específico, 2026-10-14
+
+`C-04W=BLOCKED_EXTERNAL_LEGAL_EVIDENCE`; `CFG-D=BLOCKED_OFFICIAL_SUFFICIENCY_AND_VERSIONED_PUBLICATION`; `MACRO_ACCEPTANCE=PARTIAL_ACCEPTED_QA`; `VOC-C04=PASS_QA`; `STEP_6A3=PARTIAL_BLOCKED`; `RECTOR_GATE=BLOCKED`; `STEP_6A4=NOT_STARTED`.
+
+Revisión directa de rector23/24/17/19/29/35/38/45/46/49 y contratos27/29/30/31 conserva D2=C y D1=B. Fuentes aprobadas no demuestran contexto legal por objeto ni los once inputs/vínculos por versión necesarios para publicar autosuficiencia/none. El operador indicó conservar estos bloqueos específicos, v1 y EC opcional;ningún cambio de código, contrato, datos o runtime. QA READ ONLY/TLS verifica dos metodologías v1 publicadas y una cadena histórica upload/file/evidence sin discrepancia de política; no se presenta ese caso como prueba jurídica o guard concurrente.
+
+Inventario agregado QA:16 columnas físicas,14 familias/26 ocurrencias;cuatro valores históricos no publicados:on_demand(CV03),file(CV12),low como severity(CV11),assurance(CV07),una ocurrencia persistida de cada uno. Andrés Barouh aceptó exactamente el candidato SHA29f100a9e4446f08520d78681f99223ad500dec8174a1cac98612f8a012abd4f;recibo HUMAN_RESIDUAL_VOC_C04_ACCEPTANCE_RECEIPT_20261014.json. VOC-C04 queda cerrado sin alias,backfill,renombrado ni opciones nuevas. La aceptación QA independiente permanece acreditada;no se inventa VOC-QA completo ni CFG-QA dependiente. Estado/evidencia:07_RESULT.json#residual_closure_checkpoint_20261014 y QA_RUNTIME_PUBLICATION_RELEASE_EVIDENCE_20261014.json#residual_obligation_review. Macro firmado intacto;no reejecución IAM/publicación/tests126/deploy y no producción.
+
+## STEP_6A3 — aprobación condicional C-04W/CFG-D, 2026-10-14
+
+El Product Owner aprobó condicionalmente el candidato `C04W_CFGD_RESIDUAL_DECISION_CANDIDATE_20261014.md` con SHA-256 `3487fd9fa032e5d311b37361ff673c335fba63c9736110b2c7200581370fd8dd`. La comprobación local confirmó bytes y alcance C-04W/CFG-D. La decisión funcional incorpora autoridad tenant para configurar retención y dirección conservadora CFG-D sin `none`; no aprueba DDL, grants, contratos derivados aún no presentados, QA ni despliegue. Expediente append-only: `docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/CONDITIONAL_DECISION_AND_TASK_PACKET.md`; delta textual candidato del contrato 27: `CFGD_CONTRACT_27_CANDIDATE.md`. La nueva relación tipada exige sucesora rectora conforme a 30/33/45/47 y revisión física/ejecutable propia. La duración y liberación de `legal_hold` carecen de regla ejecutable completa. Los guards actuales de assessment no acreditan todos los inputs de suficiencia de 17/19/38. `C-04W=BLOCKED_CANONICAL_BINDING_PUBLICATION`; `CFG-D=BLOCKED_CONSERVATIVE_CONTRACT_AND_SUFFICIENCY`; `MACRO_ACCEPTANCE=PARTIAL_ACCEPTED_QA`; `STEP_6A3=PARTIAL_BLOCKED`; `RECTOR_GATE=BLOCKED`; `STEP_6A4=NOT_STARTED`. No se alteraron baseline activa, esquema, datos, permisos, runtime ni evidencia QA histórica.
+
+## STEP_6A3 — activación sucesora v1.10, 2026-10-15
+
+`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15`; `RECTOR_BASELINE=PASS`; `STEP_6A3=PARTIAL_BLOCKED`; `STEP_6A4=NOT_STARTED`. El Product Owner Andrés Barouh autorizó A01–A13 para C-04W/CFG-D exclusivamente QA. La constancia de identidad, funciones, alcance y tiempo observado está en `docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/PO_A01_A13_DECISION_RECEIPT_20261015.md`. Se verificaron los 51 bytes del manifest aprobado SHA-256 `b9b6bf6930931af5eb32ca1b4027212ad3a82f247fef677b919af24d30ac9060`, se preservó v1.9 inmutable en history y se activó v1.10 con pointer, manifest y verificador concordantes. Los gates físico, ejecutable, PostgreSQL, RBAC, QA y aceptación macro se evalúan por separado; esta activación no los declara PASS.
+
+
+## STEP_6A3 — acta editorial de cuatro candidatos, 2026-10-15
+
+`PO_EDITORIAL_APPROVAL_FOUR_CANDIDATES=GRANTED_RECORDED`; `CONTRACTUAL_PUBLICATION=STAGED_NOT_EFFECTIVE`; `STEP_6A3=PARTIAL_BLOCKED`; `RECTOR_GATE=BLOCKED`; `STEP_6A4=NOT_STARTED`. Constancia aditiva: `docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/PO_FOUR_CANDIDATES_EDITORIAL_APPROVAL_20261015.json`, SHA-256 `d71b0d5ccb56d12e73ac214bda5ff51b85b1a6faaa9c9e26aff14661e7838e15`. Fecha humana declarada2026-10-15; sin hora original atribuida; UTC de registro separado. Cuatro copias sucesoras idénticas preservan contrato27/metodologíasv1. La aprobación no se extiende a las otras once entradas del manifest87bd; seis snapshots ejecutables nuevos requieren revisión exacta y se prepararon en `docs/executable-contracts/candidates/STEP_6A3_C04W_CFGD_v1.10/derived-snapshots/DERIVED_SNAPSHOT_REVIEW_MANIFEST.json` SHA-256 `15d9b609ecf82d6ec9b23ffd3711c33deefc96ad862abd110806ff337c219158`. Preflight bloquea antes de Docker por contratos aún no efectivos. Registry y QA deploy no ejecutados; fuente auténtica y aceptación humana siguen pendientes. Evidencia y clasificación en `docs/phase6a/STEP_6A3/C04W_CFGD_RESIDUAL_GATE_AUDIT_20261015.md`. No repetición de tests40/8/367, R2 o builds; sin cambios runtime ni Git remoto.
+
+
+## STEP_6A3 — continuidad C-04W/CFG-D reconciliada, 2026-10-15
+
+`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15`; `RECTOR_BASELINE=PASS`; `C04W_PHYSICAL_PUBLICATION=PASS_CONTRACT_EFFECTIVE`; `C04W_CFGD_EXECUTABLE_PUBLICATION=PASS_CONTRACT_EFFECTIVE`; `C04W_LIFECYCLE_REGISTRY=PASS_5_EXACT_AUDITED_QA`; `STEP_6A3=PARTIAL_BLOCKED`; `RECTOR_GATE=BLOCKED`; `STEP_6A4=NOT_STARTED`; `HUMAN_UI_REVIEW_C04W_CFGD=PENDING`.
+
+Las aprobaciones cuatro+seis ya recibidas y la publicación efectiva manifest e7f30ded29f213fa33a8648466b5c7bbfcc6bb520e6cdf2b11968a41d9f6e944 se corroboraron sin republicar. QA real:34migraciones exactas, cinco aristas tenant/una auditoría M2M cada una, sin FK pendientes/cascadas. Backend final sha256:474e525a3e6b2bcc067dda7a77039b36f2832ca37d138b1424a700644560fc6d y frontend español sha256:552ff3e9412cb1c78bfa3400c26c8835c6a2bfa09a6db1dc72ef18b8a2712eeb activos/healthy/cero reinicios; recibos de activación, gates y rollback preservados. Paridad187/77inputs, ledger y fingerprintsPASS. C-04W dos draft→under_review diferenciados y CFG-D Controls insufficient_data corroborados por persistencia/auditoría; históricos intactos. Typecheck ambos/contratos/gobernanza/secrets0/diffPASS. Seis casos visuales locales finales satisfechos tras corregir exclusivamente un fixture de permiso; no son aceptación humana.
+
+Pendientes: documento auténtico y su contexto de incorporación inicial (upload requiere aplicabilidad publicada, hoy ninguna), revisión separada real, recibos QA negativos aún no acreditados y aceptación humana/UI final. No se pide otra aprobación de candidatos/snapshots ni se inventa suficiencia v1/none. El acta comercial anterior mantiene su alcance. Los checkpoints anteriores quedan históricos; el ledger macro firmado no se alteró ni se promovió. Evidencia y limitaciones: docs/phase6a/STEP_6A3/C04W_CFGD_CONTINUITY_REPORT_20261015.md; checklist/acta: C04W_CFGD_HUMAN_CLOSEOUT_CHECKLIST_20261015.md; recibos: evidence/account-continuity-20261015/. Sin cambios QA, builds, deploy, contratos, IAM, BD ni runtime; sin commit/push/merge ni producción en esta continuación.
+
+
+## STEP_6A3 — incorporación inicial y negativos independientes, 2026-10-15
+
+`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15`; `RECTOR_BASELINE=PASS`; `INITIAL_SOURCE_ROUTE=BLOCKED_CONTRACT_DECISION`; `SOURCE_LEGAL_QA=BLOCKED_HUMAN_ACTION`; `INDEPENDENT_HTTP_NEGATIVES=PASS_4`; `HUMAN_AUTHENTICATED_NEGATIVE_RECEIPTS=NOT_RUN`; `HUMAN_UI_REVIEW_C04W_CFGD=PENDING`; `STEP_6A3=PARTIAL_BLOCKED`; `RECTOR_GATE=BLOCKED`; `STEP_6A4=NOT_STARTED`.
+
+La inspección de rector24/23, DELTA/storage/OpenAPI, permisos/ObjectPolicy, tres predicados de backend y R2 confirma que no hay ruta publicada de primer documento: request-upload, finalize y EvidenceCreate exigen aplicabilidad publicada; un draft sin fuente no acredita publicación. R2 permite físicamente FK draft y sourceNULL, pero no autoriza eludir el contrato; no se alteraron las dos under_review ni la EvidenceVersion histórica. Propuesta única DRAFT no efectiva: INITIAL_RETENTION_SOURCE_BOOTSTRAP_DELTA_DRAFT_20261015.md, SHA1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b; manifest de decisión f3f49ec297e069abb28989f5c039bbe1e654f507d6bf62c8d7cede12300d5582. Propone custodia sobre draft, autoría documental diferenciada y un comando bind-initial-source con permisos existentes/SoD/CAS/audit; sin migración prevista, sujeta a aprobación/sucesoras/gates. No se implementó ni se reabrieron diez aprobaciones anteriores.
+
+QA2026-10-15T20:47Z: principal M2M existente verificado, dos GET tenant403; approve anónimo401 y bearer inválido401, todos con correlation y hash de cuerpo. Son frontera de autenticación/actor, no SoD del autor ni cross-tenant humano. Casos intactos. No se dispone de canal de sesión humana autenticada en esta ejecución: negativos SoD/valid forzado/404 y permiso-entitlement humanos quedan NOT_RUN. Inventario de actores: Legal Reviewer independiente puede aprobar aplicabilidad pero carece de evidence.approve; la propuesta permite autoría por objeto diferenciada para reutilizar actores existentes, sin afirmar que ese recorrido ya esté aprobado ni otorgar grants.
+
+Imágenes QA finales474e525a…/552ff3e9… healthy/cero reinicios. Recibos anteriores, registry5, R2/34, schema242 y suites pasan y se reutilizan sin republicar/reconstruir/repetir. Dirección comercial PO12meses y alternativas12/18/24/36/48/60 registrada sólo para contratos futuros: no fuente jurídica ni default persistido ni nueva obligación STEP_6A3. Informe/acciones humanas: docs/phase6a/STEP_6A3/STEP_6A3_FINAL_BLOCKERS_AND_EXECUTION_20261015.md. Evidencia nueva: evidence/final-blockers-execution-20261015/. Sólo documentación/probes; sin BD/IAM/grants/backend/frontend runtime/infra/deploy/producción/commit/push/merge. ZIP y acceso a marcos fuera de esta ejecución.
+
+
+## STEP_6A3 — decisión PO registrada y nuevas sucesoras preparadas, 2026-10-15
+
+`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15`; `RECTOR_BASELINE=PASS`; `PO_INITIAL_SOURCE_DESIGN=APPROVED_RECORDED`; `INITIAL_SOURCE_NEW_BYTES=STAGED_NOT_EFFECTIVE`; `NEW_COMPETENT_FUNCTIONS_ACT=PENDING`; `HUMAN_DATA_MODEL_DICTAMEN=PENDING`; `NEW_IMPLEMENTATION=NOT_STARTED_DEPENDENT_PUBLICATION`; `NEW_QA_DEPLOY=BLOCKED_DEPLOY_AUTHORITY`; `STEP_6A3=PARTIAL_BLOCKED`; `RECTOR_GATE=BLOCKED`; `STEP_6A4=NOT_STARTED`.
+
+Se recibió literalmente «Sí, apruebo, pero necesito avancemos hasta el despliegue y poder iniciar etapa 6A.4». La propuestaSHA1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b coincide con manifest originalf3f49ec297e069abb28989f5c039bbe1e654f507d6bf62c8d7cede12300d5582. Constancia nueva PO_DESIGN_APPROVAL_RECEIPT_20261015.json SHA8ad355ce0a9fcfd7f6fc804bfa2a0852ccf4675e72f328563b6ca716dc675a5d: sólo Product Owner/diseño/preparación, UTC de registro real y sin hora original inventada. No se atribuyeron funciones Architecture/Data/Security, Release ni consentimiento legal/QA. Ese diseño ya no está pendiente; no se vuelve a pedir.
+
+Preparadas candidata rectora completa v1.11 (51documentos, manifest70ea851986cd7c89943dfcb9b5f260cab10a971003147246641f31ebb09f4cd4), enmiendas candidatas02/03/05/08/09/14/29, DELTA/UI y estado no efectivo; una operación bind y un audit, sin nuevos grants/aristas/esquema. Nuevo manifest consolidado de62contratos+7suplementos fa8799101778def678f547d28a776a1f32b9eb824f0220cc3763455b82692500. Validation documental PASS:175operaciones,2.344refs resueltas,174operaciones anteriores preservadas salvo anotación candidata. Borrador YAML corregido antes de someter; ningún contrato activo cambió.
+
+PG16 aislado READ_ONLY: tres cuerpos guard exactamente iguales a R2 sellada,242tablas contractuales másledger y ledger33 observado literalmente. Compatibilidad estructural técnica limitada, sin fixtures ni workflow nuevo; dictamen humano Data Model y pruebas de futura implementación pendientes antes de afirmar sin migración definitivo. R2/contrato27 intactos. No código dependiente, tests de flujo nuevo/build/deploy antes de aprobación/publicación exacta conforme47/49. Packet de implementación/pruebas, formulario de funciones competentes y runbook QA/H01–H10 listos. La intención de avanzar no sustituye Release por source/imágenes futuros ni cierre.
+
+A01–A13/cuatro/seis/publicación previa/registry5 y recibosQA existentes preservados, sin repeticiones. Imágenes anteriores474e525a…/552ff3e9… no se presentan como nueva funcionalidad. Fuente auténtica, sesiones legítimas, revisión por objeto y aceptación de nueva UI siguen pendientes. Dirección comercial12meses/opciones futuras permanece sin runtime ni obligación adicional6A3. Próximo acto: decidir sólo el manifest de bytes nuevos y dictamen adjunto declarando funciones efectivamente ejercidas. Informe único actual: docs/phase6a/STEP_6A3/STEP_6A3_PO_APPROVAL_SUCCESSOR_GATE_REPORT_20261015.md. Nuevos documentos bajo docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/ y evidencia/po-approved-initial-source-20261015/. Baseline/contratos activos/BD/backend/frontend/infra/deploy no modificados; sin commit/push/merge/producción ni entrada6A4.
+
+## STEP_6A3 — publicación INITIAL_SOURCE v1.11, 2026-10-15
+
+Manifest final aprobado f4db8b38ac4fb18abb0978f9654a83def7b4ee024bafff560a8dbf6e9b7f9247; manifest rector 4599f6e522ed91952ab01296a4c0b9cbe4df8ad4c1a612afd7fd0414215f824b. Competencias PO/Architecture/Data Model/Security/Privacy declaradas y aprobación exacta registradas en COMPETENT_AUTHORITY_FINAL_APPROVAL_20261015.json. Autorización Release QA condicionada disponible; aceptación humana NO realizada. v1.10 archivada byte-idéntica; snapshots candidatos inmutables conservan su estado preparatorio histórico, superado por recibo de publicación. Implementación/pruebas del delta pendientes; ausencia de DDL prevista y aprobada bajo pruebas PG16. STEP_6A3=PARTIAL_BLOCKED; RECTOR_GATE=BLOCKED; STEP_6A4=NOT_STARTED. No cambia aprobación de paquetes previos.
+
+## STEP_6A3 — promoción QA INITIAL_SOURCE y handoff, 2026-10-15
+
+`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15`; `RECTOR_BASELINE=PASS`; `QA_DEPLOY=PASS`; `HUMAN_QA_ACCEPTANCE=PENDING`; `STEP_6A3=PARTIAL_BLOCKED`; `RECTOR_GATE=BLOCKED` para cierre; `STEP_6A4=NOT_STARTED`.
+
+Según `docs/phase6a/STEP_6A3/STEP_6A3_QA_DEPLOY_HANDOFF_RESULT_20261015.md`, el release gate y preflight pasaron en backend y frontend QA; las imágenes aprobadas quedaron activas, healthy y sin reinicios, con contenedores anteriores conservados para rollback. El smoke posterior obtuvo HTTP 200 en dominio canónico y salud. El recibo PostgreSQL `docs/phase6a/STEP_6A3/evidence/initial-source-implementation-20261015/qa-postdeploy-readonly-20261015.json` (SHA-256 `f24c8906cdf4dd72638e25f44893de1702db08dc4e238bbb4e839639f1f1f2d0`) registra transacción READ ONLY en PG16, 34 migraciones, cinco aristas C-04W, EvidenceVersion.submit v2 publicado con una auditoría, y fingerprints históricos conservados. Cuatro comandos protegidos devolvieron 401 sin sesión; esto no acredita flujo autenticado ni SoD humano.
+
+H01–H10 permanecen pendientes: fuente Privacy/Legal auténtica, carga y revisión independiente por objeto, negativos y recorrido QA con sesiones Zoho humanas aptas, aceptación visual y decisión QA/Release de estas imágenes. El 2026-10-16 el usuario confirmó que documento y participantes humanos aún están pendientes; esa respuesta no constituye una aprobación. No se identificó conflicto rector nuevo. No hubo despliegue PROD. Este checkpoint registra evidencia recibida y verificada localmente; no constituye nueva observación de runtime ni cambia base de datos, contratos ejecutables, backend, frontend, infraestructura o contratos de despliegue.

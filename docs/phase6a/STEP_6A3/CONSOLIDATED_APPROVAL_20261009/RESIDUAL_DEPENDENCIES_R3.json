@@ -1,0 +1,91 @@
+{
+  "id": "STEP6A3-RESIDUAL-DEPENDENCIES-20261009-R3",
+  "status": "TECHNICAL_CANONICAL_INPUTS_AND_EXTERNAL_OPERATIONS_REQUIRED",
+  "sources_effective": "R1/R2 approved; v1.8 ACTIVE_VERIFIED; no independent internal reviewer by default",
+  "technical_inputs_required": [
+    {
+      "id": "CFG-D-COMPLIANCE-V1",
+      "owner": "PO Methodology/Compliance/Architecture/DataModel",
+      "source": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_MACRO_R2/04_CFGD_CORRECTED_SUFFICIENCY_REVIEW.md",
+      "source_sha256": "1cfe108bd90e119e2107a2cb4060dcd8673ceb6bd4f1a7e59f90e39bdb5645d1",
+      "missing": "Actual immutable Pack overrides/applicability/provenance/source-resolution/aggregation/confidence inputs and per-version bindings. Default weight1/factors1,.5,0/mincoverage80 already official, do not reapprove parameters",
+      "blocked_operation": "Declare/use none or remove EC dependency; additional generic signature insufficient",
+      "acceptance": "Reproducible positive/negative exactmethod/version/effective/history/sufficiency proof, then exact versioned publication delta"
+    },
+    {
+      "id": "CFG-D-CONTROLS-V1",
+      "owner": "PO Methodology/Controls/Architecture/DataModel",
+      "missing": "Actual governed evidence validity/recency/sufficiency/source-resolution/conflict/confidence binding to baseline1. min(design,operating)/coverage80 already official",
+      "blocked_operation": "Declare/use none; do not invent recency or evidence parameters",
+      "acceptance": "Official per-input sources/version/relationships + tests; preserve prior assessments and effective methodology"
+    },
+    {
+      "id": "CFG-D-PUBLICATION",
+      "owner": "PO Architecture/Methodology/DataModel",
+      "missing": "Canonical immutable identity/version/formula/sourceHash/effective interval linked to mode declaration; need distinguish v1-compatible assertion from newmethodology version",
+      "blocked_operation": "Publish none or silently change immutable v1/create semantics",
+      "acceptance": "Exact closed delta after sufficiency proof, no ad hocJSON flags/binding"
+    },
+    {
+      "id": "C-04W/C-04G-B",
+      "owner": "PO PrivacyLegal/Architecture/DataModel",
+      "source": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_MACRO_R2/05_RETENTION_TYPED_BINDING_FINDING.md",
+      "source_sha256": "79c2c1bb11c403bd34e5bcbc5826a3c12ae91c4063a866288d6afcf1c2794326",
+      "missing": "Authoritative legal context entity/source and exact typed relation from FileUploadIntent/FileObject/Evidence; classification/jurisdiction/priority/legalhold rules applicable to thatcontext",
+      "blocked_operation": "Apply/select unbound policy; change mandatory FK to represent PENDIENTE; new slice QA rollout",
+      "acceptance": "Published exact legal/context model, transactional compatibility and no-cross-tenant/hold negative tests"
+    },
+    {
+      "id": "TENANT_TIMEZONE_CONTEXT",
+      "owner": "PO Architecture/API/UX",
+      "missing": "An approved, readable tenant timezone projection for the actor; current membership/authorization DTO has none and Tenant.read is not universal",
+      "blocked_operation": "Convert enterprise local dates using guessedbrowser/UTC timezone; optionalsampleperiod fields show explicitpending",
+      "acceptance": "Exact API context contract based on persisted Tenant.default_timezone with authorized access; IANA UI/UTC backend, no fallback"
+    }
+  ],
+  "operational_authorizations_required": [
+    {
+      "id": "QA_R3",
+      "plan_path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/QA_OPERATIONAL_PLAN_R3.json",
+      "state": "PREPARED_NOT_READY_NOT_AUTHORIZED_NOT_EXECUTED",
+      "needed": "Resolve canonical technical blockers first; approve later exact targets/actor/backup/window/migration33/34 integration/build hashes/read-only historic inventory/IAM/run/rollout separately"
+    },
+    {
+      "id": "HUMAN_UI_ACCEPTANCE",
+      "state": "PENDING_HUMAN",
+      "needed": "Actual PO visual review of affected surfaces;460 synthetic browser passes do not constitute it"
+    }
+  ],
+  "no_unknown": true,
+  "rejected_options": [
+    "Invent weights/recency/thresholds",
+    "Treat NULL or optional EC as none",
+    "Create a legalbinding by policy_id equality",
+    "Remove mandatory retention FKs",
+    "Assume R1/R2 approves later hashes or real DDL",
+    "Fake QA/IAM/RLS/E2E PASS",
+    "Ask a second internal reviewer by default"
+  ],
+  "created_at": "2026-10-09T21:35:54.534932+00:00",
+  "previous_packet": {
+    "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_DEPENDENCIES_R2.json",
+    "sha256": "ad6880c144f7a0ce1b91b0f8ff7d19c626e6867348e1fa0c9b0634fa64eb3347"
+  },
+  "rbac_resolution_r3": {
+    "manifest_path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/MACRO_RBAC_D01_D02_R3.json",
+    "manifest_sha256": "17eeb65269bc2dc9727c605999f1fd0c5c343cab3b6653a372c3d879618daed9",
+    "receipt_path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/MACRO_APPROVAL_RECEIPT_R3.json",
+    "receipt_sha256": "3d69c54a089e0996096b6b37eab1ec45c320f96771c97030c2741fd2afff816d",
+    "status": "APPROVED_EXACT_MACRO_R3_PUBLISHED_LOCAL_TESTED",
+    "repeat_approval_required": false,
+    "real_grants": "NOT_AUTHORIZED_NOT_EXECUTED",
+    "candidate34_path": "docs/phase6a/STEP_6A3/rbac-publication/20261009000400_phase6a3_rbac_resolution.sql",
+    "candidate34_sha256": "1cf25933649ccbe5d0feaa13262fdab9439caad86f53f592a31b2612f7d97863"
+  },
+  "independence": "Rector49 effective; no second internal human by default; technical input/operational requirements are not second reviewer signatures",
+  "sources_effective_r3": {
+    "manifest_sha256": "17eeb65269bc2dc9727c605999f1fd0c5c343cab3b6653a372c3d879618daed9",
+    "receipt_path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/MACRO_APPROVAL_RECEIPT_R3.json",
+    "state": "APPROVED_EXACT_MACRO_R3_PUBLISHED_LOCAL_V1"
+  }
+}

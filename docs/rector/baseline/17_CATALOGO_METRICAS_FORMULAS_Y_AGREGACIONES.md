@@ -161,3 +161,9 @@ No se agregan importes en monedas distintas. Conversión requiere FX source ofic
 Un resultado publicado genera Snapshot inmutable con MetricDefinition/Formula/Methodology version, SourceResolution cuando aplique, EffectiveConfiguration, source lineage, CalculationRun, inputs hash y timestamp efectivo.
 
 Recalcular no modifica el snapshot histórico; genera uno nuevo.
+
+## 9. Delta conservador CFG-D candidato
+
+BASELINE_COMPLIANCE v1 y BASELINE_CONTROL_EFFECTIVENESS v1 conservan fórmula, parámetros, binding y resultados históricos. La fórmula y el umbral de cobertura no bastan para declarar autosuficiencia. Los cálculos nuevos no publican resultado valid sin inputs, evidencia, procedencia y resolución de conflictos exigidos por la versión publicada. EffectiveConfiguration=NULL no equivale a configuration_mode=none. Se aplican los guards y precedencia de estado del paquete aprobado.
+
+Fuente exacta del delta: `docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/CONTRACT_PACKET_20261015.md`; SHA-256 `6b87812823472d56a89622eca8119b0cd56606f2f21d635dd84bf903896ba7f2`. Esta copia candidata no es autoridad activa antes del gate 47.

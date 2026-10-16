@@ -6,9 +6,9 @@ This contract converts the rector documentation into an operational development 
 
 ## Current governed state
 
-The authoritative rector baseline is `TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23` and `docs/rector/BASELINE_STATUS` is `ACTIVE`. The 2026-09-23 human approval authorizes only the v1.7 reconciliation and Phase 5 closure recorded in the mutable execution status; it does not authorize commit, push, PR, merge, production or Phase 6.
+The authoritative rector baseline is `TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16`; `docs/rector/BASELINE_STATUS=ACTIVE`. Its exact approved 51-document manifest SHA-256 is `4599f6e522ed91952ab01296a4c0b9cbe4df8ad4c1a612afd7fd0414215f824b`, included in the final review manifest `f4db8b38ac4fb18abb0978f9654a83def7b4ee024bafff560a8dbf6e9b7f9247`. The actual human decision, declared PO/Architecture/Data Model/Security/Privacy functions and conditional QA Release authority are recorded in `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/COMPETENT_AUTHORITY_FINAL_APPROVAL_20261015.json`. Rector49 permits the declared editorial accumulation; it does not replace operational SoD, legal source or actual QA acceptance.
 
-Historical baseline v1.6 remains immutable under `docs/rector/history/` and is verified independently from the active v1.7 manifest.
+The earlier A01–A13 approval and four/six artifact approvals remain valid for their exact bytes. v1.10 manifest `b9b6bf6930931af5eb32ca1b4027212ad3a82f247fef677b919af24d30ac9060` is preserved under history, alongside prior baselines. `scripts/verify-v111-governance.py` verifies active/candidate/root publication, actual decision, protected v1.10/v1.9, executable snapshots, R2 and contract27. Publication does not close STEP_6A3 or start STEP_6A4. A runtime registry scope mismatch found during new-flow testing remains a technical promotion blocker; no authority or QA PASS is inferred to bypass it.
 
 ## Activation conditions
 

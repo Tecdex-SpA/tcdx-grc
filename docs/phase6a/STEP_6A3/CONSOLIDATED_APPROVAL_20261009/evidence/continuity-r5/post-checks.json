@@ -1,0 +1,55 @@
+[
+  {
+    "gate": "post-evidence",
+    "command": [
+      "/Users/andresbarouh/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/verify-r5-evidence.py"
+    ],
+    "at": "2026-10-10T11:50:31.842541+00:00",
+    "duration_seconds": 2.449,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/post-evidence.log",
+    "log_sha256": "36b32cb8706a5297303f0cf4d89b59e07eebbbbd0bf1504f2b3f676b81084298"
+  },
+  {
+    "gate": "post-rector",
+    "command": [
+      "bash",
+      "scripts/verify-rector-governance.sh"
+    ],
+    "at": "2026-10-10T11:50:34.293776+00:00",
+    "duration_seconds": 0.885,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/post-rector.log",
+    "log_sha256": "be827f42eb6ea9aa9359e7f5e925cc56b81bf1dbc9f7f0b6337292b1c38192ff"
+  },
+  {
+    "gate": "post-status",
+    "command": [
+      "bash",
+      "scripts/test-rector-governance-status.sh"
+    ],
+    "at": "2026-10-10T11:50:35.179717+00:00",
+    "duration_seconds": 3.591,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/post-status.log",
+    "log_sha256": "4a950b39b20f2de1440a2b45b243b63df607fa3ede7f7e32e9f7e9da71864597"
+  },
+  {
+    "gate": "post-whitespace",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "at": "2026-10-10T11:50:38.773780+00:00",
+    "duration_seconds": 0.583,
+    "exit_code": 0,
+    "result": "PASS",
+    "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/post-whitespace.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

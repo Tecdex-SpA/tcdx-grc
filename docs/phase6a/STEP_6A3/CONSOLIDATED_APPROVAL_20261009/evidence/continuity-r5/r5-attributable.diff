@@ -1,0 +1,532 @@
+--- R4/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/REQUIREMENT_TRACEABILITY.md
++++ R5/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/REQUIREMENT_TRACEABILITY.md
+@@ -93,3 +93,11 @@
+ ## Continuidad R4 sin nueva implementación
+ 
+ Auditoría R4: mismas48/36/12; evidencia R3 sellada verificada; cuatro diferencias documentales respecto al snapshot de runner y conteo82PG en15archivos registrado en CONTINUITY_CHECKPOINT_R4.md. REMAINING_12_CLAUSES_R4.md conserva IDs/literales. IANA sigue dependencia contractual; propuesta no aprobada en R4_DECISIONS_REQUIRED.md. Ningún estado de la tabla R3 cambia. Siete checks dirigidos PASS; no rerun de producto ni QA/IAM/E2E. Paquete QA R3 intacto, referencia R4 no lista para ejecución. Fuente de implementación vigente continúa07_RESULT.json#macro_implementation_20261009; continuidad adicional en continuity_r4_20261009.
++
++## Continuity R5 — 2026-10-09
++
++R4 comprobado por34hashes sellados; se preservan los cuatro documentos de estado distintos del snapshotR3 y la aclaración82PG/15archivos.48/48trazadas,36localclosed,12pending; ninguna fila promovida. IDs literales: C-04W, C-07, C-08, CFG-D-COMPLIANCE-V1, CFG-D-CONTROLS-V1, CFG-D-PUBLICATION, CFG-UQ1, CFG-UQ2, CFG-DEFAULT, CFG-QA, VOC-C04, VOC-QA. R5_12_CLAUSES_DISPOSITION.md conserva texto/fuente/estado y categoría. IANA es dependencia separada; no se renombraC-07/C-08.
++
++R5 ejecuta revisión focalizada de fuentes/modelo, evaluación condicional de RLS para24candidatas, preparaciónQA por fases y un únicoWordR5_MACRO_DECISIONS.docx con manifestDRAFT_NOT_APPROVED. No cambia contratos efectivos/código/SQL/grants. Rectorv1.8 yR1/R2/R3 siguen efectivos; SOGv2DRAFT.850PASS es históricoR3, no ejecuciónR5; checks nuevos y preservación enR5_TEST_EVIDENCE.md.
++
++Ledger añade sólo continuity_r5_20261009; CURRENT_EXECUTION_REPORT permanece macro_implementation_20261009. QA/IAM/E2EexternoNOT_RUN;6A3PARTIAL_BLOCKED/RECTOR_GATEBLOCKED;6A4NOT_STARTED. COMMITS/PUSH/PR/MERGE/DDL_LOCAL/DDL_QA/DEPLOY_R5=0. Siguiente acto: responderD1–D5 y aportar fuentes/identidad/ventana exactos; no ejecutar actos externos con esta preparación.
+--- R4/docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261009_V2/07_RESULT.json
++++ R5/docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261009_V2/07_RESULT.json
+@@ -15939,5 +15939,194 @@
+     "DEPLOY": 0,
+     "STEP_6A4": "NOT_STARTED",
+     "SOG_V2": "DRAFT_NOT_EFFECTIVE"
++  },
++  "continuity_r5_20261009": {
++    "TASK": "STEP6A3_R5_DIRECTED_CONTINUITY_AND_DECISION_PREPARATION",
++    "created_at": "2026-10-10T01:49:14.240589+00:00",
++    "RECTOR_GATE": "BLOCKED",
++    "STEP_6A3": "PARTIAL_BLOCKED",
++    "RECTOR_ACTIVE_VERSION": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09",
++    "coverage": {
++      "traced": 48,
++      "unique": 48,
++      "locally_closed_clauses": 36,
++      "pending_clauses": 12,
++      "closure": "PARTIAL_BLOCKED",
++      "identified_is_not_closed": true
++    },
++    "pending_ids": [
++      "C-04W",
++      "C-07",
++      "C-08",
++      "CFG-D-COMPLIANCE-V1",
++      "CFG-D-CONTROLS-V1",
++      "CFG-D-PUBLICATION",
++      "CFG-UQ1",
++      "CFG-UQ2",
++      "CFG-DEFAULT",
++      "CFG-QA",
++      "VOC-C04",
++      "VOC-QA"
++    ],
++    "local_clauses_promoted": 0,
++    "r4_delta": "technical RLS assessment; exact single macro Word; source bindings analysis; QA preflight/recovery; no effective implementation delta",
++    "tests_r5": [
++      {
++        "gate": "rector",
++        "command": [
++          "bash",
++          "scripts/verify-rector-governance.sh"
++        ],
++        "at": "2026-10-10T01:47:04.266239+00:00",
++        "duration_seconds": 0.572,
++        "exit_code": 0,
++        "result": "PASS",
++        "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/rector.log",
++        "log_sha256": "be827f42eb6ea9aa9359e7f5e925cc56b81bf1dbc9f7f0b6337292b1c38192ff"
++      },
++      {
++        "gate": "status",
++        "command": [
++          "bash",
++          "scripts/test-rector-governance-status.sh"
++        ],
++        "at": "2026-10-10T01:47:04.839063+00:00",
++        "duration_seconds": 1.615,
++        "exit_code": 0,
++        "result": "PASS",
++        "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/status.log",
++        "log_sha256": "4a950b39b20f2de1440a2b45b243b63df607fa3ede7f7e32e9f7e9da71864597"
++      },
++      {
++        "gate": "contracts",
++        "command": [
++          "node",
++          "scripts/foundations/generate-contract-assets.mjs",
++          "--check"
++        ],
++        "at": "2026-10-10T01:47:06.457002+00:00",
++        "duration_seconds": 0.061,
++        "exit_code": 0,
++        "result": "PASS",
++        "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/contracts.log",
++        "log_sha256": "6b23028285d3508b88246bfaf068d1c124204ef566bf5065a39cdcf841fc8976"
++      },
++      {
++        "gate": "vocabulary",
++        "command": [
++          "node",
++          "scripts/foundations/generate-phase6a-vocabularies.mjs",
++          "--check"
++        ],
++        "at": "2026-10-10T01:47:06.519860+00:00",
++        "duration_seconds": 0.333,
++        "exit_code": 0,
++        "result": "PASS",
++        "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/vocabulary.log",
++        "log_sha256": "712684f1e3b9a46e0b8fb6e9333573ec75e4a38f571ca1a587fbba6126af6001"
++      },
++      {
++        "gate": "governance-negatives",
++        "command": [
++          "python3",
++          "scripts/verify-internal-governance.py",
++          "--negative-tests"
++        ],
++        "at": "2026-10-10T01:47:06.854237+00:00",
++        "duration_seconds": 0.077,
++        "exit_code": 0,
++        "result": "PASS",
++        "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/governance-negatives.log",
++        "log_sha256": "53e0673bfb3b2dc039d560b97793deae140516e7566252b4000289630afa99b8"
++      },
++      {
++        "gate": "residuals",
++        "command": [
++          "python3",
++          "scripts/foundations/verify-phase6a3-residuals.py"
++        ],
++        "at": "2026-10-10T01:47:06.934448+00:00",
++        "duration_seconds": 0.399,
++        "exit_code": 0,
++        "result": "PASS",
++        "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/residuals.log",
++        "log_sha256": "1c44a230d4156a6dd48489c647d1d52376bd02b7ffcf92b4b64ffba4bd2c1e3d"
++      },
++      {
++        "gate": "secrets",
++        "command": [
++          "node",
++          "scripts/foundations/secret-scan.mjs"
++        ],
++        "at": "2026-10-10T01:47:07.335207+00:00",
++        "duration_seconds": 3.884,
++        "exit_code": 0,
++        "result": "PASS",
++        "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/secrets.log",
++        "log_sha256": "785afde26b815831ebbe2ea9b6a7125f5b49cdf400b3697f50d456a5337f0f2d"
++      },
++      {
++        "gate": "whitespace",
++        "command": [
++          "git",
++          "diff",
++          "--check"
++        ],
++        "at": "2026-10-10T01:47:11.222035+00:00",
++        "duration_seconds": 0.252,
++        "exit_code": 0,
++        "result": "PASS",
++        "log": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/whitespace.log",
++        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "gate": "inherited-and-exact-content",
++        "command": [
++          "/Users/andresbarouh/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python",
++          "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/verify-r5-evidence.py"
++        ],
++        "at": "2026-10-10T01:47:52.997542+00:00",
++        "at_kind": "LOG_MTIME_COMPLETION",
++        "duration_seconds": 0.185189458,
++        "duration_source": "exec_command wall_time_seconds",
++        "exit_code": 0,
++        "result": "PASS",
++        "log_sha256": "47a5a851a4fcf0cfad6db6d2b248b795c88f256ed38c2d9470930ec9e6720826",
++        "python": "3.12 bundled documents runtime"
++      }
++    ],
++    "final_check_evidence": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/post-checks.json",
++    "product_tests_r5": "NOT_RUN_NO_RUNTIME_EFFECTIVE_CONTRACT_OR_SQL_CHANGE",
++    "tests_r3_historical": "850PASS=737unit+113PG;82previously omitted in15files; 460simulated browser and38nativeUQ separate",
++    "tests_r4_historical": "7directed+3final checks; no product rerun",
++    "source_snapshot_comparison": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/evidence-verification.log",
++    "decision_manifest": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/R5_MACRO_APPROVAL_MANIFEST.json",
++    "qa_package": "PREPARED_NOT_READY_NOT_AUTHORIZED_NOT_EXECUTED",
++    "files_modified_preexisting": [
++      "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/REQUIREMENT_TRACEABILITY.md",
++      "docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261009_V2/07_RESULT.json"
++    ],
++    "layers_changed": {
++      "database": false,
++      "effective_contracts": false,
++      "backend": false,
++      "frontend": false,
++      "infrastructure": false,
++      "deployment": false,
++      "documentation": true
++    },
++    "COMMITS": 0,
++    "PUSH": 0,
++    "PR": 0,
++    "MERGE": 0,
++    "DDL_LOCAL": 0,
++    "DDL_QA": 0,
++    "DEPLOY": 0,
++    "QA": "NOT_RUN",
++    "IAM_REAL": "NOT_RUN",
++    "E2E_EXTERNAL": "NOT_RUN",
++    "STEP_6A4": "NOT_STARTED",
++    "SOG_V2": "DRAFT_NOT_EFFECTIVE",
++    "RLS": "NOT_IMPLEMENTED"
+   }
+ }
+--- /dev/null
++++ R5/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/CONTINUITY_CHECKPOINT_R5.md
+@@ -0,0 +1,29 @@
++# Checkpoint de continuidad R5
++
++Verificación final UTC 2026-10-10T13:22:58.715711+00:00. Paquete nominal 20261009 continuado el 2026-10-10; las marcas de ejecución reales están en los logs, sin retrofechar. MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09; CODEX_VARIATION_BUDGET=ZERO. RECTOR_GATE=BLOCKED para cierre STEP6A3; integridad y checks documentales PASS. STEP6A3=PARTIAL_BLOCKED; STEP6A4=NOT_STARTED.
++
++## Baseline y continuidad comprobada
++
++pwd /Users/andresbarouh/repos/tcdx-grc; repo Tecdex-SpA/tcdx-grc; origin https://github.com/Tecdex-SpA/tcdx-grc.git. Rama step6a3-internal-governance-v18-20261009; HEAD 6af66387aa03fa185ef139584de07700f247b903. HEAD...origin/main local0/0, sin fetch ni operaciones remotas. Índice lógico 1212 entradas, staging vacío; 114 filas porcelain heredadas. Snapshot1547 archivos;1545 idénticos y sólo ledger/matriz modificados por append;0perdidos. Preservación, hashes antes/después y delta atribuible en evidence/continuity-r5. Diff heredado completo en /tmp/step6a3-r5/diff-before.patch; no se limpia, stagea ni absorbe.
++
++R4_MATCH con discrepancias históricas conservadas:34/34 entradas R4 selladas coinciden. SnapshotR3 863fuentes,859MATCH/4DIFF, exclusivamente estado documental; fuentes de implementación/SQL/tests intactas. Tabla reported/current en post-evidence.log, sin sobrescribir R3/R4. Handoff reportó82PG/17archivos, JSON definitivo82PG/15archivos y113PG/18archivos totales; se conserva la aclaración R4.850PASS=737unit+113PG,0FAIL/0SKIP es evidencia R3 verificada, no corrida R5.460browser simulados,38UQ nativos y8/12RBAC separados no se suman al850;16EC y3PG R3 ya están dentro.14artifactsQA/454build hashes coinciden, sin acreditar imagen ni runtime externo.
++
++## Autoridad y dependencias
++
++ACTIVE_ACTIVATION.json ACT-INTERNAL-REVIEW-V18-20261009, effective_at 2026-10-09T18:23:58.855422Z; manifest SHA256 e51f6539df119775b2feb8839907c8cd690623b82707b399aa15a31d59196533. Gobernanza/integridad PASS, rectorv1.8 yR1/R2/R3 preservados. Rector49 admite funciones internas acumuladas y exige publicación exacta;45§3 bloquea decisiones materiales ausentes. SOGv2=DRAFT_NOT_EFFECTIVE; segregaciones operacionales y obligaciones externas siguen vigentes. No se abrieron ZIPnormativo ni STEP6A4.
++
++48/48trazadas;36/48closedlocal;12/48pending. IDs exactos: C-04W, C-07, C-08, CFG-D-COMPLIANCE-V1, CFG-D-CONTROLS-V1, CFG-D-PUBLICATION, CFG-UQ1, CFG-UQ2, CFG-DEFAULT, CFG-QA, VOC-C04, VOC-QA. R5_12_CLAUSES_DISPOSITION.md conserva textos/fuentes/estados y separa inputs humanos, operación y aceptación externa. Ninguna pendiente dispone ahora de todos los inputs/gates aplicables para cierre; no se repiten los36 cierres. IANA es dependencia adicional, no redefine C-07/C-08.
++
++CFG-D: aritmética oficial ya existe; falta demostrar suficiencia y binding versionado de inputs/modo para cada metodología. EC opcional compatible se conserva; no se fuerza none ni se cambian v1 inmutables. CT04: tipos RetentionPolicy/PrivacyProcessingActivity existen pero no se demuestra relación jurídica contextual tipada con los tres objetos; ningún FK/default/estado añadido. IANA: Tenant.default_timezone persiste/valida; falta aprobación del delta DTO cerrado, reproducido exactamente desde R4. GETEC_R1/CT01/CT03/RBAC44/VOC52/UQdefault permanecen intactos.
++
++## Resolución autónoma R5
++
++Revisión dirigida de14fuentes versionadas y10tablas del slice, con registro hash. Evaluación RLS completa para24candidatas existentes, amenazas y prerrequisitos;26§1 impone obligación condicional por viabilidad, sin aprobar aún scope/predicados. RLS=NOT_IMPLEMENTED, no se inspeccionó PGreal. PaqueteQA ampliado con inventario, identidad, backup/restore, runner, smoke,GO/NO-GO y forward recovery, PREPARED_NOT_READY_NOT_AUTHORIZED_NOT_EXECUTED. Un únicoWordR5_MACRO_DECISIONS.docx agrupaD1–D5, cláusulas exactas, opciones excluyentes, consecuencias, hashIANA y fuentes;8páginas finales renderizadas y revisadas. Manifiesto macro DRAFT_NOT_APPROVED, sin firma simulada.
++
++13ejecuciones de checks PASS:8dirigidas,1verificación inicial de evidencia y4finales tras append/ajuste de formato Word (evidencia,rector,status,whitespace). No hubo cambios de implementación ni contrato efectivo/SQL, por lo que producto/typecheck/lint/build/PG/browser no se reejecutaron; evidenciaR3 no se atribuye aR5. Logs/comandos/UTC/duración/hashes en R5_TEST_EVIDENCE.md.
++
++## Delta y punto de parada
++
++Nuevos documentos/evidenciaR5 y append de REQUIREMENT_TRACEABILITY.md/07_RESULT.json. Todas las claves anteriores del JSON se conservan; CURRENT_EXECUTION_REPORT permanece macro_implementation_20261009 y el nuevo campo continuity_r5_20261009 describe esta iteración. BD/contratos efectivos/backend/frontend/infra/deployment SIN_CAMBIO_R5. No revisiónUI humana declarada. COMMITS/PUSH/PR/MERGE/DDL_LOCAL_R5/DDL_QA/DEPLOY=0;QA/IAMreal/E2EexternoNOT_RUN. Base descartable no necesaria en esta revisión documental y no creada.
++
++Siguiente acción concreta: responderD1–D5 y aportar fuentes/relaciones/identidades/ventana exactos. D1 no convierte una firma en prueba de suficiencia;D2 no crea binding por coincidencia de policy;D3 identifica texto exacto aúnDRAFT;D4 no activaRLS;D5 no autoriza conexión niQA. Los actos materiales ausentes quedan bloqueados por45§3/49§3, sin reabrir aprobacionesR1/R2/R3.
+--- /dev/null
++++ R5/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/R5_12_CLAUSES_DISPOSITION.md
+@@ -0,0 +1,20 @@
++# Disposición de las doce cláusulas R5
++
++IDs y textos exactos de R4 cruzados con ledger vigente.48/48trazadas,36localclosed,12pending. Ninguna implementación pendiente dispone de un binding cerrado adicional verificado que permita promover su estado local. Las tareas de análisis/preparación se ejecutan independientemente. IANA y evaluaciónRLS son dependencias adicionales, no redefinen C-07/C-08.
++
++| ID literal | Texto literal y fuente | Evidencia actual | Dependencia | Categoría | Próxima acción exacta | Permiso disponible | Gate | Estado R5 |
++|---|---|---|---|---|---|---|---|---|
++| C-04W | Aprobar revalidación de publicación/vigencia/aplicabilidad/prioridad y coherencia upload→FileObject→Evidence en comandos futuros. `docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:42` | NOT_RUN_DEPENDENT_APPLICATION_GUARD R3 histórico | No typed binding from evidence/file/upload to legal context; mandatory FK conflicts with pending-without-policy write | INPUT_HUMANO | Resolve supplied legal sources/typed relationship before new application/rollout | Análisis/preparación local; nuevo delta o acto real requiere decisión exacta | BLOCKED sólo acto dependiente | BLOCKED_CANONICAL_LEGAL_BINDING |
++| C-07 | Aprobar estrategia44 grants/template set y44 por tenant completo, SEED010, preflight, versionado/audit; ejecución operacional sigue NOT_AUTHORIZED. `docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:46` | PASS_EXACT44_NATIVE_AND8_AUDIT_CASES R3 histórico | No existing DB/QA DDL/actor ceremony authorized | OPERACIONAL | Prepared forward-only artifacts; do not execute externally | Análisis/preparación local; nuevo delta o acto real requiere decisión exacta | BLOCKED sólo acto dependiente | BLOCKED_OPERATIONAL_PLAN |
++| C-08 | Aprobar18 pruebas negativas/regresión/gates de §10. `docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:47` | PASS_LOCAL_ONLY R3 histórico | QA/IAM real/external E2E and human UI pending | QA_IAM_EXTERNO | Complete dependencies and perform real acceptance only after approval | Análisis/preparación local; nuevo delta o acto real requiere decisión exacta | BLOCKED sólo acto dependiente | BLOCKED_EXTERNAL_ACCEPTANCE |
++| CFG-D-COMPLIANCE-V1 | Confirmar autosuficiencia de BASELINE_COMPLIANCE v1 y ausencia de configuración adicional conforme a 28; aprobar la cláusula individual, no una preferencia operativa `docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:50` | PASS_EXISTING_METHOD_BOUNDARIES_ONLY R3 histórico | No proof of official complete per-version inputs/recency/Pack weight overrides/conflict/confidence and none binding | INPUT_HUMANO | Keep original v1/optional EC, no none or artificial binding | Análisis/preparación local; nuevo delta o acto real requiere decisión exacta | BLOCKED sólo acto dependiente | BLOCKED_OFFICIAL_SUFFICIENCY_AND_VERSIONED_PUBLICATION |
++| CFG-D-CONTROLS-V1 | Confirmar autosuficiencia de BASELINE_CONTROL_EFFECTIVENESS v1 y ausencia de configuración adicional conforme a 28 `docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:51` | PASS_EXISTING_METHOD_BOUNDARIES_ONLY R3 histórico | No proof of official complete per-version inputs/recency/Pack weight overrides/conflict/confidence and none binding | INPUT_HUMANO | Keep original v1/optional EC, no none or artificial binding | Análisis/preparación local; nuevo delta o acto real requiere decisión exacta | BLOCKED sólo acto dependiente | BLOCKED_OFFICIAL_SUFFICIENCY_AND_VERSIONED_PUBLICATION |
++| CFG-D-PUBLICATION | Aprobar forma de publicación versionada del modo por metodología y enlace verificable a la versión; sin columnas/tablas ni flags inferidos; resolver requisito de nueva versión inmutable antes de ejecutar `docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:53` | PASS_EXISTING_METHOD_BOUNDARIES_ONLY R3 histórico | No proof of official complete per-version inputs/recency/Pack weight overrides/conflict/confidence and none binding | INPUT_HUMANO | Keep original v1/optional EC, no none or artificial binding | Análisis/preparación local; nuevo delta o acto real requiere decisión exacta | BLOCKED sólo acto dependiente | BLOCKED_OFFICIAL_SUFFICIENCY_AND_VERSIONED_PUBLICATION |
++| CFG-UQ1 | Reconciliar business key EC: tenant/Definition/Subject/effective_at/hash, NULLS NOT DISTINCT `docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:54` | PASS_38_NATIVE_UQ R3 histórico | No existing DB/QA DDL/actor ceremony authorized | OPERACIONAL | Prepared forward-only artifacts; do not execute externally | Análisis/preparación local; nuevo delta o acto real requiere decisión exacta | BLOCKED sólo acto dependiente | BLOCKED_OPERATIONAL_PLAN |
++| CFG-UQ2 | Reconciliar unicidad de layers por EC + precedence_level + ordinal `docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:55` | PASS_38_NATIVE_UQ R3 histórico | No existing DB/QA DDL/actor ceremony authorized | OPERACIONAL | Prepared forward-only artifacts; do not execute externally | Análisis/preparación local; nuevo delta o acto real requiere decisión exacta | BLOCKED sólo acto dependiente | BLOCKED_OPERATIONAL_PLAN |
++| CFG-DEFAULT | Mantener exactamente un typed default que coincida con value_type; cero requiere resolución competente, no default fabricado `docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:56` | PASS_38_NATIVE_UQ R3 histórico | No existing DB/QA DDL/actor ceremony authorized | OPERACIONAL | Prepared forward-only artifacts; do not execute externally | Análisis/preparación local; nuevo delta o acto real requiere decisión exacta | BLOCKED sólo acto dependiente | BLOCKED_OPERATIONAL_PLAN |
++| CFG-QA | Aprobar aceptación de 28 CFG-T01..08 sin autoaprobar runtime `docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:58` | PASS_LOCAL_ONLY R3 histórico | QA/IAM real/external E2E and human UI pending | QA_IAM_EXTERNO | Complete dependencies and perform real acceptance only after approval | Análisis/preparación local; nuevo delta o acto real requiere decisión exacta | BLOCKED sólo acto dependiente | BLOCKED_EXTERNAL_ACCEPTANCE |
++| VOC-C04 | Aprobar inventario histórico y compatibilidad antes del enforcement conforme a 23/30 `docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:78` | PASS_LOCAL_TYPE_LENGTH_NO_COERCION R3 histórico | No authorized QA historic values inventory; discardable empty tenants are not production compatibility evidence | QA_IAM_EXTERNO | Inventory actual codes/counts/version/context without row export or mutation after approval | Análisis/preparación local; nuevo delta o acto real requiere decisión exacta | BLOCKED sólo acto dependiente | BLOCKED_EXTERNAL_HISTORICAL_INVENTORY |
++| VOC-QA | Aprobar pruebas T-VOC01..12 y compatibilidad por ocurrencia sin certificar ejecución de capacidades nuevas `docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:81` | PASS_LOCAL_ONLY R3 histórico | QA/IAM real/external E2E and human UI pending | QA_IAM_EXTERNO | Complete dependencies and perform real acceptance only after approval | Análisis/preparación local; nuevo delta o acto real requiere decisión exacta | BLOCKED sólo acto dependiente | BLOCKED_EXTERNAL_ACCEPTANCE |
++
++Matriz de juicio humano agrupado: R5_DECISIONS_REQUIRED.md y R5_MACRO_DECISIONS.docx. Sin nueva firma no se publica la propuesta IANA. Las tres UQ/default están probadas localmente y el pendiente es operacional, no otra reconciliación de SQL.
+--- /dev/null
++++ R5/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/R5_TEST_EVIDENCE.md
+@@ -0,0 +1,37 @@
++# Evidencia de verificaciones R5
++
++Sólo documentación/propuestas y append de continuidad;0 cambios runtime, SQL, contratos efectivos, permisos o vocabulario.13ejecuciones PASS/0FAIL de checks, no13tests de producto.8dirigidas+1verificación inicial+4finales después de append/ajuste de formato. Los dos checks de evidencia son la misma comprobación en dos estados documentales; no se suman al850R3.
++
++| Check | Comando real | Resultado | Duración segundos | Log/hash |
++|---|---|---|---|---|
++| rector | `bash scripts/verify-rector-governance.sh` | PASS exit0 | 0.572 | `docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/rector.log` SHA256 be827f42eb6ea9aa9359e7f5e925cc56b81bf1dbc9f7f0b6337292b1c38192ff |
++| status | `bash scripts/test-rector-governance-status.sh` | PASS exit0 | 1.615 | `docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/status.log` SHA256 4a950b39b20f2de1440a2b45b243b63df607fa3ede7f7e32e9f7e9da71864597 |
++| contracts | `node scripts/foundations/generate-contract-assets.mjs --check` | PASS exit0 | 0.061 | `docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/contracts.log` SHA256 6b23028285d3508b88246bfaf068d1c124204ef566bf5065a39cdcf841fc8976 |
++| vocabulary | `node scripts/foundations/generate-phase6a-vocabularies.mjs --check` | PASS exit0 | 0.333 | `docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/vocabulary.log` SHA256 712684f1e3b9a46e0b8fb6e9333573ec75e4a38f571ca1a587fbba6126af6001 |
++| governance-negatives | `python3 scripts/verify-internal-governance.py --negative-tests` | PASS exit0 | 0.077 | `docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/governance-negatives.log` SHA256 53e0673bfb3b2dc039d560b97793deae140516e7566252b4000289630afa99b8 |
++| residuals | `python3 scripts/foundations/verify-phase6a3-residuals.py` | PASS exit0 | 0.399 | `docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/residuals.log` SHA256 1c44a230d4156a6dd48489c647d1d52376bd02b7ffcf92b4b64ffba4bd2c1e3d |
++| secrets | `node scripts/foundations/secret-scan.mjs` | PASS exit0 | 3.884 | `docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/secrets.log` SHA256 785afde26b815831ebbe2ea9b6a7125f5b49cdf400b3697f50d456a5337f0f2d |
++| whitespace | `git diff --check` | PASS exit0 | 0.252 | `docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/whitespace.log` SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
++| inherited-and-exact-content | `/Users/andresbarouh/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/verify-r5-evidence.py` | PASS exit0 | 0.185189458 | `docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/evidence-verification.log` SHA256 47a5a851a4fcf0cfad6db6d2b248b795c88f256ed38c2d9470930ec9e6720826 |
++| post-evidence | `/Users/andresbarouh/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/verify-r5-evidence.py` | PASS exit0 | 2.449 | `docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/post-evidence.log` SHA256 36b32cb8706a5297303f0cf4d89b59e07eebbbbd0bf1504f2b3f676b81084298 |
++| post-rector | `bash scripts/verify-rector-governance.sh` | PASS exit0 | 0.885 | `docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/post-rector.log` SHA256 be827f42eb6ea9aa9359e7f5e925cc56b81bf1dbc9f7f0b6337292b1c38192ff |
++| post-status | `bash scripts/test-rector-governance-status.sh` | PASS exit0 | 3.591 | `docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/post-status.log` SHA256 4a950b39b20f2de1440a2b45b243b63df607fa3ede7f7e32e9f7e9da71864597 |
++| post-whitespace | `git diff --check` | PASS exit0 | 0.583 | `docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r5/post-whitespace.log` SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
++
++## Entorno y exactitud
++
++Nodev22.23.2 dedicado para generadores y secret-scan; Python3.14.8 local para verificadores rector/residuales; Python3.12 y LibreOffice empaquetados para Word y comprobación OOXML. git2.50.1. environment.json,checks.json,evidence-check.json,post-checks.json conservan UTC,comando,exit yduración. Primer checkOOXML usa mtimeUTC de finalización y walltime real deexec; no se inventa un inicio. Logs sellados por SHA256. Reloj final2026-10-10UTC; carpeta nominal del paquete sigue20261009.
++
++Word inicial se ajustó sólo en formato aLetter y eliminación de borde deTitle, sin cambiar texto. word-render-review.json documenta estado inicial y word-render-final-review.json el Word final:8páginas revisadas visualmente,hashesPNG/PDF temporales,hashDOCX final. post-evidence confirma los12textos literales,14fuentes/sha ypropuestaIANA exactaR4UTF8+newline. No se entrega PDF/PNG como otro documento de aprobación. No hay firma ni selección humana simulada.
++
++## Evidencia heredada verificada
++
++R4 34/34hashes sellados coinciden; R3 snapshot859/863 coincide,4diferencias de documentos de estado registradas; código/DDL/tests coinciden. JSONR3 acredita850passed en85archivos,737unit+113PG/18archivos,0failed/pending/todo.82antes omitidos passed en15archivos, no17; no se excluyen ni renombran. R4 comprobaciones7dirigidas+3finales conservadas, sin convertirlas en nuevas pruebasR5.
++
++460browser simulated,38nativeUQ,8RBACR2,12RBACR3 se conservan como reportes separados.16EC+3PG R3 ya incluidos en850. QA14artifacts y454build hashes verificados por qa-artifacts-verification.json; no es buildR5 ni imagenremota. Detalles/nuevo actualSHA de las4diferencias en post-evidence.log; R4 yR3 nunca sobrescritos.
++
++## No ejecutado y efecto sobre gates
++
++ProductoVitest,PostgreSQL,DDL,38UQ/browser/typecheck/lint/build/schema/seeds/migrations no reejecutados R5 por ausencia de cambios de producto, contratos efectivos o SQL. No hay suitesR5 silenciadas: scope documental explícito,0testsproducto ejecutados. Nuevos testsIANA/none/CT04/RLS NOT_RUN porque sus deltas/inputs aún no son efectivos. No hay instanciaPG R5; instanciasR3 retiradas según evidencia histórica, sin tocar recursos ajenos. QA/IAMreal/E2Eexterno/backuprestore/manualUI NOT_RUN, gatesexternos BLOCKED. Las850 históricas no validan implementación futura.
++
++Preservación1545/1547idénticos,2append,0perdidos,índiceidéntico/stagingEMPTY; evidence/continuity-r5/preservation-final.json. ManifestR5 y delta atribuyen hashes a documentos/planDRAFT, no acreditan cumplimiento ni aceptaciónSTEP6A3. RECTOR_GATE=BLOCKED, STEP6A3=PARTIAL_BLOCKED.
+--- /dev/null
++++ R5/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/R5_DECISIONS_REQUIRED.md
+@@ -0,0 +1,163 @@
++# Decisiones macro para continuar STEP 6A3
++
++Destinatario Andrés Barouh, Product Owner con funciones acumuladas. Paquete R5 DRAFT_NOT_APPROVED. Rector v1.8 activo y R1/R2/R3 preservados; una sola persona puede decidir las funciones internas conforme a49. Este paquete no exige revisores independientes por defecto.
++
++Se necesita decidir el delta IANA exacto y el camino para obtener bindings metodológicos/jurídicos y scope RLS. La preparación y los checks no sustituyen prueba de suficiencia, contrato jurídico, aprobación de hashes ni aceptación externa. Ninguna opción viene marcada.
++
++Marcar UNA alternativa por grupo D1–D5 y registrar funciones/fecha/aceptación humana al final. La aprobación de preparación no autoriza QA, IAM real, grants, DDL compartido, despliegue o STEP6A4. El manifiesto externo R5_MACRO_APPROVAL_MANIFEST.json identifica bytes y alcance; no contiene firma de Codex.
++
++# D1 Fuentes y publicación de CFG D
++
++Cláusulas CFG-D-COMPLIANCE-V1, CFG-D-CONTROLS-V1 y CFG-D-PUBLICATION. S01/S02 publican factores1/0.50/0, peso baseline1, coverage80 y min(design,operating); no se someten otra vez a aprobación. S08/S09 conservan método/formula v1 inmutables y EC opcional compatible.
++
++La revisión de modelo y contrato no demuestra cada vínculo v1 a inputs de recencia/suficiencia/procedencia, pesos overridePack, SourceResolution, confianza y modo inmutable. NO_BINDING_DEMONSTRATED; esto no demuestra inexistencia fuera de las fuentes revisadas.
++
++[ ] A Identifico fuentes/versiones publicadas existentes y sus relaciones para cada baseline v1; autorizo sólo su verificación y derivación mecánica tras gates. Debo completar la matriz de inputs con fuente y locator. Una firma sin esas fuentes mantiene bloqueado none.
++
++[ ] B Solicito un diseño de delta canónico sucesor para los inputs sin fuente, con reglas exactas que debo proporcionar y manifest posterior; no autorizo escoger valores ni modificar v1 publicada.
++
++[ ] C Mantengo vigente EC opcional compatible y aplazo la declaración none; no cierro las tres cláusulas.
++
++Recomendación técnica A si existe fuente publicada verificable; B si falta, conservando comportamiento actual mientras se publica el sucesor. No se recomienda inventar otra ventana, peso o threshold. Inputs necesarios por metodología: aplicabilidad/población y aprobación; weightsPack/vigencia; evidencia requerida/validación; recencia y origen; source/conflicto/resolución; blocking/coverage/confianza; agregación/lineage y declaración modo/version/formula/sourceHash/effective interval. Campo de respuesta fuente y locator por input: __________________________________________.
++
++# D2 Binding jurídico CT04
++
++C-04W mantiene revalidación de publicación/vigencia/aplicabilidad/prioridad y coherencia upload→FileObject→Evidence. S03 fija precedencia y aclara que baseline de producto no es mínimo legal universal. S07 conserva retention_policy_id obligatorio. PrivacyProcessingActivity tiene policy y legal_bases pero no se demostró vínculo tipado a los tres objetos.
++
++[ ] A Identifico PrivacyProcessingActivity como contexto jurídicamente correcto de esos objetos y solicito propuesta exacta de relación/alcance/versionado/guards para aprobación posterior. Su coincidencia policy_id no basta y esta opción no crea FK ni autoriza DDL.
++
++[ ] B Identifico otra entidad/contexto rector con fuente/cláusula efectiva y relación que deben examinarse; no se inventa una entidad por conveniencia.
++
++[ ] C Mantengo aplicación nueva bloqueada hasta entregar contexto y fuente; PENDIENTE sigue sólo donde contrato vigente admite flujo sin política.
++
++Recomendación técnica reutilizar contexto existente únicamente si A refleja la aplicabilidad jurídica real; de lo contrario B con fuente oficial. C es el estado seguro mientras faltan datos. La técnica no decide cuál actividad u obligación aplica.
++
++Respuesta obligatoria para A/B: contrato de servicio Tecdex/version/cláusula (distinto de política tenant); política tenant/versión; autoridad legal y locator; tenant/objeto/classificación/jurisdicción; vigencia; prioridad/conflictos/hold; relación tipada y aprobación de alcance. __________________________________________. No se atribuye cumplimiento ni firma jurídica a este paquete.
++
++# D3 Proyección IANA exacta
++
++Dependencia TENANT_TIMEZONE_CONTEXT fuera de las48filas. Texto de R4 reproducido sin modificación; SHA256 UTF8 con salto final 6205faaafa3cb0cbd4d0cf34cd9c8343ccca64392e638a833e10fa7db8c73375. S10/S11 ya definen contexto propio y DTO cerrado; Tenant.default_timezone ya persiste/valida. No hay aprobación efectiva del texto DRAFT.
++
++[ ] A Apruebo íntegramente el texto exacto siguiente y sus bytes identificados por el manifiesto R5; autorizo publicación e implementación local tras gates, sin QA ni deploy.
++
++[ ] B No apruebo ese delta; contexto IANA sigue pendiente hasta una propuesta distinta exacta. No autoriza default ni fallback.
++
++Recomendación técnica A: aprovecha campo y autorización propios existentes, sin nueva ruta/permisos/columnas. Amplía un DTO cerrado y exige negativos/schema/PG/DST/context-switch y regresión; la recomendación no lo publica.
++
++Apruebo para STEP 6A.3 añadir default_timezone, string obligatorio de longitud 1 a 64 y validado como identificador IANA, a CurrentPrincipalTenantPermissions de CurrentPrincipalAuthorization. Su valor proviene exclusivamente de platform.tenants.default_timezone del tenant seleccionado mediante x-tcdx-tenant-id, leído en la misma transacción read-only repeatable-read que valida la membresía humana propia activa y tenant activo. Sin tenant seleccionado, tenant_permissions permanece null. Se preservan errores y autorización actuales: header inválido 400, autenticación 401, principal no humano o membresía/tenant inactivos 403, contexto ajeno o inexistente 404, dependencia o dato temporal persistido inválido 503. No se concede Tenant.read, no se exponen datos adicionales de empresa o persona y Platform Admin/Support no adquiere acceso tenant sin vínculo autorizado por contrato. El dato es presentación efímera; no es fuente de autorización. Al cambiar tenant o perder contexto se invalida el dato anterior; no se convierte una fecha con zona de navegador, host, locale o default supuesto. Backend y API conservan UTC Z; la UI usa la zona persistida validada. Se rechazan entradas locales inexistentes o ambiguas por DST hasta que el usuario pueda expresar un instante inequívoco conforme al contrato temporal; no se elige un offset automáticamente. No se cambia esquema, grants, auditoría de comandos, metodología ni GET EC R1. Publicación e implementación sólo después del manifiesto de este texto aprobado por el PO y de las pruebas aplicables.
++
++# D4 Alcance y viabilidad RLS
++
++S04 exige RLS para tablas críticas cuando sea operacionalmente viable. Es obligación condicional, no dispensa ni mandato universal. RLS físicoR3=0tablas/0policies/0forced. EvaluaciónR5 completa en R5_RLS_VIABILITY.md;24candidatas derivadas del slice, sin scope aprobado.
++
++[ ] A Solicito un diseño de contextoDB/roles/predicados para las24candidatas descritas o el subconjunto exacto escrito abajo, con manifest y aprobación posteriores antes de implementación. No autorizo activar RLS ni QA mediante esta selección.
++
++[ ] B Presento evidencia de condición de viabilidad distinta para el scope exacto indicado; requiere evaluación contra rector26 y no constituye dispensa general ni PASS de RLS.
++
++[ ] C Mantengo sin decidir el alcance y viabilidad; RLS NOT_IMPLEMENTED y gate de defensa en profundidad pendiente.
++
++Recomendación técnica A. PostgreSQL16 tiene la capacidad; falta contrato confiable de contexto, actor runtime sin bypass, tratamiento global/tenant/worker/pool y backup. La evidencia app/FK no equivale a RLS. Scope exacto/subconjunto y fuente si B: __________________________________________. Las alternativas no conceden PlatformSupport transversal.
++
++# D5 Preparación operacional QA
++
++C-07/CFG-UQ1/CFG-UQ2/CFG-DEFAULT son operaciones reales reservadas; C-08/CFG-QA/VOC-QA aceptación externa y VOC-C04 inventario histórico. R3 local ya aprobado; no repetir44+52firmas ni38pruebasSQL sin cambio. QA_PROMOTION_PACKAGE_R5.md preserva artifacts31/32/33/34 y backups/recuperación.
++
++[ ] A Identifico actores/cuentas/destino/ventana y autorizo sólo completar el plan operacional exacto para una aprobación posterior; no autoriza conexión ni ejecución.
++
++[ ] B Mantengo paquete PREPARED_NOT_READY_NOT_AUTHORIZED_NOT_EXECUTED sin inputs operacionales; se continúa únicamente local decidido.
++
++Recomendación técnica A para dejar un próximo plan ejecutable; requiere ServicePrincipal PLATFORM_CONTROL activo existente para33/34, identidadDBA, cuentas/membresías/entitlements reales deQA, ventana propuesta y backup/restore. No entregar secretos. Datos operacionales y responsables: __________________________________________.
++
++Ventana tentativa del planR5: sesión supervisada después de resolver bindings y sellar candidato; fecha/hora/duración por fijar expresamente por PO/DBA y nunca autorizada por tiempo transcurrido. Inventario de sólo lectura debe preceder y estar autorizado separadamente a migración/deploy. GO no puede superar bindings faltantes, incompatibilidad histórica o controles de tenant/auditoría.
++
++# Aceptación agrupada y cláusulas exactas
++
++Una sola aceptación humana puede registrar las cinco selecciones con funciones acumuladas. Firmar identifica decisión y alcance exactos; no acredita pruebas futuras ni cierra por sí sola STEP6A3. Si la respuesta modifica cualquier texto material se prepara sucesor con hash, preservando éste.
++
++Nombre: ____________________ Funciones ejercidas: ____________________ Fecha UTC o instante con zona explícita: ____________________ Decisiones D1/D2/D3/D4/D5: ____________________ Firma o aceptación expresa: ____________________.
++
++Las doce cláusulas literales siguientes se conservan desde el ledger y R4; categoría o propuesta IANA no las renombra.
++
++C-04W: Aprobar revalidación de publicación/vigencia/aplicabilidad/prioridad y coherencia upload→FileObject→Evidence en comandos futuros. Fuente docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:42
++
++C-07: Aprobar estrategia44 grants/template set y44 por tenant completo, SEED010, preflight, versionado/audit; ejecución operacional sigue NOT_AUTHORIZED. Fuente docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:46
++
++C-08: Aprobar18 pruebas negativas/regresión/gates de §10. Fuente docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:47
++
++CFG-D-COMPLIANCE-V1: Confirmar autosuficiencia de BASELINE_COMPLIANCE v1 y ausencia de configuración adicional conforme a 28; aprobar la cláusula individual, no una preferencia operativa Fuente docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:50
++
++CFG-D-CONTROLS-V1: Confirmar autosuficiencia de BASELINE_CONTROL_EFFECTIVENESS v1 y ausencia de configuración adicional conforme a 28 Fuente docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:51
++
++CFG-D-PUBLICATION: Aprobar forma de publicación versionada del modo por metodología y enlace verificable a la versión; sin columnas/tablas ni flags inferidos; resolver requisito de nueva versión inmutable antes de ejecutar Fuente docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:53
++
++CFG-UQ1: Reconciliar business key EC: tenant/Definition/Subject/effective_at/hash, NULLS NOT DISTINCT Fuente docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:54
++
++CFG-UQ2: Reconciliar unicidad de layers por EC + precedence_level + ordinal Fuente docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:55
++
++CFG-DEFAULT: Mantener exactamente un typed default que coincida con value_type; cero requiere resolución competente, no default fabricado Fuente docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:56
++
++CFG-QA: Aprobar aceptación de 28 CFG-T01..08 sin autoaprobar runtime Fuente docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:58
++
++VOC-C04: Aprobar inventario histórico y compatibilidad antes del enforcement conforme a 23/30 Fuente docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:78
++
++VOC-QA: Aprobar pruebas T-VOC01..12 y compatibilidad por ocurrencia sin certificar ejecución de capacidades nuevas Fuente docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:81
++
++# Fuentes versionadas y hashes
++
++Rutas relativas a la raíz del checkout. El hash identifica bytes inspeccionados; fuentes publicadas conservan su vigencia y los DRAFT su estado. El hash del propio Word se registra fuera del documento para evitar autorreferencia.
++
++S01 | v1.8 rector17 §§3,6,8
++docs/rector/baseline/17_CATALOGO_METRICAS_FORMULAS_Y_AGREGACIONES.md
++SHA256 b5a6eb29e7877a5e1217f9177170354f694d57265175c10883849a5938db465d
++
++S02 | v1.8 rector19 §§2–3
++docs/rector/baseline/19_METODOLOGIAS_GRC_COMPLIANCE_RISK_ASSURANCE.md
++SHA256 549e64e9ab8f0c2edcfb3e6c5c03939125e311d32298c3fac8d0b09b2d1f5c95
++
++S03 | v1.8 rector23 §§6–8
++docs/rector/baseline/23_CONTRATO_TEMPORAL_VERSIONADO_RETENCION_RECALCULO.md
++SHA256 27fe799dc0bf1dcefb1e8af7efb56e1b019b934d8d18b0f6a957f6d162eff50a
++
++S04 | v1.8 rector26 §1
++docs/rector/baseline/26_NON_FUNCTIONAL_SECURITY_RELIABILITY_OBSERVABILITY.md
++SHA256 6bd7535ac7314da4b3b48284f57d42095af1a200f04d0dcbbaa732a552987af9
++
++S05 | v1.8 rector45 §3
++docs/rector/baseline/45_CONTRATO_DESARROLLO_CERRADO_Y_NO_INFERENCIA.md
++SHA256 e283b2a059aa7f1a563fb3ac1fc242eab6156232cb183217b38afe02a196d7ba
++
++S06 | v1.8 rector49 §3
++docs/rector/baseline/49_GOBIERNO_INTERNO_Y_REVISION_UNIPERSONAL.md
++SHA256 544fd5083cf38ba5df954152d83cd02b65be3ce3f57e634ff47c685373de8c1b
++
++S07 | Frozen physical model;33,107–114,172–178,203–229
++docs/physical-data-model/01_PHYSICAL_DATA_MODEL.md
++SHA256 cdbee203ac9afe9f89cbb4320f6b7010a0e315bc160d2be6134ed3c2a15fabd5
++
++S08 | Published Phase5 methodology contract
++docs/executable-contracts/27_PHASE5_METHODOLOGY_BINDING.md
++SHA256 eedf85debfb5eb48e25d4abdd5ff4332c5dba8197ab7b96a66b97f640cfef4df
++
++S09 | Historical migration30; immutable methodology v1
++database/migrations/20261007000200_phase5_methodology_binding.sql
++SHA256 fa178ad731d48045313a11b22f1bdf3c228be502dafa1883136162ad48127850
++
++S10 | Current schema CurrentPrincipalTenantPermissions:5262
++docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml
++SHA256 739ba3c21aaa58f892e95c69fe3c8415dbf46798ebf07cc61753660479d2ac67
++
++S11 | MI7A authorization context §3
++docs/executable-contracts/23_FRONTEND_AUTHENTICATION_AUTHORIZATION_PROJECTIONS.md
++SHA256 897cfc51449b3a8b667e9e830a3e83f5b66be6093ae1e1c64bf5fff685ae3a61
++
++S12 | R4 DRAFT exact IANA text
++docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/R4_DECISIONS_REQUIRED.md
++SHA256 fba086a1c82f4cc032594a7dd49751072cdf498048d369982c6adf9b92797519
++
++S13 | R4 literal12 clauses
++docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/REMAINING_12_CLAUSES_R4.md
++SHA256 ed25ebce02c56b680f09f217e80283f692c5ca96907f92213c98df7488b6aac6
++
++S14 | QA R3 PREPARED_NOT_READY_NOT_AUTHORIZED_NOT_EXECUTED
++docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/QA_OPERATIONAL_PLAN_R3.json
++SHA256 3a1451f6b733fc7c2f45b46b9bf376364dcd24428affe1a2062256b640afc0e8
+--- /dev/null
++++ R5/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/R5_RLS_VIABILITY.md
+@@ -0,0 +1,25 @@
++# Evaluación acotada de viabilidad RLS R5
++
++Estado: TECHNICAL_ASSESSMENT_COMPLETE_OWNER_SCOPE_PENDING. RLS=NOT_IMPLEMENTED según inventario PostgreSQLR3; no se inspeccionó QA ni se creó PG R5. Rector26 §1 (S04) dice «RLS para tablas críticas cuando sea operacionalmente viable». Es obligación condicional de defensa en profundidad, no una recomendación opcional general; tampoco define lista universal de tablas/predicados ni demuestra viabilidad runtime.
++
++## Candidatos derivados del slice
++
++24tablas existentes candidatas en evidence/continuity-r5/rls-critical-candidates.json, tomadas de expected-schema237: pertenencia/asignacionesIAM, evidencias/versiones/archivos, Privacy/contexto/retención, EffectiveConfiguration/layers y audit/idempotency/outbox. Son candidatas técnicas por contener acceso de tenants, PII, binarios o historia y autoridad; no lista aprobada de implementación. Tablas mixtas IAM/Retention/Audit no admiten asumir tenant_id=current_context como única policy; GLOBAL_REFERENCE/PLATFORM_CONTROL y operaciones globales necesitan separación explícita. IAM.user_identities y platform.tenants exigen evaluación propia de autoridad global, no se incluyeron como tenant tables por analogía.
++
++## Amenazas y límites observados
++
++1. Lectura SQL con tenant predicate omitido: controles de repositorio/autorización protegen rutas actuales, pero FKs por sí solas no filtran SELECT. RLS podría aportar defensa adicional si el actor/contextoDB está vinculado de manera confiable.
++2. Cambio de tenant en pool: createDatabase usa pg.Pool de20conexiones (database.ts:9–18); la ruta de autorización valida membresía propia en transacción read-only repeatable-read (frontend-projections.ts:69–92). No se encontró protocolo aprobado de contextoRLS dentro de esos consumidores. Diseño debe garantizar limpieza entre transacciones, error/rollback y trabajos/background sin heredar tenant anterior. No se inventa un nombre de GUC ni se implementa SET LOCAL.
++3. Platform authority y plantillas mixtas: no se habilita acceso cross-tenant con bandera support/admin. Roles, grants, finalidad y auditoría necesitan contrato vigente por operación. 33/34 requieren ceremonia explícita; políticasRLS no pueden impedir su auditoría ni conferir bypass general.
++4. Owner/superuser/BYPASSRLS: deben verificarse atributos y ownership del actor runtime real después de autorización. El usuario postgres descartable deR3 no prueba el rol runtime. No se afirma seguridadRLS bajo un owner/bypass no inspeccionado.
++5. Auditoría/outbox: policies deben admitir escrituras legítimas atómicas y proteger reads históricos por ownership; fallos de audit siguen abortando cambios. Backup/restore debe preservar todas las filas autorizadamente, no producir un backup filtrado presentado como completo.
++
++## Viabilidad por componente
++
++PostgreSQL16 soporta RLS; capacidad tecnológica disponible. Contexto/conexión/predicados/aprobación de scope no cerrados. Roles runtime/ownership/bypass, planes y p95, pooling/worker/globaltemplates y restore NO_VERIFICADOS en entorno real. No se declara NO_VIABLE ni PASS a partir de esa ausencia. Recomendación técnica: cerrar contrato de contexto/roles/predicados y probar las24candidatas o subconjunto exacto aprobado en base propia descartable antes de decidir aplicación real. Cambiar constraints/IAM para sortearlo no es admisible.
++
++## Pruebas necesarias tras alcance aprobado
++
++TenantA/B para SELECT/INSERT/UPDATE/DELETE y reference hidden; contexto ausente/inválido; cambio/rollback/error/reuso de conexión; roles owner/bypass frente a runtime; permisos/entitlements/SoD/revocación; workers/serviceprincipals; tablas mixtas global+tenant; auditoría/outbox transaccional; export/backup/restore; límites de latencia vigentes. No son tests ejecutadosR5. Se exige nuevo delta exacto firmado, migración forward-only y gates aplicables; RLS no se implementa en esta iteración.
++
++Mecánica PostgreSQL cotejada con documentación primaria16: https://www.postgresql.org/docs/16/ddl-rowsecurity.html y https://www.postgresql.org/docs/16/sql-set.html (consulta2026-10-09). Roles superuser/BYPASSRLS eluden policies; owner normalmente también, salvo FORCE para owner. SET LOCAL limita el ajuste a la transacción. Son capacidades técnicas, no autoridad para diseñar el contexto GRC. Fuentes y amenazas del producto derivan de rector26/modelo y consumidores focalizados, no de ejemplos de PostgreSQL.
+--- /dev/null
++++ R5/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/QA_PROMOTION_PACKAGE_R5.md
+@@ -0,0 +1,29 @@
++# Paquete de promoción QA R5
++
++PREPARED_NOT_READY_NOT_AUTHORIZED_NOT_EXECUTED. Destinatario Andrés Barouh PO, funciones QARelease/DBA/Security/IAM. R3 operacional intacto, SHA256 3a1451f6b733fc7c2f45b46b9bf376364dcd24428affe1a2062256b640afc0e8; R4 intacto. R5 incorpora preflight y gates por etapa, nunca órdenes de ejecución.14artifacts y454build hashes coinciden en evidenciaR5; no prueban digest/imagen deploy.
++
++## Candidato y contratos
++
++Fuente HEAD6af66387aa03fa185ef139584de07700f247b903, rama step6a3-internal-governance-v18-20261009, worktree heredado+R5documental. No nuevo build/contrato efectivo/runtime. ManifestR5 sella sólo preparación. Antes de promoción, congelar candidato completo y sus fuentes/tests/build/images después de aprobar deltaIANA y resolver inputs. Contratos29/30/31/32 locales preservados; GETEC R1 intacto. Dominio único https://grc.tecdex.net/; internos DB192.168.2.40/bk192.168.2.45/www192.168.2.46. No conexión a ninguno enR5.
++
++## Etapa P0 autorización de inventario
++
++Operación propuesta: sólo lectura agregada de ledger/esquema/RLS/vocab/constraints y elegibilidad de actor, sin dump de PII. Falta nombre/identidadDBA, ServicePrincipal PLATFORM_CONTROL activo existente autorizado33/34, cuentas/membresías/roles/entitlements QA y ventana expresa. No se crean usuarios/grants/secretos ni se reutiliza actor de fixtureR3. Ventana propuesta como secuencia: inventario supervisado → revisiónGO → backup/restore descartable → ventana de locks y smoke aprobada; fecha/hora/duración NO_FIJADAS por falta de inputPO, no autorización implícita.
++
++Consultas de metadatos propuestas para revisar después de autorizar (NOT_RUN): BEGIN READ ONLY; SELECT current_database(), inet_server_addr(), inet_server_port(), current_setting('server_version_num'); SELECT migration_id,filename,content_sha256,transactional FROM platform.schema_migrations WHERE outcome='applied' ORDER BY migration_id; SELECT n.nspname,c.relname,c.relrowsecurity,c.relforcerowsecurity FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE c.relkind IN ('r','p') AND n.nspname IN ('iam','evidence','privacy','config','ops_audit'); ROLLBACK. Backend readiness exige PostgreSQL16/base tcdx-grc. Inventariar políticas/owner/runtime superuser/BYPASSRLS con rol real previamente identificado; no atribuir postgres descartable a runtime. Limitar SQL y resultados al scope aprobado.
++
++DatosUQ/default: usar preflight.readonly.sql y existing-data.predicates.readonly.sql ya sellados en physical-reconciliation; confirmar hashes del manifestR3 antes de uso, origen de constraints validated y duplicatesNULLsafe, capas/padres/niveles, defaultcount/tipo/estado, FKs e historia. Resultado incompatible aborta, sin backfill/reordenación/coerción. VOC-C04: inventario por14familias/26ocurrencias usando mapping publicado30/23; counts por tenant/contexto/versionado y canonicalcode; valores desconocidos se minimizan y no se exportan filas/PII. No asumir compatibilidad desde vacío descartable.52valores publicados no limitan por sí solos futuros consumidores.
++
++## Etapa P1 backup recuperación y runner
++
++BackupPITR/cifrado con identidadDBA y destino autorizado; restore sobre recurso aislado controlado y comparaciones ledger/counts/FK/index/constraints. No se da backupPASS sin ejecución.33/34 siguen fuera del manifest activo32; requieren nueva integración canónica exacta aprobada, checksum/actor/ceremonia transaccional y auditoría. No añadirlos a manifest sólo por firmar este paquete. Migraciones31UQ/default y32permisos ya aprobadas localmente;33adopciónaudit y34D01/D02 precisan autoridad real, locks e historial coherente. Snapshotgrants yAuditEvent antes/después sin falsaINSERT ni retrofechas. Nada se ejecuta enR5.
++
++## Etapa P2 GO NO GO y promoción
++
++GO exige fuentes CFG-D/bindingCT04/proyecciónIANA publicados y pruebas requeridasPASS; inventario compatible; backup/restore real; identidad/actor/runner/hashes/ventana/lista de actos aprobados; candidato imagen/assets sellado. RLS se evalúa contra obligación condicional rector26, sin marcarPASS físico ausente. NO-GO ante identidad/hash/contexto/SoD/entitlement/auditoría incorrectos, datos incompatibles, missinglegalbinding o aprobación ausente. Autorización de inventario no autoriza DDL/grants/deploy.
++
++Smoke por cuentas reales autorizadas: CT01versions/licencias/historia;CT03membership activa/cursor2/revocación/guardescritura;CT04pending vs aplicación jurídicamente vinculada;GETEC400/401/403/404/coherencia;44pares yD01/D02scopes/11lectores/custompreservados;VOC52provenance/códigos históricos;UQdefault/concurrencia/rollback;UTCZ/IANA/DST/contextswitch;tenantA/Bnegativos;auditoría atómica,secretminimization;assets MIME/hash/deeproute/reload y revisiónUI humana. API/IAMsimulados no pasan E2Eexterno. Manuales caso a caso con registro real, no firma anticipada.
++
++## Recuperación y punto de autorización
++
++Antes de commitBD rollback transaccional; después recuperación forward-only aprobada que conserve nuevos registros contextualizados e historia. No reinstalar UQtenant/globalordinal, resucitar grantAUDITOR ni borraraudits. Backuprestore coordinado necesita decisión explícita preservando escrituras posteriores. Rollbackdeploy sólo con candidato anterior exacto y plan autorizado; no suponer disponible. Paquete posterior debe nombrar targets/actores/fechaUTC/hashes/acciones; la firma macroR5 de preparación no ejecutaQA. QA/IAM/E2Eexterno/deployNOT_RUN.

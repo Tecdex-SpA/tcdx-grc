@@ -4,9 +4,22 @@ import { createClient, readJson, repositoryRoot } from "./db.ts";
 
 type ExpectedColumn = { name: string; type: string; nullable: boolean; default: string | null };
 type ExpectedTable = { name: string; profile: string; primaryKey: string[]; columns: ExpectedColumn[]; checks: string[]; uniqueConstraints: string[][] };
-type Inventory = { tableCount: number; tables: ExpectedTable[] };
+type Inventory = { tableCount: number; tables: ExpectedTable[]; commercialAmendmentDecision?: string };
 
-const expected = readJson<Inventory>("database/expected-schema.json");
+const commercialCandidate = process.env.TCDX_COMMERCIAL_EXPECTED_SCHEMA_CANDIDATE === "true";
+const c04wCandidate = process.env.TCDX_C04W_EXPECTED_SCHEMA_CANDIDATE === "true";
+if (commercialCandidate && (process.env.TCDX_ISOLATED_REBUILD !== "true" || process.env.DATABASE_HOST !== "127.0.0.1")) {
+  throw new Error("Commercial expected-schema candidate verification requires isolated localhost PostgreSQL");
+}
+if (c04wCandidate && (commercialCandidate || process.env.TCDX_C04W_ISOLATED_REBUILD !== "true"
+  || process.env.DATABASE_HOST !== "127.0.0.1" || process.env.DATABASE_PORT !== "55437")) {
+  throw new Error("C-04W expected-schema candidate verification requires the approved isolated R2 PostgreSQL copy");
+}
+const expected = readJson<Inventory>(c04wCandidate
+  ? "docs/physical-data-model/candidates/STEP_6A3_C04W_v1.10/EXPECTED_SCHEMA_C04W_CANDIDATE.json"
+  : commercialCandidate
+    ? "docs/physical-data-model/amendments/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/pending-publication/EXPECTED_SCHEMA_COMMERCIAL_CANDIDATE.json"
+    : "database/expected-schema.json");
 const controlledSchemas = [...new Set(expected.tables.map((table) => table.name.split(".")[0]))];
 
 function normalizedType(value: string): string {
@@ -53,6 +66,8 @@ expectedConstraints.delete("uq_requirement_control_mappings__ownership_class_ten
 expectedConstraints.delete("uq_normative_unit_control_mappings__mapping_version");
 expectedConstraints.delete("uq_subjects__tenant_id_canonical_key");
 for (const name of expectedNames(/CONSTRAINT "([^"]+)"/g, "database/migrations/20261007000200_phase5_methodology_binding.sql")) expectedConstraints.add(name);
+for (const old of ["uq_effective_configurations__tenant_id","uq_effective_configuration_layers__ordinal","ck_configuration_definitions__default_value_count"]) expectedConstraints.delete(old);
+for (const name of expectedNames(/ADD CONSTRAINT ([a-z0-9_]+)\s+(?:CHECK|UNIQUE)/g, "database/migrations/20261009000100_phase6a3_configuration_integrity.sql")) expectedConstraints.add(name);
 const expectedIndexes = new Set([
   ...expectedNames(/CREATE (?:UNIQUE )?INDEX "([^"]+)"/g, "database/migrations/20261007000200_phase5_methodology_binding.sql"),
   ...expectedNames(/CREATE (?:UNIQUE )?INDEX "([^"]+)"/g, "database/migrations/20260916000800_required_indexes.sql"),
@@ -64,6 +79,19 @@ const expectedIndexes = new Set([
   ...expectedNames(/CREATE (?:UNIQUE )?INDEX ([a-z0-9_]+)/g, "database/migrations/20260929000100_phase5_subscription_regulatory_pack_authority.sql")
   ,...expectedNames(/CREATE (?:UNIQUE )?INDEX ([a-z0-9_]+)/g, "database/migrations/20260929000300_phase5_plus_subject_validation_access.sql")
 ]);
+if (expected.commercialAmendmentDecision === "DR-STEP6A3-COMMERCIAL-PHYSICAL-EXECUTABLE-20261014-01") {
+  const commercialSql = "database/migrations/20261013000100_commercial_contract_reconciliation.sql";
+  expectedConstraints.delete("uq_usage_limits__limit_code");
+  for (const name of expectedNames(/(?:ADD CONSTRAINT|CONSTRAINT) ([a-z0-9_]+)\s+(?:CHECK|UNIQUE|FOREIGN KEY|PRIMARY KEY|EXCLUDE)/g, commercialSql)) expectedConstraints.add(name);
+  for (const name of expectedNames(/CREATE (?:UNIQUE )?INDEX ([a-z0-9_]+)/g, commercialSql)) expectedIndexes.add(name);
+}
+if (c04wCandidate || expected.tableCount === 242) {
+  const c04wSql = c04wCandidate
+    ? "database/migrations/candidates/STEP_6A3_C04W_v1.10/20261015000100_c04w_applicability_hold_r2.sql"
+    : "database/migrations/20261015000100_c04w_applicability_hold_r2.sql";
+  for (const name of expectedNames(/(?:ADD CONSTRAINT|CONSTRAINT) ([a-z0-9_]+)\s+(?:CHECK|UNIQUE|FOREIGN KEY|PRIMARY KEY)/g, c04wSql)) expectedConstraints.add(name);
+  for (const name of expectedNames(/CREATE (?:UNIQUE )?INDEX ([a-z0-9_]+)/g, c04wSql)) expectedIndexes.add(name);
+}
 expectedIndexes.delete("ix_audits__lead_membership_id");
 
 const client = createClient();
@@ -151,7 +179,9 @@ try {
     for (const expectedUnique of table.uniqueConstraints) {
       const actualUnique = actualKeys.find((key) => key.constraint_type === "u" && JSON.stringify(key.columns) === JSON.stringify(expectedUnique));
       if (!actualUnique) mismatches.push(`unique:${table.name}:${expectedUnique.join(",")}`);
-      else if (expectedUnique.includes("tenant_id") && !actualUnique.nulls_not_distinct)
+      else if (expectedUnique.includes("tenant_id")
+        && expectedUnique.some((name) => table.columns.find((column) => column.name === name)?.nullable)
+        && !actualUnique.nulls_not_distinct)
         mismatches.push(`unique-null-semantics:${table.name}:${expectedUnique.join(",")}`);
     }
   }

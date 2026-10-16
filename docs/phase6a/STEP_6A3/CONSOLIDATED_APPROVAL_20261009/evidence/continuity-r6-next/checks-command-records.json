@@ -1,0 +1,44 @@
+[
+  {
+    "status": "fulfilled",
+    "value": {
+      "gate": "typecheck",
+      "cmd": "PATH=/private/tmp/tcdx-grc-npm-cache/_npx/5dad66f2cb301fc2/node_modules/node/bin:$PATH pnpm typecheck > /Users/andresbarouh/repos/tcdx-grc/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/typecheck.log 2>&1",
+      "start": "2026-10-13T13:44:24.702Z",
+      "elapsed_ms": 5785,
+      "chunk_id": "ad411c",
+      "wall_time_seconds": 5.569369791,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "gate": "lint",
+      "cmd": "PATH=/private/tmp/tcdx-grc-npm-cache/_npx/5dad66f2cb301fc2/node_modules/node/bin:$PATH pnpm lint > /Users/andresbarouh/repos/tcdx-grc/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/lint.log 2>&1",
+      "start": "2026-10-13T13:44:24.703Z",
+      "elapsed_ms": 5712,
+      "chunk_id": "90e849",
+      "wall_time_seconds": 5.543169834,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "gate": "browser-test-typecheck",
+      "cmd": "PATH=/private/tmp/tcdx-grc-npm-cache/_npx/5dad66f2cb301fc2/node_modules/node/bin:$PATH pnpm exec tsc --noEmit --skipLibCheck --target ES2022 --module nodenext --moduleResolution nodenext e2e/*.spec.ts > /Users/andresbarouh/repos/tcdx-grc/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/browser-test-typecheck.log 2>&1",
+      "start": "2026-10-13T13:44:24.703Z",
+      "elapsed_ms": 2074,
+      "chunk_id": "d8cbbd",
+      "wall_time_seconds": 1.839024459,
+      "exit_code": 1,
+      "original_token_count": 0,
+      "output": ""
+    }
+  }
+]

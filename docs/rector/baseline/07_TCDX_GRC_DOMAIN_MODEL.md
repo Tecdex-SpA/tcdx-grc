@@ -69,3 +69,7 @@ IA produce Recommendation con provenance. La aceptación de una recomendación g
 ## Addendum - Consumidores y autoridad sobre informacion
 
 Los bounded contexts consumen conceptos canonicos y mantienen una unica autoridad de escritura por concepto. Integrations es responsable de la captura/normalizacion externa; Data & Metrics de mediciones oficiales; Rules/GRC Impact de la evaluacion contractual; cada dominio aplica impactos dentro de su autoridad. Ningun consumidor crea una segunda autoridad sobre el hecho fuente. Ver documentos 14 y 15.
+
+## Reconciliación comercial propuesta por DR-STEP6A3-COMMERCIAL-GOVERNANCE-20261013-02
+
+Tenant & Commercial Entitlements es la única autoridad de escritura de `CommercialFamily`, `PlanVersion`, `UsageLimit`, `Entitlement`, `Subscription` y sus asignaciones de RegulatoryPackVersion. `CommercialFamily` es `PLATFORM_CONTROL`, publicada e inmutable; las relaciones hacia RegulatoryPack y PlanVersion son referencias soporte tipadas, no un catálogo competidor ni un derecho implícito. El cambio de plan es un command comercial atómico sobre la Subscription y sus asignaciones, no una mutación cruzada libre de Regulatory & Compliance. La licencia/publicación del contenido de un RegulatoryPackVersion continúa bajo su propia autoridad.

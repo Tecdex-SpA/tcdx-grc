@@ -1,0 +1,17 @@
+{
+  "recorded_at_utc": "2026-10-15T20:56:53.270554+00:00",
+  "provenance": "SSH docker inspect --format .Image/.State.Health.Status/.RestartCount, executed in this turn; tool exit0",
+  "backend": {
+    "host": "192.168.2.45",
+    "image": "sha256:474e525a3e6b2bcc067dda7a77039b36f2832ca37d138b1424a700644560fc6d",
+    "health": "healthy",
+    "restart_count": 0
+  },
+  "frontend": {
+    "host": "192.168.2.46",
+    "image": "sha256:552ff3e9412cb1c78bfa3400c26c8835c6a2bfa09a6db1dc72ef18b8a2712eeb",
+    "health": "healthy",
+    "restart_count": 0
+  },
+  "deploy_or_build_performed": false
+}

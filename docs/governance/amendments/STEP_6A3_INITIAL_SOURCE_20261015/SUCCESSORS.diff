@@ -1,0 +1,398 @@
+--- docs/rector/baseline/00_README_KNOWLEDGE_BASE.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15/00_README_KNOWLEDGE_BASE.md
+@@ -4,7 +4,7 @@
+ 
+ Este paquete constituye la base contractual, funcional y de ingeniería para el nuevo desarrollo **TCDX GRC**.
+ 
+-Baseline de esta versión propuesta: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15`. Su entrada en vigencia requiere activación humana y técnica conforme a 47; la v1.8 es la predecesora íntegra. Las referencias v1.3 siguientes documentan historia semántica; no sustituyen 46/47/49 ni el manifest vigente.
++Baseline de esta versión propuesta: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15`. Su entrada en vigencia requiere activación humana y técnica conforme a 47; la v1.10 es la predecesora íntegra. Las referencias v1.3 siguientes documentan historia semántica; no sustituyen 46/47/49 ni el manifest vigente.
+ 
+ No contiene prompts a ejecutar individualmente. Sus archivos son **fuentes de conocimiento y alineamiento** que deben ser leídas y respetadas por ChatGPT, Codex y desarrolladores antes de diseñar o implementar componentes.
+ 
+@@ -135,3 +135,10 @@
+ ## Candidato comercial v1.9
+ 
+ La decisión humana `DR-STEP6A3-COMMERCIAL-GOVERNANCE-20261013-02` aprobó el diseño y los bytes candidatos de `GP-STEP6A3-COMMERCIAL-20261013-02`; la reconciliación en 07/08/21/22/23/25/29/30/33/34/42 de esta versión es una nueva manifestación por bytes que exige aprobación y publicación propias. Su preparación no cambia la baseline v1.8 previa, los contratos físicos/ejecutables activos ni los estados de STEP 6A.3/6A.4 por sí sola. Se conserva el dominio público `https://grc.tecdex.net/`.
++
++
++## STEP_6A3 — candidata de incorporación inicial de fuente v1.11
++
++`STATUS=DRAFT_NOT_EFFECTIVE; HUMAN_EXACT_BYTES_REVIEW=PENDING`. Baseline candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15, predecesora TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15. Diseño PO aprobado por SHA `1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b`; constancia `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/PO_DESIGN_APPROVAL_RECEIPT_20261015.json`. Esta sección sólo tendrá efecto después de publicación conforme47/49 y gates físico/ejecutable; no autoriza operación QA ni deploy por sí sola.
++
++Copia completa candidata de51archivos. Sólo los deltas INITIAL_SOURCE indicados modifican la predecesora; ningún archivo de baseline activa o historia se modifica.
+--- docs/rector/baseline/21_LIFECYCLE_TRANSITION_MATRIX.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15/21_LIFECYCLE_TRANSITION_MATRIX.md
+@@ -138,3 +138,10 @@
+ RetentionPolicy y RetentionPolicyApplicability aceptan submit_for_review draft→under_review por autor Tenant Admin con privacy.retention_policy.update; review existente por Privacy Manager/Legal Reviewer permanece; approve under_review→approved corresponde a Legal Reviewer distinto del autor; publish approved→published por Tenant Admin/Privacy Manager después de revalidación. Toda transición exige CAS, idempotencia, tenant y AuditEvent transaccional. Published es inmutable. HoldRelease es un comando insert-only autorizado por Legal Reviewer distinto del autor del hold; no altera lifecycle_state de policy/applicability.
+ 
+ Fuente exacta del delta: `docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/CONTRACT_PACKET_20261015.md`; SHA-256 `6b87812823472d56a89622eca8119b0cd56606f2f21d635dd84bf903896ba7f2`. Esta copia candidata no es autoridad activa antes del gate 47.
++
++
++## STEP_6A3 — candidata de incorporación inicial de fuente v1.11
++
++`STATUS=DRAFT_NOT_EFFECTIVE; HUMAN_EXACT_BYTES_REVIEW=PENDING`. Baseline candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15, predecesora TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15. Diseño PO aprobado por SHA `1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b`; constancia `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/PO_DESIGN_APPROVAL_RECEIPT_20261015.json`. Esta sección sólo tendrá efecto después de publicación conforme47/49 y gates físico/ejecutable; no autoriza operación QA ni deploy por sí sola.
++
++Se propone un único comando retention_policy_applicability.bind_initial_source, actualización draft→draft con CAS, idempotencia y AuditEvent. No publica una nueva arista de transición de estado ni cambia las cinco aristas C-04W ya auditadas. Una draft que custodia fuente pendiente no pasa a revisión, aprobación o publicación antes de bind; published continúa inmutable. Las dos filas QA under_review preexistentes no se regresan ni se modifican.
+--- docs/rector/baseline/22_RBAC_PERMISSION_SCOPE_MATRIX.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15/22_RBAC_PERMISSION_SCOPE_MATRIX.md
+@@ -150,3 +150,10 @@
+ Nueve RolePermission tenant-owned para cada TENANT_ADMIN tenant-owned, nunca Platform: privacy.retention_policy.read/create/update/publish; evidence.document.create/update; evidence.evidence.create/submit/read. Cada operación se restringe por entitlement, tenant, MembershipRole.scope_kind, ObjectPolicy y propósito de fuente de retención. Los scopes tenant nuevos de evidence.document.update y evidence.evidence.submit sólo aplican a este flujo restringido. Se agrega únicamente privacy.retention_policy.legal_hold.release para LEGAL_REVIEWER tenant-owned, mismo tenant, sin grant Tenant Admin/Privacy Manager/Platform. Los grants vigentes de otros roles permanecen.
+ 
+ Fuente exacta del delta: `docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/CONTRACT_PACKET_20261015.md`; SHA-256 `6b87812823472d56a89622eca8119b0cd56606f2f21d635dd84bf903896ba7f2`. Esta copia candidata no es autoridad activa antes del gate 47.
++
++
++## STEP_6A3 — candidata de incorporación inicial de fuente v1.11
++
++`STATUS=DRAFT_NOT_EFFECTIVE; HUMAN_EXACT_BYTES_REVIEW=PENDING`. Baseline candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15, predecesora TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15. Diseño PO aprobado por SHA `1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b`; constancia `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/PO_DESIGN_APPROVAL_RECEIPT_20261015.json`. Esta sección sólo tendrá efecto después de publicación conforme47/49 y gates físico/ejecutable; no autoriza operación QA ni deploy por sí sola.
++
++Se mantienen todos los Permission/RolePermission/MembershipRole existentes. Tenant Admin humano es custodio y autor del draft; el autor documental puede ser ese custodio o Evidence Owner humano del mismo tenant con scope tenant y permisos efectivos de cada operación. Upload/finalize/create/submit sólo admiten su cadena documental exacta; finalize/submit permanecen del autor documental. Bind es del Tenant Admin custodio autor con privacy.retention_policy.update y PRIVACY. EvidenceReview debe ser de identidad distinta del autor documental; la aprobación de aplicabilidad debe ser de identidad distinta del autor del draft. Ser autor del draft no impide revisar Evidence ajena si el permiso existe. Ninguna acumulación editorial conforme49 sustituye estas separaciones. M2M/Platform, identidad ajena, falta de permiso/entitlement/scope y objeto de otro tenant: DENY. No se conceden grants ni lectura documental general.
+--- docs/rector/baseline/23_CONTRATO_TEMPORAL_VERSIONADO_RETENCION_RECALCULO.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15/23_CONTRATO_TEMPORAL_VERSIONADO_RETENCION_RECALCULO.md
+@@ -71,3 +71,10 @@
+ La RetentionPolicy tenant-owned y su versión continúan siendo la única autoridad de duración, tipo y precedencia. Su RetentionPolicyApplicability publicada declara contexto, clasificación, propósito, alcance y vigencia. El resolver considera todas las obligaciones concurrentes; la FK primaria de un archivo selecciona una aplicabilidad ordinaria inequívoca y jamás elimina un legal hold o una obligación superior. Conflicto no resuelto impide purge. Un legal hold usa retention_seconds=NULL, no expira por vencimiento ordinario y sólo se levanta por RetentionPolicyHoldRelease explícita, autorizada, tenant-owned, insert-only y auditada. La liberación no ejecuta purge. Las filas históricas sin vínculo nuevo conservan su política previa y no se presumen liberadas de hold. La especificación exacta de predicados, transición y pruebas es el paquete aprobado identificado al final.
+ 
+ Fuente exacta del delta: `docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/CONTRACT_PACKET_20261015.md`; SHA-256 `6b87812823472d56a89622eca8119b0cd56606f2f21d635dd84bf903896ba7f2`. Esta copia candidata no es autoridad activa antes del gate 47.
++
++
++## STEP_6A3 — candidata de incorporación inicial de fuente v1.11
++
++`STATUS=DRAFT_NOT_EFFECTIVE; HUMAN_EXACT_BYTES_REVIEW=PENDING`. Baseline candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15, predecesora TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15. Diseño PO aprobado por SHA `1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b`; constancia `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/PO_DESIGN_APPROVAL_RECEIPT_20261015.json`. Esta sección sólo tendrá efecto después de publicación conforme47/49 y gates físico/ejecutable; no autoriza operación QA ni deploy por sí sola.
++
++La custodia de la primera fuente mediante FK a aplicabilidad draft no cambia duración ni precedencia de la policy ordinaria tenant-owned publicada/vigente. Source pendiente se deriva de FK/estado existentes; no es un enum persistido, legal hold, obligación acreditada ni permiso de borrado. Ninguna cadena pendiente habilita consumo de negocio, evaluación oficial, purge o release; todas las obligaciones concurrentes y la historia se conservan. Source e intervalo se revalidan al bind y antes de aprobar/publicar. Los plazos comerciales futuros de12/18/24/36/48/60meses no se implementan por esta sucesora.
+--- docs/rector/baseline/24_CONTRATO_EVIDENCIA_DOCUMENTOS_ARCHIVOS.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15/24_CONTRATO_EVIDENCIA_DOCUMENTOS_ARCHIVOS.md
+@@ -76,3 +76,10 @@
+ El comando nuevo request-upload exige RetentionPolicyApplicability publicada y aplicable, registra su FK y la RetentionPolicy/version. Finalize conserva la misma FK en FileObject sólo tras scan-PASS y hash real. EvidenceVersion hereda el vínculo exacto del FileObject directo o de DocumentVersion.file_object_id y concuerda con Evidence.retention_policy_id. La fuente legal o contractual se aporta como EvidenceVersion auténtica del mismo tenant, revisada, vigente y respaldada por FileObject scan-PASS antes de publicar una nueva versión de aplicabilidad que la cite. La carga técnica nunca acredita validez jurídica. Las versiones históricas permanecen inmutables; ausencia de respaldo se informa como insuficiencia.
+ 
+ Fuente exacta del delta: `docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/CONTRACT_PACKET_20261015.md`; SHA-256 `6b87812823472d56a89622eca8119b0cd56606f2f21d635dd84bf903896ba7f2`. Esta copia candidata no es autoridad activa antes del gate 47.
++
++
++## STEP_6A3 — candidata de incorporación inicial de fuente v1.11
++
++`STATUS=DRAFT_NOT_EFFECTIVE; HUMAN_EXACT_BYTES_REVIEW=PENDING`. Baseline candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15, predecesora TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15. Diseño PO aprobado por SHA `1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b`; constancia `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/PO_DESIGN_APPROVAL_RECEIPT_20261015.json`. Esta sección sólo tendrá efecto después de publicación conforme47/49 y gates físico/ejecutable; no autoriza operación QA ni deploy por sí sola.
++
++Excepción exclusiva al requisito de primaria publicada para el primer documento fuente: si no existe primaria ordinaria elegible para el contexto exacto, request-upload, finalize y EvidenceCreate pueden usar una nueva aplicabilidad draft de un Tenant Admin custodio, sin source, vinculada a policy ordinaria tenant-owned publicada/vigente. Cada comando revalida bajo locks el mismo tenant, clasificación, propósito evidence_document, contexto, FK y ausencia de primaria/conflicto. Intent/file/EvidenceVersion conservan la misma FK y el mismo autor documental real, Tenant Admin custodio o Evidence Owner con permisos/scope vigentes. En esta ruta acotada links=[] no crea evidencia de negocio. Scan/hash/MIME/storage, expiración, cleanup y revisión independiente se mantienen. El documento auténtico es externo aportado por persona competente: su carga no acredita legalidad. El draft permanece draft durante carga/revisión. Sólo tras aprobación independiente, vigencia/scan-PASS y cláusula auténtica el custodio ejecuta bind; después siguen submit/review/approve/publish ordinarios. No se admite source inexistente, histórica sin vigencia, cambio de autoría, datos falsos o publicación previa para desbloquear upload. El contrato ejecutable sucesor detalla el comando y consumo.
+--- docs/rector/baseline/25_API_EVENTOS_IDEMPOTENCIA_AUDITORIA.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15/25_API_EVENTOS_IDEMPOTENCIA_AUDITORIA.md
+@@ -65,3 +65,10 @@
+ `subscriptionChangePlan` usa `POST /api/v1/platform/subscriptions/{id}:change-plan`, `platform.subscription.update`, `If-Match` fuerte de `Subscription.row_version`, `Idempotency-Key`, schema cerrado y HTTP 200 sólo después de COMMIT. El alta `subscriptionCreate` conserva su HTTP 202. El replay reautoriza al actor y valida el fingerprint antes de evaluar el CAS o el estado posterior del origen; devuelve el cuerpo original persistido y omite ETag tanto en éxito como replay. El GET actual proporciona un ETag fresco para un nuevo command. Un resultado corrupto no se reconstruye desde filas actuales.
+ 
+ El cambio, cierre/alta de asignaciones, lineage, AuditEvent, OutboxEvent e IdempotencyRecord se confirman en una sola transacción. Los códigos, perfiles, payloads y mapeos exactos son los del paquete `GP-STEP6A3-COMMERCIAL-20261013-02`, artefactos 03/07/08/12, que deberán publicarse como contratos ejecutables antes de código. La ceremonia `commercialCatalogPublication` es interna, independiente y exige manifest de datos exactos, actor humano Platform Admin y transacción indivisible; no crea endpoint público de catálogo. La publicación comercial no licencia RegulatoryPackVersion.
++
++
++## STEP_6A3 — candidata de incorporación inicial de fuente v1.11
++
++`STATUS=DRAFT_NOT_EFFECTIVE; HUMAN_EXACT_BYTES_REVIEW=PENDING`. Baseline candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15, predecesora TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15. Diseño PO aprobado por SHA `1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b`; constancia `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/PO_DESIGN_APPROVAL_RECEIPT_20261015.json`. Esta sección sólo tendrá efecto después de publicación conforme47/49 y gates físico/ejecutable; no autoriza operación QA ni deploy por sí sola.
++
++Se propone retentionApplicabilityBindInitialSource en POST /api/v1/retention-policy-applicabilities/{id}:bind-initial-source. Body cerrado: source_evidence_version_id, source_clause_ref no vacío, effective_from real; effective_to opcional posterior a from. X-TCDX-Tenant-Id, bearer humano, Idempotency-Key e If-Match fuerte obligatorios; expected_version no se acepta en body HTTP. COMMIT devuelve200. Source approved/vigente/scan-PASS y EvidenceReview independiente, cadena idéntica y draft del custodio se revalidan transaccionalmente. Se actualizan sólo source/cláusula/intervalo/row_version; AuditEvent único audit.privacy.retention_policy_applicability.bind_initial_source.v1, before/after mínimos, tenant/actor/correlation sin blob/secreto. Sin domain event/outbox nuevo; replay reautoriza sin versión/audit nuevos; payload distinto, estado/CAS conflictivo:409; falta de autoridad:403; cadena/source/intervalo inválidos:422. Falla de auditoría revierte el cambio.
+--- docs/rector/baseline/38_RESULT_STATUS_AND_DATA_SUFFICIENCY_CONTRACT.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15/38_RESULT_STATUS_AND_DATA_SUFFICIENCY_CONTRACT.md
+@@ -116,3 +116,10 @@
+ Los comandos de assessment no aceptan result_status=valid declarado por el caller como prueba de suficiencia. Evalúan población, inputs, evidencia, cobertura, procedencia, conflictos, recencia sólo si hay umbral publicado y calidad sólo si hay criterio publicado, según metodología/version. Se conserva el orden de precedencia existente para componentes blocking; ausencia de dato no equivale a cero. Sin inventario publicado de criterios requeridos para una v1, el resultado nuevo queda insufficient_data/dependency_pending y no valid oficial. Historia inmutable; EC NULL no implica none.
+ 
+ Fuente exacta del delta: `docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/CONTRACT_PACKET_20261015.md`; SHA-256 `6b87812823472d56a89622eca8119b0cd56606f2f21d635dd84bf903896ba7f2`. Esta copia candidata no es autoridad activa antes del gate 47.
++
++
++## STEP_6A3 — candidata de incorporación inicial de fuente v1.11
++
++`STATUS=DRAFT_NOT_EFFECTIVE; HUMAN_EXACT_BYTES_REVIEW=PENDING`. Baseline candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15, predecesora TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15. Diseño PO aprobado por SHA `1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b`; constancia `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/PO_DESIGN_APPROVAL_RECEIPT_20261015.json`. Esta sección sólo tendrá efecto después de publicación conforme47/49 y gates físico/ejecutable; no autoriza operación QA ni deploy por sí sola.
++
++EvidenceVersion ligada a aplicabilidad no publicada y usada como fuente pendiente no puede consumirse como evidencia ordinaria en resultados, controles/requisitos ni evaluaciones. Su aprobación documental permite únicamente la vinculación de fuente por el custodio; no es valid oficial ni publica metodología. Publicar posteriormente la aplicabilidad no crea EvidenceLinks de negocio ni elimina las comprobaciones ordinarias. Se preservan las metodologíasv1, CFG-D conservador, EC opcional sin none y todos los resultados históricos.
+--- docs/rector/baseline/46_REGENTE_MAESTRO_DEL_DESARROLLO.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15/46_REGENTE_MAESTRO_DEL_DESARROLLO.md
+@@ -4,7 +4,7 @@
+ 
+ Este documento es el punto de entrada obligatorio y la constitución operativa maestra del desarrollo TCDX GRC. Integra y gobierna los documentos 00–49 aplicables de este baseline. No reemplaza sus contratos especializados: fija cómo deben ser interpretados, ejecutados y verificados durante todo el ciclo hasta `MARKET_RELEASE_READY=PASS`.
+ 
+-`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15`
++`MASTER_REGENT=TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15`
+ 
+ `CODEX_VARIATION_BUDGET=ZERO`
+ 
+@@ -88,3 +88,10 @@
+ No se declara “READY”, “DONE”, “PRODUCTION READY” ni equivalente por avance porcentual. El cierre exige evidencia de todos los gates y capacidades dependientes. La autoridad final de release corresponde al QA/Release Owner y aprobadores humanos definidos, nunca a Codex.
+ 
+ Cualquier contradicción entre una tarea y este baseline produce `RECTOR_GATE=BLOCKED` y no una reinterpretación del baseline.
++
++
++## STEP_6A3 — candidata de incorporación inicial de fuente v1.11
++
++`STATUS=DRAFT_NOT_EFFECTIVE; HUMAN_EXACT_BYTES_REVIEW=PENDING`. Baseline candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15, predecesora TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15. Diseño PO aprobado por SHA `1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b`; constancia `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/PO_DESIGN_APPROVAL_RECEIPT_20261015.json`. Esta sección sólo tendrá efecto después de publicación conforme47/49 y gates físico/ejecutable; no autoriza operación QA ni deploy por sí sola.
++
++Esta sucesora candidata incorpora exclusivamente el diseño de fuente inicial aprobado por el PO. El acto PO no declara otras funciones ejercidas ni aprueba bytes futuros; no se atribuyen aprobaciones Architecture/Data/Security/Release o Privacy/Legal inexistentes. Antes de activar se requiere decisión exacta sobre el manifest candidato con funciones competentes expresas, dictamen físico y contratos derivados. Implementación, pruebas de código dependiente, build y promoción esperan sus gates; QA auténtica/UI/cierre siguen separados.6A4 sólo tras cierre de6A3 y acto formal autorizado.
+--- docs/rector/baseline/47_APROBACION_Y_ACTIVACION_BASELINE.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15/47_APROBACION_Y_ACTIVACION_BASELINE.md
+@@ -25,3 +25,10 @@
+ Predecesora activa: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14`. Paquete funcional aprobado: `docs/governance/amendments/STEP_6A3_C04W_CFGD_20261014/CONTRACT_PACKET_20261015.md`, SHA-256 `6b87812823472d56a89622eca8119b0cd56606f2f21d635dd84bf903896ba7f2`. Esta copia integra únicamente sus deltas C-04W y CFG-D en 17, 19, 21–24, 30, 33 y 38. La decisión funcional no aprobó estos bytes de baseline ni DDL, grants, runtime o QA.
+ 
+ Activación exige: (1) entrega íntegra 00–49, reporte preimplementación y SHA256SUMS; (2) aprobación humana expresa de identificador, manifest y SHA-256 exactos, con funciones/fecha; (3) compatibilidad, fuentes, historia, pruebas positivas y negativas; (4) ceremonia de baseline, ID, status, manifests, verificador CI y revisión antes de main; (5) gates independientes físico y ejecutable antes de DDL/grants o implementación dependiente. La predecesora no se modifica ni reinterpreta. Preparación no autoriza STEP_6A4 ni QA.
++
++
++## STEP_6A3 — candidata de incorporación inicial de fuente v1.11
++
++`STATUS=DRAFT_NOT_EFFECTIVE; HUMAN_EXACT_BYTES_REVIEW=PENDING`. Baseline candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15, predecesora TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15. Diseño PO aprobado por SHA `1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b`; constancia `docs/governance/amendments/STEP_6A3_INITIAL_SOURCE_20261015/PO_DESIGN_APPROVAL_RECEIPT_20261015.json`. Esta sección sólo tendrá efecto después de publicación conforme47/49 y gates físico/ejecutable; no autoriza operación QA ni deploy por sí sola.
++
++La candidata TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15 entrega51 archivos completos y SHA256SUMS, delta exacto y manifest de revisión contra v1.10. La aprobación PO registrada cubre el diseño de SHA 1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b y su preparación, no estos bytes nuevos. Activación requiere decisión humana por manifest/ID/hashes y funciones Architecture/Data/Security competentes realmente ejercidas, constancia de dictamen físico y aprobación ejecutable exacta; ceremony de ID/status/manifests/verificador concordantes y CI/revisión antes de main. El PO puede acumular funciones sólo si las declara conforme49, sin inventarlas. QA deployment exige autoridad Release de esa versión; fuentes, SoD y aceptación humana permanecen. Sin cierre efectivo6A3 no hay READY_TO_START ni inicio6A4.
+--- docs/rector/baseline/PRE_IMPLEMENTATION_GATE_REPORT.md
++++ docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15/PRE_IMPLEMENTATION_GATE_REPORT.md
+@@ -1,8 +1,15 @@
+-# PRE_IMPLEMENTATION_GATE_REPORT — candidato v1.10 STEP_6A3
++# PRE_IMPLEMENTATION_GATE_REPORT — candidata v1.11 de fuente inicial
+ 
+ STATUS=BLOCKED_PENDING_EXACT_BYTES_HUMAN_APPROVAL
+-ACTIVE_PREDECESSOR=TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14
+-CANDIDATE=TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15
+-SOURCE_PACKET_SHA256=6b87812823472d56a89622eca8119b0cd56606f2f21d635dd84bf903896ba7f2
+-SCOPE=C-04W canonical applicability, tenant permissions, legal hold release; CFG-D conservative guards.
+-No DDL, grant, deployment, history mutation or QA activation follows from this candidate alone. Physical and executable gates remain separate.
++ACTIVE_PREDECESSOR=TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15
++CANDIDATE=TCDX_GRC_MASTER_REGENT_BASELINE_v1.11_2026-10-15
++PO_DESIGN_APPROVAL=RECORDED
++SOURCE_PROPOSAL_SHA256=1a133d60e576208eefc90d68ff39df903df829f3c9ab1b3c51fa06d8c826913b
++ARCHITECTURE_DATA_SECURITY_FUNCTIONS_APPROVAL=PENDING_EXPLICIT_ACT
++PHYSICAL_COMPATIBILITY=TECHNICAL_REVIEW_ONLY_HUMAN_DICTAMEN_PENDING
++EXECUTABLE_PUBLICATION=NOT_EFFECTIVE
++RELEASE_QA_AUTHORITY=NOT_GRANTED_FOR_NEW_BYTES
++STEP_6A3=PARTIAL_BLOCKED
++STEP_6A4=NOT_STARTED
++
++No cambia modelo físico, grants ni metodologíasv1. Ninguna migración prevista es dictamen final; requiere revisión Data Model Owner y PostgreSQL16 aislado. No implementar ni desplegar antes de gates.
+--- docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml
++++ docs/executable-contracts/candidates/STEP_6A3_INITIAL_SOURCE_v1.11/snapshots/02_OPENAPI_BASE_CONTRACT.yaml
+@@ -1,3 +1,4 @@
++# CANDIDATE_NOT_EFFECTIVE INITIAL_SOURCE v1.11
+ openapi: 3.1.0
+ info:
+   title: TCDX GRC API Base Contract
+@@ -2060,6 +2061,7 @@
+   "/files:request-upload":
+     post:
+       operationId: uploadIntentCreate
++      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
+       tags: ["evidence"]
+       summary: "EVIDENCE_DOCUMENTS: uploadIntentCreate"
+       description: "Phase 5 v1.7 amendment. Creates a durable FileUploadIntent, never an incomplete FileObject. Tenant, bucket, quarantine key, expiry and signed URL are server-controlled."
+@@ -2089,6 +2091,7 @@
+   "/file-upload-intents/{id}:finalize":
+     post:
+       operationId: uploadFinalize
++      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
+       tags: ["evidence"]
+       summary: "EVIDENCE_DOCUMENTS: uploadFinalize"
+       description: "Finalizes one same-tenant FileUploadIntent. Trusted runtime obtains actual size, MIME and SHA-256, performs fail-closed malware scan and promotes only scan-PASS content to a final FileObject."
+@@ -2260,6 +2263,7 @@
+   "/evidence-versions/{id}:submit":
+     post:
+       operationId: evidenceSubmit
++      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
+       tags: ["evidence"]
+       summary: "EVIDENCE_DOCUMENTS: evidenceSubmit"
+       description: "Derived from 21,24. Actor: Evidence Owner. Tenant semantics: scan PASS; typed links; `draft→submitted`. Contract shape: EvidenceSubmitRequest.expected_version → EvidenceVersion."
+@@ -3815,6 +3819,7 @@
+   "/retention-policy-applicabilities/{id}:submit-for-review":
+     post:
+       operationId: retentionApplicabilitySubmitForReview
++      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
+       tags: ["privacy"]
+       summary: "PRIVACY: retentionApplicabilitySubmitForReview"
+       security: [{ bearerAuth: [] }]
+@@ -3842,6 +3847,7 @@
+   "/retention-policy-applicabilities/{id}:review":
+     post:
+       operationId: retentionApplicabilityReview
++      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
+       tags: ["privacy"]
+       summary: "PRIVACY: retentionApplicabilityReview"
+       security: [{ bearerAuth: [] }]
+@@ -3869,6 +3875,7 @@
+   "/retention-policy-applicabilities/{id}:approve":
+     post:
+       operationId: retentionApplicabilityApprove
++      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
+       tags: ["privacy"]
+       summary: "PRIVACY: retentionApplicabilityApprove"
+       security: [{ bearerAuth: [] }]
+@@ -3896,6 +3903,7 @@
+   "/retention-policy-applicabilities/{id}:publish":
+     post:
+       operationId: retentionApplicabilityPublish
++      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
+       tags: ["privacy"]
+       summary: "PRIVACY: retentionApplicabilityPublish"
+       security: [{ bearerAuth: [] }]
+@@ -4436,6 +4444,7 @@
+         '409': { $ref: '#/components/responses/ConflictError' }
+     post:
+       operationId: evidenceCreate
++      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
+       tags: ["evidence"]
+       summary: "EVIDENCE_DOCUMENTS: evidenceCreate"
+       description: >-
+@@ -5099,7 +5108,36 @@
+         "503":
+           $ref: "#/components/responses/DependencyError"
+ 
++  "/retention-policy-applicabilities/{id}:bind-initial-source":
++    post:
++      operationId: retentionApplicabilityBindInitialSource
++      tags: ["privacy"]
++      summary: "PRIVACY: vincular fuente inicial a un borrador propio"
++      security: [{ bearerAuth: [] }]
++      x-tcdx-capability: "PRIVACY"
++      x-tcdx-permission: "`privacy.retention_policy.update`"
++      x-tcdx-scope: "tenant"
++      x-tcdx-audit-event: "`audit.privacy.retention_policy_applicability.bind_initial_source.v1`"
++      x-tcdx-domain-events: "NONE"
++      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
++      x-tcdx-transaction-boundary: "TX"
++      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`, audit/idempotency"
++      x-tcdx-rector-source: "INITIAL_SOURCE v1.11 candidate; DELTA.md"
++      description: "Custodian author; draft without source; exact source chain approved independently, current and scan-PASS. Bind updates source/clause/real interval only; no publication. Replay reauthorizes; CAS and transactional audit required."
++      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
++      requestBody:
++        required: true
++        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionApplicabilityBindInitialSourceRequest' } } }
++      responses:
++        '200': { $ref: '#/components/responses/OperationSuccess' }
++        '400': { $ref: '#/components/responses/ValidationError' }
++        '401': { $ref: '#/components/responses/AuthenticationError' }
++        '403': { $ref: '#/components/responses/AuthorizationError' }
++        '404': { $ref: '#/components/responses/NotFoundError' }
++        '409': { $ref: '#/components/responses/ConflictError' }
++        '422': { $ref: '#/components/responses/ValidationError' }
+ tags: []
++
+ components:
+   securitySchemes:
+     bearerAuth:
+@@ -6925,6 +6963,16 @@
+       properties:
+         expected_version: { type: integer, format: int64, minimum: 1 }
+       description: SoD and reviewed-to-approved state are enforced from authoritative state.
++    RetentionApplicabilityBindInitialSourceRequest:
++      type: object
++      additionalProperties: false
++      required: [source_evidence_version_id, source_clause_ref, effective_from]
++      properties:
++        source_evidence_version_id: { $ref: '#/components/schemas/UuidV7' }
++        source_clause_ref: { type: string, minLength: 1, pattern: '\S' }
++        effective_from: { $ref: '#/components/schemas/UtcTimestamp' }
++        effective_to: { $ref: '#/components/schemas/UtcTimestamp' }
++      description: "Strong If-Match header supplies CAS; expected_version in HTTP body is forbidden. Real intervals require to>from and compatibility with approved source and policy."
+     UploadIntentCreateRequest:
+       type: object
+       additionalProperties: false
+--- docs/executable-contracts/03_API_RESOURCE_OPERATION_MATRIX.md
++++ docs/executable-contracts/candidates/STEP_6A3_INITIAL_SOURCE_v1.11/snapshots/03_API_RESOURCE_OPERATION_MATRIX.md
+@@ -1,3 +1,5 @@
++> CANDIDATE_NOT_EFFECTIVE: snapshot sucesor INITIAL_SOURCE; texto histórico preservado, requiere publicación competente.
++
+ # API resource / operation matrix
+ 
+ | Campo | Valor |
+@@ -216,3 +218,10 @@
+ | frameworkVersionReferenceList | GET `/framework-version-references` | tenant; ISO_COMPLIANCE + purpose capability | exact macro44 roles, purpose bounded | `compliance.framework.read`; published29 scopes | active membership + parent permission + exact FK + same tenant/ObjectPolicy/SoD; legal binding before application | query → FrameworkVersionReferencePage | COMMON; NAT | NONE; NONE | RO; canonical references and parent | MACRO-STEP6A3-20261009-R1; executable29 |
+ | membershipReferenceList | GET `/membership-references` | tenant; CORE_PLATFORM + purpose capability | exact macro44 roles, purpose bounded | `platform.membership_reference.read`; published29 scopes | active membership + parent permission + exact FK + same tenant/ObjectPolicy/SoD; legal binding before application | query → MembershipReferencePage | COMMON; NAT | NONE; NONE | RO; canonical references and parent | MACRO-STEP6A3-20261009-R1; executable29 |
+ | retentionPolicyReferenceList | GET `/retention-policy-references` | tenant; EVIDENCE_DOCUMENTS + purpose capability | exact macro44 roles, purpose bounded | `privacy.retention_policy_reference.read`; published29 scopes | active membership + parent permission + exact FK + same tenant/ObjectPolicy/SoD; legal binding before application | query → RetentionPolicyReferencePage | COMMON; NAT | NONE; NONE | RO; canonical references and parent | MACRO-STEP6A3-20261009-R1; executable29 |
++
++
++## INITIAL_SOURCE v1.11 — delta candidato
++
++| retentionApplicabilityBindInitialSource | POST `/retention-policy-applicabilities/{id}:bind-initial-source` | privacy; PRIVACY | Tenant Admin custodio humano, autor draft | `privacy.retention_policy.update`; tenant | draft propio; source aprobada independiente/vigente/scan-PASS, misma cadena y contexto; If-Match fuerte | RetentionApplicabilityBindInitialSourceRequest →200 OperationSuccess | COMMON; KEY | `audit.privacy.retention_policy_applicability.bind_initial_source.v1`; NONE | TX; aplicabilidad/audit/idempotency; sin arista/grant | rector23/24/25 v1.11 candidato; INITIAL_SOURCE DELTA |
++
++Delta:una operación POST adicional;175 operaciones contractuales totales (62GET/112POST/1PUT), sin ampliar permisos. Precondiciones de uploadIntentCreate/uploadFinalize/evidenceCreate y source-select/consume se suceden exclusivamente por DELTA.md. Los contadores históricos anteriores describen el snapshot predecesor.
+--- docs/executable-contracts/05_PERMISSION_CATALOG.md
++++ docs/executable-contracts/candidates/STEP_6A3_INITIAL_SOURCE_v1.11/snapshots/05_PERMISSION_CATALOG.md
+@@ -1,3 +1,5 @@
++> CANDIDATE_NOT_EFFECTIVE: snapshot sucesor INITIAL_SOURCE; texto histórico preservado, requiere publicación competente.
++
+ # Permission, capability and base-role catalog
+ 
+ ## MI6A contract-approved, runtime-unpublished permissions
+@@ -322,3 +324,10 @@
+ ## STEP_6A3 C-04W — asignaciones cerradas
+ 
+ El manifest exacto `candidates/STEP_6A3_C04W_CFGD_v1.10/ROLE_PERMISSIONS.json` SHA-256 `8c9112ae1db21f477cca6f16dba12ccbe0b4956b2d477b77b4097d3ed5727583` define nueve permisos existentes para TENANT_ADMIN tenant-owned y el permiso nuevo `privacy.retention_policy.legal_hold.release` para LEGAL_REVIEWER tenant-owned, todos con `MembershipRole.scope_kind=tenant`. El permiso nuevo pertenece a PRIVACY, acción de release de hold publicado, y exige mismo tenant, actor humano distinto del autor, razón, CAS, idempotencia, fuente invocada válida y AuditEvent. No concede archive ni purge. Las nueve asignaciones Tenant Admin no cambian permisos de roles ajenos ni otorgan Platform authority; los dos scopes tenant añadidos a `evidence.document.update` y `evidence.evidence.submit` sólo admiten la fuente propia del flujo C-04W mediante ObjectPolicy backend. La capability PRIVACY sigue limitada por el plan GRC publicado.
++
++
++## INITIAL_SOURCE v1.11 — delta candidato
++
++Se mantienen todos los Permission/RolePermission/MembershipRole existentes. Tenant Admin humano es custodio y autor del draft; el autor documental puede ser ese custodio o Evidence Owner humano del mismo tenant con scope tenant y permisos efectivos de cada operación. Upload/finalize/create/submit sólo admiten su cadena documental exacta; finalize/submit permanecen del autor documental. Bind es del Tenant Admin custodio autor con privacy.retention_policy.update y PRIVACY. EvidenceReview debe ser de identidad distinta del autor documental; la aprobación de aplicabilidad debe ser de identidad distinta del autor del draft. Ser autor del draft no impide revisar Evidence ajena si el permiso existe. Ninguna acumulación editorial conforme49 sustituye estas separaciones. M2M/Platform, identidad ajena, falta de permiso/entitlement/scope y objeto de otro tenant: DENY. No se conceden grants ni lectura documental general.
++
++Nuevo bind usa exclusivamente privacy.retention_policy.update tenant. EVIDENCE_DOCUMENTS permanece requisito de comandos documentales; PRIVACY del custodio/binder no se concede por arrastre al autor documental. Ninguna Permission nueva.
+--- docs/executable-contracts/08_AUDIT_EVENT_CATALOG.md
++++ docs/executable-contracts/candidates/STEP_6A3_INITIAL_SOURCE_v1.11/snapshots/08_AUDIT_EVENT_CATALOG.md
+@@ -1,3 +1,5 @@
++> CANDIDATE_NOT_EFFECTIVE: snapshot sucesor INITIAL_SOURCE; texto histórico preservado, requiere publicación competente.
++
+ # Audit event catalog
+ 
+ | Campo | Valor |
+@@ -115,3 +117,10 @@
+ ## STEP_6A3 C-04W — delta de auditoría v1.10
+ 
+ El contrato de operaciones 03 y OpenAPI 02 vincula exactamente siete códigos nuevos: `audit.privacy.retention_policy.submit_for_review.v1`, `audit.privacy.retention_policy_applicability.create.v1`, `audit.privacy.retention_policy_applicability.submit_for_review.v1`, `audit.privacy.retention_policy_applicability.review.v1`, `audit.privacy.retention_policy_applicability.approve.v1`, `audit.privacy.retention_policy_applicability.publish.v1` y `audit.privacy.retention_policy.legal_hold.release.v1`. Cada mutación produce un único AuditEvent material en su transacción; el levantamiento conserva razón, actor Legal Reviewer, tenant, aplicabilidad, estado previo y resultante, hora PostgreSQL y fuente opcional. Las lecturas nuevas no generan AuditEvent material. Los conteos de cobertura anteriores describen el catálogo histórico; no se promueven hasta la publicación y verificación QA de estos códigos.
++
++
++## INITIAL_SOURCE v1.11 — delta candidato
++
++Se propone retentionApplicabilityBindInitialSource en POST /api/v1/retention-policy-applicabilities/{id}:bind-initial-source. Body cerrado: source_evidence_version_id, source_clause_ref no vacío, effective_from real; effective_to opcional posterior a from. X-TCDX-Tenant-Id, bearer humano, Idempotency-Key e If-Match fuerte obligatorios; expected_version no se acepta en body HTTP. COMMIT devuelve200. Source approved/vigente/scan-PASS y EvidenceReview independiente, cadena idéntica y draft del custodio se revalidan transaccionalmente. Se actualizan sólo source/cláusula/intervalo/row_version; AuditEvent único audit.privacy.retention_policy_applicability.bind_initial_source.v1, before/after mínimos, tenant/actor/correlation sin blob/secreto. Sin domain event/outbox nuevo; replay reautoriza sin versión/audit nuevos; payload distinto, estado/CAS conflictivo:409; falta de autoridad:403; cadena/source/intervalo inválidos:422. Falla de auditoría revierte el cambio.
++
++Los AuditEvent existentes de upload/finalize/Evidence permanecen únicos por comando. El nuevo código de bind describe actualización draft y no publicación jurídica; no existe segundo evento lifecycle para la misma escritura.
+--- docs/executable-contracts/09_SEED_MANIFESTS.md
++++ docs/executable-contracts/candidates/STEP_6A3_INITIAL_SOURCE_v1.11/snapshots/09_SEED_MANIFESTS.md
+@@ -1,3 +1,5 @@
++> CANDIDATE_NOT_EFFECTIVE: snapshot sucesor INITIAL_SOURCE; texto histórico preservado, requiere publicación competente.
++
+ # Seed manifests and lifecycle transition registry
+ 
+ | Campo | Valor |
+@@ -198,3 +200,8 @@
+ Fuente de diez pares exactos: `candidates/STEP_6A3_C04W_CFGD_v1.10/ROLE_PERMISSIONS.json` SHA-256 `8c9112ae1db21f477cca6f16dba12ccbe0b4956b2d477b77b4097d3ed5727583`. La adopción conserva grants existentes, inserta nueve pares por cada TENANT_ADMIN tenant-owned existente y un par de release por cada LEGAL_REVIEWER tenant-owned, con permiso `privacy.retention_policy.legal_hold.release` tenant, audit de publicación y verificación de tenant/role/permission. La plantilla de bootstrap futura usa el mismo manifest, sin grant global o directo a UserIdentity.
+ 
+ Aristas nuevas: `RetentionPolicy draft→under_review` por `retention_policy.submit_for_review` con update del autor; `RetentionPolicyApplicability draft→under_review→approved→published` por `submit_for_review|review|approve|publish` con los cuatro permisos y códigos AuditEvent de la matriz 03. Las aristas existentes de RetentionPolicy se preservan. `legalHoldRelease` inserta un hecho inmutable y no cambia `lifecycle_state` de policy o applicability.
++
++
++## INITIAL_SOURCE v1.11 — delta candidato
++
++No agrega seeds, permisos, pares de grants o aristas. Las cinco aristas C-04W publicadas/auditadas siguen idénticas. Bind es comando draft→draft y emite su único AuditEvent; no volver a publicar registryM2M.
+--- docs/executable-contracts/14_FILE_EVIDENCE_STORAGE_CONTRACT.md
++++ docs/executable-contracts/candidates/STEP_6A3_INITIAL_SOURCE_v1.11/snapshots/14_FILE_EVIDENCE_STORAGE_CONTRACT.md
+@@ -1,3 +1,5 @@
++> CANDIDATE_NOT_EFFECTIVE: snapshot sucesor INITIAL_SOURCE; texto histórico preservado, requiere publicación competente.
++
+ # File and evidence storage contract
+ 
+ | Campo | Valor |
+@@ -39,3 +41,10 @@
+ ## STEP_6A3 C-04W — cadena documental vinculada
+ 
+ Un nuevo FileUploadIntent exige `retention_policy_applicability_id` de una policy tenant-owned publicada, ordinaria e inequívoca, clasificación y contexto compatibles. FileObject hereda exactamente esa FK después de scan-PASS y hash real. EvidenceVersion conserva la misma applicability y concuerda con Evidence.retention_policy_id y su FileObject directo o mediante DocumentVersion. Las filas históricas con FK nula se consultan como `LEGACY_UNBOUND`; no se les inventa fuente ni se las presenta como acreditadas. Una fuente legal vinculada requiere EvidenceVersion aprobada, vigente y FileObject scan-PASS, con cláusula y contexto explícitos. El vínculo prueba procedencia técnica y no certifica cumplimiento jurídico. Purge reevalúa obligaciones concurrentes, retención ordinaria y todo legal hold activo, con DENY ante conflicto o contexto insuficiente.
++
++
++## INITIAL_SOURCE v1.11 — delta candidato
++
++Excepción exclusiva al requisito de primaria publicada para el primer documento fuente: si no existe primaria ordinaria elegible para el contexto exacto, request-upload, finalize y EvidenceCreate pueden usar una nueva aplicabilidad draft de un Tenant Admin custodio, sin source, vinculada a policy ordinaria tenant-owned publicada/vigente. Cada comando revalida bajo locks el mismo tenant, clasificación, propósito evidence_document, contexto, FK y ausencia de primaria/conflicto. Intent/file/EvidenceVersion conservan la misma FK y el mismo autor documental real, Tenant Admin custodio o Evidence Owner con permisos/scope vigentes. En esta ruta acotada links=[] no crea evidencia de negocio. Scan/hash/MIME/storage, expiración, cleanup y revisión independiente se mantienen. El documento auténtico es externo aportado por persona competente: su carga no acredita legalidad. El draft permanece draft durante carga/revisión. Sólo tras aprobación independiente, vigencia/scan-PASS y cláusula auténtica el custodio ejecuta bind; después siguen submit/review/approve/publish ordinarios. No se admite source inexistente, histórica sin vigencia, cambio de autoría, datos falsos o publicación previa para desbloquear upload. El contrato ejecutable sucesor detalla el comando y consumo.
++
++La custodia de la primera fuente mediante FK a aplicabilidad draft no cambia duración ni precedencia de la policy ordinaria tenant-owned publicada/vigente. Source pendiente se deriva de FK/estado existentes; no es un enum persistido, legal hold, obligación acreditada ni permiso de borrado. Ninguna cadena pendiente habilita consumo de negocio, evaluación oficial, purge o release; todas las obligaciones concurrentes y la historia se conservan. Source e intervalo se revalidan al bind y antes de aprobar/publicar. Los plazos comerciales futuros de12/18/24/36/48/60meses no se implementan por esta sucesora.
+--- docs/executable-contracts/29_PHASE6A3_REFERENCE_READS.md
++++ docs/executable-contracts/candidates/STEP_6A3_INITIAL_SOURCE_v1.11/snapshots/29_PHASE6A3_REFERENCE_READS.md
+@@ -1,3 +1,5 @@
++> CANDIDATE_NOT_EFFECTIVE: snapshot sucesor INITIAL_SOURCE; texto histórico preservado, requiere publicación competente.
++
+ # STEP6A3_REFERENCE_READS_v1 — publicación local
+ 
+ Estado: `PUBLISHED_LOCAL_V1`. Vigencia contractual local: 2026-10-09T18:58:05.431882+00:00. Master: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09`.
+@@ -7,3 +9,12 @@
+ Se adopta íntegramente el contenido normativo del artefacto aprobado `docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md`, SHA-256 `029ba9a9e2a0f13a726b3133bd43be71b2caf209ecb11c6381074da40a1bf247`, y sus bases incorporadas selladas en el manifiesto. Sus etiquetas históricas DRAFT/PENDING describen el estado anterior, quedan preservadas y son supersedidas únicamente por esta publicación para los deltas cerrados. Las cantidades de nuevos permisos/grants efectivos del candidato describían antes de publicación, no su materialización. No se cambia la semántica aprobada.
+ 
+ La implementación consume OpenAPI02, matriz03, Permission05 y los assets canónicos derivados. Requisito superior o dependencia no resuelta mantiene DENY; CT04 no permite aplicar políticas sin binding legal ni omitir FK obligatoria. History no genera elegibilidad nueva.
++
++
++## INITIAL_SOURCE v1.11 — delta candidato
++
++## Fuente, consumo y selección
++
++La vista de upload puede seleccionar el draft sólo para incorporar su fuente, separada inequívocamente de primarias ordinarias. La selección debe verificarse en backend, con permisos/capabilities propios de la operación; no se transforma una lectura en derecho de comando. Los selectores de evidencia ordinaria excluyen versiones ligadas a aplicabilidad no publicada. El selector de bind permite únicamente EvidenceVersion de la misma cadena draft aprobada independientemente/vigente/scan-PASS, accesible al custodio o revisor según ObjectPolicy existente acotado. History sigue mostrando su estado original sin crear elegibilidad. La consulta fuente pendiente no expone documentos de otro actor por mera pertenencia al tenant. No se añade Permission/RolePermission ni propósito persistido.
++
++

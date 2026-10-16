@@ -1,0 +1,18 @@
+$ pnpm -r typecheck
+packages/shared-types typecheck$ tsc -p tsconfig.json --noEmit
+packages/contracts typecheck$ tsc -p tsconfig.json --noEmit
+packages/shared-types typecheck: Done
+packages/contracts typecheck: Done
+apps/backend typecheck$ tsc -p tsconfig.json --noEmit
+apps/frontend typecheck$ tsc -b --pretty false
+apps/frontend typecheck: src/tenant-onboarding.test.tsx(9,163): error TS2741: Property 'default_timezone' is missing in type '{ tenant_id: string; permissions: { [k: string]: { scope_kind: "tenant"; }[]; }; }' but required in type '{ tenant_id: string; default_timezone: string; permissions: Record<string, TenantPermissionScope[]>; }'.
+apps/frontend typecheck: Failed
+[ELIFECYCLE] Command failed with exit code 2.
+apps/backend typecheck: Failed
+[ELIFECYCLE] Command failed.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in /Users/andresbarouh/repos/tcdx-grc/apps/
+  │ frontend
+
+[ELIFECYCLE] Command failed with exit code 1.

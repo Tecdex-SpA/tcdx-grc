@@ -1,0 +1,156 @@
+--- R3/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/REQUIREMENT_TRACEABILITY.md
++++ R4/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/REQUIREMENT_TRACEABILITY.md
+@@ -89,3 +89,7 @@
+ | VOC-C05 / docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:79 / Aprobar tenant/RBAC/SoD/audit/lineage reproducible conforme a 23/30 | REQUIRES_CONTRACT_PUBLICATION | MACRO-STEP6A3-20261009-R1 + MACRO-STEP6A3-RESIDUAL-20261009-R2 | docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:68 | Complete local regression; native/browsers where applicable | PASS; DONE | NONE_FOR_LOCAL_CLOSED_DELTA | NONE_FOR_PUBLISHED_LOCAL_SCOPE | Preserve immutable authority; external acceptance tracked separately |
+ | VOC-C06 / docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:80 / Aprobar i18n español central por contexto conforme a 23/30 | REQUIRES_CONTRACT_PUBLICATION | MACRO-STEP6A3-20261009-R1 | docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:70 | Complete local regression; native/browsers where applicable | PASS; DONE | NONE_FOR_LOCAL_CLOSED_DELTA | NONE_FOR_PUBLISHED_LOCAL_SCOPE | Preserve immutable authority; external acceptance tracked separately |
+ | VOC-QA / docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:81 / Aprobar pruebas T-VOC01..12 y compatibilidad por ocurrencia sin certificar ejecución de capacidades nuevas | REQUIRES_EXTERNAL_RUNTIME | MACRO-STEP6A3-20261009-R1 | docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:103 | Complete local regression; native/browsers where applicable | PASS_LOCAL_ONLY; BLOCKED_EXTERNAL_ACCEPTANCE | QA/IAM real/external E2E and human UI pending | Later exact operational plan and actual human/runtime evidence | Complete dependencies and perform real acceptance only after approval |
++
++## Continuidad R4 sin nueva implementación
++
++Auditoría R4: mismas48/36/12; evidencia R3 sellada verificada; cuatro diferencias documentales respecto al snapshot de runner y conteo82PG en15archivos registrado en CONTINUITY_CHECKPOINT_R4.md. REMAINING_12_CLAUSES_R4.md conserva IDs/literales. IANA sigue dependencia contractual; propuesta no aprobada en R4_DECISIONS_REQUIRED.md. Ningún estado de la tabla R3 cambia. Siete checks dirigidos PASS; no rerun de producto ni QA/IAM/E2E. Paquete QA R3 intacto, referencia R4 no lista para ejecución. Fuente de implementación vigente continúa07_RESULT.json#macro_implementation_20261009; continuidad adicional en continuity_r4_20261009.
+--- R3/docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261009_V2/07_RESULT.json
++++ R4/docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261009_V2/07_RESULT.json
+@@ -15801,5 +15801,143 @@
+       "staging": "EMPTY_CONTENT_PRESERVED",
+       "raw_index_stat_cache_note": "Raw index SHA changed while content/modes/blob/path remain equal unchanged HEAD; no staging/replacement operations"
+     }
++  },
++  "continuity_r4_20261009": {
++    "TASK": "STEP6A3_R4_CONTINUITY_ONLY",
++    "created_at": "2026-10-09T22:03:46.386670+00:00",
++    "RECTOR_GATE": "BLOCKED",
++    "STEP_6A3": "PARTIAL_BLOCKED",
++    "RECTOR_ACTIVE_VERSION": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09",
++    "coverage": {
++      "traced": 48,
++      "unique": 48,
++      "locally_closed_clauses": 36,
++      "pending_clauses": 12,
++      "closure": "PARTIAL_BLOCKED",
++      "identified_is_not_closed": true
++    },
++    "r3_source_hashes": {
++      "total": 863,
++      "match": 859,
++      "documentary_differences": [
++        {
++          "path": "docs/governance/MASTER_EXECUTION_STATUS.md",
++          "reported_sha256": "8485533aeaec47d7dd14f56e3697e27a58dc665a299617cd6bd24eb4307f5b3f",
++          "actual_sha256": "c7271a9328323a8e5470c90bd64c699f0026f9d09461c2ce717894ae50d21238",
++          "status": "DIFF"
++        },
++        {
++          "path": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md",
++          "reported_sha256": "cce7891ce14cd4566574d3879e28501cb3003f05fadaa34c95db0595f002c316",
++          "actual_sha256": "85bc72b94021adf28444e3ae6d2fc7a354873fa3fe85004f1314d3bd269c862f",
++          "status": "DIFF"
++        },
++        {
++          "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/REQUIREMENT_TRACEABILITY.md",
++          "reported_sha256": "cd3e9e88d044280fe1591ed8d27d9268f18f1a645db07934ff110a37024b0c9e",
++          "actual_sha256": "c102a020fc86bc7ea0593b9569522654191bacc7b1465a144a5ee293d7c7ce0b",
++          "status": "DIFF"
++        },
++        {
++          "path": "docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261009_V2/07_RESULT.json",
++          "reported_sha256": "8fbb80f8ab7ea0247c212798cd9b3e3ec475e9569c13529393f808412be77ee7",
++          "actual_sha256": "a89dd788d5e2ee1e5507d0e5ce252f7c35b11bd967407490dd411c821dd516a7",
++          "status": "DIFF"
++        }
++      ]
++    },
++    "r3_count_correction": "82 previously omitted PG cases in15files;113PG in18total; handoff17files is documentary discrepancy",
++    "tests_r4": [
++      {
++        "gate": "rector",
++        "command": "bash scripts/verify-rector-governance.sh",
++        "at": "2026-10-09T22:01:28.019521+00:00",
++        "duration_seconds": 0.414,
++        "exit_code": 0,
++        "result": "PASS",
++        "log": "rector.log"
++      },
++      {
++        "gate": "status",
++        "command": "bash scripts/test-rector-governance-status.sh",
++        "at": "2026-10-09T22:01:28.433293+00:00",
++        "duration_seconds": 1.559,
++        "exit_code": 0,
++        "result": "PASS",
++        "log": "status.log"
++      },
++      {
++        "gate": "contracts",
++        "command": "node scripts/foundations/generate-contract-assets.mjs --check",
++        "at": "2026-10-09T22:01:29.992410+00:00",
++        "duration_seconds": 0.064,
++        "exit_code": 0,
++        "result": "PASS",
++        "log": "contracts.log"
++      },
++      {
++        "gate": "vocabulary",
++        "command": "node scripts/foundations/generate-phase6a-vocabularies.mjs --check",
++        "at": "2026-10-09T22:01:30.056366+00:00",
++        "duration_seconds": 0.178,
++        "exit_code": 0,
++        "result": "PASS",
++        "log": "vocabulary.log"
++      },
++      {
++        "gate": "governance-negatives",
++        "command": "python3 scripts/verify-internal-governance.py --negative-tests",
++        "at": "2026-10-09T22:01:30.234618+00:00",
++        "duration_seconds": 0.073,
++        "exit_code": 0,
++        "result": "PASS",
++        "log": "governance-negatives.log"
++      },
++      {
++        "gate": "residuals",
++        "command": "python3 scripts/foundations/verify-phase6a3-residuals.py",
++        "at": "2026-10-09T22:01:30.307251+00:00",
++        "duration_seconds": 0.144,
++        "exit_code": 0,
++        "result": "PASS",
++        "log": "residuals.log"
++      },
++      {
++        "gate": "whitespace",
++        "command": "git diff --check",
++        "at": "2026-10-09T22:01:30.451054+00:00",
++        "duration_seconds": 0.122,
++        "exit_code": 0,
++        "result": "PASS",
++        "log": "whitespace.log"
++      }
++    ],
++    "product_tests_r4": "NOT_RUN_NO_RUNTIME_CHANGE",
++    "effective_contract_changes": 0,
++    "decision_manifest": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/R4_DECISION_MANIFEST.json",
++    "pending_ids": [
++      "C-04W",
++      "C-07",
++      "C-08",
++      "CFG-D-COMPLIANCE-V1",
++      "CFG-D-CONTROLS-V1",
++      "CFG-D-PUBLICATION",
++      "CFG-UQ1",
++      "CFG-UQ2",
++      "CFG-DEFAULT",
++      "CFG-QA",
++      "VOC-C04",
++      "VOC-QA"
++    ],
++    "qa_package": "PREPARED_NOT_READY_NOT_AUTHORIZED_NOT_EXECUTED",
++    "COMMITS": 0,
++    "PUSH": 0,
++    "PR": 0,
++    "MERGE": 0,
++    "DDL_LOCAL": 0,
++    "DDL_QA": 0,
++    "DEPLOY": 0,
++    "STEP_6A4": "NOT_STARTED",
++    "SOG_V2": "DRAFT_NOT_EFFECTIVE"
+   }
+ }

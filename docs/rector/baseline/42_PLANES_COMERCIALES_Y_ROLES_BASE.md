@@ -81,6 +81,12 @@ Los límites cuantitativos (usuarios, almacenamiento, ejecuciones, packs, conect
 
 Los tres planes comparten un único modelo de datos. Las capacidades no contratadas quedan inaccesibles por Entitlement y ocultas en UI; no se eliminan tablas ni se crean schemas por plan.
 
+### 2.5 Familias y límites comerciales de la sucesora propuesta
+
+`CommercialFamily` constituye un único catálogo `PLATFORM_CONTROL` publicado e inmutable. Las raíces ISO_9001_2015, ISO_9001_2026, ISO_IEC_27001_2022 e ISO_IEC_42001_2023 se clasifican como familia `ISO` y `source_type=standard`; CL_LEY_21719 como `LEGAL` y `source_type=law`, sólo mediante publicación de datos exactos. Esta clasificación no publica ISO 9001:2026, no declara vigente una ley y no concede uso oficial del contenido.
+
+Nuevas versiones de `ISO` e `ISO_RIESGO_OPERATIVO` pueden vincular `ISO`; una nueva versión `GRC` puede vincular `ISO` y `LEGAL`, sin restringir para siempre las clases legales, contractuales o sectoriales de §2.3. Cada PlanVersion publicada declara sus familias y límites total/familia de `regulatory_pack_count` de forma finita e inmutable durante toda su vigencia. Las cantidades, IDs, fechas y adopciones reales requieren manifest comercial separado y aprobación exacta; no se agregan a las PlanVersion v1 publicadas ni se inventan defaults. Cero es un valor comercial explícito; ausencia de cuota requerida bloquea publicación y elegibilidad. El cambio de plan conserva términos e intervalos contratados y no concede derechos por el solo nombre de la familia.
+
 ## 3. Roles canónicos cerrados
 
 Roles de plataforma: `Platform Admin`, `Platform Support`.
@@ -127,3 +133,12 @@ Todo tenant obtiene al crearse los roles tenant como definiciones inmutables de 
 - Legal Reviewer aprueba interpretación jurídica, no resultados técnicos.
 
 La matriz permission/scope definitiva continúa en 22 y debe incorporar estos roles antes del `PHYSICAL_DATA_MODEL_REVIEW`.
+
+## 6. Modelo de incorporación y administración hasta Fase10 — DR001 §§1–4
+
+La contratación y el alta de empresas son asistidas por Platform Admin hasta completar Fase10. Secuencia de negocio: identidad inicial canónica/MI por sus mecanismos existentes → empresa y primer Tenant Admin mediante contrato25 → Subscription/PlanVersion publicada y habilitación conforme al catálogo → normas/versiones elegibles por comandos existentes. Una creación parcial se informa como tal; tenantCreate no prueba habilitación ni readiness. No hay pago/contratación autoservida, cliente creando su empresa ni autorización automática postFase10.
+Tenant Admin administra usuarios internos, roles y parámetros autorizados del tenant. Platform puede asistir por contrato26 y otros comandos expresamente autorizados por permisos efectivos; no obtiene ni necesita una Membership ficticia para actuar por su ruta Platform. No se amplían planes, capabilities, permisos ni scopes. Administración ordinaria usa CORE_PLATFORM/configuración; no se exige PRIVACY para una mera preferencia SaaS. Los comandos de acreditación Privacy conservan PRIVACY y sus permisos/SoD; no se usa esta distinción para conceder PRIVACY a ISO.
+
+## 7. Retención comercial propuesta — DR001 §5
+
+Oferta candidata12meses predeterminados y alternativas18/24/36/48/60. Continúa siendo propuesta no implementada, con términos versionados por PlanVersion/UsageLimit y configuración canónica cuando se publique su binding exacto. No se editan PlanVersion publicadas ni datos existentes, no se añaden valores implícitos ni se reduce el período de una Subscription. Documento23§11 delimita unidad/ancla y conservación por categoría: la oferta nunca anula obligaciones, hold, auditoría ni prohibiciones de purge. La edición comercial no publica contenido regulatorio ni certifica cumplimiento.

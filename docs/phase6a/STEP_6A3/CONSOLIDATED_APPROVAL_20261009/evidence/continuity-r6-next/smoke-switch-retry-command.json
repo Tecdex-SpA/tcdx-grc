@@ -1,0 +1,18 @@
+{
+  "command": [
+    "pnpm",
+    "exec",
+    "playwright",
+    "test",
+    "--config",
+    "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/playwright.r6-next.config.ts",
+    "--project=chromium-desktop",
+    "--grep",
+    "^D3 IANA changes tenant",
+    "--reporter=line,json"
+  ],
+  "at": "2026-10-13T13:42:16.343248+00:00",
+  "duration": 2.054318125010468,
+  "exit_code": 1,
+  "log_sha256": "d02d288df2f6f4cedb763d11a3209592f7391d187c8913a587ad5a0c574bd8f2"
+}

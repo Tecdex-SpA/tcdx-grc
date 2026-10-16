@@ -1,0 +1,65 @@
+{
+  "status": "PENDING_HUMAN_EXACT_BYTE_PHYSICAL_AND_EXECUTABLE_GATE_REVIEW",
+  "active_regent": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.9_2026-10-14",
+  "source_design_decision": "DR-STEP6A3-COMMERCIAL-GOVERNANCE-20261013-02",
+  "source_publication_manifest_sha256": "5b3b791cc2b7c3446ff69b244edacdf3ab810b0c864c5428c795f52dc6b9fb06",
+  "artifacts": [
+    {
+      "path": "docs/physical-data-model/amendments/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/02_PHYSICAL_MODEL_CANDIDATE.md",
+      "sha256": "6c7ffcd2dadad3951ce6b9e1ed84ed18a5f3f4dbf452ec801865e68d541af7d4"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/09_MIGRATION_EXECUTION_CONTRACT.md",
+      "sha256": "c547c6f6e510f4a8748455d16dbf64b7a000cd35653dc36c265422d60673d86e"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/09_MIGRATION_MANIFEST_CANDIDATE.json",
+      "sha256": "7856ab006f20fa2510de2602929fd7ddb891be4a494a7495b083af60b4565a29"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/20261013000100_commercial_contract_reconciliation.sql",
+      "sha256": "ed6ca86b9234672fcb55293b5e2a69d09e999e84b3c7d75d56ccf0cd86479ae5"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/EXPECTED_SCHEMA_DELTA_CANDIDATE.json",
+      "sha256": "e1d3a6eb940d2bc2fdd223fc8bc298e8fd26cb4a3b0b0dcd57cc1ff22905850d"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/pending-publication/05_HISTORICAL_READONLY_INVENTORY.sql",
+      "sha256": "5a14da06e3d3551bc0b4a640893e09fb75a70d8aac4551954e86316d2b874efd"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/02_OPENAPI_COMMERCIAL_MERGED_CANDIDATE.json",
+      "sha256": "b1678b658b0954c23856a5f8540118dcbec3268d4713b6275486724f0c5a512a"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/03_SECURITY_TRANSACTION_REPLAY_CONTRACT.md",
+      "sha256": "f40f1a2c3e3c5791d289c2ccec464962f0a0d1a8a27df5967659123c5cef8fb0"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/07_OPENAPI_COMMERCIAL_CANDIDATE.json",
+      "sha256": "54b201251822699256db8535e540f0b91f74d239bd2661b07a66ff720d90b27e"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/08_COMMAND_PERMISSION_LIFECYCLE_AUDIT_BINDINGS.json",
+      "sha256": "c0f32c400b1baf462c05de9cb817a913fc304cf73016905a30beda72de7150ce"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/12_AUDIT_EVENT_PAYLOAD_SCHEMAS.json",
+      "sha256": "975a6bfd689a0fde8a3c4128fc4c0ade79a95eca6777c09af850d207126fa9b1"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/17_PUBLICATION_MANIFEST_SCHEMA.json",
+      "sha256": "e60201cb51c1babd445b8b1d60fc479b026b94ea372d931fd5919b213bf74061"
+    },
+    {
+      "path": "docs/executable-contracts/candidates/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/18_CATALOG_PUBLICATION_RESULT_SCHEMA.json",
+      "sha256": "dd34801fb8fe0e89071260f6cf58ed86c2a100f61b2d225aea0d6abb177ca873"
+    }
+  ],
+  "exclusions": [
+    "No active contract publication until exact destination bytes and gates are approved",
+    "No DDL, QA shared database, IAM, grants, commit, push, merge or deploy",
+    "No expected-schema activation or STEP 6A.4 start"
+  ]
+}

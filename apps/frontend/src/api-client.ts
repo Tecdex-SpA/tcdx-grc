@@ -16,7 +16,13 @@ export class ApiClient {
     private readonly selectedTenant: () => SelectedTenant
   ) {}
 
+  currentTenantId(): string | null { return this.selectedTenant()?.tenantId ?? null; }
+
   async request<T>(path: string, init: RequestInit = {}, options: { tenantContext?: "required" | "omit" } = {}): Promise<T> {
+    return (await this.requestRepresentation<T>(path, init, options)).body;
+  }
+
+  private async requestRepresentation<T>(path: string, init: RequestInit = {}, options: { tenantContext?: "required" | "omit" } = {}): Promise<{ body: T; headers: Headers; status: number }> {
     const token = await this.tokens.getAccessToken();
     if (!token) throw new ApiProblem({ code: "TCDX.AUTHENTICATION.REQUIRED", message: uiText.auth.title, correlation_id: crypto.randomUUID(), retryable: false }, 401);
     const headers = new Headers(init.headers);
@@ -34,7 +40,19 @@ export class ApiClient {
       if (response.status === 401) await this.tokens.clearSession();
       throw new ApiProblem(problem, response.status);
     }
-    return response.status === 204 ? undefined as T : await response.json() as T;
+    if(response.status === 204) return { body: undefined as T, headers: response.headers, status: response.status };
+    if(/^\/api\/v1\/(framework-version-references|membership-references|retention-policy-references)(?:\?|$)/.test(path)) {
+      const parse=JSON.parse as (text:string,reviver:(key:string,value:unknown,context?:{source?:string})=>unknown)=>unknown;
+      const body = parse(await response.text(),(key,value,context)=> {
+        if(["version_number","retention_seconds"].includes(key) && typeof value==="number" && !Number.isSafeInteger(value)) {
+          if(!context?.source || !/^[0-9]+$/.test(context.source)) throw new Error("LOSSLESS_INTEGER_UNAVAILABLE");
+          return BigInt(context.source);
+        }
+        return value;
+      }) as T;
+      return { body, headers: response.headers, status: response.status };
+    }
+    return { body: await response.json() as T, headers: response.headers, status: response.status };
   }
 
   accessMe<T>(): Promise<T> { return this.request<T>("/api/v1/access/me", {}, { tenantContext: "omit" }); }
@@ -48,13 +66,17 @@ export class ApiClient {
   }
 
   currentAuthorization(tenantId: string | null, signal?: AbortSignal): Promise<CurrentPrincipalAuthorization> {
-    return this.request<CurrentPrincipalAuthorization>("/api/v1/auth/me/authorization", {
+    return this.request<CurrentPrincipalAuthorization>("/api/v2/auth/me/authorization", {
       headers: tenantId ? { "X-TCDX-Tenant-Id": tenantId } : {}, cache: "no-store", ...(signal ? { signal } : {})
     }, { tenantContext: "omit" });
   }
 
   platformGet<T>(path: string, init: RequestInit = {}): Promise<T> {
     return this.request<T>(path, init, { tenantContext: "omit" });
+  }
+
+  platformRepresentation<T>(path: string, init: RequestInit = {}): Promise<{ body: T; headers: Headers; status: number }> {
+    return this.requestRepresentation<T>(path, init, { tenantContext: "omit" });
   }
 
   async logout(): Promise<void> {
@@ -69,8 +91,8 @@ export class ApiClient {
     return this.request<T>(path, { method: "POST", headers: { "Idempotency-Key": idempotencyKey }, body: JSON.stringify(body) });
   }
 
-  async platformPost<T>(path: string, body: Record<string, unknown>, idempotencyKey: string = crypto.randomUUID()): Promise<T> {
-    return this.request<T>(path, { method: "POST", headers: { "Idempotency-Key": idempotencyKey }, body: JSON.stringify(body) }, { tenantContext: "omit" });
+  async platformPost<T>(path: string, body: Record<string, unknown>, idempotencyKey: string = crypto.randomUUID(), ifMatch?: string): Promise<T> {
+    return this.request<T>(path, { method: "POST", headers: { "Idempotency-Key": idempotencyKey, ...(ifMatch ? { "If-Match": ifMatch } : {}) }, body: JSON.stringify(body) }, { tenantContext: "omit" });
   }
 
   private async fileRequest(path: string, init: RequestInit): Promise<Response> {
@@ -90,10 +112,11 @@ export class ApiClient {
     return response;
   }
 
-  async uploadEvidenceFile(file: File, retentionPolicyId: string, classification: string, sourceProvenance: string): Promise<string> {
+  async uploadEvidenceFile(file: File, retentionPolicyId: string, applicabilityId: string, classification: string, sourceProvenance: string, context: {scope_subject_id?:string|null;processing_activity_id?:string|null} = {}): Promise<string> {
     const envelope = await this.post<{ result: { upload_intent_id: string; upload_url: string } }>("/api/v1/files:request-upload", {
       original_filename: file.name, declared_mime: file.type || "application/octet-stream", size_bytes: file.size,
-      classification, retention_policy_id: retentionPolicyId, source_provenance: sourceProvenance
+      ...context, classification, retention_policy_id: retentionPolicyId,
+      retention_policy_applicability_id: applicabilityId, source_provenance: sourceProvenance
     });
     const { upload_intent_id: intentId, upload_url: uploadUrl } = envelope.result;
     const expectedPath = `/api/v1/file-upload-intents/${encodeURIComponent(intentId)}/content`;

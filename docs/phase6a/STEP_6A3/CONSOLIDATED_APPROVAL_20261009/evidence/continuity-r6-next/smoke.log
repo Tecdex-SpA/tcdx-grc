@@ -1,0 +1,63 @@
+[WebServer] npm warn Unknown env config "manage-package-manager-versions". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+[WebServer] (node:40690) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+
+Running 7 tests using 2 workers
+
+(node:40701) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:40702) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/7] [chromium-desktop] › e2e/branding.spec.ts:43:1 › dashboard branding uses the same logo with responsive navigation
+[2/7] [chromium-desktop] › e2e/managed-identity-ui.spec.ts:70:1 › permission projection governs MI controls; roles and tenant context grant none
+[3/7] [chromium-desktop] › e2e/platform-role-ui.spec.ts:106:1 › fresh permission revocation prevents POST even after opening the confirmation
+[4/7] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:113:1 › C: tenant explicit lookup, runtime role catalog, membership and server refetch
+[5/7] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:168:1 › wrong tenant projection cannot enable tenant incorporation or assignment
+(node:40718) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[6/7] [chromium-desktop] › e2e/core-grc-ui.spec.ts:141:1 › D3 IANA rejects a DST gap and serializes an explicit overlapping instant in UTC
+[7/7] [chromium-desktop] › e2e/core-grc-ui.spec.ts:171:1 › D3 IANA changes tenant context without retaining the prior zone
+  1) [chromium-desktop] › e2e/core-grc-ui.spec.ts:171:1 › D3 IANA changes tenant context without retaining the prior zone 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Agregar elemento' })
+
+
+      189 |   await selector.selectOption(tenantId);
+      190 |   await page.getByRole("button", { name: "Ver detalle" }).click();
+    > 191 |   await page.getByRole("button", { name: "Agregar elemento" }).click();
+          |                                                                ^
+      192 |   await expect(page.getByText(/Europe\/Berlin/).first()).toBeVisible();
+      193 |   await selector.selectOption(tenantB);
+      194 |   await expect.poll(() => requests.at(-1)).toBe(tenantB);
+        at /Users/andresbarouh/repos/tcdx-grc/e2e/core-grc-ui.spec.ts:191:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/smoke-artifacts/core-grc-ui-D3-IANA-change-3e342-ut-retaining-the-prior-zone-chromium-desktop/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/smoke-artifacts/core-grc-ui-D3-IANA-change-3e342-ut-retaining-the-prior-zone-chromium-desktop/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/smoke-artifacts/core-grc-ui-D3-IANA-change-3e342-ut-retaining-the-prior-zone-chromium-desktop/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/smoke-artifacts/core-grc-ui-D3-IANA-change-3e342-ut-retaining-the-prior-zone-chromium-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  1 failed
+    [chromium-desktop] › e2e/core-grc-ui.spec.ts:171:1 › D3 IANA changes tenant context without retaining the prior zone 
+  6 passed (34.5s)

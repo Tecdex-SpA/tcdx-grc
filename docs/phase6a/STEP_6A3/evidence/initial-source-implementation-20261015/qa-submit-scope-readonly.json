@@ -1,0 +1,63 @@
+{
+  "observed_at_utc": "2026-10-15T21:37:48.047Z",
+  "provenance": "Exact structured stdout of read-only SSH docker exec probe in this conversation; no repeated query",
+  "read_only": true,
+  "scopes": [
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "permission_code": "evidence.document.create",
+      "scopes": [
+        "tenant"
+      ]
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "permission_code": "evidence.evidence.create",
+      "scopes": [
+        "tenant"
+      ]
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "permission_code": "evidence.evidence.submit",
+      "scopes": [
+        "tenant"
+      ]
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "permission_code": "evidence.document.create",
+      "scopes": [
+        "tenant"
+      ]
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "permission_code": "evidence.evidence.create",
+      "scopes": [
+        "tenant"
+      ]
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "permission_code": "evidence.evidence.submit",
+      "scopes": [
+        "tenant"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "entity_type": "EvidenceVersion",
+      "version_number": "1",
+      "command_code": "evidence.submit",
+      "scopes": [
+        "assigned_object",
+        "owned_object"
+      ]
+    }
+  ],
+  "DDL": 0,
+  "DML": 0,
+  "secrets_exported": false
+}

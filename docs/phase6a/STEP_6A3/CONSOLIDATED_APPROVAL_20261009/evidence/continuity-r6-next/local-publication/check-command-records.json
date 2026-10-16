@@ -1,0 +1,50 @@
+[
+  {
+    "status": "fulfilled",
+    "value": {
+      "gate": "rector",
+      "command": "bash scripts/verify-rector-governance.sh > /Users/andresbarouh/repos/tcdx-grc/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/local-publication/rector.log 2>&1",
+      "at": "2026-10-13T14:03:51.733Z",
+      "result": {
+        "chunk_id": "5b7758",
+        "wall_time_seconds": 0.255503709,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      },
+      "duration_ms": 422
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "gate": "rector-status",
+      "command": "bash scripts/test-rector-governance-status.sh > /Users/andresbarouh/repos/tcdx-grc/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/local-publication/rector-status.log 2>&1",
+      "at": "2026-10-13T14:03:51.736Z",
+      "result": {
+        "chunk_id": "6b2756",
+        "wall_time_seconds": 1.48692975,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      },
+      "duration_ms": 1654
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "gate": "whitespace",
+      "command": "git diff --check > /Users/andresbarouh/repos/tcdx-grc/docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/local-publication/whitespace.log 2>&1",
+      "at": "2026-10-13T14:03:51.736Z",
+      "result": {
+        "chunk_id": "e7e491",
+        "wall_time_seconds": 0.043799666,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      },
+      "duration_ms": 207
+    }
+  }
+]

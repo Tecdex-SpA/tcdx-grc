@@ -19,7 +19,7 @@ for (const line of readFileSync(source, "utf8").split("\n")) {
   rows.set(code, { capabilities, scopes });
 }
 
-if (rows.size !== 166) throw new Error(`Expected 166 pre-MI plus approved P2A/methodology permission bindings, got ${rows.size}`);
+if (rows.size !== 170) throw new Error(`Expected 170 pre-MI plus approved P2A/methodology/STEP6A3 permission bindings, got ${rows.size}`);
 const approvedDiscovery = readFileSync(source, "utf8").split("\n").find((line) => line.startsWith("| platform.user_identity.read |"));
 if (!approvedDiscovery || !approvedDiscovery.includes("| CORE_PLATFORM | platform, tenant |")) throw new Error("D1-R discovery binding missing");
 rows.set("platform.user_identity.read", { capabilities: ["CORE_PLATFORM"], scopes: ["platform", "tenant"] });
@@ -28,6 +28,15 @@ if (!approvedOnboarding?.includes("| onboard | CORE_PLATFORM | platform | PLATFO
 rows.set("platform.tenant_user.onboard", { capabilities: ["CORE_PLATFORM"], scopes: ["platform"] });
 for (const action of ["read", "create", "update", "administer"]) {
   rows.set(`platform.managed_identity.${action}`, { capabilities: ["CORE_PLATFORM"], scopes: ["platform"] });
+}
+const commercial = JSON.parse(readFileSync(resolve(root,
+  "docs/executable-contracts/amendments/STEP_6A3_COMMERCIAL_v1.9/08_COMMAND_PERMISSION_LIFECYCLE_AUDIT_BINDINGS.json"), "utf8"));
+if (commercial.status !== "APPROVED_ACTIVE_CONTRACT") throw new Error("Commercial bindings are not effective");
+for (const binding of [...commercial.bindings, ...commercial.read_bindings]) {
+  const code = binding.permission;
+  const scopes = binding.allowed_scopes ?? [binding.scope];
+  if (!scopes.every(scope => scope === "platform")) throw new Error("Commercial projection scope drift");
+  rows.set(code, { capabilities: rows.get("platform.subscription.create").capabilities, scopes });
 }
 const content = `// Generated from executable Permission catalog 05 and approved MI6A/P2A/D1-R publication contracts. Do not edit.\n`
   + `export const permissionProjectionCatalog: Readonly<Record<string, { capabilities: readonly string[]; scopes: readonly string[] }>> = `

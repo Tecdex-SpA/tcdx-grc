@@ -1,0 +1,34 @@
+{
+  "observed_at_utc": "2026-10-15T20:23:50.496914+00:00",
+  "receipt_and_archive_checks": [
+    {
+      "kind": "backend",
+      "activation_matches_live_image": true,
+      "activation_matches_gate_hash": true
+    },
+    {
+      "kind": "backend",
+      "archive_source_sha256": "879942f159f61a607712fe4c7ba79668343f008285e43a37129159fae821a58e",
+      "expected_source_sha256": "879942f159f61a607712fe4c7ba79668343f008285e43a37129159fae821a58e",
+      "archive_matches": true
+    },
+    {
+      "kind": "frontend",
+      "activation_matches_live_image": true,
+      "activation_matches_gate_hash": true
+    },
+    {
+      "kind": "frontend",
+      "archive_source_sha256": "bac88a14e73d95ed258cd4e3c9a615dce5ec42c7352241b5239fec7e16d45821",
+      "expected_source_sha256": "bac88a14e73d95ed258cd4e3c9a615dce5ec42c7352241b5239fec7e16d45821",
+      "archive_matches": true
+    }
+  ],
+  "diff_check_exit": 0,
+  "secrets_scan": {
+    "secretFindings": 0,
+    "findings": []
+  },
+  "test_only_fix": "e2e/core-grc-ui.spec.ts; visual case now explicitly includes privacy.retention_policy.read in mock authorization",
+  "production_source_changed": false
+}

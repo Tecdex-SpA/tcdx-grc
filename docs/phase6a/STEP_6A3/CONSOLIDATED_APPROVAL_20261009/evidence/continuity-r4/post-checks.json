@@ -1,0 +1,23 @@
+[
+  {
+    "command": "bash scripts/verify-rector-governance.sh",
+    "exit_code": 0,
+    "result": "PASS",
+    "duration_seconds": 0.44,
+    "log": "post-rector.log"
+  },
+  {
+    "command": "bash scripts/test-rector-governance-status.sh",
+    "exit_code": 0,
+    "result": "PASS",
+    "duration_seconds": 2.146,
+    "log": "post-status.log"
+  },
+  {
+    "command": "git diff --check",
+    "exit_code": 0,
+    "result": "PASS",
+    "duration_seconds": 0.123,
+    "log": "post-whitespace.log"
+  }
+]

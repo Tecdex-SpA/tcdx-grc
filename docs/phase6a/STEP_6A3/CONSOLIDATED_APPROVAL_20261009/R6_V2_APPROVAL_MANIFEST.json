@@ -1,0 +1,391 @@
+{
+  "id": "STEP6A3_IANA_MAJOR_V2_R6_NEXT_20261013",
+  "state": "DRAFT_NOT_APPROVED_NOT_EFFECTIVE",
+  "prepared_at": "2026-10-13T13:51:03.753961+00:00",
+  "rector": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09",
+  "semantic_text_sha256": "6205faaafa3cb0cbd4d0cf34cd9c8343ccca64392e638a833e10fa7db8c73375",
+  "semantic_approval": "D3=A already approved; unchanged exact text",
+  "transport_preparation_approval": "Option A SHA188f09c23936afe871ad562ce20d7e859914a83d66766cd708a5c330fcec5ec5; preparation only",
+  "operation": "currentPrincipalAuthorizationRead",
+  "route_proposed": "GET /api/v2/auth/me/authorization",
+  "retirement_proposed": "Only GET /api/v1/auth/me/authorization: unregistered404; no redirect/fallback/dual DTO; other v1 endpoints preserved",
+  "compatibility": "closed DTO breaks prior consumer; exact retirement and paired client/backend required; not yet approved",
+  "physical_schema_change": false,
+  "migrations": [],
+  "new_permissions_grants_roles": [],
+  "QA_authorized": false,
+  "publication_effective": false,
+  "source_index": [
+    {
+      "path": "apps/backend/src/app.ts",
+      "entry_R5_sha256": "03a7492443e8bda2760eeaf5b0fc722cd06ec3da4a1cc16d98f9b48c52785000",
+      "candidate_sha256": "6b0bdfc6c78fdca3c0a419a63acc45d4bb92f5f780382cf07a1576f69589b4ce",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "apps/backend/src/security/frontend-projections.postgres.test.ts",
+      "entry_R5_sha256": "7ec13fb7db5c96bebb7468ecf5a60b90c0b5bc714a14a84f9690e22af2674c37",
+      "candidate_sha256": "53b6034744fcba8882ba0cb51290eea25a4467c4b04b092b4a1fd5e86b2bde8d",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "apps/backend/src/security/frontend-projections.test.ts",
+      "entry_R5_sha256": "06c1f68c9066eb3ae4c42d2e5d45c907afaa6be72b75bdc9719ce0e530b42541",
+      "candidate_sha256": "0562305eaae168efa117e3e7e108fa7c42d078280b9dddd3ecaac6a2cef33b73",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "apps/backend/src/security/frontend-projections.ts",
+      "entry_R5_sha256": "8eabd90f8c62c2146fb383549a4932c32f2894ee1a7b86b0cfacede34d2f168b",
+      "candidate_sha256": "a40eaba9d9a6da79c2f0790601adeb854adeb41b0d5ec6d0ab8c3a000bae8079",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "apps/backend/src/security/platform-iam-service.ts",
+      "entry_R5_sha256": "36370e611da017dabe3de199c914a0996dd6e0b3e1ca1ef0f47a7827dd8d34c3",
+      "candidate_sha256": "436b0aa4d9b665f06011814545438ca45b2882b20f962bf0014c8fee81641afb",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "apps/backend/src/security/platform-role-service.postgres.test.ts",
+      "entry_R5_sha256": "83fbff3690c726d59c8e869d128b46187e5db04f9b519e5b1e24a75affebf774",
+      "candidate_sha256": "9736fb0f7ace0ea0a198afa6bcb3966227d4b55f0745b0c8511f925a47b92992",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "apps/backend/src/security/role-assign-projection-scope.postgres.test.ts",
+      "entry_R5_sha256": "a128cc9bbc16792612a9fdda77654c4a820a37e89c00daf32e1f3eb060ea5044",
+      "candidate_sha256": "6e8652b07ae4e2e76a9fd3a1a9b3530e025f620a68584662a422edfbcebc2edf",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "apps/frontend/src/api-client.test.ts",
+      "entry_R5_sha256": "2738f8b3e8442fcc1041fb83fc0a7f8fc56f10bd6a32bfec3e49040124ef2c2f",
+      "candidate_sha256": "53f0bacadfd50378ed80862c264b5e4d7575d1bc454fbbf4f0fca761bc1b5a52",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "apps/frontend/src/api-client.ts",
+      "entry_R5_sha256": "405eb0000911d40045ec8783afb95be9233da10908a38f09e66115d2288daed1",
+      "candidate_sha256": "adfa039bfe73d0e9cfe501d1e98d5ba5972fa015d428fedcd3d2bb51746186e6",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "apps/frontend/src/core-grc.tsx",
+      "entry_R5_sha256": "c259e5f5a735dad3bc1a78d7699248c06003b9263dd760c84857ba5680c73f50",
+      "candidate_sha256": "ae3cbafffa87098f77189a079ba127a303e3a53625ff1d6c12c95e245307df77",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "apps/frontend/src/frontend-auth-projections.test.tsx",
+      "entry_R5_sha256": "0e3214bafef5d50ff86d24a3830fd367de61212aa313ef9e48358f77bdbad43a",
+      "candidate_sha256": "f102cf66c7994110ae2e89d11ddfaf60c9ccf41ee72146b075cfee1be3e0d61b",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "apps/frontend/src/frontend-auth-projections.ts",
+      "entry_R5_sha256": "e2db616e31ddf0a3fe18a25ca0789f7d5b5c2944879b2ea6eb6c388857cc1960",
+      "candidate_sha256": "abf571b120259b42ba844b1664a65d012f3647f6ad03f948bdba41fd19928f56",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "apps/frontend/src/i18n/es.ts",
+      "entry_R5_sha256": "de6165ee829d6861df1ea222581b88abfec4f4e45ba8fbed398054d5cb564f34",
+      "candidate_sha256": "7d71b66f52ed2c114822ed11eb7204c2a90cf9d8f146974a3f4efe883a1a7239",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "apps/frontend/src/structured-reference-fields.tsx",
+      "entry_R5_sha256": "ff4e06eaa970ac5010e98258de41c3a6016d0ac143a305c1115eb31ee31e09a3",
+      "candidate_sha256": "56b4cc719b29ed122ff1ed0335d912573c04f7f7d623c5da141b4aa6bed966db",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "apps/frontend/src/tenant-onboarding.test.tsx",
+      "entry_R5_sha256": "6c55c1d30febe64bcd8bd26dbfee158a1e39b784eefc897b8cea3817f08af600",
+      "candidate_sha256": "4ce57ee8007303e90c2387036b635d09447e589a7000622aa92c334c36a4f59f",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "apps/frontend/src/tenant-onboarding.tsx",
+      "entry_R5_sha256": "07e4a15a6f1336ec2e7c411bbbe445766c20ad621497b7b0cfba8e66f273b42e",
+      "candidate_sha256": "b230910dbc59624be40ed9fc21b13d8752aca2ca230250e30e38b817ee27086f",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "apps/frontend/src/tenant-timezone.test.tsx",
+      "entry_R5_sha256": null,
+      "candidate_sha256": "8294453e7b8c97dd9a7bfa318842a4fddf9ecdeb8b4d2dac5ba0f8e22aabc8f7",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "apps/frontend/src/tenant-timezone.tsx",
+      "entry_R5_sha256": null,
+      "candidate_sha256": "8084007b2e9dad04a7a8149ef17b49d79c7ede2897099de28655584d43567aea",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml",
+      "entry_R5_sha256": "739ba3c21aaa58f892e95c69fe3c8415dbf46798ebf07cc61753660479d2ac67",
+      "candidate_sha256": "81743f6a81cfa86fe9a10dd52ad4da30161452aefa3fc599d7402ff6edf2b776",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "docs/executable-contracts/23_FRONTEND_AUTHENTICATION_AUTHORIZATION_PROJECTIONS.md",
+      "entry_R5_sha256": "897cfc51449b3a8b667e9e830a3e83f5b66be6093ae1e1c64bf5fff685ae3a61",
+      "candidate_sha256": "6f0234e24524201f99137f09ba3a4ffebaf57fd84373803c400651f857881bb7",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "docs/executable-contracts/33_PHASE6A3_TENANT_TIMEZONE_PROJECTION.md",
+      "entry_R5_sha256": null,
+      "candidate_sha256": "b6cf8eaff2963157ed35438813ce60021ad16a39c90da31f1eb69ad17f23b329",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "e2e/branding.spec.ts",
+      "entry_R5_sha256": "b938fc3e51e27a93be8a33e8f250180019675b4f973b87aa337b25350332a252",
+      "candidate_sha256": "31170c8f2db607f914685bd25d7420c9f0d439ab780b32dea6f472f79b365df4",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "e2e/core-grc-ui.spec.ts",
+      "entry_R5_sha256": "ffc47096708a51bd4f95fd55815db2eb767cfec4418f7ca265663793645b691e",
+      "candidate_sha256": "97eb866ce89c04de7bd865fca7869fb24fd4c2adfb4389eb2f8a9476d6b87e41",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "e2e/managed-identity-tenant-access.spec.ts",
+      "entry_R5_sha256": "533b63abc6c010ad27a46e43521caa6ce616dcab0f794bb60af9ba81aa943e46",
+      "candidate_sha256": "895606b6455067a8ef4cf4655ec245238af5a23632789f0e7d297cd648a68e5a",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "e2e/managed-identity-ui.spec.ts",
+      "entry_R5_sha256": "2043eb7f763c725374814075f86f0e49dc3ef37268dea644fcf955ec61ec8b24",
+      "candidate_sha256": "cff82ca52fa497989b36c4c711e1cd7acbc7aeb538cc54e3699fb38619571e78",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "e2e/platform-role-ui.spec.ts",
+      "entry_R5_sha256": "4eabb009817756a1a66212b2361f2bcdc9dbfd814e7441f45d5092f4f309ee63",
+      "candidate_sha256": "ccbe716b0516e80f564b0b2b769d5992f0e24af81137a80ada6aafa80578c5b9",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "e2e/tenant-onboarding-ui.spec.ts",
+      "entry_R5_sha256": "4438e4b64e02db321776b1be957d228c595f788e095f7a696fa234c1430a053e",
+      "candidate_sha256": "1d6f63140f85a3d6515093e97ea36e9d0c7c395ea3bd10fba256446a3a6d8008",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "packages/contracts/src/frontend-auth-projections.ts",
+      "entry_R5_sha256": "bcb768d8e6783e47c40d3e848226609dff8c7fc43ec919294a998d0f532065b2",
+      "candidate_sha256": "2e9071f1e89313e2bdd3d7d9ef13cf76f19edffebd58300620c6994d07c82137",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "packages/contracts/src/iana-timezone.ts",
+      "entry_R5_sha256": null,
+      "candidate_sha256": "b82a37cf67e8d91d8e7df92c767f08c932aaa8023a0da3c171f8be81ed8c72c4",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "packages/contracts/src/index.ts",
+      "entry_R5_sha256": "9c5ea70fac61398f78b36c9d03e1a2f868a8dc50ae18117039990b81357fe031",
+      "candidate_sha256": "112c597c0535b593ee1d147b0a1cabe92aa337f9220ef72fdda2490dfd195759",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "packages/contracts/src/mi7a-frontend-projections.test.ts",
+      "entry_R5_sha256": "c4267bbdffc43ccaa4b28d3dc7a864c4072455d238533ef76a3438d05846ad8b",
+      "candidate_sha256": "89856e5cdfb2ef4fafad44e0f27af4f86fefff0136cbf1afdb02016692efcfd0",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "packages/contracts/src/phase6a3-iana-contract.test.ts",
+      "entry_R5_sha256": null,
+      "candidate_sha256": "fdcaa63ce8a4fbe18aab01414618764ad401d3098820b09afc55ccd6b64f6b4c",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "packages/contracts/src/testing/schema-validator.ts",
+      "entry_R5_sha256": "eeb38d861db1b672ac15696202d4cb57adc2483afa069bff691be40777c40e5b",
+      "candidate_sha256": "d003e157017f759ca223866e7da80abca5a1535268ed07191230fbe1fc727f4a",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    },
+    {
+      "path": "scripts/foundations/verify-tenant-isolation.ts",
+      "entry_R5_sha256": "9bf3239f1ff9357b2886a2f08718a169e653e1c200791ca2d3792d3b5df2b952",
+      "candidate_sha256": "0703820a02b83194ae0d0c8f9eadd8482757165c5bda629ed8bfb2e8a424d73b",
+      "version": "R6-next major v2 candidate",
+      "state": "DRAFT_NOT_EFFECTIVE",
+      "change_owner": "Codex authorized local preparation; PO exact acceptance required for publication"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/R6_V2_TRANSPORT_CONTRACT_DRAFT.md",
+      "sha256": "433756c9c128dc3373b53211efdd73d83bdae6ddb39302b4d000e91d853c3b31"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/R6_NEXT_CONSUMER_COMPATIBILITY_REVIEW.md",
+      "sha256": "89a16b038eb18436a8aad6b69bcd60a72b36e79fda1a403e9a5a1161fc16eb72"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/R6_OWNER_APPROVAL_RECEIPT.json",
+      "sha256": "acfe51886f1e95b81605fd30fb53db011598cf70fdbda1d2b0993c02759e50a8"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/R6_API_MAJOR_PREPARATION_RECEIPT.json",
+      "sha256": "5fd052dc571aadc786df279fc02677451c137c145c8b3f536e9c144d23e087b2"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/final-attributable.patch",
+      "sha256": "a2107300c24bade3aa1c08e94b113142ac0100f4436e31e475b8b23ec0c91407"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/candidate-source-index.json",
+      "sha256": "574a8eddd16465fdf1e90a7201a0a77c1ab93cfd66f9877b99962b32c5c9b3a2"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/next-only-harness.patch",
+      "sha256": "262c12660a6689e63aa858d39dc4994756ca2115f782a4e741fc1caef8145bd4"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/final-browser-coverage.json",
+      "sha256": "9fd79a548a564da988facab77a22b7d6278966302fa61e8a9985ce7a563df7f5"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/full.json",
+      "sha256": "89b9234872b2127f8e8f251793561527c13549d2a1f1f0db520a5fa7ffffd217"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/affected-final.json",
+      "sha256": "01b10f606bb27bf01a52045f5bd606294e31733611ffc3ebec99a9de438f49a6"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6-next/current-source-and-build-match.json",
+      "sha256": "507d601587cbc0a3cd8e92ed80ff5885d65e8565c0b500885edb8a25d539ee13"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/v2-integral-tests.json",
+      "sha256": "4eac71b659fbad4ba32a37f440500add0cb18848989888872f5961bde8d82be6"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/v2-gate-commands.json",
+      "sha256": "2fc6d0ee0683992ca7ddfa3c725c026b5b14d22d8a1ae11d11e329623bc93f86"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/v2-build-hashes.json",
+      "sha256": "7ca1ac7c536213689bdc1e364ae3953e61e1c2cdb916258123e826d827be4e0d"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/continuity-r6/iana-approved.txt",
+      "sha256": "6205faaafa3cb0cbd4d0cf34cd9c8343ccca64392e638a833e10fa7db8c73375"
+    },
+    {
+      "path": "docs/rector/baseline/25_API_EVENTOS_IDEMPOTENCIA_AUDITORIA.md",
+      "sha256": "683d2c0f17ed0cf0aedb6ed107b3dc69d68a664b06ef019c01bfb8b87f4d633b"
+    },
+    {
+      "path": "docs/rector/baseline/49_GOBIERNO_INTERNO_Y_REVISION_UNIPERSONAL.md",
+      "sha256": "544fd5083cf38ba5df954152d83cd02b65be3ce3f57e634ff47c685373de8c1b"
+    }
+  ],
+  "tests": {
+    "unchanged_product_unit_PG": {
+      "pass": 872,
+      "unit": 759,
+      "postgresql": 113,
+      "fail": 0,
+      "skip": 0,
+      "revision": "R6 previous v2, exact product source/build unchanged; no rerun for browser harness"
+    },
+    "one_full_browser_run": {
+      "startTime": "2026-10-13T13:43:52.390Z",
+      "duration": 219551.83099999998,
+      "expected": 467,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "targeted_after_final_changes": {
+      "startTime": "2026-10-13T13:49:02.862Z",
+      "duration": 16058.652999999998,
+      "expected": 20,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "reconciled_unique_browser_cases": 468,
+    "scope": "SIMULATED_LOCAL_NOT_EXTERNAL_E2E",
+    "manual_human_UI": "NOT_RUN"
+  }
+}

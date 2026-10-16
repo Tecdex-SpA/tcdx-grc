@@ -8,11 +8,48 @@ export const moduleLabels = {
   "solicitudes-evidencia": "Solicitudes de evidencia",
   evidencias: "Evidencias",
   retencion: "Políticas de retención",
+  "aplicabilidad-retencion": "Aplicabilidad de retención",
   issues: "Hallazgos y brechas",
   acciones: "Acciones"
 } as const;
 
 export const uiText = {
+  temporal: {
+    contextPending: "pendiente de contexto de zona horaria de la empresa.",
+    instantPlaceholder: "AAAA-MM-DDTHH:mm:ss±HH:mm",
+    instantGuidance: "Indica fecha, hora y desfase explícito válido para la zona de la empresa, o un instante UTC terminado en Z.",
+    invalidInstant: "La fecha y hora necesitan un instante inequívoco válido. Revisa el desfase y la transición de horario de verano."
+  },
+  references: {
+    messages: {
+      NO_RECORDS: "No hay registros disponibles en este contexto.",
+      NO_ELIGIBLE_RECORDS: "No hay registros que puedan utilizarse en esta operación.",
+      NO_PERMISSION: "No tienes acceso a estas opciones en la empresa seleccionada.",
+      AMBIGUOUS_REFERENCE: "Las referencias disponibles no permiten una selección inequívoca. La selección está pendiente.",
+      LEGAL_BINDING_PENDING: "La política está pendiente de aplicabilidad jurídica. No se ha aplicado ni se declara cumplimiento.",
+      MISSING_CONFIGURATION: "No hay una configuración efectiva disponible para este contexto.",
+      CATALOG_NOT_PUBLISHED: "No hay una versión publicada o habilitada disponible para este contexto.",
+      TEMPORARY_READ_FAILURE: "No pudimos cargar las opciones. Intenta nuevamente.",
+      LOCALIZATION_UNAVAILABLE: "No hay una traducción disponible para estas opciones. La selección no está habilitada."
+    },
+    controlLifecycleUnavailable: "El filtro por estado no está disponible: el catálogo completo de estados de controles aún no está publicado.",
+    loading: "Cargando opciones…",
+    select: "Selecciona una opción",
+    invalid: "Selecciona una opción válida.",
+    parentRequired: "Selecciona primero el objeto de origen.",
+    more: "Cargar más opciones",
+    search: "Buscar",
+    searchLabel: (label: string) => `Buscar ${label}`,
+    owner: "Responsable de negocio",
+    methodology: "Referencia metodológica",
+    tenantControl: "Control de la organización",
+    baseControl: "Control base autorizado",
+    controlVersion: "Versión de control",
+    searchControl: "Buscar control",
+    allStates: "Todos los estados",
+    approvedEvidence: "Versión de evidencia aprobada",
+    translationUnavailable: "Traducción no disponible"
+  },
   actions: {
     approve: "Aprobar",
     complete: "Completar",
@@ -42,6 +79,7 @@ export const uiText = {
     dashboard: "Panel principal",
     compliance: "Cumplimiento",
     requirements: "Requisitos",
+    norms: "Normas",
     controls: "Controles",
     evidence: "Evidencias",
     actions: "Acciones",
@@ -85,7 +123,7 @@ export const uiText = {
     actions: "Acciones",
     noData: "Sin dato",
     coreGrc: "Core GRC",
-    currentTenantData: "Registros visibles del tenant",
+    currentTenantData: "Registros visibles de la empresa",
     visibleDataset: "Sobre registros visibles",
     visibleCount: "registros visibles"
   },
@@ -98,7 +136,7 @@ export const uiText = {
     createEyebrow: "Alta controlada",
     closeCreate: "Cerrar creación",
     closeDetail: "Cerrar detalle",
-    guidance: "Completa únicamente los datos contractuales. Los identificadores deben pertenecer a objetos visibles del tenant.",
+    guidance: "Completa los datos de la operación con información de tu empresa.",
     invalidJson: "El campo debe contener un JSON válido.",
     requiredField: "Completa el campo requerido.",
     createError: "No fue posible crear el registro.",
@@ -189,6 +227,9 @@ export const uiText = {
     timezone: "Zona horaria IANA",
     plan: "Plan vigente",
     noPlan: "Sin suscripción vigente",
+    subscriptionCode: "Código de suscripción",
+    subscriptionStatus: "Estado de suscripción",
+    subscriptionConflict: "La empresa ya tiene una suscripción activa o la solicitud entró en conflicto. Consulta el plan vigente en este detalle.",
     viewUsers: "Administrar usuarios",
     memberships: "Usuarios y membresías",
     invitations: "Invitaciones con identidad corporativa Zoho",
@@ -255,6 +296,6 @@ export const uiText = {
     selectorLabel: "Empresa activa",
     selectorPlaceholder: "Selecciona una empresa",
     noneTitle: "Sin empresas disponibles",
-    noneDetail: "Tu identidad está autenticada, pero todavía no tiene un contexto tenant activo."
+    noneDetail: "Tu identidad está autenticada, pero todavía no tiene un contexto de empresa activo."
   }
 } as const;

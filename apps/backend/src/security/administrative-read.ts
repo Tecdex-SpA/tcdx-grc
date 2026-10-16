@@ -148,7 +148,7 @@ async function get(database: Kysely<FoundationDatabase>, spec: ReadSpec, id: str
 const tenantSpec: ReadSpec = {
   select: `t.tenant_id,t.tenant_code,t.legal_name,t.display_name,t.default_timezone,t.lifecycle_state,t.data_classification,t.created_at,t.updated_at,
     (SELECT jsonb_build_object('subscription_id',s.subscription_id,'subscription_code',s.subscription_code,'lifecycle_state',s.lifecycle_state,
-      'plan_code',p.plan_code,'plan_name',p.name,'plan_version_number',pv.version_number)
+      'plan_code',p.plan_code,'plan_name',pv.display_name,'plan_version_number',pv.version_number)
        FROM platform.subscriptions s JOIN platform.plan_versions pv ON pv.plan_version_id=s.plan_version_id
        JOIN platform.plans p ON p.plan_id=pv.plan_id
       WHERE s.tenant_id=t.tenant_id AND s.lifecycle_state='active' AND s.starts_at<=transaction_timestamp()
@@ -200,15 +200,24 @@ function membershipRoleSpec(tenantId: string, membershipId: string): ReadSpec {
 
 export async function administrativeRead(
   database: Kysely<FoundationDatabase>, verifier: IdentityVerifier, request: FastifyRequest,
-  operation: "tenantList" | "tenantGet" | "membershipList" | "membershipGet" | "membershipRoleList" |
+  operation: "planVersionList" | "tenantList" | "tenantGet" | "membershipList" | "membershipGet" | "membershipRoleList" |
     "membershipInvitationList" | "membershipInvitationGet" | "roleList" | "roleGet",
   resourceId?: string
 ): Promise<Page | JsonRow> {
   const isList = operation.endsWith("List");
   const allowed = isList ? ["page[size]", "page[cursor]"] : [];
-  if (!["tenantList", "tenantGet"].includes(operation)) allowed.push("tenant_id");
+  if (!["planVersionList", "tenantList", "tenantGet"].includes(operation)) allowed.push("tenant_id");
   if (operation === "roleList") allowed.push("assignable_family");
   const query = administrativeQuery(request.query, allowed);
+  if (operation === "planVersionList") {
+    await context(database, verifier, request, "platform.subscription.create", query, { platformOnly: true });
+    return list(database, {
+      select: "pv.plan_version_id,pv.plan_id,p.plan_code,p.name AS plan_name,pv.version_number,pv.display_name,pv.created_at",
+      from: "platform.plan_versions pv JOIN platform.plans p ON p.plan_id=pv.plan_id",
+      where: "p.lifecycle_state='published' AND pv.lifecycle_state='published' AND (pv.effective_from IS NULL OR pv.effective_from<=transaction_timestamp()) AND (pv.effective_to IS NULL OR pv.effective_to>transaction_timestamp())",
+      values: [], id: "pv.plan_version_id", createdAt: "pv.created_at"
+    }, query);
+  }
   if (operation === "roleList" && query.assignable_family !== undefined) {
     if (query.assignable_family !== "platform") invalid("assignable_family");
     if (request.headers["x-tcdx-tenant-id"] !== undefined) denied();

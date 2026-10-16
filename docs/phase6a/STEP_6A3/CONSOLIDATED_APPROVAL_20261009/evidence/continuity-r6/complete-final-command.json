@@ -1,0 +1,31 @@
+{
+  "command": [
+    "docker",
+    "exec",
+    "f006b8e7e8220181ea71bf717506f6b9a28f123fb7fa761082c25a54b526abb4",
+    "env",
+    "DATABASE_HOST=127.0.0.1",
+    "DATABASE_PORT=55432",
+    "DATABASE_NAME=tcdx-grc",
+    "DATABASE_USER=postgres",
+    "DATABASE_SSL_MODE=disable",
+    "TCDX_ISOLATED_REBUILD=true",
+    "TCDX_SECURITY_INTEGRATION=true",
+    "TCDX_PHASE5_LIFECYCLE_INTEGRATION=true",
+    "TCDX_EC_READONLY_POSTGRES=true",
+    "TCDX_STEP6A3_REFERENCE_POSTGRES=true",
+    "TCDX_STEP6A3_PG_SYSTEM_IDENTIFIER=7696125537008902190",
+    "pnpm",
+    "exec",
+    "vitest",
+    "run",
+    "--config",
+    "vitest.config.ts",
+    "--no-file-parallelism",
+    "--reporter=json",
+    "--outputFile=/workspace/r6-complete-final.json"
+  ],
+  "at": "2026-10-13T12:41:03.785418+00:00",
+  "duration": 105.20128404092975,
+  "exit_code": 0
+}

@@ -15,7 +15,7 @@ async function healthyLogo(page: Page): Promise<void> {
   const canonical = await readFile("docs/ui/assets/brand/tecdex-logo-light.svg");
   const hash = (bytes: Buffer) => createHash("sha256").update(bytes).digest("hex");
   expect(hash(await response.body())).toBe(hash(canonical));
-  expect(await page.locator("img").evaluateAll((images) => images.some((image) => !image.complete || image.naturalWidth === 0))).toBe(false);
+  expect(await page.locator("img").evaluateAll((images) => images.some((image) => !(image as HTMLImageElement).complete || (image as HTMLImageElement).naturalWidth === 0))).toBe(false);
   expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
 }
 
@@ -37,17 +37,17 @@ test("login branding loads the packaged canonical logo after deep navigation and
   await method.focus();
   await expect(method).toBeFocused();
   expect(await method.evaluate((element) => getComputedStyle(element).outlineStyle)).not.toBe("none");
-  await page.screenshot({ path: `/tmp/tcdx-grc-mi10-p2d-branding-${info.project.name}-login.png`, fullPage: true });
+  await page.screenshot({ path: `${process.env.TCDX_UI_EVIDENCE_DIR ?? "/tmp"}/tcdx-grc-mi10-p2d-branding-${info.project.name}-login.png`, fullPage: true });
 });
 
 test("dashboard branding uses the same logo with responsive navigation", async ({ page }, info) => {
   await page.addInitScript(() => sessionStorage.setItem("tcdx.access_token", "p2d-local-browser-fixture"));
-  await page.route("**/api/v1/**", (route) => {
+  await page.route(url => url.pathname.startsWith("/api/v1/") || url.pathname === "/api/v2/auth/me/authorization", (route) => {
     const pathname = new URL(route.request().url()).pathname;
     if (pathname.endsWith("/access/me")) return route.fulfill({ json: {
       available_tenant_contexts: [], effective_platform_role_codes: ["PLATFORM_ADMIN"]
     } });
-    if (pathname.endsWith("/auth/me/authorization")) return route.fulfill({ json: {
+    if (pathname === "/api/v2/auth/me/authorization") return route.fulfill({ json: {
       evaluated_at: new Date().toISOString(), platform_permissions: ["platform.managed_identity.read"], tenant_permissions: null
     } });
     return route.fulfill({ json: { items: [], page: { has_more: false, next_cursor: null } } });
@@ -63,7 +63,7 @@ test("dashboard branding uses the same logo with responsive navigation", async (
   }
   await expect(page.locator(".brand img")).toBeVisible();
   await expect(page.locator("body")).not.toContainText(/TCDX GRC|TCDX Managed Identity/);
-  await page.screenshot({ path: `/tmp/tcdx-grc-mi10-p2d-branding-${info.project.name}-dashboard.png`, fullPage: true });
+  await page.screenshot({ path: `${process.env.TCDX_UI_EVIDENCE_DIR ?? "/tmp"}/tcdx-grc-mi10-p2d-branding-${info.project.name}-dashboard.png`, fullPage: true });
   await page.reload();
   await healthyLogo(page);
 });

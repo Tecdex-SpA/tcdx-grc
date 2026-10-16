@@ -1,0 +1,28 @@
+{
+  "scope": "Technical structural compatibility only; not a human dictamen and not execution of proposed product code",
+  "postgres_major": 16,
+  "isolated_migration_ledger": 33,
+  "r2_file_sha256": "b2a5bc73f75d7f95fb7ba5068f1b3ea77a923d7da7501446d05455ee545ec523",
+  "function_body_checks": [
+    {
+      "name": "privacy.c04w_guard_applicability",
+      "matches_exact_R2_function_body": true
+    },
+    {
+      "name": "evidence.c04w_guard_file_chain",
+      "matches_exact_R2_function_body": true
+    },
+    {
+      "name": "privacy.c04w_guard_hold_release",
+      "matches_exact_R2_function_body": true
+    }
+  ],
+  "extra_isolated_tables": [
+    "platform.schema_migrations"
+  ],
+  "missing_expected_tables": [],
+  "R2_unchanged": true,
+  "human_Data_Model_Owner_dictamen": "PENDING",
+  "new_implementation_PG16_tests": "NOT_RUN_PENDING_EFFECTIVE_CONTRACTS",
+  "no_migration_final_assertion": false
+}

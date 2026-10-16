@@ -1,0 +1,505 @@
+[WebServer] npm warn Unknown env config "manage-package-manager-versions". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+[WebServer] (node:72962) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+
+Running 460 tests using 2 workers
+
+(node:72969) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:72970) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/460] [chromium-desktop] › e2e/branding.spec.ts:22:1 › login branding loads the packaged canonical logo after deep navigation and reload
+[2/460] [chromium-desktop] › e2e/managed-identity-tenant-access.spec.ts:66:1 › A identity-only provisioning is optional and never rediscloses its credential
+[3/460] [chromium-desktop] › e2e/managed-identity-tenant-access.spec.ts:72:33 › B/C provision plus 1 runtime tenant roles, server refetch and duplicate click
+[4/460] [chromium-desktop] › e2e/branding.spec.ts:43:1 › dashboard branding uses the same logo with responsive navigation
+[5/460] [chromium-desktop] › e2e/managed-identity-ui.spec.ts:39:1 › login entry uses backend availability and fails closed for unknown response
+[6/460] [chromium-desktop] › e2e/managed-identity-ui.spec.ts:54:1 › Managed Identity entry opens the separate approved IAM flow without a GRC password form
+[7/460] [chromium-desktop] › e2e/managed-identity-tenant-access.spec.ts:72:33 › B/C provision plus 2 runtime tenant roles, server refetch and duplicate click
+[8/460] [chromium-desktop] › e2e/managed-identity-ui.spec.ts:70:1 › permission projection governs MI controls; roles and tenant context grant none
+[9/460] [chromium-desktop] › e2e/managed-identity-ui.spec.ts:84:1 › create permission emits a one-time credential only in the result view
+[10/460] [chromium-desktop] › e2e/managed-identity-tenant-access.spec.ts:78:1 › D existing identity adds company access without reprovision or UUID labels
+[11/460] [chromium-desktop] › e2e/managed-identity-ui.spec.ts:124:1 › provision replay exposes metadata without a credential or automatic reset
+[12/460] [chromium-desktop] › e2e/managed-identity-tenant-access.spec.ts:81:1 › E existing Membership displays current roles and adds roles without duplication
+[13/460] [chromium-desktop] › e2e/managed-identity-ui.spec.ts:144:1 › password reset recovery requires a new explicit action and fresh key
+[14/460] [chromium-desktop] › e2e/managed-identity-tenant-access.spec.ts:86:1 › F/G platform selector remains Platform-only and tenant catalog is loaded only for the selected company
+[15/460] [chromium-desktop] › e2e/managed-identity-ui.spec.ts:177:1 › password reset original discloses once and a replay response omits the credential
+[16/460] [chromium-desktop] › e2e/managed-identity-tenant-access.spec.ts:90:1 › J partial role failure retains identity and Membership, retry reuses exactly the original body/key
+[17/460] [chromium-desktop] › e2e/managed-identity-ui.spec.ts:205:1 › administrative lifecycle actions require a reason and distinct intentions
+[18/460] [chromium-desktop] › e2e/managed-identity-tenant-access.spec.ts:94:1 › K subscription denial explains the pending association and preserves the provisioned identity
+[19/460] [chromium-desktop] › e2e/managed-identity-tenant-access.spec.ts:97:1 › server-read failure after success permits refresh without repeating a mutation
+[20/460] [chromium-desktop] › e2e/managed-identity-ui.spec.ts:238:1 › tenant admin and a Platform role name without projected permission cannot enter MI
+[21/460] [chromium-desktop] › e2e/managed-identity-ui.spec.ts:249:1 › failed permission projection clears MI presentation eligibility
+[22/460] [chromium-desktop] › e2e/managed-identity-ui.spec.ts:259:1 › MI7 safe surfaces keep labels, focus and supported viewport layout
+[23/460] [chromium-desktop] › e2e/managed-identity-tenant-access.spec.ts:100:1 › effective permission revocation prevents the central POST without relying on role names
+[24/460] [chromium-desktop] › e2e/managed-identity-tenant-access.spec.ts:102:1 › missing effective central permission exposes reads but never onboarding actions
+[25/460] [chromium-desktop] › e2e/managed-identity-tenant-access.spec.ts:104:1 › tenant catalog contamination fails closed without a usable role or submit control
+[26/460] [chromium-desktop] › e2e/platform-role-ui.spec.ts:58:1 › navigation, identity selection, empty state and catalog remain distinct from tenant roles
+[27/460] [chromium-desktop] › e2e/managed-identity-tenant-access.spec.ts:106:1 › governed tenant role revocation uses explicit target, ETag, reason, idempotency and canonical refetch
+[28/460] [chromium-desktop] › e2e/platform-role-ui.spec.ts:74:1 › assign and revoke send exact IDs/payloads/fresh keys and refetch server state without optimistic authority
+[29/460] [chromium-desktop] › e2e/managed-identity-tenant-access.spec.ts:108:1 › M/N/O separated access sections preserve branding, responsive containment and keyboard focus
+[30/460] [chromium-desktop] › e2e/platform-role-ui.spec.ts:95:1 › role-name and tenant grants cannot expose admin actions without effective platform permission
+[31/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:90:1 › A: company with existing identity uses exact onboarding boundary, refetch and no manual IDs
+[32/460] [chromium-desktop] › e2e/platform-role-ui.spec.ts:100:1 › missing catalog permission never supplies a hardcoded option while revoke remains independent
+[33/460] [chromium-desktop] › e2e/platform-role-ui.spec.ts:106:1 › fresh permission revocation prevents POST even after opening the confirmation
+[34/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:99:1 › B: MI provisioning reuses one-time disclosure across summary, partial failure and same-key recovery
+[35/460] [chromium-desktop] › e2e/platform-role-ui.spec.ts:112:43 › assignment read 400 is an error rather than an empty collection
+[36/460] [chromium-desktop] › e2e/platform-role-ui.spec.ts:112:43 › assignment read 401 is an error rather than an empty collection
+[37/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:113:1 › C: tenant explicit lookup, runtime role catalog, membership and server refetch
+[38/460] [chromium-desktop] › e2e/platform-role-ui.spec.ts:112:43 › assignment read 403 is an error rather than an empty collection
+[39/460] [chromium-desktop] › e2e/platform-role-ui.spec.ts:112:43 › assignment read 404 is an error rather than an empty collection
+[40/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:121:1 › D: tenant new Managed Identity is handoff, never credential provisioning
+[41/460] [chromium-desktop] › e2e/platform-role-ui.spec.ts:112:43 › assignment read 409 is an error rather than an empty collection
+[42/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:126:1 › E: partial roles recover only failed assignment with stable key and no repeated Membership
+[43/460] [chromium-desktop] › e2e/platform-role-ui.spec.ts:118:1 › catalog failure stays unavailable and does not fabricate options
+[44/460] [chromium-desktop] › e2e/platform-role-ui.spec.ts:122:1 › last platform administrator conflict preserves the exact server-rendered assignment
+[45/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:132:1 › F: tenant privacy has explicit lookup only, no typing requests, wildcard or global list
+[46/460] [chromium-desktop] › e2e/platform-role-ui.spec.ts:130:1 › uncertain transport result blocks retries until explicit server read and a new intention
+[47/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:140:1 › existing active Membership is reused and its roles assigned independently
+[48/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:144:1 › platform authority and display role metadata confer no tenant create action
+[49/460] [chromium-desktop] › e2e/platform-role-ui.spec.ts:141:1 › successful POST with failed refetch never inserts authoritative optimistic state
+[50/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:147:1 › company required fields, timezone error and back navigation keep business inputs
+[51/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:153:1 › G: dual platform and own-tenant authority supports both operations with distinct contexts
+(node:73053) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[52/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:141:1 › Control base selector resolves an authorized ControlVersion without a human UUID field
+[53/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:160:1 › H: platform-only projection includes role permission but never enables tenant assign
+[54/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:168:1 › wrong tenant projection cannot enable tenant incorporation or assignment
+[55/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:163:1 › Control catalog filters by an effective contracted framework
+[56/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:173:39 › tenant own-context revoke preserves reason, CAS, idempotency and server refresh
+[57/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:180:1 › Applicability offers only the approved decisions and requires a No aplica rationale
+[58/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:173:39 › platform explicit target revoke preserves reason, CAS, idempotency and server refresh
+[59/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:182:1 › server receipt remains truthful if list refresh fails and is reconciled without another onboarding
+[60/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:193:1 › Tenant Admin sees own contracted frameworks without commercial commands
+[61/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:202:1 › Tenant Admin reads validation access without platform actions
+[62/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:190:1 › accepted role response without server assignment stays pending, then retries same intent
+[63/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:222:1 › Platform Admin creates exact non-authoritative access from canonical candidates
+[64/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:198:1 › closing provisioned identity before onboarding retains identity and destroys credential disclosure
+[65/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:208:39 › onboarding 403 shows safe business error and keeps the original retry key
+[66/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:299:1 › Candidate empty and error states have no manual ID fallback
+[67/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:208:39 › onboarding 409 shows safe business error and keeps the original retry key
+[68/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:320:3 › Validation CREATE 400 displays the canonical denial and preserves list authority
+[69/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:208:39 › onboarding 422 shows safe business error and keeps the original retry key
+[70/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:320:3 › Validation CREATE 401 displays the canonical denial and preserves list authority
+[71/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:215:1 › I/J: branding, keyboard steps, labels, focus return and responsive tenant form
+[72/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:320:3 › Validation CREATE 403 displays the canonical denial and preserves list authority
+[73/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:230:1 › dual actor without platform revoke permission uses own tenant authority, never promotes platform read
+[74/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:320:3 › Validation CREATE 404 displays the canonical denial and preserves list authority
+[75/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:236:1 › lost revoke response reconciles ended server state without a second mutation
+[76/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:320:3 › Validation CREATE 409 displays the canonical denial and preserves list authority
+[77/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:243:1 › membership dialog traps keyboard focus, Escape restores detail trigger
+[78/460] [chromium-desktop] › e2e/tenant-onboarding-ui.spec.ts:252:1 › dual actor reads own memberships and catalog using tenant grants when platform read grants are absent
+[79/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:355:1 › Validation CREATE ignores a repeated click while the POST is pending
+(node:73102) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[80/460] [chromium-laptop] › e2e/branding.spec.ts:22:1 › login branding loads the packaged canonical logo after deep navigation and reload
+[81/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:381:1 › Platform Admin revokes validation access with reason, CAS and a local refresh
+[82/460] [chromium-laptop] › e2e/branding.spec.ts:43:1 › dashboard branding uses the same logo with responsive navigation
+[83/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:423:1 › Platform Admin sees a validation access conflict without a false success
+[84/460] [chromium-laptop] › e2e/managed-identity-tenant-access.spec.ts:66:1 › A identity-only provisioning is optional and never rediscloses its credential
+[85/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:448:1 › Tenant Admin creates a canonical Subject in company settings
+[86/460] [chromium-laptop] › e2e/managed-identity-tenant-access.spec.ts:72:33 › B/C provision plus 1 runtime tenant roles, server refetch and duplicate click
+[87/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:460:1 › QA validation content displays its condition and keeps filters tenant-scoped
+[88/460] [chromium-laptop] › e2e/managed-identity-tenant-access.spec.ts:72:33 › B/C provision plus 2 runtime tenant roles, server refetch and duplicate click
+[89/460] [chromium-laptop] › e2e/managed-identity-tenant-access.spec.ts:78:1 › D existing identity adds company access without reprovision or UUID labels
+[90/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:505:1 › login surface exposes the governed OIDC entry point
+[91/460] [chromium-laptop] › e2e/managed-identity-tenant-access.spec.ts:81:1 › E existing Membership displays current roles and adds roles without duplication
+[92/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:519:1 › invitation entry clears the one-time token from the visible URL
+[93/460] [chromium-laptop] › e2e/managed-identity-tenant-access.spec.ts:86:1 › F/G platform selector remains Platform-only and tenant catalog is loaded only for the selected company
+[94/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:532:1 › platform admin can generate a Zoho invitation without automatic roles
+[95/460] [chromium-laptop] › e2e/managed-identity-tenant-access.spec.ts:90:1 › J partial role failure retains identity and Membership, retry reuses exactly the original body/key
+[96/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:551:1 › Platform companies and tenant users expose the canonical administrative flow
+[97/460] [chromium-laptop] › e2e/managed-identity-tenant-access.spec.ts:94:1 › K subscription denial explains the pending association and preserves the provisioned identity
+[98/460] [chromium-laptop] › e2e/managed-identity-tenant-access.spec.ts:97:1 › server-read failure after success permits refresh without repeating a mutation
+[99/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:576:1 › removing one tenant role requires human confirmation and preserves the other
+[100/460] [chromium-laptop] › e2e/managed-identity-tenant-access.spec.ts:100:1 › effective permission revocation prevents the central POST without relying on role names
+[101/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:627:1 › dashboard visual contract, drill-down and accessibility
+[102/460] [chromium-laptop] › e2e/managed-identity-tenant-access.spec.ts:102:1 › missing effective central permission exposes reads but never onboarding actions
+[103/460] [chromium-laptop] › e2e/managed-identity-tenant-access.spec.ts:104:1 › tenant catalog contamination fails closed without a usable role or submit control
+[104/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:669:3 › Aplicabilidad mantiene la baseline comercial en español
+[105/460] [chromium-laptop] › e2e/managed-identity-tenant-access.spec.ts:106:1 › governed tenant role revocation uses explicit target, ETag, reason, idempotency and canonical refetch
+[106/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:669:3 › Evaluaciones de requisitos mantiene la baseline comercial en español
+[107/460] [chromium-laptop] › e2e/managed-identity-tenant-access.spec.ts:108:1 › M/N/O separated access sections preserve branding, responsive containment and keyboard focus
+[108/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:669:3 › Declaración de aplicabilidad mantiene la baseline comercial en español
+[109/460] [chromium-laptop] › e2e/managed-identity-ui.spec.ts:39:1 › login entry uses backend availability and fails closed for unknown response
+[110/460] [chromium-laptop] › e2e/managed-identity-ui.spec.ts:54:1 › Managed Identity entry opens the separate approved IAM flow without a GRC password form
+[111/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:669:3 › Controles mantiene la baseline comercial en español
+[112/460] [chromium-laptop] › e2e/managed-identity-ui.spec.ts:70:1 › permission projection governs MI controls; roles and tenant context grant none
+[113/460] [chromium-laptop] › e2e/managed-identity-ui.spec.ts:84:1 › create permission emits a one-time credential only in the result view
+[114/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:669:3 › Evaluaciones de control mantiene la baseline comercial en español
+[115/460] [chromium-laptop] › e2e/managed-identity-ui.spec.ts:124:1 › provision replay exposes metadata without a credential or automatic reset
+[116/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:669:3 › Pruebas de aseguramiento mantiene la baseline comercial en español
+[117/460] [chromium-laptop] › e2e/managed-identity-ui.spec.ts:144:1 › password reset recovery requires a new explicit action and fresh key
+[118/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:669:3 › Solicitudes de evidencia mantiene la baseline comercial en español
+[119/460] [chromium-laptop] › e2e/managed-identity-ui.spec.ts:177:1 › password reset original discloses once and a replay response omits the credential
+[120/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:669:3 › Evidencias mantiene la baseline comercial en español
+[121/460] [chromium-laptop] › e2e/managed-identity-ui.spec.ts:205:1 › administrative lifecycle actions require a reason and distinct intentions
+[122/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:669:3 › Políticas de retención mantiene la baseline comercial en español
+[123/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:669:3 › Hallazgos y brechas mantiene la baseline comercial en español
+[124/460] [chromium-laptop] › e2e/managed-identity-ui.spec.ts:238:1 › tenant admin and a Platform role name without projected permission cannot enter MI
+[125/460] [chromium-laptop] › e2e/managed-identity-ui.spec.ts:249:1 › failed permission projection clears MI presentation eligibility
+[126/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:669:3 › Acciones mantiene la baseline comercial en español
+[127/460] [chromium-laptop] › e2e/managed-identity-ui.spec.ts:259:1 › MI7 safe surfaces keep labels, focus and supported viewport layout
+[128/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:687:3 › Control assessment completes with valid, then refetches authoritative state
+[129/460] [chromium-laptop] › e2e/platform-role-ui.spec.ts:58:1 › navigation, identity selection, empty state and catalog remain distinct from tenant roles
+[130/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:687:3 › Control assessment completes with no_data, then refetches authoritative state
+[131/460] [chromium-laptop] › e2e/platform-role-ui.spec.ts:74:1 › assign and revoke send exact IDs/payloads/fresh keys and refetch server state without optimistic authority
+[132/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:726:1 › Evidence request keeps backend denial and refetches successful fulfillment
+[133/460] [chromium-laptop] › e2e/platform-role-ui.spec.ts:95:1 › role-name and tenant grants cannot expose admin actions without effective platform permission
+[134/460] [chromium-laptop] › e2e/platform-role-ui.spec.ts:100:1 › missing catalog permission never supplies a hardcoded option while revoke remains independent
+[135/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:765:3 › compliance assessment selects the published server methodology without a fabricated default
+[136/460] [chromium-laptop] › e2e/platform-role-ui.spec.ts:106:1 › fresh permission revocation prevents POST even after opening the confirmation
+[137/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:788:3 › compliance methodology catalog denial remains explicit and cannot become a free UUID field
+[138/460] [chromium-laptop] › e2e/platform-role-ui.spec.ts:112:43 › assignment read 400 is an error rather than an empty collection
+[139/460] [chromium-laptop] › e2e/platform-role-ui.spec.ts:112:43 › assignment read 401 is an error rather than an empty collection
+[140/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:765:3 › controls assessment selects the published server methodology without a fabricated default
+[141/460] [chromium-laptop] › e2e/platform-role-ui.spec.ts:112:43 › assignment read 403 is an error rather than an empty collection
+[142/460] [chromium-laptop] › e2e/platform-role-ui.spec.ts:112:43 › assignment read 404 is an error rather than an empty collection
+[143/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:788:3 › controls methodology catalog denial remains explicit and cannot become a free UUID field
+[144/460] [chromium-laptop] › e2e/platform-role-ui.spec.ts:112:43 › assignment read 409 is an error rather than an empty collection
+[145/460] [chromium-laptop] › e2e/platform-role-ui.spec.ts:118:1 › catalog failure stays unavailable and does not fabricate options
+[146/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:799:1 › Phase6A Subject picker pages authorized records, searches and invalidates stale selection
+[147/460] [chromium-laptop] › e2e/platform-role-ui.spec.ts:122:1 › last platform administrator conflict preserves the exact server-rendered assignment
+[148/460] [chromium-laptop] › e2e/platform-role-ui.spec.ts:130:1 › uncertain transport result blocks retries until explicit server read and a new intention
+[149/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:822:1 › Phase6A control versions require an explicit choice and retain native keyboard labels
+[150/460] [chromium-laptop] › e2e/platform-role-ui.spec.ts:141:1 › successful POST with failed refetch never inserts authoritative optimistic state
+[151/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:838:1 › Phase6A selector failures retry without exposing technical error content
+[152/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:90:1 › A: company with existing identity uses exact onboarding boundary, refetch and no manual IDs
+[153/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:846:1 › Phase6A permission revocation during pagination removes cached choices and selection
+[154/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:99:1 › B: MI provisioning reuses one-time disclosure across summary, partial failure and same-key recovery
+[155/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:861:1 › Phase6A selectors fail closed in Spanish when an operational translation is unavailable
+[156/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:113:1 › C: tenant explicit lookup, runtime role catalog, membership and server refetch
+[157/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:875:1 › Macro R1 framework and SoA items use authorized business selectors without UUID/JSON input
+[158/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:121:1 › D: tenant new Managed Identity is handoff, never credential provisioning
+[159/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:126:1 › E: partial roles recover only failed assignment with stable key and no repeated Membership
+[160/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:885:1 › Macro R1 responsible selection binds purpose and selected Issue; vocabulary labels are Spanish
+[161/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:132:1 › F: tenant privacy has explicit lookup only, no typing requests, wildcard or global list
+[162/460] [chromium-desktop] › e2e/core-grc-ui.spec.ts:893:1 › Macro R1 retention remains explicitly pending on missing legal binding; no fabricated option
+[163/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:140:1 › existing active Membership is reused and its roles assigned independently
+[164/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:144:1 › platform authority and display role metadata confer no tenant create action
+[165/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:147:1 › company required fields, timezone error and back navigation keep business inputs
+(node:73227) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[166/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:141:1 › Control base selector resolves an authorized ControlVersion without a human UUID field
+[167/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:153:1 › G: dual platform and own-tenant authority supports both operations with distinct contexts
+[168/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:163:1 › Control catalog filters by an effective contracted framework
+[169/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:160:1 › H: platform-only projection includes role permission but never enables tenant assign
+[170/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:180:1 › Applicability offers only the approved decisions and requires a No aplica rationale
+[171/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:168:1 › wrong tenant projection cannot enable tenant incorporation or assignment
+[172/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:173:39 › tenant own-context revoke preserves reason, CAS, idempotency and server refresh
+[173/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:193:1 › Tenant Admin sees own contracted frameworks without commercial commands
+[174/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:173:39 › platform explicit target revoke preserves reason, CAS, idempotency and server refresh
+[175/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:202:1 › Tenant Admin reads validation access without platform actions
+[176/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:182:1 › server receipt remains truthful if list refresh fails and is reconciled without another onboarding
+[177/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:222:1 › Platform Admin creates exact non-authoritative access from canonical candidates
+[178/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:190:1 › accepted role response without server assignment stays pending, then retries same intent
+[179/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:299:1 › Candidate empty and error states have no manual ID fallback
+[180/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:198:1 › closing provisioned identity before onboarding retains identity and destroys credential disclosure
+[181/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:208:39 › onboarding 403 shows safe business error and keeps the original retry key
+[182/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:320:3 › Validation CREATE 400 displays the canonical denial and preserves list authority
+[183/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:208:39 › onboarding 409 shows safe business error and keeps the original retry key
+[184/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:320:3 › Validation CREATE 401 displays the canonical denial and preserves list authority
+[185/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:208:39 › onboarding 422 shows safe business error and keeps the original retry key
+[186/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:320:3 › Validation CREATE 403 displays the canonical denial and preserves list authority
+[187/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:215:1 › I/J: branding, keyboard steps, labels, focus return and responsive tenant form
+[188/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:320:3 › Validation CREATE 404 displays the canonical denial and preserves list authority
+[189/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:320:3 › Validation CREATE 409 displays the canonical denial and preserves list authority
+[190/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:230:1 › dual actor without platform revoke permission uses own tenant authority, never promotes platform read
+[191/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:355:1 › Validation CREATE ignores a repeated click while the POST is pending
+[192/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:236:1 › lost revoke response reconciles ended server state without a second mutation
+[193/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:243:1 › membership dialog traps keyboard focus, Escape restores detail trigger
+[194/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:381:1 › Platform Admin revokes validation access with reason, CAS and a local refresh
+[195/460] [chromium-laptop] › e2e/tenant-onboarding-ui.spec.ts:252:1 › dual actor reads own memberships and catalog using tenant grants when platform read grants are absent
+[196/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:423:1 › Platform Admin sees a validation access conflict without a false success
+(node:73281) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[197/460] [chromium-tablet] › e2e/branding.spec.ts:22:1 › login branding loads the packaged canonical logo after deep navigation and reload
+[198/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:448:1 › Tenant Admin creates a canonical Subject in company settings
+[199/460] [chromium-tablet] › e2e/branding.spec.ts:43:1 › dashboard branding uses the same logo with responsive navigation
+[200/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:460:1 › QA validation content displays its condition and keeps filters tenant-scoped
+[201/460] [chromium-tablet] › e2e/managed-identity-tenant-access.spec.ts:66:1 › A identity-only provisioning is optional and never rediscloses its credential
+[202/460] [chromium-tablet] › e2e/managed-identity-tenant-access.spec.ts:72:33 › B/C provision plus 1 runtime tenant roles, server refetch and duplicate click
+[203/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:505:1 › login surface exposes the governed OIDC entry point
+[204/460] [chromium-tablet] › e2e/managed-identity-tenant-access.spec.ts:72:33 › B/C provision plus 2 runtime tenant roles, server refetch and duplicate click
+[205/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:519:1 › invitation entry clears the one-time token from the visible URL
+[206/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:532:1 › platform admin can generate a Zoho invitation without automatic roles
+[207/460] [chromium-tablet] › e2e/managed-identity-tenant-access.spec.ts:78:1 › D existing identity adds company access without reprovision or UUID labels
+[208/460] [chromium-tablet] › e2e/managed-identity-tenant-access.spec.ts:81:1 › E existing Membership displays current roles and adds roles without duplication
+[209/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:551:1 › Platform companies and tenant users expose the canonical administrative flow
+[210/460] [chromium-tablet] › e2e/managed-identity-tenant-access.spec.ts:86:1 › F/G platform selector remains Platform-only and tenant catalog is loaded only for the selected company
+[211/460] [chromium-tablet] › e2e/managed-identity-tenant-access.spec.ts:90:1 › J partial role failure retains identity and Membership, retry reuses exactly the original body/key
+[212/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:576:1 › removing one tenant role requires human confirmation and preserves the other
+[213/460] [chromium-tablet] › e2e/managed-identity-tenant-access.spec.ts:94:1 › K subscription denial explains the pending association and preserves the provisioned identity
+[214/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:627:1 › dashboard visual contract, drill-down and accessibility
+[215/460] [chromium-tablet] › e2e/managed-identity-tenant-access.spec.ts:97:1 › server-read failure after success permits refresh without repeating a mutation
+[216/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:669:3 › Aplicabilidad mantiene la baseline comercial en español
+[217/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:669:3 › Evaluaciones de requisitos mantiene la baseline comercial en español
+[218/460] [chromium-tablet] › e2e/managed-identity-tenant-access.spec.ts:100:1 › effective permission revocation prevents the central POST without relying on role names
+[219/460] [chromium-tablet] › e2e/managed-identity-tenant-access.spec.ts:102:1 › missing effective central permission exposes reads but never onboarding actions
+[220/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:669:3 › Declaración de aplicabilidad mantiene la baseline comercial en español
+[221/460] [chromium-tablet] › e2e/managed-identity-tenant-access.spec.ts:104:1 › tenant catalog contamination fails closed without a usable role or submit control
+[222/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:669:3 › Controles mantiene la baseline comercial en español
+[223/460] [chromium-tablet] › e2e/managed-identity-tenant-access.spec.ts:106:1 › governed tenant role revocation uses explicit target, ETag, reason, idempotency and canonical refetch
+[224/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:669:3 › Evaluaciones de control mantiene la baseline comercial en español
+[225/460] [chromium-tablet] › e2e/managed-identity-tenant-access.spec.ts:108:1 › M/N/O separated access sections preserve branding, responsive containment and keyboard focus
+[226/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:669:3 › Pruebas de aseguramiento mantiene la baseline comercial en español
+[227/460] [chromium-tablet] › e2e/managed-identity-ui.spec.ts:39:1 › login entry uses backend availability and fails closed for unknown response
+[228/460] [chromium-tablet] › e2e/managed-identity-ui.spec.ts:54:1 › Managed Identity entry opens the separate approved IAM flow without a GRC password form
+[229/460] [chromium-tablet] › e2e/managed-identity-ui.spec.ts:70:1 › permission projection governs MI controls; roles and tenant context grant none
+[230/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:669:3 › Solicitudes de evidencia mantiene la baseline comercial en español
+[231/460] [chromium-tablet] › e2e/managed-identity-ui.spec.ts:84:1 › create permission emits a one-time credential only in the result view
+[232/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:669:3 › Evidencias mantiene la baseline comercial en español
+[233/460] [chromium-tablet] › e2e/managed-identity-ui.spec.ts:124:1 › provision replay exposes metadata without a credential or automatic reset
+[234/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:669:3 › Políticas de retención mantiene la baseline comercial en español
+[235/460] [chromium-tablet] › e2e/managed-identity-ui.spec.ts:144:1 › password reset recovery requires a new explicit action and fresh key
+[236/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:669:3 › Hallazgos y brechas mantiene la baseline comercial en español
+[237/460] [chromium-tablet] › e2e/managed-identity-ui.spec.ts:177:1 › password reset original discloses once and a replay response omits the credential
+[238/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:669:3 › Acciones mantiene la baseline comercial en español
+[239/460] [chromium-tablet] › e2e/managed-identity-ui.spec.ts:205:1 › administrative lifecycle actions require a reason and distinct intentions
+[240/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:687:3 › Control assessment completes with valid, then refetches authoritative state
+[241/460] [chromium-tablet] › e2e/managed-identity-ui.spec.ts:238:1 › tenant admin and a Platform role name without projected permission cannot enter MI
+[242/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:687:3 › Control assessment completes with no_data, then refetches authoritative state
+[243/460] [chromium-tablet] › e2e/managed-identity-ui.spec.ts:249:1 › failed permission projection clears MI presentation eligibility
+[244/460] [chromium-tablet] › e2e/managed-identity-ui.spec.ts:259:1 › MI7 safe surfaces keep labels, focus and supported viewport layout
+[245/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:726:1 › Evidence request keeps backend denial and refetches successful fulfillment
+[246/460] [chromium-tablet] › e2e/platform-role-ui.spec.ts:58:1 › navigation, identity selection, empty state and catalog remain distinct from tenant roles
+[247/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:765:3 › compliance assessment selects the published server methodology without a fabricated default
+[248/460] [chromium-tablet] › e2e/platform-role-ui.spec.ts:74:1 › assign and revoke send exact IDs/payloads/fresh keys and refetch server state without optimistic authority
+[249/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:788:3 › compliance methodology catalog denial remains explicit and cannot become a free UUID field
+[250/460] [chromium-tablet] › e2e/platform-role-ui.spec.ts:95:1 › role-name and tenant grants cannot expose admin actions without effective platform permission
+[251/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:765:3 › controls assessment selects the published server methodology without a fabricated default
+[252/460] [chromium-tablet] › e2e/platform-role-ui.spec.ts:100:1 › missing catalog permission never supplies a hardcoded option while revoke remains independent
+[253/460] [chromium-tablet] › e2e/platform-role-ui.spec.ts:106:1 › fresh permission revocation prevents POST even after opening the confirmation
+[254/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:788:3 › controls methodology catalog denial remains explicit and cannot become a free UUID field
+[255/460] [chromium-tablet] › e2e/platform-role-ui.spec.ts:112:43 › assignment read 400 is an error rather than an empty collection
+[256/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:799:1 › Phase6A Subject picker pages authorized records, searches and invalidates stale selection
+[257/460] [chromium-tablet] › e2e/platform-role-ui.spec.ts:112:43 › assignment read 401 is an error rather than an empty collection
+[258/460] [chromium-tablet] › e2e/platform-role-ui.spec.ts:112:43 › assignment read 403 is an error rather than an empty collection
+[259/460] [chromium-tablet] › e2e/platform-role-ui.spec.ts:112:43 › assignment read 404 is an error rather than an empty collection
+[260/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:822:1 › Phase6A control versions require an explicit choice and retain native keyboard labels
+[261/460] [chromium-tablet] › e2e/platform-role-ui.spec.ts:112:43 › assignment read 409 is an error rather than an empty collection
+[262/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:838:1 › Phase6A selector failures retry without exposing technical error content
+[263/460] [chromium-tablet] › e2e/platform-role-ui.spec.ts:118:1 › catalog failure stays unavailable and does not fabricate options
+[264/460] [chromium-tablet] › e2e/platform-role-ui.spec.ts:122:1 › last platform administrator conflict preserves the exact server-rendered assignment
+[265/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:846:1 › Phase6A permission revocation during pagination removes cached choices and selection
+[266/460] [chromium-tablet] › e2e/platform-role-ui.spec.ts:130:1 › uncertain transport result blocks retries until explicit server read and a new intention
+[267/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:861:1 › Phase6A selectors fail closed in Spanish when an operational translation is unavailable
+[268/460] [chromium-tablet] › e2e/platform-role-ui.spec.ts:141:1 › successful POST with failed refetch never inserts authoritative optimistic state
+[269/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:875:1 › Macro R1 framework and SoA items use authorized business selectors without UUID/JSON input
+[270/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:90:1 › A: company with existing identity uses exact onboarding boundary, refetch and no manual IDs
+[271/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:885:1 › Macro R1 responsible selection binds purpose and selected Issue; vocabulary labels are Spanish
+[272/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:99:1 › B: MI provisioning reuses one-time disclosure across summary, partial failure and same-key recovery
+[273/460] [chromium-laptop] › e2e/core-grc-ui.spec.ts:893:1 › Macro R1 retention remains explicitly pending on missing legal binding; no fabricated option
+[274/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:113:1 › C: tenant explicit lookup, runtime role catalog, membership and server refetch
+[275/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:121:1 › D: tenant new Managed Identity is handoff, never credential provisioning
+(node:73410) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[276/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:141:1 › Control base selector resolves an authorized ControlVersion without a human UUID field
+[277/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:126:1 › E: partial roles recover only failed assignment with stable key and no repeated Membership
+[278/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:132:1 › F: tenant privacy has explicit lookup only, no typing requests, wildcard or global list
+[279/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:163:1 › Control catalog filters by an effective contracted framework
+[280/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:140:1 › existing active Membership is reused and its roles assigned independently
+[281/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:180:1 › Applicability offers only the approved decisions and requires a No aplica rationale
+[282/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:144:1 › platform authority and display role metadata confer no tenant create action
+[283/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:147:1 › company required fields, timezone error and back navigation keep business inputs
+[284/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:193:1 › Tenant Admin sees own contracted frameworks without commercial commands
+[285/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:153:1 › G: dual platform and own-tenant authority supports both operations with distinct contexts
+[286/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:202:1 › Tenant Admin reads validation access without platform actions
+[287/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:222:1 › Platform Admin creates exact non-authoritative access from canonical candidates
+[288/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:160:1 › H: platform-only projection includes role permission but never enables tenant assign
+[289/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:168:1 › wrong tenant projection cannot enable tenant incorporation or assignment
+[290/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:173:39 › tenant own-context revoke preserves reason, CAS, idempotency and server refresh
+[291/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:299:1 › Candidate empty and error states have no manual ID fallback
+[292/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:173:39 › platform explicit target revoke preserves reason, CAS, idempotency and server refresh
+[293/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:320:3 › Validation CREATE 400 displays the canonical denial and preserves list authority
+[294/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:182:1 › server receipt remains truthful if list refresh fails and is reconciled without another onboarding
+[295/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:190:1 › accepted role response without server assignment stays pending, then retries same intent
+[296/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:320:3 › Validation CREATE 401 displays the canonical denial and preserves list authority
+[297/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:198:1 › closing provisioned identity before onboarding retains identity and destroys credential disclosure
+[298/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:320:3 › Validation CREATE 403 displays the canonical denial and preserves list authority
+[299/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:208:39 › onboarding 403 shows safe business error and keeps the original retry key
+[300/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:320:3 › Validation CREATE 404 displays the canonical denial and preserves list authority
+[301/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:208:39 › onboarding 409 shows safe business error and keeps the original retry key
+[302/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:320:3 › Validation CREATE 409 displays the canonical denial and preserves list authority
+[303/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:208:39 › onboarding 422 shows safe business error and keeps the original retry key
+[304/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:355:1 › Validation CREATE ignores a repeated click while the POST is pending
+[305/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:215:1 › I/J: branding, keyboard steps, labels, focus return and responsive tenant form
+[306/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:381:1 › Platform Admin revokes validation access with reason, CAS and a local refresh
+[307/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:423:1 › Platform Admin sees a validation access conflict without a false success
+[308/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:230:1 › dual actor without platform revoke permission uses own tenant authority, never promotes platform read
+[309/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:236:1 › lost revoke response reconciles ended server state without a second mutation
+[310/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:448:1 › Tenant Admin creates a canonical Subject in company settings
+[311/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:243:1 › membership dialog traps keyboard focus, Escape restores detail trigger
+[312/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:460:1 › QA validation content displays its condition and keeps filters tenant-scoped
+[313/460] [chromium-tablet] › e2e/tenant-onboarding-ui.spec.ts:252:1 › dual actor reads own memberships and catalog using tenant grants when platform read grants are absent
+[314/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:505:1 › login surface exposes the governed OIDC entry point
+(node:73525) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[315/460] [chromium-narrow] › e2e/branding.spec.ts:22:1 › login branding loads the packaged canonical logo after deep navigation and reload
+[316/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:519:1 › invitation entry clears the one-time token from the visible URL
+[317/460] [chromium-narrow] › e2e/branding.spec.ts:43:1 › dashboard branding uses the same logo with responsive navigation
+[318/460] [chromium-narrow] › e2e/managed-identity-tenant-access.spec.ts:66:1 › A identity-only provisioning is optional and never rediscloses its credential
+[319/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:532:1 › platform admin can generate a Zoho invitation without automatic roles
+[320/460] [chromium-narrow] › e2e/managed-identity-tenant-access.spec.ts:72:33 › B/C provision plus 1 runtime tenant roles, server refetch and duplicate click
+[321/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:551:1 › Platform companies and tenant users expose the canonical administrative flow
+[322/460] [chromium-narrow] › e2e/managed-identity-tenant-access.spec.ts:72:33 › B/C provision plus 2 runtime tenant roles, server refetch and duplicate click
+[323/460] [chromium-narrow] › e2e/managed-identity-tenant-access.spec.ts:78:1 › D existing identity adds company access without reprovision or UUID labels
+[324/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:576:1 › removing one tenant role requires human confirmation and preserves the other
+[325/460] [chromium-narrow] › e2e/managed-identity-tenant-access.spec.ts:81:1 › E existing Membership displays current roles and adds roles without duplication
+[326/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:627:1 › dashboard visual contract, drill-down and accessibility
+[327/460] [chromium-narrow] › e2e/managed-identity-tenant-access.spec.ts:86:1 › F/G platform selector remains Platform-only and tenant catalog is loaded only for the selected company
+[328/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:669:3 › Aplicabilidad mantiene la baseline comercial en español
+[329/460] [chromium-narrow] › e2e/managed-identity-tenant-access.spec.ts:90:1 › J partial role failure retains identity and Membership, retry reuses exactly the original body/key
+[330/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:669:3 › Evaluaciones de requisitos mantiene la baseline comercial en español
+[331/460] [chromium-narrow] › e2e/managed-identity-tenant-access.spec.ts:94:1 › K subscription denial explains the pending association and preserves the provisioned identity
+[332/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:669:3 › Declaración de aplicabilidad mantiene la baseline comercial en español
+[333/460] [chromium-narrow] › e2e/managed-identity-tenant-access.spec.ts:97:1 › server-read failure after success permits refresh without repeating a mutation
+[334/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:669:3 › Controles mantiene la baseline comercial en español
+[335/460] [chromium-narrow] › e2e/managed-identity-tenant-access.spec.ts:100:1 › effective permission revocation prevents the central POST without relying on role names
+[336/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:669:3 › Evaluaciones de control mantiene la baseline comercial en español
+[337/460] [chromium-narrow] › e2e/managed-identity-tenant-access.spec.ts:102:1 › missing effective central permission exposes reads but never onboarding actions
+[338/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:669:3 › Pruebas de aseguramiento mantiene la baseline comercial en español
+[339/460] [chromium-narrow] › e2e/managed-identity-tenant-access.spec.ts:104:1 › tenant catalog contamination fails closed without a usable role or submit control
+[340/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:669:3 › Solicitudes de evidencia mantiene la baseline comercial en español
+[341/460] [chromium-narrow] › e2e/managed-identity-tenant-access.spec.ts:106:1 › governed tenant role revocation uses explicit target, ETag, reason, idempotency and canonical refetch
+[342/460] [chromium-narrow] › e2e/managed-identity-tenant-access.spec.ts:108:1 › M/N/O separated access sections preserve branding, responsive containment and keyboard focus
+[343/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:669:3 › Evidencias mantiene la baseline comercial en español
+[344/460] [chromium-narrow] › e2e/managed-identity-ui.spec.ts:39:1 › login entry uses backend availability and fails closed for unknown response
+[345/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:669:3 › Políticas de retención mantiene la baseline comercial en español
+[346/460] [chromium-narrow] › e2e/managed-identity-ui.spec.ts:54:1 › Managed Identity entry opens the separate approved IAM flow without a GRC password form
+[347/460] [chromium-narrow] › e2e/managed-identity-ui.spec.ts:70:1 › permission projection governs MI controls; roles and tenant context grant none
+[348/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:669:3 › Hallazgos y brechas mantiene la baseline comercial en español
+[349/460] [chromium-narrow] › e2e/managed-identity-ui.spec.ts:84:1 › create permission emits a one-time credential only in the result view
+[350/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:669:3 › Acciones mantiene la baseline comercial en español
+[351/460] [chromium-narrow] › e2e/managed-identity-ui.spec.ts:124:1 › provision replay exposes metadata without a credential or automatic reset
+[352/460] [chromium-narrow] › e2e/managed-identity-ui.spec.ts:144:1 › password reset recovery requires a new explicit action and fresh key
+[353/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:687:3 › Control assessment completes with valid, then refetches authoritative state
+[354/460] [chromium-narrow] › e2e/managed-identity-ui.spec.ts:177:1 › password reset original discloses once and a replay response omits the credential
+[355/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:687:3 › Control assessment completes with no_data, then refetches authoritative state
+[356/460] [chromium-narrow] › e2e/managed-identity-ui.spec.ts:205:1 › administrative lifecycle actions require a reason and distinct intentions
+[357/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:726:1 › Evidence request keeps backend denial and refetches successful fulfillment
+[358/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:765:3 › compliance assessment selects the published server methodology without a fabricated default
+[359/460] [chromium-narrow] › e2e/managed-identity-ui.spec.ts:238:1 › tenant admin and a Platform role name without projected permission cannot enter MI
+[360/460] [chromium-narrow] › e2e/managed-identity-ui.spec.ts:249:1 › failed permission projection clears MI presentation eligibility
+[361/460] [chromium-narrow] › e2e/managed-identity-ui.spec.ts:259:1 › MI7 safe surfaces keep labels, focus and supported viewport layout
+[362/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:788:3 › compliance methodology catalog denial remains explicit and cannot become a free UUID field
+[363/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:765:3 › controls assessment selects the published server methodology without a fabricated default
+[364/460] [chromium-narrow] › e2e/platform-role-ui.spec.ts:58:1 › navigation, identity selection, empty state and catalog remain distinct from tenant roles
+[365/460] [chromium-narrow] › e2e/platform-role-ui.spec.ts:74:1 › assign and revoke send exact IDs/payloads/fresh keys and refetch server state without optimistic authority
+[366/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:788:3 › controls methodology catalog denial remains explicit and cannot become a free UUID field
+[367/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:799:1 › Phase6A Subject picker pages authorized records, searches and invalidates stale selection
+[368/460] [chromium-narrow] › e2e/platform-role-ui.spec.ts:95:1 › role-name and tenant grants cannot expose admin actions without effective platform permission
+[369/460] [chromium-narrow] › e2e/platform-role-ui.spec.ts:100:1 › missing catalog permission never supplies a hardcoded option while revoke remains independent
+[370/460] [chromium-narrow] › e2e/platform-role-ui.spec.ts:106:1 › fresh permission revocation prevents POST even after opening the confirmation
+[371/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:822:1 › Phase6A control versions require an explicit choice and retain native keyboard labels
+[372/460] [chromium-narrow] › e2e/platform-role-ui.spec.ts:112:43 › assignment read 400 is an error rather than an empty collection
+[373/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:838:1 › Phase6A selector failures retry without exposing technical error content
+[374/460] [chromium-narrow] › e2e/platform-role-ui.spec.ts:112:43 › assignment read 401 is an error rather than an empty collection
+[375/460] [chromium-narrow] › e2e/platform-role-ui.spec.ts:112:43 › assignment read 403 is an error rather than an empty collection
+[376/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:846:1 › Phase6A permission revocation during pagination removes cached choices and selection
+[377/460] [chromium-narrow] › e2e/platform-role-ui.spec.ts:112:43 › assignment read 404 is an error rather than an empty collection
+[378/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:861:1 › Phase6A selectors fail closed in Spanish when an operational translation is unavailable
+[379/460] [chromium-narrow] › e2e/platform-role-ui.spec.ts:112:43 › assignment read 409 is an error rather than an empty collection
+[380/460] [chromium-narrow] › e2e/platform-role-ui.spec.ts:118:1 › catalog failure stays unavailable and does not fabricate options
+[381/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:875:1 › Macro R1 framework and SoA items use authorized business selectors without UUID/JSON input
+[382/460] [chromium-narrow] › e2e/platform-role-ui.spec.ts:122:1 › last platform administrator conflict preserves the exact server-rendered assignment
+[383/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:885:1 › Macro R1 responsible selection binds purpose and selected Issue; vocabulary labels are Spanish
+[384/460] [chromium-narrow] › e2e/platform-role-ui.spec.ts:130:1 › uncertain transport result blocks retries until explicit server read and a new intention
+[385/460] [chromium-tablet] › e2e/core-grc-ui.spec.ts:893:1 › Macro R1 retention remains explicitly pending on missing legal binding; no fabricated option
+[386/460] [chromium-narrow] › e2e/platform-role-ui.spec.ts:141:1 › successful POST with failed refetch never inserts authoritative optimistic state
+[387/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:90:1 › A: company with existing identity uses exact onboarding boundary, refetch and no manual IDs
+(node:73668) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[388/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:99:1 › B: MI provisioning reuses one-time disclosure across summary, partial failure and same-key recovery
+[389/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:141:1 › Control base selector resolves an authorized ControlVersion without a human UUID field
+[390/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:113:1 › C: tenant explicit lookup, runtime role catalog, membership and server refetch
+[391/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:163:1 › Control catalog filters by an effective contracted framework
+[392/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:121:1 › D: tenant new Managed Identity is handoff, never credential provisioning
+[393/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:180:1 › Applicability offers only the approved decisions and requires a No aplica rationale
+[394/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:126:1 › E: partial roles recover only failed assignment with stable key and no repeated Membership
+[395/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:193:1 › Tenant Admin sees own contracted frameworks without commercial commands
+[396/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:132:1 › F: tenant privacy has explicit lookup only, no typing requests, wildcard or global list
+[397/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:202:1 › Tenant Admin reads validation access without platform actions
+[398/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:140:1 › existing active Membership is reused and its roles assigned independently
+[399/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:222:1 › Platform Admin creates exact non-authoritative access from canonical candidates
+[400/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:144:1 › platform authority and display role metadata confer no tenant create action
+[401/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:147:1 › company required fields, timezone error and back navigation keep business inputs
+[402/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:153:1 › G: dual platform and own-tenant authority supports both operations with distinct contexts
+[403/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:299:1 › Candidate empty and error states have no manual ID fallback
+[404/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:320:3 › Validation CREATE 400 displays the canonical denial and preserves list authority
+[405/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:160:1 › H: platform-only projection includes role permission but never enables tenant assign
+[406/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:168:1 › wrong tenant projection cannot enable tenant incorporation or assignment
+[407/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:320:3 › Validation CREATE 401 displays the canonical denial and preserves list authority
+[408/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:173:39 › tenant own-context revoke preserves reason, CAS, idempotency and server refresh
+[409/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:173:39 › platform explicit target revoke preserves reason, CAS, idempotency and server refresh
+[410/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:320:3 › Validation CREATE 403 displays the canonical denial and preserves list authority
+[411/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:182:1 › server receipt remains truthful if list refresh fails and is reconciled without another onboarding
+[412/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:320:3 › Validation CREATE 404 displays the canonical denial and preserves list authority
+[413/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:190:1 › accepted role response without server assignment stays pending, then retries same intent
+[414/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:320:3 › Validation CREATE 409 displays the canonical denial and preserves list authority
+[415/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:198:1 › closing provisioned identity before onboarding retains identity and destroys credential disclosure
+[416/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:355:1 › Validation CREATE ignores a repeated click while the POST is pending
+[417/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:208:39 › onboarding 403 shows safe business error and keeps the original retry key
+[418/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:381:1 › Platform Admin revokes validation access with reason, CAS and a local refresh
+[419/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:208:39 › onboarding 409 shows safe business error and keeps the original retry key
+[420/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:423:1 › Platform Admin sees a validation access conflict without a false success
+[421/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:208:39 › onboarding 422 shows safe business error and keeps the original retry key
+[422/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:448:1 › Tenant Admin creates a canonical Subject in company settings
+[423/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:215:1 › I/J: branding, keyboard steps, labels, focus return and responsive tenant form
+[424/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:460:1 › QA validation content displays its condition and keeps filters tenant-scoped
+[425/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:505:1 › login surface exposes the governed OIDC entry point
+[426/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:230:1 › dual actor without platform revoke permission uses own tenant authority, never promotes platform read
+[427/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:519:1 › invitation entry clears the one-time token from the visible URL
+[428/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:236:1 › lost revoke response reconciles ended server state without a second mutation
+[429/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:532:1 › platform admin can generate a Zoho invitation without automatic roles
+[430/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:243:1 › membership dialog traps keyboard focus, Escape restores detail trigger
+[431/460] [chromium-narrow] › e2e/tenant-onboarding-ui.spec.ts:252:1 › dual actor reads own memberships and catalog using tenant grants when platform read grants are absent
+[432/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:551:1 › Platform companies and tenant users expose the canonical administrative flow
+[433/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:576:1 › removing one tenant role requires human confirmation and preserves the other
+[434/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:627:1 › dashboard visual contract, drill-down and accessibility
+[435/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:669:3 › Aplicabilidad mantiene la baseline comercial en español
+[436/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:669:3 › Evaluaciones de requisitos mantiene la baseline comercial en español
+[437/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:669:3 › Declaración de aplicabilidad mantiene la baseline comercial en español
+[438/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:669:3 › Controles mantiene la baseline comercial en español
+[439/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:669:3 › Evaluaciones de control mantiene la baseline comercial en español
+[440/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:669:3 › Pruebas de aseguramiento mantiene la baseline comercial en español
+[441/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:669:3 › Solicitudes de evidencia mantiene la baseline comercial en español
+[442/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:669:3 › Evidencias mantiene la baseline comercial en español
+[443/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:669:3 › Políticas de retención mantiene la baseline comercial en español
+[444/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:669:3 › Hallazgos y brechas mantiene la baseline comercial en español
+[445/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:669:3 › Acciones mantiene la baseline comercial en español
+[446/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:687:3 › Control assessment completes with valid, then refetches authoritative state
+[447/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:687:3 › Control assessment completes with no_data, then refetches authoritative state
+[448/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:726:1 › Evidence request keeps backend denial and refetches successful fulfillment
+[449/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:765:3 › compliance assessment selects the published server methodology without a fabricated default
+[450/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:788:3 › compliance methodology catalog denial remains explicit and cannot become a free UUID field
+[451/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:765:3 › controls assessment selects the published server methodology without a fabricated default
+[452/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:788:3 › controls methodology catalog denial remains explicit and cannot become a free UUID field
+[453/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:799:1 › Phase6A Subject picker pages authorized records, searches and invalidates stale selection
+[454/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:822:1 › Phase6A control versions require an explicit choice and retain native keyboard labels
+[455/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:838:1 › Phase6A selector failures retry without exposing technical error content
+[456/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:846:1 › Phase6A permission revocation during pagination removes cached choices and selection
+[457/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:861:1 › Phase6A selectors fail closed in Spanish when an operational translation is unavailable
+[458/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:875:1 › Macro R1 framework and SoA items use authorized business selectors without UUID/JSON input
+[459/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:885:1 › Macro R1 responsible selection binds purpose and selected Issue; vocabulary labels are Spanish
+[460/460] [chromium-narrow] › e2e/core-grc-ui.spec.ts:893:1 › Macro R1 retention remains explicitly pending on missing legal binding; no fabricated option
+  460 passed (2.9m)

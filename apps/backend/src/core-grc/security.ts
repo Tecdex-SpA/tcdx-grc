@@ -134,16 +134,16 @@ export function requireAccess(actor: CoreActor, permission: string, capability: 
 
 export async function assertLifecycleEdge(transaction: Transaction<FoundationDatabase>, actor: CoreActor, input: {
   entityType: string; fromState: string; commandCode: string; permission: string;
-}): Promise<{ toState: string; auditEventCode: string; sodPolicyRef: string }> {
-  const edge = await sql<{ to_state: string; audit_event_code: string; sod_policy_ref: string; scope_kind: ScopeKind }>`
+}): Promise<{ toState: string; auditEventCode: string; sodPolicyRef: string; preconditionPolicyRef: string }> {
+  const edge = await sql<{ to_state: string; audit_event_code: string; sod_policy_ref: string; precondition_policy_ref: string; scope_kind: ScopeKind }>`
     WITH current_edges AS (
       SELECT DISTINCT ON (entity_type,from_state,command_code)
-             lifecycle_transition_definition_id,entity_type,from_state,command_code,to_state,audit_event_code,sod_policy_ref,permission_id
+             lifecycle_transition_definition_id,entity_type,from_state,command_code,to_state,audit_event_code,sod_policy_ref,precondition_policy_ref,permission_id
         FROM ops_audit.lifecycle_transition_definitions
        WHERE lifecycle_state='published'
        ORDER BY entity_type,from_state,command_code,version_number DESC
     )
-    SELECT e.to_state,e.audit_event_code,e.sod_policy_ref,s.scope_kind
+    SELECT e.to_state,e.audit_event_code,e.sod_policy_ref,e.precondition_policy_ref,s.scope_kind
       FROM current_edges e
       JOIN iam.permissions p ON p.permission_id=e.permission_id
       JOIN ops_audit.lifecycle_transition_scopes s ON s.lifecycle_transition_definition_id=e.lifecycle_transition_definition_id
@@ -154,5 +154,5 @@ export async function assertLifecycleEdge(transaction: Transaction<FoundationDat
   if (edge.rows.length === 0 || !edge.rows.some((row) => grants.has(row.scope_kind))) {
     throw new FoundationError("TCDX.LIFECYCLE.TRANSITION_DENIED", "Lifecycle transition denied", 409);
   }
-  return { toState: edge.rows[0]!.to_state, auditEventCode: edge.rows[0]!.audit_event_code, sodPolicyRef: edge.rows[0]!.sod_policy_ref };
+  return { toState: edge.rows[0]!.to_state, auditEventCode: edge.rows[0]!.audit_event_code, sodPolicyRef: edge.rows[0]!.sod_policy_ref, preconditionPolicyRef: edge.rows[0]!.precondition_policy_ref };
 }

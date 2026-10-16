@@ -1,0 +1,4047 @@
+{
+  "scope": "OFFLINE_APPROVED_LOCAL_PUBLICATION_RECONCILIATION_NO_SQL_EXECUTION",
+  "checks": [
+    {
+      "check": "EC R1 adopted bytes",
+      "result": "PASS"
+    },
+    {
+      "check": "EC specific approval provenance",
+      "result": "PASS"
+    },
+    {
+      "check": "24 canonical role templates",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape PLATFORM_ADMIN",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape PLATFORM_SUPPORT",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape TENANT_ADMIN",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape EXECUTIVE_BOARD_VIEWER",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape GRC_MANAGER",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape QUALITY_MANAGER",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape COMPLIANCE_MANAGER",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape RISK_MANAGER",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape CISO_SECURITY_MANAGER",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape AI_GOVERNANCE_MANAGER",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape PRIVACY_MANAGER",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape LEGAL_REVIEWER",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape AUDITOR_LEAD",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape AUDITOR",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape PROCESS_OWNER",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape CONTROL_OWNER",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape EVIDENCE_OWNER",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape ACTION_OWNER",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape SUPPLIER_MANAGER",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape CONTINUITY_MANAGER",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape REGULATORY_CONTENT_STEWARD",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape DATA_ADMIN",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape REPORT_VIEWER",
+      "result": "PASS"
+    },
+    {
+      "check": "grant before/after shape VIEWER",
+      "result": "PASS"
+    },
+    {
+      "check": "44 unique candidate pairs",
+      "result": "PASS"
+    },
+    {
+      "check": "13/17/14 grant counts",
+      "result": "PASS"
+    },
+    {
+      "check": "no Platform/Tenant Admin candidate escalation",
+      "result": "PASS"
+    },
+    {
+      "check": "published reader/creator sources resolved 0",
+      "result": "PASS"
+    },
+    {
+      "check": "candidate exactly matches authorized-purpose union compliance.framework.read",
+      "result": "PASS"
+    },
+    {
+      "check": "published reader/creator sources resolved 1",
+      "result": "PASS"
+    },
+    {
+      "check": "candidate exactly matches authorized-purpose union platform.membership_reference.read",
+      "result": "PASS"
+    },
+    {
+      "check": "published reader/creator sources resolved 2",
+      "result": "PASS"
+    },
+    {
+      "check": "candidate exactly matches authorized-purpose union privacy.retention_policy_reference.read",
+      "result": "PASS"
+    },
+    {
+      "check": "exact later macro approval",
+      "result": "PASS"
+    },
+    {
+      "check": "published bounded pairs preserve approved candidate",
+      "result": "PASS"
+    },
+    {
+      "check": "specifically approved local Permission publication compliance.framework.read",
+      "result": "PASS"
+    },
+    {
+      "check": "specifically approved local Permission publication platform.membership_reference.read",
+      "result": "PASS"
+    },
+    {
+      "check": "specifically approved local Permission publication privacy.retention_policy_reference.read",
+      "result": "PASS"
+    },
+    {
+      "check": "D01 extra AUDITOR seed identified",
+      "result": "PASS"
+    },
+    {
+      "check": "D02 Requirement seed definition without literal grants",
+      "result": "PASS"
+    },
+    {
+      "check": "D02 no later direct Requirement grant publication",
+      "result": "PASS"
+    },
+    {
+      "check": "52 adopted proposal bytes",
+      "result": "PASS"
+    },
+    {
+      "check": "52 rows / 14 families",
+      "result": "PASS"
+    },
+    {
+      "check": "unique family/code namespace",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 2 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 2 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 2 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 3 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 3 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 3 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0223",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 4 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 4 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 4 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0223",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 5 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 5 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 5 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0223",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 6 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 6 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 6 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 7 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 7 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 7 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0208",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0234",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 8 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 8 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 8 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0208",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0234",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 9 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 9 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 9 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0208",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0234",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 10 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 10 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 10 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 11 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 11 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 11 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0075",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0090",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 12 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 12 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 12 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0075",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0090",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 13 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 13 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 13 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0075",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0090",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 14 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 14 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 14 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0075",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0090",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 15 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 15 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 15 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0075",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0090",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 16 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 16 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 16 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0075",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0090",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 17 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 17 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 17 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0075",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0090",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 18 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 18 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 18 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 19 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 19 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 19 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0341",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 20 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 20 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 20 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 21 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 21 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 21 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0343",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 22 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 22 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 22 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0343",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 23 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 23 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 23 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0343",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 24 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 24 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 24 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 25 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 25 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 25 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 26 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 26 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 26 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 27 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 27 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 27 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0279",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0287",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0300",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0314",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0329",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 28 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 28 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 28 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0279",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0287",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0300",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0314",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0329",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 29 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 29 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 29 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0279",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0287",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0300",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0314",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0329",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 30 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 30 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 30 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 31 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 31 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 31 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0226",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0229",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 32 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 32 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 32 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0226",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0229",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 33 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 33 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 33 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 34 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 34 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 34 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0358",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 35 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 35 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 35 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0358",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 36 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 36 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 36 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0358",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 37 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 37 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 37 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0358",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 38 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 38 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 38 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 39 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 39 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 39 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0278",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0286",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0299",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 40 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 40 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 40 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0278",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0286",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0299",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 41 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 41 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 41 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0278",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0286",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0299",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 42 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 42 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 42 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 43 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 43 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 43 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0213",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0240",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 44 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 44 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 44 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0213",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0240",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 45 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 45 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 45 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0213",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0240",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 46 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 46 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 46 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 47 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 47 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 47 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0225",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0228",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 48 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 48 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 48 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0225",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0228",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 49 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 49 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 49 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 50 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 50 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 50 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0079",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0094",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 51 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 51 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 51 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0079",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0094",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 52 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 52 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 52 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0079",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0094",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 53 exact source payload",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 53 checksum and signed-date absence",
+      "result": "PASS"
+    },
+    {
+      "check": "vocabulary 53 string bounds and owner",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0079",
+      "result": "PASS"
+    },
+    {
+      "check": "unambiguous occurrence family F-0094",
+      "result": "PASS"
+    },
+    {
+      "check": "26 occurrences, 4 mappings / 22 new contracts",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0075",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0079",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0090",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0094",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0208",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0213",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0223",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0225",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0226",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0228",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0229",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0234",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0240",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0278",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0279",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0285",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0286",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0287",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0299",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0300",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0314",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0318",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0329",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0341",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0343",
+      "result": "PASS"
+    },
+    {
+      "check": "consumer provenance F-0358",
+      "result": "PASS"
+    },
+    {
+      "check": "all consumers mapped",
+      "result": "PASS"
+    },
+    {
+      "check": "48 unique clauses match ledger",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260916000100",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260916000200",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260916000300",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260916000400",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260916000500",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260916000600",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260916000700",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260916000800",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260916000900",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260916001000",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260921000100",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260921000200",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260923000100",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260923000200",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260924000100",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260924000200",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260924000300",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260925000100",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260928000100",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260928000200",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260928000300",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260928000400",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260929000100",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260929000200",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20260929000300",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20261001000100",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20261006000100",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20261006000200",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20261007000100",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20261007000200",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20261009000100",
+      "result": "PASS"
+    },
+    {
+      "check": "immutable active migration checksum 20261009000200",
+      "result": "PASS"
+    },
+    {
+      "check": "five independent current packets remain pending",
+      "result": "PASS"
+    },
+    {
+      "check": "exact adoptable UTF-8 hash DR-STEP6A3-CFGD-SOD-R1",
+      "result": "PASS"
+    },
+    {
+      "check": "sealed packet source docs/phase6a/STEP_6A3/28_CONFIG_CFGD_CONDITIONAL_DECISION_AND_PHYSICAL_RECONCILIATION.md",
+      "result": "PASS"
+    },
+    {
+      "check": "sealed packet source docs/executable-contracts/27_PHASE5_METHODOLOGY_BINDING.md",
+      "result": "PASS"
+    },
+    {
+      "check": "sealed packet source database/migrations/20261007000200_phase5_methodology_binding.sql",
+      "result": "PASS"
+    },
+    {
+      "check": "literal methodology decision hash CFG-D-COMPLIANCE-V1",
+      "result": "PASS"
+    },
+    {
+      "check": "literal methodology decision hash CFG-D-CONTROLS-V1",
+      "result": "PASS"
+    },
+    {
+      "check": "literal methodology decision hash CFG-D-PUBLICATION",
+      "result": "PASS"
+    },
+    {
+      "check": "exact adoptable UTF-8 hash DR-STEP6A3-CT-RBAC-R1",
+      "result": "PASS"
+    },
+    {
+      "check": "sealed packet source docs/phase6a/STEP_6A3/20_P_RBAC_PUBLICATION_DECISION_PACKET.md",
+      "result": "PASS"
+    },
+    {
+      "check": "sealed packet source docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md",
+      "result": "PASS"
+    },
+    {
+      "check": "exact adoptable UTF-8 hash DR-STEP6A3-VOC52-R1",
+      "result": "PASS"
+    },
+    {
+      "check": "sealed packet source docs/phase6a/STEP_6A3/22_P_VOC_CANONICAL_VALUE_PROPOSALS.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "sealed packet source docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md",
+      "result": "PASS"
+    },
+    {
+      "check": "sealed packet source docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "sealed packet source docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md",
+      "result": "PASS"
+    },
+    {
+      "check": "exact adoptable UTF-8 hash DR-STEP6A3-UQ-DEFAULT-R2",
+      "result": "PASS"
+    },
+    {
+      "check": "sealed packet source docs/phase6a/STEP_6A3/physical-reconciliation/constraints.isolated.prepared.sql",
+      "result": "PASS"
+    },
+    {
+      "check": "sealed packet source docs/phase6a/STEP_6A3/physical-reconciliation/existing-data.predicates.readonly.sql",
+      "result": "PASS"
+    },
+    {
+      "check": "sealed packet source docs/phase6a/STEP_6A3/physical-reconciliation/forward-only.candidate.sql",
+      "result": "PASS"
+    },
+    {
+      "check": "sealed packet source docs/phase6a/STEP_6A3/physical-reconciliation/preflight.readonly.sql",
+      "result": "PASS"
+    },
+    {
+      "check": "exact adoptable UTF-8 hash DR-STEP6A3-EXTERNAL-ACCEPTANCE-R1",
+      "result": "PASS"
+    },
+    {
+      "check": "sealed packet source docs/executable-contracts/10_TEST_CONTRACTS.md",
+      "result": "PASS"
+    },
+    {
+      "check": "sealed packet source docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md",
+      "result": "PASS"
+    }
+  ],
+  "passed": 365,
+  "failed": 0,
+  "ec_adopted_sha256": "159c2fac9a5d2006900f49ee020521146f2e85baeec9233c8a8f07429bc28163",
+  "candidate_grants": [
+    {
+      "role_code": "EXECUTIVE_BOARD_VIEWER",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F read; M/R sólo history parent autorizado",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:104",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:69",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:59",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "EXECUTIVE_BOARD_VIEWER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F read; M/R sólo history parent autorizado",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:104",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:69",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "EXECUTIVE_BOARD_VIEWER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F read; M/R sólo history parent autorizado",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:104",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:69",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "GRC_MANAGER",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F; M request/action; R sólo history salvo command grant independiente",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:105",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:70",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:59",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "GRC_MANAGER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F; M request/action; R sólo history salvo command grant independiente",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:105",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:70",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "GRC_MANAGER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F; M request/action; R sólo history salvo command grant independiente",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:105",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:70",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "QUALITY_MANAGER",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F; M action; R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:106",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:71",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:59",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "QUALITY_MANAGER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F; M action; R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:106",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:71",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "QUALITY_MANAGER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F; M action; R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:106",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:71",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F; M request/action; R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:107",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:72",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:59",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F; M request/action; R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:107",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:72",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F; M request/action; R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:107",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:72",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "RISK_MANAGER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "M action/history Action; no Risk runtime nuevo",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:108",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:73",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:109",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:74",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:59",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:109",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:74",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:109",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:74",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:110",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:75",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:59",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:110",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:75",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:110",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:75",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "PRIVACY_MANAGER",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F; M/R history; retención admin conserva PRIVACY",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:111",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:76",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:59",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "PRIVACY_MANAGER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F; M/R history; retención admin conserva PRIVACY",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:111",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:76",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "PRIVACY_MANAGER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F; M/R history; retención admin conserva PRIVACY",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:111",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:76",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "LEGAL_REVIEWER",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F; M/R history; ninguna aprobación automática",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:112",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:77",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:59",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "LEGAL_REVIEWER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F; M/R history; ninguna aprobación automática",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:112",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:77",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "LEGAL_REVIEWER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F; M/R history; ninguna aprobación automática",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:112",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:77",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "AUDITOR_LEAD",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F; M request/action; R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:113",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:78",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "AUDITOR_LEAD",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F; M request/action; R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:113",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:78",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "AUDITOR_LEAD",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F; M request/action; R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:113",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:78",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "AUDITOR",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F; M request; R upload por document.create; M action DENY por RBAC-D01",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:114",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:79",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "AUDITOR",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F; M request; R upload por document.create; M action DENY por RBAC-D01",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:114",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:79",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "AUDITOR",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F; M request; R upload por document.create; M action DENY por RBAC-D01",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:114",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:79",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:76"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "PROCESS_OWNER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "M sólo history de Action/Assurance autorizado",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:115",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:80",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "CONTROL_OWNER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "M request; R upload; history sólo parent permitido",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:116",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:81",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "CONTROL_OWNER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "M request; R upload; history sólo parent permitido",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:116",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:81",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:76"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "EVIDENCE_OWNER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "M history; R upload/evidence; sin autoaprobar",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:117",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:82",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "EVIDENCE_OWNER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "M history; R upload/evidence; sin autoaprobar",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:117",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:82",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:76",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:141"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "ACTION_OWNER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "M history Action; sin create/verificación implícita",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:118",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:83",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "REGULATORY_CONTENT_STEWARD",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F read, sin publicación editorial",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:121",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:86",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:59"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "REPORT_VIEWER",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F read; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:123",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:88",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:59",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "REPORT_VIEWER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F read; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:123",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:88",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "REPORT_VIEWER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F read; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:123",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:88",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "VIEWER",
+      "permission": "compliance.framework.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "purpose_and_justification": "F read; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:124",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:89",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:59",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:126"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "VIEWER",
+      "permission": "platform.membership_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object,audit_engagement; exact parent only",
+      "capability": "CORE_PLATFORM + purpose capability",
+      "purpose_and_justification": "F read; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:124",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:89",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:130",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:133",
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:129"
+      ],
+      "broader_than_purpose_union": false
+    },
+    {
+      "role_code": "VIEWER",
+      "permission": "privacy.retention_policy_reference.read",
+      "before": 0,
+      "after_candidate": 1,
+      "publication_state": "NOT_PUBLISHED",
+      "authority": "TENANT via active MembershipRole; template ownership is not actor authority",
+      "template_ownership": "PLATFORM_CONTROL",
+      "scopes": "tenant,assigned_object,owned_object; exact parent/command only",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "purpose_and_justification": "F read; M/R history",
+      "source": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md:124",
+      "role_source": "database/migrations/20260916000900_canonical_seeds.sql:89",
+      "sod": "No approval/assignment/admin grant; parent SoD and command grant remain independent",
+      "risk": "History must not permit enumeration or selection; no structural scope inferred",
+      "published_purpose_sources": [
+        "docs/executable-contracts/05_PERMISSION_CATALOG.md:131"
+      ],
+      "broader_than_purpose_union": false
+    }
+  ],
+  "rbac_discrepancies": {
+    "D01_literal_action_create_seed_roles": [
+      "AUDITOR",
+      "AUDITOR_LEAD",
+      "COMPLIANCE_MANAGER",
+      "GRC_MANAGER",
+      "QUALITY_MANAGER",
+      "RISK_MANAGER"
+    ],
+    "D02_requirement_literal_seed_grants": 0,
+    "later_select_distributions": [
+      {
+        "source": "database/migrations/20260921000100_pre_f5c_executable_physical_reconciliation.sql:63",
+        "sha256": "3ad1a2a663d1f00b8a6f8cb417ee1333a38ca39b9cfb81c1d0d883c2b5096cef",
+        "direct_requirement_reference": false
+      },
+      {
+        "source": "database/migrations/20260921000100_pre_f5c_executable_physical_reconciliation.sql:64",
+        "sha256": "f588b3408c80ce04b88b1a201ddf410f31d997e3ce5dd2642bd620470e16bb28",
+        "direct_requirement_reference": false
+      },
+      {
+        "source": "database/migrations/20260921000100_pre_f5c_executable_physical_reconciliation.sql:66",
+        "sha256": "e30261adcbb37c700306e39064990ac41833aa95fb62f9a81996110acdfd4f58",
+        "direct_requirement_reference": false
+      },
+      {
+        "source": "database/migrations/20260921000100_pre_f5c_executable_physical_reconciliation.sql:67",
+        "sha256": "d1caf8af14689a11235ef501d45a280842f41f7fc56978a3bca151525222e5b5",
+        "direct_requirement_reference": false
+      },
+      {
+        "source": "database/migrations/20260921000100_pre_f5c_executable_physical_reconciliation.sql:68",
+        "sha256": "ea62b0b4329ba31869f4a7dc654fd68afcd5b51a3c8db77b3fb256611f5884c6",
+        "direct_requirement_reference": false
+      },
+      {
+        "source": "database/migrations/20260921000200_phase5_core_grc_runtime_permissions.sql:57",
+        "sha256": "f2f4fc0bdcc28d85f623922b950a0b3c60d63b120a2750829df0a912c43dfe64",
+        "direct_requirement_reference": false
+      },
+      {
+        "source": "database/migrations/20260924000100_phase5_subscription_create_catalog.sql:43",
+        "sha256": "18adfdd0f8d4f1f2b48eea6f4a761363cc1e1b1a70f9cf17d89f7f594b6fb266",
+        "direct_requirement_reference": false
+      },
+      {
+        "source": "database/migrations/20260924000300_phase5_membership_invitation.sql:99",
+        "sha256": "e160acf390ed11fbcbcc3e4e898a9154f4cf60ce7f1de6c963828ad97e5ced5c",
+        "direct_requirement_reference": false
+      },
+      {
+        "source": "database/migrations/20260925000100_phase5_membership_invitation_platform_authority_reconciliation.sql:104",
+        "sha256": "787d1b560905aea13885c71b0e10740dc9fa5019c85a6eacb4fcf1c5798065a3",
+        "direct_requirement_reference": false
+      },
+      {
+        "source": "database/migrations/20260928000100_phase5_administrative_read_permissions.sql:44",
+        "sha256": "6411d31c678a8bfc8df92c1f316866ee875dda6f558c12bb73f0bd350b471fbc",
+        "direct_requirement_reference": false
+      },
+      {
+        "source": "database/migrations/20260928000100_phase5_administrative_read_permissions.sql:56",
+        "sha256": "6a483c7d70a38a83ff65cdca6eaa7e72ed9e1b8f647b62d6c9a11ce9c133eba4",
+        "direct_requirement_reference": false
+      },
+      {
+        "source": "database/migrations/20260928000200_phase5_membership_role_revoke_platform_grant.sql:27",
+        "sha256": "81d1f75c354520a422fc7bd20804e49354745b7f34efccccd8c2bc7223fb9e62",
+        "direct_requirement_reference": false
+      },
+      {
+        "source": "database/migrations/20260929000200_phase5_plus_permissions_applicability.sql:29",
+        "sha256": "fca77b558175bc6d9f9c78e2d3f890cf1825bd8c4d3212627bf1877c12f6e6bc",
+        "direct_requirement_reference": false
+      },
+      {
+        "source": "database/migrations/20260929000300_phase5_plus_subject_validation_access.sql:105",
+        "sha256": "4edccaeebf9edb120d8578f560da11c9e74451e6f86eab194074f98ddd2a71da",
+        "direct_requirement_reference": false
+      },
+      {
+        "source": "database/migrations/20261001000100_managed_identity_permissions_publication.sql:47",
+        "sha256": "1e1c308e0e0c94779063db521a7abe07d19c52a2297b010844ba009fb1a91f36",
+        "direct_requirement_reference": false
+      },
+      {
+        "source": "database/migrations/20261006000100_platform_role_administration_permission_publication.sql:28",
+        "sha256": "d4f30334cea1f5200eae8822cd663199234ca2e6a5eeab8b7752b7167e3b063e",
+        "direct_requirement_reference": false
+      },
+      {
+        "source": "database/migrations/20261006000200_user_identity_discovery_permission_publication.sql:28",
+        "sha256": "59d6aafaf7a4f9cee140fcc75534dad14489a9fafad3f9de54e9d3c7b1b05010",
+        "direct_requirement_reference": false
+      },
+      {
+        "source": "database/migrations/20261007000100_platform_tenant_user_onboarding_permission_publication.sql:25",
+        "sha256": "cffcee017eb60dcad4c355ea60260534dac02a45aebbf3c73f1c19eb915bc914",
+        "direct_requirement_reference": false
+      },
+      {
+        "source": "database/migrations/20261007000200_phase5_methodology_binding.sql:56",
+        "sha256": "65f6b444162357e37c34dab7457d61d7ebd11e44a2461aaa603309277c09f459",
+        "direct_requirement_reference": false
+      },
+      {
+        "source": "database/migrations/20261007000200_phase5_methodology_binding.sql:106",
+        "sha256": "6375cd49a504791f1603d99967380483c4c5cebef7afa8d864c6a3f55f063339",
+        "direct_requirement_reference": false
+      },
+      {
+        "source": "database/migrations/20261009000200_phase6a3_reference_read_permissions.sql:62",
+        "sha256": "c7cd8ffc491f964bcead309a52f25b2fa248163388843277ea5cc13cf786fef6",
+        "direct_requirement_reference": false
+      }
+    ],
+    "limitation": "Source reconciliation including SELECT publications; no claim about QA/custom/runtime grants"
+  },
+  "vocabulary_source_sha256": "8a9669d3389eba33be3640756777c35642a5d910567082cdd1fc12bf91c66239",
+  "vocabulary_manifest_sha256": "5106f98f64a950ed7dddb5618f14a11864b166421be1dac7613682863492dc5e",
+  "consumer_map": [
+    {
+      "field_id": "F-0075",
+      "family": "CV-03",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "ControlFrequency",
+      "contract_kind": "NUEVO_CONTRATO_PROPUESTO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "controlInstantiate / frequency_code",
+      "bounds": "1..64",
+      "requiredness": "required",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:44"
+    },
+    {
+      "field_id": "F-0079",
+      "family": "CV-14",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "SuggestedBusinessOwnerRole",
+      "contract_kind": "EXISTENTE_PERO_REQUIERE_MAPEO_AUTORIZADO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "controlInstantiate / suggested_owner_role_code",
+      "bounds": "1..96",
+      "requiredness": "optional",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:45"
+    },
+    {
+      "field_id": "F-0090",
+      "family": "CV-03",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "ControlFrequency",
+      "contract_kind": "NUEVO_CONTRATO_PROPUESTO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "controlGet / frequency_code",
+      "bounds": "lectura: no estrechar histórico",
+      "requiredness": "read-only; required; non-null si presente",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:46"
+    },
+    {
+      "field_id": "F-0094",
+      "family": "CV-14",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "SuggestedBusinessOwnerRole",
+      "contract_kind": "EXISTENTE_PERO_REQUIERE_MAPEO_AUTORIZADO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "controlGet / suggested_owner_role_code",
+      "bounds": "lectura: no estrechar histórico",
+      "requiredness": "read-only; optional; nullable",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:47"
+    },
+    {
+      "field_id": "F-0208",
+      "family": "CV-02",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "EvidenceType",
+      "contract_kind": "NUEVO_CONTRATO_PROPUESTO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "evidenceCreate / evidence_type",
+      "bounds": "1..64",
+      "requiredness": "required",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:48"
+    },
+    {
+      "field_id": "F-0213",
+      "family": "CV-12",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "EvidenceSourceKind",
+      "contract_kind": "NUEVO_CONTRATO_PROPUESTO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "evidenceCreate / source_kind",
+      "bounds": "1..32",
+      "requiredness": "required",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:49"
+    },
+    {
+      "field_id": "F-0223",
+      "family": "CV-01",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "FileClassification",
+      "contract_kind": "EXISTENTE_PERO_REQUIERE_MAPEO_AUTORIZADO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "uploadIntentCreate / classification",
+      "bounds": "1..32",
+      "requiredness": "required when upload",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:50"
+    },
+    {
+      "field_id": "F-0225",
+      "family": "CV-13",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "EvidenceSufficiency",
+      "contract_kind": "NUEVO_CONTRATO_PROPUESTO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "evidenceApprove / sufficiency",
+      "bounds": "1..32",
+      "requiredness": "optional; omitido persiste NULL; rationale y expected_version required",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:51"
+    },
+    {
+      "field_id": "F-0226",
+      "family": "CV-09",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "EvidenceRelevance",
+      "contract_kind": "NUEVO_CONTRATO_PROPUESTO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "evidenceApprove / relevance",
+      "bounds": "1..32",
+      "requiredness": "optional; omitido persiste NULL; rationale y expected_version required",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:52"
+    },
+    {
+      "field_id": "F-0228",
+      "family": "CV-13",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "EvidenceSufficiency",
+      "contract_kind": "NUEVO_CONTRATO_PROPUESTO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "evidenceReject / sufficiency",
+      "bounds": "1..32",
+      "requiredness": "optional; omitido persiste NULL; rationale y expected_version required",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:53"
+    },
+    {
+      "field_id": "F-0229",
+      "family": "CV-09",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "EvidenceRelevance",
+      "contract_kind": "NUEVO_CONTRATO_PROPUESTO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "evidenceReject / relevance",
+      "bounds": "1..32",
+      "requiredness": "optional; omitido persiste NULL; rationale y expected_version required",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:54"
+    },
+    {
+      "field_id": "F-0234",
+      "family": "CV-02",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "EvidenceType",
+      "contract_kind": "NUEVO_CONTRATO_PROPUESTO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "evidenceGet / evidence_type",
+      "bounds": "lectura: no estrechar histórico",
+      "requiredness": "read-only; required; non-null si presente",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:55"
+    },
+    {
+      "field_id": "F-0240",
+      "family": "CV-12",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "EvidenceSourceKind",
+      "contract_kind": "NUEVO_CONTRATO_PROPUESTO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "evidenceGet / source_kind",
+      "bounds": "lectura: no estrechar histórico",
+      "requiredness": "read-only; required; non-null si presente",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:56"
+    },
+    {
+      "field_id": "F-0278",
+      "family": "CV-11",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "IssueSeverity",
+      "contract_kind": "NUEVO_CONTRATO_PROPUESTO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "issueCreate / severity",
+      "bounds": "1..32",
+      "requiredness": "required",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:57"
+    },
+    {
+      "field_id": "F-0279",
+      "family": "CV-08",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "IssuePriority;ActionPriority",
+      "contract_kind": "NUEVO_CONTRATO_PROPUESTO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "issueCreate / priority",
+      "bounds": "1..32",
+      "requiredness": "required",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:58"
+    },
+    {
+      "field_id": "F-0285",
+      "family": "CV-07",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "IssueOriginRole",
+      "contract_kind": "NUEVO_CONTRATO_PROPUESTO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "issueCreate / origin_role",
+      "bounds": "1..32",
+      "requiredness": "required",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:59"
+    },
+    {
+      "field_id": "F-0286",
+      "family": "CV-11",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "IssueSeverity",
+      "contract_kind": "NUEVO_CONTRATO_PROPUESTO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "issueTriage / severity",
+      "bounds": "1..32",
+      "requiredness": "required",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:60"
+    },
+    {
+      "field_id": "F-0287",
+      "family": "CV-08",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "IssuePriority;ActionPriority",
+      "contract_kind": "NUEVO_CONTRATO_PROPUESTO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "issueTriage / priority",
+      "bounds": "1..32",
+      "requiredness": "required",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:61"
+    },
+    {
+      "field_id": "F-0299",
+      "family": "CV-11",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "IssueSeverity",
+      "contract_kind": "NUEVO_CONTRATO_PROPUESTO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "issueGet / severity",
+      "bounds": "lectura: no estrechar histórico",
+      "requiredness": "read-only; required; non-null si presente",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:62"
+    },
+    {
+      "field_id": "F-0300",
+      "family": "CV-08",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "IssuePriority;ActionPriority",
+      "contract_kind": "NUEVO_CONTRATO_PROPUESTO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "issueGet / priority",
+      "bounds": "lectura: no estrechar histórico",
+      "requiredness": "read-only; required; non-null si presente",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:63"
+    },
+    {
+      "field_id": "F-0314",
+      "family": "CV-08",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "IssuePriority;ActionPriority",
+      "contract_kind": "NUEVO_CONTRATO_PROPUESTO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "actionCreate / priority",
+      "bounds": "1..32",
+      "requiredness": "required",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:64"
+    },
+    {
+      "field_id": "F-0318",
+      "family": "CV-06",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "ActionEvidenceLinkRole",
+      "contract_kind": "NUEVO_CONTRATO_PROPUESTO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "actionComplete / link_role",
+      "bounds": "1..32",
+      "requiredness": "required",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:65"
+    },
+    {
+      "field_id": "F-0329",
+      "family": "CV-08",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "IssuePriority;ActionPriority",
+      "contract_kind": "NUEVO_CONTRATO_PROPUESTO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "actionGet / priority",
+      "bounds": "lectura: no estrechar histórico",
+      "requiredness": "read-only; required; non-null si presente",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:66"
+    },
+    {
+      "field_id": "F-0341",
+      "family": "CV-04",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "SoAApplicabilityDecision",
+      "contract_kind": "EXISTENTE_PERO_REQUIERE_MAPEO_AUTORIZADO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "soaCreate / items[].applicability_decision",
+      "bounds": "1..32",
+      "requiredness": "required within item",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:67"
+    },
+    {
+      "field_id": "F-0343",
+      "family": "CV-05",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "SoAImplementationState",
+      "contract_kind": "NUEVO_CONTRATO_PROPUESTO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "soaCreate / items[].implementation_state",
+      "bounds": "1..32",
+      "requiredness": "required within item",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:68"
+    },
+    {
+      "field_id": "F-0358",
+      "family": "CV-10",
+      "vocabulary_source": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "schema_candidate": "AssuranceSelectionMethod",
+      "contract_kind": "NUEVO_CONTRATO_PROPUESTO",
+      "publication_state": "NOT_PUBLISHED",
+      "consumer": "assuranceTestExecute / samples[].selection_method",
+      "bounds": "1..64",
+      "requiredness": "required dentro de sample; samples optional",
+      "consumer_source": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md:69"
+    }
+  ],
+  "clauses": [
+    {
+      "clause_id": "C-01",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar request/envelope/cursor/contexto temporal/error/audit/default DENY de §4.",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:34",
+      "owner": "Architecture, Backend, Security",
+      "acceptance": "RBAC-C13/C14/C15",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/20_P_RBAC_PUBLICATION_DECISION_PACKET.md:188"
+    },
+    {
+      "clause_id": "C-02",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar proyección, predicados, acceso oficial/validación e historia FrameworkVersion de §5 bajo compliance.framework.read.",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:35",
+      "owner": "Architecture, Backend, Security, Compliance",
+      "acceptance": "RBAC-C01/C02/C04",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/20_P_RBAC_PUBLICATION_DECISION_PACKET.md:189"
+    },
+    {
+      "clause_id": "C-03A",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar display_name+joined_at, elegibilidad activa y propósitos ligados al parent de §6; recurso Permission membership_reference.",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:36",
+      "owner": "Architecture, Backend, Security, IAM, Evidence, Remediation",
+      "acceptance": "RBAC-C05/C06/C07",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/20_P_RBAC_PUBLICATION_DECISION_PACKET.md:190"
+    },
+    {
+      "clause_id": "C-03B",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar revalidación de elegibilidad activa y pertenencia de asignado en comandos EvidenceRequest/Action, conservando IDs/campos e historia.",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:37",
+      "owner": "Architecture, Backend, Security, IAM, Evidence, Remediation",
+      "acceptance": "RBAC-C07/C08",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/20_P_RBAC_PUBLICATION_DECISION_PACKET.md:191"
+    },
+    {
+      "clause_id": "C-04",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar proyección, propósito, vigencia e historia de §7 bajo EVIDENCE_DOCUMENTS y permiso específico.",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:38",
+      "owner": "Architecture, Backend, Security, Evidence, Privacy/Legal",
+      "acceptance": "RBAC-C09/C10",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/20_P_RBAC_PUBLICATION_DECISION_PACKET.md:192"
+    },
+    {
+      "clause_id": "C-04G-1",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar visibilidad mínima global product_baseline published, sin afirmar cumplimiento jurídico.",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:39",
+      "owner": "Architecture, Security, Privacy/Legal",
+      "acceptance": "RBAC-C11/C12",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/20_P_RBAC_PUBLICATION_DECISION_PACKET.md:193"
+    },
+    {
+      "clause_id": "C-04G-2",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar Source→ImportManifest→PackVersion oficial efectiva para descubrir candidato regulatorio; no concede aplicabilidad al objeto.",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:40",
+      "owner": "Architecture, Data Model, Backend, Security, Privacy/Legal",
+      "acceptance": "RBAC-C11/C12",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/20_P_RBAC_PUBLICATION_DECISION_PACKET.md:194"
+    },
+    {
+      "clause_id": "C-04G-3",
+      "status": "REQUIRES_COMPETENT_REVIEW",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Confirmar DENY de global contractual/hold sin binding; decidir si el requisito completo exige enmienda C-04G-B.",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:41",
+      "owner": "Architecture, Data Model, Privacy/Legal, Evidence",
+      "acceptance": "RBAC-C11",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/20_P_RBAC_PUBLICATION_DECISION_PACKET.md:195"
+    },
+    {
+      "clause_id": "C-04W",
+      "status": "REQUIRES_COMPETENT_REVIEW",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar revalidación de publicación/vigencia/aplicabilidad/prioridad y coherencia upload→FileObject→Evidence en comandos futuros.",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:42",
+      "owner": "Architecture, Backend, Security, Privacy/Legal, Evidence",
+      "acceptance": "RBAC-C12",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/20_P_RBAC_PUBLICATION_DECISION_PACKET.md:196"
+    },
+    {
+      "clause_id": "C-06F",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar13 templates F exactos, incluidos Auditor Lead/Auditor para historia SoA; los otros11 DENY.",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:43",
+      "owner": "Security, Architecture, Compliance",
+      "acceptance": "RBAC-C03",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/20_P_RBAC_PUBLICATION_DECISION_PACKET.md:197"
+    },
+    {
+      "clause_id": "C-06M",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar17 templates M; lista sólo para M7 con permiso de comando; historia sólo por parent exacto.",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:44",
+      "owner": "Security, Architecture, IAM, Evidence, Remediation, Controls",
+      "acceptance": "RBAC-C06/C14",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/20_P_RBAC_PUBLICATION_DECISION_PACKET.md:198"
+    },
+    {
+      "clause_id": "C-06R",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar14 templates R; selección sólo R3 con permiso de comando; historia por parent exacto.",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:45",
+      "owner": "Security, Architecture, Privacy/Legal, Evidence",
+      "acceptance": "RBAC-C09/C11",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/20_P_RBAC_PUBLICATION_DECISION_PACKET.md:199"
+    },
+    {
+      "clause_id": "C-07",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar estrategia44 grants/template set y44 por tenant completo, SEED010, preflight, versionado/audit; ejecución operacional sigue NOT_AUTHORIZED.",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:46",
+      "owner": "Architecture, Backend, Security",
+      "acceptance": "RBAC-C16",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/20_P_RBAC_PUBLICATION_DECISION_PACKET.md:200"
+    },
+    {
+      "clause_id": "C-08",
+      "status": "REQUIRES_EXTERNAL_RUNTIME",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar18 pruebas negativas/regresión/gates de §10.",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:47",
+      "owner": "Architecture, Backend, Security, Domain, QA/Release",
+      "acceptance": "RBAC-C01..18",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/20_P_RBAC_PUBLICATION_DECISION_PACKET.md:201"
+    },
+    {
+      "clause_id": "RBAC-D01",
+      "status": "REQUIRES_COMPETENT_REVIEW",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Resolver grant AUDITOR actionCreate materializado adicional: reconciliar con catálogo de cinco roles o emitir DR competente que apruebe su alcance exacto.",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:48",
+      "owner": "Security, Architecture, Remediation",
+      "acceptance": "RBAC-C08",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/20_P_RBAC_PUBLICATION_DECISION_PACKET.md:202"
+    },
+    {
+      "clause_id": "RBAC-D02",
+      "status": "REQUIRES_COMPETENT_REVIEW",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Registrar once lectores contractuales Requirement y ausencia de RolePermission en migraciones; decidir publicación legítima futura independiente.",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:49",
+      "owner": "Security, Architecture, Compliance, Backend",
+      "acceptance": "RBAC-C03/C16",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/20_P_RBAC_PUBLICATION_DECISION_PACKET.md:203"
+    },
+    {
+      "clause_id": "CFG-D-COMPLIANCE-V1",
+      "status": "REQUIRES_COMPETENT_REVIEW",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Confirmar autosuficiencia de BASELINE_COMPLIANCE v1 y ausencia de configuración adicional conforme a 28; aprobar la cláusula individual, no una preferencia operativa",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:50",
+      "owner": "Methodology, Configuration, Domain Compliance, Architecture",
+      "acceptance": "CFG-T01/T02",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "database/migrations/20261007000200_phase5_methodology_binding.sql:48"
+    },
+    {
+      "clause_id": "CFG-D-CONTROLS-V1",
+      "status": "REQUIRES_COMPETENT_REVIEW",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Confirmar autosuficiencia de BASELINE_CONTROL_EFFECTIVENESS v1 y ausencia de configuración adicional conforme a 28",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:51",
+      "owner": "Methodology, Configuration, Domain Controls/Assurance, Architecture",
+      "acceptance": "CFG-T01/T02",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "database/migrations/20261007000200_phase5_methodology_binding.sql:96"
+    },
+    {
+      "clause_id": "CFG-D-HISTORY",
+      "status": "REQUIRES_COMPETENT_REVIEW",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar preservación de assessments con/sin EC, snapshots y método/fórmula exactos; contrato versionado de ausencia, sin backfill",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:52",
+      "owner": "Backend, Data Model, Domain Compliance, Domain Controls, Architecture",
+      "acceptance": "CFG-T03/T04",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "apps/backend/src/core-grc/service.ts:263"
+    },
+    {
+      "clause_id": "CFG-D-PUBLICATION",
+      "status": "REQUIRES_COMPETENT_REVIEW",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar forma de publicación versionada del modo por metodología y enlace verificable a la versión; sin columnas/tablas ni flags inferidos; resolver requisito de nueva versión inmutable antes de ejecutar",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:53",
+      "owner": "Architecture, Data Model, Backend, Methodology, Security",
+      "acceptance": "CFG-T04/T05",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/executable-contracts/27_PHASE5_METHODOLOGY_BINDING.md:5"
+    },
+    {
+      "clause_id": "CFG-UQ1",
+      "status": "REQUIRES_DDL_AUTH",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Reconciliar business key EC: tenant/Definition/Subject/effective_at/hash, NULLS NOT DISTINCT",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:54",
+      "owner": "Data Model, Architecture, Backend",
+      "acceptance": "CFG-T06/T07",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "database/migrations/20260916000600_constraints_and_uniqueness.sql:797"
+    },
+    {
+      "clause_id": "CFG-UQ2",
+      "status": "REQUIRES_DDL_AUTH",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Reconciliar unicidad de layers por EC + precedence_level + ordinal",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:55",
+      "owner": "Data Model, Architecture, Backend",
+      "acceptance": "CFG-T06/T07",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "database/migrations/20260916000600_constraints_and_uniqueness.sql:800"
+    },
+    {
+      "clause_id": "CFG-DEFAULT",
+      "status": "REQUIRES_DDL_AUTH",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Mantener exactamente un typed default que coincida con value_type; cero requiere resolución competente, no default fabricado",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:56",
+      "owner": "Data Model, Configuration, Architecture, Backend",
+      "acceptance": "CFG-T08",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/physical-data-model/01_PHYSICAL_DATA_MODEL.md:224"
+    },
+    {
+      "clause_id": "CFG-HANDLER",
+      "status": "DONE",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Registrar declaración effectiveConfigurationGet sin handler HTTP demostrado; no contar CT02 implementada; ninguna ampliación EC.read",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:57",
+      "owner": "Backend, Architecture, Security",
+      "acceptance": "CFG-T05",
+      "approval": "DR-STEP6A3-EC-DETAIL-R1-20261009",
+      "evidence": "Current EC HTTP regression required; local publication only"
+    },
+    {
+      "clause_id": "CFG-QA",
+      "status": "REQUIRES_EXTERNAL_RUNTIME",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar aceptación de 28 CFG-T01..08 sin autoaprobar runtime",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:58",
+      "owner": "QA, Backend, Security, Domain Compliance, Domain Controls",
+      "acceptance": "CFG-T01..08",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/21_P_CONFIG_BINDING_EVIDENCE_AND_ARCHITECTURE_OPTIONS.md:188"
+    },
+    {
+      "clause_id": "CV01-A",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "4 códigos CHECK archivo y4 labels/definiciones de 22; separación de Tenant; conjunto exacto CSV22, hash 8a9669d3389eba33be3640756777c35642a5d910567082cdd1fc12bf91c66239",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:59",
+      "owner": "Evidence + Security, Backend, Architecture, Security, Data Model",
+      "acceptance": "T-VOC01..12 con casos específicos de 30",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:78"
+    },
+    {
+      "clause_id": "CV02-A",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "document/record/image/report de22 como tipo; separación MIME/source; conjunto exacto CSV22, hash 8a9669d3389eba33be3640756777c35642a5d910567082cdd1fc12bf91c66239",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:60",
+      "owner": "Evidence, Backend, Architecture, Security, Data Model",
+      "acceptance": "T-VOC01..12 con casos específicos de 30",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:79"
+    },
+    {
+      "clause_id": "CV03-A",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "8frecuencias de22 y períodos calendarios expresos; trigger sólo descrito; conjunto exacto CSV22, hash 8a9669d3389eba33be3640756777c35642a5d910567082cdd1fc12bf91c66239",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:61",
+      "owner": "Controls, Backend, Architecture, Security, Data Model",
+      "acceptance": "T-VOC01..12 con casos específicos de 30",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:80"
+    },
+    {
+      "clause_id": "CV04-A",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "applicable/not_applicable de22 paraControlVersion enSoA; equivalencia acotada de códigosRequirementApplicability; conjunto exacto CSV22, hash 8a9669d3389eba33be3640756777c35642a5d910567082cdd1fc12bf91c66239",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:62",
+      "owner": "Compliance, Backend, Architecture, Security, Data Model",
+      "acceptance": "T-VOC01..12 con casos específicos de 30",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:81"
+    },
+    {
+      "clause_id": "CV05-A",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "4estados22 y regla not_applicable requiere decisiónSoA homónima; implemented separadoeffectiveness; conjunto exacto CSV22, hash 8a9669d3389eba33be3640756777c35642a5d910567082cdd1fc12bf91c66239",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:63",
+      "owner": "Compliance + Controls, Backend, Architecture, Security, Data Model",
+      "acceptance": "T-VOC01..12 con casos específicos de 30",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:82"
+    },
+    {
+      "clause_id": "CV06-A",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "closure único22 como soportecompleted; conjunto exacto CSV22, hash 8a9669d3389eba33be3640756777c35642a5d910567082cdd1fc12bf91c66239",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:64",
+      "owner": "Actions + Evidence, Backend, Architecture, Security, Data Model",
+      "acceptance": "T-VOC01..12 con casos específicos de 30",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:83"
+    },
+    {
+      "clause_id": "CV07-A",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "trigger único22 como papel de origen; conjunto exacto CSV22, hash 8a9669d3389eba33be3640756777c35642a5d910567082cdd1fc12bf91c66239",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:65",
+      "owner": "Actions, Backend, Architecture, Security, Data Model",
+      "acceptance": "T-VOC01..12 con casos específicos de 30",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:84"
+    },
+    {
+      "clause_id": "CV08-I",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "urgent/high/normal/low22 paraIssue; conjunto exacto CSV22, hash 8a9669d3389eba33be3640756777c35642a5d910567082cdd1fc12bf91c66239",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:66",
+      "owner": "Actions, Backend, Architecture, Security, Data Model",
+      "acceptance": "T-VOC01..12 con casos específicos de 30",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:85"
+    },
+    {
+      "clause_id": "CV08-A",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "urgent/high/normal/low22 paraAction; conjunto exacto CSV22, hash 8a9669d3389eba33be3640756777c35642a5d910567082cdd1fc12bf91c66239",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:67",
+      "owner": "Actions, Backend, Architecture, Security, Data Model",
+      "acceptance": "T-VOC01..12 con casos específicos de 30",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:86"
+    },
+    {
+      "clause_id": "CV08-C",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar expresamente escala compartida de urgenciaIssue/Action de22; ningún SLA/valor heredado; conjunto exacto CSV22, hash 8a9669d3389eba33be3640756777c35642a5d910567082cdd1fc12bf91c66239",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:68",
+      "owner": "Actions + Architecture, Backend, Architecture, Security, Data Model",
+      "acceptance": "T-VOC01..12 con casos específicos de 30",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:87"
+    },
+    {
+      "clause_id": "CV09-A",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "3 criterios relevance de 22;opcionalidad y rationale; conjunto exacto CSV22, hash 8a9669d3389eba33be3640756777c35642a5d910567082cdd1fc12bf91c66239",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:69",
+      "owner": "Evidence, Backend, Architecture, Security, Data Model",
+      "acceptance": "T-VOC01..12 con casos específicos de 30",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:88"
+    },
+    {
+      "clause_id": "CV10-A",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "5 métodos de 22 y restriccionescensus;procedimientos explícitos en soporte gobernado; conjunto exacto CSV22, hash 8a9669d3389eba33be3640756777c35642a5d910567082cdd1fc12bf91c66239",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:70",
+      "owner": "Assurance + Backend, Backend, Architecture, Security, Data Model",
+      "acceptance": "T-VOC01..12 con casos específicos de 30",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:89"
+    },
+    {
+      "clause_id": "CV11-A",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "critical/major/moderate/minor22 con criteriosFinding;sin escalaRisk; conjunto exacto CSV22, hash 8a9669d3389eba33be3640756777c35642a5d910567082cdd1fc12bf91c66239",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:71",
+      "owner": "Actions / Finding, Backend, Architecture, Security, Data Model",
+      "acceptance": "T-VOC01..12 con casos específicos de 30",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:90"
+    },
+    {
+      "clause_id": "CV12-A",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "uploaded/system_record/human_observation/external_record22;no aliasupload y todasfile pipeline vigente; conjunto exacto CSV22, hash 8a9669d3389eba33be3640756777c35642a5d910567082cdd1fc12bf91c66239",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:72",
+      "owner": "Evidence, Backend, Architecture, Security, Data Model",
+      "acceptance": "T-VOC01..12 con casos específicos de 30",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:91"
+    },
+    {
+      "clause_id": "CV13-A",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "3 criterios sufficiency de 22;opcional;sin scorefactor; conjunto exacto CSV22, hash 8a9669d3389eba33be3640756777c35642a5d910567082cdd1fc12bf91c66239",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:73",
+      "owner": "Evidence, Backend, Architecture, Security, Data Model",
+      "acceptance": "T-VOC01..12 con casos específicos de 30",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:92"
+    },
+    {
+      "clause_id": "CV14-A",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "5 códigos de 22 delregistryRole usados sólo como funciones sugeridas; sin grants/assignments; conjunto exacto CSV22, hash 8a9669d3389eba33be3640756777c35642a5d910567082cdd1fc12bf91c66239",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:74",
+      "owner": "Controls + Security, Backend, Architecture, Security, Data Model",
+      "acceptance": "T-VOC01..12 con casos específicos de 30",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:93"
+    },
+    {
+      "clause_id": "VOC-C01",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar fuente OpenAPI por owner y generación existente conforme a 23/30",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:75",
+      "owner": "Architecture, Backend, Security, Data Model, Domain propietario",
+      "acceptance": "T-VOC01..12",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:60"
+    },
+    {
+      "clause_id": "VOC-C02",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar versiones de contrato/presentación y vigencia pendiente conforme a 23/30",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:76",
+      "owner": "Architecture, Backend, Security, Data Model, Domain propietario",
+      "acceptance": "T-VOC01..12",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:62"
+    },
+    {
+      "clause_id": "VOC-C03",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar retirement y unknown histórico conforme a 23/30",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:77",
+      "owner": "Architecture, Backend, Security, Data Model, Domain propietario",
+      "acceptance": "T-VOC01..12",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:64"
+    },
+    {
+      "clause_id": "VOC-C04",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar inventario histórico y compatibilidad antes del enforcement conforme a 23/30",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:78",
+      "owner": "Architecture, Backend, Security, Data Model, Domain propietario, QA",
+      "acceptance": "T-VOC01..12",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:66"
+    },
+    {
+      "clause_id": "VOC-C05",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar tenant/RBAC/SoD/audit/lineage reproducible conforme a 23/30",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:79",
+      "owner": "Architecture, Backend, Security, Data Model, Domain propietario",
+      "acceptance": "T-VOC01..12",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:68"
+    },
+    {
+      "clause_id": "VOC-C06",
+      "status": "REQUIRES_CONTRACT_PUBLICATION",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar i18n español central por contexto conforme a 23/30",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:80",
+      "owner": "Architecture, Backend, Security, Data Model, Domain propietario",
+      "acceptance": "T-VOC01..12",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:70"
+    },
+    {
+      "clause_id": "VOC-QA",
+      "status": "REQUIRES_EXTERNAL_RUNTIME",
+      "ledger_state_preserved": "PENDING_REVIEW",
+      "literal_ledger_requirement": "Aprobar pruebas T-VOC01..12 y compatibilidad por ocurrencia sin certificar ejecución de capacidades nuevas",
+      "source": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md:81",
+      "owner": "QA, Backend, Security, Domain propietarios",
+      "acceptance": "T-VOC01..12",
+      "approval": "SPECIFIC_COMPETENT_DECISION_NOT_RECORDED",
+      "evidence": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md:103"
+    }
+  ],
+  "active_migrations": [
+    {
+      "id": "20260916000100",
+      "sha256": "4f29910baacf82526fb06226c237024b7315038a4868baa7bbda56ced4779437"
+    },
+    {
+      "id": "20260916000200",
+      "sha256": "08fce9d08e729f097095a10cfdfbf093c43f9d8cbfbee97d39594691f4ad8f29"
+    },
+    {
+      "id": "20260916000300",
+      "sha256": "f300aac95b6fba36c09fc6ac77550bf574f953c0ee0ad374a8cbf6fdb338ef9f"
+    },
+    {
+      "id": "20260916000400",
+      "sha256": "a38d2a7babbe77d79783d66e8ce909916e967be739d3712f303e51883d85a81b"
+    },
+    {
+      "id": "20260916000500",
+      "sha256": "bac1e0a421a4d532eb2da27e4bc9453125cfa407a2e8da904c8749c726815764"
+    },
+    {
+      "id": "20260916000600",
+      "sha256": "7d079aa1234050b6dde06d9fb3cad939144fcbccdf287cc31bbe863c68899bf5"
+    },
+    {
+      "id": "20260916000700",
+      "sha256": "d2112e4b402e8789312d5473969b615e6d7ab344a58a2211f790c4423dd4361f"
+    },
+    {
+      "id": "20260916000800",
+      "sha256": "d3502b9de76209b54b40497e6b9fdf94d463335d1f5441fb0fb924786648336e"
+    },
+    {
+      "id": "20260916000900",
+      "sha256": "94547ff1fa6a9accf56ff6f28be93afeb91b8c290ca9bb224667862c64c8c2e7"
+    },
+    {
+      "id": "20260916001000",
+      "sha256": "c4247051c223960eb5ca817a0f85650dbc828a7864e48f66a1a73b1d298a224d"
+    },
+    {
+      "id": "20260921000100",
+      "sha256": "1181d7ab26718927124de880e351fbaba3f2daaca41267a1ef66d28ac2021680"
+    },
+    {
+      "id": "20260921000200",
+      "sha256": "8cc3d1b2a64a5b00ffd55f93ccfbcdfcde5406ffa9c1fa7f2d2055f505048eb0"
+    },
+    {
+      "id": "20260923000100",
+      "sha256": "4ee0b3d24c7d7aa6ea87a8e9a6618cd2a7b164aedf1e3990590c3cf1b512ea82"
+    },
+    {
+      "id": "20260923000200",
+      "sha256": "96a56b5669cd6e6fd0d751dc12526e3fe6ad2c612e77a8a7e144c847775be96c"
+    },
+    {
+      "id": "20260924000100",
+      "sha256": "a41efa51265d5f95a342674bdbac2faecf37ac31ac1c45aef47b394c7e380f2f"
+    },
+    {
+      "id": "20260924000200",
+      "sha256": "751ff47c9644b8d7134bb16148728a075e61af3057fa2a271e280a1fb1cd1728"
+    },
+    {
+      "id": "20260924000300",
+      "sha256": "0942e5eb360f7157a444d7b04fbe7558312e8d782347e60a745a8d4365034806"
+    },
+    {
+      "id": "20260925000100",
+      "sha256": "b66f88a19323d7a92465f6e61e762dffcf511eae55e53456d811c7912d3dad8a"
+    },
+    {
+      "id": "20260928000100",
+      "sha256": "d19c72ce5a0b9e5caa65d8b6b93daec1b2188dee54067551bb8ac3c8c7dcdd35"
+    },
+    {
+      "id": "20260928000200",
+      "sha256": "d47e4fa07250092c5b8c063a60713528627acee864f93278b3c5f0ed5dd57cdc"
+    },
+    {
+      "id": "20260928000300",
+      "sha256": "4e38ffe74d4c5324d16871228e65e800396d538f45aaf29b052d895bfb5cbe84"
+    },
+    {
+      "id": "20260928000400",
+      "sha256": "1d4e5a51372531a1a5645dd5152cd00742016a3e5a7f3c508193caa65afcb929"
+    },
+    {
+      "id": "20260929000100",
+      "sha256": "58db95213900be09348312702659b292f53a5913fe03df99102c444320c70bbd"
+    },
+    {
+      "id": "20260929000200",
+      "sha256": "58d52157c20f5daa95d533030fa0b2ed4f85d7faea1a0f256a167f608a23ea8d"
+    },
+    {
+      "id": "20260929000300",
+      "sha256": "5eb46ac182929c1649fed610a4d66cd92017ea07b473aba933e5c167f5e1dfdb"
+    },
+    {
+      "id": "20261001000100",
+      "sha256": "90503ed1cf626c7d8a3529d323670322e180efde90257ee8bb99efe2736eef07"
+    },
+    {
+      "id": "20261006000100",
+      "sha256": "2a3c0d14748a9494d6ef60572802782eab2cdf3f4e60bef6026d73c48c1b6399"
+    },
+    {
+      "id": "20261006000200",
+      "sha256": "fa7d34a7f33044b8ee02478211c67a6c1c36ee64df0e0d2de57a60101d157c22"
+    },
+    {
+      "id": "20261007000100",
+      "sha256": "4f91369da1908264eba937e5c9d760a34bcefe3d7de1d726ac558c3f9b138673"
+    },
+    {
+      "id": "20261007000200",
+      "sha256": "fa178ad731d48045313a11b22f1bdf3c228be502dafa1883136162ad48127850"
+    },
+    {
+      "id": "20261009000100",
+      "sha256": "b717f0c91f88a4079f791fd68cc08ff5202ef7f0dda6c7cf85ea37cb23441722"
+    },
+    {
+      "id": "20261009000200",
+      "sha256": "920ececb9d28e3821a9faf9d2c754db481a26c0e33c53ae0f94b3a0535885ed8"
+    }
+  ],
+  "source_inventory": [
+    {
+      "path": "docs/phase6a/STEP_6A3/01_IMPLEMENTATION_MANIFEST.md",
+      "sha256": "053ee05dac8da5905bfc3becac275021fbfd7abc841c6286622c417be2edd5b2",
+      "lines": 34
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/02_READ_CAPABILITIES_IMPLEMENTATION.md",
+      "sha256": "93a3ce2697c3ca95b80dcbdde2831308ac2714eb794ba7d0f3ba6381fee21bde",
+      "lines": 23
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/03_SELECTOR_COMPONENTS.md",
+      "sha256": "c32b973154b0c0f8b72420eccecde995e376869aeab3bfa1fcd5443265407fed",
+      "lines": 76
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/04_VOCABULARY_RESOLUTION.md",
+      "sha256": "aed94c07b921fb06bcebde2a3c3887186dc047d485e8b6196783baaa3f7bc888",
+      "lines": 115
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/05_FORM_ADOPTION_MATRIX.csv",
+      "sha256": "0978b1f81f6be7635ab68871f842bf6596c2d9bd6b36d0afe79640321c373250",
+      "lines": 362
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/06_SECURITY_AND_TENANT_ISOLATION.md",
+      "sha256": "6988cb7c3ec1911994eb6452133bb40253d646084ab5b8fbc2611791321f4d88",
+      "lines": 13
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/07_TEST_AND_CONTRACT_RESULTS.md",
+      "sha256": "3fbdd5c83c0afb33cd1b2ee28a8ee051ca682424f30916d4c6a1d3599d8f38ad",
+      "lines": 32
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/08_OPEN_DECISIONS.md",
+      "sha256": "f638d020fe488f583fb96c425ced99afe3850e0342af0c3884d467804f027a80",
+      "lines": 25
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/09_STEP_6A3_IMPLEMENTATION_REPORT.md",
+      "sha256": "0e768dcbf46fd67d2e58e50015652f735892c6686fdc69a8b68e28930070444c",
+      "lines": 27
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/10_STEP_6A3_RESULT.json",
+      "sha256": "5fe7f2e08e4d135158f0a9231f98f03191c853b19127ff42c1df2d51b1487b5b",
+      "lines": 186
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/11_CORRECTIVE_CONTRACT_DECISION_PACKET.md",
+      "sha256": "ac6707e27e58a1a804527ff3a74efdaae2319ae691479a398fc0a0698a14d42b",
+      "lines": 97
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/12_CORRECTIVE_VOCABULARY_MATRIX.csv",
+      "sha256": "a931cdc2df860c4181b59dd122d69eed01107b47ad99e6aa6d8c3865d849aa6c",
+      "lines": 30
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/13_CORRECTIVE_CLOSURE_REPORT.md",
+      "sha256": "cf63f51959ff06ba3fe1417580aaf5c6563575c525596a97cc30bf1e2528c10c",
+      "lines": 32
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/14_STEP_6A3_CORRECTIVE_RESULT.json",
+      "sha256": "5fb55fc9f76238df3e39ba3412e776997751e02dd2220b136581aa4048a6ec6c",
+      "lines": 258
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/15_DR_6A3_TECHNICAL_20261008.md",
+      "sha256": "7e4ce411b88b8666a61f149bb093bc7f1f1f861f0c9a5ebeb5078ccf5439d20d",
+      "lines": 37
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/16_TECHNICAL_READ_CAPABILITY_MATRIX.csv",
+      "sha256": "eaae8023bc6e27e5bafcb7558057eabedb890954c96e1f8f4872c39bc05c5436",
+      "lines": 5
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/17_TECHNICAL_VOCABULARY_FIELD_MATRIX.csv",
+      "sha256": "ba4f9e92c822760c0c6b75903979560f3f7272be7828246c53f0e5626f882ee6",
+      "lines": 30
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/18_TECHNICAL_LOCALIZATION_AND_GATE_REPORT.md",
+      "sha256": "02dd03d8f021c0b10034ff4e7a4afd180b30723d58b896cb77dd477472fd8f0c",
+      "lines": 43
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/19_STEP_6A3_TECHNICAL_RESULT.json",
+      "sha256": "947b55c0aeae810dd367663350c98d35660a4d77db7502d4fcdafc7f2511bc74",
+      "lines": 258
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/20_P_RBAC_PUBLICATION_DECISION_PACKET.md",
+      "sha256": "5d6768ed6b806f5795d387dd3bd48ba0f744c60002c4e36d1a1452a69ea592af",
+      "lines": 222
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/21_P_CONFIG_BINDING_EVIDENCE_AND_ARCHITECTURE_OPTIONS.md",
+      "sha256": "17ac177ef38003de4a24fb6106f3555993ff6a0a9460efa451da5788fd6f3de4",
+      "lines": 266
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/22_P_VOC_CANONICAL_VALUE_PROPOSALS.csv",
+      "sha256": "8a9669d3389eba33be3640756777c35642a5d910567082cdd1fc12bf91c66239",
+      "lines": 53
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md",
+      "sha256": "de3feae44235a7cdc905671f75769d3606f5c61b7bf8314f0fd32be87df7bab3",
+      "lines": 156
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/24_STEP_6A3_RECONCILIATION_REPORT.md",
+      "sha256": "c7b88af994c6cfee4ebcb30e7eed38972abd41f0de19dea4815939a738189fe1",
+      "lines": 135
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/25_STEP_6A3_RESULT.json",
+      "sha256": "4ced73e1bda291c7a7ec4609aa981f88400b959822b552ac677cff06bb910d40",
+      "lines": 765
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md",
+      "sha256": "85bc72b94021adf28444e3ae6d2fc7a354873fa3fe85004f1314d3bd269c862f",
+      "lines": 264
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/27_RBAC_CONTRACT_PUBLICATION_CANDIDATE.md",
+      "sha256": "029ba9a9e2a0f13a726b3133bd43be71b2caf209ecb11c6381074da40a1bf247",
+      "lines": 136
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/28_CONFIG_CFGD_CONDITIONAL_DECISION_AND_PHYSICAL_RECONCILIATION.md",
+      "sha256": "28b0f1b9b7a0fa4718b0612f447b81d71dd8a7653e7a3f8bf5458b2333660b48",
+      "lines": 73
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/29_VOC_PUBLICATION_MANIFEST_CANDIDATE.csv",
+      "sha256": "5106f98f64a950ed7dddb5618f14a11864b166421be1dac7613682863492dc5e",
+      "lines": 53
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/30_VOC_TECHNICAL_SIGNOFF_AND_COMPATIBILITY.md",
+      "sha256": "d20d1bfa04f61c43b5c7fdb6767cf5c2046a68b24a33ef4d7638b6afdd733c0e",
+      "lines": 89
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/31_STEP_6A3_PO_RECONCILIATION_REPORT.md",
+      "sha256": "b0719937440f9b00b900625ce2c6cbbeee7f5aa5ba12832785b3f22b51d1b25d",
+      "lines": 56
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/32_STEP_6A3_PO_RECONCILIATION_RESULT.json",
+      "sha256": "48d1c8f854bfd2bb1e9548bbd907f0cb4e74bdeaa85c4b1991372bdbdd9a90b5",
+      "lines": 294
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/AUTHORITY_AUDIT_20261008/01_RECTOR_AUTHORITY_RULES.md",
+      "sha256": "3fdef1745f3dd45e39b7fd08d00f3c509c7c671a80ddd546c3cb58f763e90ee3",
+      "lines": 75
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/AUTHORITY_AUDIT_20261008/02_48_CLAUSE_CLASSIFICATION.csv",
+      "sha256": "39dfdc5ef3e0cac7410b933f9653d6937f265cd8fc1021b6eae0ceb7a161ca7b",
+      "lines": 49
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/AUTHORITY_AUDIT_20261008/03_SOLO_PO_OPERATING_MODEL_AND_DECISION.md",
+      "sha256": "b332c7c81c73db17744ee3b6f78673bbcff63e55372cecd51a8f2bb0b6d08df0",
+      "lines": 85
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/AUTHORITY_AUDIT_20261008/04_CRITICAL_PATH_AND_RESULT.json",
+      "sha256": "d531f81a00c0b940e761df27927c88091cc37246ff67afd9306c11c026ff6edb",
+      "lines": 645
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/CONTINUITY_HANDOFF_20261009_R3.md",
+      "sha256": "5fcb37dea656d20d40965c87a5fc88361fee2d8acbf096082fc4e09870fff658",
+      "lines": 126
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/MACRO_APPROVAL_RECEIPT_R1.json",
+      "sha256": "335c40cac78b6bfcf01f7b840786d62ad74ea8f24d7bd59d0fb95f2f1f8c6739",
+      "lines": 22
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/MACRO_APPROVAL_RECEIPT_R3.json",
+      "sha256": "3d69c54a089e0996096b6b37eab1ec45c320f96771c97030c2741fd2afff816d",
+      "lines": 23
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/MACRO_MANIFEST_R1.json",
+      "sha256": "5b8c02385615fe6b5c825b18619d0cf1d493b7b7880e47530cc02893b3c953c4",
+      "lines": 4280
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/MACRO_RBAC_D01_D02_R3.json",
+      "sha256": "17eeb65269bc2dc9727c605999f1fd0c5c343cab3b6653a372c3d879618daed9",
+      "lines": 138
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/QA_OPERATIONAL_PLAN_R1.json",
+      "sha256": "7eefd8f3a2990cfc30826253ebccc0547827fdb89121c8c4ab40db007d060b45",
+      "lines": 77
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/QA_OPERATIONAL_PLAN_R1.md",
+      "sha256": "1877c333eff5f052a35b4f8755ec36ed9e5134a958c30778b3785ff0f0801c34",
+      "lines": 7
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/QA_OPERATIONAL_PLAN_R2.json",
+      "sha256": "7a976d34f24fe908856c98cee0ed409702146500d172d3ff58b5b62e8af168a4",
+      "lines": 1956
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/QA_OPERATIONAL_PLAN_R2.md",
+      "sha256": "abea7057c8c11bdb9499fc2c1a05c6ab391ed5977abbc2e2813a65364dc90358",
+      "lines": 7
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/QA_OPERATIONAL_PLAN_R3.json",
+      "sha256": "3a1451f6b733fc7c2f45b46b9bf376364dcd24428affe1a2062256b640afc0e8",
+      "lines": 1995
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/QA_OPERATIONAL_PLAN_R3.md",
+      "sha256": "6b5cd6b401b1229349636d9d1459ae304713cb8fdbb39d55d4ceb81d604841a2",
+      "lines": 7
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RBAC_D01_D02_DECISION_R3.md",
+      "sha256": "cec2ca70b911e511059ce7aee5277eeed7d9194fe2bf9523404e79a2f2a88838",
+      "lines": 9
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/REQUIREMENT_TRACEABILITY.md",
+      "sha256": "c102a020fc86bc7ea0593b9569522654191bacc7b1465a144a5ee293d7c7ce0b",
+      "lines": 91
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_DEPENDENCIES_R2.json",
+      "sha256": "ad6880c144f7a0ce1b91b0f8ff7d19c626e6867348e1fa0c9b0634fa64eb3347",
+      "lines": 77
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_DEPENDENCIES_R3.json",
+      "sha256": "eeb3bb16b40d40d9dda32bebb6172405a02fd4823cab49d4bda49664ce269e5f",
+      "lines": 91
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_MACRO_R2/01_MEMBERSHIP_PAGINATION_DELTA.md",
+      "sha256": "c9ea86a5a6d319d992679e4c93f725e9dce70e35f359622257c7741e11414f5a",
+      "lines": 12
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_MACRO_R2/02_RBAC_PUBLICATION_AUDIT_DELTA.md",
+      "sha256": "1c381bd283f0619f0ebc4a15e91fa9623b4f018a5e1ec246459eb1bc9c4b3f47",
+      "lines": 14
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_MACRO_R2/03_VOCABULARY_PROVENANCE_DELTA.md",
+      "sha256": "dbc0318a60ec5e14d1b4bb3282c5f9ec81cdc65b0a37f073492bddd3a6ab6fbb",
+      "lines": 12
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_MACRO_R2/04_CFGD_CORRECTED_SUFFICIENCY_REVIEW.md",
+      "sha256": "1cfe108bd90e119e2107a2cb4060dcd8673ceb6bd4f1a7e59f90e39bdb5645d1",
+      "lines": 13
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_MACRO_R2/05_RETENTION_TYPED_BINDING_FINDING.md",
+      "sha256": "79c2c1bb11c403bd34e5bcbc5826a3c12ae91c4063a866288d6afcf1c2794326",
+      "lines": 11
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_MACRO_R2/APPROVAL_RECEIPT_R2.json",
+      "sha256": "eed714be808cf63ea5b32c750fa003336851bb6545044a9fe051ed1c053334b1",
+      "lines": 22
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_MACRO_R2/MANIFEST_R2.json",
+      "sha256": "2dd41de880d445963c5c74917751d58490c63d7364ec1ad2179bbe39c5187ed8",
+      "lines": 298
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/INSTANCE.json",
+      "sha256": "206e1f3ac61d46406b89255f3bc85638fc8129bfcfb4ced0070cada2054572ca",
+      "lines": 19
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/full-tests.json",
+      "sha256": "034dbbbd12e712de632de327a008865ce2ba8e7cdfe48514215caf114b37e9e6",
+      "lines": 1
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/host-unit.json",
+      "sha256": "86d9ad63d4da9e21c00f31352506fa84fd218666fd28b97b06a557a634f1faf4",
+      "lines": 1
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/isolated-catalog-fixture.json",
+      "sha256": "9bae03f4d158b8da5d1c825f9d414961dc2cb395ca5ffc03e3885f2c39ad55a7",
+      "lines": 1
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/native-rbac-vocab.json",
+      "sha256": "5ddba8ac2b44f28b5eab790163769ac8fa00ee28071df5ba96065b9a16b965d5",
+      "lines": 2305
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/native-uq.json",
+      "sha256": "abff0af9f35b910fdd4c20072693389ba3d20d20ed085d55358a01bfe0fa283c",
+      "lines": 184
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/postgresql-settings.json",
+      "sha256": "dc42f53f4f0b30ac2a1916223016815342d52d3619c83d9ace9df391088051b7",
+      "lines": 1
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/INSTANCE.json",
+      "sha256": "206e1f3ac61d46406b89255f3bc85638fc8129bfcfb4ced0070cada2054572ca",
+      "lines": 19
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/native-uq.json",
+      "sha256": "abff0af9f35b910fdd4c20072693389ba3d20d20ed085d55358a01bfe0fa283c",
+      "lines": 184
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/postgresql-settings.json",
+      "sha256": "dc42f53f4f0b30ac2a1916223016815342d52d3619c83d9ace9df391088051b7",
+      "lines": 1
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/product-full-tests.json",
+      "sha256": "d136c576eb53182a3bdf6342075e88a29716aeef35df88923bd24b0cfc91e97a",
+      "lines": 1
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/product-migration-gates.json",
+      "sha256": "68af0b623ecacf167a2c0fd7974184bd21efeeae32f0985d07e54e195d3a4804",
+      "lines": 8
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/product-schema.json",
+      "sha256": "6806009ca25c8acd89bd16917fef2a692aeb1993ddee9861443cd09b95fc5f6e",
+      "lines": 21
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/product-seeds.json",
+      "sha256": "311c1eba576bfccbd384cb6dd72f05d6eec5addb0377c97f66f8b9ddb26a0f3e",
+      "lines": 31
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/product-ui-tests.json",
+      "sha256": "4be7ef456ab4327147a0c26058889574c9f39aad776d1c76b3db37baa58e9a9e",
+      "lines": 15815
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/r2-disposable-rebuild.json",
+      "sha256": "fadd50638ed3c1c4f774ae1aedc630c6ab29335ebc4484a78c90882ce4eb6424",
+      "lines": 8
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/r2-full-fixture-failure.json",
+      "sha256": "2f6efb540c5a8c50dff17aeeecaa68416ce1968a6292b1ae12262f2b968777d4",
+      "lines": 1
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/r2-native-final-read.json",
+      "sha256": "db35ce2be7026fcdf25187e89ddd05df58c8989524c2162d7495130391d8f803",
+      "lines": 23
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/r2-own-publication-fixture.json",
+      "sha256": "4c1c22f181e8633b206e4dc7d262d1c38c32ba882c2062ef00a76dd26b0063db",
+      "lines": 9
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/r2-rbac-native.json",
+      "sha256": "c0ba62120069bf315730b8174c5f3f80596e35a16d2c984f2044a03a9da16eac",
+      "lines": 44
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/r2-targeted-final.json",
+      "sha256": "ef2f7315891b0e3223cc73561578d0f4b5e4b2399f37a3b9c8bb6446b327ae18",
+      "lines": 1
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/r3-commands.json",
+      "sha256": "e0dc3ec82af21fd0bfaa3e9b7596df421fb5f1271737c2aef8872f867139ccdd",
+      "lines": 134
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/r3-current-targeted.json",
+      "sha256": "e6689012f040076d6333ada3a764e99090aca073d1941ca6b543cdfe631c6fd6",
+      "lines": 1
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/r3-first-full-tests.json",
+      "sha256": "fed0e0b879e99dd1440e42bbcd16e1c8ac35f4b8f57f42d8846c9cdbb55cc67d",
+      "lines": 1
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/r3-full-tests.json",
+      "sha256": "639b120ce9829d033eab5fac3b7a3f3bc313b7d90788d18d61c14cd420a8b6d4",
+      "lines": 1
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/r3-instance-cleanup.json",
+      "sha256": "cb703f5f8b95c0b9dbf1223dfe701439da70d03e4692c9282e75d825d445340a",
+      "lines": 67
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/r3-native-rbac-vocab.json",
+      "sha256": "8ecf914798ef78cf90e101d83ef1818e5bb797f97298f8465b44149a708ad8cd",
+      "lines": 2441
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/r3-preservation.json",
+      "sha256": "b98dda5dd3e731fe13d4af3da5310bd7f6094c55a6074cfa08777d45b2d7205a",
+      "lines": 376
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/r3-python-optimized.json",
+      "sha256": "8be697ff26ce7d3547637486b77af7977a38517b3c79f5128a2260116ffd3ea6",
+      "lines": 11
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/r3-rbac-native.json",
+      "sha256": "42cb641c07a1e7e12348488445d2841c6911f771370af42f57c22bb09cbb5def",
+      "lines": 59
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/r3-residuals.json",
+      "sha256": "843eef70298b181e8ab45cf649396c97a49698c6faf0573faff79cc117594df8",
+      "lines": 3897
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/r3-runner-source-hashes.json",
+      "sha256": "badef4aa6db6e341fd29df6b9aeb9a86beaa05ac76360ceb9c64b5086e4af4fb",
+      "lines": 865
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/product-r3/r3-source-changes.json",
+      "sha256": "c25f0fbbb7c63bb4e88edb253704ca2f7905368c992d26cec9891e39b9395d28",
+      "lines": 1501
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/rebuild.json",
+      "sha256": "26765c96e11f8e75b3eb83824cee129fac755773f9fd0e1a0d5548ddf080834b",
+      "lines": 41
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261008/01_SOLO_OWNER_RECTOR_AMENDMENT_CANDIDATE.md",
+      "sha256": "82db1a937b1e21ff6555f6633e78f4c4d4a43577b308866f09f90ffe2fb5d0bf",
+      "lines": 47
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261008/02_RECTOR_CONFLICT_AND_AMENDMENT_IMPACT.md",
+      "sha256": "080fe9483542a73a7e4186d96ff56ba153c7e470efa5f15ce788e2ee29410522",
+      "lines": 48
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261008/03_48_CLAUSE_EXECUTION_AND_OWNER_DECISIONS.csv",
+      "sha256": "c62f9e26b154ff8450ee4d4d1e91ee7fdf4cdd0ee09a0a2323de5813ae553bfe",
+      "lines": 49
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261008/04_THREE_CFGD_SOD_RESOLUTION.md",
+      "sha256": "4c539d085b5e995f4ebfb9c9346ffb9d9060bb54d97d0b8249c8b003e4fafb13",
+      "lines": 33
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261008/05_PO_APPROVAL_PACKET.md",
+      "sha256": "3466cc999f12ff747452007b73148c99b4143cf00ac692159a93034037056560",
+      "lines": 31
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261008/06_RESULT.json",
+      "sha256": "91f45565a11eb07d947f0f9ce8c2f5394c8173e5a1ceee6da806928b350355dc",
+      "lines": 597
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261009_V2/01_SOG_V2_AMENDMENT_CANDIDATE.md",
+      "sha256": "41c7848bfd43ef50511386bbb376b901126a60f13aaf6702d7a92c2c95b33aa8",
+      "lines": 51
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261009_V2/02_V1_TO_V2_DIFF_AND_RECTOR_CONFLICTS.md",
+      "sha256": "57d6a047e620a3ba84320748535aba4042fe147b72935cebb6bf3b0f83949df6",
+      "lines": 93
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261009_V2/03_48_CLAUSES_CONSOLIDATED_DECISION_MATRIX.csv",
+      "sha256": "6a64901160f6d470905ef688064e3129f11f1983682f44a1b1f432393abd813c",
+      "lines": 49
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261009_V2/04_CFGD_TECHNICAL_FINDINGS_AND_LOCAL_TESTS.md",
+      "sha256": "7d5a402bb4c0c67e42143203871bf8d9eb2430b641a2933c34003624985550b6",
+      "lines": 309
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261009_V2/05_PO_ONE_DECISION_APPROVAL_PACKET.md",
+      "sha256": "9ee045ce1ead5d4dfcc56a027608c9ea7dae0d5c0211942f539f9cec274deb4c",
+      "lines": 48
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261009_V2/06_NEXT_EXECUTABLE_BATCH.md",
+      "sha256": "b095adcb8bad3f26e6ab86b4dd0448a641887c5bfb72ea8d66251a6559c179f9",
+      "lines": 1797
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261009_V2/07_RESULT.json",
+      "sha256": "a89dd788d5e2ee1e5507d0e5ce252f7c35b11bd967407490dd411c821dd516a7",
+      "lines": 15805
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/physical-reconciliation/constraints.isolated.prepared.sql",
+      "sha256": "445249e12448cf16054f96366c35b98a6999b2d8cbf2eecd9e3b68d45feaab72",
+      "lines": 64
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/physical-reconciliation/existing-data.predicates.readonly.sql",
+      "sha256": "4192773194fee44a099e3c6b71a4b249f0f22da2749a215da1c86d1b68768b97",
+      "lines": 47
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/physical-reconciliation/forward-only.candidate.sql",
+      "sha256": "d20b7778e62e5ad3c94d7bcfba1eb7b9e43763e3e713f4fea83221ab6d3531f5",
+      "lines": 98
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/physical-reconciliation/preflight.readonly.sql",
+      "sha256": "6c1a3b70543352ad043ed29e8a43a58bb21db73174c67d3a30e6ab3518e4a3d1",
+      "lines": 41
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/physical-reconciliation/roundtrip.isolated.sql",
+      "sha256": "af8b2d9589668af3d779c332f6d6749adc94c456996d5b0d841aa990d062390a",
+      "lines": 28
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/rbac-publication/20261009000300_phase6a3_role_permission_publication.sql",
+      "sha256": "7a7c6db089cfac1adbd6b30207b5207882bd5ca6eda459d17a766d9193d96579",
+      "lines": 27
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/rbac-publication/20261009000400_phase6a3_rbac_resolution.sql",
+      "sha256": "1cf25933649ccbe5d0feaa13262fdab9439caad86f53f592a31b2612f7d97863",
+      "lines": 40
+    }
+  ]
+}

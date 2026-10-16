@@ -15,6 +15,7 @@ const targetId = "018f47f2-6170-7bd0-9d43-12f644a2b114";
 const evidenceVersionId = "018f47f2-6170-7bd0-9d43-12f644a2b115";
 const retentionPolicyId = "018f47f2-6170-7bd0-9d43-12f644a2b116";
 const correlationId = "018f47f2-6170-7bd0-9d43-12f644a2b117";
+const retentionApplicabilityId = "018f47f2-6170-7bd0-9d43-12f644a2b118";
 
 type Query = { sql: string; parameters: readonly unknown[] };
 type QueryResult = { rows: Record<string, unknown>[]; numAffectedRows?: bigint };
@@ -52,6 +53,7 @@ function intentRow(overrides: Record<string, unknown> = {}): Record<string, unkn
     expected_size_bytes: 12,
     classification: "confidential",
     retention_policy_id: retentionPolicyId,
+    retention_policy_applicability_id: retentionApplicabilityId,
     source_provenance: "customer-upload",
     effective_from: null,
     effective_to: null,
@@ -121,9 +123,10 @@ describe("Phase 5 FileUploadIntent runtime", () => {
     const statements: Query[] = [];
     const database = executor((query) => {
       statements.push(query);
-      if (query.sql.startsWith("SELECT 1 AS found FROM privacy.retention_policies")) return { rows: [{ found: 1 }] };
+      if (query.sql.includes("FROM privacy.retention_policy_applicabilities a")) return { rows: [{ retention_policy_applicability_id: retentionApplicabilityId }] };
       if (query.sql.startsWith("INSERT INTO evidence.file_upload_intents")) return { rows: [intentRow()] };
-      throw new Error(`Unexpected SQL: ${query.sql}`);
+      if(query.sql.includes("after_payload->'contract_provenance'"))return {rows:[]};
+    throw new Error(`Unexpected SQL: ${query.sql}`);
     });
 
     const result = await definition.execute({
@@ -137,6 +140,7 @@ describe("Phase 5 FileUploadIntent runtime", () => {
         size_bytes: 12,
         classification: "confidential",
         retention_policy_id: retentionPolicyId,
+        retention_policy_applicability_id: retentionApplicabilityId,
         source_provenance: "customer-upload"
       }
     });
@@ -154,7 +158,7 @@ describe("Phase 5 FileUploadIntent runtime", () => {
     const storage = new StorageDouble();
     const noPersistence = executor(() => { throw new Error("persistence must not run"); });
     await expect(executeMutation(noPersistence, actorFor(definition), definition, {
-      body: { original_filename: "x", declared_mime: "application/pdf", size_bytes: 1, classification: "secret", retention_policy_id: retentionPolicyId, source_provenance: "upload" },
+      body: { original_filename: "x", declared_mime: "application/pdf", size_bytes: 1, classification: "secret", retention_policy_id: retentionPolicyId, retention_policy_applicability_id: retentionApplicabilityId, source_provenance: "upload" },
       idempotencyKey: "invalid-classification",
       correlationId,
       fileStorage: storage
@@ -162,7 +166,7 @@ describe("Phase 5 FileUploadIntent runtime", () => {
 
     let inserted = false;
     const missingPolicy = executor((query) => {
-      if (query.sql.startsWith("SELECT 1 AS found FROM privacy.retention_policies")) return { rows: [] };
+      if (query.sql.includes("FROM privacy.retention_policy_applicabilities a")) return { rows: [] };
       if (query.sql.startsWith("INSERT")) inserted = true;
       return { rows: [] };
     });
@@ -171,8 +175,8 @@ describe("Phase 5 FileUploadIntent runtime", () => {
       actor: actorFor(definition),
       correlationId,
       fileStorage: storage,
-      body: { original_filename: "x", declared_mime: "application/pdf", size_bytes: 1, classification: "internal", retention_policy_id: retentionPolicyId, source_provenance: "upload" }
-    })).rejects.toSatisfy((error: unknown) => code(error) === "TCDX.RESOURCE.NOT_FOUND");
+      body: { original_filename: "x", declared_mime: "application/pdf", size_bytes: 1, classification: "internal", retention_policy_id: retentionPolicyId, retention_policy_applicability_id: retentionApplicabilityId, source_provenance: "upload" }
+    })).rejects.toSatisfy((error: unknown) => code(error) === "TCDX.INVARIANT.VIOLATION");
     expect(inserted).toBe(false);
   });
 
@@ -183,9 +187,12 @@ describe("Phase 5 FileUploadIntent runtime", () => {
     const database = executor((query) => {
       statements.push(query);
       if (query.sql.includes("FROM evidence.file_upload_intents t")) return { rows: [intentRow()] };
+      if (query.sql.includes("SELECT scope_subject_id,processing_activity_id FROM privacy.retention_policy_applicabilities")) return { rows: [{ scope_subject_id: null, processing_activity_id: null }] };
+      if (query.sql.includes("FROM privacy.retention_policy_applicabilities a")) return { rows: [{ retention_policy_applicability_id: retentionApplicabilityId }] };
       if (query.sql.startsWith("INSERT INTO evidence.file_objects")) return { rows: [{ file_object_id: query.parameters[0] }] };
       if (query.sql.startsWith("UPDATE evidence.file_upload_intents")) return { rows: [intentRow({ lifecycle_state: "promoted", row_version: 2, file_object_id: query.parameters.at(-1) })] };
-      throw new Error(`Unexpected SQL: ${query.sql}`);
+      if(query.sql.includes("after_payload->'contract_provenance'"))return {rows:[]};
+    throw new Error(`Unexpected SQL: ${query.sql}`);
     });
 
     const result = await definition.execute({ transaction: database, actor: actorFor(definition), body: { expected_version: 1 }, targetId, correlationId, fileStorage: storage });
@@ -210,8 +217,11 @@ describe("Phase 5 FileUploadIntent runtime", () => {
         selectCount += 1;
         return { rows: [intentRow(selectCount === 1 ? {} : { lifecycle_state: "rejected", row_version: 2, rejected_at: new Date() })] };
       }
+      if (query.sql.includes("SELECT scope_subject_id,processing_activity_id FROM privacy.retention_policy_applicabilities")) return { rows: [{ scope_subject_id: null, processing_activity_id: null }] };
+      if (query.sql.includes("FROM privacy.retention_policy_applicabilities a")) return { rows: [{ retention_policy_applicability_id: retentionApplicabilityId }] };
       if (query.sql.startsWith("UPDATE evidence.file_upload_intents")) return { rows: [intentRow({ lifecycle_state: "rejected", row_version: 2, rejected_at: new Date() })] };
-      throw new Error(`Unexpected SQL: ${query.sql}`);
+      if(query.sql.includes("after_payload->'contract_provenance'"))return {rows:[]};
+    throw new Error(`Unexpected SQL: ${query.sql}`);
     });
     const rejected = await definition.execute({ transaction: rejectedDatabase, actor: actorFor(definition), body: { expected_version: 1 }, targetId, correlationId, fileStorage: storage });
     expect(rejected.deferredError?.code).toBe("TCDX.FILE.MALWARE_REJECTED");
@@ -223,6 +233,8 @@ describe("Phase 5 FileUploadIntent runtime", () => {
     let mutated = false;
     const unavailableDatabase = executor((query) => {
       if (query.sql.includes("FROM evidence.file_upload_intents t")) return { rows: [intentRow()] };
+      if (query.sql.includes("SELECT scope_subject_id,processing_activity_id FROM privacy.retention_policy_applicabilities")) return { rows: [{ scope_subject_id: null, processing_activity_id: null }] };
+      if (query.sql.includes("FROM privacy.retention_policy_applicabilities a")) return { rows: [{ retention_policy_applicability_id: retentionApplicabilityId }] };
       if (query.sql.startsWith("INSERT") || query.sql.startsWith("UPDATE")) mutated = true;
       return { rows: [] };
     });
@@ -240,8 +252,11 @@ describe("Phase 5 FileUploadIntent runtime", () => {
         selectCount += 1;
         return { rows: [intentRow(selectCount === 1 ? { expires_at: new Date(Date.now() - 1_000) } : { lifecycle_state: "expired", row_version: 2, expired_at: new Date() })] };
       }
+      if (query.sql.includes("SELECT scope_subject_id,processing_activity_id FROM privacy.retention_policy_applicabilities")) return { rows: [{ scope_subject_id: null, processing_activity_id: null }] };
+      if (query.sql.includes("FROM privacy.retention_policy_applicabilities a")) return { rows: [{ retention_policy_applicability_id: retentionApplicabilityId }] };
       if (query.sql.startsWith("UPDATE evidence.file_upload_intents")) return { rows: [intentRow({ lifecycle_state: "expired", row_version: 2, expired_at: new Date() })] };
-      throw new Error(`Unexpected SQL: ${query.sql}`);
+      if(query.sql.includes("after_payload->'contract_provenance'"))return {rows:[]};
+    throw new Error(`Unexpected SQL: ${query.sql}`);
     });
     const expired = await definition.execute({ transaction: expiredDb, actor: actorFor(definition), body: { expected_version: 1 }, targetId, correlationId, fileStorage: storage });
     expect(expired.deferredError?.code).toBe("TCDX.LIFECYCLE.TRANSITION_DENIED");
@@ -266,7 +281,8 @@ describe("Phase 5 evidenceRequestFulfill", () => {
       if (query.sql.includes("FROM evidence.evidence_requests er")) return { rows: [{ found: 1 }] };
       if (query.sql.startsWith("UPDATE evidence.evidence_requests")) return { rows: [{ evidence_request_id: targetId, row_version: 2, lifecycle_state: "fulfilled" }] };
       if (query.sql.startsWith("INSERT INTO evidence.evidence_request_fulfillments")) return { rows: [{}] };
-      throw new Error(`Unexpected SQL: ${query.sql}`);
+      if(query.sql.includes("after_payload->'contract_provenance'"))return {rows:[]};
+    throw new Error(`Unexpected SQL: ${query.sql}`);
     });
     const result = await definition.execute({ transaction: database, actor: actorFor(definition), body: { expected_version: 1, evidence_version_id: evidenceVersionId }, targetId });
     expect(result).toMatchObject({ resource: "evidenceRequest", id: targetId });
@@ -316,7 +332,8 @@ describe("Phase 5 controlAssessmentSubmit", () => {
       if (query.sql.includes("FROM controls.control_effectiveness_methodologies")) return { rows: [{ methodology_version_ref: targetId, minimum_coverage: 80, version_number: 1 }] };
       if (query.sql.includes("current_edges")) return { rows: [{ to_state: "completed", audit_event_code: definition.auditEvent, sod_policy_ref: "contract:default-deny-sod:v1", scope_kind: "tenant" }] };
       if (query.sql.startsWith("UPDATE controls.control_assessments")) { update = query; return { rows: [{ control_assessment_id: targetId, methodology_version_ref: targetId, row_version: 2, lifecycle_state: "completed" }] }; }
-      throw new Error(`Unexpected SQL: ${query.sql}`);
+      if(query.sql.includes("after_payload->'contract_provenance'"))return {rows:[]};
+    throw new Error(`Unexpected SQL: ${query.sql}`);
     });
     await definition.execute({ transaction: database, actor: actorFor(definition), targetId, body: { expected_version: 1, result_status: "valid", domain_conclusion: "partially_effective", design_effectiveness: 65, operating_effectiveness: 80, coverage_percent: 90 } });
     expect(update?.parameters).toContain(65);

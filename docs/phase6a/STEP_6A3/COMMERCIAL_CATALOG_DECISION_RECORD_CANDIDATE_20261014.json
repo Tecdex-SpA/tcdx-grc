@@ -1,0 +1,19 @@
+{
+  "record_kind": "COMMERCIAL_CATALOG_DECISION_RECORD_CANDIDATE",
+  "authority": "Andrés Barouh, Product Owner, instruction received 2026-10-14",
+  "approval_scope": "Approved commercial values; exact manifest bytes require separate approval under rector 42 section 2.5",
+  "plans": ["ISO", "ISO_RIESGO_OPERATIVO", "GRC"],
+  "new_versions": ["ISO v2", "ISO_RIESGO_OPERATIVO v2", "GRC v2"],
+  "version_effectivity": "effective_from is UTC when the exact manifest is closed; effective_to is null; published_at is the actual publication instant; eligibility begins only after publication",
+  "quotas": {
+    "ISO": { "total": 2, "ISO": 2, "LEGAL": 0 },
+    "ISO_RIESGO_OPERATIVO": { "total": 3, "ISO": 3, "LEGAL": 0 },
+    "GRC": { "total": 5, "ISO": 4, "LEGAL": 1 }
+  },
+  "entitlements": "Preserve 36 v1 rows and create 36 v2 rows with the same capability identities and enabled values by plan",
+  "families": { "ISO": "standard", "LEGAL": "law" },
+  "root_links": "Four real standard roots to ISO; one real law root to LEGAL",
+  "pack_publication": "Five draft packs approved for functional QA only; do not publish without independent regulatory content gates",
+  "zero_quota_representation": "The manifest links LEGAL to ISO and ISO_RIESGO_OPERATIVO with explicit zero limits. The zero limit denies activation and preserves ISO-only plan rights. Exact-byte approval covers this representation.",
+  "existing_subscriptions": "Preserve all three active subscriptions without reassignment"
+}

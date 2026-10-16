@@ -1,0 +1,1005 @@
+{
+  "package_id": "GP-STEP6A3-COMMERCIAL-20261013-02",
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "d6677456da4c3bb099c7eed6b0eb75114b255beccc9a07663dc59e46840824cc"
+    },
+    {
+      "path": "database/expected-schema.json",
+      "sha256": "f920bf882a8b7ab0e91e2d43929bb161ca0ffeab100f0b640cf621a70ec2d7d3"
+    },
+    {
+      "path": "database/migrations/20260916000100_bootstrap_schemas_and_ledger.sql",
+      "sha256": "4f29910baacf82526fb06226c237024b7315038a4868baa7bbda56ced4779437"
+    },
+    {
+      "path": "database/migrations/20260916000200_platform_iam_organization.sql",
+      "sha256": "08fce9d08e729f097095a10cfdfbf093c43f9d8cbfbee97d39594691f4ad8f29"
+    },
+    {
+      "path": "database/migrations/20260916000300_normative_control_evidence.sql",
+      "sha256": "f300aac95b6fba36c09fc6ac77550bf574f953c0ee0ad374a8cbf6fdb338ef9f"
+    },
+    {
+      "path": "database/migrations/20260916000400_risk_operations_privacy.sql",
+      "sha256": "a38d2a7babbe77d79783d66e8ce909916e967be739d3712f303e51883d85a81b"
+    },
+    {
+      "path": "database/migrations/20260916000500_data_integration_reporting_ai.sql",
+      "sha256": "bac1e0a421a4d532eb2da27e4bc9453125cfa407a2e8da904c8749c726815764"
+    },
+    {
+      "path": "database/migrations/20260916000600_constraints_and_uniqueness.sql",
+      "sha256": "7d079aa1234050b6dde06d9fb3cad939144fcbccdf287cc31bbe863c68899bf5"
+    },
+    {
+      "path": "database/migrations/20260916000700_foreign_keys.sql",
+      "sha256": "d2112e4b402e8789312d5473969b615e6d7ab344a58a2211f790c4423dd4361f"
+    },
+    {
+      "path": "database/migrations/20260916000800_required_indexes.sql",
+      "sha256": "d3502b9de76209b54b40497e6b9fdf94d463335d1f5441fb0fb924786648336e"
+    },
+    {
+      "path": "database/migrations/20260916000900_canonical_seeds.sql",
+      "sha256": "94547ff1fa6a9accf56ff6f28be93afeb91b8c290ca9bb224667862c64c8c2e7"
+    },
+    {
+      "path": "database/migrations/20260916001000_pre_f4_integrated_audit_model.sql",
+      "sha256": "c4247051c223960eb5ca817a0f85650dbc828a7864e48f66a1a73b1d298a224d"
+    },
+    {
+      "path": "database/migrations/20260921000100_pre_f5c_executable_physical_reconciliation.sql",
+      "sha256": "1181d7ab26718927124de880e351fbaba3f2daaca41267a1ef66d28ac2021680"
+    },
+    {
+      "path": "database/migrations/20260921000200_phase5_core_grc_runtime_permissions.sql",
+      "sha256": "8cc3d1b2a64a5b00ffd55f93ccfbcdfcde5406ffa9c1fa7f2d2055f505048eb0"
+    },
+    {
+      "path": "database/migrations/20260923000100_pre_f5e_platform_authority.sql",
+      "sha256": "4ee0b3d24c7d7aa6ea87a8e9a6618cd2a7b164aedf1e3990590c3cf1b512ea82"
+    },
+    {
+      "path": "database/migrations/20260923000200_phase5_final_closure.sql",
+      "sha256": "96a56b5669cd6e6fd0d751dc12526e3fe6ad2c612e77a8a7e144c847775be96c"
+    },
+    {
+      "path": "database/migrations/20260924000100_phase5_subscription_create_catalog.sql",
+      "sha256": "a41efa51265d5f95a342674bdbac2faecf37ac31ac1c45aef47b394c7e380f2f"
+    },
+    {
+      "path": "database/migrations/20260924000200_phase5_retention_policy_lifecycle.sql",
+      "sha256": "751ff47c9644b8d7134bb16148728a075e61af3057fa2a271e280a1fb1cd1728"
+    },
+    {
+      "path": "database/migrations/20260924000300_phase5_membership_invitation.sql",
+      "sha256": "0942e5eb360f7157a444d7b04fbe7558312e8d782347e60a745a8d4365034806"
+    },
+    {
+      "path": "database/migrations/20260925000100_phase5_membership_invitation_platform_authority_reconciliation.sql",
+      "sha256": "b66f88a19323d7a92465f6e61e762dffcf511eae55e53456d811c7912d3dad8a"
+    },
+    {
+      "path": "database/migrations/20260928000100_phase5_administrative_read_permissions.sql",
+      "sha256": "d19c72ce5a0b9e5caa65d8b6b93daec1b2188dee54067551bb8ac3c8c7dcdd35"
+    },
+    {
+      "path": "database/migrations/20260928000200_phase5_membership_role_revoke_platform_grant.sql",
+      "sha256": "d47e4fa07250092c5b8c063a60713528627acee864f93278b3c5f0ed5dd57cdc"
+    },
+    {
+      "path": "database/migrations/20260928000300_phase5_control_assessment_start_tenant_scope.sql",
+      "sha256": "4e38ffe74d4c5324d16871228e65e800396d538f45aaf29b052d895bfb5cbe84"
+    },
+    {
+      "path": "database/migrations/20260928000400_phase5_regulatory_catalog_contract_alignment.sql",
+      "sha256": "1d4e5a51372531a1a5645dd5152cd00742016a3e5a7f3c508193caa65afcb929"
+    },
+    {
+      "path": "database/migrations/20260929000100_phase5_subscription_regulatory_pack_authority.sql",
+      "sha256": "58db95213900be09348312702659b292f53a5913fe03df99102c444320c70bbd"
+    },
+    {
+      "path": "database/migrations/20260929000200_phase5_plus_permissions_applicability.sql",
+      "sha256": "58d52157c20f5daa95d533030fa0b2ed4f85d7faea1a0f256a167f608a23ea8d"
+    },
+    {
+      "path": "database/migrations/20260929000300_phase5_plus_subject_validation_access.sql",
+      "sha256": "5eb46ac182929c1649fed610a4d66cd92017ea07b473aba933e5c167f5e1dfdb"
+    },
+    {
+      "path": "database/migrations/20261001000100_managed_identity_permissions_publication.sql",
+      "sha256": "90503ed1cf626c7d8a3529d323670322e180efde90257ee8bb99efe2736eef07"
+    },
+    {
+      "path": "database/migrations/20261006000100_platform_role_administration_permission_publication.sql",
+      "sha256": "2a3c0d14748a9494d6ef60572802782eab2cdf3f4e60bef6026d73c48c1b6399"
+    },
+    {
+      "path": "database/migrations/20261006000200_user_identity_discovery_permission_publication.sql",
+      "sha256": "fa7d34a7f33044b8ee02478211c67a6c1c36ee64df0e0d2de57a60101d157c22"
+    },
+    {
+      "path": "database/migrations/20261007000100_platform_tenant_user_onboarding_permission_publication.sql",
+      "sha256": "4f91369da1908264eba937e5c9d760a34bcefe3d7de1d726ac558c3f9b138673"
+    },
+    {
+      "path": "database/migrations/20261007000200_phase5_methodology_binding.sql",
+      "sha256": "fa178ad731d48045313a11b22f1bdf3c228be502dafa1883136162ad48127850"
+    },
+    {
+      "path": "database/migrations/20261009000100_phase6a3_configuration_integrity.sql",
+      "sha256": "b717f0c91f88a4079f791fd68cc08ff5202ef7f0dda6c7cf85ea37cb23441722"
+    },
+    {
+      "path": "database/migrations/20261009000200_phase6a3_reference_read_permissions.sql",
+      "sha256": "920ececb9d28e3821a9faf9d2c754db481a26c0e33c53ae0f94b3a0535885ed8"
+    },
+    {
+      "path": "database/migrations/manifest.json",
+      "sha256": "f10105381a492feabf7f39ae92329c49bc7f357f3b5aee06b4ef279b983801b9"
+    },
+    {
+      "path": "database/seed-manifest.json",
+      "sha256": "eb4ce85088a056be4f477fa9acff5ae272616ff95bbfd9eed79ce1826c894377"
+    },
+    {
+      "path": "docs/executable-contracts/00_README.md",
+      "sha256": "c1179d9f192646dc07bfc8af5a0bf34abe9680105f0fa896cfb4fad09a24548d"
+    },
+    {
+      "path": "docs/executable-contracts/01_IMPLEMENTATION_DECISION_MANIFEST.md",
+      "sha256": "1adead94dca6632fa05f27746deff0443b99c6233a5985deb5e5a104e400b1de"
+    },
+    {
+      "path": "docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml",
+      "sha256": "4e26a049cf96c1288176e2a179bddce6069b5caccf4aa1a465457e08d0874dc7"
+    },
+    {
+      "path": "docs/executable-contracts/03_API_RESOURCE_OPERATION_MATRIX.md",
+      "sha256": "d017b563e97283b774af5981da2a7218693f2990832a8c2b654c8686a08043c0"
+    },
+    {
+      "path": "docs/executable-contracts/04_EVENT_CATALOG.md",
+      "sha256": "ac4a4f1d0ff149769a7b9a9e9a7063d5fd6ee43e8714ec3bfbebcd76c9fb8832"
+    },
+    {
+      "path": "docs/executable-contracts/05_PERMISSION_CATALOG.md",
+      "sha256": "e4f94f48a455a1a25d5c7964a17053d4dbf2e5761437c5acfda3962604cac01d"
+    },
+    {
+      "path": "docs/executable-contracts/06_ERROR_MODEL.md",
+      "sha256": "d5ae20850a89f8f82b8bf8b006c147cc38f9a8a1a2c1931c021a0c891e979c17"
+    },
+    {
+      "path": "docs/executable-contracts/07_IDEMPOTENCY_CONTRACT.md",
+      "sha256": "d23edc4c251ae9eaceea3255d2ca16145196f4edb2180cea996afc21f3665af8"
+    },
+    {
+      "path": "docs/executable-contracts/08_AUDIT_EVENT_CATALOG.md",
+      "sha256": "d3832219040b34b864213711aefa7a5dffa27b6caf1345564dccbf7480d5b39a"
+    },
+    {
+      "path": "docs/executable-contracts/09_SEED_MANIFESTS.md",
+      "sha256": "866647489d07e3e83f9ca525308617b3ecb338786bcc06e084c31b33b49f2ef7"
+    },
+    {
+      "path": "docs/executable-contracts/10_TEST_CONTRACTS.md",
+      "sha256": "072e0a3d20ac3a1c6b2642f936d6a1458a9726db8d0ba6e3ab0a27ac1d4dcb18"
+    },
+    {
+      "path": "docs/executable-contracts/11_MIGRATION_PLAN.md",
+      "sha256": "ac0a87e7abc8e3b017b94af7906c63768fd778cfae9e7e6c91254691a8488ab2"
+    },
+    {
+      "path": "docs/executable-contracts/12_TRANSACTION_CONCURRENCY_CONTRACT.md",
+      "sha256": "d2a9b0c18764e1121b89c0bd64c9ec4eae1320ba0647e5b9a39e4e7941664507"
+    },
+    {
+      "path": "docs/executable-contracts/13_AUTHENTICATION_AUTHORIZATION_CONTRACT.md",
+      "sha256": "9462bc8568b8db4e323422e2ad2564d5920031cc49114b46f4c8ae37e8a34c78"
+    },
+    {
+      "path": "docs/executable-contracts/14_FILE_EVIDENCE_STORAGE_CONTRACT.md",
+      "sha256": "ec81a3f4ce8879a2187a5f3e43a652f613111be1a60269b94f093042d0357926"
+    },
+    {
+      "path": "docs/executable-contracts/15_OUTBOX_WORKER_CONTRACT.md",
+      "sha256": "a484bff06d414f90d98aa6ce29b0506c09d99cf074cf5dd372641b87564d898e"
+    },
+    {
+      "path": "docs/executable-contracts/16_OBSERVABILITY_CONTRACT.md",
+      "sha256": "eb864e4e80c8176b172e19cbdb0f6a543b76b3eda5d96250912a3ecfd91e6e3e"
+    },
+    {
+      "path": "docs/executable-contracts/17_AI_INTEGRATION_CONTRACT.md",
+      "sha256": "21b835753a98bd96595098fe2367fb2185a90819c678e28b354709e49d839298"
+    },
+    {
+      "path": "docs/executable-contracts/18_EXECUTABLE_CONTRACT_TRACEABILITY.md",
+      "sha256": "30eee3a6c45516a6a1f40e61587f77afda5fbff5ea5319c20073ce8e09fcd359"
+    },
+    {
+      "path": "docs/executable-contracts/19_OPEN_DECISIONS_AND_BLOCKERS.md",
+      "sha256": "a20f638f2402bf5d20b3574e2f5ea378b8ecbf954461b68721fd53cb10bad53c"
+    },
+    {
+      "path": "docs/executable-contracts/20_EXECUTABLE_CONTRACTS_REVIEW_REPORT.md",
+      "sha256": "803d1c37352ee1db481341b384ed1d70b79e3409ab8119bcadb959b12470cbac"
+    },
+    {
+      "path": "docs/executable-contracts/21_PRE_F5E_PLATFORM_IAM_AND_TOKEN_BOUNDARY.md",
+      "sha256": "39f416a984eb0481a2fe309f35d3832127d9f735667035a1cfa0f842024a9923"
+    },
+    {
+      "path": "docs/executable-contracts/22_TCDX_MANAGED_IDENTITY_KEYCLOAK_CONTRACT.md",
+      "sha256": "f05765394206f0dbffb7cd6dda249f235a66414ea7e189d2aa8d224242068d31"
+    },
+    {
+      "path": "docs/executable-contracts/23_FRONTEND_AUTHENTICATION_AUTHORIZATION_PROJECTIONS.md",
+      "sha256": "6f0234e24524201f99137f09ba3a4ffebaf57fd84373803c400651f857881bb7"
+    },
+    {
+      "path": "docs/executable-contracts/24_PLATFORM_ROLE_ADMINISTRATION_CONTRACT.md",
+      "sha256": "a51df5ad299a3d9d75407238c32cc09ca1ab0bbb1c4c65a6f50dd491e0b4e8a1"
+    },
+    {
+      "path": "docs/executable-contracts/25_TENANT_INITIAL_ONBOARDING_AND_IDENTITY_DISCOVERY.md",
+      "sha256": "badf5fe9a8a754696d128a79c338b4ca43f8813062b535b23cbb1aa11c0d8054"
+    },
+    {
+      "path": "docs/executable-contracts/26_PLATFORM_TENANT_USER_ONBOARDING.md",
+      "sha256": "0983ee99298563210686fd2657ca825236a573b80335ff09edf9487f8dc7d058"
+    },
+    {
+      "path": "docs/executable-contracts/27_PHASE5_METHODOLOGY_BINDING.md",
+      "sha256": "eedf85debfb5eb48e25d4abdd5ff4332c5dba8197ab7b96a66b97f640cfef4df"
+    },
+    {
+      "path": "docs/executable-contracts/28_EFFECTIVE_CONFIGURATION_DETAIL_READ.md",
+      "sha256": "0d0513c544e9f449e7985524a070ebd577ed05451c71a43d4f81e12d2bb391b6"
+    },
+    {
+      "path": "docs/executable-contracts/29_PHASE6A3_RBAC_MANIFEST.json",
+      "sha256": "7462a780d4e0afe23c812983b762685e6f1aa8944ddef85afc50ca2c6d01cd72"
+    },
+    {
+      "path": "docs/executable-contracts/29_PHASE6A3_REFERENCE_READS.md",
+      "sha256": "cf44ce455944601fbc4a047973827b2e6a24822d257b3d67dfab8f331e18f739"
+    },
+    {
+      "path": "docs/executable-contracts/30_PHASE6A3_VOCABULARIES.md",
+      "sha256": "fa3dc81e86ed7155cf775c104de8766831462812ec9517a2680d3159a23783f2"
+    },
+    {
+      "path": "docs/executable-contracts/30_PHASE6A3_VOCABULARIES_MANIFEST.json",
+      "sha256": "81e559c96f687c319d415bb57b97187f17f91d884b35594b4ce0db7b68862b83"
+    },
+    {
+      "path": "docs/executable-contracts/31_PHASE6A3_PUBLICATION_METADATA.json",
+      "sha256": "fe06a7aa26c18ae6a6f94c30b035ea90c47847610e15f4ee5695cebb89019321"
+    },
+    {
+      "path": "docs/executable-contracts/31_PHASE6A3_RESIDUAL_DELTAS_R2.md",
+      "sha256": "26414c9af122d4dc445a36c5e7fb671bb33d29e643988d86eeacc75427641641"
+    },
+    {
+      "path": "docs/executable-contracts/31_VOCABULARY_PROVENANCE_SCHEMA.json",
+      "sha256": "a959b241bc390f0a9468e28cd2b0bd75d03ef0b7df3f0b0d979df6296ba519b6"
+    },
+    {
+      "path": "docs/executable-contracts/32_PHASE6A3_RBAC_RESOLUTION_R3.md",
+      "sha256": "329c7b3ac917e0eeebd3e4d9c66a9d6394064772f499916b96c32539f3fbbed1"
+    },
+    {
+      "path": "docs/executable-contracts/32_PHASE6A3_RBAC_RESOLUTION_R3_METADATA.json",
+      "sha256": "50102db7642716fc699ecc8e7b92ab39d36ea82fd17066facef70e560bb6ffd8"
+    },
+    {
+      "path": "docs/executable-contracts/33_PHASE6A3_TENANT_TIMEZONE_PROJECTION.md",
+      "sha256": "b6cf8eaff2963157ed35438813ce60021ad16a39c90da31f1eb69ad17f23b329"
+    },
+    {
+      "path": "docs/executable-contracts/33_PHASE6A3_TENANT_TIMEZONE_PROJECTION_METADATA.json",
+      "sha256": "6794792801c6e7e42eeb6fdcc17d8d0a383d6c49eee09f5712946db41f920912"
+    },
+    {
+      "path": "docs/executable-contracts/amendments/PHASE_5_PLUS_SUBJECT_VALIDATION_v1.0/00_README.md",
+      "sha256": "1804103c13bc6e4941e476b529c86a3c982c8ddd66e2b8f138e1ee072f0cfde4"
+    },
+    {
+      "path": "docs/executable-contracts/amendments/PRE_F4_AUDIT_MODEL_v1.5/00_README.md",
+      "sha256": "32d104f1018332f67a0b01b1dfaec82370697a6aaf88837ea25167d2489e0703"
+    },
+    {
+      "path": "docs/executable-contracts/amendments/PRE_F4_AUDIT_MODEL_v1.5/01_API_PERMISSION_AUDIT_CONTRACT.md",
+      "sha256": "f69be66038a93cdef8d4c7a18a2ac86b61cdcb9a192b0f45b8f284b53f262528"
+    },
+    {
+      "path": "docs/executable-contracts/amendments/PRE_F4_AUDIT_MODEL_v1.5/02_SEED_AND_TEST_CONTRACT.md",
+      "sha256": "1c55c5cf2edb2fff6c493f6ffbf8e8604ecdd237b4cf9861f1f2846850ffa4d0"
+    },
+    {
+      "path": "docs/executable-contracts/amendments/PRE_F4_AUDIT_MODEL_v1.5/03_REVIEW_REPORT.md",
+      "sha256": "0ee10399fac7caf6181fe9c724ece07b08f5a2d3fbd6c888e4deb6380152b757"
+    },
+    {
+      "path": "docs/governance/CODEX_RECTOR_ENFORCEMENT.md",
+      "sha256": "8008ba8fdbbe6d4d2e9c8c67cc8457e1af8e5b2683b61f3b0ec58fd2b2512095"
+    },
+    {
+      "path": "docs/governance/MASTER_EXECUTION_STATUS.md",
+      "sha256": "8cbcb1e5d44080770e7b8f0b55a1d2adca672f0492428d8f8df7725b39ae0aa8"
+    },
+    {
+      "path": "docs/governance/amendments/COMMERCIAL_PACK_FAMILY_20261013/DRAFT_CANONICAL_AMENDMENT.md",
+      "sha256": "4f0b9bf2ea346b26d65f79df7daa6165d25785a917dfea52a2d4d9d1b627c068"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/20_P_RBAC_PUBLICATION_DECISION_PACKET.md",
+      "sha256": "5d6768ed6b806f5795d387dd3bd48ba0f744c60002c4e36d1a1452a69ea592af"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/21_P_CONFIG_BINDING_EVIDENCE_AND_ARCHITECTURE_OPTIONS.md",
+      "sha256": "17ac177ef38003de4a24fb6106f3555993ff6a0a9460efa451da5788fd6f3de4"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/23_P_VOC_DECISION_AND_PROVENANCE.md",
+      "sha256": "de3feae44235a7cdc905671f75769d3606f5c61b7bf8314f0fd32be87df7bab3"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/26_PO_APPROVAL_AND_COMPETENT_REVIEW_LEDGER.md",
+      "sha256": "85bc72b94021adf28444e3ae6d2fc7a354873fa3fe85004f1314d3bd269c862f"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/28_CONFIG_CFGD_CONDITIONAL_DECISION_AND_PHYSICAL_RECONCILIATION.md",
+      "sha256": "28b0f1b9b7a0fa4718b0612f447b81d71dd8a7653e7a3f8bf5458b2333660b48"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/MACRO_APPROVAL_RECEIPT_R1.json",
+      "sha256": "335c40cac78b6bfcf01f7b840786d62ad74ea8f24d7bd59d0fb95f2f1f8c6739"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/MACRO_APPROVAL_RECEIPT_R3.json",
+      "sha256": "3d69c54a089e0996096b6b37eab1ec45c320f96771c97030c2741fd2afff816d"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/R6_API_MAJOR_PREPARATION_RECEIPT.json",
+      "sha256": "5fd052dc571aadc786df279fc02677451c137c145c8b3f536e9c144d23e087b2"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/R6_NEXT_V2_APPROVAL_RECEIPT.json",
+      "sha256": "9ccac3c6ae82cdca1cfb670d2f3a17517953892926b32750ed7389aa905d39bb"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/R6_OWNER_APPROVAL_RECEIPT.json",
+      "sha256": "acfe51886f1e95b81605fd30fb53db011598cf70fdbda1d2b0993c02759e50a8"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RESIDUAL_MACRO_R2/APPROVAL_RECEIPT_R2.json",
+      "sha256": "eed714be808cf63ea5b32c750fa003336851bb6545044a9fe051ed1c053334b1"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/SHA256SUMS.txt",
+      "sha256": "e614ee9c019bed45a8650aa0daea58aca42bf002091de3f94e353a810a5c7e63"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/build-receipt.json",
+      "sha256": "61066c49681cec59a8a9f7a1729c8cec8d547ab817924d4232d8d134a9c5a876"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/build.log",
+      "sha256": "91a9248b58cd1113e524803a1434f101d9ebd23249d3ca4492fe17a26a160dc5"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/contracts-receipt.json",
+      "sha256": "1f5ab56810b7d634e6fc26cb946a5ef90d32113665eec3462556ef93ed49c1df"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/contracts.log",
+      "sha256": "d67a5158baf2ff9a548629c8bc6870044bf456a3d256be6c6f3feac76ec9aa9b"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/entry-state.json",
+      "sha256": "89d1a443c02fdcf9e1220849deeb59ad4c9b9748111dd082a62ac35679c971ca"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/final-audit.json",
+      "sha256": "f646cd1cbda75055e11b57df6d4704a9b74489e9f1907cd81ec8443534ad4fcb"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/finalize-evidence.py",
+      "sha256": "2332ab046e7d19b2b98040cbc45899522c3f4401bf1f4f9a5ca568ba7cc9d0c2"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/fixture-attestation.json",
+      "sha256": "35b8061fcaeed7f912f3f7c42ea64b2a2559a0c35ef8851caf5a64b754f2d946"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/fixtures-receipt.json",
+      "sha256": "a939af5f0e36063199783c45727f9a1bc66a7e56bfe8e5f619ceff33a23c05ab"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/fixtures.log",
+      "sha256": "6867adfba28302da6e6612be87859d8dc5e2d7f8a9d32d95430bd6f2a870bde2"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/inherited-pending-clauses.json",
+      "sha256": "bb0ab0821bad562a01687d02af1387c0fe34b9900ee385330931a27c6a8e2dd0"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/lint-receipt.json",
+      "sha256": "eb0456183bb35009655c702f5a036e3871f04fd8d5cb828924041bd55e3eb237"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/lint.log",
+      "sha256": "8a21fa8ca41bcae1d259b913f324690f476445919c4516b702c34a70761ddd9d"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/manifest-review.json",
+      "sha256": "062130543d20443c997b2db668ec87f0d0e7acec87647ec4d26939fba6829fbe"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/migration-apply-isolated-receipt.json",
+      "sha256": "6a81ad6732b3bc0544d4cb5a58134c025ee3944e87fe634f41b1ea60f4e9706f"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/migration-apply-isolated.log",
+      "sha256": "02a76c04fa876e31cb395534f78b36595a1ae2cb6d6076c7cc4244dac4e9d7f3"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/migration-status-receipt.json",
+      "sha256": "6188b15d1c5a31681071ccb8a116a2ec39799c68ad59ef7fc3b86db9504d8b2d"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/migration-status.log",
+      "sha256": "eed3367fdab00b7215e66e8ee4db12b71bf349fc055ed38dc419f1440b37212f"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/migration-validation-receipt.json",
+      "sha256": "8e76dc0de25bd3de94e6bff3f7244c679fb5e51ee897e7799528db58e3140d92"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/migration-validation.log",
+      "sha256": "4ad64b8b1f369f9f6a884bdf3a8cdbd5b4e5de078cffe1eb8369a17ceb0f4f5b"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/postgres-receipt.json",
+      "sha256": "db261a544e73b6d04b39027b314ce39088b039382431bed44adfe72c2b0d32c8"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/postgres-results.json",
+      "sha256": "35ea501ed9e90d448e783f55420c68618d1939b0b2646f169988f2c1b13d4a06"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/postgres.log",
+      "sha256": "ef81d0c098d109f750963e0ff912cddcbcee86b9f587c0e6a7f2f8240633afec"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/prepare-fixtures.mjs",
+      "sha256": "2c1e24dc9bf369d977ad5b37cc597f4072ff9b292af2651e65f870cc520c5012"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/qa-readonly.json",
+      "sha256": "78f7873fdad2b5cd24c03968b58b9f0f462d605393376b70f0ff163c9b1d9d58"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/qa-readonly.py",
+      "sha256": "896dd88996711e4f4f9755772dd70a6507e1ecd319b431b067f8fc1c6b90ce9b"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/rector-receipt.json",
+      "sha256": "312dd11cae3be436d080d58d85bf47d879f923f62096f83d041599db401ec544"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/rector-status-receipt.json",
+      "sha256": "17d77a58eb084d75f6b6292fd72b45f3bdc461a4a57ce88f4346deb2871db21c"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/rector-status.log",
+      "sha256": "4a950b39b20f2de1440a2b45b243b63df607fa3ede7f7e32e9f7e9da71864597"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/rector.log",
+      "sha256": "be827f42eb6ea9aa9359e7f5e925cc56b81bf1dbc9f7f0b6337292b1c38192ff"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/run-checks.py",
+      "sha256": "5f856e773bbac7640a4defd4e9bc1595cff9fdd0806a446d5b9972be4eddf198"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/schema-receipt.json",
+      "sha256": "b1e10b90f9d7f57d054839369e33ddc4190c1d2e909c5d7a49c456fa21de68b6"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/schema.log",
+      "sha256": "07847d918a0597f212de0762ed97a6261c5ee3dbccdc8aa9a72a937e8f9426b9"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/secrets-receipt.json",
+      "sha256": "234462a3f13ec99ae321b1db25ade90e8cc36123a0724e229f99efb524c1af9f"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/secrets.log",
+      "sha256": "9fedc7516da286dc23425a52533c851cc8ef5d6e2a7a4fc55696689f62b33894"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/seeds-receipt.json",
+      "sha256": "24324a42f76d6a4db97f5a4a6257f5c37436091111fda5e808499bed80922de4"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/seeds.log",
+      "sha256": "cc73602e23b90c6267ebed79c09c338c1603783fff89ace007f8689206cf3283"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/subscription-postgres-receipt.json",
+      "sha256": "c6c554cad557bfb89b55534b4ab0bc7ac6f9572afb9f454835daee701874acb3"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/subscription-postgres-results.json",
+      "sha256": "394e08bf8b061a963fd5ea250a94da108102172358b65559eb48238fbfbb1329"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/subscription-postgres.log",
+      "sha256": "e8d41fb0a2ad4e3c89a84c1f0bbcbcf7541e06429727ec6110b7c8a9a1740b8c"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/tenant-isolation-receipt.json",
+      "sha256": "73ae429f3b717dd0ed3f8fb35f1c76b3a989632c85e3af81cfe059fad1fb3676"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/tenant-isolation.log",
+      "sha256": "931c5b537573d6aa810c96fc6481aea8c8d1fd11cbfb997c69c1e8a0f846b289"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/tests-summary.json",
+      "sha256": "15821424e4df75eb32de260651e9628190fa4103938d18e8c80390c065008f91"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/typecheck-receipt.json",
+      "sha256": "66bc92e63bbeca080f81db2d49b5ac54549f236259a9d84444bc5bca698f97a7"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/typecheck.log",
+      "sha256": "79c8d9b18d7cf39c9d7e87f187f88a8c85e65b25b0422a834521419544e86fc9"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/unit-receipt.json",
+      "sha256": "9090e113c21dc920803eb939138f57ea56e82a9cb4221bfbd2d99979c72c29a7"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/unit-results.json",
+      "sha256": "10521578ec146914bae3008a6234225f5ada699a203bd23ae6b0d9c1a880c0c4"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/integral-closure-20261013/unit.log",
+      "sha256": "bef6f14eb6713526762c429c979a20de5b55a4fbe1648dfd69785eb823f6a623"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/rescue-20261013/EXACT_GO_RECEIPT.json",
+      "sha256": "cd61fbb62a7c397143169a98a809edd82dc45c6bfb8eaaaed1cbd2b0aa12b63b"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/evidence/rescue-20261013/EXACT_GO_RECEIPT_R2.json",
+      "sha256": "e3ba40307a34c3a9f6de37c8ec73cea87c9321349c359247f051642629d829ad"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/SOLO_OWNER_GOVERNANCE_PROPOSAL_20261009_V2/07_RESULT.json",
+      "sha256": "fc3e8267f6d5c6e1a27d2aaee8e04d2b2251a1f0b608c4ea7c3b7a4184d719c6"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/STEP_6A3_COMMERCIAL_GOVERNANCE_APPROVAL_PACKAGE.md",
+      "sha256": "846bb0a8b0b8491670a6343bbd5e82fb7d01cea6a20abbb351a724ab502bee32"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/STEP_6A3_INTEGRAL_CLOSURE_REPORT_20261013.md",
+      "sha256": "1b40cc044b7841477097c0f1aaed3876107686772f7c6b545acb677661dbbbd9"
+    },
+    {
+      "path": "docs/physical-data-model/00_README.md",
+      "sha256": "f3e04159ebffa9828ef0e7ab79b6980992a9f5b9c43bfcc6cb4429d355bbde33"
+    },
+    {
+      "path": "docs/physical-data-model/01_PHYSICAL_DATA_MODEL.md",
+      "sha256": "cdbee203ac9afe9f89cbb4320f6b7010a0e315bc160d2be6134ed3c2a15fabd5"
+    },
+    {
+      "path": "docs/physical-data-model/02_RELATIONSHIP_AND_CARDINALITY_MATRIX.md",
+      "sha256": "100507b12887599f709be40bfe684257d9aaffecc0c731d060d195304363a4e0"
+    },
+    {
+      "path": "docs/physical-data-model/03_CONSTRAINTS_AND_INVARIANTS.md",
+      "sha256": "ddc5bc79d8b54da0d9f8b728d8ed3e55b3198aca7440c40182321be750fed236"
+    },
+    {
+      "path": "docs/physical-data-model/04_INDEX_STRATEGY.md",
+      "sha256": "d338371b651df21e75bf6896c4bff2306b8f5bdc11f6a4408b0a4b495f97eae6"
+    },
+    {
+      "path": "docs/physical-data-model/05_MULTI_TENANT_ISOLATION_MODEL.md",
+      "sha256": "95d71659f298979abda86b6ae1a42b8475c6108e8ffbebb3060b9c932ade9ef7"
+    },
+    {
+      "path": "docs/physical-data-model/06_TEMPORAL_VERSIONING_RETENTION_MODEL.md",
+      "sha256": "61774c906344fba35564c76e40cc290784e4704c5c24aeb401ed9f700bec7df6"
+    },
+    {
+      "path": "docs/physical-data-model/07_AUDIT_EVIDENCE_LINEAGE_MODEL.md",
+      "sha256": "a5cb17d3201777e859979f6f4920f03942879d8d20d38295bf8bface37f2b7ef"
+    },
+    {
+      "path": "docs/physical-data-model/08_RBAC_PHYSICAL_MODEL.md",
+      "sha256": "314039df518ff9e9b8d9e84a8fa2dfce858a8f9c30f8aac261001ca366bfac20"
+    },
+    {
+      "path": "docs/physical-data-model/09_NORMATIVE_AND_REGULATORY_MODEL.md",
+      "sha256": "7133d48263c74ebbf5df872dcb93224f292dd5a7502af27a492f67b454c28528"
+    },
+    {
+      "path": "docs/physical-data-model/10_DATA_TYPE_CATALOG.md",
+      "sha256": "b7557472c81bf9132b4b19f6ffd6d2dca73a498a1979fa80575218f3669c525d"
+    },
+    {
+      "path": "docs/physical-data-model/11_PHYSICAL_NAMING_STANDARD.md",
+      "sha256": "59aa0e55cb44d1986544101ffaeddb352f32023114027dac7c98ceee3af17803"
+    },
+    {
+      "path": "docs/physical-data-model/12_CANONICAL_TO_PHYSICAL_TRACEABILITY.md",
+      "sha256": "05936b8fe86de8091372949a8aaf21d5afc125e3f49896dbffe7c06acd0c0849"
+    },
+    {
+      "path": "docs/physical-data-model/13_PHYSICAL_MODEL_DECISION_LOG.md",
+      "sha256": "e3e138731ff152ee4a64c8ab6bc5efcad2bb829d9b4a1ed3d03f47a00ea23822"
+    },
+    {
+      "path": "docs/physical-data-model/14_OPEN_BLOCKERS.md",
+      "sha256": "fed970732f4849fb945efd0bb88085c7e1496bffa426c4c1a18ef0c4ec7c1157"
+    },
+    {
+      "path": "docs/physical-data-model/15_PHASE5_METHODOLOGY_BINDING_AMENDMENT.md",
+      "sha256": "221345ed748ccf471ad6b4a93be0702f3495549ad497dbf4fccf3c904875ca59"
+    },
+    {
+      "path": "docs/physical-data-model/15_PHYSICAL_DATA_MODEL_REVIEW_REPORT.md",
+      "sha256": "e0e296dbcae8987d8e90b75e6dfe6f0ca1c2cda236553a2a5a0d12da5d229caa"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/PHASE_5_FINAL_CLOSURE_v1.7/00_README.md",
+      "sha256": "fd50ab672362f50093315663c560aeb89794ab70c04ee3ae2af8122977cb089f"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/PHASE_5_FINAL_CLOSURE_v1.7/01_FILE_UPLOAD_INTENT_PHYSICAL_MODEL.md",
+      "sha256": "150f6c8e912d890ae8e056c4d881a7ba265c7f0d2862d50421fb19ecd1fb23b3"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/PHASE_5_FINAL_CLOSURE_v1.7/02_TRACEABILITY_AND_REVIEW.md",
+      "sha256": "dbac250410df5a8dc4c34d540d3356d23981fcea4cbf690208bf9639bc0da9b8"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/PHASE_5_MEMBERSHIP_INVITATION_v1.0/02_TRACEABILITY_AND_REVIEW.md",
+      "sha256": "490704f83c5b38069ff2cf23c2b5e1bb8a3e77268d6ad4eb40ff9bac2651e3f8"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/PHASE_5_MEMBERSHIP_INVITATION_v1.0/README.md",
+      "sha256": "d0c21be285ce9fcfe672f6692cc19aec016dc9c84e267ecd7f4bb6fcd3d02bb8"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/PHASE_5_PLUS_SUBJECT_VALIDATION_v1.0/00_README.md",
+      "sha256": "b93c955309f61966edd5a920d6fe72d660353ee93cf0ddeb2030fc967e1ca418"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/PHASE_5_REGULATORY_CATALOG_v1.1/00_README.md",
+      "sha256": "97c654700ffee4e6af6fcd80636209da35064e03def7e3a1e03d9c330cdd4353"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/PHASE_5_RETENTION_POLICY_LIFECYCLE_v1.7/00_README.md",
+      "sha256": "74261da8d2dcf5e8e7dd0502883712068c839396124dbeb0ef1e6a5e73d80aa3"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/PHASE_5_RETENTION_POLICY_LIFECYCLE_v1.7/01_RETENTION_POLICY_RECONCILIATION.md",
+      "sha256": "4527cfa95ca610a032e581d9ebc3c016b476ca35178c078c9466db24a083fd63"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/PHASE_5_RETENTION_POLICY_LIFECYCLE_v1.7/02_TRACEABILITY_AND_REVIEW.md",
+      "sha256": "a995e7e40f0b6c8c924f48f109dea666fa476603421acdeb749996f90894e983"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/PHASE_5_SUBSCRIPTION_REGULATORY_PACK_v1.0/00_README.md",
+      "sha256": "153a53a881b9370a1d06486a1277f10d356652718555930601bbb1f71e1e7d86"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/PRE_F4_AUDIT_MODEL_v1.5/00_README.md",
+      "sha256": "59facaead6b87a5787b0d1b67d1fd91e5a75a29b8dc14461254a95f102d852bd"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/PRE_F4_AUDIT_MODEL_v1.5/01_AUDIT_PHYSICAL_MODEL_AMENDMENT.md",
+      "sha256": "2414ef82091cf938e694efb5c26d8c13bfc9a6430c7273816c701a0f322925c8"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/PRE_F4_AUDIT_MODEL_v1.5/02_RELATIONSHIPS_CONSTRAINTS_AND_INVARIANTS.md",
+      "sha256": "979cdfd4852312ba28632fd43b203d2e02c186bfa4483ed3448463d0e733ab78"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/PRE_F4_AUDIT_MODEL_v1.5/03_CANONICAL_TO_PHYSICAL_TRACEABILITY.md",
+      "sha256": "e12a23dc3938f7394860404d1cf489d2ee01ff3ed33eb8191e6f9e3b246117b2"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/PRE_F4_AUDIT_MODEL_v1.5/04_REVIEW_REPORT.md",
+      "sha256": "a5f860e8755075101eb27ed65cc9958e6cba509eae974dae746328053d975818"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/PRE_F5E_PLATFORM_AUTHORITY_v1.6/00_README.md",
+      "sha256": "e41aa947b1da7f995a52fb63d58900269b30763c98d3fff2f030413a2b325216"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/PRE_F5E_PLATFORM_AUTHORITY_v1.6/01_PLATFORM_IAM_PHYSICAL_MODEL_AMENDMENT.md",
+      "sha256": "ee3fded839fe3090c9aff424a38ba7c08b9cf91e15255bcdfbec4524c18d0b38"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/PRE_F5E_PLATFORM_AUTHORITY_v1.6/02_REVIEW_REPORT.md",
+      "sha256": "e5674ff21b622fa0af041fc48c09ed7652b20f64529b698e34320d7bee400e49"
+    },
+    {
+      "path": "docs/rector/ACTIVE_ACTIVATION.json",
+      "sha256": "6c3396ed9bd37e70f79d18c77cfd7421999114ab1aa20b6ea943df7c859b284a"
+    },
+    {
+      "path": "docs/rector/BASELINE_ID",
+      "sha256": "76c5f58d48b99c68594d96861d2cc7ccdcd19cabaa759b5e5bb55667d6149761"
+    },
+    {
+      "path": "docs/rector/BASELINE_STATUS",
+      "sha256": "883d3bff9a26459c06c2dae4b4993c3f6bf4059f8abefb81bef9985f280237ff"
+    },
+    {
+      "path": "docs/rector/RECTOR_MANIFEST.sha256",
+      "sha256": "e51f6539df119775b2feb8839907c8cd690623b82707b399aa15a31d59196533"
+    },
+    {
+      "path": "docs/rector/baseline/00_README_KNOWLEDGE_BASE.md",
+      "sha256": "209f34125aa0b921828589173ec6e1288c5d90987517da00ba73730d956d1172"
+    },
+    {
+      "path": "docs/rector/baseline/01_DEFINICION_NUEVO_PRODUCTO.md",
+      "sha256": "fbad6b9f4fe649b2690c4c7eb4da0786a1068e73f5227e1ab5ddbb986bc7428a"
+    },
+    {
+      "path": "docs/rector/baseline/02_DEFINICION_BASE_DATOS_MODELO_DATOS.md",
+      "sha256": "847ae4c7fd0fdd4aaba24b046a2c14ee7679decf9ae77b9f4a6712764564c9c6"
+    },
+    {
+      "path": "docs/rector/baseline/03_RELACION_ENTRE_ESTADOS.md",
+      "sha256": "6a49c8347f3d59d9f0acfc629aa6b11d547276432655832105c6e20ecc324d90"
+    },
+    {
+      "path": "docs/rector/baseline/04_DEFINICION_FUNCIONAMIENTO.md",
+      "sha256": "524ee7d0347af8ce04ed9a13598f178ec40ef8750bdd8f7b432db01c20546904"
+    },
+    {
+      "path": "docs/rector/baseline/05_MAPA_FUNCIONAMIENTO.md",
+      "sha256": "be7d087f1747b49555bc7b955213570a58e1e1f901517c2e44cadffa3b24c968"
+    },
+    {
+      "path": "docs/rector/baseline/06_CONSIDERACIONES_ENGINEERING_CONSTITUTION.md",
+      "sha256": "23fd50c8728c7f9f9ab6ebdbf7830d8aef81dfd881ef7f5fa44f5040d8a33223"
+    },
+    {
+      "path": "docs/rector/baseline/07_TCDX_GRC_DOMAIN_MODEL.md",
+      "sha256": "7ab5e287d69764c3483bc4ed5525df715befa61483e635f50e8a16d0636f6672"
+    },
+    {
+      "path": "docs/rector/baseline/08_TCDX_GRC_CANONICAL_DATA_MODEL.md",
+      "sha256": "5e6bf40c8949f56bb3151e45fa6bc3c7f2f42975478522644f331c4e5e277f3b"
+    },
+    {
+      "path": "docs/rector/baseline/09_TCDX_GRC_RBAC_MODEL.md",
+      "sha256": "f2091d5fc3e5257bbb7cbdd47eb0f56e002c40b4dcb345f9b4288571438e9fff"
+    },
+    {
+      "path": "docs/rector/baseline/10_TCDX_GRC_TRACEABILITY_MATRIX.md",
+      "sha256": "bb7474eeb476c15e8cbf94104c3cdb172d66c9ec67f61c16ca114ca49620492c"
+    },
+    {
+      "path": "docs/rector/baseline/11_ALINEAMIENTO_DESARROLLO.md",
+      "sha256": "a0f8ddbbbf0c5f3106324078b5b59e106d461099d57954f418bd91f78591b3f0"
+    },
+    {
+      "path": "docs/rector/baseline/12_INFRAESTRUCTURA_Y_LIMITES.md",
+      "sha256": "7221e43483a71d2fe4d5b27e1b424db4a6d117ebfcea94da27351163311424c2"
+    },
+    {
+      "path": "docs/rector/baseline/13_CHECKLIST_ANTI_REGRESION.md",
+      "sha256": "073c2d852eb9a43e03ea539d44efb89147fab428c918d6356054100fe641f556"
+    },
+    {
+      "path": "docs/rector/baseline/14_CONTRATO_CANONICO_INGESTA_CALCULO_RESULTADOS.md",
+      "sha256": "8eb2ee104f59493359318a8ca7c7dda761805c24d1515a6971ed7268d2778e76"
+    },
+    {
+      "path": "docs/rector/baseline/15_MODULOS_CONSUMIDORES_Y_MATRIZ_DE_INFORMACION.md",
+      "sha256": "c58240683527e25e4037ef954e006c76968b887d332ebaeab2e8f2e5cd8c58f0"
+    },
+    {
+      "path": "docs/rector/baseline/16_CATALOGO_CANONICO_OBSERVACIONES_Y_SUBJECTS.md",
+      "sha256": "ff8d04bc386e3ba3ce0a529d51e90665d7ef88a9a19e51f1f61b247f33a2bf4d"
+    },
+    {
+      "path": "docs/rector/baseline/17_CATALOGO_METRICAS_FORMULAS_Y_AGREGACIONES.md",
+      "sha256": "b5a6eb29e7877a5e1217f9177170354f694d57265175c10883849a5938db465d"
+    },
+    {
+      "path": "docs/rector/baseline/18_RULES_ENGINE_GRC_IMPACT_CONTRACT.md",
+      "sha256": "c5c219785fe9d5cd2bc42e3b3ddcb36fbf98f9068da6c872d04288fecbab5dff"
+    },
+    {
+      "path": "docs/rector/baseline/19_METODOLOGIAS_GRC_COMPLIANCE_RISK_ASSURANCE.md",
+      "sha256": "549e64e9ab8f0c2edcfb3e6c5c03939125e311d32298c3fac8d0b09b2d1f5c95"
+    },
+    {
+      "path": "docs/rector/baseline/20_MATRIZ_CONECTORES_DATOS_OBSERVACIONES_IMPACTO.md",
+      "sha256": "729e07f9831aa31dc8b8431f501edd10fb17a3ecc9d267d712e6fb7ceac7b66f"
+    },
+    {
+      "path": "docs/rector/baseline/21_LIFECYCLE_TRANSITION_MATRIX.md",
+      "sha256": "af1b6eed6bcb13c7ddebf9d0b3dc2a44cfc7f230c866d6c1c44da23d1fc888a5"
+    },
+    {
+      "path": "docs/rector/baseline/22_RBAC_PERMISSION_SCOPE_MATRIX.md",
+      "sha256": "d47a594ee78863b2b294128f7cb3696b36d991d5f653a2836ee57896ed1b23f9"
+    },
+    {
+      "path": "docs/rector/baseline/23_CONTRATO_TEMPORAL_VERSIONADO_RETENCION_RECALCULO.md",
+      "sha256": "27fe799dc0bf1dcefb1e8af7efb56e1b019b934d8d18b0f6a957f6d162eff50a"
+    },
+    {
+      "path": "docs/rector/baseline/24_CONTRATO_EVIDENCIA_DOCUMENTOS_ARCHIVOS.md",
+      "sha256": "b652d31d0be9b0a856d0cb66d74faf609915432f6c85bf98ea8723cd833b563d"
+    },
+    {
+      "path": "docs/rector/baseline/25_API_EVENTOS_IDEMPOTENCIA_AUDITORIA.md",
+      "sha256": "683d2c0f17ed0cf0aedb6ed107b3dc69d68a664b06ef019c01bfb8b87f4d633b"
+    },
+    {
+      "path": "docs/rector/baseline/26_NON_FUNCTIONAL_SECURITY_RELIABILITY_OBSERVABILITY.md",
+      "sha256": "6bd7535ac7314da4b3b48284f57d42095af1a200f04d0dcbbaa732a552987af9"
+    },
+    {
+      "path": "docs/rector/baseline/27_REPORTING_UX_RESULTADOS_DRILLDOWN.md",
+      "sha256": "8c5ade951e818d456b7c01dc428536f49bac49cc71ed19a92ff58e8336c2ff52"
+    },
+    {
+      "path": "docs/rector/baseline/28_PREIMPLEMENTATION_CONTRACT_GATE.md",
+      "sha256": "dbb5400dc858730bdf0e940ff1ce0b47e95335590dd7c616efdf8099f770a92b"
+    },
+    {
+      "path": "docs/rector/baseline/29_CONFIGURACION_PARAMETRIZACION_Y_EXTENSIBILIDAD.md",
+      "sha256": "328390a8b584b2cbad4943319ee4d3cbbaac9f87d6ccc4ba38d8806c2b6cb1f3"
+    },
+    {
+      "path": "docs/rector/baseline/30_MODELO_LOGICO_RELACIONAL_CANONICO.md",
+      "sha256": "1ddf3c886a1294c0973576fa6a3337abdf05dbb0bfb2072e04d95bd990c8d5cf"
+    },
+    {
+      "path": "docs/rector/baseline/31_DECISIONES_FUNDACIONALES_CERRADAS.md",
+      "sha256": "d7d1fb0ab645f15366902f8a3a358a44d42aeeb1c083a5464297c2b6c385f2fa"
+    },
+    {
+      "path": "docs/rector/baseline/32_GLOSARIO_SEMANTICO_Y_NOMENCLATURA.md",
+      "sha256": "6a8cb31930b410bd9260100688b4b6d2112f78b312ba2c3fd0066bd6fbabc2c2"
+    },
+    {
+      "path": "docs/rector/baseline/33_CATALOGO_ENTIDADES_CANONICAS.md",
+      "sha256": "7e2cb028aca17a448a7f9010aa71f9af0094adfd3366f74e86fc1c46651c94d0"
+    },
+    {
+      "path": "docs/rector/baseline/34_ARQUITECTURA_LOGICA_COMPONENTES_Y_DEPENDENCIAS.md",
+      "sha256": "4e7c2355bd3355aa2e41d2e13599409549c3c8241b9ad279b9344bbeff043882"
+    },
+    {
+      "path": "docs/rector/baseline/35_SOURCE_PRECEDENCE_CONFLICT_RESOLUTION_POLICY.md",
+      "sha256": "66f646b1620630c517146210b61530f3a93b42cce6f41a8c72a478ae769fb67e"
+    },
+    {
+      "path": "docs/rector/baseline/36_AUTOMATION_POLICY_AND_HUMAN_OVERSIGHT.md",
+      "sha256": "d8ed5c606dca321f12226e511aea6ba7ed6fc09487d34c660d2f330526c6d639"
+    },
+    {
+      "path": "docs/rector/baseline/37_REGULATORY_PACK_CONTRACT.md",
+      "sha256": "a04d8134e1f620f7b2e3d543f65543f46cdd5bc052075e19b7365e7873be093b"
+    },
+    {
+      "path": "docs/rector/baseline/38_RESULT_STATUS_AND_DATA_SUFFICIENCY_CONTRACT.md",
+      "sha256": "0b38fe578b11ffbbeac406a97f10a2462bf7ac5bb7c914c21ada9b289bb68f07"
+    },
+    {
+      "path": "docs/rector/baseline/39_DECISIONES_SEMANTICAS_FINALES_PRE_MODELO_FISICO.md",
+      "sha256": "a66b2ac97332ae7fe864659dc791b1997ab4741d1e9063e5cc4c57c9592389de"
+    },
+    {
+      "path": "docs/rector/baseline/40_CIERRE_INTEGRIDAD_SEMANTICA_Y_CONTRATOS_FISICOS.md",
+      "sha256": "5b6050c3b4cb20d095bfee40dd8d4efe24e17e5a614ab8dff4a5e006f2fb06e5"
+    },
+    {
+      "path": "docs/rector/baseline/41_BASELINE_REGULATORIO_OBLIGATORIO.md",
+      "sha256": "b521642a0772306ea00213edb981311c2adc2d8c3a46750d6d3ca0e6ec4a145a"
+    },
+    {
+      "path": "docs/rector/baseline/42_PLANES_COMERCIALES_Y_ROLES_BASE.md",
+      "sha256": "1d3ab34978339da234e8b5676e645fe799b94f7fdef45a2e46517fc8b16bdf59"
+    },
+    {
+      "path": "docs/rector/baseline/43_PLAN_MAESTRO_RECTOR_DISENO_Y_DESARROLLO.md",
+      "sha256": "edb36d061f027c4f69fc57cdd95ae19fed2a33af1cd519d7161f63aee0a28af6"
+    },
+    {
+      "path": "docs/rector/baseline/44_CONTRATO_ESTRUCTURA_NORMATIVA_REQUISITOS_CONTROLES.md",
+      "sha256": "6f19fd4e83862252dc039c23609a73d7cdbaab6cce8c8c0875ae254c71ebfe60"
+    },
+    {
+      "path": "docs/rector/baseline/45_CONTRATO_DESARROLLO_CERRADO_Y_NO_INFERENCIA.md",
+      "sha256": "e283b2a059aa7f1a563fb3ac1fc242eab6156232cb183217b38afe02a196d7ba"
+    },
+    {
+      "path": "docs/rector/baseline/46_REGENTE_MAESTRO_DEL_DESARROLLO.md",
+      "sha256": "fe94e24c545ca4d00b4126cb5e8483bf41a2b2fd7e9e143dc628d6e1a93990a4"
+    },
+    {
+      "path": "docs/rector/baseline/47_APROBACION_Y_ACTIVACION_BASELINE.md",
+      "sha256": "cfcf99e8b4528c2f90b4c9b09b73e6a4b0ca9d1f01498885346b5272efb4bde0"
+    },
+    {
+      "path": "docs/rector/baseline/48_CONTRATO_AUDITORIA_INTEGRADA_ISO_19011.md",
+      "sha256": "84b7b4cd357d3b6d3d47f1e3b58e4a90ce994c0d385bba2045d70e605e3185c6"
+    },
+    {
+      "path": "docs/rector/baseline/49_GOBIERNO_INTERNO_Y_REVISION_UNIPERSONAL.md",
+      "sha256": "544fd5083cf38ba5df954152d83cd02b65be3ce3f57e634ff47c685373de8c1b"
+    },
+    {
+      "path": "docs/rector/baseline/PRE_IMPLEMENTATION_GATE_REPORT.md",
+      "sha256": "c2cf8144f74641b7f17392bbff60a4a0f6e9255804a91e231b0dbbc936689633"
+    },
+    {
+      "path": "docs/rector/baseline/SHA256SUMS.txt",
+      "sha256": "e51f6539df119775b2feb8839907c8cd690623b82707b399aa15a31d59196533"
+    },
+    {
+      "path": "docs/ui/TCDX_GRC_COMPONENT_CONTRACT_v1.0.md",
+      "sha256": "0173ed28ad8a26ca88e9d2f2fa7f326f8a70bf2c35bee88fb03bb4392f49eb15"
+    },
+    {
+      "path": "docs/ui/TCDX_GRC_DASHBOARD_CONTRACT_v1.0.md",
+      "sha256": "6732c092a5c7e54b96e2e677dea1988ca5cbf9b5d1fc55ca78502e989f88f7ce"
+    },
+    {
+      "path": "docs/ui/TCDX_GRC_DESIGN_TOKENS_CONTRACT_v1.0.md",
+      "sha256": "20fc981e4ac7a41f209ad59661a4cefb5b44cc523c7be823f7a236f3e4604076"
+    },
+    {
+      "path": "docs/ui/TCDX_GRC_LAYOUT_AND_NAVIGATION_v1.0.md",
+      "sha256": "bfdefba922aa70522ec462a13de545d1ded282967ae49f4fc43d31cbfc33b662"
+    },
+    {
+      "path": "docs/ui/TCDX_GRC_VISUAL_ACCEPTANCE_GATES_v1.0.md",
+      "sha256": "53f3a3a245c51a3ad266219f1be2a6899bd76aee1dddbdaa4b2f0a605f9ac91b"
+    },
+    {
+      "path": "docs/ui/TCDX_GRC_VISUAL_CONTRACT_v1.0.md",
+      "sha256": "cdaf9e993774ab2a03078501a9b266840a90150c0ab85ffd7ee43bb72e73ec04"
+    },
+    {
+      "path": "docs/ui/TCDX_GRC_VISUAL_CONTRACT_v1.1.md",
+      "sha256": "72449af0723f50060cc0192301f1ccb43e82b85d1a0e994f4c0e6d467c11fe84"
+    },
+    {
+      "path": "docs/ui/TCDX_GRC_VISUAL_CONTRACT_v1.2.md",
+      "sha256": "722b3bebc0753cd6e7e5b7731e0aae2546b436f76e4c31bc29fe6760629c5fdc"
+    },
+    {
+      "path": "docs/ui/VISUAL_BASELINE_MANIFEST.json",
+      "sha256": "a88f6ec4babfece7ef6703fa6b8241be6264bc80d3ae39036b5c4ac21aab64de"
+    }
+  ]
+}

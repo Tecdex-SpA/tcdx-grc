@@ -1,9 +1,10 @@
+# CANDIDATE_NOT_EFFECTIVE INITIAL_SOURCE v1.11
 openapi: 3.1.0
 info:
   title: TCDX GRC API Base Contract
   version: 1.0.0-contract-candidate
   description: >-
-    Contrato schema-first aprobado de Fase 2 con las enmiendas PRE-F5, PRE-F5B, PRE-F5C, los cierres compatibles PRE-F5E y las decisiones Subscription, lecturas administrativas y Fase 5+. Publica 161 operaciones que cierran
+    Contrato schema-first aprobado de Fase 2 con las enmiendas PRE-F5, PRE-F5B, PRE-F5C, los cierres compatibles PRE-F5E y las decisiones Subscription, lecturas administrativas y Fase 5+. Publica 174 operaciones que cierran
     trazabilidad rector-capability-permission-audit-idempotency-modelo físico.
     H-003..H-005 autorizan las operaciones mínimas de Configuration,
     privacy retention/erasure y lifecycle-registry sobre entidades existentes.
@@ -829,6 +830,7 @@ paths:
   "/auth/me/authorization":
     get:
       operationId: currentPrincipalAuthorizationRead
+      servers: [{ url: "/api/v2" }]
       x-tcdx-response-cache-control: "no-store (all statuses)"
       x-tcdx-response-vary: "Authorization, X-TCDX-Tenant-Id (all statuses)"
       tags: ["platform"]
@@ -927,6 +929,28 @@ paths:
         '401': { $ref: '#/components/responses/AuthenticationError' }
         '403': { $ref: '#/components/responses/AuthorizationError' }
         '404': { $ref: '#/components/responses/NotFoundError' }
+  "/platform/plan-versions":
+    get:
+      operationId: planVersionSelectableList
+      tags: ["platform"]
+      summary: "Published, currently effective PlanVersions selectable by Platform Admin"
+      description: "Uses existing platform.subscription.create authority, no tenant header. Returns only canonical plan/version display metadata with cursor pagination."
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-permission: "`platform.subscription.create`"
+      x-tcdx-scope: "platform"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`platform.plan_versions`, `platform.plans`"
+      x-tcdx-rector-source: "Product Owner commercial UI connection 2026-10-13; 09,22,42"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/PageSize' }, { $ref: '#/components/parameters/Cursor' }]
+      responses:
+        '200': { $ref: '#/components/responses/PublishedPlanVersionListSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
   "/platform/subscriptions":
     post:
       operationId: subscriptionCreate
@@ -2037,6 +2061,7 @@ paths:
   "/files:request-upload":
     post:
       operationId: uploadIntentCreate
+      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
       tags: ["evidence"]
       summary: "EVIDENCE_DOCUMENTS: uploadIntentCreate"
       description: "Phase 5 v1.7 amendment. Creates a durable FileUploadIntent, never an incomplete FileObject. Tenant, bucket, quarantine key, expiry and signed URL are server-controlled."
@@ -2066,6 +2091,7 @@ paths:
   "/file-upload-intents/{id}:finalize":
     post:
       operationId: uploadFinalize
+      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
       tags: ["evidence"]
       summary: "EVIDENCE_DOCUMENTS: uploadFinalize"
       description: "Finalizes one same-tenant FileUploadIntent. Trusted runtime obtains actual size, MIME and SHA-256, performs fail-closed malware scan and promotes only scan-PASS content to a final FileObject."
@@ -2237,13 +2263,14 @@ paths:
   "/evidence-versions/{id}:submit":
     post:
       operationId: evidenceSubmit
+      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
       tags: ["evidence"]
       summary: "EVIDENCE_DOCUMENTS: evidenceSubmit"
       description: "Derived from 21,24. Actor: Evidence Owner. Tenant semantics: scan PASS; typed links; `draft→submitted`. Contract shape: EvidenceSubmitRequest.expected_version → EvidenceVersion."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "EVIDENCE_DOCUMENTS"
       x-tcdx-permission: "`evidence.evidence.submit`"
-      x-tcdx-scope: "owned/assigned"
+      x-tcdx-scope: "owned/assigned/tenant"
       x-tcdx-audit-event: "`audit.evidence.evidence.submit.v1`"
       x-tcdx-domain-events: "`evidence.evidence.submitted.v1`"
       x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
@@ -2263,6 +2290,12 @@ paths:
         '403': { $ref: '#/components/responses/AuthorizationError' }
         '404': { $ref: '#/components/responses/NotFoundError' }
         '409': { $ref: '#/components/responses/ConflictError' }
+      x-tcdx-initial-source-submit-scope:
+        allowed_scopes: [assigned_object, owned_object, tenant]
+        tenant_policy: OWN_INITIAL_SOURCE_ONLY
+        registry_version: 2
+        policy_ref: "contract:initial-retention-source-submit:v1.11"
+
   "/evidence-versions/{id}:start-review":
     post:
       operationId: evidenceReviewStart
@@ -3480,11 +3513,17 @@ paths:
       operationId: effectiveConfigurationGet
       tags: ["configuration"]
       summary: "CORE_PLATFORM: effectiveConfigurationGet"
-      description: "H-003. Reads a reproducible tenant-derived resolution. EffectiveConfiguration has no direct-write operation and conflicts remain explicit."
+      description: "DR-STEP6A3-EC-DETAIL-R1-20261009. Immutable persisted metadata with complete authorized lineage; tenant grant only, all unbound scopes DENY. Historical status codes remain literal; structural conflicts409, stored conflict metadata200. No query, calculation, materialization or method binding."
       security: [{ bearerAuth: [] }]
       x-tcdx-capability: "CORE_PLATFORM"
       x-tcdx-permission: "`configuration.effective_configuration.read`"
-      x-tcdx-scope: "tenant/scoped object"
+      x-tcdx-scope: "tenant"
+      x-tcdx-contract-id: "EC-DETAIL-READ-v1-L03-R1"
+      x-tcdx-contract-version: 1
+      x-tcdx-contract-status: "PUBLISHED_LOCAL_CONTRACT"
+      x-tcdx-human-decision: "DR-STEP6A3-EC-DETAIL-R1-20261009"
+      x-tcdx-approved-source-sha256: "159c2fac9a5d2006900f49ee020521146f2e85baeec9233c8a8f07429bc28163"
+      x-tcdx-unbound-scopes: "DENY"
       x-tcdx-audit-event: "NONE"
       x-tcdx-domain-events: "NONE"
       x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
@@ -3493,12 +3532,26 @@ paths:
       x-tcdx-rector-source: "29,33,39; H-003"
       parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
       responses:
-        '200': { $ref: '#/components/responses/OperationSuccess' }
+        '200':
+          description: Closed EC detail projection; status codes remain persisted metadata, not an official result.
+          headers:
+            X-Correlation-Id: { $ref: '#/components/headers/CorrelationId' }
+            X-Request-Id: { $ref: '#/components/headers/RequestId' }
+            Cache-Control: { schema: { type: string, const: no-store } }
+            Vary: { schema: { type: string, const: 'Authorization, X-TCDX-Tenant-Id' } }
+          content: { application/json: { schema: { $ref: '#/components/schemas/EffectiveConfigurationDetailReadResult' } } }
         '400': { $ref: '#/components/responses/ValidationError' }
-        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '401':
+          description: TCDX.AUTHENTICATION.REQUIRED or INVALID; no SQL before authentication.
+          headers:
+            WWW-Authenticate: { schema: { type: string, const: Bearer } }
+          content: { application/problem+json: { schema: { $ref: '#/components/schemas/ErrorEnvelope' } } }
         '403': { $ref: '#/components/responses/AuthorizationError' }
         '404': { $ref: '#/components/responses/NotFoundError' }
         '409': { $ref: '#/components/responses/ConflictError' }
+        '500':
+          description: TCDX.INTERNAL.FAILURE; sanitized unexpected failure or invalid persisted metadata, never empty success.
+          content: { application/problem+json: { schema: { $ref: '#/components/schemas/ErrorEnvelope' } } }
   "/retention-policies":
     get:
       operationId: retentionPolicyList
@@ -3675,6 +3728,239 @@ paths:
         '403': { $ref: '#/components/responses/AuthorizationError' }
         '404': { $ref: '#/components/responses/NotFoundError' }
         '409': { $ref: '#/components/responses/ConflictError' }
+  "/retention-policies/{id}:submit-for-review":
+    post:
+      operationId: retentionPolicySubmitForReview
+      tags: ["privacy"]
+      summary: "PRIVACY: retentionPolicySubmitForReview"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.update`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.retention_policy.submit_for_review.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.retention_policies`, audit/idempotency"
+      x-tcdx-rector-source: "C-04W; successor v1.10; executable DELTA"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionPolicyTransitionRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  "/retention-policy-applicabilities":
+    get:
+      operationId: retentionApplicabilityList
+      tags: ["privacy"]
+      summary: "PRIVACY: retentionApplicabilityList"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.read`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`"
+      x-tcdx-rector-source: "C-04W; successor v1.10"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/PageSize' }, { $ref: '#/components/parameters/Cursor' }]
+      responses:
+        '200': { $ref: '#/components/responses/OperationSuccess' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+    post:
+      operationId: retentionApplicabilityCreate
+      tags: ["privacy"]
+      summary: "PRIVACY: retentionApplicabilityCreate"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.create`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.retention_policy_applicability.create.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`, audit/idempotency"
+      x-tcdx-rector-source: "C-04W; successor v1.10"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionApplicabilityCreateRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  "/retention-policy-applicabilities/{id}":
+    get:
+      operationId: retentionApplicabilityGet
+      tags: ["privacy"]
+      summary: "PRIVACY: retentionApplicabilityGet"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.read`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`"
+      x-tcdx-rector-source: "C-04W; successor v1.10"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      responses:
+        '200': { $ref: '#/components/responses/OperationSuccess' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+  "/retention-policy-applicabilities/{id}:submit-for-review":
+    post:
+      operationId: retentionApplicabilitySubmitForReview
+      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
+      tags: ["privacy"]
+      summary: "PRIVACY: retentionApplicabilitySubmitForReview"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.update`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.retention_policy_applicability.submit_for_review.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`, audit/idempotency"
+      x-tcdx-rector-source: "C-04W; successor v1.10; executable DELTA"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionPolicyTransitionRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  "/retention-policy-applicabilities/{id}:review":
+    post:
+      operationId: retentionApplicabilityReview
+      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
+      tags: ["privacy"]
+      summary: "PRIVACY: retentionApplicabilityReview"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.review`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.retention_policy_applicability.review.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`, audit/idempotency"
+      x-tcdx-rector-source: "C-04W; successor v1.10; executable DELTA"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionPolicyTransitionRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  "/retention-policy-applicabilities/{id}:approve":
+    post:
+      operationId: retentionApplicabilityApprove
+      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
+      tags: ["privacy"]
+      summary: "PRIVACY: retentionApplicabilityApprove"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.approve`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.retention_policy_applicability.approve.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`, audit/idempotency"
+      x-tcdx-rector-source: "C-04W; successor v1.10; executable DELTA"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionPolicyTransitionRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  "/retention-policy-applicabilities/{id}:publish":
+    post:
+      operationId: retentionApplicabilityPublish
+      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
+      tags: ["privacy"]
+      summary: "PRIVACY: retentionApplicabilityPublish"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.publish`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.retention_policy_applicability.publish.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`, audit/idempotency"
+      x-tcdx-rector-source: "C-04W; successor v1.10; executable DELTA"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionPolicyTransitionRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+  "/retention-policy-applicabilities/{id}:release-hold":
+    post:
+      operationId: legalHoldRelease
+      tags: ["privacy"]
+      summary: "PRIVACY: legalHoldRelease"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.legal_hold.release`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.retention_policy.legal_hold.release.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.retention_policy_hold_releases`, audit/idempotency"
+      x-tcdx-rector-source: "C-04W; successor v1.10; executable DELTA"
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/LegalHoldReleaseRequest' } } }
+      responses:
+        '202': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+        '422': { $ref: '#/components/responses/ValidationError' }
   "/data-subject-requests":
     post:
       operationId: dataSubjectRequestCreate
@@ -4164,6 +4450,7 @@ paths:
         '409': { $ref: '#/components/responses/ConflictError' }
     post:
       operationId: evidenceCreate
+      x-tcdx-initial-source-contract: "INITIAL_SOURCE DELTA.md; draft custody/source-only exception; independent review and no ordinary consumption; no effective change before candidate publication"
       tags: ["evidence"]
       summary: "EVIDENCE_DOCUMENTS: evidenceCreate"
       description: >-
@@ -4402,7 +4689,461 @@ paths:
         '401': { $ref: '#/components/responses/AuthenticationError' }
         '403': { $ref: '#/components/responses/AuthorizationError' }
 
+  "/framework-version-references":
+    get:
+      operationId: frameworkVersionReferenceList
+      x-tcdx-scope: "tenant"
+      x-tcdx-physical-entities: "regulatory.frameworks, regulatory.framework_versions, regulatory.statements_of_applicability"
+      x-tcdx-rector-source: "MACRO-STEP6A3-20261009-R1; executable29; rector49"
+      description: "STEP6A3_REFERENCE_READS_v1. Closed combinations, real parent ObjectPolicy, signed keyset cursor and eligibility rules: executable29 adopts exact approved27. Unknown/duplicate query rejected. History requires exact parent FK; does not confer selectability. No implicit legal binding."
+      security:
+        - bearerAuth: []
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-permission: "`compliance.framework.read`"
+      x-tcdx-capability: "ISO_COMPLIANCE"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      parameters:
+        - $ref: "#/components/parameters/CorrelationId"
+        - $ref: "#/components/parameters/TenantContext"
+        - name: purpose
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            enum:
+              - select
+              - history
+            default: select
+        - name: page[size]
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 25
+        - name: page[cursor]
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            maxLength: 2048
+        - name: filter[query]
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            minLength: 2
+            maxLength: 160
+        - name: statement_of_applicability_id
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            $ref: "#/components/schemas/UuidV7"
+        - name: filter[framework_id]
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            $ref: "#/components/schemas/UuidV7"
+        - name: filter[framework_version_id]
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            $ref: "#/components/schemas/UuidV7"
+      responses:
+        "200":
+          description: Authorized minimal reference page; empty is distinct from failure
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+            Vary:
+              schema:
+                type: string
+                const: Authorization, X-TCDX-Tenant-Id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FrameworkVersionReferencePage"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "401":
+          $ref: "#/components/responses/AuthenticationError"
+        "403":
+          $ref: "#/components/responses/AuthorizationError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "409":
+          $ref: "#/components/responses/ConflictError"
+        "422":
+          description: Ineligible selection or missing legal binding
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+        "500":
+          description: Sanitized internal failure
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+        "503":
+          $ref: "#/components/responses/DependencyError"
+  "/membership-references":
+    get:
+      operationId: membershipReferenceList
+      x-tcdx-scope: "tenant, assigned_object, owned_object, audit_engagement"
+      x-tcdx-physical-entities: "iam.tenant_memberships, iam.user_identities, authorized purpose parents"
+      x-tcdx-rector-source: "MACRO-STEP6A3-20261009-R1; executable29; rector49"
+      description: "STEP6A3_REFERENCE_READS_v1. Closed combinations, real parent ObjectPolicy, signed keyset cursor and eligibility rules: executable29 adopts exact approved27. Unknown/duplicate query rejected. History requires exact parent FK; does not confer selectability. No implicit legal binding."
+      security:
+        - bearerAuth: []
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-permission: "`platform.membership_reference.read`"
+      x-tcdx-capability: "CORE_PLATFORM"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      parameters:
+        - $ref: "#/components/parameters/CorrelationId"
+        - $ref: "#/components/parameters/TenantContext"
+        - name: purpose
+          in: query
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            enum:
+              - evidence-request-assignment
+              - action-assignment
+              - evidence-request-history
+              - action-history
+              - assurance-test-history
+        - name: page[size]
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 25
+        - name: page[cursor]
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            maxLength: 2048
+        - name: filter[query]
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            minLength: 2
+            maxLength: 160
+        - name: requirement_id
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            $ref: "#/components/schemas/UuidV7"
+        - name: control_id
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            $ref: "#/components/schemas/UuidV7"
+        - name: requirement_assessment_id
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            $ref: "#/components/schemas/UuidV7"
+        - name: control_assessment_id
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            $ref: "#/components/schemas/UuidV7"
+        - name: assurance_test_id
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            $ref: "#/components/schemas/UuidV7"
+        - name: issue_id
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            $ref: "#/components/schemas/UuidV7"
+        - name: evidence_request_id
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            $ref: "#/components/schemas/UuidV7"
+        - name: action_id
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            $ref: "#/components/schemas/UuidV7"
+        - name: filter[tenant_membership_id]
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            $ref: "#/components/schemas/UuidV7"
+      responses:
+        "200":
+          description: Authorized minimal reference page; empty is distinct from failure
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+            Vary:
+              schema:
+                type: string
+                const: Authorization, X-TCDX-Tenant-Id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MembershipReferencePage"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "401":
+          $ref: "#/components/responses/AuthenticationError"
+        "403":
+          $ref: "#/components/responses/AuthorizationError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "409":
+          $ref: "#/components/responses/ConflictError"
+        "422":
+          description: Ineligible selection or missing legal binding
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+        "500":
+          description: Sanitized internal failure
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+        "503":
+          $ref: "#/components/responses/DependencyError"
+  "/retention-policy-references":
+    get:
+      operationId: retentionPolicyReferenceList
+      x-tcdx-scope: "tenant, assigned_object, owned_object"
+      x-tcdx-physical-entities: "privacy.retention_policies, regulatory.regulatory_import_manifests, authorized purpose parents"
+      x-tcdx-rector-source: "MACRO-STEP6A3-20261009-R1; executable29; rector49"
+      description: "STEP6A3_REFERENCE_READS_v1. Closed combinations, real parent ObjectPolicy, signed keyset cursor and eligibility rules: executable29 adopts exact approved27. Unknown/duplicate query rejected. History requires exact parent FK; does not confer selectability. No implicit legal binding."
+      security:
+        - bearerAuth: []
+      x-tcdx-transaction-boundary: "RO"
+      x-tcdx-idempotency-class: "NATURALLY_IDEMPOTENT"
+      x-tcdx-permission: "`privacy.retention_policy_reference.read`"
+      x-tcdx-capability: "EVIDENCE_DOCUMENTS"
+      x-tcdx-audit-event: "NONE"
+      x-tcdx-domain-events: "NONE"
+      parameters:
+        - $ref: "#/components/parameters/CorrelationId"
+        - $ref: "#/components/parameters/TenantContext"
+        - name: purpose
+          in: query
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            enum:
+              - upload
+              - evidence
+              - history
+        - name: page[size]
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 25
+        - name: page[cursor]
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            maxLength: 2048
+        - name: filter[query]
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            minLength: 2
+            maxLength: 160
+        - name: evidence_id
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            $ref: "#/components/schemas/UuidV7"
+        - name: file_object_id
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            $ref: "#/components/schemas/UuidV7"
+        - name: file_upload_intent_id
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            $ref: "#/components/schemas/UuidV7"
+        - name: filter[retention_policy_id]
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            $ref: "#/components/schemas/UuidV7"
+        - name: filter[policy_kind]
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            enum:
+              - legal_hold
+              - mandatory_regulatory_policy
+              - contractual_policy
+              - tenant_policy
+              - product_baseline
+        - name: filter[version_number]
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        "200":
+          description: Authorized minimal reference page; empty is distinct from failure
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+            Vary:
+              schema:
+                type: string
+                const: Authorization, X-TCDX-Tenant-Id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RetentionPolicyReferencePage"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "401":
+          $ref: "#/components/responses/AuthenticationError"
+        "403":
+          $ref: "#/components/responses/AuthorizationError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "409":
+          $ref: "#/components/responses/ConflictError"
+        "422":
+          description: Ineligible selection or missing legal binding
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+        "500":
+          description: Sanitized internal failure
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+        "503":
+          $ref: "#/components/responses/DependencyError"
+
+  "/retention-policy-applicabilities/{id}:bind-initial-source":
+    post:
+      operationId: retentionApplicabilityBindInitialSource
+      tags: ["privacy"]
+      summary: "PRIVACY: vincular fuente inicial a un borrador propio"
+      security: [{ bearerAuth: [] }]
+      x-tcdx-capability: "PRIVACY"
+      x-tcdx-permission: "`privacy.retention_policy.update`"
+      x-tcdx-scope: "tenant"
+      x-tcdx-audit-event: "`audit.privacy.retention_policy_applicability.bind_initial_source.v1`"
+      x-tcdx-domain-events: "NONE"
+      x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"
+      x-tcdx-transaction-boundary: "TX"
+      x-tcdx-physical-entities: "`privacy.retention_policy_applicabilities`, audit/idempotency"
+      x-tcdx-rector-source: "INITIAL_SOURCE v1.11 candidate; DELTA.md"
+      description: "Custodian author; draft without source; exact source chain approved independently, current and scan-PASS. Bind updates source/clause/real interval only; no publication. Replay reauthorizes; CAS and transactional audit required."
+      parameters: [{ $ref: '#/components/parameters/CorrelationId' }, { $ref: '#/components/parameters/TenantContext' }, { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/IfMatch' }, { name: id, in: path, required: true, schema: { $ref: '#/components/schemas/UuidV7' } }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/RetentionApplicabilityBindInitialSourceRequest' } } }
+      responses:
+        '200': { $ref: '#/components/responses/OperationSuccess' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/AuthenticationError' }
+        '403': { $ref: '#/components/responses/AuthorizationError' }
+        '404': { $ref: '#/components/responses/NotFoundError' }
+        '409': { $ref: '#/components/responses/ConflictError' }
+        '422': { $ref: '#/components/responses/ValidationError' }
 tags: []
+
 components:
   securitySchemes:
     bearerAuth:
@@ -4817,9 +5558,15 @@ components:
     CurrentPrincipalTenantPermissions:
       type: object
       additionalProperties: false
-      required: [tenant_id, permissions]
+      required: [tenant_id, permissions, default_timezone]
       properties:
         tenant_id: { $ref: '#/components/schemas/UuidV7' }
+        default_timezone:
+          type: string
+          minLength: 1
+          maxLength: 64
+          format: iana-time-zone
+          description: "Own selected active tenant's persisted IANA zone, read in the authorization snapshot; ephemeral presentation context, never permission authority. STEP6A3 D3 approved 2026-10-13."
         permissions:
           type: object
           propertyNames:
@@ -5052,6 +5799,24 @@ components:
         reason: { type: string, minLength: 1, maxLength: 2000 }
         person_verification_ref: { type: string, minLength: 1, maxLength: 255 }
       description: Nonsecret person-verification reference; no credential value is accepted as input. The original successful response may disclose a newly generated temporary credential once.
+    PublishedPlanVersion:
+      type: object
+      additionalProperties: false
+      required: [plan_version_id, plan_id, plan_code, plan_name, version_number, display_name]
+      properties:
+        plan_version_id: { $ref: '#/components/schemas/UuidV7' }
+        plan_id: { $ref: '#/components/schemas/UuidV7' }
+        plan_code: { type: string }
+        plan_name: { type: string }
+        version_number: { type: integer }
+        display_name: { type: string }
+    PublishedPlanVersionPage:
+      type: object
+      additionalProperties: false
+      required: [items, page]
+      properties:
+        items: { type: array, items: { $ref: '#/components/schemas/PublishedPlanVersion' } }
+        page: { $ref: '#/components/schemas/PageMeta' }
     TenantAdministrativeProjection:
       type: object
       additionalProperties: false
@@ -5555,6 +6320,7 @@ components:
       additionalProperties: false
       required: [statement_of_applicability_id, row_version, framework_version_id, soa_version, title, lifecycle_state]
       properties:
+        contract_provenance: { type: array, items: { $ref: '#/components/schemas/VocabularyProvenanceV1' } }
         statement_of_applicability_id: { $ref: '#/components/schemas/UuidV7' }
         row_version: { type: integer, format: int64, minimum: 1 }
         framework_version_id: { $ref: '#/components/schemas/UuidV7' }
@@ -5617,6 +6383,7 @@ components:
       additionalProperties: false
       required: [control_id, row_version, ownership_class, control_code, name, control_origin, lifecycle_state]
       properties:
+        contract_provenance: { type: array, items: { $ref: '#/components/schemas/VocabularyProvenanceV1' } }
         control_id: { $ref: '#/components/schemas/UuidV7' }
         row_version: { type: integer, format: int64, minimum: 1 }
         ownership_class: { $ref: '#/components/schemas/OwnershipClass' }
@@ -5677,6 +6444,7 @@ components:
       additionalProperties: false
       required: [assurance_test_id, row_version, control_id, control_version_id, test_code, lifecycle_state, result_status]
       properties:
+        contract_provenance: { type: array, items: { $ref: '#/components/schemas/VocabularyProvenanceV1' } }
         assurance_test_id: { $ref: '#/components/schemas/UuidV7' }
         row_version: { type: integer, format: int64, minimum: 1 }
         control_id: { $ref: '#/components/schemas/UuidV7' }
@@ -5751,6 +6519,7 @@ components:
       additionalProperties: false
       required: [evidence_version_id, row_version, evidence_id, version_number, lifecycle_state, provenance_ref]
       properties:
+        contract_provenance: { type: array, items: { $ref: '#/components/schemas/VocabularyProvenanceV1' } }
         evidence_version_id: { $ref: '#/components/schemas/UuidV7' }
         row_version: { type: integer, format: int64, minimum: 1 }
         evidence_id: { $ref: '#/components/schemas/UuidV7' }
@@ -5782,6 +6551,7 @@ components:
       additionalProperties: false
       required: [evidence_id, row_version, evidence_code, evidence_type, lifecycle_state, retention_policy_id, source_kind]
       properties:
+        contract_provenance: { type: array, items: { $ref: '#/components/schemas/VocabularyProvenanceV1' } }
         evidence_id: { $ref: '#/components/schemas/UuidV7' }
         row_version: { type: integer, format: int64, minimum: 1 }
         evidence_code: { type: string }
@@ -5817,6 +6587,7 @@ components:
       additionalProperties: false
       required: [issue_id, row_version, issue_code, issue_kind, title, description, lifecycle_state, severity, priority]
       properties:
+        contract_provenance: { type: array, items: { $ref: '#/components/schemas/VocabularyProvenanceV1' } }
         issue_id: { $ref: '#/components/schemas/UuidV7' }
         row_version: { type: integer, format: int64, minimum: 1 }
         issue_code: { type: string }
@@ -5861,6 +6632,7 @@ components:
       additionalProperties: false
       required: [action_id, row_version, issue_id, action_code, title, description, lifecycle_state, priority]
       properties:
+        contract_provenance: { type: array, items: { $ref: '#/components/schemas/VocabularyProvenanceV1' } }
         action_id: { $ref: '#/components/schemas/UuidV7' }
         row_version: { type: integer, format: int64, minimum: 1 }
         issue_id: { $ref: '#/components/schemas/UuidV7' }
@@ -5978,6 +6750,7 @@ components:
       additionalProperties: false
       required: [upload_intent_id, lifecycle_state, upload_url, expires_at]
       properties:
+        contract_provenance: { type: array, items: { $ref: '#/components/schemas/VocabularyProvenanceV1' } }
         upload_intent_id: { $ref: '#/components/schemas/UuidV7' }
         lifecycle_state: { type: string, enum: [pending_upload] }
         upload_url: { type: string, format: uri-reference }
@@ -6063,9 +6836,9 @@ components:
       required: [reference_control_version_id, applicability_decision, justification, implementation_state]
       properties:
         reference_control_version_id: { $ref: '#/components/schemas/UuidV7' }
-        applicability_decision: { type: string, minLength: 1, maxLength: 32 }
+        applicability_decision: { $ref: '#/components/schemas/SoAApplicabilityDecision' }
         justification: { type: string, minLength: 1 }
-        implementation_state: { type: string, minLength: 1, maxLength: 32 }
+        implementation_state: { $ref: '#/components/schemas/SoAImplementationState' }
         tenant_control_id: { $ref: '#/components/schemas/UuidV7' }
         tenant_control_version_id: { $ref: '#/components/schemas/UuidV7' }
       description: Reference and optional tenant Control identities must be accessible and mutually compatible in the selected tenant.
@@ -6094,11 +6867,11 @@ components:
         objective: { type: string, minLength: 1 }
         control_type: { type: string, enum: [preventive, detective, corrective, directive] }
         nature: { type: string, enum: [manual, automated, hybrid] }
-        frequency_code: { type: string, minLength: 1, maxLength: 64 }
+        frequency_code: { $ref: '#/components/schemas/ControlFrequency' }
         execution_method: { type: string, minLength: 1 }
         verification_method: { type: string, minLength: 1 }
         minimum_evidence: { type: string, minLength: 1 }
-        suggested_owner_role_code: { type: string, minLength: 1, maxLength: 96 }
+        suggested_owner_role_code: { $ref: '#/components/schemas/SuggestedBusinessOwnerRole' }
         effective_from: { $ref: '#/components/schemas/UtcTimestamp' }
         effective_to: { $ref: '#/components/schemas/UtcTimestamp' }
       description: Creates only a TENANT_OWNED tenant_instantiated Control and version 1 from an accessible global/platform ControlVersion.
@@ -6151,7 +6924,7 @@ components:
         sample_code: { type: string, minLength: 1, maxLength: 128 }
         population_count: { type: integer, format: int64, minimum: 0 }
         sample_count: { type: integer, format: int64, minimum: 0 }
-        selection_method: { type: string, minLength: 1, maxLength: 64 }
+        selection_method: { $ref: '#/components/schemas/AssuranceSelectionMethod' }
         sample_period_start: { $ref: '#/components/schemas/UtcTimestamp' }
         sample_period_end: { $ref: '#/components/schemas/UtcTimestamp' }
         result_status: { $ref: '#/components/schemas/ResultStatus' }
@@ -6196,16 +6969,29 @@ components:
       properties:
         expected_version: { type: integer, format: int64, minimum: 1 }
       description: SoD and reviewed-to-approved state are enforced from authoritative state.
+    RetentionApplicabilityBindInitialSourceRequest:
+      type: object
+      additionalProperties: false
+      required: [source_evidence_version_id, source_clause_ref, effective_from]
+      properties:
+        source_evidence_version_id: { $ref: '#/components/schemas/UuidV7' }
+        source_clause_ref: { type: string, minLength: 1, pattern: '\S' }
+        effective_from: { $ref: '#/components/schemas/UtcTimestamp' }
+        effective_to: { $ref: '#/components/schemas/UtcTimestamp' }
+      description: "Strong If-Match header supplies CAS; expected_version in HTTP body is forbidden. Real intervals require to>from and compatibility with approved source and policy."
     UploadIntentCreateRequest:
       type: object
       additionalProperties: false
-      required: [original_filename, declared_mime, size_bytes, classification, retention_policy_id, source_provenance]
+      required: [original_filename, declared_mime, size_bytes, classification, retention_policy_id, retention_policy_applicability_id, source_provenance]
       properties:
         original_filename: { type: string, minLength: 1 }
         declared_mime: { type: string, minLength: 1, maxLength: 255 }
         size_bytes: { type: integer, format: int64, minimum: 0 }
-        classification: { type: string, minLength: 1, maxLength: 32 }
+        classification: { $ref: '#/components/schemas/FileClassification' }
         retention_policy_id: { $ref: '#/components/schemas/UuidV7' }
+        retention_policy_applicability_id: { $ref: '#/components/schemas/UuidV7' }
+        scope_subject_id: { $ref: '#/components/schemas/UuidV7' }
+        processing_activity_id: { $ref: '#/components/schemas/UuidV7' }
         source_provenance: { type: string, minLength: 1 }
         effective_from: { $ref: '#/components/schemas/UtcTimestamp' }
         effective_to: { $ref: '#/components/schemas/UtcTimestamp' }
@@ -6271,12 +7057,12 @@ components:
       required: [evidence_code, evidence_type, retention_policy_id, source_kind, file_object_id, provenance_ref, links]
       properties:
         evidence_code: { type: string, minLength: 1, maxLength: 128 }
-        evidence_type: { type: string, minLength: 1, maxLength: 64 }
+        evidence_type: { $ref: '#/components/schemas/EvidenceType' }
         business_owner_subject_id: { $ref: '#/components/schemas/UuidV7' }
         valid_from: { $ref: '#/components/schemas/UtcTimestamp' }
         valid_to: { $ref: '#/components/schemas/UtcTimestamp' }
         retention_policy_id: { $ref: '#/components/schemas/UuidV7' }
-        source_kind: { type: string, minLength: 1, maxLength: 32 }
+        source_kind: { $ref: '#/components/schemas/EvidenceSourceKind' }
         file_object_id: { $ref: '#/components/schemas/UuidV7' }
         period_start: { $ref: '#/components/schemas/UtcTimestamp' }
         period_end: { $ref: '#/components/schemas/UtcTimestamp' }
@@ -6286,7 +7072,7 @@ components:
         provenance_ref: { type: string, minLength: 1 }
         links:
           type: array
-          minItems: 1
+          minItems: 0
           items: { $ref: '#/components/schemas/EvidenceLinkCreateInput' }
       description: FileObject must be finalized, usable and scan-PASS; all objects and policies must be tenant-compatible. Evidence, first draft version and links are created atomically.
     EvidenceSubmitRequest:
@@ -6307,8 +7093,8 @@ components:
       required: [expected_version, rationale]
       properties:
         expected_version: { type: integer, format: int64, minimum: 1 }
-        sufficiency: { type: string, minLength: 1, maxLength: 32 }
-        relevance: { type: string, minLength: 1, maxLength: 32 }
+        sufficiency: { $ref: '#/components/schemas/EvidenceSufficiency' }
+        relevance: { $ref: '#/components/schemas/EvidenceRelevance' }
         rationale: { type: string, minLength: 1 }
       description: Decision=approved, reviewer identity and reviewed_at are server-derived; submitter/reviewer SoD is enforced.
     EvidenceRejectRequest:
@@ -6317,8 +7103,8 @@ components:
       required: [expected_version, rationale]
       properties:
         expected_version: { type: integer, format: int64, minimum: 1 }
-        sufficiency: { type: string, minLength: 1, maxLength: 32 }
-        relevance: { type: string, minLength: 1, maxLength: 32 }
+        sufficiency: { $ref: '#/components/schemas/EvidenceSufficiency' }
+        relevance: { $ref: '#/components/schemas/EvidenceRelevance' }
         rationale: { type: string, minLength: 1 }
       description: Decision=rejected, reviewer identity and reviewed_at are server-derived; rejection reason is mandatory.
     IssueCreateRequest:
@@ -6334,14 +7120,14 @@ components:
         issue_kind: { type: string, enum: [finding, non_conformity, gap, exception, audit_observation] }
         title: { type: string, minLength: 1 }
         description: { type: string, minLength: 1 }
-        severity: { type: string, minLength: 1, maxLength: 32 }
-        priority: { type: string, minLength: 1, maxLength: 32 }
+        severity: { $ref: '#/components/schemas/IssueSeverity' }
+        priority: { $ref: '#/components/schemas/IssuePriority' }
         business_owner_subject_id: { $ref: '#/components/schemas/UuidV7' }
         due_date: { type: string, format: date }
         requirement_assessment_id: { $ref: '#/components/schemas/UuidV7' }
         control_assessment_id: { $ref: '#/components/schemas/UuidV7' }
         assurance_test_id: { $ref: '#/components/schemas/UuidV7' }
-        origin_role: { type: string, minLength: 1, maxLength: 32 }
+        origin_role: { $ref: '#/components/schemas/IssueOriginRole' }
       description: Exactly one Core GRC typed origin is accepted in Phase 5; risk, incident, supplier and audit origins remain outside this slice.
     IssueTriageRequest:
       type: object
@@ -6349,8 +7135,8 @@ components:
       required: [expected_version, severity, priority]
       properties:
         expected_version: { type: integer, format: int64, minimum: 1 }
-        severity: { type: string, minLength: 1, maxLength: 32 }
-        priority: { type: string, minLength: 1, maxLength: 32 }
+        severity: { $ref: '#/components/schemas/IssueSeverity' }
+        priority: { $ref: '#/components/schemas/IssuePriority' }
         business_owner_subject_id: { $ref: '#/components/schemas/UuidV7' }
         due_date: { type: string, format: date }
       description: Severity and priority remain distinct from the open-to-triaged lifecycle transition.
@@ -6383,7 +7169,7 @@ components:
         action_code: { type: string, minLength: 1, maxLength: 128 }
         title: { type: string, minLength: 1 }
         description: { type: string, minLength: 1 }
-        priority: { type: string, minLength: 1, maxLength: 32 }
+        priority: { $ref: '#/components/schemas/ActionPriority' }
         assigned_membership_id: { $ref: '#/components/schemas/UuidV7' }
         due_date: { type: string, format: date }
       description: Parent Issue is the path identity and must belong to the selected tenant; initial state is pending.
@@ -6407,7 +7193,7 @@ components:
       properties:
         expected_version: { type: integer, format: int64, minimum: 1 }
         evidence_version_id: { $ref: '#/components/schemas/UuidV7' }
-        link_role: { type: string, minLength: 1, maxLength: 32 }
+        link_role: { $ref: '#/components/schemas/ActionEvidenceLinkRole' }
       description: Closure EvidenceVersion must be eligible and same-tenant; completion is allowed only from in_review and never verifies the Action.
     ActionVerifyRequest:
       type: object
@@ -6422,7 +7208,7 @@ components:
     RetentionPolicyCreateRequest:
       type: object
       additionalProperties: false
-      required: [policy_code, version_number, policy_kind, retention_seconds, trigger_event_code, precedence_rank, is_mandatory]
+      required: [policy_code, version_number, policy_kind, trigger_event_code, precedence_rank, is_mandatory]
       properties:
         policy_code: { type: string, minLength: 1, maxLength: 128 }
         version_number: { type: integer, format: int64, minimum: 1 }
@@ -6431,7 +7217,7 @@ components:
         trigger_event_code: { type: string, enum: [expiry_or_closure] }
         precedence_rank: { type: integer, enum: [500, 400, 300, 200, 100] }
         is_mandatory: { type: boolean }
-      description: Precedence must match policy_kind exactly (500/400/300/200/100). effective_from, effective_to, lifecycle, row_version, regulatory source and disposition are not caller-controlled.
+      description: For legal_hold retention_seconds is absent and persisted NULL; for every other kind it is a required nonnegative integer. Precedence must match policy_kind exactly (500/400/300/200/100). effective_from, effective_to, lifecycle, row_version, regulatory source and disposition are not caller-controlled.
     RetentionPolicyTransitionRequest:
       type: object
       additionalProperties: false
@@ -6440,15 +7226,180 @@ components:
     RetentionPolicyUpdateRequest:
       type: object
       additionalProperties: false
-      required: [retention_seconds, is_mandatory]
+      required: [is_mandatory]
       properties:
         retention_seconds: { type: integer, format: int64, minimum: 0 }
         is_mandatory: { type: boolean }
-      description: Draft-only update; strong If-Match supplies row_version. Policy identity, kind, trigger, precedence and lifecycle remain server-controlled.
+      description: Draft-only update; legal_hold omits retention_seconds and all other kinds require it. Strong If-Match supplies row_version. Policy identity, kind, trigger, precedence and lifecycle remain server-controlled.
+    RetentionApplicabilityCreateRequest:
+      type: object
+      additionalProperties: false
+      required: [retention_policy_id, version_number, classification]
+      properties:
+        retention_policy_id: { $ref: '#/components/schemas/UuidV7' }
+        version_number: { type: integer, format: int64, minimum: 1 }
+        classification: { $ref: '#/components/schemas/FileClassification' }
+        scope_subject_id: { $ref: '#/components/schemas/UuidV7' }
+        processing_activity_id: { $ref: '#/components/schemas/UuidV7' }
+        legal_basis_id: { $ref: '#/components/schemas/UuidV7' }
+        source_evidence_version_id: { $ref: '#/components/schemas/UuidV7' }
+        source_clause_ref: { type: string, minLength: 1 }
+        effective_from: { $ref: '#/components/schemas/UtcTimestamp' }
+        effective_to: { $ref: '#/components/schemas/UtcTimestamp' }
+        supersedes_applicability_id: { $ref: '#/components/schemas/UuidV7' }
+    LegalHoldReleaseRequest:
+      type: object
+      additionalProperties: false
+      required: [reason]
+      properties:
+        reason: { type: string, minLength: 1 }
+        release_source_evidence_version_id: { $ref: '#/components/schemas/UuidV7' }
     DomainCommandRequest:
       type: object
       description: Operation-specific schema placeholder constrained by the named request contract in artifact 03; implementations must refine it without adding fields or semantics not traced to that contract.
       additionalProperties: true
+    EffectiveConfigurationDetailReadResult:
+      {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "EffectiveConfigurationDetailReadResult-v1-L03-R1",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operation_id",
+          "status",
+          "correlation_id",
+          "result"
+        ],
+        "properties": {
+          "operation_id": {
+            "const": "effectiveConfigurationGet"
+          },
+          "status": {
+            "const": "completed"
+          },
+          "correlation_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "result": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "effective_configuration_id",
+              "configuration_definition",
+              "resolved_for_subject_id",
+              "effective_at",
+              "resolved_at",
+              "resolution_status",
+              "input_hash",
+              "layers"
+            ],
+            "properties": {
+              "effective_configuration_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "configuration_definition": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "configuration_definition_id",
+                  "configuration_code",
+                  "version_number"
+                ],
+                "properties": {
+                  "configuration_definition_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "configuration_code": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "version_number": {
+                    "type": "string",
+                    "pattern": "^(?:[1-9][0-9]{0,17}|[1-8][0-9]{18}|9[0-1][0-9]{17}|92[0-1][0-9]{16}|922[0-2][0-9]{15}|9223[0-2][0-9]{14}|92233[0-6][0-9]{13}|922337[0-1][0-9]{12}|92233720[0-2][0-9]{10}|922337203[0-5][0-9]{9}|9223372036[0-7][0-9]{8}|92233720368[0-4][0-9]{7}|922337203685[0-3][0-9]{6}|9223372036854[0-6][0-9]{5}|92233720368547[0-6][0-9]{4}|922337203685477[0-4][0-9]{3}|9223372036854775[0-7][0-9]{2}|922337203685477580[0-6]|9223372036854775807)$",
+                    "description": "Decimal canónico, sin ceros iniciales, rango 1..9223372036854775807; nunca number JSON."
+                  }
+                }
+              },
+              "resolved_for_subject_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "effective_at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$"
+              },
+              "resolved_at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$"
+              },
+              "resolution_status": {
+                "type": "string",
+                "maxLength": 32
+              },
+              "input_hash": {
+                "type": "string",
+                "pattern": "^[0-9a-fA-F]{64}$"
+              },
+              "layers": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "configuration_definition_id",
+                    "configuration_override_id",
+                    "precedence_level",
+                    "ordinal",
+                    "was_selected"
+                  ],
+                  "properties": {
+                    "configuration_definition_id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "configuration_override_id": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "precedence_level": {
+                      "type": "string",
+                      "maxLength": 32
+                    },
+                    "ordinal": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 2147483647
+                    },
+                    "was_selected": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     OperationResult:
       type: object
       additionalProperties: false
@@ -6459,6 +7410,631 @@ components:
         correlation_id: { type: string, format: uuid }
         resource_id: { oneOf: [{ $ref: '#/components/schemas/UuidV7' }, { type: 'null' }] }
         result: { type: [object, 'null'] }
+    FileClassification:
+      type: string
+      minLength: 1
+      maxLength: 32
+      enum: [public, internal, confidential, restricted]
+      x-tcdx-vocabulary-family: CV-01
+      x-tcdx-vocabulary-version: STEP6A3_VOCABULARIES_v1
+
+    EvidenceType:
+      type: string
+      minLength: 1
+      maxLength: 64
+      enum: [document, record, image, report]
+      x-tcdx-vocabulary-family: CV-02
+      x-tcdx-vocabulary-version: STEP6A3_VOCABULARIES_v1
+
+    ControlFrequency:
+      type: string
+      minLength: 1
+      maxLength: 64
+      enum: [continuous, daily, weekly, monthly, quarterly, semiannual, annual, event_driven]
+      x-tcdx-vocabulary-family: CV-03
+      x-tcdx-vocabulary-version: STEP6A3_VOCABULARIES_v1
+
+    SoAApplicabilityDecision:
+      type: string
+      minLength: 1
+      maxLength: 32
+      enum: [applicable, not_applicable]
+      x-tcdx-vocabulary-family: CV-04
+      x-tcdx-vocabulary-version: STEP6A3_VOCABULARIES_v1
+
+    SoAImplementationState:
+      type: string
+      minLength: 1
+      maxLength: 32
+      enum: [not_implemented, partially_implemented, implemented, not_applicable]
+      x-tcdx-vocabulary-family: CV-05
+      x-tcdx-vocabulary-version: STEP6A3_VOCABULARIES_v1
+
+    ActionEvidenceLinkRole:
+      type: string
+      minLength: 1
+      maxLength: 32
+      enum: [closure]
+      x-tcdx-vocabulary-family: CV-06
+      x-tcdx-vocabulary-version: STEP6A3_VOCABULARIES_v1
+
+    IssueOriginRole:
+      type: string
+      minLength: 1
+      maxLength: 32
+      enum: [trigger]
+      x-tcdx-vocabulary-family: CV-07
+      x-tcdx-vocabulary-version: STEP6A3_VOCABULARIES_v1
+
+    IssuePriority:
+      type: string
+      minLength: 1
+      maxLength: 32
+      enum: [urgent, high, normal, low]
+      x-tcdx-vocabulary-family: CV-08
+      x-tcdx-vocabulary-version: STEP6A3_VOCABULARIES_v1
+
+    ActionPriority:
+      type: string
+      minLength: 1
+      maxLength: 32
+      enum: [urgent, high, normal, low]
+      x-tcdx-vocabulary-family: CV-08
+      x-tcdx-vocabulary-version: STEP6A3_VOCABULARIES_v1
+
+    EvidenceRelevance:
+      type: string
+      minLength: 1
+      maxLength: 32
+      enum: [relevant, partially_relevant, not_relevant]
+      x-tcdx-vocabulary-family: CV-09
+      x-tcdx-vocabulary-version: STEP6A3_VOCABULARIES_v1
+
+    AssuranceSelectionMethod:
+      type: string
+      minLength: 1
+      maxLength: 64
+      enum: [census, random, stratified_random, systematic, judgmental]
+      x-tcdx-vocabulary-family: CV-10
+      x-tcdx-vocabulary-version: STEP6A3_VOCABULARIES_v1
+
+    IssueSeverity:
+      type: string
+      minLength: 1
+      maxLength: 32
+      enum: [critical, major, moderate, minor]
+      x-tcdx-vocabulary-family: CV-11
+      x-tcdx-vocabulary-version: STEP6A3_VOCABULARIES_v1
+
+    EvidenceSourceKind:
+      type: string
+      minLength: 1
+      maxLength: 32
+      enum: [uploaded, system_record, human_observation, external_record]
+      x-tcdx-vocabulary-family: CV-12
+      x-tcdx-vocabulary-version: STEP6A3_VOCABULARIES_v1
+
+    EvidenceSufficiency:
+      type: string
+      minLength: 1
+      maxLength: 32
+      enum: [sufficient, partially_sufficient, insufficient]
+      x-tcdx-vocabulary-family: CV-13
+      x-tcdx-vocabulary-version: STEP6A3_VOCABULARIES_v1
+
+    SuggestedBusinessOwnerRole:
+      type: string
+      minLength: 1
+      maxLength: 96
+      enum: [COMPLIANCE_MANAGER, CONTROL_OWNER, PROCESS_OWNER, QUALITY_MANAGER, CISO_SECURITY_MANAGER]
+      x-tcdx-vocabulary-family: CV-14
+      x-tcdx-vocabulary-version: STEP6A3_VOCABULARIES_v1
+
+    FrameworkVersionReference:
+      type: object
+      additionalProperties: false
+      required:
+        - framework_version_id
+        - framework_id
+        - framework_code
+        - framework_name
+        - edition
+        - version_number
+        - ownership_class
+        - lifecycle_state
+        - effective_from
+        - effective_to
+        - published_at
+        - access_mode
+        - selectable
+      properties:
+        framework_version_id:
+          $ref: "#/components/schemas/UuidV7"
+        framework_id:
+          $ref: "#/components/schemas/UuidV7"
+        framework_code:
+          type: string
+          maxLength: 128
+        framework_name:
+          type: string
+        edition:
+          type: string
+          maxLength: 128
+        version_number:
+          type: integer
+          format: int64
+          minimum: 1
+        ownership_class:
+          $ref: "#/components/schemas/OwnershipClass"
+        lifecycle_state:
+          type: string
+          maxLength: 32
+        effective_from:
+          type:
+            - string
+            - "null"
+          format: date-time
+        effective_to:
+          type:
+            - string
+            - "null"
+          format: date-time
+        published_at:
+          type:
+            - string
+            - "null"
+          format: date-time
+        access_mode:
+          type: string
+          enum:
+            - official
+            - non_authoritative_validation
+        selectable:
+          type: boolean
+    FrameworkVersionReferencePage:
+      type: object
+      additionalProperties: false
+      required:
+        - items
+        - page
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/FrameworkVersionReference"
+        page:
+          type: object
+          additionalProperties: false
+          required:
+            - has_more
+            - next_cursor
+          properties:
+            has_more:
+              type: boolean
+            next_cursor:
+              type:
+                - string
+                - "null"
+              maxLength: 2048
+    MembershipReference:
+      type: object
+      additionalProperties: false
+      required:
+        - tenant_membership_id
+        - display_name
+        - joined_at
+        - selectable
+      properties:
+        tenant_membership_id:
+          $ref: "#/components/schemas/UuidV7"
+        display_name:
+          type: string
+        joined_at:
+          $ref: "#/components/schemas/UtcTimestamp"
+        selectable:
+          type: boolean
+    MembershipReferencePage:
+      type: object
+      additionalProperties: false
+      required:
+        - items
+        - page
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/MembershipReference"
+        page:
+          type: object
+          additionalProperties: false
+          required:
+            - has_more
+            - next_cursor
+          properties:
+            has_more:
+              type: boolean
+            next_cursor:
+              type:
+                - string
+                - "null"
+              maxLength: 2048
+    RetentionPolicyReference:
+      type: object
+      additionalProperties: false
+      required:
+        - retention_policy_id
+        - policy_code
+        - version_number
+        - policy_kind
+        - retention_seconds
+        - trigger_event_code
+        - precedence_rank
+        - is_mandatory
+        - ownership_class
+        - lifecycle_state
+        - effective_from
+        - effective_to
+        - selectable
+      properties:
+        retention_policy_id:
+          $ref: "#/components/schemas/UuidV7"
+        policy_code:
+          type: string
+          maxLength: 128
+        version_number:
+          type: integer
+          format: int64
+          minimum: 1
+        policy_kind:
+          type: string
+          enum:
+            - legal_hold
+            - mandatory_regulatory_policy
+            - contractual_policy
+            - tenant_policy
+            - product_baseline
+        retention_seconds:
+          type:
+            - integer
+            - "null"
+          format: int64
+          minimum: 0
+        trigger_event_code:
+          type: string
+          enum:
+            - expiry_or_closure
+        precedence_rank:
+          type: integer
+          enum:
+            - 500
+            - 400
+            - 300
+            - 200
+            - 100
+        is_mandatory:
+          type: boolean
+        ownership_class:
+          $ref: "#/components/schemas/OwnershipClass"
+        lifecycle_state:
+          type: string
+          enum:
+            - draft
+            - under_review
+            - approved
+            - published
+        effective_from:
+          type:
+            - string
+            - "null"
+          format: date-time
+        effective_to:
+          type:
+            - string
+            - "null"
+          format: date-time
+        selectable:
+          type: boolean
+    RetentionPolicyReferencePage:
+      type: object
+      additionalProperties: false
+      required:
+        - items
+        - page
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/RetentionPolicyReference"
+        page:
+          type: object
+          additionalProperties: false
+          required:
+            - has_more
+            - next_cursor
+          properties:
+            has_more:
+              type: boolean
+            next_cursor:
+              type:
+                - string
+                - "null"
+              maxLength: 2048
+
+
+    VocabularyProvenanceV1:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      additionalProperties: false
+      required:
+        - profile_version
+        - contract_version
+        - manifest_sha256
+        - root
+        - occurrences
+      properties:
+        profile_version:
+          const: 1
+        contract_version:
+          const: STEP6A3_VOCABULARIES_v1
+        manifest_sha256:
+          const: 81e559c96f687c319d415bb57b97187f17f91d884b35594b4ce0db7b68862b83
+        root:
+          type: object
+          additionalProperties: false
+          required:
+            - entity_type
+            - entity_id
+            - entity_version
+          properties:
+            entity_type:
+              type: string
+              minLength: 1
+              maxLength: 128
+            entity_id:
+              type: string
+              format: uuid
+              pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+            entity_version:
+              type: object
+              additionalProperties: false
+              required:
+                - kind
+                - value
+              properties:
+                kind:
+                  enum:
+                    - row_version
+                    - version_number
+                value:
+                  type: string
+                  pattern: ^(?:[1-9][0-9]{0,17}|[1-8][0-9]{18}|9[0-1][0-9]{17}|92[0-1][0-9]{16}|922[0-2][0-9]{15}|9223[0-2][0-9]{14}|92233[0-6][0-9]{13}|922337[0-1][0-9]{12}|92233720[0-2][0-9]{10}|922337203[0-5][0-9]{9}|9223372036[0-7][0-9]{8}|92233720368[0-4][0-9]{7}|922337203685[0-3][0-9]{6}|9223372036854[0-6][0-9]{5}|92233720368547[0-6][0-9]{4}|922337203685477[0-4][0-9]{3}|9223372036854775[0-7][0-9]{2}|922337203685477580[0-6]|9223372036854775807)$
+                  maxLength: 19
+        occurrences:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            additionalProperties: false
+            required:
+              - family_id
+              - code
+              - input_path
+              - entity_type
+              - entity_id
+              - entity_version
+            properties:
+              family_id:
+                enum:
+                  - CV-01
+                  - CV-02
+                  - CV-03
+                  - CV-04
+                  - CV-05
+                  - CV-06
+                  - CV-07
+                  - CV-08
+                  - CV-09
+                  - CV-10
+                  - CV-11
+                  - CV-12
+                  - CV-13
+                  - CV-14
+              code:
+                type: string
+              input_path:
+                type: string
+                pattern: ^[a-z_]+(\[[0-9]+\]\.[a-z_]+)?$
+              entity_type:
+                type: string
+                minLength: 1
+                maxLength: 128
+              entity_id:
+                type: string
+                format: uuid
+                pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+              entity_version:
+                type: object
+                additionalProperties: false
+                required:
+                  - kind
+                  - value
+                properties:
+                  kind:
+                    enum:
+                      - row_version
+                      - version_number
+                      - root_row_version
+                      - root_version_number
+                  value:
+                    type: string
+                    pattern: ^(?:[1-9][0-9]{0,17}|[1-8][0-9]{18}|9[0-1][0-9]{17}|92[0-1][0-9]{16}|922[0-2][0-9]{15}|9223[0-2][0-9]{14}|92233[0-6][0-9]{13}|922337[0-1][0-9]{12}|92233720[0-2][0-9]{10}|922337203[0-5][0-9]{9}|9223372036[0-7][0-9]{8}|92233720368[0-4][0-9]{7}|922337203685[0-3][0-9]{6}|9223372036854[0-6][0-9]{5}|92233720368547[0-6][0-9]{4}|922337203685477[0-4][0-9]{3}|9223372036854775[0-7][0-9]{2}|922337203685477580[0-6]|9223372036854775807)$
+                    maxLength: 19
+            allOf:
+              - if:
+                  properties:
+                    family_id:
+                      const: CV-01
+                then:
+                  properties:
+                    code:
+                      enum:
+                        - public
+                        - internal
+                        - confidential
+                        - restricted
+              - if:
+                  properties:
+                    family_id:
+                      const: CV-02
+                then:
+                  properties:
+                    code:
+                      enum:
+                        - document
+                        - record
+                        - image
+                        - report
+              - if:
+                  properties:
+                    family_id:
+                      const: CV-03
+                then:
+                  properties:
+                    code:
+                      enum:
+                        - continuous
+                        - daily
+                        - weekly
+                        - monthly
+                        - quarterly
+                        - semiannual
+                        - annual
+                        - event_driven
+              - if:
+                  properties:
+                    family_id:
+                      const: CV-04
+                then:
+                  properties:
+                    code:
+                      enum:
+                        - applicable
+                        - not_applicable
+              - if:
+                  properties:
+                    family_id:
+                      const: CV-05
+                then:
+                  properties:
+                    code:
+                      enum:
+                        - not_implemented
+                        - partially_implemented
+                        - implemented
+                        - not_applicable
+              - if:
+                  properties:
+                    family_id:
+                      const: CV-06
+                then:
+                  properties:
+                    code:
+                      enum:
+                        - closure
+              - if:
+                  properties:
+                    family_id:
+                      const: CV-07
+                then:
+                  properties:
+                    code:
+                      enum:
+                        - trigger
+              - if:
+                  properties:
+                    family_id:
+                      const: CV-08
+                then:
+                  properties:
+                    code:
+                      enum:
+                        - urgent
+                        - high
+                        - normal
+                        - low
+              - if:
+                  properties:
+                    family_id:
+                      const: CV-09
+                then:
+                  properties:
+                    code:
+                      enum:
+                        - relevant
+                        - partially_relevant
+                        - not_relevant
+              - if:
+                  properties:
+                    family_id:
+                      const: CV-10
+                then:
+                  properties:
+                    code:
+                      enum:
+                        - census
+                        - random
+                        - stratified_random
+                        - systematic
+                        - judgmental
+              - if:
+                  properties:
+                    family_id:
+                      const: CV-11
+                then:
+                  properties:
+                    code:
+                      enum:
+                        - critical
+                        - major
+                        - moderate
+                        - minor
+              - if:
+                  properties:
+                    family_id:
+                      const: CV-12
+                then:
+                  properties:
+                    code:
+                      enum:
+                        - uploaded
+                        - system_record
+                        - human_observation
+                        - external_record
+              - if:
+                  properties:
+                    family_id:
+                      const: CV-13
+                then:
+                  properties:
+                    code:
+                      enum:
+                        - sufficient
+                        - partially_sufficient
+                        - insufficient
+              - if:
+                  properties:
+                    family_id:
+                      const: CV-14
+                then:
+                  properties:
+                    code:
+                      enum:
+                        - COMPLIANCE_MANAGER
+                        - CONTROL_OWNER
+                        - PROCESS_OWNER
+                        - QUALITY_MANAGER
+                        - CISO_SECURITY_MANAGER
+
   responses:
     PlatformRoleAssignmentListSuccess:
       description: Complete active platform assignment intervals for an existing target; zero assignments is a valid empty items collection. Duplicate active role intervals fail closed with canonical 409.
@@ -6543,6 +8119,9 @@ components:
       content:
         application/problem+json:
           schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+    PublishedPlanVersionListSuccess:
+      description: Authorized published PlanVersion cursor page for subscription assignment.
+      content: { application/json: { schema: { $ref: '#/components/schemas/PublishedPlanVersionPage' } } }
     TenantAdministrativeListSuccess:
       description: Authorized global Tenant metadata cursor page.
       content: { application/json: { schema: { $ref: '#/components/schemas/TenantAdministrativePage' } } }

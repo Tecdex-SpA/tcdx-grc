@@ -1,0 +1,38 @@
+{
+  "recorded_at_utc": "2026-10-15T22:58:12.834423+00:00",
+  "instruction": "User interrupted promotion and requested preparation for another Codex account",
+  "application_deploy": "NOT_EXECUTED",
+  "backend_current": {
+    "observed_at_utc": "2026-10-15T22:56:32.564115+00:00",
+    "service": "tcdx-grc-backend",
+    "container_id": "5aeecc52ff00d978f32bc4edb0f522efa66f3ada65a87d6e3ac27bda36b9e734",
+    "image_id": "sha256:474e525a3e6b2bcc067dda7a77039b36f2832ca37d138b1424a700644560fc6d",
+    "running": true,
+    "health": "healthy",
+    "release_gate_sha256": "8889ab6a0eaea04c989e4c2540fe5dd6e346e64904bf2a7cfac8cbc1455bfb05",
+    "release_id": "step6a3-c04w-cfgd-final-20261015",
+    "staged_gate_sha256": null,
+    "staged_promoter_sha256": null,
+    "new_activation_receipt_exists": false
+  },
+  "frontend_current": {
+    "observed_at_utc": "2026-10-15T22:56:30.594928+00:00",
+    "service": "tcdx-grc-frontend",
+    "container_id": "702ffb7d8c574de39754101f5fb4097e718768eb8fca1c0e91bef1e0e4806370",
+    "image_id": "sha256:552ff3e9412cb1c78bfa3400c26c8835c6a2bfa09a6db1dc72ef18b8a2712eeb",
+    "running": true,
+    "health": "healthy",
+    "release_gate_sha256": "f700d274b42dead1c84115a456fec3451310b127cf0ac34217bf5f430f15caa5",
+    "release_id": null,
+    "staged_gate_sha256": null,
+    "staged_promoter_sha256": null,
+    "new_activation_receipt_exists": false
+  },
+  "staging_transfer": "Final transfer was aborted; both hosts verified staged gate/promoter absent. Do not assume transfer completed.",
+  "registry_v2": "PUBLISHED_REAL_M2M_AND_REPLAY_ZERO; DO_NOT_REPEAT",
+  "scope_policy_runtime": "PENDING_NEW_BACKEND_PROMOTION; registryv2 precedes the backend guard. No human functional flow on old images.",
+  "approvals": "All existing approvals and conditional Release authority preserved. QA acceptance NOT_PERFORMED.",
+  "STEP_6A3": "PARTIAL_BLOCKED",
+  "RECTOR_GATE": "BLOCKED",
+  "STEP_6A4": "NOT_STARTED"
+}

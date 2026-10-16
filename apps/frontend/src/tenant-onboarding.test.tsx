@@ -6,7 +6,7 @@ import { AddTenantUser, InitialCompanyWizard, TenantUserIntent, addUserPermissio
 import source from "./tenant-onboarding.tsx?raw";
 const tenant = "tenant-fixture", person = "person-fixture", memberId = "membership-fixture";
 const identity = { user_identity_id: person, display_name: "Persona controlada", provider_display: "Proveedor controlado", lifecycle_state: "active" as const };
-const projection = (codes: readonly string[], id = tenant): CurrentPrincipalAuthorization => ({ evaluated_at: new Date().toISOString(), platform_permissions: [], tenant_permissions: { tenant_id: id, permissions: Object.fromEntries(codes.map(code => [code, [{ scope_kind: "tenant" }]])) } });
+const projection = (codes: readonly string[], id = tenant): CurrentPrincipalAuthorization => ({ evaluated_at: new Date().toISOString(), platform_permissions: [], tenant_permissions: { tenant_id: id, default_timezone: "Europe/Berlin", permissions: Object.fromEntries(codes.map(code => [code, [{ scope_kind: "tenant" }]])) } });
 const fakeApi = (functions: Record<string, unknown>) => functions as unknown as ApiClient;
 const page = (items: unknown[], cursor: string | null = null) => ({ items, page: { has_more: cursor !== null, next_cursor: cursor } });
 afterEach(() => vi.restoreAllMocks());

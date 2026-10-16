@@ -141,6 +141,21 @@ describe("RetentionPolicy canonical lifecycle runtime", () => {
     expect(insert?.parameters).toContain(1);
   });
 
+  it("keeps legal hold duration unbounded and rejects a caller-supplied numeric deadline", async () => {
+    const definition = mutations.get("retentionPolicyCreate")!;
+    let insert: Query | undefined;
+    const database = executor((query) => {
+      insert = query;
+      return { rows: [row("draft", 1, { policy_kind: "legal_hold", retention_seconds: null })] };
+    });
+    const body = { policy_code: "TEST-HOLD", version_number: 1, policy_kind: "legal_hold", trigger_event_code: "expiry_or_closure", precedence_rank: 500, is_mandatory: true };
+    await definition.execute({ transaction: database, actor: actorFor(definition), body, correlationId });
+    expect(insert?.sql).toContain("INSERT INTO privacy.retention_policies");
+    expect(insert?.parameters).toContain(null);
+    await expect(definition.execute({ transaction: database, actor: actorFor(definition), body: { ...body, retention_seconds: 0 }, correlationId }))
+      .rejects.toSatisfy((error: unknown) => errorCode(error) === "TCDX.VALIDATION.FAILED");
+  });
+
   it("rejects an unknown kind, mismatched precedence, arbitrary trigger or non-boolean mandatory flag", async () => {
     const definition = mutations.get("retentionPolicyCreate")!;
     const never = executor(() => { throw new Error("must not persist"); });

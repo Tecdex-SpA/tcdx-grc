@@ -1,0 +1,14 @@
+$ pnpm -r typecheck
+packages/contracts typecheck$ tsc -p tsconfig.json --noEmit
+packages/shared-types typecheck$ tsc -p tsconfig.json --noEmit
+packages/shared-types typecheck: Done
+packages/contracts typecheck: src/phase6a3-iana-contract.test.ts(1,30): error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+packages/contracts typecheck: src/phase6a3-iana-contract.test.ts(2,28): error TS2591: Cannot find name 'node:crypto'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+packages/contracts typecheck: Failed
+[ELIFECYCLE] Command failed with exit code 1.
+Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+
+  × "pnpm recursive run" failed in /Users/andresbarouh/repos/tcdx-grc/
+  │ packages/contracts
+
+[ELIFECYCLE] Command failed with exit code 1.

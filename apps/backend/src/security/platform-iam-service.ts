@@ -1,3 +1,5 @@
+import {ROLE_PERMISSION_PUBLICATION,RBAC_RESOLUTION_R3,isIanaTimezone} from "@tcdx-grc/contracts";
+import {requireReferencePublication,requireRbacResolutionR3} from "./reference-publication.js";
 import { createHash, randomBytes } from "node:crypto";
 import { sql, type Kysely, type Transaction } from "kysely";
 import { validate as validateUuid } from "uuid";
@@ -12,6 +14,7 @@ import { recordPrivilegedUse, requirePlatformAccess } from "./platform-authority
 import { membershipRoleEtag } from "./membership-role-etag.js";
 
 type Body = Record<string, unknown>;
+export { subscriptionChangePlan } from "./commercial-subscription.js";
 type ScopeKind = "tenant" | "organizational_unit" | "process" | "service" | "audit_engagement" | "assigned_object" | "owned_object";
 
 const scopeKinds = new Set<ScopeKind>(["tenant", "organizational_unit", "process", "service", "audit_engagement", "assigned_object", "owned_object"]);
@@ -398,13 +401,14 @@ export async function tenantBootstrapInTransaction(transaction: Transaction<Foun
     }
 
     const templateCodes = templates.rows.map(({ role_code }) => role_code);
-    const templateGrants = await sql<{ role_code: string; permission_id: string }>`
-      SELECT r.role_code,rp.permission_id
+    const templateGrants = await sql<{ role_code: string; permission_id: string; permission_code: string }>`
+      SELECT r.role_code,rp.permission_id,p.permission_code
         FROM iam.roles r
         JOIN iam.role_permissions rp
           ON rp.role_id=r.role_id
          AND rp.ownership_class='PLATFORM_CONTROL'
          AND rp.tenant_id IS NULL
+        JOIN iam.permissions p ON p.permission_id=rp.permission_id
        WHERE r.role_id = ANY(${templates.rows.map(({ role_id }) => role_id)}::uuid[])
        ORDER BY r.role_code,rp.permission_id
     `.execute(transaction);
@@ -461,18 +465,33 @@ export async function tenantBootstrapInTransaction(transaction: Transaction<Foun
       throw bootstrapInvariant("SEED-010 tenant role grants are inconsistent");
     }
 
+    const referenceCodes:readonly string[]=ROLE_PERMISSION_PUBLICATION.permission_codes;
+    const publicationActor=templateGrants.rows.some(g=>referenceCodes.includes(g.permission_code))?await requireReferencePublication(transaction,true):null;
+    const resolutionActor=templateGrants.rows.some(g=>g.permission_code===RBAC_RESOLUTION_R3.permission_code)?await requireRbacResolutionR3(transaction,true):null;
     let createdGrantCount = 0;
     for (const grant of templateGrants.rows) {
       const key = `${grant.role_code}:${grant.permission_id}`;
       if (actualGrants.has(key)) continue;
       const role = rolesByCode.get(grant.role_code);
       if (!role) throw bootstrapInvariant(`SEED-010 role is missing: ${grant.role_code}`);
+      const grantId=newUuidV7();
       await sql`
         INSERT INTO iam.role_permissions
           (role_permission_id,created_by_user_identity_id,ownership_class,tenant_id,role_id,permission_id)
-        VALUES (${newUuidV7()}::uuid,${actor.identity.principalId}::uuid,'TENANT_OWNED',${input.tenantId}::uuid,
+        VALUES (${grantId}::uuid,${actor.identity.principalId}::uuid,'TENANT_OWNED',${input.tenantId}::uuid,
                 ${role.role_id}::uuid,${grant.permission_id}::uuid)
       `.execute(transaction);
+      if(referenceCodes.includes(grant.permission_code)) {
+        if(!publicationActor)throw bootstrapInvariant("Reference publication actor unavailable");
+        const state={present:true,role_id:role.role_id,role_code:grant.role_code,permission_id:grant.permission_id,permission_code:grant.permission_code};
+        await persistAuditEvent(transaction,{auditEventId:newUuidV7(),ownershipClass:"TENANT_OWNED",tenantId:input.tenantId,actor:{servicePrincipalId:publicationActor},correlationId:input.correlationId,eventCode:ROLE_PERMISSION_PUBLICATION.event_code,aggregateType:"RolePermission",aggregateId:grantId,commandCode:ROLE_PERMISSION_PUBLICATION.command_code,outcome:"success",classification:"restricted",before:{...state,present:false},after:{...state,manifest_sha256:ROLE_PERMISSION_PUBLICATION.manifest_sha256,receipt_sha256:ROLE_PERMISSION_PUBLICATION.receipt_sha256,migration_id:ROLE_PERMISSION_PUBLICATION.migration_id,source_migration_id:ROLE_PERMISSION_PUBLICATION.source_migration_id,source_migration_sha256:ROLE_PERMISSION_PUBLICATION.source_migration_sha256,reason:"Approved SEED-010 materialization"}});
+      }
+      if(grant.permission_code===RBAC_RESOLUTION_R3.permission_code) {
+        if(!resolutionActor)throw bootstrapInvariant("R3 publication actor unavailable");
+        const p=RBAC_RESOLUTION_R3;
+        const state={present:true,role_id:role.role_id,role_code:grant.role_code,permission_id:grant.permission_id,permission_code:grant.permission_code};
+        await persistAuditEvent(transaction,{auditEventId:newUuidV7(),ownershipClass:"TENANT_OWNED",tenantId:input.tenantId,actor:{servicePrincipalId:resolutionActor},correlationId:input.correlationId,eventCode:p.event_code,aggregateType:"RolePermission",aggregateId:grantId,commandCode:p.command_code,outcome:"success",classification:"restricted",before:{...state,present:false},after:{...state,manifest_sha256:p.manifest_sha256,receipt_sha256:p.receipt_sha256,migration_id:p.migration_id,source_migration_id:p.source_migration_id,source_migration_sha256:p.source_migration_sha256,reason:"Approved R3 SEED-010 materialization"}});
+      }
       actualGrants.add(key);
       createdGrantCount += 1;
     }
@@ -577,7 +596,7 @@ export async function tenantCreate(transaction: Transaction<FoundationDatabase>,
   const legalName = text(input.body, "legal_name");
   const displayName = text(input.body, "display_name");
   const timezone = text(input.body, "default_timezone", 64);
-  try { new Intl.DateTimeFormat("en", { timeZone: timezone }).format(); } catch {
+  if (!isIanaTimezone(timezone)) {
     throw new FoundationError("TCDX.VALIDATION.FAILED", "Invalid IANA timezone", 400, false, { field: "default_timezone" });
   }
   const key = idempotencyKey(input.key);
@@ -642,16 +661,19 @@ export async function subscriptionCreate(transaction: Transaction<FoundationData
   `.execute(transaction);
   if (tenant.rows.length !== 1) throw new FoundationError("TCDX.RESOURCE.NOT_FOUND", "Resource not found", 404);
 
-  const planVersion = await sql<{ plan_version_id: string; plan_state: string; version_state: string }>`
-    SELECT pv.plan_version_id,p.lifecycle_state AS plan_state,pv.lifecycle_state AS version_state
+  const planVersion = await sql<{ plan_version_id: string; plan_state: string; version_state: string; currently_effective: boolean }>`
+    SELECT pv.plan_version_id,p.lifecycle_state AS plan_state,pv.lifecycle_state AS version_state,
+           (pv.effective_from IS NULL OR pv.effective_from<=transaction_timestamp())
+             AND (pv.effective_to IS NULL OR pv.effective_to>transaction_timestamp()) AS currently_effective
       FROM platform.plan_versions pv
       JOIN platform.plans p ON p.plan_id=pv.plan_id
      WHERE pv.plan_version_id=${planVersionId}::uuid
      FOR SHARE OF p,pv
   `.execute(transaction);
   if (planVersion.rows.length !== 1) throw new FoundationError("TCDX.RESOURCE.NOT_FOUND", "Resource not found", 404);
-  if (planVersion.rows[0]?.plan_state !== "published" || planVersion.rows[0]?.version_state !== "published") {
-    throw new FoundationError("TCDX.INVARIANT.VIOLATION", "PlanVersion is not published", 422);
+  if (planVersion.rows[0]?.plan_state !== "published" || planVersion.rows[0]?.version_state !== "published"
+      || planVersion.rows[0]?.currently_effective !== true) {
+    throw new FoundationError("TCDX.INVARIANT.VIOLATION", "PlanVersion is not published and currently effective", 422);
   }
 
   const active = await sql<{ subscription_id: string }>`

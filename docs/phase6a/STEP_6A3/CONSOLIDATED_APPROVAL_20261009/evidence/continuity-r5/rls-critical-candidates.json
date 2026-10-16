@@ -1,0 +1,146 @@
+[
+  {
+    "table": "iam.tenant_memberships",
+    "profile": "TM",
+    "tenant_nullable": false,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  },
+  {
+    "table": "iam.tenant_membership_invitations",
+    "profile": "TM",
+    "tenant_nullable": false,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  },
+  {
+    "table": "iam.membership_roles",
+    "profile": "TI",
+    "tenant_nullable": false,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  },
+  {
+    "table": "iam.roles",
+    "profile": "MX",
+    "tenant_nullable": true,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  },
+  {
+    "table": "iam.role_permissions",
+    "profile": "MXI",
+    "tenant_nullable": true,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  },
+  {
+    "table": "evidence.documents",
+    "profile": "TM",
+    "tenant_nullable": false,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  },
+  {
+    "table": "evidence.document_versions",
+    "profile": "TV",
+    "tenant_nullable": false,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  },
+  {
+    "table": "evidence.evidences",
+    "profile": "TM",
+    "tenant_nullable": false,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  },
+  {
+    "table": "evidence.evidence_versions",
+    "profile": "TM",
+    "tenant_nullable": false,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  },
+  {
+    "table": "evidence.evidence_reviews",
+    "profile": "TI",
+    "tenant_nullable": false,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  },
+  {
+    "table": "evidence.evidence_links",
+    "profile": "TI",
+    "tenant_nullable": false,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  },
+  {
+    "table": "evidence.file_objects",
+    "profile": "TM",
+    "tenant_nullable": false,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  },
+  {
+    "table": "evidence.file_upload_intents",
+    "profile": "TM",
+    "tenant_nullable": false,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  },
+  {
+    "table": "privacy.privacy_processing_activities",
+    "profile": "TM",
+    "tenant_nullable": false,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  },
+  {
+    "table": "privacy.processing_activity_legal_bases",
+    "profile": "TI",
+    "tenant_nullable": false,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  },
+  {
+    "table": "privacy.retention_policies",
+    "profile": "MXI",
+    "tenant_nullable": true,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  },
+  {
+    "table": "privacy.data_subject_requests",
+    "profile": "TM",
+    "tenant_nullable": false,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  },
+  {
+    "table": "privacy.privacy_breaches",
+    "profile": "TM",
+    "tenant_nullable": false,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  },
+  {
+    "table": "config.configuration_overrides",
+    "profile": "MXI",
+    "tenant_nullable": true,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  },
+  {
+    "table": "config.effective_configurations",
+    "profile": "TI",
+    "tenant_nullable": false,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  },
+  {
+    "table": "config.effective_configuration_layers",
+    "profile": "TI",
+    "tenant_nullable": false,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  },
+  {
+    "table": "ops_audit.audit_events",
+    "profile": "EV",
+    "tenant_nullable": true,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  },
+  {
+    "table": "ops_audit.idempotency_records",
+    "profile": "MXI",
+    "tenant_nullable": true,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  },
+  {
+    "table": "ops_audit.outbox_events",
+    "profile": "EV",
+    "tenant_nullable": true,
+    "status": "CANDIDATE_FOR_OWNER_DECISION_NOT_APPROVED_POLICY_SCOPE"
+  }
+]

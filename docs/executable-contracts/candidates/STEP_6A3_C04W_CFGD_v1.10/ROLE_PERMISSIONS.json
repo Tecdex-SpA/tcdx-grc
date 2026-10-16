@@ -1,0 +1,18 @@
+{
+  "status": "DRAFT_NOT_EFFECTIVE",
+  "source_packet_sha256": "6b87812823472d56a89622eca8119b0cd56606f2f21d635dd84bf903896ba7f2",
+  "role_permissions": [
+    { "role_code": "TENANT_ADMIN", "ownership_class": "TENANT_OWNED", "permission_code": "privacy.retention_policy.read", "scope_kind": "tenant" },
+    { "role_code": "TENANT_ADMIN", "ownership_class": "TENANT_OWNED", "permission_code": "privacy.retention_policy.create", "scope_kind": "tenant" },
+    { "role_code": "TENANT_ADMIN", "ownership_class": "TENANT_OWNED", "permission_code": "privacy.retention_policy.update", "scope_kind": "tenant" },
+    { "role_code": "TENANT_ADMIN", "ownership_class": "TENANT_OWNED", "permission_code": "privacy.retention_policy.publish", "scope_kind": "tenant" },
+    { "role_code": "TENANT_ADMIN", "ownership_class": "TENANT_OWNED", "permission_code": "evidence.document.create", "scope_kind": "tenant" },
+    { "role_code": "TENANT_ADMIN", "ownership_class": "TENANT_OWNED", "permission_code": "evidence.document.update", "scope_kind": "tenant", "object_policy": "own C-04W upload intent only" },
+    { "role_code": "TENANT_ADMIN", "ownership_class": "TENANT_OWNED", "permission_code": "evidence.evidence.create", "scope_kind": "tenant", "object_policy": "C-04W source from own scan-PASS FileObject only" },
+    { "role_code": "TENANT_ADMIN", "ownership_class": "TENANT_OWNED", "permission_code": "evidence.evidence.submit", "scope_kind": "tenant", "object_policy": "own C-04W source EvidenceVersion only" },
+    { "role_code": "TENANT_ADMIN", "ownership_class": "TENANT_OWNED", "permission_code": "evidence.evidence.read", "scope_kind": "tenant", "object_policy": "own or linked C-04W source with classification policy" },
+    { "role_code": "LEGAL_REVIEWER", "ownership_class": "TENANT_OWNED", "permission_code": "privacy.retention_policy.legal_hold.release", "scope_kind": "tenant", "object_policy": "same tenant active hold, distinct author, audited", "permission_catalog_delta": true }
+  ],
+  "publication": "not authorized; resolve role and permission by canonical code within tenant, UUIDv7 row, audit every published grant",
+  "forbidden": ["platform role", "global RolePermission", "identity grant", "Privacy Manager revocation"]
+}

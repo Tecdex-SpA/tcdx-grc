@@ -1,0 +1,138 @@
+{
+  "id": "MACRO-STEP6A3-RBAC-D01-D02-20261009-R3",
+  "status": "PENDING_EXACT_PO_APPROVAL",
+  "created_at": "2026-10-09T21:13:10.643224+00:00",
+  "literal_text": "Apruebo exclusivamente la reconciliación contractual RBAC-D01/RBAC-D02 con los lectores y creadores ya publicados en Permission Catalog05. D01: AUDITOR no recibe remediation.action.create; se prepara la retirada de ese único par de la plantilla global y de instancias de ese rol baseline TENANT_OWNED, sin alterar roles custom, MembershipRole, historia, lectura ni los otros cinco roles creadores. D02: se prepara la distribución de compliance.requirement.read exclusivamente a VIEWER, REPORT_VIEWER, EXECUTIVE_BOARD_VIEWER, GRC_MANAGER, QUALITY_MANAGER, COMPLIANCE_MANAGER, CISO_SECURITY_MANAGER, AI_GOVERNANCE_MANAGER, PRIVACY_MANAGER, LEGAL_REVIEWER, REGULATORY_CONTENT_STEWARD. Se mantiene capability ISO_COMPLIANCE, scope tenant, membership activa, licencia/entitlement del Pack, ObjectPolicy, historia/versionado, auditoría e aislamiento; ownership PLATFORM_CONTROL de una plantilla no otorga autoridad de plataforma al tenant. No se añaden permisos, scopes ni roles distintos. Cada adopción/revocación/materialización requiere auditoría transaccional de la presencia real antes y después, fuente/versión/hash/motivo/UTC/correlación y actor competente existente; ninguna migración histórica cambia. Autorizo publicar el delta exacto e implementarlo y probarlo localmente en la base descartable propia tras sus gates. Las mutaciones reales de grants, QA, IAM real, DDL no descartable y despliegue continúan reservadas al plan operacional específico posterior. Esta decisión no publica none, define binding legal, activa SOGv2 ni cierra STEP6A3.",
+  "literal_utf8_sha256": "c6fc18ff12880cccd3bf48054e9e7246d952cad33bd58cf036aa06b26542dee2",
+  "artifacts": [
+    {
+      "path": "docs/phase6a/STEP_6A3/CONSOLIDATED_APPROVAL_20261009/RBAC_D01_D02_DECISION_R3.md",
+      "sha256": "cec2ca70b911e511059ce7aee5277eeed7d9194fe2bf9523404e79a2f2a88838",
+      "version": "R3_CANDIDATE"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "RBAC-D01",
+      "before": 1,
+      "after": 0,
+      "role_code": "AUDITOR",
+      "permission": "remediation.action.create",
+      "source": "docs/executable-contracts/05_PERMISSION_CATALOG.md:86",
+      "scope": "tenant/assigned_object existing catalog, no extension",
+      "capability": "ISSUES_ACTIONS"
+    },
+    {
+      "id": "RBAC-D02",
+      "pairs": [
+        {
+          "role_code": "VIEWER",
+          "permission": "compliance.requirement.read",
+          "before": 0,
+          "after": 1,
+          "scope": "tenant",
+          "capability": "ISO_COMPLIANCE"
+        },
+        {
+          "role_code": "REPORT_VIEWER",
+          "permission": "compliance.requirement.read",
+          "before": 0,
+          "after": 1,
+          "scope": "tenant",
+          "capability": "ISO_COMPLIANCE"
+        },
+        {
+          "role_code": "EXECUTIVE_BOARD_VIEWER",
+          "permission": "compliance.requirement.read",
+          "before": 0,
+          "after": 1,
+          "scope": "tenant",
+          "capability": "ISO_COMPLIANCE"
+        },
+        {
+          "role_code": "GRC_MANAGER",
+          "permission": "compliance.requirement.read",
+          "before": 0,
+          "after": 1,
+          "scope": "tenant",
+          "capability": "ISO_COMPLIANCE"
+        },
+        {
+          "role_code": "QUALITY_MANAGER",
+          "permission": "compliance.requirement.read",
+          "before": 0,
+          "after": 1,
+          "scope": "tenant",
+          "capability": "ISO_COMPLIANCE"
+        },
+        {
+          "role_code": "COMPLIANCE_MANAGER",
+          "permission": "compliance.requirement.read",
+          "before": 0,
+          "after": 1,
+          "scope": "tenant",
+          "capability": "ISO_COMPLIANCE"
+        },
+        {
+          "role_code": "CISO_SECURITY_MANAGER",
+          "permission": "compliance.requirement.read",
+          "before": 0,
+          "after": 1,
+          "scope": "tenant",
+          "capability": "ISO_COMPLIANCE"
+        },
+        {
+          "role_code": "AI_GOVERNANCE_MANAGER",
+          "permission": "compliance.requirement.read",
+          "before": 0,
+          "after": 1,
+          "scope": "tenant",
+          "capability": "ISO_COMPLIANCE"
+        },
+        {
+          "role_code": "PRIVACY_MANAGER",
+          "permission": "compliance.requirement.read",
+          "before": 0,
+          "after": 1,
+          "scope": "tenant",
+          "capability": "ISO_COMPLIANCE"
+        },
+        {
+          "role_code": "LEGAL_REVIEWER",
+          "permission": "compliance.requirement.read",
+          "before": 0,
+          "after": 1,
+          "scope": "tenant",
+          "capability": "ISO_COMPLIANCE"
+        },
+        {
+          "role_code": "REGULATORY_CONTENT_STEWARD",
+          "permission": "compliance.requirement.read",
+          "before": 0,
+          "after": 1,
+          "scope": "tenant",
+          "capability": "ISO_COMPLIANCE"
+        }
+      ],
+      "source": "docs/executable-contracts/05_PERMISSION_CATALOG.md:59–60"
+    }
+  ],
+  "competent_human": "PO funciones acumuladas Security/Architecture/Compliance/Remediation; rector49",
+  "dependencies": [
+    "Exact later C16 approval",
+    "Technical local negative/replay/audit/tenant tests before publication activation",
+    "Real grant operation remains separately authorized"
+  ],
+  "not_authorized": [
+    "QA",
+    "Real IAM",
+    "Non-disposable DDL or grant DML",
+    "Deploy",
+    "none",
+    "SOGv2",
+    "STEP6A4",
+    "Git remote",
+    "Commit without overall PASS"
+  ],
+  "security_effect": "Remove one extra command grant;11 existing contractual reference readers; no Admin/custom escalation, no tenant context bypass"
+}

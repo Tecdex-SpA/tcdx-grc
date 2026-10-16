@@ -1,0 +1,101 @@
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.1 [39m[90m/app[39m
+
+ [32m✓[39m apps/backend/dist/core-grc/phase5-lifecycle.postgres.test.js [2m([22m[2m1 test[22m[2m)[22m[33m 2070[2mms[22m[39m
+   [32m✓[39m Phase 5 lifecycle PostgreSQL isolated integration [2m(1)[22m
+     [33m[2m✓[22m[39m persists RetentionPolicy, Storage, Evidence and ControlAssessmentSubmit with isolated actors[33m 2067[2mms[22m[39m
+{
+  "oidcUserIdentityBoundary": "PASS",
+  "firstPlatformAdminBootstrap": "PASS",
+  "bootstrapConcurrency": [
+    "fulfilled",
+    "rejected"
+  ],
+  "tenantBootstrap": "PASS",
+  "platformRbac": "PASS",
+  "subscriptionCreate": {
+    "subscription_id": "01a11804-8b56-7126-b977-90cf4731576f",
+    "tenant_id": "01a11804-8734-70ce-971d-dacaddf90813",
+    "plan_version_id": "01a0a783-6000-73d1-a52c-eaa706d6696a",
+    "subscription_code": "RT-01a11804",
+    "lifecycle_state": "active",
+    "starts_at": "2026-10-07T20:18:33.424Z",
+    "ends_at": null,
+    "cancelled_at": null
+  },
+  "subscriptionReplay": true,
+  "tenantCreateDefaults": {
+    "tenant_id": "01a11804-8734-70ce-971d-dacaddf90813",
+    "tenant_code": "RT-9113eb687cf5",
+    "legal_name": "Runtime Verification One",
+    "display_name": "Runtime One",
+    "default_timezone": "America/Santiago",
+    "lifecycle_state": "active",
+    "data_classification": "confidential"
+  },
+  "membershipCreateNoAutomaticRole": true,
+  "membershipRoleAssign": {
+    "membership_role_id": "01a11804-8c47-70be-bb44-82354ced8d6d",
+    "tenant_membership_id": "01a11804-8bf5-711e-876e-a3cb6fd66684",
+    "role_id": "01a11804-8476-71ec-b8fd-4d23ae285585",
+    "scope_kind": "tenant",
+    "organizational_unit_id": null,
+    "process_id": null,
+    "service_id": null,
+    "audit_id": null,
+    "valid_from": "2026-10-07T20:18:33.660Z",
+    "valid_to": null,
+    "etag": "a18389f753cac288760b8ba4fe2f802adac20513a75b43321e1386b0021bba59"
+  },
+  "accessMeOwnContexts": 2,
+  "tenantAuthorizationDefaultDeny": true,
+  "failures": []
+}
+ [32m✓[39m apps/backend/dist/security/runtime-security.postgres.test.js [2m([22m[2m1 test[22m[2m)[22m[33m 3065[2mms[22m[39m
+   [32m✓[39m Phase 5 runtime security PostgreSQL integration [2m(1)[22m
+     [33m[2m✓[22m[39m serializes bootstrap and enforces platform/tenant authorization[33m 3059[2mms[22m[39m
+ [32m✓[39m apps/backend/dist/security/tenant-onboarding.postgres.test.js [2m([22m[2m35 tests[22m[2m)[22m[33m 11555[2mms[22m[39m
+   [32m✓[39m D2 isolated PostgreSQL onboarding/privacy/transactions [2m(35)[22m
+     [33m[2m✓[22m[39m publishes exactly one physical Permission, approved template/tenant grants and no schema delta[33m 405[2mms[22m[39m
+     [33m[2m✓[22m[39m creates company,22 canonical roles and exactly one first Tenant Admin without subscription/actor authority[33m 918[2mms[22m[39m
+     [33m[2m✓[22m[39m replays exact completed intent with no duplicate rows/audit/outbox; altered payload conflicts[33m 824[2mms[22m[39m
+     [33m[2m✓[22m[39m serializes simultaneous same-intent attempts and keeps one company/admin[33m 821[2mms[22m[39m
+     [33m[2m✓[22m[39m rolls back bootstrap authority if parent completion audit fails, preserving only the child checkpoint[33m 1444[2mms[22m[39m
+     [33m[2m✓[22m[39m persists company/admin-pending checkpoint, rolls back late bootstrap failure and resumes only pending work[33m 1247[2mms[22m[39m
+     [33m[2m✓[22m[39m rejects a new key against the same business company without adopting its authority[33m 738[2mms[22m[39m
+     [33m[2m✓[22m[39m internal bootstrap cannot establish another target or reopen after first admin revocation[33m 980[2mms[22m[39m
+     [33m[2m✓[22m[39m binds public routes exactly, has no bootstrap route, uses no-store on success/error and authenticates[33m 1244[2mms[22m[39m
+ [32m✓[39m apps/backend/dist/regulatory/phase5-plus-validation.postgres.test.js [2m([22m[2m1 test[22m[2m)[22m[33m 883[2mms[22m[39m
+   [32m✓[39m Phase 5+ Subject and provisional validation in isolated PostgreSQL [2m(1)[22m
+     [33m[2m✓[22m[39m creates tenant Subjects and grants an exact provisional pack only to a classified non-production tenant[33m 873[2mms[22m[39m
+ [32m✓[39m apps/backend/dist/security/managed-identity.postgres.test.js [2m([22m[2m3 tests[22m[2m)[22m[33m 766[2mms[22m[39m
+   [32m✓[39m Managed Identity canonical mapping in isolated PostgreSQL [2m(3)[22m
+     [33m[2m✓[22m[39m completes the eight-operation local lifecycle with one-time disclosure, safe audit and no grants[33m 438[2mms[22m[39m
+ [32m✓[39m apps/backend/dist/security/membership-invitation.postgres.test.js [2m([22m[2m1 test[22m[2m)[22m[33m 1023[2mms[22m[39m
+   [32m✓[39m membership invitation PostgreSQL integration [2m(1)[22m
+     [33m[2m✓[22m[39m enforces one-time tenant enrollment, audit/outbox and accept/revoke concurrency[33m 1013[2mms[22m[39m
+ [32m✓[39m apps/backend/dist/security/tenant-user-onboarding.postgres.test.js [2m([22m[2m18 tests[22m[2m)[22m[33m 5835[2mms[22m[39m
+   [32m✓[39m Central onboarding isolated PostgreSQL security and partial progress [2m(18)[22m
+     [33m[2m✓[22m[39m publishes one Permission/PlatformAdmin grant with no DDL/schema delta[33m 447[2mms[22m[39m
+     [33m[2m✓[22m[39m reconciles duplicate Membership/assignment and same-key replay without duplicate evidence[33m 357[2mms[22m[39m
+     [33m[2m✓[22m[39m registered endpoint requires authentication and keeps generic assign tenant-only[33m 446[2mms[22m[39m
+ [32m✓[39m apps/backend/dist/security/role-assign-projection-scope.postgres.test.js [2m([22m[2m7 tests[22m[2m)[22m[33m 968[2mms[22m[39m
+ [32m✓[39m apps/backend/dist/security/platform-role-service.postgres.test.js [2m([22m[2m7 tests[22m[2m)[22m[33m 1183[2mms[22m[39m
+ [32m✓[39m apps/backend/dist/security/platform-role-read.postgres.test.js [2m([22m[2m1 test[22m[2m)[22m[33m 782[2mms[22m[39m
+   [32m✓[39m P2E isolated PostgreSQL target/canonical catalog projections [2m(1)[22m
+     [33m[2m✓[22m[39m proves lifecycle, server refresh, exact revoke ID, catalog eligibility, default DENY and zero read side effects[33m 779[2mms[22m[39m
+ [32m✓[39m apps/backend/dist/regulatory/validation-candidates.postgres.test.js [2m([22m[2m1 test[22m[2m)[22m[33m 351[2mms[22m[39m
+   [32m✓[39m validation candidate physical authority in isolated PostgreSQL [2m(1)[22m
+     [33m[2m✓[22m[39m requires every exact provenance chain predicate and never crosses into commercial assignment[33m 343[2mms[22m[39m
+ [32m✓[39m apps/backend/dist/regulatory/pack-temporal.postgres.test.js [2m([22m[2m1 test[22m[2m)[22m[32m 156[2mms[22m[39m
+ [32m✓[39m apps/backend/dist/security/membership-role-revoke.postgres.test.js [2m([22m[2m1 test[22m[2m)[22m[32m 113[2mms[22m[39m
+ [32m✓[39m apps/backend/dist/security/frontend-projections.postgres.test.js [2m([22m[2m1 test[22m[2m)[22m[32m 254[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m14 passed[39m[22m[90m (14)[39m
+[2m      Tests [22m [1m[32m79 passed[39m[22m[90m (79)[39m
+[2m   Start at [22m 20:18:23
+[2m   Duration [22m 53.11s[2m (tests 70%, import 18%, transform 11%, worker 1%)[22m
+
+[2m    Isolate [22m [33m14 workers spawned[39m[2m · ~779ms startup each (spawn + environment, per file)[22m
+[2m            [22m [2mat least ~10.13s faster with [22m[33misolate: false[39m[2m — reuses workers across files instead of one per file[22m
+

@@ -1,0 +1,13 @@
+$ vitest run --config vitest.config.ts
+
+ RUN  v5.0.1 /Users/andresbarouh/repos/tcdx-grc
+
+
+ Test Files  55 passed | 14 skipped (69)
+      Tests  485 passed | 79 skipped (564)
+   Start at  19:13:32
+   Duration  4.39s (import 62%, tests 20%, transform 17%, worker 1%)
+
+    Isolate  69 workers spawned · ~127ms startup each (spawn + environment, per file)
+             at least ~846ms faster with isolate: false — reuses workers across files instead of one per file
+

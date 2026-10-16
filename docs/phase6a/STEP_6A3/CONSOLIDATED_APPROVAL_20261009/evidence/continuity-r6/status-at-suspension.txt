@@ -1,0 +1,135 @@
+ M AGENTS.md
+ M apps/backend/src/app.ts
+ M apps/backend/src/core-grc/core-grc.test.ts
+ M apps/backend/src/core-grc/model.ts
+ M apps/backend/src/core-grc/phase5-final-closure.test.ts
+ M apps/backend/src/core-grc/phase5-lifecycle.postgres.test.ts
+ M apps/backend/src/core-grc/repository.ts
+ M apps/backend/src/core-grc/routes.ts
+ M apps/backend/src/core-grc/service.ts
+ M apps/backend/src/security/application-token.ts
+ M apps/backend/src/security/frontend-projections.postgres.test.ts
+ M apps/backend/src/security/frontend-projections.test.ts
+ M apps/backend/src/security/frontend-projections.ts
+ M apps/backend/src/security/permission-projection-catalog.generated.ts
+ M apps/backend/src/security/platform-iam-service.ts
+ M apps/backend/src/security/platform-role-service.postgres.test.ts
+ M apps/backend/src/security/role-assign-projection-scope.postgres.test.ts
+ M apps/backend/src/security/runtime-security.postgres.test.ts
+ M apps/backend/src/security/tenant-context.ts
+ M apps/backend/src/security/tenant-onboarding.postgres.test.ts
+ M apps/backend/src/security/tenant-user-onboarding.postgres.test.ts
+ M apps/backend/src/server.ts
+ M apps/frontend/src/api-client.test.ts
+ M apps/frontend/src/api-client.ts
+ M apps/frontend/src/core-grc.tsx
+ M apps/frontend/src/frontend-auth-projections.test.tsx
+ M apps/frontend/src/frontend-auth-projections.ts
+ M apps/frontend/src/i18n/display-text.ts
+ M apps/frontend/src/i18n/es.ts
+ M apps/frontend/src/styles.css
+ M apps/frontend/src/tenant-onboarding.test.tsx
+ M apps/frontend/src/tenant-onboarding.tsx
+ M database/expected-schema.json
+ M database/migrations/manifest.json
+ M database/seed-manifest.json
+ M docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml
+ M docs/executable-contracts/03_API_RESOURCE_OPERATION_MATRIX.md
+ M docs/executable-contracts/05_PERMISSION_CATALOG.md
+ M docs/executable-contracts/08_AUDIT_EVENT_CATALOG.md
+ M docs/executable-contracts/09_SEED_MANIFESTS.md
+ M docs/executable-contracts/11_MIGRATION_PLAN.md
+ M docs/executable-contracts/18_EXECUTABLE_CONTRACT_TRACEABILITY.md
+ M docs/executable-contracts/23_FRONTEND_AUTHENTICATION_AUTHORIZATION_PROJECTIONS.md
+ M docs/governance/CODEX_RECTOR_ENFORCEMENT.md
+ M docs/governance/MASTER_EXECUTION_STATUS.md
+ M docs/rector/BASELINE_ID
+ M docs/rector/RECTOR_MANIFEST.sha256
+ M docs/rector/baseline/00_README_KNOWLEDGE_BASE.md
+ M docs/rector/baseline/22_RBAC_PERMISSION_SCOPE_MATRIX.md
+ M docs/rector/baseline/43_PLAN_MAESTRO_RECTOR_DISENO_Y_DESARROLLO.md
+ M docs/rector/baseline/45_CONTRATO_DESARROLLO_CERRADO_Y_NO_INFERENCIA.md
+ M docs/rector/baseline/46_REGENTE_MAESTRO_DEL_DESARROLLO.md
+ M docs/rector/baseline/47_APROBACION_Y_ACTIVACION_BASELINE.md
+ M docs/rector/baseline/SHA256SUMS.txt
+ M e2e/core-grc-ui.spec.ts
+ M e2e/managed-identity-tenant-access.spec.ts
+ M e2e/managed-identity-ui.spec.ts
+ M e2e/platform-role-ui.spec.ts
+ M e2e/tenant-onboarding-ui.spec.ts
+ M packages/contracts/src/frontend-auth-projections.ts
+ M packages/contracts/src/index.ts
+ M packages/contracts/src/mi7a-frontend-projections.test.ts
+ M packages/contracts/src/platform-role-read-contract.test.ts
+ M packages/contracts/src/pre-f5b-executable-contracts.test.ts
+ M packages/contracts/src/pre-f5e-platform-iam-token-contracts.test.ts
+ M packages/contracts/src/role-assign-projection-scope.test.ts
+ M packages/contracts/src/tenant-onboarding-d2.test.ts
+ M scripts/foundations/generate-contract-assets.mjs
+ M scripts/foundations/permission-projection-catalog.mjs
+ M scripts/foundations/verify-schema.ts
+ M scripts/foundations/verify-seeds.ts
+ M scripts/foundations/verify-tenant-isolation.ts
+ M scripts/test-rector-governance-status.sh
+ M scripts/verify-rector-governance.sh
+?? apps/backend/src/configuration/effective-read.postgres.test.ts
+?? apps/backend/src/configuration/effective-read.test.ts
+?? apps/backend/src/configuration/effective-read.ts
+?? apps/backend/src/core-grc/phase6a-configuration-integrity.test.ts
+?? apps/backend/src/core-grc/phase6a-configuration-reference-integrity.test.ts
+?? apps/backend/src/core-grc/phase6a-methodology-boundaries.test.ts
+?? apps/backend/src/core-grc/reference-reads.postgres.test.ts
+?? apps/backend/src/core-grc/reference-reads.test.ts
+?? apps/backend/src/core-grc/reference-reads.ts
+?? apps/backend/src/core-grc/vocabulary-provenance.test.ts
+?? apps/backend/src/core-grc/vocabulary-provenance.ts
+?? apps/backend/src/security/rbac-resolution-r3.postgres.test.ts
+?? apps/backend/src/security/reference-publication.ts
+?? apps/backend/src/security/tenant-context.test.ts
+?? apps/backend/src/security/testing/
+?? apps/frontend/src/reference-read.test.ts
+?? apps/frontend/src/reference-read.ts
+?? apps/frontend/src/reference-selectors.test.tsx
+?? apps/frontend/src/reference-selectors.tsx
+?? apps/frontend/src/structured-reference-fields.tsx
+?? apps/frontend/src/tenant-timezone.test.tsx
+?? apps/frontend/src/tenant-timezone.tsx
+?? artifacts/phase5-iam-ui/local-playwright/phase6a3-selector-chromium-desktop.png
+?? artifacts/phase5-iam-ui/step23l-managed-identity-tenant-onboarding-e2e/snapshot.mjs
+?? data/regulatory/catalogs/_archives/
+?? database/migrations/20261009000100_phase6a3_configuration_integrity.sql
+?? database/migrations/20261009000200_phase6a3_reference_read_permissions.sql
+?? docs/executable-contracts/28_EFFECTIVE_CONFIGURATION_DETAIL_READ.md
+?? docs/executable-contracts/29_PHASE6A3_RBAC_MANIFEST.json
+?? docs/executable-contracts/29_PHASE6A3_REFERENCE_READS.md
+?? docs/executable-contracts/30_PHASE6A3_VOCABULARIES.md
+?? docs/executable-contracts/30_PHASE6A3_VOCABULARIES_MANIFEST.json
+?? docs/executable-contracts/31_PHASE6A3_PUBLICATION_METADATA.json
+?? docs/executable-contracts/31_PHASE6A3_RESIDUAL_DELTAS_R2.md
+?? docs/executable-contracts/31_VOCABULARY_PROVENANCE_SCHEMA.json
+?? docs/executable-contracts/32_PHASE6A3_RBAC_RESOLUTION_R3.md
+?? docs/executable-contracts/32_PHASE6A3_RBAC_RESOLUTION_R3_METADATA.json
+?? docs/executable-contracts/33_PHASE6A3_TENANT_TIMEZONE_PROJECTION.md
+?? docs/governance/amendments/
+?? docs/normative-sources/
+?? docs/phase6a/
+?? docs/rector/ACTIVE_ACTIVATION.json
+?? docs/rector/baseline/49_GOBIERNO_INTERNO_Y_REVISION_UNIPERSONAL.md
+?? docs/rector/candidates/TCDX_GRC_MASTER_REGENT_BASELINE_v1.8_2026-10-09/
+?? docs/rector/history/TCDX_GRC_MASTER_REGENT_BASELINE_v1.7_2026-09-23/
+?? packages/contracts/src/iana-timezone.ts
+?? packages/contracts/src/phase6a-reference-resolution.test.ts
+?? packages/contracts/src/phase6a-vocabularies.ts
+?? packages/contracts/src/phase6a3-iana-contract.test.ts
+?? packages/contracts/src/phase6a3-provenance-contract.test.ts
+?? packages/contracts/src/phase6a3-publication.test.ts
+?? packages/contracts/src/testing/
+?? scripts/foundations/generate-phase6a-vocabularies.mjs
+?? scripts/foundations/phase6a3-amendment.mjs
+?? scripts/foundations/test-phase6a3-rbac-publication.mjs
+?? scripts/foundations/test-phase6a3-rbac-resolution-r3.mjs
+?? scripts/foundations/test-phase6a3-uq-disposable.mjs
+?? scripts/foundations/verify-phase6a3-local-candidates.mjs
+?? scripts/foundations/verify-phase6a3-residuals.py
+?? scripts/verify-internal-governance.py
+?? scripts/verify-phase6a3-current.py

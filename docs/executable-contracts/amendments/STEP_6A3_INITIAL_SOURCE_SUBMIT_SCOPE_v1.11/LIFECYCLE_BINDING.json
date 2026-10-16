@@ -1,0 +1,31 @@
+{
+  "entity_type": "EvidenceVersion",
+  "from_state": "draft",
+  "command_code": "evidence.submit",
+  "to_state": "submitted",
+  "sod_policy_ref": "contract:default-deny-sod:v1",
+  "audit_event_code": "audit.evidence.evidence.submit.v1",
+  "notification_policy_ref": "NONE_CONTRACTUALLY_REQUIRED",
+  "recalculation_policy_ref": "NONE_CONTRACTUALLY_REQUIRED",
+  "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+  "concurrency_semantics": "ROW_VERSION_COMPARE_AND_SWAP",
+  "system_actor_allowed": false,
+  "permission_code": "evidence.evidence.submit",
+  "side_effects": [
+    {
+      "event_code": "evidence.evidence.submitted.v1",
+      "ordinal": 1,
+      "is_required": true
+    }
+  ],
+  "version_number": 2,
+  "predecessor_version_number": 1,
+  "precondition_policy_ref": "contract:initial-retention-source-submit:v1.11",
+  "allowed_scopes": [
+    "assigned_object",
+    "owned_object",
+    "tenant"
+  ],
+  "tenant_scope_policy": "OWN_INITIAL_SOURCE_ONLY; full v1.11 custody guard, no EvidenceLinks, exact author, no ordinary consumption. Replay reauthorizes.",
+  "existing_scope_policy": "Preserve ordinary owned_object/assigned_object authorization and ObjectPolicy; no broadened tenant-only ordinary submit."
+}
