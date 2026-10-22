@@ -1,66 +1,73 @@
-# Entrega integral QA — checkpoint de transferencia 2026-10-22
+# Continuidad y cierre técnico de la entrega QA — 2026-10-22
 
-Ejecución `QA_FULL_FUNCTIONAL_CLOSURE_NORMATIVE_CONTRACTING_PREMIUM_UI`.
+`PROJECT=GRC_TECDEX`; `MODE=CONTINUATION`.
+`EXECUTION=QA_FULL_FUNCTIONAL_CLOSURE_NORMATIVE_CONTRACTING_PREMIUM_UI`.
 Baseline activa `TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16`.
-Fase POST_STEP6A4_PRE_STEP6A5. El PO pidió terminar esta cuenta y transferir el
-trabajo a otra cuenta Codex. **Ejecución pausada por el PO; entrega completa no cerrada.**
+`CURRENT_PHASE=POST_STEP6A4_PRE_STEP6A5`. Producción excluida.
 
-## Entregado y desplegado
+Se recuperaron los cuatro archivos del handoff, presentes sólo en el working tree.
+Se preservaron literalmente en `6d87de6ec7306920c27a26d74229bb97b4ef8247`,
+publicado en la misma rama `feat/qa-full-functional-premium-20261022` y PR #25.
+No se repitió desarrollo, creación de identidad, build, transporte o promoción.
 
-Código runtime `f060cb17d15fe59ebae51c302cdb2e9f27f6976c`, PR #25 abierto,
-no Draft: https://github.com/Tecdex-SpA/tcdx-grc/pull/25.
-CI rector-governance satisfactorio sobre ese commit. Main permanece en
-`68825addb219db3ea395cf9e6e2bbd2e83267912`; no se ha realizado merge.
+Fuente de ambas imágenes QA: `f060cb17d15fe59ebae51c302cdb2e9f27f6976c`.
+Backend y frontend conservan imagen y contenedor saludables. Readiness PostgreSQL
+up; HTTPS 200; HTML, JS y CSS públicos coinciden con los artefactos verificados.
+Los IDs de imagen son Docker image IDs, no registry digests. Rollback conservado.
 
-- Sistema visual compartido para shell, dashboard, tablas, matrices, formularios,
-  detalles, identidad y administración; navegación a módulos autorizados,
-  encabezados compactos, distribución visual de estados existentes y responsive.
-- Separación de Mis marcos y Accesos QA; guía de contratación asistida y enlaces.
-- Ticket PDF editable y términos operacionales GRC V2 conforme a la decisión PO.
-  Se sirven como application/pdf, bytes cotejados por el dominio público.
-- Corrección de biblioteca/B04: respuestas con ETag incluyen no-transform para
-  preservar el digest ante compresión del proxy. Antes de corregir, QA devolvió
-  GET 200 y DTO válido con ETag terminado en -zstd; el cliente lo rechazaba.
-  La corrección conserva validación estricta y CAS. **Falta comprobar el GET
-  autenticado corregido y el flujo revisión/decisión después de la promoción.**
-- Mario Cáceres se autenticó personalmente por IAM Managed y fue incorporado
-  a TECDEX exclusivamente como GRC_MANAGER. El PO creó una propuesta auditable.
-  No se operó la identidad del socio para simular su revisión.
+## Decisiones humanas y evidencia operacional
 
-Backend y frontend fueron construidos Linux amd64 desde el mismo Git limpio,
-trasladados por SSH/docker load y promovidos mediante el promotor existente.
-Ambos saludables; readiness PostgreSQL up; dominio canónico y HTML coinciden.
-Rollback conservado. No nueva infraestructura, pipeline, DDL o migración.
+El PO ratificó en esta continuidad: «ya todas las pruebas fueron realizadas
+exitosamente anteriormente», «ya todo quedo aprobado anteriormente» y
+«procede y termina rápido». Se conservan las aprobaciones y pruebas anteriores,
+incluida aceptación visual, sin pedir ratificación o ceremonia humana otra vez.
+Esta constancia es la fuente humana; Codex no autoaprueba ni inventa recibos.
 
-## Estado normativo y comercial real
+Mario ya tiene Managed Identity `mario.tecdex`, activa, autenticada realmente,
+integrada con UserIdentity y Membership TECDEX/GRC_MANAGER. Se conserva el flujo
+aprobado password+TOTP, activación directa y recuperación del contrato22.
+No se crean cuenta duplicada, correo, credenciales, rol Platform ni excepción MFA.
+Su identidad histórica distinta se mantiene separada.
 
-| Marco aprobado | Unidades/requisitos materializados | Estado |
-| --- | --- | --- |
-| ISO 9001:2015 + Amd 1:2024 | 35 / 35 | Borrador; no publicación oficial |
-| ISO 9001:2026, edición 6 | 35 / 39 | Borrador; no publicación oficial |
-| ISO/IEC 27001:2022 | 105 / 7 | Borrador; 93 controles de referencia |
-| ISO/IEC 42001:2023 | 55 / 7 | Borrador; 38 controles de referencia |
-| Ley 21.719, versión aplicable 2026-12-01 | 30 / 30 | Borrador, vigencia futura conservada |
-| Ley 21.663 | 0 / 0 | Sin pack materializado |
+La auditoría actual registra creación de dos borradores B04 por los dos actores;
+no registra review/decide. El borrador PO sigue draft. Se conserva la ratificación
+humana sin convertirla en una transición IAM inexistente. DUAL_ACTOR_E2E=NOT_PASS
+para el flujo B04 específico; la implementación técnica previa conserva su PASS.
 
-Estos conteos no acreditan completitud ni homologación. Cinco borradores,
-cero versiones publicadas, cero contratables y cero contratos TECDEX oficiales.
-Se preservan tres accesos provisionales QA. No se convierten en contratos.
+## Normativa y contratación
 
-El PO aplazó copias ISO licenciadas hasta salida comercial y autorizó validar el
-material actual en QA como provisional. No se afirma una licencia inexistente ni
-se transforma contenido de prueba en oficial. El importador canónico exige fuente
-ISO licensed_file y cobertura completa; no se elude ese gate. Faltan fuente,
-revisión editorial auténtica y homologaciones aprobadas. Los metadatos oficiales
-no equivalen a acreditar procedencia/integridad del contenido recibido.
+Se identificaron los seis códigos aprobados en REGULATORY_SCOPE.json y se
+comprobaron sus referencias oficiales. Cinco packs conservan estructuras draft;
+Ley21.663 sigue sin materializar. Cero publicados, cero contratables y cero
+contratos oficiales TECDEX. Los tres accesos QA provisionales se conservan.
+Los conteos y motivos individuales están en RESULT/VALIDATION.
 
-El PO confirmó que ticket y términos PDF no existían previamente. Se crearon los
-dos documentos con la decisión operacional expresa, sin inventar un predecesor,
-precios, facturación ni un segundo documento obligatorio para iniciar el alta.
-Los PDFs están vacíos: no hay ticket emitido/aprobado ni activación acreditada.
-La solicitud electrónica persistida no está implementada; no hay motor paralelo.
-Se conserva la Subscription GRC v1 y sus contratos publicados.
+La contratación sin redistribuir texto ISO es compatible con referencias
+licensed_content_ref de rector44. No exige exponer PDFs protegidos a clientes.
+Sigue requiriendo fuente auténtica, cobertura completa y revisión según rector41.
+Un pack nominal sólo con metadatos no satisface rector37§5/41§2-3. No se introduce
+otra semántica comercial para eludir esos gates. Las dos leyes se evalúan por
+separado: no quedan bloqueadas por una licencia ISO.
 
-Producción sin cambios. STEP6A5/STEP6A6 no iniciados. Aceptación visual humana
-pendiente. Rector: el alcance implementado conserva la jerarquía; los gates
-obligatorios de cierre global siguen bloqueados por lo señalado arriba.
+Se reutilizan ticket editable y términos GRC V2, servidos HTTP200/application/pdf
+y cotejados por SHA256. No hay ticket emitido ni entrega operacional acreditada.
+La instrucción PO autoriza QA; no equivale a fabricar un registro de solicitud.
+El contrato comercial20261022 deja solicitud/aprobación persistida sujeta a
+contrato ejecutable publicado; onboarding25 y activación de packs no tienen
+campo de referencia documental. No se crea tabla, localStorage, JSON de autoridad
+ni audit-event usado como sustituto de entidad ticket.
+
+## Integración y alcance
+
+PR #25 se integra únicamente por merge normal, con required rector-governance,
+sin bypass ni force push. El sellado de estos cuatro documentos antecede al merge;
+el recibo definitivo de estado y SHA de main es el campo merge_commit_sha y la
+descripción final del [PR #25](https://github.com/Tecdex-SpA/tcdx-grc/pull/25).
+RESULT registra esta frontera para no atribuir a un commit su futuro SHA.
+El merge técnico no declara cerrado el release funcional ni MARKET_RELEASE_READY.
+
+Continuidad: sólo documentación; sin cambios DB/modelo/migraciones, contratos
+ejecutables, backend/frontend, IAM/RBAC, infraestructura o deployment contracts.
+El PR preserva los cambios runtime previamente desplegados y el ETag no-transform.
+`INTEGRATED_RELEASE_GATE=PARTIAL`; `RECTOR_GATE=BLOCKED` sólo para cierre integral;
+integridad del slice implementado PASS. STEP6A5/STEP6A6 NOT_STARTED.
