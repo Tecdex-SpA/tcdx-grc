@@ -32,3 +32,18 @@
   .matrix-card tbody th { min-width: 148px; max-width: 210px; }
   .matrix-card thead th, .matrix-card tbody td { min-width: 148px; max-width: 230px; }
 }
+
+/* Shared executive SaaS polish using the approved visual vocabulary. */
+.workspace { max-width: 1680px; }
+.page-heading h1 { font-weight: 700; text-wrap: balance; }
+.page-heading p { max-width: 76ch; line-height: 1.55; }
+.data-card header { padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.kpi-card > strong, .distribution-legend strong { font-variant-numeric: tabular-nums; }
+.chart-frame :is(svg, canvas) { max-width: 100%; }
+.chart-frame svg text { font-family: inherit; }
+.distribution-ring > div { box-shadow: inset 0 0 0 1px var(--line); }
+.distribution-legend > div { border: 1px solid var(--line); }
+.table-scroll { scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+.matrix-card :is(a, button):focus-visible { outline: 3px solid var(--secondary); outline-offset: -2px; }
+.matrix-card tbody tr:focus-within > :is(th, td) { background: color-mix(in srgb, var(--secondary) 7%, var(--surface)); }
+@media (max-width: 760px) { .page-heading { align-items: flex-start; } }
