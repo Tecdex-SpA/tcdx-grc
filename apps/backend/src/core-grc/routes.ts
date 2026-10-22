@@ -245,8 +245,9 @@ export function registerCoreGrcRoutes(app: FastifyInstance, dependencies: CoreGr
     const actor = await resolvePlatformActor(dependencies.database,
       await resolveAuthenticatedIdentity(dependencies.identityVerifier, request));
     requirePlatformAccess(actor, "platform.subscription_regulatory_pack.create", actor.roles.includes("PLATFORM_ADMIN"));
-    const versions = await sql<{ regulatory_pack_version_id: string; pack_code: string; name: string; edition: string; license_classification: string }>`
-      SELECT pv.regulatory_pack_version_id,p.pack_code,p.name,pv.edition,pv.license_classification
+    const versions = await sql<{ regulatory_pack_version_id: string; pack_code: string; name: string; edition: string; license_classification: string; version_number: string; effective_from: Date | null; effective_to: Date | null }>`
+      SELECT pv.regulatory_pack_version_id,p.pack_code,p.name,pv.edition,pv.license_classification,
+             pv.version_number,pv.effective_from,pv.effective_to
         FROM regulatory.regulatory_pack_versions pv
         JOIN regulatory.regulatory_packs p ON p.regulatory_pack_id=pv.regulatory_pack_id
        WHERE pv.lifecycle_state='published' AND p.lifecycle_state='published'
@@ -254,7 +255,9 @@ export function registerCoreGrcRoutes(app: FastifyInstance, dependencies: CoreGr
          AND (pv.effective_to IS NULL OR pv.effective_to>transaction_timestamp())
        ORDER BY p.name,pv.edition,pv.regulatory_pack_version_id
     `.execute(dependencies.database);
-    return { items: versions.rows, page: { has_more: false, next_cursor: null } };
+    return { items: versions.rows.map(row => ({ ...row, version_number: String(row.version_number),
+      effective_from: row.effective_from?.toISOString() ?? null, effective_to: row.effective_to?.toISOString() ?? null })),
+      page: { has_more: false, next_cursor: null } };
   });
   const packReadAuthority = async (request: FastifyRequest) => {
     if (request.headers["x-tcdx-tenant-id"] !== undefined) {

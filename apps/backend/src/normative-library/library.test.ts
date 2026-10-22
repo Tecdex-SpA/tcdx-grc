@@ -7,7 +7,7 @@ import { contextualAuditProfile, historicalContext, type ContextFacts, type Appl
 import { assertControlDefinition, resolveControlAdjustment, assertOverrideSoD, type ControlDefinition, type ControlOverride } from '../configuration/control-adjustments.js';
 import { lifecycleRegistryConflicts, assertRepresentableLifecycleCommand, selectLibraryTransition } from './lifecycle.js';
 import { authorizeMatrix, parseMatrixQuery, projectMatrixPage, type CursorPort } from './matrices.js';
-import { matrixSourceQuery } from './matrix-source.js';
+import { matrixSourceQuery, loadMatrixPopulation } from './matrix-source.js';
 const id=(n:number)=>'018f47f2-6170-7000-8000-'+n.toString(16).padStart(12,'0');
 const tenant=id(1),user=id(2),subject=id(3),now='2026-10-20T12:00:00Z';
 function actor(permissions:string[],roles=['GRC_MANAGER']):CoreActor{return {tenantId:tenant,membershipId:id(4),userIdentityId:user,permissions:new Set(permissions),permissionScopes:new Map(permissions.map(p=>[p,new Set(['tenant' as const])])),scopes:new Set(['tenant']),capabilityGroups:new Set(['CORE_PLATFORM','ISO_COMPLIANCE','CONTROLS_ASSURANCE','EVIDENCE_DOCUMENTS','ISSUES_ACTIONS']),roles};}
@@ -51,6 +51,24 @@ const authority={async axis(){return true;},async relation(){return true;},async
 describe('B08 typed source queries, authorization and cursor windows',()=>{
  for(const d of NORMATIVE_LIBRARY.matrices.types)it(`${d.matrix_type}: typed filters and all required permissions`,()=>{const type=d.matrix_type as MatrixType;const raw=Object.fromEntries(d.required_filters.map(f=>[f,f==='as_of'?now:id(50)]));const q=parseMatrixQuery(type,raw,[]);expect(()=>authorizeMatrix(matrixActor(type),type)).not.toThrow();expect(()=>authorizeMatrix(actor(['reporting.matrix.read']),type)).toThrow();expect(()=>parseMatrixQuery(type,{...raw,sql:'drop'},[])).toThrow();const sql=matrixSourceQuery(matrixActor(type),q);expect(sql.parameters).toContain(tenant);expect(sql.sql).toContain('$1::uuid');});
  it('parameterizes search text instead of interpreting it as SQL',()=>{const q=parseMatrixQuery('issues_actions',{as_of:now,query:"' OR true --"},[]);const statement=matrixSourceQuery(matrixActor('issues_actions'),q);expect(statement.sql).not.toContain("' OR true --");expect(statement.parameters).toContain("%' OR true --%");});
+ it.each(['requirements_controls','controls_evidence'] as const)('%s distinguishes version one of different canonical parents',async type=>{
+  const row=type==='requirements_controls'?{requirement_id:id(60),requirement_code:'REQ-QA'}:{control_id:id(60),control_code:'CTRL-QA'};
+  const idField=type==='requirements_controls'?'control_version_id':'evidence_version_id';
+  const relationField=type==='requirements_controls'?'requirement_control_mapping_id':'evidence_link_id';
+  const records=['PARENT-A','PARENT-B'].map((code,index)=>({row_data:row,
+   column_data:{[idField]:id(61+index),version_number:'1',matrix_parent_code:code},
+   relation_data:{[relationField]:id(70+index),effective_from:now},read_at:new Date(now)}));
+  const tx={async executeQuery(){return {rows:records};}};
+  const query=parseMatrixQuery(type,{as_of:now,...(type==='requirements_controls'?{source_framework_version_id:id(80)}:{})},[]);
+  const result=await loadMatrixPopulation(tx as never,matrixActor(type),query);
+  expect(result.columns.map(column=>column.label)).toEqual(['PARENT-A · v1','PARENT-B · v1']);
+  expect(result.columns.map(column=>column.code)).toEqual(['PARENT-A','PARENT-B']);
+  expect(result.columns.map(column=>column.ref)).toEqual([{[idField]:id(61)},{[idField]:id(62)}]);
+  const searched=matrixSourceQuery(matrixActor(type),parseMatrixQuery(type,{...query.filters,query:"' OR true --"},[]));
+  expect(searched.sql).not.toContain("' OR true --");
+  expect(searched.parameters).toContain("%' OR true --%");
+  expect(searched.sql).toContain('parent.tenant_id');
+ });
  it('rejects unsupported lifecycle, periods and limits',()=>{for(const extra of [{lifecycle_state:'invented'},{row_limit:201},{as_of:'2026-02-30T12:00:00Z'}])expect(()=>parseMatrixQuery('issues_actions',{as_of:now,...extra},[])).toThrow();expect(()=>parseMatrixQuery('requirements_assessments',{as_of:now,source_framework_version_id:id(1),period_start:now},[])).toThrow();});
  it('filters invisible axes/cells before fingerprint or paging',async()=>{const a=matrixActor('issues_actions'),q=parseMatrixQuery('issues_actions',{as_of:now},[]),hidden=axis(99);const clean=await projectMatrixPage(a,q,{rows:[rowAxis],columns:[colAxis],cells:[cell],readAt:now},authority,signer);const protectedPage=await projectMatrixPage(a,q,{rows:[rowAxis,hidden],columns:[colAxis],cells:[cell,{...cell,row_ref:hidden.ref}],readAt:now},{...authority,async axis(ref){return !Object.values(ref).includes(id(99));}},signer);expect(protectedPage).toEqual(clean);});
  it('binds cell continuation to exact axes and rejects visible drift or another tenant',async()=>{const a=matrixActor('issues_actions'),q=parseMatrixQuery('issues_actions',{as_of:now,cell_limit:1},[]),data={rows:[rowAxis],columns:[colAxis],cells:[cell,{...cell,relation_ref:{action_id:id(42)}}],readAt:now};const first=await projectMatrixPage(a,q,data,authority,signer);expect(first.next_cell_cursor).not.toBeNull();const next={...q,cursors:{cell:first.next_cell_cursor!}};const second=await projectMatrixPage(a,next,data,authority,signer);expect(second.cells).toHaveLength(1);expect(second.cells).not.toEqual(first.cells);await expect(projectMatrixPage({...a,tenantId:id(99)},next,data,authority,signer)).rejects.toThrow();await expect(projectMatrixPage(a,next,{...data,rows:[{...rowAxis,label:'Changed'}]},authority,signer)).rejects.toThrow();});

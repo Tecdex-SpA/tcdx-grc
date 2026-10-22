@@ -894,6 +894,10 @@ function ContractedPacks({ api, subscriptionId, platform, canActivate = false, c
   const [versionId, setVersionId] = useState("");
   const [effectiveFrom, setEffectiveFrom] = useState("");
   const [feedback, setFeedback] = useState("");
+  const [confirming, setConfirming] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const activationLock = useRef(false);
+  const activationIntent = useRef<{ fingerprint: string; key: string } | undefined>(undefined);
   const [nonce, setNonce] = useState(0);
   const path = platform && subscriptionId ? `/api/v1/subscriptions/${encodeURIComponent(subscriptionId)}/regulatory-packs`
     : "/api/v1/subscriptions/current/regulatory-packs";
@@ -907,17 +911,29 @@ function ContractedPacks({ api, subscriptionId, platform, canActivate = false, c
     return () => controller.abort();
   }, [api, path, platform, subscriptionId, canActivate, nonce]);
   const activate = async () => {
+    if (activationLock.current || !confirming) return;
     if (!versionId || !effectiveFrom || !subscriptionId) { setFeedback("Selecciona una versión y fecha de inicio."); return; }
+    const instant = explicitUtcInstant(effectiveFrom);
+    if (!instant) { setFeedback(uiText.temporal.invalidInstant); return; }
+    const fingerprint = JSON.stringify([subscriptionId, versionId, instant]);
+    if (activationIntent.current?.fingerprint !== fingerprint) activationIntent.current = { fingerprint, key: crypto.randomUUID() };
+    activationLock.current = true; setBusy(true); setFeedback("");
     try {
-      const instant = explicitUtcInstant(effectiveFrom);
-      if (!instant) { setFeedback(uiText.temporal.invalidInstant); return; }
-      await api.platformPost(path, { regulatory_pack_version_id: versionId, effective_from: instant });
-      setFeedback("Marco activado."); setNonce((value) => value + 1);
+      const response = await api.platformPost<{ operation_id: string; status: string; result: Row }>(path,
+        { regulatory_pack_version_id: versionId, effective_from: instant }, activationIntent.current.key);
+      if (response.operation_id !== "subscriptionRegulatoryPackActivate" || response.status !== "completed"
+        || response.result?.subscription_id !== subscriptionId || response.result.regulatory_pack_version_id !== versionId
+        || typeof response.result.subscription_regulatory_pack_id !== "string") throw new Error("INVALID_PACK_ACTIVATION_RESPONSE");
+      setFeedback("Marco contratado y auditado."); setConfirming(false); setVersionId(""); setEffectiveFrom("");
+      activationIntent.current = undefined; setNonce((value) => value + 1);
     } catch (error) {
       const status = error instanceof ApiProblem ? error.status : 0;
-      setFeedback(status === 403 ? "No tienes autorización para activar este marco." : status === 404 ? "La suscripción o versión del marco ya no está disponible." : status === 409 ? "El marco ya está contratado o la vigencia entra en conflicto." : "No fue posible activar el marco.");
-    }
+      setFeedback(status === 403 ? "No tienes autorización para contratar este marco." : status === 404 ? "La suscripción o versión del marco ya no está disponible. Actualiza el catálogo." : status === 409 ? "El marco ya está contratado o la vigencia entra en conflicto. Consulta los marcos contratados." : status === 422 ? "La versión no cumple las condiciones de contratación de la suscripción." : "No fue posible confirmar la contratación. Puedes reintentar la misma solicitud sin duplicarla.");
+    } finally { activationLock.current = false; setBusy(false); }
   };
+  const selectedVersion = versions.find(version => version.regulatory_pack_version_id === versionId);
+  const alreadyContracted = items.some(item => item.regulatory_pack_version_id === versionId && item.lifecycle_state === "active" && ["effective", "future"].includes(String(item.effective_state)));
+  const changeIntent = () => { setConfirming(false); setFeedback(""); activationIntent.current = undefined; };
   const loadMore = async () => {
     if (!page.next_cursor) return;
     const target = `${path}?page%5Bcursor%5D=${encodeURIComponent(page.next_cursor)}`;
@@ -938,9 +954,31 @@ function ContractedPacks({ api, subscriptionId, platform, canActivate = false, c
   };
   return <DataCard title="Marcos contratados" className="admin-section">
     {feedback && <p className="inline-feedback" role="status">{feedback}</p>}
-    {items.length === 0 ? <p>Sin marcos contratados.</p> : <div className="table-scroll"><table><thead><tr><th>Pack</th><th>Edición</th><th>Licencia</th><th>Contrato</th><th>Vigencia</th><th>Desde</th><th>Hasta</th>{platform && <th>Acción</th>}</tr></thead><tbody>{items.map((item) => <tr key={String(item.subscription_regulatory_pack_id)}><td><strong>{String(item.name)}</strong><small className="admin-secondary">{String(item.pack_code)}</small></td><td>{String(item.edition)}</td><td>{displayValue(item.license_classification)}</td><td><StatusBadge value={item.lifecycle_state}/></td><td><StatusBadge value={item.effective_state}/></td><td>{adminDate(item.effective_from)}</td><td>{item.effective_to ? adminDate(item.effective_to) : "—"}</td>{platform && <td>{canRevoke && item.effective_state === "effective" && <button className="link-button" onClick={() => void revoke(item)}>Revocar</button>}</td>}</tr>)}</tbody></table></div>}
+    {items.length === 0 ? <p>Sin marcos contratados.</p> : <div className="table-scroll"><table><thead><tr><th>Pack</th><th>Edición</th><th>Versión</th><th>Licencia</th><th>Contrato</th><th>Vigencia</th><th>Desde</th><th>Hasta</th>{platform && <th>Acción</th>}</tr></thead><tbody>{items.map((item) => <tr key={String(item.subscription_regulatory_pack_id)}><td><strong>{String(item.name)}</strong><small className="admin-secondary">{String(item.pack_code)}</small></td><td>{String(item.edition)}</td><td>{displayValue(item.version_number)}</td><td>{displayValue(item.license_classification)}</td><td><StatusBadge value={item.lifecycle_state}/></td><td><StatusBadge value={item.effective_state}/></td><td>{adminDate(item.effective_from)}</td><td>{item.effective_to ? adminDate(item.effective_to) : "—"}</td>{platform && <td>{canRevoke && item.effective_state === "effective" && <button className="link-button" onClick={() => void revoke(item)}>Revocar</button>}</td>}</tr>)}</tbody></table></div>}
     {page.has_more && <button className="button secondary" onClick={() => void loadMore()}>{uiText.actions.loadMore}</button>}
-    {platform && subscriptionId && canActivate && (catalogState === "loading" ? <LoadingState/> : catalogState === "denied" ? <StatePanel kind="permission-denied" detail="No tienes acceso al catálogo de marcos publicables."/> : catalogState === "error" ? <StatePanel kind="error" detail="No fue posible consultar los marcos publicables."/> : versions.length === 0 ? <StatePanel kind="empty" detail="No hay versiones de marco publicadas y vigentes para contratar. Solicita la publicación oficial del catálogo."/> : <form className="admin-form" onSubmit={(event) => { event.preventDefault(); void activate(); }}><label><span>Versión del marco</span><select value={versionId} onChange={(event) => setVersionId(event.target.value)}><option value="">Selecciona una versión publicada</option>{versions.map((version) => <option key={String(version.regulatory_pack_version_id)} value={String(version.regulatory_pack_version_id)}>{String(version.name)} · {String(version.edition)}</option>)}</select></label><label><span>Vigente desde</span><input type="text" placeholder="AAAA-MM-DDTHH:mm:ssZ" value={effectiveFrom} onChange={(event) => setEffectiveFrom(event.target.value)}/></label><button className="button primary" type="submit">Activar marco</button></form>)}
+    {platform && subscriptionId && canActivate && <section aria-labelledby="pack-catalog-title">
+      <h3 id="pack-catalog-title">Catálogo de marcos</h3>
+      {catalogState === "loading" ? <LoadingState/> : catalogState === "denied" ? <StatePanel kind="permission-denied" detail="No tienes acceso al catálogo de marcos publicables."/> : catalogState === "error" ? <StatePanel kind="error" detail="No fue posible consultar los marcos publicables." retry={() => setNonce(value => value + 1)}/> : versions.length === 0 ? <StatePanel kind="empty" detail="No hay versiones de marco publicadas y vigentes para contratar. Los accesos de validación QA se administran por separado y no constituyen contratación oficial."/> : <form className="admin-form" onSubmit={event => {
+        event.preventDefault();
+        if (busy || alreadyContracted) return;
+        if (!explicitUtcInstant(effectiveFrom)) { setFeedback(uiText.temporal.invalidInstant); return; }
+        setConfirming(true); setFeedback("");
+      }}>
+        <label><span>Versión del marco</span><select required disabled={busy} value={versionId} onChange={event => { setVersionId(event.target.value); changeIntent(); }}><option value="">Selecciona una versión publicada</option>{versions.map(version => <option key={String(version.regulatory_pack_version_id)} value={String(version.regulatory_pack_version_id)}>{String(version.name)} · {String(version.edition)} · v{displayValue(version.version_number)}</option>)}</select></label>
+        {selectedVersion && <section aria-label="Detalle del marco">
+          <h4>{String(selectedVersion.name)}</h4>
+          <dl><dt>Edición</dt><dd>{String(selectedVersion.edition)}</dd><dt>Versión</dt><dd>{displayValue(selectedVersion.version_number)}</dd><dt>Licencia</dt><dd>{displayValue(selectedVersion.license_classification)}</dd><dt>Vigencia de la versión desde</dt><dd>{selectedVersion.effective_from ? adminDate(selectedVersion.effective_from) : "Sin límite de inicio"}</dd><dt>Vigencia de la versión hasta</dt><dd>{selectedVersion.effective_to ? adminDate(selectedVersion.effective_to) : "Sin fecha de término"}</dd></dl>
+          <p>La contratación activa esta edición y versión en la suscripción vigente de la empresa seleccionada, bajo sus condiciones contractuales.</p>
+          {alreadyContracted && <p role="status">Esta versión ya está contratada para esta suscripción.</p>}
+        </section>}
+        <label><span>Vigente desde</span><input required disabled={busy} type="text" placeholder="AAAA-MM-DDTHH:mm:ssZ" value={effectiveFrom} onChange={event => { setEffectiveFrom(event.target.value); changeIntent(); }}/></label>
+        {confirming ? <section aria-label="Confirmación de contratación">
+          <p>Confirma la contratación de {String(selectedVersion?.name)} · {String(selectedVersion?.edition)} · v{displayValue(selectedVersion?.version_number)} desde {adminDate(explicitUtcInstant(effectiveFrom))}.</p>
+          <button className="button primary" type="button" disabled={busy || alreadyContracted} onClick={() => void activate()}>{busy ? "Contratando…" : "Confirmar contratación"}</button>
+          <button className="button secondary" type="button" disabled={busy} onClick={() => setConfirming(false)}>Volver al detalle</button>
+        </section> : <button className="button primary" type="submit" disabled={busy || !versionId || !effectiveFrom || alreadyContracted}>Contratar marco</button>}
+      </form>}
+    </section>}
   </DataCard>;
 }
 
