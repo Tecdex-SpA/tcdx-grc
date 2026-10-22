@@ -29,7 +29,7 @@ def main():
     if not re.fullmatch(r"tcdx-grc-step6a3-[a-z0-9-]+-operator", name):
         raise RuntimeError("CANONICAL_OPERATOR_NAME_REQUIRED")
     replacement = os.environ.get("TCDX_QA_OPERATOR_REPLACE", "")
-    if replacement not in ["", "integrated-qa-release-20261022", "integrated-qa-release-20261022-v3"]:
+    if replacement not in ["", "integrated-qa-release-20261022", "integrated-qa-release-20261022-v3", "integrated-qa-release-20261022-v4"]:
         raise RuntimeError("UNREVIEWED_OPERATOR_REPLACEMENT")
     replace = bool(replacement)
     previous = json.loads(run(["docker", "inspect", name]))[0] if replace else None

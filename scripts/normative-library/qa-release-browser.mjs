@@ -32,16 +32,22 @@ try{
     const a=access.ok?await access.json():null,b=authorization.ok?await authorization.json():null;
     const platform=await fetch('/api/v1/platform/knowledge-sources',{headers});
     const denied=await fetch('/api/v1/platform/knowledge-sources',{headers:{authorization:'Bearer invalid-release-probe',accept:'application/json'}});
-    return {access_status:access.status,authorization_status:authorization.status,available_tenant_contexts:a?.available_tenant_contexts?.map(x=>({tenant_id:x.tenant_id,roles:x.effective_role_codes}))??[],platform_roles:a?.effective_platform_role_codes??[],platform_permission_count:b?.platform_permissions?.length??0,platform_source_list_status:platform.status,invalid_bearer_status:denied.status};
+    return {access_status:access.status,authorization_status:authorization.status,available_tenant_contexts:a?.available_tenant_contexts?.map(x=>({tenant_id:x.tenant_id,roles:x.effective_role_codes}))??[],platform_roles:a?.effective_platform_role_codes??[],platform_permission_count:b?.platform_permissions?.length??0,platform_library_permissions:b?.platform_permissions?.filter(p=>p.startsWith('knowledge.'))??[],platform_source_list_status:platform.status,invalid_bearer_status:denied.status};
    });
    report.tests.push({kind:'REAL_AUTHENTICATED_API',...summary});
    report.status='AUTHENTICATED_READY';await save('status.json',report);
    await page.screenshot({path:new URL('authenticated.png',directory).pathname,fullPage:true});
    console.log('QA_AUTHENTICATED_BROWSER_READY');
+   for(const [id,path]of [['platform-library','/biblioteca-plataforma'],['tenant-matrices','/normas?tab=matrices'],['tenant-adjustments','/normas?tab=ajustes']]){
+    await page.goto(report.origin+path,{waitUntil:'networkidle'});
+    await page.screenshot({path:new URL('screen-auto-'+id+'.png',directory).pathname,fullPage:true});
+    const view=await page.evaluate(()=>({headings:[...document.querySelectorAll('h1,h2,h3')].map(x=>x.textContent),tables:document.querySelectorAll('table').length,alerts:[...document.querySelectorAll('[role=alert]')].map(x=>x.textContent),buttons:[...document.querySelectorAll('main button')].map(x=>x.textContent),horizontal_overflow:document.documentElement.scrollWidth>innerWidth}));
+    await save('response-auto-'+id+'.json',{status:'OBSERVED',path,...view});
+   }
    // Keep the credential inside the page. Commands are read-only navigation/API
    // or close; writes require a separately reviewed canonical scenario.
    let last;
-   for(let n=0;n<900&&!closing;n++){
+   for(let n=0;n<3600&&!closing;n++){
     let cmd;try{cmd=JSON.parse(await readFile(new URL('command.json',directory),'utf8'));}catch{}
     if(cmd&&cmd.id!==last){last=cmd.id;
      if(cmd.action==='close'){await stop();break;}

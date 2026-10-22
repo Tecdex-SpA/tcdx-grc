@@ -68,9 +68,21 @@ describe.skipIf(process.env.TCDX_LIBRARY_OPERATIONAL_INTEGRATION!=='true')('B01â
   finally{await sql`DROP TRIGGER library_audit_fault ON ops_audit.audit_events`.execute(db);await sql`DROP FUNCTION public.library_audit_fault()`.execute(db);}
  });
  it('publishes the exact catalog and 13 bindings atomically, and replays without duplicates',async()=>{
+  const global=await prepareLibraryPublication(process.cwd(),{tenantIds:[],effectiveFrom:from,effectiveTo:to});
+  const firstGlobal=await db.transaction().execute(tx=>publishLibraryOperationalData(tx,principal,newUuidV7(),global));
+  expect(firstGlobal).toMatchObject({permissions:8,bindings:13,definitions:4,created:64,audited:64});
+  const globalAudits=(await sql`SELECT * FROM ops_audit.audit_events WHERE command_code='normativeLibraryOperationalPublication' ORDER BY audit_event_id`.execute(db)).rows;
   const first=await publish();expect(first).toMatchObject({permissions:8,bindings:13});expect(first.created).toBeGreaterThan(0);
+  const retained=(await sql`SELECT * FROM ops_audit.audit_events WHERE command_code='normativeLibraryOperationalPublication' AND tenant_id IS NULL ORDER BY audit_event_id`.execute(db)).rows;
+  expect(retained).toEqual(globalAudits);
   const audits=await count();expect(await publish()).toMatchObject({created:0,audited:0});expect(await count()).toBe(audits);
   expect((await sql`SELECT * FROM platform.schema_migrations`.execute(db)).rows).toHaveLength(36);
+ });
+ it('rejects unrelated global audit manifest drift rather than adopting or rewriting it',async()=>{
+  await rollback(async tx=>{
+   await sql`UPDATE ops_audit.audit_events SET after_payload=jsonb_set(after_payload,'{publication_manifest_sha256}','"unapproved"'::jsonb) WHERE command_code='normativeLibraryOperationalPublication' AND aggregate_type='Permission'`.execute(tx);
+   await expect(publishLibraryOperationalData(tx,principal,newUuidV7(),p)).rejects.toMatchObject({statusCode:409});
+  });
  });
  it('serializes two concurrent replays without duplicate rows or audit',async()=>{
   const before=await count();for(const result of await Promise.all([publish(),publish()]))expect(result).toMatchObject({created:0,audited:0});expect(await count()).toBe(before);

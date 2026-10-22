@@ -18,6 +18,7 @@ export type LibraryPublicationInput={tenantIds:string[];effectiveFrom:string;eff
 type Migration={id:string;filename:string;sha256:string};
 export type LibraryPublication=Readonly<LibraryPublicationInput&{manifestSha256:string;migrations:Migration[]}>;
 const loaded=new WeakMap<LibraryPublication,string>();
+const globalPredecessor=new WeakMap<LibraryPublication,string>();
 
 /** Offline preparation only. Catalogs and successor receipts remain the sole product authority.
  * Tenant selection and validity are operational inputs, never tenant/date-specific code. */
@@ -37,7 +38,9 @@ export async function prepareLibraryPublication(root:string,input:LibraryPublica
  for(const m of migrations)await exact('database/migrations/'+m.filename,m.sha256);
  const p:LibraryPublication={tenantIds:[...input.tenantIds].sort(),effectiveFrom:new Date(input.effectiveFrom).toISOString(),effectiveTo:new Date(input.effectiveTo).toISOString(),migrations,
   manifestSha256:hashCanonical({sources:contract.sources,migrations_sha256:sha(manifestBytes),...input,tenantIds:[...input.tenantIds].sort()})};
- loaded.set(p,hashCanonical(p));return p;
+ loaded.set(p,hashCanonical(p));
+ globalPredecessor.set(p,hashCanonical({sources:contract.sources,migrations_sha256:sha(manifestBytes),...input,tenantIds:[]}));
+ return p;
 }
 
 /** Reuses the authenticated IAM publisher's transaction. No startup seed or public registration API.
@@ -57,7 +60,12 @@ export async function publishLibraryOperationalData(tx:Transaction<FoundationDat
  let created=0,audited=0;
  async function audit(type:string,id:string,event:string,tenantId:string|null,material:Record<string,unknown>){
   const after={...material,publication_manifest_sha256:p.manifestSha256};
-  const existing=(await sql<{valid:boolean}>`SELECT (after_payload=${JSON.stringify(after)}::jsonb AND outcome='success'
+  // A later explicitly selected tenant may consume the exact global-only
+  // predecessor from these same sources and validity. Its immutable audit is
+  // retained, not rewritten or duplicated. No other manifest drift is accepted.
+  const predecessor={...after,publication_manifest_sha256:globalPredecessor.get(p)};
+  const existing=(await sql<{valid:boolean}>`SELECT ((after_payload=${JSON.stringify(after)}::jsonb
+   OR (${tenantId===null} AND after_payload=${JSON.stringify(predecessor)}::jsonb)) AND outcome='success'
    AND ownership_class=${tenantId?'TENANT_OWNED':'PLATFORM_CONTROL'} AND tenant_id IS NOT DISTINCT FROM ${tenantId}::uuid
    AND actor_service_principal_id=${principal}::uuid AND actor_user_identity_id IS NULL) AS valid
    FROM ops_audit.audit_events WHERE aggregate_type=${type} AND aggregate_id=${id}::uuid

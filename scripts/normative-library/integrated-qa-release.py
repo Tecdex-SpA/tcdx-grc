@@ -87,7 +87,7 @@ if __name__ == '__main__':
     elif sys.argv[1] == 'check': check(sys.argv[2], sys.argv[3:])
     elif sys.argv[1] == 'database':
         mode=sys.argv[2]
-        assert mode in ['PRE','PRE_RETRY','POST','BACKUP','schema']
+        assert mode in ['PRE','PRE_RETRY','POST','POST_FINAL','POST_TENANT','BACKUP','schema']
         spec=importlib.util.spec_from_file_location('qa_release_env',ROOT/'docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa01-migration36-adoption-20261022/operator.py')
         prior=importlib.util.module_from_spec(spec)
         sys.dont_write_bytecode=True
@@ -99,6 +99,32 @@ if __name__ == '__main__':
         save('database-'+mode+'-command.json',{'exit_code':p.returncode,'stdout':p.stdout if p.returncode==0 else 'FAILED_DIAGNOSTIC_REDACTED','started_mode':mode})
         print(p.stdout if p.returncode==0 else 'DATABASE_CHECK_FAILED')
         sys.exit(p.returncode)
+    elif sys.argv[1] == 'compare':
+        before=json.loads((CUSTODY/'PRE_RETRY.json').read_text())
+        tenant_mode=len(sys.argv)>2 and sys.argv[2]=='POST_TENANT'
+        after=json.loads((CUSTODY/('POST_TENANT.json' if tenant_mode else 'POST_FINAL.json')).read_text())
+        tenant_ids=json.loads((CUSTODY/'stage-tenant.json').read_text())['publication_input']['tenantIds'] if tenant_mode else []
+        categories=['ledger','relations','columns','constraints','indexes','functions','triggers','typed_default_exact','authority_catalog']
+        for category in categories:
+            assert [r for r in before['results'] if r['category']==category]==[r for r in after['results'] if r['category']==category], category
+        fingerprints=lambda x:{r['relation']:r for r in x['results'] if r['category']=='data_fingerprint'}
+        pre,post=fingerprints(before),fingerprints(after)
+        expected={'config.configuration_definition_scopes':4,'config.configuration_definitions':4,'config.configuration_validation_rules':4,'iam.permissions':8,'iam.role_permissions':39,'ops_audit.lifecycle_transition_definitions':13,'ops_audit.lifecycle_transition_scopes':13,'ops_audit.lifecycle_transition_side_effects':13}
+        if tenant_mode: expected['iam.role_permissions']+=30
+        assert pre.keys()==post.keys() and len(pre)==244
+        for relation,delta in expected.items(): assert post[relation]['rows']-pre[relation]['rows']==delta, relation
+        changed=[r for r in pre if pre[r]!=post[r]]
+        assert set(changed)<=set(expected)|{'ops_audit.audit_events','iam.user_identities'}
+        assert post['iam.user_identities']['rows']==pre['iam.user_identities']['rows']
+        assert all(r['self_updated'] for r in after['identity_login_updates'])
+        assert all((r['command_code'],r['event_code'],r['outcome'])==('oidc.session.establish','audit.iam.application_token.issue.v1','success') for r in after['other_audit']), after['other_audit']
+        audit_count=94 if tenant_mode else 64
+        assert sum(r['count'] for r in after['activation'])==audit_count
+        assert len(after['publication_audit'])==audit_count and all((r['tenant_id'] is None and r['ownership_class']=='PLATFORM_CONTROL' or r['tenant_id'] in tenant_ids and r['ownership_class']=='TENANT_OWNED' and r['aggregate_type']=='RolePermission') and r['outcome']=='success' for r in after['publication_audit'])
+        assert len(after['definitions'])==4 and all(r['defaults']==0 and r['lifecycle_state']=='published' for r in after['definitions'])
+        result={'status':'PASS','schema_catalogues_unchanged':categories,'fingerprints_verified':244,'unchanged_tables':244-len(changed),'changed_tables':changed,'approved_deltas':expected,'additional_changes':'Existing identity login timestamps and canonical login audit only','publication_audit_count':audit_count,'tenant_activations':tenant_ids}
+        save('physical-comparison'+('-tenant' if tenant_mode else '')+'.json',result)
+        print(json.dumps(result))
     elif sys.argv[1] == 'image':
         component=sys.argv[2]
         assert component in ['backend','frontend']

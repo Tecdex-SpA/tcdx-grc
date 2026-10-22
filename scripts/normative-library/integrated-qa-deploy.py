@@ -17,7 +17,7 @@ C = ROOT / '.release-custody/integrated-qa-release-20261022'
 REMOTE = '/home/tecdex/.config/tcdx-grc/integrated-qa-release-20261022'
 HOSTS = {'backend': '192.168.2.45', 'frontend': '192.168.2.46'}
 ITERATION = os.environ.get('TCDX_RELEASE_ITERATION', '')
-assert ITERATION in ['', 'v3']
+assert ITERATION in ['', 'v3', 'v4']
 SUFFIX = '-' + ITERATION if ITERATION else ''
 def read(path): return json.loads(path.read_text())
 def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -30,9 +30,10 @@ def ssh(host, command, input=None, timeout=240):
     if p.returncode: raise RuntimeError('QA_REMOTE_COMMAND_FAILED: ' + p.stdout[-900:] + p.stderr[-300:])
     return p.stdout.strip()
 mode = sys.argv[1]
-if mode == 'diagnose':
-    receipt=json.loads(ssh(HOSTS['backend'],'docker exec -i tcdx-grc-step6a3-publication-operator node --input-type=module',(ROOT/'scripts/normative-library/qa-release-operator-diagnostic.mjs').read_text()))
-    save('operator-diagnostic'+SUFFIX+'.json',receipt)
+if mode in ['diagnose','runtime']:
+    command='docker exec -i '+('tcdx-grc-backend node --input-type=module - backend' if mode=='runtime' else 'tcdx-grc-step6a3-publication-operator node --input-type=module')
+    receipt=json.loads(ssh(HOSTS['backend'],command,(ROOT/'scripts/normative-library/qa-release-operator-diagnostic.mjs').read_text()))
+    save(('backend-runtime' if mode=='runtime' else 'operator-diagnostic')+SUFFIX+'.json',receipt)
     print(json.dumps(receipt))
     sys.exit(0)
 if mode == 'transport':
@@ -68,6 +69,17 @@ elif mode == 'stage':
     outcome = json.loads(ssh(HOSTS['backend'], 'python3 -', verify))
     save('stage.json', {**outcome, 'source_commit': info['source_commit'], 'source_archive_sha256': info['source_archive_sha256'], 'remote_directory': REMOTE, 'publication_input': publication, 'publication_input_sha256': sha(input_path), 'PO_temporal_decision': 'One calendar year from recorded publication-start instant', 'tenant_scope_decision': 'Global-only per explicit release authorization; no tenant inferred'})
     print('STAGE_PASS_GLOBAL_ONLY_ONE_CALENDAR_YEAR')
+elif mode == 'stage-tenant':
+    import uuid
+    tenant = str(uuid.UUID(sys.argv[2]))
+    assert uuid.UUID(tenant).version == 7
+    original = read(C / 'stage.json')
+    publication = {**original['publication_input'], 'tenantIds': [tenant]}
+    path = C / 'publication-input-tenant.json'
+    with path.open('x') as stream: stream.write(json.dumps(publication, indent=2) + '\n')
+    subprocess.run(['scp', str(path), 'tecdex@' + HOSTS['backend'] + ':' + REMOTE + '/publication-input-tenant.json'], check=True, capture_output=True)
+    save('stage-tenant.json', {'publication_input': publication, 'publication_input_sha256': sha(path), 'input_file': 'publication-input-tenant.json', 'global_predecessor_input_sha256': original['publication_input_sha256'], 'PO_decision': 'Explicit authorization of this single tenant in current release conversation; no other tenant selected'})
+    print('STAGE_TENANT_PASS_NO_GLOBAL_INPUT_OVERWRITE')
 elif mode in ['promote', 'preflight']:
     component = sys.argv[2]
     assert component in HOSTS
@@ -82,7 +94,7 @@ elif mode in ['promote', 'preflight']:
     save(mode + '-' + component + SUFFIX + '.json', {**receipt, 'source_commit': info['source_commit']})
     print(json.dumps(receipt))
 elif mode == 'operators':
-    info, staged = image('backend'), read(C / 'stage.json')
+    info, staged = image('backend'), read(C / ('stage-tenant.json' if ITERATION == 'v4' else 'stage.json'))
     names = ['tcdx-grc-step6a3-publication-operator', 'tcdx-grc-step6a3-c04w-publication-operator', 'tcdx-grc-step6a3-c04w-lifecycle-operator', 'tcdx-grc-step6a3-initial-source-operator']
     source = (ROOT / 'scripts/phase6a3/qa-iam-publication-runtime.py').read_text()
     for name in names:
@@ -94,7 +106,7 @@ elif mode == 'operators':
         config = ssh(HOSTS['backend'], 'python3 -', locate)
         assert config.startswith('/home/tecdex/.config/tcdx-grc/')
         env = {'TCDX_QA_OPERATOR_NAME': name, 'TCDX_QA_OPERATOR_REPLACE': 'integrated-qa-release-20261022'+SUFFIX, 'TCDX_LIBRARY_RELEASE_HOST_DIRECTORY': REMOTE,
-               'TCDX_LIBRARY_PUBLICATION_ROOT': '/run/config/library-release/source', 'TCDX_LIBRARY_PUBLICATION_INPUT_FILE': '/run/config/library-release/publication-input.json', 'TCDX_LIBRARY_PUBLICATION_INPUT_SHA256': staged['publication_input_sha256']}
+               'TCDX_LIBRARY_PUBLICATION_ROOT': '/run/config/library-release/source', 'TCDX_LIBRARY_PUBLICATION_INPUT_FILE': '/run/config/library-release/'+staged.get('input_file','publication-input.json'), 'TCDX_LIBRARY_PUBLICATION_INPUT_SHA256': staged['publication_input_sha256']}
         command = ' '.join(k + '=' + shlex.quote(v) for k, v in env.items()) + ' python3 - ' + shlex.quote(info['image_id']) + ' ' + shlex.quote(info['source_archive_sha256']) + ' ' + shlex.quote(config)
         receipt = json.loads(ssh(HOSTS['backend'], command, source))
         save(filename, receipt)

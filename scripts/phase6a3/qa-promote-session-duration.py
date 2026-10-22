@@ -102,6 +102,10 @@ def main():
     for value in host.get("Dns") or []:
         args.extend(["--dns", value])
     for mount in current["Mounts"]:
+        # A subsequent promotion replaces this same approved certificate mount;
+        # Docker rejects duplicate mount destinations even when their source matches.
+        if extra_mounts and mount["Destination"] == "/run/config/qa-database-root.pem":
+            continue
         if mount["Type"] == "bind":
             source = mount["Source"]
         elif mount["Type"] == "volume":

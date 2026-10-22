@@ -8,7 +8,7 @@ import {createClient} from '../foundations/db.ts';
 import {collect,guard,dataQueries} from '../../docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa01-migration36-adoption-20261022/inspect.mts';
 const root=new URL('../../',import.meta.url).pathname;
 const custody=root+'.release-custody/integrated-qa-release-20261022';
-const mode=process.argv[2];if(!['PRE','PRE_RETRY','POST','BACKUP'].includes(mode??''))throw Error('READ_ONLY_OR_BACKUP_REQUIRED');
+const mode=process.argv[2];if(!['PRE','PRE_RETRY','POST','POST_FINAL','POST_TENANT','BACKUP'].includes(mode??''))throw Error('READ_ONLY_OR_BACKUP_REQUIRED');
 process.umask(0o077);
 const sha=(b:Buffer|string)=>createHash('sha256').update(b).digest('hex');
 const run=(cmd:string,args:string[],options:any={})=>{const p=spawnSync(cmd,args,{encoding:'utf8',timeout:180000,maxBuffer:32*1024*1024,...options});if(p.status!==0)throw Error('Subprocess failed: '+cmd);return p.stdout as string;};
@@ -23,6 +23,12 @@ try{
   result.results=await collect(async q=>(await c.query(q)).rows[0].jsonb_build_object);
   result.activation=await c.query("SELECT aggregate_type,event_code,count(*)::int FROM ops_audit.audit_events WHERE command_code='normativeLibraryOperationalPublication' GROUP BY aggregate_type,event_code ORDER BY aggregate_type,event_code").then(r=>r.rows);
   result.definitions=await c.query("SELECT configuration_definition_id::text,configuration_code,version_number,value_type,lifecycle_state,effective_from::text,effective_to::text,num_nonnulls(default_boolean_value,default_integer_value,default_decimal_value,default_text_value,default_timestamp_value,default_duration_seconds_value,default_json_value) defaults FROM config.configuration_definitions WHERE configuration_code IN ('control_operational_activity','control_recommended_evidence','control_operational_frequency','control_operational_confirmation') ORDER BY configuration_code").then(r=>r.rows);
+  if(mode==='POST_FINAL'||mode==='POST_TENANT'){
+   result.publication_audit=await c.query("SELECT audit_event_id::text,aggregate_type,aggregate_id::text,event_code,ownership_class,tenant_id::text,actor_service_principal_id::text,outcome,after_payload FROM ops_audit.audit_events WHERE command_code='normativeLibraryOperationalPublication' ORDER BY aggregate_type,aggregate_id").then(r=>r.rows);
+   result.other_audit=await c.query("SELECT command_code,event_code,outcome,count(*)::int FROM ops_audit.audit_events WHERE occurred_at>=$1::timestamptz AND command_code IS DISTINCT FROM 'normativeLibraryOperationalPublication' GROUP BY command_code,event_code,outcome ORDER BY command_code,event_code",[JSON.parse(readFileSync(custody+'/PRE_RETRY.json','utf8')).started_utc]).then(r=>r.rows);
+   result.sources=await c.query("SELECT ownership_class,license_classification,lifecycle_state,count(*)::int FROM knowledge.knowledge_sources GROUP BY ownership_class,license_classification,lifecycle_state ORDER BY ownership_class,license_classification,lifecycle_state").then(r=>r.rows);
+   result.identity_login_updates=await c.query("SELECT count(*)::int AS recently_authenticated_existing_identities, bool_and(updated_by_user_identity_id=user_identity_id) AS self_updated FROM iam.user_identities WHERE last_authenticated_at>=$1::timestamptz",[JSON.parse(readFileSync(custody+'/PRE_RETRY.json','utf8')).started_utc]).then(r=>r.rows);
+  }
   await c.query('ROLLBACK');result.status='PASS_READ_ONLY';
  }else{
   if(run('fdesetup',['status']).trim()!=='FileVault is On.')throw Error('Encrypted custody required');
