@@ -1,0 +1,107 @@
+[
+  {
+    "name": "focused",
+    "command": "pnpm exec vitest run apps/backend/src/security/normative-library-publication.test.ts apps/backend/src/security/publication-operator-server.test.ts apps/backend/src/configuration/control-definition-references.test.ts apps/backend/src/configuration/control-adjustment-policy.test.ts apps/backend/src/configuration/resolver.test.ts apps/backend/src/normative-library apps/frontend/src/normative-library-workspace.test.tsx apps/frontend/src/normative-library-client.test.ts apps/frontend/src/core-grc.test.tsx",
+    "exit_code": 0,
+    "log": "checks/focused.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; isolated PG16 where required"
+  },
+  {
+    "name": "postgres",
+    "command": "bash scripts/normative-library/run-operational-postgres-tests.sh",
+    "exit_code": 0,
+    "log": "checks/postgres.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; isolated PG16 where required"
+  },
+  {
+    "name": "browser",
+    "command": "pnpm exec playwright test --config scripts/normative-library/playwright-definitions-resolution.config.ts",
+    "exit_code": 0,
+    "log": "checks/browser.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; isolated PG16 where required"
+  },
+  {
+    "name": "typecheck",
+    "command": "pnpm typecheck",
+    "exit_code": 0,
+    "log": "checks/typecheck.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; isolated PG16 where required"
+  },
+  {
+    "name": "build",
+    "command": "pnpm build",
+    "exit_code": 0,
+    "log": "checks/build.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; isolated PG16 where required"
+  },
+  {
+    "name": "backend-final-typecheck",
+    "command": "pnpm --filter @tcdx-grc/backend typecheck",
+    "exit_code": 0,
+    "log": "checks/backend-final-typecheck.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; isolated PG16 where required"
+  },
+  {
+    "name": "backend-final-build",
+    "command": "pnpm --filter @tcdx-grc/backend build",
+    "exit_code": 0,
+    "log": "checks/backend-final-build.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; isolated PG16 where required"
+  },
+  {
+    "name": "canonical-1",
+    "command": "node scripts/foundations/generate-contract-assets.mjs --check",
+    "exit_code": 0,
+    "log": "checks/canonical-1.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; isolated PG16 where required"
+  },
+  {
+    "name": "canonical-2",
+    "command": "node scripts/foundations/generate-contract-assets.mjs --check",
+    "exit_code": 0,
+    "log": "checks/canonical-2.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; isolated PG16 where required"
+  },
+  {
+    "name": "library-assets",
+    "command": "node scripts/normative-library/generate-contract-assets.mjs --check",
+    "exit_code": 0,
+    "log": "checks/library-assets.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; isolated PG16 where required"
+  },
+  {
+    "name": "h04-assets",
+    "command": "node scripts/normative-library/generate-rights-contract.mjs --check",
+    "exit_code": 0,
+    "log": "checks/h04-assets.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; isolated PG16 where required"
+  },
+  {
+    "name": "rector",
+    "command": "bash scripts/verify-rector-governance.sh",
+    "exit_code": 0,
+    "log": "checks/rector.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; isolated PG16 where required"
+  },
+  {
+    "name": "rector-status",
+    "command": "bash scripts/test-rector-governance-status.sh",
+    "exit_code": 0,
+    "log": "checks/rector-status.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; isolated PG16 where required"
+  },
+  {
+    "name": "secrets",
+    "command": "pnpm secrets:scan",
+    "exit_code": 0,
+    "log": "checks/secrets.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; isolated PG16 where required"
+  },
+  {
+    "name": "whitespace",
+    "command": "git diff --check",
+    "exit_code": 0,
+    "log": "checks/whitespace.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; isolated PG16 where required"
+  }
+]

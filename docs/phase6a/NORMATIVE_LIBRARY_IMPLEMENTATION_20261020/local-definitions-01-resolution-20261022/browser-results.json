@@ -1,0 +1,448 @@
+{
+  "config": {
+    "argv": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "/Users/andresbarouh/repos/tcdx-grc/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "scripts/normative-library/playwright-definitions-resolution.config.ts"
+    ],
+    "configFile": "/Users/andresbarouh/repos/tcdx-grc/scripts/normative-library/playwright-definitions-resolution.config.ts",
+    "rootDir": "/Users/andresbarouh/repos/tcdx-grc/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "desktop",
+        "name": "desktop",
+        "testDir": "/Users/andresbarouh/repos/tcdx-grc/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "b04-contextual-resolution.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "narrow",
+        "name": "narrow",
+        "testDir": "/Users/andresbarouh/repos/tcdx-grc/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "b04-contextual-resolution.spec.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "\"/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node\" \"/Users/andresbarouh/repos/tcdx-grc/apps/frontend/node_modules/vite/bin/vite.js\" preview --host 127.0.0.1 --port 4184 --strictPort",
+      "cwd": "/Users/andresbarouh/repos/tcdx-grc/apps/frontend",
+      "url": "http://127.0.0.1:4184",
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [
+    {
+      "title": "b04-contextual-resolution.spec.ts",
+      "file": "b04-contextual-resolution.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "creates initial B04 using real canonical handlers without Platform or override-read permission",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 749,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T14:36:20.529Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d463bea8a81120cda335-4e929c873b802ca6b318",
+          "file": "b04-contextual-resolution.spec.ts",
+          "line": 39,
+          "column": 1
+        },
+        {
+          "title": "control change clears prior Definition/value and backend checks new target",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 233,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T14:36:21.564Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d463bea8a81120cda335-4b36c837127f17338cc2",
+          "file": "b04-contextual-resolution.spec.ts",
+          "line": 52,
+          "column": 1
+        },
+        {
+          "title": "stale Definition is rejected by write and selection invalidated automatically",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 375,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T14:36:21.801Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d463bea8a81120cda335-d9289272ece6462564b5",
+          "file": "b04-contextual-resolution.spec.ts",
+          "line": 55,
+          "column": 1
+        },
+        {
+          "title": "empty, denied and dependency errors remain explicit and cannot submit",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 293,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T14:36:22.179Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d463bea8a81120cda335-ae4753e950d13f06d276",
+          "file": "b04-contextual-resolution.spec.ts",
+          "line": 58,
+          "column": 1
+        },
+        {
+          "title": "published periodicity vocabulary is understandable and saved through the same B04 command",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 346,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T14:36:22.476Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d463bea8a81120cda335-a4508fdf33452d09abc7",
+          "file": "b04-contextual-resolution.spec.ts",
+          "line": 66,
+          "column": 1
+        },
+        {
+          "title": "creates initial B04 using real canonical handlers without Platform or override-read permission",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "narrow",
+              "projectName": "narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 451,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T14:36:23.232Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d463bea8a81120cda335-d96f4b7bc336cb60f492",
+          "file": "b04-contextual-resolution.spec.ts",
+          "line": 39,
+          "column": 1
+        },
+        {
+          "title": "control change clears prior Definition/value and backend checks new target",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "narrow",
+              "projectName": "narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 264,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T14:36:23.800Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d463bea8a81120cda335-41cc6834e62ec79d33e3",
+          "file": "b04-contextual-resolution.spec.ts",
+          "line": 52,
+          "column": 1
+        },
+        {
+          "title": "stale Definition is rejected by write and selection invalidated automatically",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "narrow",
+              "projectName": "narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 330,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T14:36:24.068Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d463bea8a81120cda335-25e87093b1d388aa67a2",
+          "file": "b04-contextual-resolution.spec.ts",
+          "line": 55,
+          "column": 1
+        },
+        {
+          "title": "empty, denied and dependency errors remain explicit and cannot submit",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "narrow",
+              "projectName": "narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 294,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T14:36:24.402Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d463bea8a81120cda335-23c29643454444e4847d",
+          "file": "b04-contextual-resolution.spec.ts",
+          "line": 58,
+          "column": 1
+        },
+        {
+          "title": "published periodicity vocabulary is understandable and saved through the same B04 command",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "narrow",
+              "projectName": "narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 325,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T14:36:24.699Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d463bea8a81120cda335-41a8bb58c9f7b484de90",
+          "file": "b04-contextual-resolution.spec.ts",
+          "line": 66,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-22T14:36:19.538Z",
+    "duration": 5520.860000000001,
+    "expected": 10,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

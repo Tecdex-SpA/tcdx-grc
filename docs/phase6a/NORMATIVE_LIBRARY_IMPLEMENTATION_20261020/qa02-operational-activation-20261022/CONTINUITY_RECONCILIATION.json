@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "method": "Exact SHA256 with sealed successor preimages; no historical verifier edits, no recreation of product files",
+  "layers": [
+    {
+      "dossier": "local-definitions-01-resolution-20261022",
+      "manifest_entries": 99,
+      "all_manifest_and_seal_entries": "PASS_AT_SEALED_SUCCESSOR_PREIMAGE"
+    },
+    {
+      "dossier": "local-operational-preparation-20261022",
+      "manifest_entries": 59,
+      "all_manifest_and_seal_entries": "PASS_AT_SEALED_SUCCESSOR_PREIMAGE"
+    },
+    {
+      "dossier": "code-b04-01-full-resolution-20261022",
+      "manifest_entries": 81,
+      "all_manifest_and_seal_entries": "PASS_AT_SEALED_SUCCESSOR_PREIMAGE"
+    }
+  ],
+  "historical_verifier_failures": "RETAINED_EXPECTED_PREDECESSOR_SNAPSHOT_MISMATCHES",
+  "QA01_current_verifier": "PASS_WITH_PRIVATE_BACKUP_CHECK"
+}

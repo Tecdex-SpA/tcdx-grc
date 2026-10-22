@@ -14,7 +14,7 @@ const seeds = JSON.parse(seedSource) as { phase5MembershipInvitationPermissions:
 
 describe("Phase 5 canonical tenant-user enrollment contract", () => {
   it("adds exactly one forward-only successor table after RetentionPolicy", () => {
-    expect(schema.tableCount).toBe(242);
+    expect(schema.tableCount).toBe(244);
     expect(schema.tables.filter(({ name }) => name === "iam.tenant_membership_invitations")).toHaveLength(1);
     expect(manifest.migrations.length).toBeGreaterThanOrEqual(21);
     expect(manifest.migrations.find(({ id }) => id === "20260924000300")).toMatchObject({

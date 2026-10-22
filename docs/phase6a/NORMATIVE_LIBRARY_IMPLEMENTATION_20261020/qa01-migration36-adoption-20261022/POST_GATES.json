@@ -1,0 +1,73 @@
+{
+  "status": "PASS",
+  "checks": {
+    "relations_unchanged": true,
+    "columns_unchanged": true,
+    "indexes_unchanged": true,
+    "functions_unchanged": true,
+    "triggers_unchanged": true,
+    "authority_catalog_unchanged": true,
+    "constraint_names_unchanged": true,
+    "only_authorized_check_replaced": true,
+    "exact_new_validated_check": true,
+    "all_244_business_fingerprints_identical": true,
+    "35_full_historical_ledger_rows_identical": true,
+    "no_invalid_constraints_indexes": true,
+    "canonical_schema_zero_mismatches": true,
+    "only36_applied_once": true
+  },
+  "canonical_summary": {
+    "database": "tcdx-grc",
+    "postgresMajor": 16,
+    "expectedPhysicalTables": 244,
+    "actualPhysicalTables": 244,
+    "expectedColumns": 3630,
+    "expectedConstraints": 2644,
+    "expectedRequiredIndexes": 1557,
+    "tenantScopedTables": 217,
+    "primaryKeys": 245,
+    "uniqueConstraints": 434,
+    "checkConstraints": 821,
+    "foreignKeys": 1388,
+    "compositeTenantForeignKeys": 510,
+    "tableOwners": [
+      "postgres"
+    ],
+    "forbiddenDeleteCascades": 0,
+    "schemaMismatches": 0,
+    "normativeLibraryDefinitionChecks": {
+      "constraints": 98,
+      "indexes": 56,
+      "functions": 8,
+      "triggers": 12
+    },
+    "mismatches": []
+  },
+  "constraint_change": {
+    "before": {
+      "oid": "105618",
+      "name": "ck_configuration_definitions__typed_default",
+      "contype": "c",
+      "relation": "config.configuration_definitions",
+      "definition": "CHECK (num_nonnulls(default_boolean_value, default_integer_value, default_decimal_value, default_text_value, default_timestamp_value, default_duration_seconds_value, default_json_value) = 1 AND\nCASE value_type\n    WHEN 'boolean'::text THEN default_boolean_value IS NOT NULL\n    WHEN 'integer'::text THEN default_integer_value IS NOT NULL\n    WHEN 'decimal'::text THEN default_decimal_value IS NOT NULL\n    WHEN 'text'::text THEN default_text_value IS NOT NULL\n    WHEN 'timestamp'::text THEN default_timestamp_value IS NOT NULL\n    WHEN 'duration'::text THEN default_duration_seconds_value IS NOT NULL\n    WHEN 'json'::text THEN default_json_value IS NOT NULL\n    ELSE false\nEND)",
+      "convalidated": true,
+      "relation_oid": "91155",
+      "referenced_relation_oid": "0",
+      "normalized_definition": "CHECK (num_nonnulls(default_boolean_value, default_integer_value, default_decimal_value, default_text_value, default_timestamp_value, default_duration_seconds_value, default_json_value) = 1 AND\nCASE value_type\n    WHEN 'boolean'::text THEN default_boolean_value IS NOT NULL\n    WHEN 'integer'::text THEN default_integer_value IS NOT NULL\n    WHEN 'decimal'::text THEN default_decimal_value IS NOT NULL\n    WHEN 'text'::text THEN default_text_value IS NOT NULL\n    WHEN 'timestamp'::text THEN default_timestamp_value IS NOT NULL\n    WHEN 'duration'::text THEN default_duration_seconds_value IS NOT NULL\n    WHEN 'json'::text THEN default_json_value IS NOT NULL\n    ELSE false\nEND)"
+    },
+    "after": {
+      "oid": "106118",
+      "name": "ck_configuration_definitions__typed_default",
+      "contype": "c",
+      "relation": "config.configuration_definitions",
+      "definition": "CHECK ((value_type::text = ANY (ARRAY['boolean'::character varying, 'integer'::character varying, 'decimal'::character varying, 'text'::character varying, 'timestamp'::character varying, 'duration'::character varying, 'json'::character varying]::text[])) AND (num_nonnulls(default_boolean_value, default_integer_value, default_decimal_value, default_text_value, default_timestamp_value, default_duration_seconds_value, default_json_value) = 0 OR num_nonnulls(default_boolean_value, default_integer_value, default_decimal_value, default_text_value, default_timestamp_value, default_duration_seconds_value, default_json_value) = 1 AND\nCASE value_type\n    WHEN 'boolean'::text THEN default_boolean_value IS NOT NULL\n    WHEN 'integer'::text THEN default_integer_value IS NOT NULL\n    WHEN 'decimal'::text THEN default_decimal_value IS NOT NULL\n    WHEN 'text'::text THEN default_text_value IS NOT NULL\n    WHEN 'timestamp'::text THEN default_timestamp_value IS NOT NULL\n    WHEN 'duration'::text THEN default_duration_seconds_value IS NOT NULL\n    WHEN 'json'::text THEN default_json_value IS NOT NULL\n    ELSE false\nEND))",
+      "convalidated": true,
+      "relation_oid": "91155",
+      "referenced_relation_oid": "0",
+      "normalized_definition": "CHECK ((value_type::text = ANY (ARRAY['boolean'::character varying::text, 'integer'::character varying::text, 'decimal'::character varying::text, 'text'::character varying::text, 'timestamp'::character varying::text, 'duration'::character varying::text, 'json'::character varying::text])) AND (num_nonnulls(default_boolean_value, default_integer_value, default_decimal_value, default_text_value, default_timestamp_value, default_duration_seconds_value, default_json_value) = 0 OR num_nonnulls(default_boolean_value, default_integer_value, default_decimal_value, default_text_value, default_timestamp_value, default_duration_seconds_value, default_json_value) = 1 AND\nCASE value_type\n    WHEN 'boolean'::text THEN default_boolean_value IS NOT NULL\n    WHEN 'integer'::text THEN default_integer_value IS NOT NULL\n    WHEN 'decimal'::text THEN default_decimal_value IS NOT NULL\n    WHEN 'text'::text THEN default_text_value IS NOT NULL\n    WHEN 'timestamp'::text THEN default_timestamp_value IS NOT NULL\n    WHEN 'duration'::text THEN default_duration_seconds_value IS NOT NULL\n    WHEN 'json'::text THEN default_json_value IS NOT NULL\n    ELSE false\nEND))"
+    }
+  },
+  "business_tables": 244,
+  "business_DML": "NONE",
+  "technical_ledger_inserts": 1
+}

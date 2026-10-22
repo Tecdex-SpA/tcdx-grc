@@ -1,0 +1,49 @@
+{
+  "status": "PASS_CONTRACT_EFFECTIVE_LOCAL",
+  "baseline_id": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "effective_at_utc": "2026-10-20T21:53:59.651765+00:00",
+  "scope": "LOCAL_DOCUMENTARY_CONTRACTS_B01_B09_ONLY",
+  "deltas": [
+    "B01",
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "B06",
+    "B07",
+    "B08",
+    "B09"
+  ],
+  "publication_mechanism": "Hash-bound successor amendment and append-only local authority receipt under rector45/46/47/49; no baseline replacement",
+  "authorization": {
+    "path": "docs/governance/amendments/NORMATIVE_LIBRARY_20261020/RESUME_AUTHORIZATION.json",
+    "sha256": "d98a3b86d5d59580b058d95e1c869f86677f8383c692c587ba4aec0b23e40289"
+  },
+  "review_manifest": {
+    "path": "docs/governance/amendments/NORMATIVE_LIBRARY_20261020/REVIEW_MANIFEST.json",
+    "sha256": "1061e51e67d59a8b3fd723177e0f41400cc3375d690973173bbffd127e2b37ea"
+  },
+  "publication_manifest": {
+    "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/PUBLICATION_MANIFEST.json",
+    "sha256": "b2b66fd97a8c0ebf43d75c815ae14d41e9f47297d8a1ee17d0a4d10190763b11"
+  },
+  "human_signature_of_derived_bytes": false,
+  "technical_gates": "PASS_DOCUMENTARY_STRUCTURAL_AND_SCHEMA_ONLY",
+  "physical_contract_review": "PASS_DOCUMENTARY_ONLY",
+  "sql_execution": "NOT_PERFORMED",
+  "runtime_activation": "NOT_EXECUTED",
+  "git_publication": "NONE",
+  "operational_grants": "NOT_ACTIVATED",
+  "normative_content_homologation": "NOT_EXECUTED",
+  "official_pack_publication": "NOT_EXECUTED",
+  "not_claimed": [
+    "DB enforcement",
+    "QA/runtime/E2E",
+    "migrations",
+    "imports",
+    "deployment",
+    "human UI acceptance",
+    "market release"
+  ],
+  "precedence": "Exact B01-B09 deltas only. Prepared/candidate annotations are preserved historical preparation status, superseded for contractual effect by this receipt; operational non-execution remains true."
+}

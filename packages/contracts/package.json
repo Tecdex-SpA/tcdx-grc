@@ -5,8 +5,14 @@
   "type": "module",
   "main": "./dist/index.js",
   "exports": {
-    "types": "./dist/index.d.ts",
-    "import": "./dist/index.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./normative-library": {
+      "types": "./dist/normative-library.d.ts",
+      "import": "./dist/normative-library.js"
+    }
   },
   "types": "./dist/index.d.ts",
   "scripts": {

@@ -1,0 +1,74 @@
+{
+  "status": "PASS_CONTRACT_EFFECTIVE_LOCAL",
+  "PV_H04_01": "CONTRACT_PUBLISHED_VERIFIED",
+  "baseline_id": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "scope": "PV-H04-01_ONE_FUNCTION_CORRECTOR_ONLY",
+  "effective_at_utc": "2026-10-21T20:58:13.991022+00:00",
+  "publication_manifest": {
+    "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_PV01_PUBLICATION_20261021/PUBLICATION_MANIFEST.json",
+    "sha256": "625402c2f3e2749921a22e62e20b67756c5bec166b536957f55eef9cdb55904a"
+  },
+  "authorization": {
+    "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_PV01_PUBLICATION_20261021/AUTHORIZATION.json",
+    "sha256": "7e55f0eef6b0ea8ed66bffe22698c2df96e31e666a0b46421b24e8acdf1285b9"
+  },
+  "review": {
+    "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_PV01_PUBLICATION_20261021/REVIEW.json",
+    "sha256": "ff41712fa8272028f7ab84959cd26b7c93600d07b423686c5bd8a6b627b267e9"
+  },
+  "predecessor_receipt": {
+    "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_SQL_GRAMMAR_20261021/CONTRACT_PUBLICATION_RECEIPT.json",
+    "sha256": "cf2eee2ef255ad33e41728205cd959821e7b0eca2a1bd30f3c30968d2cf84f03"
+  },
+  "authorized_candidate_manifest": {
+    "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_PHYSICAL_VALIDATION_20261021/PUBLICATION_MANIFEST_CANDIDATE.json",
+    "sha256": "b1328e9fe106d7587939f933cbb880f5834302f2ab41e4e8cdf9fa55fd1f2225"
+  },
+  "effective_ddl": {
+    "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_PHYSICAL_VALIDATION_20261021/DDL_SPEC.sql",
+    "sha256": "43bd138f9c66d30efb785cafa83bf90dbf1bce45448a8b434f3678225b33f4dd"
+  },
+  "required_predecessor_ddl": {
+    "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_SQL_GRAMMAR_20261021/DDL_SPEC.sql",
+    "sha256": "0841e1c9136400ca88a43ba06e9308fcb4b17eb51df296b2d7bda4d1f87c9a4c"
+  },
+  "effective_ddl_sequence": [
+    {
+      "path": "docs/physical-data-model/amendments/NORMATIVE_LIBRARY_20261020/03_DDL_SPEC.sql",
+      "sha256": "33d444c2e5394f1a027d3d81230b77335487e768d2a130578a5f119c559f72e7"
+    },
+    {
+      "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_SQL_GRAMMAR_20261021/DDL_SPEC.sql",
+      "sha256": "0841e1c9136400ca88a43ba06e9308fcb4b17eb51df296b2d7bda4d1f87c9a4c"
+    },
+    {
+      "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_PHYSICAL_VALIDATION_20261021/DDL_SPEC.sql",
+      "sha256": "43bd138f9c66d30efb785cafa83bf90dbf1bce45448a8b434f3678225b33f4dd"
+    }
+  ],
+  "supersedes_only": {
+    "object": "knowledge.enforce_source_usage_rights()",
+    "predecessor_sql": {
+      "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_SQL_GRAMMAR_20261021/DDL_SPEC.sql",
+      "sha256": "0841e1c9136400ca88a43ba06e9308fcb4b17eb51df296b2d7bda4d1f87c9a4c"
+    },
+    "change": "Replace nonexistent pack tenant lookup with exact global pack identity lock; retain existing FK"
+  },
+  "physical_evidence": {
+    "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/physical-validation-20261021/attempt-03/RESULT.json",
+    "sha256": "3351b45f855f87f506df2a00316dccd76849edf2439737b2dce1a0195eb0ab7a"
+  },
+  "physical_checks": "149_PASS_REUSED_IMMUTABLE_EVIDENCE_PG16.15",
+  "preservation": "4359 original files +850 physical artifacts unchanged",
+  "runtime_activation": "NOT_EXECUTED",
+  "sql_executed_this_publication": "NONE",
+  "human_signature_of_derived_bytes": false,
+  "QA_PRODUCTION_MIGRATIONS": "NONE",
+  "IMPORTS": "NONE",
+  "IAM_REGISTRY_ACTIVATIONS": "NONE",
+  "DEPLOYMENTS": "NONE",
+  "INFRASTRUCTURE_CHANGES": "NONE",
+  "GIT_COMMIT_PUSH_MERGE": "NONE",
+  "STEP6A5": "NOT_STARTED",
+  "STEP6A6": "NOT_STARTED"
+}

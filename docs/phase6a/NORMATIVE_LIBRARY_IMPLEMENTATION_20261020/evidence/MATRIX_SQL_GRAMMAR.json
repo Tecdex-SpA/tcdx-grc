@@ -1,0 +1,65 @@
+{
+  "status": "PASS_OFFLINE_GRAMMAR_ONLY",
+  "queries": [
+    {
+      "type": "requirements_controls",
+      "sql": "SELECT to_jsonb(r) AS row_data,to_jsonb(c) AS column_data,to_jsonb(l) AS relation_data,transaction_timestamp() AS read_at FROM regulatory.requirement_control_mappings l JOIN regulatory.requirements r ON r.requirement_id=l.requirement_id JOIN controls.control_versions c ON c.control_version_id=l.control_version_id WHERE (l.tenant_id IS NULL OR l.tenant_id=$1::uuid) AND (r.tenant_id IS NULL OR r.tenant_id=$1::uuid) AND (c.tenant_id IS NULL OR c.tenant_id=$1::uuid) AND (l.effective_from IS NULL OR l.effective_from<=$2::timestamptz) AND (l.effective_to IS NULL OR l.effective_to>$2::timestamptz) AND r.framework_version_id=$3::uuid",
+      "parameters": [
+        "018f47f2-6170-7000-8000-000000000001",
+        "2026-10-20T12:00:00Z",
+        "018f47f2-6170-7000-8000-000000000001"
+      ]
+    },
+    {
+      "type": "controls_evidence",
+      "sql": "SELECT to_jsonb(r) AS row_data,to_jsonb(c) AS column_data,to_jsonb(l) AS relation_data,transaction_timestamp() AS read_at FROM evidence.evidence_links l JOIN controls.controls r ON r.control_id=l.control_id OR r.control_id=(SELECT v.control_id FROM controls.control_versions v WHERE v.control_version_id=l.control_version_id AND v.tenant_id=l.tenant_id) JOIN evidence.evidence_versions c ON c.evidence_version_id=l.evidence_version_id AND c.tenant_id=l.tenant_id WHERE l.tenant_id=$1::uuid AND r.tenant_id=$1::uuid AND (l.effective_from IS NULL OR l.effective_from<=$2::timestamptz) AND (l.effective_to IS NULL OR l.effective_to>$2::timestamptz)",
+      "parameters": [
+        "018f47f2-6170-7000-8000-000000000001",
+        "2026-10-20T12:00:00Z"
+      ]
+    },
+    {
+      "type": "requirements_assessments",
+      "sql": "SELECT to_jsonb(r) AS row_data,to_jsonb(c) AS column_data,to_jsonb(l) AS relation_data,transaction_timestamp() AS read_at FROM regulatory.requirement_applicabilities l JOIN regulatory.requirements r ON r.requirement_id=l.requirement_id JOIN regulatory.requirement_assessments c ON c.requirement_applicability_id=l.requirement_applicability_id AND c.tenant_id=l.tenant_id WHERE l.tenant_id=$1::uuid AND (r.tenant_id IS NULL OR r.tenant_id=$1::uuid) AND (l.effective_from IS NULL OR l.effective_from<=$2::timestamptz) AND (l.effective_to IS NULL OR l.effective_to>$2::timestamptz) AND r.framework_version_id=$3::uuid",
+      "parameters": [
+        "018f47f2-6170-7000-8000-000000000001",
+        "2026-10-20T12:00:00Z",
+        "018f47f2-6170-7000-8000-000000000001"
+      ]
+    },
+    {
+      "type": "frameworks_frameworks",
+      "sql": "SELECT to_jsonb(r) AS row_data,to_jsonb(c) AS column_data,to_jsonb(l) AS relation_data,transaction_timestamp() AS read_at FROM regulatory.framework_crosswalks l JOIN regulatory.framework_versions r ON r.framework_version_id=l.source_framework_version_id JOIN regulatory.framework_versions c ON c.framework_version_id=l.target_framework_version_id WHERE (l.tenant_id IS NULL OR l.tenant_id=$1::uuid) AND (r.tenant_id IS NULL OR r.tenant_id=$1::uuid) AND (c.tenant_id IS NULL OR c.tenant_id=$1::uuid) AND (l.effective_from IS NULL OR l.effective_from<=$2::timestamptz) AND (l.effective_to IS NULL OR l.effective_to>$2::timestamptz) AND r.framework_version_id=$3::uuid AND c.framework_version_id=$4::uuid",
+      "parameters": [
+        "018f47f2-6170-7000-8000-000000000001",
+        "2026-10-20T12:00:00Z",
+        "018f47f2-6170-7000-8000-000000000001",
+        "018f47f2-6170-7000-8000-000000000001"
+      ]
+    },
+    {
+      "type": "obligations_applicability",
+      "sql": "SELECT to_jsonb(r) AS row_data,to_jsonb(c) AS column_data,to_jsonb(l) AS relation_data,transaction_timestamp() AS read_at FROM regulatory.requirement_applicabilities l JOIN regulatory.requirements r ON r.requirement_id=l.requirement_id JOIN regulatory.requirement_applicabilities c ON c.requirement_applicability_id=l.requirement_applicability_id AND c.tenant_id=l.tenant_id WHERE l.tenant_id=$1::uuid AND (r.tenant_id IS NULL OR r.tenant_id=$1::uuid) AND (l.effective_from IS NULL OR l.effective_from<=$2::timestamptz) AND (l.effective_to IS NULL OR l.effective_to>$2::timestamptz) AND r.framework_version_id=$3::uuid",
+      "parameters": [
+        "018f47f2-6170-7000-8000-000000000001",
+        "2026-10-20T12:00:00Z",
+        "018f47f2-6170-7000-8000-000000000001"
+      ]
+    },
+    {
+      "type": "issues_actions",
+      "sql": "SELECT to_jsonb(r) AS row_data,to_jsonb(c) AS column_data,to_jsonb(l) AS relation_data,transaction_timestamp() AS read_at FROM remediation.actions l JOIN remediation.issues r ON r.issue_id=l.issue_id AND r.tenant_id=l.tenant_id JOIN remediation.actions c ON c.action_id=l.action_id AND c.tenant_id=l.tenant_id WHERE l.tenant_id=$1::uuid AND l.created_at<=$2::timestamptz AND r.created_at<=$2::timestamptz",
+      "parameters": [
+        "018f47f2-6170-7000-8000-000000000001",
+        "2026-10-20T12:00:00Z"
+      ]
+    }
+  ],
+  "postgresql_grammar": [
+    16,
+    1
+  ],
+  "database_connections": 0,
+  "sql_executed": false,
+  "catalog_resolution": "NOT_TESTED"
+}

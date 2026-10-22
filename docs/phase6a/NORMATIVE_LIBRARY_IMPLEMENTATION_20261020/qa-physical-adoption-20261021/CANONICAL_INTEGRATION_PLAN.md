@@ -1,0 +1,13 @@
+# Reconciliación canónica imprescindible antes de G3 PASS
+
+No se cambió ningún archivo canónico activo ni contrato sellado. La candidata35 está fuera de database/migrations/manifest.json y no será ejecutada por pipeline/arranque. Sus46 sentencias son los tres bloques publicados byte-idénticos. El runner es exclusivamente scripts/foundations/migrate.ts, con su lock/checksum/ledger transaccional. Nunca usar TCDX_MIGRATION_TEST_MODE para eludir el manifiesto en QA.
+
+Antes de cualquier GO: integrar de forma revisable la candidata en database/migrations/ y añadir una entrada al manifest canónico, preservando34 IDs/checksums anteriores; reconciliar los artefactos derivados que consume el verificador con el modelo ya publicado. database/expected-schema.json sigue242 tablas; el contrato B01–B09 proyecta243 y H04 añade la relación soporte restante. El estado esperado operativo posterior será244 tablas de dominio, no un nuevo modelo de producto.
+
+scripts/foundations/verify-schema.ts enumera migraciones históricas y conserva uq_knowledge_versions__version_number en el set esperado; además, su incorporación C04W depende de tableCount===242. Una simple modificación del conteo perdería ese tramo del chequeo. Se debe preservar la cobertura histórica C04W, reflejar la sustitución UQ Item+version, las columnas y constraints/índices nuevos y verificar las funciones/triggers exactos según el recibo PV-H04-01. No desactivar asserts ni crear un verificador paralelo para declarar PASS ignorando el canónico.
+
+El estado esperado H04 se deriva exclusivamente del DDL/LOGICAL_PHYSICAL_BINDING publicados, sin inventar perfiles o entidades. Deben permanecer las authorities de KnowledgeSource/Version, Configuration y RequirementApplicability; matrices derivadas y permisos efectivos siguen en sus autoridades existentes. No se publica ninguna nueva semántica ni se cambia el snapshot histórico sellado para acomodar el código.
+
+La candidata requiere demostrar con el runner oficial, en un entorno desechable autorizado y sin datos QA copiados por inferencia: rebuild/reapply/checksum, rollback completo ante fallo y coincidencia del esperado derivado. Los149 tests anteriores no cubrieron esta integración de migración/verificador y no se convierten en evidencia de ella. No se ha realizado esa prueba en este ciclo.
+
+Son pendientes técnicos identificados, no nuevas decisiones conceptuales del PO. Mientras esa cadena no esté cerrada, MIGRATION_INTEGRITY_GATE=BLOCKED y no hay DDL QA aunque exista autorización condicional y ventana. Cambiar contratos efectivos o salir del alcance requiere STOP; no se corrige por conveniencia.

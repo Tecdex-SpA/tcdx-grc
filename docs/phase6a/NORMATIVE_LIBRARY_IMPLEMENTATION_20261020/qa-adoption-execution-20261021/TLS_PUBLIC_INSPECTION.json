@@ -1,0 +1,44 @@
+{
+  "observed_at_utc": "2026-10-21T23:25:30.685214+00:00",
+  "target": "192.168.2.40:5432 PostgreSQL STARTTLS",
+  "openssl_version": "OpenSSL 3.6.5 29 Sep 2026 (Library: OpenSSL 3.6.5 29 Sep 2026)",
+  "command": [
+    "/opt/homebrew/opt/openssl@3/bin/openssl",
+    "s_client",
+    "-starttls",
+    "postgres",
+    "-connect",
+    "192.168.2.40:5432",
+    "-showcerts",
+    "-verify_return_error",
+    "-verify_ip",
+    "192.168.2.40"
+  ],
+  "duration_seconds": 0.1574,
+  "network_exit_code": 1,
+  "verification_fatal": true,
+  "verification_disabled": false,
+  "database_authentication_attempted": false,
+  "public_chain_certificates_presented": 1,
+  "certificate_artifact": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-execution-20261021/TLS_PUBLIC_CERT_OBSERVED_UNTRUSTED.pem",
+  "certificate_pem_sha256": "0a99469321c1117cdf3154a7e5c5e50dd42f719af7b8b1a647fa0bb55179519b",
+  "metadata": {
+    "exit_code": 0,
+    "stdout": "subject=CN=db-tecdex\nissuer=CN=db-tecdex\nnotBefore=May 17 20:59:33 2026 GMT\nnotAfter=May 14 20:59:33 2036 GMT\nserial=19C96762B6237D8AD7A2A415FA11556376D1EB2C\nsha256 Fingerprint=FB:68:09:DA:13:9E:E3:E5:2C:2F:1F:EA:D7:5B:11:92:7B:04:B8:96:7A:2B:5D:B8:46:9C:B6:70:E3:BB:A3:E6\nX509v3 Subject Alternative Name: \n    DNS:db-tecdex",
+    "stderr": ""
+  },
+  "authorized_IP_identity_check": {
+    "exit_code": 1,
+    "stdout": "IP 192.168.2.40 does NOT match certificate",
+    "stderr": ""
+  },
+  "verification_diagnostics": [
+    "Verification error: self-signed certificate",
+    "Verify return code: 18 (self-signed certificate)",
+    "verify error:num=18:self-signed certificate",
+    "805D64EE01000000:error:0A000086:SSL routines:tls_post_process_server_certificate:certificate verify failed:ssl/statem/statem_clnt.c:2126:"
+  ],
+  "trusted_administrative_binding": "NOT_AVAILABLE",
+  "trust_installed": "NONE",
+  "decision": "BLOCKED_NO_DDL_NO_WINDOW"
+}

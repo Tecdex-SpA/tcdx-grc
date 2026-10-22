@@ -1,0 +1,58 @@
+[
+  {
+    "check": "verified-affected-unit-contract",
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "packages/contracts/src",
+      "apps/frontend/src",
+      "apps/backend/src/core-grc",
+      "apps/backend/src/normative-library",
+      "apps/backend/src/configuration",
+      "apps/backend/src/regulatory",
+      "apps/backend/src/app.test.ts",
+      "--exclude",
+      "**/*.postgres.test.ts",
+      "--maxWorkers=2"
+    ],
+    "duration_seconds": 8.946,
+    "status": "PASS",
+    "exit_code": 0,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/verified-affected-unit-contract.log",
+    "sha256": "ed9bcfa4ab06fa4a8ea36aebf4dbfa5fe1635a4e40b7e07e6ae5b2101099ad5d"
+  },
+  {
+    "check": "verified-backend-build-lint",
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "-p",
+      "apps/backend/tsconfig.json"
+    ],
+    "duration_seconds": 0.791,
+    "status": "PASS",
+    "exit_code": 0,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/verified-backend-build-lint.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "check": "verified-focused",
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "apps/backend/src/normative-library",
+      "apps/backend/src/configuration",
+      "apps/frontend/src/normative-library-client.test.ts",
+      "--exclude",
+      "**/*.postgres.test.ts",
+      "--maxWorkers=2"
+    ],
+    "duration_seconds": 2.43,
+    "status": "PASS",
+    "exit_code": 0,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/verified-focused.log",
+    "sha256": "602407c3b7d2c51e4d756df2d8f9179c8937aded733dcf47c8c89b4b685df20f"
+  }
+]

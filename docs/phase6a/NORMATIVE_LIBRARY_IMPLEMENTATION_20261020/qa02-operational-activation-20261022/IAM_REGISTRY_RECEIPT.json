@@ -1,0 +1,395 @@
+{
+  "status": "BLOCKED_NOT_EXECUTED",
+  "reason": "Canonical publisher requires fresh M2M authentication; credential and private operator socket are absent in this local session. Only PostgreSQL QA connection is authorized; no backend deployment or remote secret transfer performed.",
+  "writes": 0,
+  "new_audit_ids": [],
+  "state_before_after": "IDENTICAL",
+  "canonical_mechanism": "IamPublicationService.publishNormativeLibrary / iam.library.publish",
+  "publisher": [
+    {
+      "service_principal_id": "01a13c3b-dbdd-763f-bcbb-f16ff41d99ba",
+      "principal_code": "grc-qa-iam-publisher",
+      "principal_kind": "MACHINE_TO_MACHINE",
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_id": null,
+      "lifecycle_state": "active",
+      "credential_ref": "/run/secrets/iam_publisher_client_secret"
+    }
+  ],
+  "pending_permissions": [
+    "knowledge.knowledge_item.read",
+    "knowledge.knowledge_item.create",
+    "knowledge.knowledge_item.update",
+    "knowledge.knowledge_item.review",
+    "knowledge.knowledge_item.publish",
+    "knowledge.knowledge_source.read",
+    "knowledge.knowledge_source.create",
+    "reporting.matrix.read"
+  ],
+  "approved_base_pairs": [
+    {
+      "permission": "knowledge.knowledge_item.read",
+      "role": "PLATFORM_ADMIN",
+      "scope": "platform",
+      "policy": "KNOWLEDGE_GLOBAL_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_item.read",
+      "role": "PLATFORM_SUPPORT",
+      "scope": "platform",
+      "policy": "KNOWLEDGE_SUPPORT_METADATA"
+    },
+    {
+      "permission": "knowledge.knowledge_item.read",
+      "role": "TENANT_ADMIN",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_item.read",
+      "role": "GRC_MANAGER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_item.read",
+      "role": "COMPLIANCE_MANAGER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_item.read",
+      "role": "CONTROL_OWNER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_item.read",
+      "role": "EVIDENCE_OWNER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_item.read",
+      "role": "ACTION_OWNER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_item.read",
+      "role": "VIEWER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_item.create",
+      "role": "PLATFORM_ADMIN",
+      "scope": "platform",
+      "policy": "KNOWLEDGE_GLOBAL_AUTHOR"
+    },
+    {
+      "permission": "knowledge.knowledge_item.create",
+      "role": "TENANT_ADMIN",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_AUTHOR"
+    },
+    {
+      "permission": "knowledge.knowledge_item.create",
+      "role": "GRC_MANAGER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_AUTHOR"
+    },
+    {
+      "permission": "knowledge.knowledge_item.update",
+      "role": "PLATFORM_ADMIN",
+      "scope": "platform",
+      "policy": "KNOWLEDGE_GLOBAL_AUTHOR"
+    },
+    {
+      "permission": "knowledge.knowledge_item.update",
+      "role": "TENANT_ADMIN",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_AUTHOR"
+    },
+    {
+      "permission": "knowledge.knowledge_item.update",
+      "role": "GRC_MANAGER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_AUTHOR"
+    },
+    {
+      "permission": "knowledge.knowledge_item.review",
+      "role": "PLATFORM_ADMIN",
+      "scope": "platform",
+      "policy": "KNOWLEDGE_GLOBAL_REVIEW"
+    },
+    {
+      "permission": "knowledge.knowledge_item.review",
+      "role": "GRC_MANAGER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_REVIEW"
+    },
+    {
+      "permission": "knowledge.knowledge_item.publish",
+      "role": "PLATFORM_ADMIN",
+      "scope": "platform",
+      "policy": "KNOWLEDGE_GLOBAL_PUBLISH"
+    },
+    {
+      "permission": "knowledge.knowledge_item.publish",
+      "role": "GRC_MANAGER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_PUBLISH"
+    },
+    {
+      "permission": "knowledge.knowledge_source.read",
+      "role": "PLATFORM_ADMIN",
+      "scope": "platform",
+      "policy": "KNOWLEDGE_GLOBAL_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_source.read",
+      "role": "PLATFORM_SUPPORT",
+      "scope": "platform",
+      "policy": "KNOWLEDGE_SUPPORT_METADATA"
+    },
+    {
+      "permission": "knowledge.knowledge_source.read",
+      "role": "TENANT_ADMIN",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_source.read",
+      "role": "GRC_MANAGER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_source.read",
+      "role": "COMPLIANCE_MANAGER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_source.read",
+      "role": "CONTROL_OWNER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_source.read",
+      "role": "EVIDENCE_OWNER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_source.read",
+      "role": "ACTION_OWNER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_source.read",
+      "role": "VIEWER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_source.create",
+      "role": "PLATFORM_ADMIN",
+      "scope": "platform",
+      "policy": "KNOWLEDGE_GLOBAL_AUTHOR"
+    },
+    {
+      "permission": "knowledge.knowledge_source.create",
+      "role": "TENANT_ADMIN",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_AUTHOR"
+    },
+    {
+      "permission": "knowledge.knowledge_source.create",
+      "role": "GRC_MANAGER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_AUTHOR"
+    },
+    {
+      "permission": "reporting.matrix.read",
+      "role": "TENANT_ADMIN",
+      "scope": "tenant",
+      "policy": "MATRIX_SOURCE_INTERSECTION"
+    },
+    {
+      "permission": "reporting.matrix.read",
+      "role": "GRC_MANAGER",
+      "scope": "tenant",
+      "policy": "MATRIX_SOURCE_INTERSECTION"
+    },
+    {
+      "permission": "reporting.matrix.read",
+      "role": "COMPLIANCE_MANAGER",
+      "scope": "tenant",
+      "policy": "MATRIX_SOURCE_INTERSECTION"
+    },
+    {
+      "permission": "reporting.matrix.read",
+      "role": "CONTROL_OWNER",
+      "scope": "tenant",
+      "policy": "MATRIX_SOURCE_INTERSECTION"
+    },
+    {
+      "permission": "reporting.matrix.read",
+      "role": "EVIDENCE_OWNER",
+      "scope": "tenant",
+      "policy": "MATRIX_SOURCE_INTERSECTION"
+    },
+    {
+      "permission": "reporting.matrix.read",
+      "role": "ACTION_OWNER",
+      "scope": "tenant",
+      "policy": "MATRIX_SOURCE_INTERSECTION"
+    },
+    {
+      "permission": "reporting.matrix.read",
+      "role": "VIEWER",
+      "scope": "tenant",
+      "policy": "MATRIX_SOURCE_INTERSECTION"
+    },
+    {
+      "permission": "configuration.configuration_override.approve",
+      "role": "GRC_MANAGER",
+      "scope": "tenant",
+      "policy": "CONTROL_OVERRIDE_DECIDER"
+    }
+  ],
+  "limited_grant": {
+    "code": "configuration.configuration_override.approve",
+    "capability": "CORE_PLATFORM",
+    "current_base_grant": "NONE",
+    "contract_role": "GRC_MANAGER",
+    "scope": "tenant",
+    "policy": "CONTROL_OVERRIDE_DECIDER",
+    "only_configuration_codes": [
+      "control_operational_activity",
+      "control_recommended_evidence",
+      "control_operational_frequency",
+      "control_operational_confirmation"
+    ],
+    "runtime_activation": "NOT_AUTHORIZED_NOT_EXECUTED"
+  },
+  "observed_existing_permissions": [
+    {
+      "permission_id": "01a0a783-6000-7983-ad36-dd029e92f9fc",
+      "permission_code": "configuration.configuration_override.approve",
+      "domain_code": "configuration",
+      "resource_code": "configuration_override",
+      "action_code": "approve",
+      "lifecycle_state": "published"
+    },
+    {
+      "permission_id": "01a0a783-6000-710f-802c-35227d69ab46",
+      "permission_code": "configuration.configuration_override.review",
+      "domain_code": "configuration",
+      "resource_code": "configuration_override",
+      "action_code": "review",
+      "lifecycle_state": "published"
+    },
+    {
+      "permission_id": "01a0a783-6000-7932-88ca-b27273dabaf4",
+      "permission_code": "configuration.configuration_override.update",
+      "domain_code": "configuration",
+      "resource_code": "configuration_override",
+      "action_code": "update",
+      "lifecycle_state": "published"
+    }
+  ],
+  "observed_existing_grants": [
+    {
+      "role_permission_id": "01a0a783-6000-7bf1-97ed-157df888112a",
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_id": null,
+      "role_id": "01a0a783-6000-741a-84b1-1e1041772050",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "configuration.configuration_override.review"
+    },
+    {
+      "role_permission_id": "01a0a783-6000-7185-889f-12aaa5a843d0",
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_id": null,
+      "role_id": "01a0a783-6000-741a-84b1-1e1041772050",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "configuration.configuration_override.update"
+    },
+    {
+      "role_permission_id": "01a0a783-6000-7773-9082-9e395c6b6abf",
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_id": null,
+      "role_id": "01a0a783-6000-7a04-aa2e-69e3c85fb544",
+      "role_code": "TENANT_ADMIN",
+      "permission_code": "configuration.configuration_override.update"
+    },
+    {
+      "role_permission_id": "01a0cfc7-0da3-7112-a9da-c4191a8d6473",
+      "ownership_class": "TENANT_OWNED",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "role_id": "01a0cfc7-0cd8-75d8-9c78-559d08511c28",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "configuration.configuration_override.review"
+    },
+    {
+      "role_permission_id": "01a0cfc7-0db7-717b-8e53-c098e46ac6eb",
+      "ownership_class": "TENANT_OWNED",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "role_id": "01a0cfc7-0cd8-75d8-9c78-559d08511c28",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "configuration.configuration_override.update"
+    },
+    {
+      "role_permission_id": "01a0cfc7-0e4b-70b1-8ca5-da3bf634c7c0",
+      "ownership_class": "TENANT_OWNED",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "role_id": "01a0cfc7-0ce1-72ce-a89e-69a957b73491",
+      "role_code": "TENANT_ADMIN",
+      "permission_code": "configuration.configuration_override.update"
+    },
+    {
+      "role_permission_id": "01a11820-afb7-701f-a4db-e13e18f02d64",
+      "ownership_class": "TENANT_OWNED",
+      "tenant_id": "01a11820-ae9f-7485-93e5-942eaec71121",
+      "role_id": "01a11820-aee0-723e-9fd4-e3fa8dc2e63a",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "configuration.configuration_override.review"
+    },
+    {
+      "role_permission_id": "01a11820-afca-71eb-9980-9e1dc7cc894c",
+      "ownership_class": "TENANT_OWNED",
+      "tenant_id": "01a11820-ae9f-7485-93e5-942eaec71121",
+      "role_id": "01a11820-aee0-723e-9fd4-e3fa8dc2e63a",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "configuration.configuration_override.update"
+    },
+    {
+      "role_permission_id": "01a11820-b054-71df-b57d-d5ab8a28c077",
+      "ownership_class": "TENANT_OWNED",
+      "tenant_id": "01a11820-ae9f-7485-93e5-942eaec71121",
+      "role_id": "01a11820-aee9-74e6-a214-7c70d71377d6",
+      "role_code": "TENANT_ADMIN",
+      "permission_code": "configuration.configuration_override.update"
+    }
+  ],
+  "local_custody": [
+    {
+      "path": "/run/secrets/iam_publisher_client_secret",
+      "present": false
+    },
+    {
+      "path": "/Users/andresbarouh/.secrets/tcdx-grc-qa/iam-publisher-client-secret",
+      "present": false
+    },
+    {
+      "path": "/run/tcdx-operator/catalog.sock",
+      "present": false
+    }
+  ],
+  "scope_or_permission_widening": "NONE"
+}

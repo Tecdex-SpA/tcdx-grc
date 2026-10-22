@@ -1,0 +1,231 @@
+waiting for server to start.... done
+server started
+20260916000100 applied
+20260916000200 applied
+20260916000300 applied
+20260916000400 applied
+20260916000500 applied
+20260916000600 applied
+20260916000700 applied
+20260916000800 applied
+20260916000900 applied
+20260916001000 applied
+20260921000100 applied
+20260921000200 applied
+20260923000100 applied
+20260923000200 applied
+20260924000100 applied
+20260924000200 applied
+20260924000300 applied
+20260925000100 applied
+20260928000100 applied
+20260928000200 applied
+20260928000300 applied
+20260928000400 applied
+20260929000100 applied
+20260929000200 applied
+20260929000300 applied
+20261001000100 applied
+20261006000100 applied
+20261006000200 applied
+20261007000100 applied
+20261007000200 applied
+20261009000100 applied
+20261009000200 applied
+20261013000100 applied
+20261015000100 applied
+20261021221204 applied
+
+ RUN  v5.0.1 /Users/andresbarouh/repos/tcdx-grc
+
+ ❯ apps/backend/src/security/normative-library-publication.postgres.test.ts (35 tests | 24 failed) 526ms
+   ❯ B01–B09 operational preparation on task-owned PG16 (35)
+     × rolls back catalog, bindings, Definitions and audits on any failure 89ms
+     × publishes the exact catalog, 13 bindings and four Definitions atomically, and replays without duplicates 68ms
+     × serializes two concurrent replays without duplicate rows or audit 69ms
+     × adopts and rejects drift for knowledgeVersionUpdate 1ms
+     × adopts and rejects drift for knowledgeVersionReview.reviewed 0ms
+     × adopts and rejects drift for knowledgeVersionReview.rejected 0ms
+     × adopts and rejects drift for knowledgeVersionPublish 0ms
+     × adopts and rejects drift for platformKnowledgeVersionUpdate 1ms
+     × adopts and rejects drift for platformKnowledgeVersionReview.reviewed 0ms
+     × adopts and rejects drift for platformKnowledgeVersionReview.rejected 0ms
+     × adopts and rejects drift for platformKnowledgeVersionPublish 0ms
+     × adopts and rejects drift for configurationOverrideUpdate 0ms
+     × adopts and rejects drift for configurationOverrideReview.reviewed 0ms
+     × adopts and rejects drift for configurationOverrideReview.rejected 0ms
+     × adopts and rejects drift for configurationOverrideDecide.approved 0ms
+     × adopts and rejects drift for configurationOverrideDecide.rejected 0ms
+     × publishes control_operational_activity@1 with one exact scope and rule; eligible for B04 8ms
+     × publishes control_recommended_evidence@1 with one exact scope and rule; eligible for B04 2ms
+     × publishes control_operational_frequency@1 with one exact scope and rule; eligible for B04 2ms
+     × publishes control_operational_confirmation@1 with one exact scope and rule; eligible for B04 2ms
+     × enforces canonical roles, Platform/Tenant separation, missing permission, default DENY and tenant isolation 1ms
+     × preserves contextual B04 create and rejects self-review with the real policy and PostgreSQL 2ms
+     × records exact attested synthetic rights with canonical audit and no duplicate or overlapping grants 4ms
+     × revokes once with canonical audit; preserves immutable history and default DENY 1ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 24 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > rolls back catalog, bindings, Definitions and audits on any failure
+AssertionError: expected [Function] to throw error including 'synthetic audit fault' but got 'new row for relation "configuration_d…'
+
+Expected: "synthetic audit fault"
+Received: "new row for relation "configuration_definitions" violates check constraint "ck_configuration_definitions__typed_default""
+
+ ❯ apps/backend/src/security/normative-library-publication.postgres.test.ts:66:30
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/24]⎯
+
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > publishes the exact catalog, 13 bindings and four Definitions atomically, and replays without duplicates
+error: new row for relation "configuration_definitions" violates check constraint "ck_configuration_definitions__typed_default"
+ ❯ node_modules/.pnpm/pg@8.23.0/node_modules/pg/lib/client.js:694:17
+ ❯ PostgresConnection.executeQuery node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/dialect/postgres/postgres-driver.js:113:28
+ ❯ node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/query-executor/query-executor-base.js:39:24
+ ❯ SingleConnectionProvider.#run node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/driver/single-connection-provider.js:24:16
+ ❯ DefaultQueryExecutor.executeQuery node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/query-executor/query-executor-base.js:38:28
+ ❯ publishLibraryOperationalData apps/backend/src/security/normative-library-publication.ts:122:4
+
+ ❯ node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/kysely.js:680:32
+ ❯ DefaultConnectionProvider.provideConnection node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/driver/default-connection-provider.js:10:20
+ ❯ apps/backend/src/security/normative-library-publication.postgres.test.ts:70:15
+ ❯ PostgresConnection.executeQuery node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/dialect/postgres/postgres-driver.js:126:41
+ ❯ node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/query-executor/query-executor-base.js:39:24
+ ❯ SingleConnectionProvider.#run node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/driver/single-connection-provider.js:24:16
+ ❯ DefaultQueryExecutor.executeQuery node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/query-executor/query-executor-base.js:38:28
+ ❯ publishLibraryOperationalData apps/backend/src/security/normative-library-publication.ts:122:4
+ ❯ node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/kysely.js:680:32
+ ❯ DefaultConnectionProvider.provideConnection node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/driver/default-connection-provider.js:10:20
+ ❯ apps/backend/src/security/normative-library-publication.postgres.test.ts:70:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/24]⎯
+
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > serializes two concurrent replays without duplicate rows or audit
+error: new row for relation "configuration_definitions" violates check constraint "ck_configuration_definitions__typed_default"
+ ❯ node_modules/.pnpm/pg@8.23.0/node_modules/pg/lib/client.js:694:17
+ ❯ PostgresConnection.executeQuery node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/dialect/postgres/postgres-driver.js:113:28
+ ❯ node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/query-executor/query-executor-base.js:39:24
+ ❯ SingleConnectionProvider.#run node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/driver/single-connection-provider.js:24:16
+ ❯ DefaultQueryExecutor.executeQuery node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/query-executor/query-executor-base.js:38:28
+ ❯ publishLibraryOperationalData apps/backend/src/security/normative-library-publication.ts:122:4
+
+ ❯ node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/kysely.js:680:32
+ ❯ DefaultConnectionProvider.provideConnection node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/driver/default-connection-provider.js:10:20
+ ❯ PostgresConnection.executeQuery node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/dialect/postgres/postgres-driver.js:126:41
+ ❯ node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/query-executor/query-executor-base.js:39:24
+ ❯ SingleConnectionProvider.#run node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/driver/single-connection-provider.js:24:16
+ ❯ DefaultQueryExecutor.executeQuery node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/query-executor/query-executor-base.js:38:28
+ ❯ publishLibraryOperationalData apps/backend/src/security/normative-library-publication.ts:122:4
+ ❯ node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/kysely.js:680:32
+ ❯ DefaultConnectionProvider.provideConnection node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/driver/default-connection-provider.js:10:20
+ ❯ apps/backend/src/security/normative-library-publication.postgres.test.ts:75:50
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/24]⎯
+
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > adopts and rejects drift for knowledgeVersionUpdate
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > adopts and rejects drift for knowledgeVersionReview.reviewed
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > adopts and rejects drift for knowledgeVersionReview.rejected
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > adopts and rejects drift for knowledgeVersionPublish
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > adopts and rejects drift for platformKnowledgeVersionUpdate
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > adopts and rejects drift for platformKnowledgeVersionReview.reviewed
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > adopts and rejects drift for platformKnowledgeVersionReview.rejected
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > adopts and rejects drift for platformKnowledgeVersionPublish
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > adopts and rejects drift for configurationOverrideUpdate
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > adopts and rejects drift for configurationOverrideReview.reviewed
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > adopts and rejects drift for configurationOverrideReview.rejected
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > adopts and rejects drift for configurationOverrideDecide.approved
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > adopts and rejects drift for configurationOverrideDecide.rejected
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ apps/backend/src/security/normative-library-publication.postgres.test.ts:82:42
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/24]⎯
+
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > publishes control_operational_activity@1 with one exact scope and rule; eligible for B04
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > publishes control_recommended_evidence@1 with one exact scope and rule; eligible for B04
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > publishes control_operational_frequency@1 with one exact scope and rule; eligible for B04
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > publishes control_operational_confirmation@1 with one exact scope and rule; eligible for B04
+AssertionError: expected [] to have a length of 4 but got +0
+
+- Expected
++ Received
+
+- 4
++ 0
+
+ ❯ apps/backend/src/security/normative-library-publication.postgres.test.ts:87:22
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/24]⎯
+
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > enforces canonical roles, Platform/Tenant separation, missing permission, default DENY and tenant isolation
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ apps/backend/src/security/normative-library-publication.postgres.test.ts:91:209
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/24]⎯
+
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > preserves contextual B04 create and rejects self-review with the real policy and PostgreSQL
+TypeError: Cannot read properties of undefined (reading 'configuration_definition_id')
+ ❯ apps/backend/src/security/normative-library-publication.postgres.test.ts:101:233
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/24]⎯
+
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > records exact attested synthetic rights with canonical audit and no duplicate or overlapping grants
+Error: Access denied
+ ❯ requireAccess apps/backend/src/core-grc/security.ts:131:11
+    129|   const grants = grantedScopes(actor, permission);
+    130|   if (!actor.capabilityGroups.has(capability) || !actor.permissions.ha…
+    131|     throw new FoundationError("TCDX.AUTHORIZATION.DENIED", "Access den…
+       |           ^
+    132|   }
+    133| }
+ ❯ authorizeLibraryOperation apps/backend/src/normative-library/authorization.ts:25:3
+ ❯ authority apps/backend/src/normative-library/rights-publication.ts:22:2
+ ❯ apps/backend/src/normative-library/rights-publication.ts:47:16
+ ❯ node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/kysely.js:680:32
+ ❯ DefaultConnectionProvider.provideConnection node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/driver/default-connection-provider.js:10:20
+ ❯ apps/backend/src/security/normative-library-publication.postgres.test.ts:113:36
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/24]⎯
+
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > revokes once with canonical audit; preserves immutable history and default DENY
+Error: Access denied
+ ❯ requireAccess apps/backend/src/core-grc/security.ts:131:11
+    129|   const grants = grantedScopes(actor, permission);
+    130|   if (!actor.capabilityGroups.has(capability) || !actor.permissions.ha…
+    131|     throw new FoundationError("TCDX.AUTHORIZATION.DENIED", "Access den…
+       |           ^
+    132|   }
+    133| }
+ ❯ authorizeLibraryOperation apps/backend/src/normative-library/authorization.ts:25:3
+ ❯ authority apps/backend/src/normative-library/rights-publication.ts:22:2
+ ❯ apps/backend/src/normative-library/rights-publication.ts:77:16
+ ❯ node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/kysely.js:680:32
+ ❯ DefaultConnectionProvider.provideConnection node_modules/.pnpm/kysely@0.29.5/node_modules/kysely/dist/driver/default-connection-provider.js:10:20
+ ❯ apps/backend/src/security/normative-library-publication.postgres.test.ts:131:10
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/24]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  24 failed | 11 passed (35)
+   Start at  10:33:08
+   Duration  1.44s (import 39%, tests 39%, transform 22%)
+

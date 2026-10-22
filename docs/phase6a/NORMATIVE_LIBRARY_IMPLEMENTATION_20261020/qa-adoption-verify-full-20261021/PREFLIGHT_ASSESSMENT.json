@@ -1,0 +1,19 @@
+{
+  "gates": {
+    "rector": "PASS",
+    "published_sources": "PASS",
+    "QA_identity_TLS_verify_full": "PASS",
+    "34_immutable_migrations_and_sole_pending_35": "PASS",
+    "architectural_consistency": "PASS",
+    "schema_and_all_242_business_fingerprints_no_drift": "PASS",
+    "backup_available_verified_recovery": "PASS",
+    "canonical_client_typecheck_and_4_unit_tests": "PASS",
+    "activity_transactions_locks": "PASS"
+  },
+  "decision": "PASS_PRECHECK",
+  "checked_at_utc": "2026-10-21T23:40:03.757806+00:00",
+  "backup_reference": "QA-LOGICAL-e923e6ecc44845c6920c8fd975f34675",
+  "migration_id": "20261021221204",
+  "migration_sha256": "9279159e88c60fff03f998e33008fb0d675f53e4423df638c9e54f709a773798",
+  "recovery": "Canonical transaction rollback before commit; prior isolated PG16.15 rollback proof reused. Named logical backup recoverable at22:46:47UTC; no PITR. No destructive down or restore inferred after commit."
+}

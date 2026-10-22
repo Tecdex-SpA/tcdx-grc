@@ -1,0 +1,77 @@
+{
+  "PROJECT": "GRC_TECDEX",
+  "ACTIVE_BASELINE": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "CONTRACT_PUBLICATION_RECEIPT": {
+    "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/CONTRACT_PUBLICATION_RECEIPT.json",
+    "sha256": "55fabcdc4ddf4bcab641d9104874649fddb8ae9aeb7a771af93c569cf3fe9699"
+  },
+  "CONTRACT_GATE": "PASS_ORIGINAL_AND_TWO_PUBLISHED_SUCCESSORS",
+  "IMPLEMENTATION_SCOPE": "B01_B09_ONLY",
+  "IMPLEMENTATION": "INCOMPLETE_CODE_PREPARED_NOT_ENABLED",
+  "B01_IMPLEMENTATION": "CODE_PREPARED_CONTRACT_TESTED",
+  "B02_IMPLEMENTATION": "CODE_PREPARED_NOT_WIRED_RIGHTS_BINDING_PENDING",
+  "B03_IMPLEMENTATION": "CODE_PREPARED_NOT_WIRED_RIGHTS_BINDING_PENDING",
+  "B04_IMPLEMENTATION": "CODE_PREPARED_CANONICAL_POLICY_COMPOSITION_PENDING",
+  "B05_IMPLEMENTATION": "CODE_PREPARED_DEFAULT_DENY_RUNTIME_NOT_VALIDATED",
+  "B06_IMPLEMENTATION": "CODE_PREPARED_REGISTRY_CONTRACT_UNBLOCKED_RUNTIME_NOT_VALIDATED",
+  "B07_IMPLEMENTATION": "CODE_PREPARED_HOOKS_NOT_WIRED",
+  "B08_IMPLEMENTATION": "CODE_PREPARED_COMPONENTS_NOT_MOUNTED",
+  "B09_IMPLEMENTATION": "EPHEMERAL_UI_CODE_PREPARED_NOT_MOUNTED",
+  "B10_B11": "DOCUMENTARY_ONLY",
+  "UNIT_CONTRACT_BUILD_GATES": {
+    "expanded_unit_contract": "550_PASS_49_FILES",
+    "last_focused": "110_PASS_6_FILES",
+    "contract_backend_builds": "PASS",
+    "frontend_typecheck_build": "PASS",
+    "derived_contract_assets": "PASS",
+    "isolated_browser": "2_PASS_NOT_PRODUCT_E2E",
+    "historical_failures": "6_RECONCILED_WITH_SEALED_AUTHORITY",
+    "logs": [
+      "evidence/FINAL_VERIFICATION.json",
+      "evidence/LAST_VERIFICATION.json",
+      "evidence/UI_RECEIPT.json"
+    ]
+  },
+  "PHYSICAL_RUNTIME_QA_GATES": "NOT_EXECUTED_BLOCKED_PENDING_PO_AUTHORIZED_MIGRATION_AND_OPERATIONAL_GATES",
+  "RECTOR_INTEGRITY": "PASS",
+  "RECTOR_GATE": "BLOCKED",
+  "RECTOR_GATE_SCOPE": "Rights-dependent composition lacks effective canonical binding; H04 proposal prepared, not effective contract. Integrity gates pass. Implementation closure remains incomplete.",
+  "HUMAN_UI_REVIEW": "PENDING",
+  "MIGRATIONS_EXECUTED": "NONE",
+  "IMPORTS_EXECUTED": "NONE",
+  "DEPLOYMENTS_EXECUTED": "NONE",
+  "OPERATIONAL_IAM_GRANTS_ACTIVATED": "NONE",
+  "STEP6A3_CLOSURE": "PASS",
+  "STEP6A4_CLOSURE": "PASS",
+  "STEP6A5": "NOT_STARTED",
+  "STEP6A6": "NOT_STARTED",
+  "BRANCH": "fix/step6a3-v112-continuity-20261016",
+  "HEAD": "4a275264a7522031e62bf09f598c9d56e21d25e0",
+  "INDEX": "EMPTY_PRESERVED",
+  "FILES_CREATED": 115,
+  "FILES_MODIFIED": 8,
+  "PREEXISTING_FILES_PRESERVED": 4205,
+  "ARCHITECTURAL_LAYERS": {
+    "database": "NOT_CHANGED_NOT_EXECUTED",
+    "executable_contracts": "TWO_NARROW_APPEND_ONLY_LOCAL_AMENDMENTS",
+    "backend": "SOURCE_PREPARED",
+    "frontend": "ISOLATED_COMPONENTS_PREPARED",
+    "infrastructure": "UNCHANGED",
+    "deployment_contracts": "UNCHANGED"
+  },
+  "BLOCKERS": [
+    "H04 rights binding needs exact logical/physical/executable amendment before canonical adapter",
+    "Canonical Definition validation policy and route/hook composition incomplete",
+    "Physical schema/IAM/registry/Definition adoption and real runtime/QA evidence not authorized or performed"
+  ],
+  "QUESTIONS": {
+    "H01_B06": "ANSWERED_AND_PUBLISHED",
+    "H02_KNOWLEDGE_ITEM": "ANSWERED_AND_PUBLISHED",
+    "H03_HISTORICAL_TESTS": "ANSWERED_AND_FIXED",
+    "H04_SOURCE_RIGHTS": "ANSWERED_NO_EXISTING_REGISTER_TECHNICAL_PROPOSAL_ACCEPTED_UNDER_PO_AUTHORIZATION_EXACT_AMENDMENT_PENDING",
+    "pending_PO_questions": []
+  },
+  "NEXT_PO_AUTHORIZATION_NEEDED": "NONE_TO_CONTINUE_CONTRACT_AND_CODE_PREPARATION; future migration/import/grants/registry/seed/deploy require separately scoped PO authorization",
+  "NEXT_SAFE_ACTION": "Concretar y revisar amendment de H04_SOURCE_RIGHTS_PROPOSAL.md; implementar adapter y completar policies/rutas/hooks sin habilitarlos.",
+  "HANDOFF_PATH": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/I10_HANDOFF.md"
+}

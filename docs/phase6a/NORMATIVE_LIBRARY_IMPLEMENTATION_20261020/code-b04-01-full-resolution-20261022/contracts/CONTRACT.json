@@ -1,0 +1,138 @@
+{
+  "status": "EFFECTIVE_LOCAL_CODE_ONLY",
+  "baseline_id": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "authorization": "Current PO instruction RESOLUCIÓN INTEGRAL CODE-B04-01: executable contracts, backend/frontend, tests directly authorized; no intermediate approval, no operational activation.",
+  "operation": {
+    "operation_id": "controlConfigurationDefinitionReferenceList",
+    "path": "/control-versions/{id}/configuration-definition-references",
+    "method": "get",
+    "permission": "configuration.configuration_override.create",
+    "policy": "CONTROL_OVERRIDE_DEFINITION_REFERENCE",
+    "context": "TENANT",
+    "request_schema": null,
+    "response_schema": "ControlDefinitionReferencePage",
+    "success": 200,
+    "audit_event": null,
+    "domain_event": null,
+    "implementation": "LOCAL_CODE",
+    "runtime_grants": "NOT_ACTIVATED"
+  },
+  "schemas": {
+    "ControlDefinitionReferencePage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "control_version_id",
+        "evaluated_at",
+        "items"
+      ],
+      "properties": {
+        "control_version_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "evaluated_at": {
+          "$ref": "#/components/schemas/UtcTimestamp"
+        },
+        "items": {
+          "type": "array",
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "configuration_definition_id",
+              "configuration_code",
+              "definition_version",
+              "value_type",
+              "scope_level",
+              "effective_from",
+              "effective_to",
+              "published_at"
+            ],
+            "properties": {
+              "configuration_definition_id": {
+                "$ref": "#/components/schemas/UuidV7"
+              },
+              "configuration_code": {
+                "enum": [
+                  "control_operational_activity",
+                  "control_recommended_evidence",
+                  "control_operational_frequency",
+                  "control_operational_confirmation"
+                ]
+              },
+              "definition_version": {
+                "$ref": "#/components/schemas/NormativeLibraryPositiveInt64"
+              },
+              "value_type": {
+                "const": "text"
+              },
+              "scope_level": {
+                "const": "control_version"
+              },
+              "effective_from": {
+                "$ref": "#/components/schemas/UtcTimestamp"
+              },
+              "effective_to": {
+                "$ref": "#/components/schemas/UtcTimestamp"
+              },
+              "published_at": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/UtcTimestamp"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "policy": {
+    "all_of": [
+      "HUMAN_INTERACTIVE canonical identity and active own tenant membership",
+      "Existing effective configuration.configuration_override.create / CORE_PLATFORM / tenant scope",
+      "TENANT_ADMIN or GRC_MANAGER as CONTROL_OVERRIDE_AUTHOR",
+      "Target ControlVersion and its parent Control are TENANT_OWNED in the selected tenant; otherwise concealed404",
+      "No Platform permission required or inherited; no grant/config/registry activation",
+      "Only exact published B04 descriptor versions, global PLATFORM_CONTROL Definition, tenant NULL, current interval, both override flags, exact control_version scopes and published validation rules"
+    ],
+    "otherwise": "DENY",
+    "runtime_activated": false
+  },
+  "query_policy": "No query or body. Unknown/duplicate queries reject400. Full bounded0..4 items; no pagination or hidden counts. Server snapshot time, no-store/Vary auth+tenant.",
+  "publication_policy": "lifecycle_state published; published_at nullable preserved; no new states or fabricated timestamps.",
+  "write_revalidation": "Existing create revalidates all conditions under locks. Lost Definition eligibility409 CONFLICT.RESOURCE with field configuration_definition_id; no sensitive existence distinction.",
+  "errors": {
+    "400": "TCDX.VALIDATION.FAILED",
+    "401": "TCDX.AUTHENTICATION.REQUIRED or INVALID",
+    "403": "TCDX.AUTHORIZATION.DENIED",
+    "404": "TCDX.RESOURCE.NOT_FOUND",
+    "409": "TCDX.CONFLICT.RESOURCE",
+    "422": "TCDX.INVARIANT.VIOLATION",
+    "503": "TCDX.DEPENDENCY.UNAVAILABLE",
+    "500": "TCDX.INTERNAL.FAILURE"
+  },
+  "audit": "RO/NAT; no business mutation AuditEvent/domain/outbox/idempotency/lifecycle edge. Existing security telemetry/correlation applies. B04 create/review/decide audit/SoD unchanged.",
+  "rights": "Metadata refs only, no normative/editorial text, effective/default values or source licences. H04 remains conjunctive for any subsequent protected content use.",
+  "physical_delta": "NONE",
+  "permissions_delta": "NONE; contextual input-reference read bound to existing B04 create functional authorization, no extra administrative grant.",
+  "predecessors": [
+    {
+      "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/02_OPENAPI_NORMATIVE_LIBRARY.json",
+      "sha256": "3cf4b1a0c4fb176ad317a1075c124e92707e77e4240ed72b0d088a1358804c10"
+    },
+    {
+      "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/OPERATIONS.json",
+      "sha256": "f0e148f1456c44a44987ddf674f6859d171748b6bbc1057189773d2c4dd3fe06"
+    },
+    {
+      "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/CONFIGURATION_DEFINITIONS.json",
+      "sha256": "3779d8eacd48bf7df28804e70c7fdc62d9c5b43719a94f4a3e57e7a6a1aa01cc"
+    }
+  ]
+}

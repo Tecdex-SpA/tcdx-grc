@@ -1,0 +1,89 @@
+{
+  "contract_name": "TCDX Unified Compliance Control Catalog canonical import contract",
+  "version": "1.1+NORMATIVE_LIBRARY_20261020",
+  "rector_basis": [
+    "44_CONTRATO_ESTRUCTURA_NORMATIVA_REQUISITOS_CONTROLES.md",
+    "37_REGULATORY_PACK_CONTRACT.md",
+    "41_BASELINE_REGULATORIO_OBLIGATORIO.md",
+    "35_SOURCE_PRECEDENCE_CONFLICT_RESOLUTION_POLICY.md"
+  ],
+  "scope": [
+    "ISO_9001_2015",
+    "ISO_9001_2026",
+    "ISO_IEC_27001_2022",
+    "ISO_IEC_42001_2023",
+    "CL_LEY_21719",
+    "CL_LEY_21663"
+  ],
+  "rules": [
+    "Do not add or alter physical schema to fit this catalog.",
+    "Do not import full ISO normative text unless a licensed source is supplied by TCDX.",
+    "NormativeUnit is editorial structure; Requirement is atomic evaluable obligation; Control is operational/reference mechanism.",
+    "Annex A catalog controls are Control/ControlVersion regulatory_reference, not Requirement.",
+    "TCDX baseline controls are PLATFORM_CONTROL, tenant_id NULL, control_origin tcdx_baseline.",
+    "Tenant controls must be instantiated through canonical flows and based_on_control_version_id; do not duplicate global controls by seed.",
+    "UUIDs are UUIDv7 created by the importer. No UUID is stored in this catalog. Upsert/identity uses business keys.",
+    "Published history is immutable. Future licensed reconciliation creates governed versions/mappings; it does not rewrite prior published identities.",
+    "Crosswalks are typed. Do not create generic object_type/object_id relations.",
+    "QA/development use of provisional ISO summaries is allowed; official compliance/readiness use is blocked until licensing and review gates pass.",
+    "Preserve all 211 source candidate IDs and 104 independent proposals; no declaration of315 verified obligations.",
+    "Ten Law21.663 candidates retained; six crosswalks remain preliminary until homologation.",
+    "Raw candidates are manifest/source artifacts until true canonical identity/source/provenance can be assigned; do not fabricate source-origin, authorized/licensed flags or business UUIDs.",
+    "Test publication uses existing NON_AUTHORITATIVE_TEST_PACK, validation provenance/access and contextual rights; official pack gates remain independent.",
+    "The new scope is an amendment of the import contract, not a new 49-file catalogue or permission to run the v1.1 importer on incoming ZIPs."
+  ],
+  "fail_closed_conditions": [
+    "unknown framework_code",
+    "unresolved parent NormativeUnit",
+    "unresolved Requirement normative unit",
+    "unknown TCDX baseline control in RequirementControlMapping",
+    "duplicate business key",
+    "attempt to materialize quarantined relation",
+    "attempt to mark ISO content official/licensed without licensed source manifest"
+  ],
+  "predecessor": {
+    "path": "data/regulatory/catalogs/tcdx-unified-compliance-control-catalog/v1.1/canonical_import_contract.json",
+    "sha256": "5cc7549a2451425916ffb158b05b3cc386f5ac78c5d0e0f0ea58ad0cdb5f009e",
+    "version": "1.1"
+  },
+  "executed_imports": false,
+  "adapter_implementation_authorized": false,
+  "source_origin_delta": {
+    "existing": [
+      "licensed_file",
+      "official_source"
+    ],
+    "added": "received_preliminary_file",
+    "necessity": "Regulatory SourceOrigin currently has only licensed_file and official_source; neither truthfully represents a received preliminary preparation/review ZIP. Supporting source roles describe purpose, not acquisition origin. No reinterpretation of either existing origin is allowed.",
+    "representation": "Import input/provenance artifact only, included in canonical import checksum; no new physical column, table, or authority class",
+    "constraints": {
+      "authorityClass": "NON_AUTHORITATIVE_TEST_PACK",
+      "authorized": false,
+      "licenseClassification": "non_authoritative_test_pack",
+      "commercialPublicationEligible": false,
+      "certificationAssertionEligible": false,
+      "devDemoExecutionEligible": true,
+      "forbidden_source_role": "authorized_normative_source"
+    },
+    "rights": "Receipt is not a license. Preserve actual rights per act and source; unknown rights deny protected reproduction only. licenseClassification describes non-authoritative use, not a grant of rights.",
+    "source_locator": "Immutable received artifact/member locator with SHA256 and edition, via existing governance.provenance and object provenanceRef. officialUri identifies the authentic external reference when known; it never claims the received ZIP is official. Missing authentic source identity keeps raw candidates outside canonical import.",
+    "promotion": "No in-place origin/authority promotion. Later authentic source creates governed source/version and explicit reviewed mappings; no historical rewrite."
+  },
+  "law_21663_compatibility": {
+    "sourceType": "law",
+    "authorized_origin": "official_source",
+    "authorized_source": "Authentic Chilean legal source with exact edition/disposition citations and source checksum; verify publisher/URI/source against that artifact before official publication",
+    "preliminary_origin": "received_preliminary_file",
+    "temporal": "Per authentic edition/disposition and transition conditions. Never reuse the fixed CL_LEY_21719 principal effective date or invent a uniform date. Unresolved temporal metadata blocks the affected canonical import, not independent package work.",
+    "existing_21719": "Preserve existing official source, date and historical versions literally. No reclassification of its published official source as test content.",
+    "adapter_delta": "Dispatch both law codes by their published source contracts. Only ISO codes require sourceType=standard. Extend allowlists and governed input validation without executing the historical v1.1 catalogue importer on these ZIPs.",
+    "approval": "Official gate retains Regulatory Content Steward, Compliance Manager, GRC Manager and the legal/security review applicable to the authentic law source; source coverage and operational SoD are not waived by development authorization."
+  },
+  "provisional_execution_boundary": {
+    "review": "Preserve reviewed=false/pending candidates and real review outcomes; receipt or shape validation does not approve them.",
+    "access": "Existing RegulatoryPackValidationAccess, validation provenance and demo/test tenant classifications, development/test/qa only; no production official use. No access rows or grants created by this contract.",
+    "identities": "211 candidates, 104 independent proposals and six preliminary crosswalks remain source populations, not homologated canonical obligations.",
+    "rights_provenance": "Preserve original ZIP SHA, member locator/row ID/hash, publisher as actually declared, edition, reception/source provenance and actual rights evidence separately from review and official publication.",
+    "gates": "Each package source/edition/coverage/review/official gate is independent; unavailable rights for one protected body do not block unrelated metadata, original editorial or permitted internal tests."
+  }
+}

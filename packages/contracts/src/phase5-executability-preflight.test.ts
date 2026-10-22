@@ -1,3 +1,4 @@
+import { publishedCoverage } from "./testing/published-coverage.js";
 import { describe, expect, it } from "vitest";
 import expectedSchemaSource from "../../../database/expected-schema.json?raw";
 import migration from "../../../database/migrations/20260921000100_pre_f5c_executable_physical_reconciliation.sql?raw";
@@ -96,8 +97,8 @@ describe("PRE-F5C Phase 5 executability preflight", () => {
   const tables = new Map(expectedSchema.tables.map((table) => [table.name, table]));
 
   it("keeps PRE-F5C mutability intact in the approved cumulative table inventory", () => {
-    expect(expectedSchema.tableCount).toBe(242);
-    expect(expectedSchema.tables).toHaveLength(242);
+    expect(expectedSchema.tableCount).toBe(244);
+    expect(expectedSchema.tables).toHaveLength(244);
     expect(tables.has("evidence.file_upload_intents")).toBe(true);
     const mutable = [
       "regulatory.requirement_applicabilities",
@@ -139,10 +140,10 @@ describe("PRE-F5C Phase 5 executability preflight", () => {
   });
 
   it("keeps all OpenAPI operations aligned with the matrix and includes the RetentionPolicy lifecycle", () => {
-    expect(openApiOperations.size).toBe(Number(matrixSource.match(/`CONTRACTUAL_OPERATIONS=(\d+)`/)?.[1]));
+    expect(openApiOperations.size).toBe(publishedCoverage(matrixSource).total);
     expect(matrixOperations.size).toBe(openApiOperations.size);
-    expect([...openApiOperations.values()].filter(({ method }) => method === "get")).toHaveLength(Number(matrixSource.match(/`PUBLIC_READ_OPERATIONS=(\d+)`/)?.[1]));
-    expect([...openApiOperations.values()].filter(({ method }) => method === "post")).toHaveLength(111);
+    expect([...openApiOperations.values()].filter(({ method }) => method === "get")).toHaveLength(publishedCoverage(matrixSource).reads);
+    expect([...openApiOperations.values()].filter(({ method }) => method === "post")).toHaveLength(publishedCoverage(matrixSource).posts);
     expect([...openApiOperations.values()].filter(({ method }) => method === "put")).toHaveLength(1);
     for (const [id, operation] of openApiOperations) expect(matrixOperations.get(id), id).toMatchObject({ method: operation.method, path: operation.path });
     const required: Record<string, [string, string]> = {
@@ -252,8 +253,8 @@ describe("PRE-F5C Phase 5 executability preflight", () => {
     }
     const operationAudits = [...matrixOperations.values()].map(({ audit }) => audit).filter((audit) => audit !== "NONE");
     const uniqueAudits = new Set([...operationAudits, ...edges.map(({ audit }) => audit)]);
-    expect(operationAudits).toHaveLength(112);
-    expect(uniqueAudits.size).toBe(185);
+    expect(operationAudits).toHaveLength(publishedCoverage(matrixSource).mutations);
+    expect(uniqueAudits.size).toBe(185 + publishedCoverage(matrixSource).addedAuditCount);
     expect(auditCatalog).toContain("PUBLISHED_AUDIT_EVENT_CODES=168");
     expect(auditCatalog).toContain("exactly one material AuditEvent");
   });

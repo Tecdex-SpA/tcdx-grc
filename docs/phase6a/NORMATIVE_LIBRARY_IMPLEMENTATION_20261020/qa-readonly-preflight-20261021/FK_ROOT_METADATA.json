@@ -1,0 +1,473 @@
+{
+  "label": "FK_ROOT_METADATA",
+  "command": "psql fixed canonical QA endpoint; pgpass via libpq; no credential values logged",
+  "sql_sha256": "4dd648c7100445f76ea3547c610c29c2e83e4d5b10fd71f112ec54080f55aa54",
+  "duration_seconds": 0.3423,
+  "exit_code": 0,
+  "at_utc": "2026-10-21T21:20:11.179085+00:00",
+  "show_transaction_read_only": "on",
+  "results": [
+    {
+      "user": "postgres",
+      "version": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, 64-bit",
+      "category": "identity",
+      "database": "tcdx-grc",
+      "in_recovery": false,
+      "server_port": 5432,
+      "cluster_name": "16/main",
+      "lock_timeout": "1s",
+      "role_superuser": true,
+      "server_address": "192.168.2.40",
+      "statement_timeout": "5s",
+      "server_version_num": "160015",
+      "transaction_read_only": "on",
+      "default_transaction_read_only": "on"
+    },
+    {
+      "rows": [
+        {
+          "name": "iam.user_identities",
+          "owner": "postgres",
+          "relkind": "r",
+          "estimated_rows": 7,
+          "relrowsecurity": false,
+          "relforcerowsecurity": false
+        },
+        {
+          "name": "platform.tenants",
+          "owner": "postgres",
+          "relkind": "r",
+          "estimated_rows": -1,
+          "relrowsecurity": false,
+          "relforcerowsecurity": false
+        }
+      ],
+      "category": "relations"
+    },
+    {
+      "rows": [
+        {
+          "name": "user_identity_id",
+          "type": "uuid",
+          "relation": "iam.user_identities",
+          "attnotnull": true,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "relation": "iam.user_identities",
+          "attnotnull": true,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "relation": "iam.user_identities",
+          "attnotnull": false,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "relation": "iam.user_identities",
+          "attnotnull": false,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": null
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "relation": "iam.user_identities",
+          "attnotnull": true,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_by_user_identity_id",
+          "type": "uuid",
+          "relation": "iam.user_identities",
+          "attnotnull": false,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": null
+        },
+        {
+          "name": "updated_by_service_principal_id",
+          "type": "uuid",
+          "relation": "iam.user_identities",
+          "attnotnull": false,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": null
+        },
+        {
+          "name": "row_version",
+          "type": "bigint",
+          "relation": "iam.user_identities",
+          "attnotnull": true,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": "1"
+        },
+        {
+          "name": "identity_key",
+          "type": "character varying(255)",
+          "relation": "iam.user_identities",
+          "attnotnull": true,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": null
+        },
+        {
+          "name": "display_name",
+          "type": "text",
+          "relation": "iam.user_identities",
+          "attnotnull": true,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": null
+        },
+        {
+          "name": "email_normalized",
+          "type": "text",
+          "relation": "iam.user_identities",
+          "attnotnull": false,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": null
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "character varying(32)",
+          "relation": "iam.user_identities",
+          "attnotnull": true,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": null
+        },
+        {
+          "name": "last_authenticated_at",
+          "type": "timestamp with time zone",
+          "relation": "iam.user_identities",
+          "attnotnull": false,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": null
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "relation": "platform.tenants",
+          "attnotnull": true,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "relation": "platform.tenants",
+          "attnotnull": true,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "relation": "platform.tenants",
+          "attnotnull": false,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "relation": "platform.tenants",
+          "attnotnull": false,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": null
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "relation": "platform.tenants",
+          "attnotnull": true,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_by_user_identity_id",
+          "type": "uuid",
+          "relation": "platform.tenants",
+          "attnotnull": false,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": null
+        },
+        {
+          "name": "updated_by_service_principal_id",
+          "type": "uuid",
+          "relation": "platform.tenants",
+          "attnotnull": false,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": null
+        },
+        {
+          "name": "row_version",
+          "type": "bigint",
+          "relation": "platform.tenants",
+          "attnotnull": true,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": "1"
+        },
+        {
+          "name": "tenant_code",
+          "type": "character varying(64)",
+          "relation": "platform.tenants",
+          "attnotnull": true,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": null
+        },
+        {
+          "name": "legal_name",
+          "type": "text",
+          "relation": "platform.tenants",
+          "attnotnull": true,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": null
+        },
+        {
+          "name": "display_name",
+          "type": "text",
+          "relation": "platform.tenants",
+          "attnotnull": true,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": null
+        },
+        {
+          "name": "default_timezone",
+          "type": "character varying(64)",
+          "relation": "platform.tenants",
+          "attnotnull": true,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": null
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "character varying(32)",
+          "relation": "platform.tenants",
+          "attnotnull": true,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": "'active'::character varying"
+        },
+        {
+          "name": "data_classification",
+          "type": "character varying(32)",
+          "relation": "platform.tenants",
+          "attnotnull": true,
+          "attidentity": "",
+          "attgenerated": "",
+          "default_expression": "'confidential'::character varying"
+        }
+      ],
+      "category": "columns"
+    },
+    {
+      "rows": [
+        {
+          "name": "ck_user_identities__created_actor_one",
+          "contype": "c",
+          "relation": "iam.user_identities",
+          "definition": "CHECK (num_nonnulls(created_by_user_identity_id, created_by_service_principal_id) <= 1)",
+          "condeferred": false,
+          "convalidated": true,
+          "condeferrable": false
+        },
+        {
+          "name": "ck_user_identities__row_version_positive",
+          "contype": "c",
+          "relation": "iam.user_identities",
+          "definition": "CHECK (row_version > 0)",
+          "condeferred": false,
+          "convalidated": true,
+          "condeferrable": false
+        },
+        {
+          "name": "ck_user_identities__updated_actor_one",
+          "contype": "c",
+          "relation": "iam.user_identities",
+          "definition": "CHECK (num_nonnulls(updated_by_user_identity_id, updated_by_service_principal_id) <= 1)",
+          "condeferred": false,
+          "convalidated": true,
+          "condeferrable": false
+        },
+        {
+          "name": "fk_user_identities__created_by_service_principal_id",
+          "contype": "f",
+          "relation": "iam.user_identities",
+          "definition": "FOREIGN KEY (created_by_service_principal_id) REFERENCES iam.service_principals(service_principal_id) ON DELETE RESTRICT",
+          "condeferred": false,
+          "convalidated": true,
+          "condeferrable": false
+        },
+        {
+          "name": "fk_user_identities__created_by_user_identity_id",
+          "contype": "f",
+          "relation": "iam.user_identities",
+          "definition": "FOREIGN KEY (created_by_user_identity_id) REFERENCES iam.user_identities(user_identity_id) ON DELETE RESTRICT",
+          "condeferred": false,
+          "convalidated": true,
+          "condeferrable": false
+        },
+        {
+          "name": "fk_user_identities__updated_by_service_principal_id",
+          "contype": "f",
+          "relation": "iam.user_identities",
+          "definition": "FOREIGN KEY (updated_by_service_principal_id) REFERENCES iam.service_principals(service_principal_id) ON DELETE RESTRICT",
+          "condeferred": false,
+          "convalidated": true,
+          "condeferrable": false
+        },
+        {
+          "name": "fk_user_identities__updated_by_user_identity_id",
+          "contype": "f",
+          "relation": "iam.user_identities",
+          "definition": "FOREIGN KEY (updated_by_user_identity_id) REFERENCES iam.user_identities(user_identity_id) ON DELETE RESTRICT",
+          "condeferred": false,
+          "convalidated": true,
+          "condeferrable": false
+        },
+        {
+          "name": "pk_user_identities",
+          "contype": "p",
+          "relation": "iam.user_identities",
+          "definition": "PRIMARY KEY (user_identity_id)",
+          "condeferred": false,
+          "convalidated": true,
+          "condeferrable": false
+        },
+        {
+          "name": "uq_user_identities__identity_key",
+          "contype": "u",
+          "relation": "iam.user_identities",
+          "definition": "UNIQUE (identity_key)",
+          "condeferred": false,
+          "convalidated": true,
+          "condeferrable": false
+        },
+        {
+          "name": "ck_tenants__created_actor_one",
+          "contype": "c",
+          "relation": "platform.tenants",
+          "definition": "CHECK (num_nonnulls(created_by_user_identity_id, created_by_service_principal_id) <= 1)",
+          "condeferred": false,
+          "convalidated": true,
+          "condeferrable": false
+        },
+        {
+          "name": "ck_tenants__data_classification",
+          "contype": "c",
+          "relation": "platform.tenants",
+          "definition": "CHECK (data_classification::text = ANY (ARRAY['public'::character varying, 'internal'::character varying, 'confidential'::character varying, 'restricted'::character varying]::text[]))",
+          "condeferred": false,
+          "convalidated": true,
+          "condeferrable": false
+        },
+        {
+          "name": "ck_tenants__row_version_positive",
+          "contype": "c",
+          "relation": "platform.tenants",
+          "definition": "CHECK (row_version > 0)",
+          "condeferred": false,
+          "convalidated": true,
+          "condeferrable": false
+        },
+        {
+          "name": "ck_tenants__updated_actor_one",
+          "contype": "c",
+          "relation": "platform.tenants",
+          "definition": "CHECK (num_nonnulls(updated_by_user_identity_id, updated_by_service_principal_id) <= 1)",
+          "condeferred": false,
+          "convalidated": true,
+          "condeferrable": false
+        },
+        {
+          "name": "fk_tenants__created_by_service_principal_id",
+          "contype": "f",
+          "relation": "platform.tenants",
+          "definition": "FOREIGN KEY (created_by_service_principal_id) REFERENCES iam.service_principals(service_principal_id) ON DELETE RESTRICT",
+          "condeferred": false,
+          "convalidated": true,
+          "condeferrable": false
+        },
+        {
+          "name": "fk_tenants__created_by_user_identity_id",
+          "contype": "f",
+          "relation": "platform.tenants",
+          "definition": "FOREIGN KEY (created_by_user_identity_id) REFERENCES iam.user_identities(user_identity_id) ON DELETE RESTRICT",
+          "condeferred": false,
+          "convalidated": true,
+          "condeferrable": false
+        },
+        {
+          "name": "fk_tenants__updated_by_service_principal_id",
+          "contype": "f",
+          "relation": "platform.tenants",
+          "definition": "FOREIGN KEY (updated_by_service_principal_id) REFERENCES iam.service_principals(service_principal_id) ON DELETE RESTRICT",
+          "condeferred": false,
+          "convalidated": true,
+          "condeferrable": false
+        },
+        {
+          "name": "fk_tenants__updated_by_user_identity_id",
+          "contype": "f",
+          "relation": "platform.tenants",
+          "definition": "FOREIGN KEY (updated_by_user_identity_id) REFERENCES iam.user_identities(user_identity_id) ON DELETE RESTRICT",
+          "condeferred": false,
+          "convalidated": true,
+          "condeferrable": false
+        },
+        {
+          "name": "pk_tenants",
+          "contype": "p",
+          "relation": "platform.tenants",
+          "definition": "PRIMARY KEY (tenant_id)",
+          "condeferred": false,
+          "convalidated": true,
+          "condeferrable": false
+        },
+        {
+          "name": "uq_tenants__tenant_code",
+          "contype": "u",
+          "relation": "platform.tenants",
+          "definition": "UNIQUE (tenant_code)",
+          "condeferred": false,
+          "convalidated": true,
+          "condeferrable": false
+        }
+      ],
+      "category": "constraints"
+    }
+  ],
+  "error": null
+}

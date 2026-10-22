@@ -1,0 +1,72 @@
+{
+  "id": "CONFIGURATION_OPTIONAL_DEFAULT_20261022",
+  "scope": "General ConfigurationDefinition default cardinality and type integrity only",
+  "semantic_decision": "A_NULL_IS_ABSENCE_OF_PLATFORM_DEFAULT",
+  "canonical_entity": "ConfigurationDefinition",
+  "superseded_rule": "Physical model01 configuration_definitions exactly one typed default; migration31 typed_default",
+  "value_types": [
+    "boolean",
+    "integer",
+    "decimal",
+    "text",
+    "timestamp",
+    "duration",
+    "json"
+  ],
+  "unknown_type": "DENY_EVEN_WHEN_ALL_DEFAULTS_NULL",
+  "business_DML": "NONE",
+  "predecessor_manifest": {
+    "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-physical-adoption-20261021/candidate-migration/manifest.proposed.json",
+    "sha256": "70ecaa0f4bbf168a1f5e4c3cefbd734036217dc7b09ac3d4a11b65f9cbc66152"
+  },
+  "migration": {
+    "id": "20261022141304",
+    "filename": "20261022141304_configuration_optional_default.sql",
+    "sha256": "4fc817fa8ba6b8149dce1d484a301b511b24f8d4329038fd1e72265c9cd0bfc3",
+    "transactional": true,
+    "preconditions": [
+      "exact_35_predecessor_checksums",
+      "approved_LOCAL_DEFINITIONS_01_forward_only_correction",
+      "separate_environment_execution_authorization"
+    ],
+    "postconditions": [
+      "244_domain_tables_unchanged",
+      "optional_absence_or_one_correctly_typed_default",
+      "all_existing_business_rows_unchanged",
+      "ledger_36_atomic_with_DDL"
+    ]
+  },
+  "ddl": {
+    "path": "docs/physical-data-model/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/DDL_SPEC.sql",
+    "sha256": "4fc817fa8ba6b8149dce1d484a301b511b24f8d4329038fd1e72265c9cd0bfc3"
+  },
+  "pg16_constraint": {
+    "path": "docs/physical-data-model/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/PG16_CONSTRAINT.json",
+    "sha256": "5d5d774bac7c5508f54c6d3b6d7b83142d830b43904737be388ceb8bf0c01816"
+  },
+  "sources": [
+    {
+      "path": "docs/rector/baseline/29_CONFIGURACION_PARAMETRIZACION_Y_EXTENSIBILIDAD.md",
+      "sha256": "4ea8a91e3cbb120d83d1295caf3f3820ce5a07d9601c48ca1a24017bc614574b"
+    },
+    {
+      "path": "docs/physical-data-model/01_PHYSICAL_DATA_MODEL.md",
+      "sha256": "cdbee203ac9afe9f89cbb4320f6b7010a0e315bc160d2be6134ed3c2a15fabd5"
+    },
+    {
+      "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/CONFIGURATION_DEFINITIONS.json",
+      "sha256": "3779d8eacd48bf7df28804e70c7fdc62d9c5b43719a94f4a3e57e7a6a1aa01cc"
+    },
+    {
+      "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/CONFIGURATION_APPROVAL_AND_CONCURRENCY.md",
+      "sha256": "bd8aee7b05712aea06d0935135d1f6a7a39ca898d3e95f0078fad9704f3b0cc7"
+    }
+  ],
+  "four_descriptors": "UNCHANGED_NULL_DEFAULTS",
+  "specific_code_tenant_id_date_branches": false,
+  "new_rule": "A known value_type permits zero typed defaults; if supplied, exactly one default must match value_type. Other Definition, override, lifecycle and validation rules remain conjunctive.",
+  "pg16_predecessor": {
+    "path": "docs/physical-data-model/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/PG16_PREDECESSOR.json",
+    "sha256": "21279c2547813911cac256b2ed55a9e69cc1692220f300f436ad8c12c4992b1c"
+  }
+}

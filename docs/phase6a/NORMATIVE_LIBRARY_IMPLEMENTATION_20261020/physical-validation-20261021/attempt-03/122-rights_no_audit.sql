@@ -1,0 +1,4 @@
+BEGIN;
+INSERT INTO knowledge.knowledge_source_usage_rights(knowledge_source_usage_right_id,created_by_user_identity_id,ownership_class,tenant_id,knowledge_source_id,audience_tenant_id,content_hash,edition_ref,use_act,use_environment,content_kind,effective_from,effective_to,evidence_ref,evidence_hash,recorded_audit_event_id) VALUES ('00000000-0000-7000-8000-000000000200','00000000-0000-7000-8000-000000000003','GLOBAL_REFERENCE',NULL,'00000000-0000-7000-8000-000000000010',NULL,'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa','SYNTHETIC_NOT_A_LICENSE','consultation','test','metadata','2026-01-01','2030-01-01','synthetic://not-real-rights','cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc','00000000-0000-7000-8000-000000000201');
+SET CONSTRAINTS ALL IMMEDIATE;
+ROLLBACK;

@@ -1,0 +1,56 @@
+--- a/scripts/foundations/generate-contract-assets.mjs
++++ b/scripts/foundations/generate-contract-assets.mjs
+@@ -1667,8 +1667,45 @@
+ const normativeSchemaBytes = `${JSON.stringify(normativeSchema, null, 2)}\n`;
+ if (sha256(normativeSchemaBytes) !== "c2fc38768ee6c7b3760346ec862304204e4f94abd18a2d8150745bbaf6953207")
+   throw new Error(`Normative-library expected-schema derivation drift: ${sha256(normativeSchemaBytes)}`);
+-writeOrCheck(resolve(root, "database/migrations/manifest.json"), `${JSON.stringify(normativeManifest, null, 2)}\n`);
+-writeOrCheck(resolve(root, "database/expected-schema.json"), normativeSchemaBytes);
++// Forward-only LOCAL-DEFINITIONS-01 successor. Published predecessor bytes stay immutable.
++const optionalDefaultRoot = 'docs/physical-data-model/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/';
++const optionalReceiptBytes = readFileSync(resolve(root, optionalDefaultRoot + 'CONTRACT_PUBLICATION_RECEIPT.json'));
++const optionalReceipt = JSON.parse(optionalReceiptBytes);
++const readOptionalExact = ref => {
++  if (!ref.path.startsWith('docs/') || ref.path.includes('..')) throw new Error('Invalid optional-default source path');
++  const bytes = readFileSync(resolve(root, ref.path));
++  if (sha256(bytes) !== ref.sha256) throw new Error(`Optional-default authority drift: ${ref.path}`);
++  return bytes;
++};
++if (sha256(optionalReceiptBytes) !== 'cfceb764253354ae77c18bb8618c5310b7952441739ba348dabcaed96545ef05' || optionalReceipt.status !== 'PASS_CONTRACT_EFFECTIVE_LOCAL' || optionalReceipt.real_activation !== 'NONE')
++  throw new Error('Optional-default local corrective authority missing');
++readOptionalExact(optionalReceipt.authorization);
++const optionalPublication = JSON.parse(readOptionalExact(optionalReceipt.publication_manifest));
++for (const ref of optionalPublication.files) readOptionalExact(ref);
++const optionalContract = JSON.parse(readFileSync(resolve(root, optionalDefaultRoot + 'CONTRACT.json')));
++for (const ref of optionalContract.sources) readOptionalExact(ref);
++if (optionalContract.predecessor_manifest.sha256 !== sha256(normativeManifestBytes) ||
++    optionalContract.semantic_decision !== 'A_NULL_IS_ABSENCE_OF_PLATFORM_DEFAULT') throw new Error('Optional-default predecessor/semantics drift');
++const optionalEntry = optionalContract.migration;
++if (!/^\d{14}$/.test(optionalEntry.id) || optionalEntry.id <= normativeEntry.id ||
++    optionalEntry.filename !== optionalEntry.id + '_configuration_optional_default.sql' || !optionalEntry.transactional ||
++    JSON.stringify(optionalPublication.migration) !== JSON.stringify(optionalEntry)) throw new Error('Invalid corrective migration sequence');
++const optionalDdl = readOptionalExact(optionalContract.ddl);
++if (sha256(optionalDdl) !== optionalEntry.sha256) throw new Error('Corrective migration/source mismatch');
++writeOrCheck(resolve(migrationDir, optionalEntry.filename), optionalDdl.toString('utf8'));
++const optionalConstraint = JSON.parse(readOptionalExact(optionalContract.pg16_constraint));
++if (optionalConstraint.relation !== 'config.configuration_definitions' || optionalConstraint.name !== 'ck_configuration_definitions__typed_default' || !optionalConstraint.validated)
++  throw new Error('Incomplete corrective PG16 constraint projection');
++normativeSchema.configurationDefaultAmendment = {
++  contract: {path: optionalDefaultRoot + 'CONTRACT.json', sha256: sha256(readFileSync(resolve(root, optionalDefaultRoot + 'CONTRACT.json')))},
++  receipt: {path: optionalDefaultRoot + 'CONTRACT_PUBLICATION_RECEIPT.json', sha256: sha256(optionalReceiptBytes)},
++  migration: {path: 'database/migrations/' + optionalEntry.filename, sha256: optionalEntry.sha256},
++  constraint: optionalConstraint,
++  status: 'PREPARED_LOCAL_NOT_QA_APPLIED'
++};
++const currentManifest = {...normativeManifest, migrations: [...normativeManifest.migrations, optionalEntry]};
++writeOrCheck(resolve(root, "database/migrations/manifest.json"), `${JSON.stringify(currentManifest, null, 2)}\n`);
++writeOrCheck(resolve(root, "database/expected-schema.json"), `${JSON.stringify(normativeSchema, null, 2)}\n`);
+ const canonicalSeedSql = historicalMigrations.find(([filename]) => filename === "20260916000900_canonical_seeds.sql")[1];
+ writeOrCheck(resolve(root, "database/seed-manifest.json"), `${JSON.stringify({
+   manifestVersion: 2,
+@@ -1820,4 +1857,4 @@
+ 
+ const commercialApi = JSON.parse(readFileSync(resolve(root, "docs/executable-contracts/amendments/STEP_6A3_COMMERCIAL_v1.9/02_OPENAPI_COMMERCIAL_MERGED.json"), "utf8"));
+ const commercialOperations = Object.values(commercialApi.paths).flatMap(path => Object.values(path).filter(value => value && typeof value === "object" && value.operationId)).length;
+-console.log(JSON.stringify({ mode: checkOnly ? "check" : "write", physicalTables: normativeSchema.tableCount, publishedPermissions: 175, permissionsAfterCatalogRelease: 163, lifecycleEdges: 103, rawLifecycleDefinitionRows: 140, migrations: normativeManifest.migrations.length, operations: commercialOperations, baseOperations: operationIds.length, readOperations: readCount }, null, 2));
++console.log(JSON.stringify({ mode: checkOnly ? "check" : "write", physicalTables: normativeSchema.tableCount, publishedPermissions: 175, permissionsAfterCatalogRelease: 163, lifecycleEdges: 103, rawLifecycleDefinitionRows: 140, migrations: currentManifest.migrations.length, operations: commercialOperations, baseOperations: operationIds.length, readOperations: readCount }, null, 2));

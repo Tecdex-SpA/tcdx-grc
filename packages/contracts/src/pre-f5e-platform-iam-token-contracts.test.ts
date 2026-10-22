@@ -1,3 +1,4 @@
+import activeActivationSource from "../../../docs/rector/ACTIVE_ACTIVATION.json?raw";
 import { describe, expect, it } from "vitest";
 import expectedSchemaSource from "../../../database/expected-schema.json?raw";
 import migrationManifestSource from "../../../database/migrations/manifest.json?raw";
@@ -50,8 +51,8 @@ function schemaBlock(schemaName: string): string {
 
 describe("PRE-F5E canonical Platform IAM materialization", () => {
   it("preserves the checksummed PRE-F5E migration inside the approved 233-table inventory", () => {
-    expect(expectedSchema.tableCount).toBe(242);
-    expect(expectedSchema.tables).toHaveLength(242);
+    expect(expectedSchema.tableCount).toBe(244);
+    expect(expectedSchema.tables).toHaveLength(244);
     const migrations = migrationManifest.migrations.filter(({ filename }) => /pre[_-]?f5e/i.test(filename));
     expect(migrations).toHaveLength(1);
     expect(migrations[0]).toMatchObject({ id: "20260923000100", filename: "20260923000100_pre_f5e_platform_authority.sql" });
@@ -114,7 +115,7 @@ describe("PRE-F5E canonical Platform IAM materialization", () => {
   });
 
   it("adds no bootstrap authority, tenant dependency, person seed, table or public endpoint", () => {
-    expect(expectedSchema.tableCount).toBe(242);
+    expect(expectedSchema.tableCount).toBe(244);
     expect(expectedSchema.tables.filter(({ name }) => /bootstrap/i.test(name))).toHaveLength(0);
     expect(preF5eMigration).not.toMatch(/CREATE\s+TABLE[^;]*bootstrap/is);
     expect(preF5eMigration).not.toMatch(/INSERT\s+INTO\s+iam\.platform_role_assignments/i);
@@ -126,8 +127,10 @@ describe("PRE-F5E canonical Platform IAM materialization", () => {
     expect(preF5eContract).toContain("creates no bootstrap table, enabled flag, personal seed, environment allowlist, second authority or public endpoint");
   });
 
-  it("keeps the exact v1.6 candidate evidence while selecting the activated v1.9 baseline", () => {
-    expect(activeBaselineId.trim()).toBe("TCDX_GRC_MASTER_REGENT_BASELINE_v1.10_2026-10-15");
+  it("keeps the exact v1.6 candidate evidence while selecting the formally activated baseline", () => {
+    const activation = JSON.parse(activeActivationSource) as { baseline_id: string };
+    expect(activation.baseline_id).toBe("TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16");
+    expect(activeBaselineId.trim()).toBe(activation.baseline_id);
     expect(activeBaselineStatus.trim()).toBe("ACTIVE");
     const entries = candidateManifest.trim().split("\n");
     expect(entries).toHaveLength(10);

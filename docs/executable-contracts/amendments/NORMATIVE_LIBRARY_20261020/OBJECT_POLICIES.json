@@ -1,0 +1,202 @@
+{
+  "predicate_language": "Closed normative ALL-of conditions; implementation must encode and test each predicate, not parse prose or infer grants",
+  "policies": {
+    "KNOWLEDGE_GLOBAL_READ": {
+      "all_of": [
+        "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+        "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+        "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+        "PlatformRoleAssignment active for PLATFORM_ADMIN or PLATFORM_SUPPORT with explicit read grant; tenant header forbidden",
+        "Only GLOBAL_REFERENCE/PLATFORM_CONTROL Knowledge; never private tenant content",
+        "PLATFORM_SUPPORT is metadata-only regardless of staff status; protected bodies/tenant content are not included",
+        "Content rights and classification govern each act; a global reference grants no pack licence"
+      ],
+      "otherwise": "DENY",
+      "runtime_activated": false
+    },
+    "KNOWLEDGE_SUPPORT_METADATA": {
+      "all_of": [
+        "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+        "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+        "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+        "PLATFORM_SUPPORT active, explicit global read permission only",
+        "Projection strips content and sensitive locators/refs; no creation/review/publication/tenant scope or impersonation inferred"
+      ],
+      "otherwise": "DENY",
+      "runtime_activated": false
+    },
+    "KNOWLEDGE_GLOBAL_AUTHOR": {
+      "all_of": [
+        "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+        "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+        "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+        "PLATFORM_ADMIN active PlatformRoleAssignment and explicit corresponding permission; tenant header forbidden",
+        "Knowledge ownership PLATFORM_CONTROL for original editorial; authentic normative sources remain Regulatory entities, no override of official source",
+        "No PlatformSupport or tenant role permission substitution",
+        "REVIEW/PUBLISH require identity different from version author; reviewer may publish the same reviewed hash; no fictitious second identity",
+        "PUBLISH requires reviewed exact artifact, source/rights/classification/citations checked and immutable storage/hash verified; not official regulatory publication"
+      ],
+      "otherwise": "DENY",
+      "runtime_activated": false
+    },
+    "KNOWLEDGE_GLOBAL_REVIEW": {
+      "all_of": [
+        "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+        "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+        "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+        "PLATFORM_ADMIN active PlatformRoleAssignment and explicit corresponding permission; tenant header forbidden",
+        "Knowledge ownership PLATFORM_CONTROL for original editorial; authentic normative sources remain Regulatory entities, no override of official source",
+        "No PlatformSupport or tenant role permission substitution",
+        "REVIEW/PUBLISH require identity different from version author; reviewer may publish the same reviewed hash; no fictitious second identity",
+        "PUBLISH requires reviewed exact artifact, source/rights/classification/citations checked and immutable storage/hash verified; not official regulatory publication"
+      ],
+      "otherwise": "DENY",
+      "runtime_activated": false
+    },
+    "KNOWLEDGE_GLOBAL_PUBLISH": {
+      "all_of": [
+        "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+        "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+        "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+        "PLATFORM_ADMIN active PlatformRoleAssignment and explicit corresponding permission; tenant header forbidden",
+        "Knowledge ownership PLATFORM_CONTROL for original editorial; authentic normative sources remain Regulatory entities, no override of official source",
+        "No PlatformSupport or tenant role permission substitution",
+        "REVIEW/PUBLISH require identity different from version author; reviewer may publish the same reviewed hash; no fictitious second identity",
+        "PUBLISH requires reviewed exact artifact, source/rights/classification/citations checked and immutable storage/hash verified; not official regulatory publication"
+      ],
+      "otherwise": "DENY",
+      "runtime_activated": false
+    },
+    "KNOWLEDGE_TENANT_READ": {
+      "all_of": [
+        "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+        "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+        "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+        "Active Membership in selected tenant and explicit tenant read permission",
+        "Tenant-owned Source/Item/Version must have the same tenant; global versions additionally require visible targets and source/pack access",
+        "Published global metadata/guide reads do not confer global edit rights; drafts only their authorized tenant/global editorial actors",
+        "Content projection/search/filter/count obey rights and target read permissions before pagination; forbidden objects concealed identically to not-found"
+      ],
+      "otherwise": "DENY",
+      "runtime_activated": false
+    },
+    "KNOWLEDGE_TENANT_AUTHOR": {
+      "all_of": [
+        "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+        "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+        "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+        "Active tenant Membership and explicit permission on same-tenant TENANT_OWNED Source/Item/Version",
+        "Authoring: TENANT_ADMIN/GRC_MANAGER only by actual grants; review/publish: GRC_MANAGER only by actual grants",
+        "No global item/source mutation or cross-tenant target even for Platform staff",
+        "REVIEW/PUBLISH author identity differs; review binds exact body+target manifest; reviewer may publish own review of another author",
+        "Context body requires contexto_empresarial Subject link; private Subject and source ownership match tenant; no legal/permission inference from text"
+      ],
+      "otherwise": "DENY",
+      "runtime_activated": false
+    },
+    "KNOWLEDGE_TENANT_REVIEW": {
+      "all_of": [
+        "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+        "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+        "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+        "Active tenant Membership and explicit permission on same-tenant TENANT_OWNED Source/Item/Version",
+        "Authoring: TENANT_ADMIN/GRC_MANAGER only by actual grants; review/publish: GRC_MANAGER only by actual grants",
+        "No global item/source mutation or cross-tenant target even for Platform staff",
+        "REVIEW/PUBLISH author identity differs; review binds exact body+target manifest; reviewer may publish own review of another author",
+        "Context body requires contexto_empresarial Subject link; private Subject and source ownership match tenant; no legal/permission inference from text"
+      ],
+      "otherwise": "DENY",
+      "runtime_activated": false
+    },
+    "KNOWLEDGE_TENANT_PUBLISH": {
+      "all_of": [
+        "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+        "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+        "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+        "Active tenant Membership and explicit permission on same-tenant TENANT_OWNED Source/Item/Version",
+        "Authoring: TENANT_ADMIN/GRC_MANAGER only by actual grants; review/publish: GRC_MANAGER only by actual grants",
+        "No global item/source mutation or cross-tenant target even for Platform staff",
+        "REVIEW/PUBLISH author identity differs; review binds exact body+target manifest; reviewer may publish own review of another author",
+        "Context body requires contexto_empresarial Subject link; private Subject and source ownership match tenant; no legal/permission inference from text"
+      ],
+      "otherwise": "DENY",
+      "runtime_activated": false
+    },
+    "CONTROL_OVERRIDE_READ": {
+      "all_of": [
+        "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+        "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+        "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+        "Active tenant Membership, CORE_PLATFORM and corresponding existing configuration permission/scope",
+        "Object is one of four exact published Definition codes in CONFIGURATION_DEFINITIONS.json, correct Definition version, tenant/object override allowed",
+        "scope_level=control_version, target is a same-tenant TENANT_OWNED ControlVersion; contextual writes cannot alter global source or methodological minima"
+      ],
+      "otherwise": "DENY",
+      "runtime_activated": false
+    },
+    "CONTROL_OVERRIDE_AUTHOR": {
+      "all_of": [
+        "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+        "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+        "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+        "Active tenant Membership, CORE_PLATFORM and corresponding existing configuration permission/scope",
+        "Object is one of four exact published Definition codes in CONFIGURATION_DEFINITIONS.json, correct Definition version, tenant/object override allowed",
+        "scope_level=control_version, target is a same-tenant TENANT_OWNED ControlVersion; contextual writes cannot alter global source or methodological minima",
+        "Create by existing TENANT_ADMIN/GRC_MANAGER grants; update only own draft; other actors cannot rewrite a draft under a read/review grant"
+      ],
+      "otherwise": "DENY",
+      "runtime_activated": false
+    },
+    "CONTROL_OVERRIDE_REVIEWER": {
+      "all_of": [
+        "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+        "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+        "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+        "Active tenant Membership, CORE_PLATFORM and corresponding existing configuration permission/scope",
+        "Object is one of four exact published Definition codes in CONFIGURATION_DEFINITIONS.json, correct Definition version, tenant/object override allowed",
+        "scope_level=control_version, target is a same-tenant TENANT_OWNED ControlVersion; contextual writes cannot alter global source or methodological minima",
+        "GRC_MANAGER with explicit effective review/approve respectively; author cannot review or decide even with accumulated roles",
+        "Review/decision on exact ETag/hash and typed target; reviewed source and rights remain eligible",
+        "Reviewer may decide the same version authored by another identity; no third person is universally required; stricter applicable SoD remains",
+        "Approve grant remains operational NONE until separately authorized IAM publication; data schema change does not activate it"
+      ],
+      "otherwise": "DENY",
+      "runtime_activated": false
+    },
+    "CONTROL_OVERRIDE_DECIDER": {
+      "all_of": [
+        "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+        "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+        "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+        "Active tenant Membership, CORE_PLATFORM and corresponding existing configuration permission/scope",
+        "Object is one of four exact published Definition codes in CONFIGURATION_DEFINITIONS.json, correct Definition version, tenant/object override allowed",
+        "scope_level=control_version, target is a same-tenant TENANT_OWNED ControlVersion; contextual writes cannot alter global source or methodological minima",
+        "GRC_MANAGER with explicit effective review/approve respectively; author cannot review or decide even with accumulated roles",
+        "Review/decision on exact ETag/hash and typed target; reviewed source and rights remain eligible",
+        "Reviewer may decide the same version authored by another identity; no third person is universally required; stricter applicable SoD remains",
+        "Approve grant remains operational NONE until separately authorized IAM publication; data schema change does not activate it"
+      ],
+      "otherwise": "DENY",
+      "runtime_activated": false
+    },
+    "MATRIX_SOURCE_INTERSECTION": {
+      "all_of": [
+        "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+        "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+        "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+        "Tenant context required; matrix permission does not grant any source permission",
+        "Required per-type source read permissions and capabilities in MATRIX_TYPES.json; ALL required before reads",
+        "Object ownership and global pack/validation access checked for both axes, relation, inspector and result",
+        "Filter invisible data before existence/count/search/keyset/hash; no totals or density leaking inaccessible rows",
+        "Cursors bound to actor, tenant, permissions, type, editions, asOf and filters; reauthorize each page; drift rejects409, never truncates silently",
+        "Known accessible source metadata may identify a content restriction; existence of a private unauthorized object is never disclosed",
+        "No SQL, generic table names, caller-owned tenant or arbitrary axes; no derived compliance calculations"
+      ],
+      "otherwise": "DENY",
+      "runtime_activated": false
+    }
+  },
+  "override_approval_contract_grant": "GRC_MANAGER / configuration.configuration_override.approve / tenant / CONTROL_OVERRIDE_DECIDER / four Definitions only; NONE operational today",
+  "external_source_policy": "Rights apply per act and source. Unknown rights never become authorized=true. Metadata/original editorial independent uses continue.",
+  "operational_activation": "NOT_AUTHORIZED"
+}

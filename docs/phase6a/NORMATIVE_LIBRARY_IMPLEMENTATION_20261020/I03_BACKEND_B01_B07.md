@@ -1,0 +1,11 @@
+# I03 — Backend preparado
+
+B01: model/validator reconoce sexto código y received_preliminary_file; valida que preliminar no sea autoridad/licencia oficial, distingue law de standard y no hereda la fecha fija de Ley21.719. No se ejecuta pipeline/importador.
+
+B02/B03: validadores cerrados derivados de OpenAPI; XOR, ownership, citas/ordinales, contexto Subject, hash UTF8 del artefacto, inmutabilidad y ETag reproducible GET/command. postgres.ts usa FKs tipadas y lectores canónicos. knowledge-service.ts prepara Source/Item/Version create y update/review/publish tenant/Platform, locks, numeración por Item, custodia y supersession prospectiva. knowledge-read.ts prepara get/list, proyección metadata-only Support, source rights requeridos, keysets firmados y acceso global/tenant filtrado. MinioKnowledgeCustody reutiliza cliente/bucket privado existente, AES256/versioning y hash de bytes reales; no crea infraestructura o bucket, no se instancia en runtime.
+
+B04/B05/B06: control-adjustments reutiliza resolveConfiguration y selecciona capas/sucesores sin reescribir historia. Servicios de creación/actualización/revisión/decisión y lectura exigen Definition publicada, ControlVersion tenant, permiso efectivo, SoD, ETag, auditorías exactas y registry real. Policy port de validaciones superiores es obligatorio, no hay implementación permisiva por defecto. effective-control-read especializa únicamente lectura persistida; no resuelve/materializa por GET.
+
+B07: contextualAuditProfile y postgres loader fijan KnowledgeVersion/Item/version/hash/Subject/tenant exactos. applicability-persistence prepara hooks de la transacción existente y del AuditEvent único; no nuevo endpoint/comando/outbox para create. No se conectan al servicio core actual antes del gate físico. Históricos sin contexto/perfil permanecen sin inferencia.
+
+mutations.ts atomiza operaciones preparadas con los helpers canónicos de idempotencia/audit/outbox y consulta del registry publicado; replay reautoriza y retorna el resultado persistido sin ETag, sin reconstruirlo. Los nuevos hechos usan outcome=succeeded del contrato08. No se reescribe la instrumentación histórica ajena a este slice. Los servicios SQL no han sido ejecutados en PostgreSQL.

@@ -1,0 +1,107 @@
+{
+  "status": "PASS",
+  "scope": "DOCUMENTARY_STRUCTURAL_AND_EXECUTABLE_SCHEMA_CONTRACTS_ONLY",
+  "node": "v22.23.2",
+  "checks": [
+    {
+      "check": "OPENAPI_ALL_REFERENCES_RESOLVE",
+      "status": "PASS",
+      "detail": 2835
+    },
+    {
+      "check": "UNIQUE_OPERATION_IDS_AND_EXACT_DELTA",
+      "status": "PASS",
+      "detail": {
+        "new": 30,
+        "total": 205
+      }
+    },
+    {
+      "check": "PREDECESSOR_OPERATIONS_PRESERVED",
+      "status": "PASS",
+      "detail": {
+        "specialization": "configurationOverrideCreate new control scope, existing202 preserved",
+        "otherOperations": "unchanged"
+      }
+    },
+    {
+      "check": "POLICIES_PERMISSIONS_AND_ROLE_GRANTS",
+      "status": "PASS",
+      "detail": {
+        "newPermissions": 8,
+        "operationalGrants": 0
+      }
+    },
+    {
+      "check": "TRANSPORT_CONTEXT_REQUEST_ERRORS_AND_CONCURRENCY",
+      "status": "PASS",
+      "detail": "30 operation surfaces checked; no runtime request sent"
+    },
+    {
+      "check": "LIFECYCLE_AUDIT_OUTBOX_IDEMPOTENCY_BINDINGS",
+      "status": "PASS",
+      "detail": {
+        "bindings": 13,
+        "activation": false
+      }
+    },
+    {
+      "check": "CANONICAL_PHYSICAL_DERIVATION_AND_REAL_FK_KEYS",
+      "status": "PASS",
+      "detail": {
+        "sourceTableCount": 242,
+        "contractTableCount": 243,
+        "newColumns": 4,
+        "newForeignKeys": 11,
+        "liveDatabase": "NOT_QUERIED"
+      }
+    },
+    {
+      "check": "PHYSICAL_XOR_IMMUTABILITY_SCOPE_AND_HISTORY_SPEC",
+      "status": "PASS",
+      "detail": "DDL artifact inspected; no SQL executed, enforcement not claimed"
+    },
+    {
+      "check": "FOUR_DEFINITIONS_AND_EXISTING_FREQUENCY_VOCABULARY",
+      "status": "PASS",
+      "detail": {
+        "definitions": 4,
+        "frequencyCodes": 8,
+        "noInventedDefaults": true
+      }
+    },
+    {
+      "check": "MATRIX_RELATION_SOURCES_AND_NO_PARALLEL_MODEL",
+      "status": "PASS",
+      "detail": "Six typed source relations with real table/column references; no SQL/runtime proof inferred"
+    },
+    {
+      "check": "CLOSED_WIRE_SCHEMA_COMPILATION",
+      "status": "PASS",
+      "detail": {
+        "compiled": 44,
+        "library": "8.20.0"
+      }
+    },
+    {
+      "check": "WIRE_SHAPE_NEGATIVES_NOT_BUSINESS_OR_FK_TESTS",
+      "status": "PASS",
+      "detail": {
+        "lexicalCases": 14,
+        "runtimeRequests": 0,
+        "actorsCreated": 0,
+        "foreignKeyExecution": "NOT_TESTED"
+      }
+    },
+    {
+      "check": "CANONICAL_ORIGIN_AND_AI_SEPARATION",
+      "status": "PASS",
+      "detail": "No network or DNS actions"
+    }
+  ],
+  "postgresql_enforcement": "NOT_RUN_NO_MIGRATION_AUTHORITY",
+  "backend_frontend_implementation": "NOT_IMPLEMENTED",
+  "qa_tests": "NOT_RUN",
+  "semantic_homologation": "NOT_EXECUTED",
+  "operational_grants": "NOT_ACTIVATED"
+}

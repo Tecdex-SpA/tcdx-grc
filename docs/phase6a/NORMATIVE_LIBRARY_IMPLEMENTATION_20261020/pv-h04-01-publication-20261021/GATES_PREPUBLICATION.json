@@ -1,0 +1,32 @@
+[
+  {
+    "gate": "CONTRACT_REVIEW",
+    "command": [
+      "python3",
+      "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/pv-h04-01-publication-20261021/verify.py"
+    ],
+    "exit_code": 0,
+    "status": "PASS",
+    "started_at_utc": "2026-10-21T20:58:12.373559+00:00",
+    "finished_at_utc": "2026-10-21T20:58:13.729263+00:00",
+    "log": {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/pv-h04-01-publication-20261021/CONTRACT_REVIEW.log",
+      "sha256": "213d931ddf1c9ef8b99de816d6e550fe50c1a868fef063682069fc8654f4f490"
+    }
+  },
+  {
+    "gate": "RECTOR",
+    "command": [
+      "bash",
+      "scripts/verify-rector-governance.sh"
+    ],
+    "exit_code": 0,
+    "status": "PASS",
+    "started_at_utc": "2026-10-21T20:58:13.731149+00:00",
+    "finished_at_utc": "2026-10-21T20:58:13.984687+00:00",
+    "log": {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/pv-h04-01-publication-20261021/RECTOR.log",
+      "sha256": "1804d6f3163b6323585d0d832274aaba9364ee4465435fb83636839d0ba76bbe"
+    }
+  }
+]

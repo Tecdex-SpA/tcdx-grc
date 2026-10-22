@@ -1,0 +1,312 @@
+{
+  "baseline": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "mode": "CONTRACT_SPECIFICATION_NOT_APPLIED",
+  "source_schema": {
+    "path": "database/expected-schema.json",
+    "sha256": "ab9a097c6340c6b5619e6f583adf6b20c1044bdcef49cf97957cd24796630b79",
+    "tables": 242
+  },
+  "new_tables": [
+    {
+      "name": "knowledge.knowledge_version_context_links",
+      "profile": "IMMUTABLE_WITH_PARENT_PUBLICATION",
+      "primaryKey": [
+        "knowledge_version_context_link_id"
+      ],
+      "columns": [
+        {
+          "name": "knowledge_version_context_link_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "ownership_class",
+          "type": "varchar(24)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "knowledge_version_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "normative_unit_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "requirement_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "control_version_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "subject_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "context_role",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "source_locator",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "provenance_ref",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "excerpt_hash",
+          "type": "char(64)",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "checks": [
+        "exactly_one_typed_target",
+        "source_ownership_matches_version",
+        "global_cannot_target_private",
+        "tenant_target_same_tenant_or_visible_global",
+        "context_role_closed",
+        "published_parent_links_immutable"
+      ],
+      "uniqueConstraints": [
+        [
+          "knowledge_version_id",
+          "context_role",
+          "normative_unit_id",
+          "requirement_id",
+          "control_version_id",
+          "subject_id"
+        ]
+      ]
+    }
+  ],
+  "added_columns": {
+    "config.configuration_overrides": [
+      {
+        "name": "control_version_id",
+        "type": "uuid",
+        "nullable": true,
+        "default": null
+      },
+      {
+        "name": "supersedes_configuration_override_id",
+        "type": "uuid",
+        "nullable": true,
+        "default": null
+      }
+    ],
+    "config.effective_configurations": [
+      {
+        "name": "control_version_id",
+        "type": "uuid",
+        "nullable": true,
+        "default": null
+      }
+    ],
+    "regulatory.requirement_applicabilities": [
+      {
+        "name": "context_knowledge_version_id",
+        "type": "uuid",
+        "nullable": true,
+        "default": null
+      }
+    ]
+  },
+  "foreign_keys": [
+    {
+      "table": "knowledge.knowledge_version_context_links",
+      "columns": [
+        "knowledge_version_id"
+      ],
+      "references": "knowledge.knowledge_versions",
+      "reference_columns": [
+        "knowledge_version_id"
+      ],
+      "on_delete": "RESTRICT",
+      "on_update": "NO ACTION"
+    },
+    {
+      "table": "knowledge.knowledge_version_context_links",
+      "columns": [
+        "normative_unit_id"
+      ],
+      "references": "regulatory.normative_units",
+      "reference_columns": [
+        "normative_unit_id"
+      ],
+      "on_delete": "RESTRICT",
+      "on_update": "NO ACTION"
+    },
+    {
+      "table": "knowledge.knowledge_version_context_links",
+      "columns": [
+        "requirement_id"
+      ],
+      "references": "regulatory.requirements",
+      "reference_columns": [
+        "requirement_id"
+      ],
+      "on_delete": "RESTRICT",
+      "on_update": "NO ACTION"
+    },
+    {
+      "table": "knowledge.knowledge_version_context_links",
+      "columns": [
+        "control_version_id"
+      ],
+      "references": "controls.control_versions",
+      "reference_columns": [
+        "control_version_id"
+      ],
+      "on_delete": "RESTRICT",
+      "on_update": "NO ACTION"
+    },
+    {
+      "table": "knowledge.knowledge_version_context_links",
+      "columns": [
+        "subject_id"
+      ],
+      "references": "org.subjects",
+      "reference_columns": [
+        "subject_id"
+      ],
+      "on_delete": "RESTRICT",
+      "on_update": "NO ACTION"
+    },
+    {
+      "table": "knowledge.knowledge_version_context_links",
+      "columns": [
+        "tenant_id"
+      ],
+      "references": "platform.tenants",
+      "reference_columns": [
+        "tenant_id"
+      ],
+      "on_delete": "RESTRICT",
+      "on_update": "NO ACTION"
+    },
+    {
+      "table": "knowledge.knowledge_version_context_links",
+      "columns": [
+        "created_by_user_identity_id"
+      ],
+      "references": "iam.user_identities",
+      "reference_columns": [
+        "user_identity_id"
+      ],
+      "on_delete": "RESTRICT",
+      "on_update": "NO ACTION"
+    },
+    {
+      "table": "config.configuration_overrides",
+      "columns": [
+        "tenant_id",
+        "control_version_id"
+      ],
+      "references": "controls.control_versions",
+      "reference_columns": [
+        "tenant_id",
+        "control_version_id"
+      ],
+      "on_delete": "RESTRICT",
+      "on_update": "NO ACTION"
+    },
+    {
+      "table": "config.effective_configurations",
+      "columns": [
+        "tenant_id",
+        "control_version_id"
+      ],
+      "references": "controls.control_versions",
+      "reference_columns": [
+        "tenant_id",
+        "control_version_id"
+      ],
+      "on_delete": "RESTRICT",
+      "on_update": "NO ACTION"
+    },
+    {
+      "table": "config.configuration_overrides",
+      "columns": [
+        "tenant_id",
+        "supersedes_configuration_override_id"
+      ],
+      "references": "config.configuration_overrides",
+      "reference_columns": [
+        "tenant_id",
+        "configuration_override_id"
+      ],
+      "on_delete": "RESTRICT",
+      "on_update": "NO ACTION"
+    },
+    {
+      "table": "regulatory.requirement_applicabilities",
+      "columns": [
+        "tenant_id",
+        "context_knowledge_version_id"
+      ],
+      "references": "knowledge.knowledge_versions",
+      "reference_columns": [
+        "tenant_id",
+        "knowledge_version_id"
+      ],
+      "on_delete": "RESTRICT",
+      "on_update": "NO ACTION"
+    }
+  ],
+  "unique_correction": {
+    "table": "knowledge.knowledge_versions",
+    "remove": [
+      "version_number"
+    ],
+    "add": [
+      "knowledge_item_id",
+      "version_number"
+    ],
+    "source": "docs/physical-data-model/01_PHYSICAL_DATA_MODEL.md KnowledgeVersion row; database/migrations/20260916000600_constraints_and_uniqueness.sql:945 mismatch",
+    "data_rewrite": false
+  },
+  "new_scope": "control_version",
+  "technical_effective_table_count": 243,
+  "live_table_count": "NOT_QUERIED",
+  "row_version_columns_added": []
+}

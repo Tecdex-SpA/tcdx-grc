@@ -1,0 +1,58 @@
+--- a/apps/backend/src/security/normative-library-publication.ts
++++ b/apps/backend/src/security/normative-library-publication.ts
+@@ -8,7 +8,7 @@
+ import {newUuidV7} from '../uuid.js';
+ import {hashCanonical} from '../regulatory/hash.js';
+ import {persistAuditEvent} from '../persistence/foundation-records.js';
+-import {controlSchemaReference} from '../configuration/control-adjustment-policy.js';
++import {controlSchemaReference,validateControlRule} from '../configuration/control-adjustment-policy.js';
+ import {matchesLibraryRegistry,type RuntimeLibraryEdge} from '../normative-library/lifecycle.js';
+ 
+ const fail=():never=>{throw new FoundationError('TCDX.CONFLICT.RESOURCE','Normative library publication conflicts with canonical authority',409);};
+@@ -29,10 +29,11 @@
+  const exact=async(path:string,expected:string)=>{const absolute=resolve(root,path);if(!absolute.startsWith(resolve(root)+sep))fail();const b=await readFile(absolute);if(sha(b)!==expected)fail();return b;};
+  for(const [path,expected]of Object.entries(contract.sources))await exact(path,expected);
+  const manifestBytes=await readFile(resolve(root,'database/migrations/manifest.json'));
+- // Exact local adoption receipt; this is integrity evidence, never a new QA observation.
+- if(sha(manifestBytes)!=='70ecaa0f4bbf168a1f5e4c3cefbd734036217dc7b09ac3d4a11b65f9cbc66152')fail();
++ const correction=contract.configurationDefaultCorrection;
++ const predecessor=JSON.parse((await exact(correction.predecessor_manifest.path,correction.predecessor_manifest.sha256)).toString());
++ if(predecessor.migrations.length!==35||manifestBytes.toString()!==JSON.stringify({...predecessor,migrations:[...predecessor.migrations,correction.migration]},null,2)+'\n')fail();
+  const migrations=(JSON.parse(manifestBytes.toString()).migrations as Migration[]);
+- if(migrations.length!==35||migrations.at(-1)?.sha256!=='9279159e88c60fff03f998e33008fb0d675f53e4423df638c9e54f709a773798')fail();
++ if(migrations.length!==36||migrations[34]?.sha256!=='9279159e88c60fff03f998e33008fb0d675f53e4423df638c9e54f709a773798')fail();
+  for(const m of migrations)await exact('database/migrations/'+m.filename,m.sha256);
+  const p:LibraryPublication={tenantIds:[...input.tenantIds].sort(),effectiveFrom:new Date(input.effectiveFrom).toISOString(),effectiveTo:new Date(input.effectiveTo).toISOString(),migrations,
+   manifestSha256:hashCanonical({sources:contract.sources,migrations_sha256:sha(manifestBytes),...input,tenantIds:[...input.tenantIds].sort()})};
+@@ -115,11 +116,29 @@
+   }
+   await audit('LifecycleTransitionDefinition',id,'audit.platform.lifecycle_transition.publish.v1',null,{binding:b,runtime_registry_version:current[0]?.version_number??'1',present:true});
+  }
+- return {permissions:8,bindings:13,created,audited,publication_manifest_sha256:p.manifestSha256};
++ for(const d of contract.definitions.definitions){
++  const rows=(await sql<Record<string,unknown>&{configuration_definition_id:string;effective_from:Date;effective_to:Date;published_at:Date|null}>`SELECT * FROM config.configuration_definitions WHERE configuration_code=${d.configuration_code} ORDER BY version_number`.execute(tx)).rows;
++  if(rows.length>1||rows[0]&&['configuration_code','version_number','value_type','owner_domain','ownership_class','tenant_overridable','object_overridable'].some(k=>String(rows[0]![k])!==String(d[k as keyof typeof d])))fail();
++  const current=rows[0],id=current?.configuration_definition_id??newUuidV7();
++  if(current&&(current.tenant_id!==null||current.lifecycle_state!=='published'||!current.published_at||current.effective_from.toISOString()!==p.effectiveFrom||current.effective_to.toISOString()!==p.effectiveTo||Object.entries(current).some(([k,v])=>k.startsWith('default_')&&v!==null)))fail();
++  const definition={...d,configuration_definition_id:id,lifecycle_state:'published'};
++  if(!current){
++   await sql`INSERT INTO config.configuration_definitions(configuration_definition_id,created_by_service_principal_id,ownership_class,configuration_code,version_number,value_type,tenant_overridable,object_overridable,owner_domain,lifecycle_state,effective_from,effective_to,published_at)
++    VALUES(${id}::uuid,${principal}::uuid,'PLATFORM_CONTROL',${d.configuration_code},${d.version_number},${d.value_type},TRUE,TRUE,${d.owner_domain},'published',${p.effectiveFrom}::timestamptz,${p.effectiveTo}::timestamptz,transaction_timestamp())`.execute(tx);
++   await sql`INSERT INTO config.configuration_definition_scopes(configuration_definition_scope_id,created_by_service_principal_id,ownership_class,configuration_definition_id,scope_level) VALUES(${newUuidV7()}::uuid,${principal}::uuid,'PLATFORM_CONTROL',${id}::uuid,'control_version')`.execute(tx);
++   await sql`INSERT INTO config.configuration_validation_rules(configuration_validation_rule_id,created_by_service_principal_id,ownership_class,configuration_definition_id,rule_ordinal,operator,error_code,operand_text_value)
++    VALUES(${newUuidV7()}::uuid,${principal}::uuid,'PLATFORM_CONTROL',${id}::uuid,1,'contract_schema','TCDX.VALIDATION.FAILED',${controlSchemaReference(definition)})`.execute(tx);created++;
++  }
++  const scopes=(await sql<{scope_level:string;ownership_class:string;tenant_id:string|null}>`SELECT * FROM config.configuration_definition_scopes WHERE configuration_definition_id=${id}::uuid`.execute(tx)).rows;
++  if(scopes.length!==1||scopes[0]?.scope_level!=='control_version'||scopes[0].ownership_class!=='PLATFORM_CONTROL'||scopes[0].tenant_id!==null)fail();
++  validateControlRule(definition,(await sql<Record<string,unknown>>`SELECT * FROM config.configuration_validation_rules WHERE configuration_definition_id=${id}::uuid ORDER BY rule_ordinal`.execute(tx)).rows);
++  await audit('ConfigurationDefinition',id,'audit.configuration.configuration_definition.publish.v1',null,{descriptor:d,effective_from:p.effectiveFrom,effective_to:p.effectiveTo,present:true});
++ }
++ return {permissions:8,bindings:13,definitions:4,created,audited,publication_manifest_sha256:p.manifestSha256};
+ }
+ 
+ /** Exact derived preparation, without manufactured defaults or physical IDs.
+- * Materialization is a distinct gate: migration 31 forbids all four approved NULL defaults. */
++ * The general forward-only optional-default correction supplies physical integrity. */
+ export function prepareLibraryDefinitions(){
+  return contract.definitions.definitions.map(d=>({descriptor:d,scope:{ownership_class:'PLATFORM_CONTROL',tenant_id:null,scope_level:'control_version'},
+   validation_rule:{rule_ordinal:1,operator:'contract_schema',error_code:'TCDX.VALIDATION.FAILED',operand_text_value:controlSchemaReference({...d,configuration_definition_id:'',lifecycle_state:'published'})}}));

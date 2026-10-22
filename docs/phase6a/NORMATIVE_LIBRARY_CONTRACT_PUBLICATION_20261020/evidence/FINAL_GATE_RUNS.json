@@ -1,0 +1,36 @@
+[
+  {
+    "check": "rector-final",
+    "command": [
+      "bash",
+      "scripts/verify-rector-governance.sh"
+    ],
+    "exit_code": 0,
+    "status": "PASS",
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_CONTRACT_PUBLICATION_20261020/evidence/rector-final.log",
+    "sha256": "1804d6f3163b6323585d0d832274aaba9364ee4465435fb83636839d0ba76bbe"
+  },
+  {
+    "check": "rector-status-final",
+    "command": [
+      "bash",
+      "scripts/test-rector-governance-status.sh"
+    ],
+    "exit_code": 0,
+    "status": "PASS",
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_CONTRACT_PUBLICATION_20261020/evidence/rector-status-final.log",
+    "sha256": "4a950b39b20f2de1440a2b45b243b63df607fa3ede7f7e32e9f7e9da71864597"
+  },
+  {
+    "check": "derived-assets-final",
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "scripts/foundations/generate-contract-assets.mjs",
+      "--check"
+    ],
+    "exit_code": 0,
+    "status": "PASS",
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_CONTRACT_PUBLICATION_20261020/evidence/derived-assets-final.log",
+    "sha256": "d924b69504ebf455a0395e40fafa2cd7be8c3642042581b57c28d35e13714c1a"
+  }
+]

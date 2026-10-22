@@ -1,0 +1,83 @@
+[
+  {
+    "check": "final-contracts-build",
+    "status": "PASS",
+    "exit_code": 0,
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "-p",
+      "packages/contracts/tsconfig.json"
+    ],
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/evidence/final-contracts-build.log"
+  },
+  {
+    "check": "final-backend-build",
+    "status": "PASS",
+    "exit_code": 0,
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "-p",
+      "apps/backend/tsconfig.json"
+    ],
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/evidence/final-backend-build.log"
+  },
+  {
+    "check": "final-frontend-typecheck",
+    "status": "PASS",
+    "exit_code": 0,
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "-p",
+      "apps/frontend/tsconfig.json",
+      "--noEmit"
+    ],
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/evidence/final-frontend-typecheck.log"
+  },
+  {
+    "check": "final-frontend-build",
+    "status": "PASS",
+    "exit_code": 0,
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "apps/frontend/node_modules/vite/bin/vite.js",
+      "build",
+      "apps/frontend",
+      "--config",
+      "apps/frontend/vite.config.ts"
+    ],
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/evidence/final-frontend-build.log"
+  },
+  {
+    "check": "final-unit-contract",
+    "status": "PASS",
+    "exit_code": 0,
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "packages/contracts/src",
+      "apps/frontend/src",
+      "apps/backend/src/normative-library",
+      "apps/backend/src/regulatory",
+      "apps/backend/src/configuration",
+      "--exclude",
+      "**/*.postgres.test.ts",
+      "--maxWorkers=2"
+    ],
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/evidence/final-unit-contract.log"
+  },
+  {
+    "check": "final-library-assets",
+    "status": "PASS",
+    "exit_code": 0,
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "scripts/normative-library/generate-contract-assets.mjs",
+      "--check"
+    ],
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/evidence/final-library-assets.log"
+  }
+]

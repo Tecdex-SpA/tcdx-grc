@@ -1,0 +1,11 @@
+# PV-H04-01 — publicación contractual sucesora
+
+La instrucción PO actual autoriza publicar el corrector físico exacto del manifiesto candidato `NORMATIVE_LIBRARY_H04_PHYSICAL_VALIDATION_20261021/PUBLICATION_MANIFEST_CANDIDATE.json`. Ese paquete y sus textos CANDIDATE_NOT_PUBLISHED quedan como historia inmutable. El recibo de esta sucesora es la autoridad del nuevo estado; no se edita el candidato para reescribir su historia.
+
+Defecto original: la función H04 consultaba tenant_id en regulatory.regulatory_pack_versions, tabla global sin esa columna; PostgreSQL16.15 produjo42703 en dos casos con paquete. El único delta es CREATE OR REPLACE de knowledge.enforce_source_usage_rights(): elimina la variable pack_tenant y reemplaza la consulta/comparación inexistente por PERFORM del ID exacto FOR SHARE. El FK publicado mantiene el rechazo23503 de un paquete desconocido. Source, ownership/audiencia tenant, auditoría, actos, entornos, inmutabilidad y primera revocación conservan todos sus predicados.
+
+El DDL efectivo de esta corrección es exactamente DDL_SPEC.sql del candidato (SHA43bd138f9c66d30efb785cafa83bf90dbf1bce45448a8b434f3678225b33f4dd), referenciado sin duplicarlo. Es un parche de una función, no un reemplazo de todo el DDL H04. Para futura adopción autorizada: B01–B09 completo → H04 SQL_GRAMMAR completo (tabla/índice/función/trigger) → este corrector de función. El resto del contrato H04 original permanece efectivo. No se modifica ningún recibo anterior, baseline, tabla, columna, OpenAPI, policy, permiso, grant, registry, backend o frontend.
+
+Evidencia: attempt-02 conserva127 PASS/dos FAIL; attempt-03 conserva149 PASS con los mismos bytes del corrector, en PostgreSQL16.15 temporal, y sus149 SQL/log. Se verifica la evidencia íntegra y su correspondencia, sin volver a ejecutar SQL. Tres contenedores destruidos en la validación anterior; no se crea ninguno para esta publicación. Los fallos históricos no pasan retroactivamente a PASS.
+
+Esta publicación es CONTRACT_EFFECTIVE_LOCAL. No activa nada en una base de datos o runtime, no acredita derechos jurídicos y no cierra B01–B09 funcionalmente. Permanecen las autorizaciones y gates físicos/operacionales, pruebas QA/E2E y derechos reales. STEP6A5/STEP6A6 NOT_STARTED. No existe ampliación de alcance ni conflicto rector pendiente dentro de esta corrección.

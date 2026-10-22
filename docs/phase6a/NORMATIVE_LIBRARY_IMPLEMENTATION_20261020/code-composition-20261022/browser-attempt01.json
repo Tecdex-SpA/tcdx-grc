@@ -1,0 +1,504 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.4.0/bin/node",
+      "/Users/andresbarouh/repos/tcdx-grc/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "scripts/normative-library/playwright-code-composition.config.ts"
+    ],
+    "configFile": "/Users/andresbarouh/repos/tcdx-grc/scripts/normative-library/playwright-code-composition.config.ts",
+    "rootDir": "/Users/andresbarouh/repos/tcdx-grc/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-composition-20261022/browser",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "desktop",
+        "name": "desktop",
+        "testDir": "/Users/andresbarouh/repos/tcdx-grc/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "normative-library-code-composition.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-composition-20261022/browser",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "narrow",
+        "name": "narrow",
+        "testDir": "/Users/andresbarouh/repos/tcdx-grc/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "normative-library-code-composition.spec.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-composition-20261022/browser-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "\"/opt/homebrew/Cellar/node/26.4.0/bin/node\" \"/Users/andresbarouh/repos/tcdx-grc/apps/frontend/node_modules/vite/bin/vite.js\" preview --host 127.0.0.1 --port 4182 --strictPort",
+      "cwd": "/Users/andresbarouh/repos/tcdx-grc/apps/frontend",
+      "url": "http://127.0.0.1:4182",
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [
+    {
+      "title": "normative-library-code-composition.spec.ts",
+      "file": "normative-library-code-composition.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "compiled shell mounts content and removes it on denied tenant switch",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 30043,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/andresbarouh/repos/tcdx-grc/e2e/normative-library-code-composition.spec.ts",
+                        "column": 75,
+                        "line": 40
+                      },
+                      "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Versión 1 · Publicado', exact: true })\u001b[22m\n\n\n  38 | test('compiled shell mounts content and removes it on denied tenant switch',async({page},info)=>{\n  39 |  const calls=await isolated(page);await page.goto('/normas?tab=contenido');\n> 40 |  await page.getByRole('button',{name:'Versión 1 · Publicado',exact:true}).click();\n     |                                                                           ^\n  41 |  for(const name of ['COMPRENDER','IMPLEMENTAR','DEMOSTRAR'])await expect(page.getByRole('heading',{name,exact:true})).toBeVisible();\n  42 |  await expect(page.getByRole('navigation',{name:'Biblioteca Normativa'})).toBeVisible();\n  43 |  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/normative-library-code-composition.spec.ts:40:75"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T11:47:12.771Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-composition-20261022/browser/normative-library-code-com-ab72f--it-on-denied-tenant-switch-desktop/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-composition-20261022/browser/normative-library-code-com-ab72f--it-on-denied-tenant-switch-desktop/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "46e5e723a60844293869-14f3aec3018fffebadfd",
+          "file": "normative-library-code-composition.spec.ts",
+          "line": 38,
+          "column": 1
+        },
+        {
+          "title": "all six full matrices use published API and preserve empty/authorization notices",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5183,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Sin relaciones autorizadas para esta selección.')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('Sin relaciones autorizadas para esta selección.') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Sin relaciones autorizadas para esta selección.')\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Sin relaciones autorizadas para esta selección.')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('Sin relaciones autorizadas para esta selección.') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Sin relaciones autorizadas para esta selección.')\u001b[22m\n\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/normative-library-code-composition.spec.ts:53:83",
+                    "location": {
+                      "file": "/Users/andresbarouh/repos/tcdx-grc/e2e/normative-library-code-composition.spec.ts",
+                      "column": 83,
+                      "line": 53
+                    },
+                    "snippet": "  51 |  for(const d of NORMATIVE_LIBRARY.matrices.types){\n  52 |   await page.goto('/normas?tab=matrices&'+new URLSearchParams({matrix:d.matrix_type,as_of:now,source_framework_version_id:id(5),target_framework_version_id:id(6)}));\n> 53 |   await expect(page.getByText('Sin relaciones autorizadas para esta selección.')).toBeVisible();\n     |                                                                                   ^\n  54 |   await expect(page.getByText('Sólo información autorizada; no se exponen conteos de objetos fuera de alcance.')).toBeVisible();\n  55 |   expect(calls.some(u=>u.pathname.endsWith('/matrices/'+d.matrix_type))).toBe(true);\n  56 |  }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/andresbarouh/repos/tcdx-grc/e2e/normative-library-code-composition.spec.ts",
+                        "column": 83,
+                        "line": 53
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Sin relaciones autorizadas para esta selección.')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('Sin relaciones autorizadas para esta selección.') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Sin relaciones autorizadas para esta selección.')\u001b[22m\n\n\n  51 |  for(const d of NORMATIVE_LIBRARY.matrices.types){\n  52 |   await page.goto('/normas?tab=matrices&'+new URLSearchParams({matrix:d.matrix_type,as_of:now,source_framework_version_id:id(5),target_framework_version_id:id(6)}));\n> 53 |   await expect(page.getByText('Sin relaciones autorizadas para esta selección.')).toBeVisible();\n     |                                                                                   ^\n  54 |   await expect(page.getByText('Sólo información autorizada; no se exponen conteos de objetos fuera de alcance.')).toBeVisible();\n  55 |   expect(calls.some(u=>u.pathname.endsWith('/matrices/'+d.matrix_type))).toBe(true);\n  56 |  }\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/normative-library-code-composition.spec.ts:53:83"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T11:47:44.541Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-composition-20261022/browser/normative-library-code-com-50433-empty-authorization-notices-desktop/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-composition-20261022/browser/normative-library-code-com-50433-empty-authorization-notices-desktop/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/andresbarouh/repos/tcdx-grc/e2e/normative-library-code-composition.spec.ts",
+                    "column": 83,
+                    "line": 53
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "46e5e723a60844293869-7f25da7ce84c6904c65c",
+          "file": "normative-library-code-composition.spec.ts",
+          "line": 49,
+          "column": 1
+        },
+        {
+          "title": "dashboard mini navigates to same full matrix without Risk or export activation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 471,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T11:47:50.028Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "46e5e723a60844293869-f2b3986ac24742c977bb",
+          "file": "normative-library-code-composition.spec.ts",
+          "line": 60,
+          "column": 1
+        },
+        {
+          "title": "direct protected routes with no grants expose no library operations or content",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 228,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T11:47:50.588Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "46e5e723a60844293869-4c9940aec39f3e223663",
+          "file": "normative-library-code-composition.spec.ts",
+          "line": 70,
+          "column": 1
+        },
+        {
+          "title": "compiled shell mounts content and removes it on denied tenant switch",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "narrow",
+              "projectName": "narrow",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 30053,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/andresbarouh/repos/tcdx-grc/e2e/normative-library-code-composition.spec.ts",
+                        "column": 75,
+                        "line": 40
+                      },
+                      "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Versión 1 · Publicado', exact: true })\u001b[22m\n\n\n  38 | test('compiled shell mounts content and removes it on denied tenant switch',async({page},info)=>{\n  39 |  const calls=await isolated(page);await page.goto('/normas?tab=contenido');\n> 40 |  await page.getByRole('button',{name:'Versión 1 · Publicado',exact:true}).click();\n     |                                                                           ^\n  41 |  for(const name of ['COMPRENDER','IMPLEMENTAR','DEMOSTRAR'])await expect(page.getByRole('heading',{name,exact:true})).toBeVisible();\n  42 |  await expect(page.getByRole('navigation',{name:'Biblioteca Normativa'})).toBeVisible();\n  43 |  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/normative-library-code-composition.spec.ts:40:75"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T11:47:51.052Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-composition-20261022/browser/normative-library-code-com-ab72f--it-on-denied-tenant-switch-narrow/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-composition-20261022/browser/normative-library-code-com-ab72f--it-on-denied-tenant-switch-narrow/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "46e5e723a60844293869-3b761a76c2fa957f7973",
+          "file": "normative-library-code-composition.spec.ts",
+          "line": 38,
+          "column": 1
+        },
+        {
+          "title": "all six full matrices use published API and preserve empty/authorization notices",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "narrow",
+              "projectName": "narrow",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5186,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Sin relaciones autorizadas para esta selección.')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('Sin relaciones autorizadas para esta selección.') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Sin relaciones autorizadas para esta selección.')\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Sin relaciones autorizadas para esta selección.')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('Sin relaciones autorizadas para esta selección.') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Sin relaciones autorizadas para esta selección.')\u001b[22m\n\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/normative-library-code-composition.spec.ts:53:83",
+                    "location": {
+                      "file": "/Users/andresbarouh/repos/tcdx-grc/e2e/normative-library-code-composition.spec.ts",
+                      "column": 83,
+                      "line": 53
+                    },
+                    "snippet": "  51 |  for(const d of NORMATIVE_LIBRARY.matrices.types){\n  52 |   await page.goto('/normas?tab=matrices&'+new URLSearchParams({matrix:d.matrix_type,as_of:now,source_framework_version_id:id(5),target_framework_version_id:id(6)}));\n> 53 |   await expect(page.getByText('Sin relaciones autorizadas para esta selección.')).toBeVisible();\n     |                                                                                   ^\n  54 |   await expect(page.getByText('Sólo información autorizada; no se exponen conteos de objetos fuera de alcance.')).toBeVisible();\n  55 |   expect(calls.some(u=>u.pathname.endsWith('/matrices/'+d.matrix_type))).toBe(true);\n  56 |  }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/andresbarouh/repos/tcdx-grc/e2e/normative-library-code-composition.spec.ts",
+                        "column": 83,
+                        "line": 53
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Sin relaciones autorizadas para esta selección.')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByText('Sin relaciones autorizadas para esta selección.') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Sin relaciones autorizadas para esta selección.')\u001b[22m\n\n\n  51 |  for(const d of NORMATIVE_LIBRARY.matrices.types){\n  52 |   await page.goto('/normas?tab=matrices&'+new URLSearchParams({matrix:d.matrix_type,as_of:now,source_framework_version_id:id(5),target_framework_version_id:id(6)}));\n> 53 |   await expect(page.getByText('Sin relaciones autorizadas para esta selección.')).toBeVisible();\n     |                                                                                   ^\n  54 |   await expect(page.getByText('Sólo información autorizada; no se exponen conteos de objetos fuera de alcance.')).toBeVisible();\n  55 |   expect(calls.some(u=>u.pathname.endsWith('/matrices/'+d.matrix_type))).toBe(true);\n  56 |  }\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/normative-library-code-composition.spec.ts:53:83"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T11:48:21.408Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-composition-20261022/browser/normative-library-code-com-50433-empty-authorization-notices-narrow/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-composition-20261022/browser/normative-library-code-com-50433-empty-authorization-notices-narrow/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/andresbarouh/repos/tcdx-grc/e2e/normative-library-code-composition.spec.ts",
+                    "column": 83,
+                    "line": 53
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "46e5e723a60844293869-9b858ca66af514fd8db1",
+          "file": "normative-library-code-composition.spec.ts",
+          "line": 49,
+          "column": 1
+        },
+        {
+          "title": "dashboard mini navigates to same full matrix without Risk or export activation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "narrow",
+              "projectName": "narrow",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 407,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T11:48:26.935Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "46e5e723a60844293869-14e08c99a9706d331dcd",
+          "file": "normative-library-code-composition.spec.ts",
+          "line": 60,
+          "column": 1
+        },
+        {
+          "title": "direct protected routes with no grants expose no library operations or content",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "narrow",
+              "projectName": "narrow",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 222,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T11:48:27.434Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "46e5e723a60844293869-eee91efdc73da041aac2",
+          "file": "normative-library-code-composition.spec.ts",
+          "line": 70,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-22T11:47:11.841Z",
+    "duration": 75906.213,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

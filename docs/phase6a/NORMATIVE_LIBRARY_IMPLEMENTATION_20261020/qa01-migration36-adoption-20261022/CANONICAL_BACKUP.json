@@ -1,0 +1,17 @@
+{
+  "mode": "backup",
+  "started_utc": "2026-10-22T15:12:52.685940+00:00",
+  "finished_utc": "2026-10-22T15:13:11.943330+00:00",
+  "exit_code": 0,
+  "command": [
+    "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+    "--experimental-strip-types",
+    "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa01-migration36-adoption-20261022/backup.mts",
+    "--restore-saved"
+  ],
+  "stdout": "{\"status\":\"PASS_VERIFIED_RECOVERABLE\",\"reference\":\"QA01-LOGICAL-0680ff6898e747d8ba2d56b9a171e1ca\",\"comparisons\":{\"relations\":true,\"columns\":true,\"constraints\":true,\"indexes\":true,\"functions\":true,\"triggers\":true,\"ledger\":true,\"authority_catalog\":true,\"all_245_table_fingerprints\":true},\"cleanup\":{\"exit_code\":0,\"container_absent\":true,\"sensitive_restore_tmpfs_destroyed\":true}}\n",
+  "stderr": "",
+  "TLS": "verify-full host=db-tecdex hostaddr=192.168.2.40",
+  "test_mode": false,
+  "isolated_rebuild": false
+}

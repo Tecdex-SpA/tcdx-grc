@@ -1,0 +1,33 @@
+# Knowledge — autoría, versiones, vínculos y custodia
+
+Contrato subordinado al amendment rector y físico de esta misma publicación. Las superficies Platform y tenant tienen OperationId, ruta y policy diferentes en OpenAPI. No son aliases o rutas de impersonation. PLATFORM_ADMIN y PLATFORM_SUPPORT requieren PlatformRoleAssignment real; Support sólo consulta metadata global no sensible, sin heredar permisos de Admin. Tenant usa Membership y tenant seleccionado; no staff, cargo o claim como autorización.
+
+## Source, Item y versión
+
+KnowledgeSource registra metadatos declarados de procedencia mediante create, sin inventar una fuente normativa autorizada. Se reutiliza la entidad canónica: la extensión de recurso knowledge_source read/create es necesaria para que una autoría no dependa de IDs privados, fuentes fabricadas o seeds implícitos. No hay Source CRUD genérico, delete o licencia automática. Los lectores list/get permiten selección accesible, búsqueda autorizada y paginación; no UUID manual.
+
+KnowledgeItemCreate exige Source existente visible de la misma autoridad. SourceCreate fija ID/actor/ownership/tenant en servidor y registra entrada activa de catálogo de procedencia; active no significa auténtica/licenciada/homologada. Metadatos de Source usados por una publicación quedan congelados para ese artefacto; correcciones de procedencia se registran por nueva fuente/versión y auditoría, sin alterar el contenido publicado. Una restricción actual aplicable de derechos puede denegar acceso sin reescribir historia.
+
+KnowledgeVersionCreate asigna version_number bajo lock del Item con UQ item+version, genera UUIDv7 y estado draft. El cliente no fija actor, ownership, tenant, lifecycle, hash, content_ref o published_at. El cuerpo es KnowledgeContent o KnowledgeContextContent, con lengua explícita y citas. Los links se materializan como FKs en la relación soporte; un UUID en texto no sirve como relación crítica. Citation.link_ordinal identifica un vínculo del manifiesto exacto, con locator/hash. Orden fuera de rango, locator vacío o target no autorizado se rechazan.
+
+KnowledgeContent mantiene COMPRENDER/IMPLEMENTAR/DEMOSTRAR. La revisión semántica exige todos los contenidos funcionales N03–N09/N14 de los criterios PO, profundidad práctica, referencias y distinción inequívoca del texto/referencia oficial. Un campo text no acredita esa calidad automáticamente. KnowledgeContextContent conserva descripción, alcance, actividades, supuestos y preguntas pendientes, con autoría/citas/vigencia; sólo tenant-owned y contexto_empresarial→Subject propio. Textos editoriales no son métodos ni decisiones jurídicas.
+
+## Ciclo, inmutabilidad y sustitución
+
+Draft admite actualización sólo del autor autorizado y ETag actual. Review decide reviewed/rejected con razón; publish sólo acepta reviewed y la identidad es distinta del autor. El revisor puede publicar ese mismo artefacto; no se impone un tercer actor. Publicar Knowledge es publicación editorial/consulta o contexto, nunca gate de pack oficial.
+
+El artefacto es una serialización JSON UTF-8 canónica de contenido, idioma, citas, targets tipados ordenados y vigencia. content_hash es SHA256 de esos bytes, comprobado en escritura y lectura. El conjunto de links y cuerpo publicado no admite cambios. La única actualización de metadata a una fila publicada permitida por publish gobernado es fijar una vez el superseded_by_id ya canónico hacia una nueva versión publicada del mismo Item y autoridad, con número y corte posteriores; no se modifica texto, hash, links, actor ni intervalos originales. La elegibilidad histórica respeta el corte effective_from del sucesor. Sin sustitución explícita no se elige una versión por último escritor: el lector expone versiones exactas y sus intervalos, y la selección ambigua se informa.
+
+## Custodia del cuerpo sin almacenamiento paralelo
+
+Se reutiliza el adaptador privado MinIO/S3 de rector24/ejecutable14; no hay VM, bucket público, FileObject global ficticio o tabla documental nueva. Para estos cuerpos estructurados exclusivamente se define un recurso interno inmutable bajo la autoridad existente KnowledgeVersion.content_ref/content_hash. content_ref es opaco, generado por backend para esa versión y objeto/version de storage; nunca URL aportada por cliente, ruta arbitraria o locator ejecutable. El adaptador registra el hash y la versión inmutable del objeto antes del commit de KnowledgeVersion; se lee sólo por el servicio autorizado, sin URL de MinIO al navegador.
+
+El cuerpo se valida como JSON cerrado y texto UTF-8; no acepta binarios, HTML activo, scripts, enlaces que ejecuten contenido, uploads genéricos o documentos adjuntos. Los archivos protegidos existentes conservan su pipeline FileUploadIntent/FileObject/Document/Evidence y retención tenant; no se reaprovecha esa fila como archivo global. El objeto Knowledge usa cifrado, control de servicio, límites de tamaño del contrato, backup/versionado y retención de rector23 con clasificación/protección heredadas de la fuente y contexto. El almacenamiento no concede autorización. Objeto incompleto/hash distinto implica source_error/dependency error según lectura, no cuerpo vacío válido.
+
+Prepare/write objeto inmutable → verificar bytes → transacción de versión/links/audit/outbox/idempotencia. Un rollback deja sólo objeto huérfano no referenciable; cleanup autorizado/idempotente respeta retención/holds y no elimina un recurso publicado. No se usa transacción distribuida. Se verifica ausencia de referencias antes de cleanup; no se publica este job o ruta operacional mediante la orden actual.
+
+## Acceso, citas y derechos por acto
+
+Cada lectura/búsqueda prueba permiso del recurso, tenant/ownership, target, pack/acceso de validación y derecho del acto. El manifiesto/cuerpo no es fuente de permisos. license_classification no equivale por sí sola a licencia efectiva. Para texto normativo protegido se reutilizan los contratos de fuente/edición/pack y evidencia de derechos reales; no se copia como texto editorial para eludirlos. Las citas se limitan al uso acreditado. Guía original y contexto declarados por sus autores se revisan como tales; revisión/publicación no certifican autenticidad normativa o licencia de terceros.
+
+PLATFORM_SUPPORT recibe content=null, content_access=metadata_only y locators sensibles minimizados. Usuarios tenant no ven borradores globales por su rol local; contenido global publicado o de validación exige el acceso correspondiente. Metadata ya legítimamente visible puede explicar restricción de contenido; objetos privados ajenos producen 404 indistinguible. Filtros por target permiten como máximo un FK explícito, comprobado antes de búsqueda/cursor. Ninguna búsqueda revela fragmentos o conteos protegidos.

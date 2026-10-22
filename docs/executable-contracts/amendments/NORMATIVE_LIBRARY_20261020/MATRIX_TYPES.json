@@ -1,0 +1,368 @@
+{
+  "types": [
+    {
+      "matrix_type": "requirements_controls",
+      "row_types": [
+        "Requirement"
+      ],
+      "column_types": [
+        "ControlVersion"
+      ],
+      "tables": [
+        "regulatory.requirements",
+        "regulatory.requirement_control_mappings",
+        "controls.control_versions"
+      ],
+      "canonical_join_edges": [
+        [
+          "regulatory.requirement_control_mappings.requirement_id",
+          "regulatory.requirements.requirement_id"
+        ],
+        [
+          "regulatory.requirement_control_mappings.control_version_id",
+          "controls.control_versions.control_version_id"
+        ]
+      ],
+      "required_source_permissions": [
+        "compliance.requirement.read",
+        "controls.control.read"
+      ],
+      "additional_entry_permission": "reporting.matrix.read",
+      "source_capabilities": "Each effective source permission retains its actual capability/entitlement; no implicit Risk or advanced Reporting entitlement",
+      "supported_filters": [
+        "as_of",
+        "source_framework_version_id",
+        "query",
+        "row_cursor",
+        "column_cursor",
+        "cell_cursor",
+        "row_limit",
+        "column_limit",
+        "cell_limit",
+        "requirement_id",
+        "control_version_id",
+        "lifecycle_state"
+      ],
+      "temporal_semantics": "effective_interval",
+      "notes": "Mapping editorial is not assessment; no compliance conclusion by link. NormativeUnitControlMapping is separate, not fabricated Requirement.",
+      "new_business_calculation": false,
+      "required_filters": [
+        "source_framework_version_id",
+        "as_of"
+      ],
+      "lifecycle_state_source": {
+        "table": "regulatory.requirement_control_mappings",
+        "column": "lifecycle_state",
+        "entity_type": "RequirementControlMapping",
+        "allowed_values": "Actual published lifecycle registry/vocabulary for this entity; unknown/unpublished input rejects400; no new state list"
+      }
+    },
+    {
+      "matrix_type": "controls_evidence",
+      "row_types": [
+        "Control",
+        "ControlVersion"
+      ],
+      "column_types": [
+        "EvidenceVersion"
+      ],
+      "tables": [
+        "controls.controls",
+        "controls.control_versions",
+        "evidence.evidence_links",
+        "evidence.evidence_versions"
+      ],
+      "canonical_join_edges": [
+        [
+          "evidence.evidence_links.control_id",
+          "controls.controls.control_id"
+        ],
+        [
+          "evidence.evidence_links.control_version_id",
+          "controls.control_versions.control_version_id"
+        ],
+        [
+          "evidence.evidence_links.evidence_version_id",
+          "evidence.evidence_versions.evidence_version_id"
+        ]
+      ],
+      "required_source_permissions": [
+        "controls.control.read",
+        "evidence.evidence.read"
+      ],
+      "additional_entry_permission": "reporting.matrix.read",
+      "source_capabilities": "Each effective source permission retains its actual capability/entitlement; no implicit Risk or advanced Reporting entitlement",
+      "supported_filters": [
+        "as_of",
+        "query",
+        "row_cursor",
+        "column_cursor",
+        "cell_cursor",
+        "row_limit",
+        "column_limit",
+        "cell_limit",
+        "control_id",
+        "control_version_id",
+        "lifecycle_state"
+      ],
+      "temporal_semantics": "effective_interval",
+      "notes": "Rows distinguish Control from exact ControlVersion target. No guessed latest version for a control_id link. Source reference alone does not demonstrate tenant implementation.",
+      "new_business_calculation": false,
+      "required_filters": [
+        "as_of"
+      ],
+      "lifecycle_state_source": {
+        "table": "evidence.evidence_versions",
+        "column": "lifecycle_state",
+        "entity_type": "EvidenceVersion",
+        "allowed_values": "Actual published lifecycle registry/vocabulary for this entity; unknown/unpublished input rejects400; no new state list"
+      }
+    },
+    {
+      "matrix_type": "requirements_assessments",
+      "row_types": [
+        "Requirement"
+      ],
+      "column_types": [
+        "RequirementAssessment"
+      ],
+      "tables": [
+        "regulatory.requirements",
+        "regulatory.requirement_applicabilities",
+        "regulatory.requirement_assessments"
+      ],
+      "canonical_join_edges": [
+        [
+          "regulatory.requirement_applicabilities.requirement_id",
+          "regulatory.requirements.requirement_id"
+        ],
+        [
+          "regulatory.requirement_assessments.requirement_applicability_id",
+          "regulatory.requirement_applicabilities.requirement_applicability_id"
+        ]
+      ],
+      "required_source_permissions": [
+        "compliance.requirement.read",
+        "compliance.applicability.read",
+        "compliance.requirement_assessment.read"
+      ],
+      "additional_entry_permission": "reporting.matrix.read",
+      "source_capabilities": "Each effective source permission retains its actual capability/entitlement; no implicit Risk or advanced Reporting entitlement",
+      "supported_filters": [
+        "as_of",
+        "source_framework_version_id",
+        "query",
+        "row_cursor",
+        "column_cursor",
+        "cell_cursor",
+        "row_limit",
+        "column_limit",
+        "cell_limit",
+        "requirement_id",
+        "scope_subject_id",
+        "period_start",
+        "period_end",
+        "result_status",
+        "lifecycle_state"
+      ],
+      "temporal_semantics": "effective_interval",
+      "notes": "Applicability interval governs population; assessment time/result remain persisted values, unknown periods/method refs stay NULL. Period filters assessed_at, not an invented measured period.",
+      "new_business_calculation": false,
+      "required_filters": [
+        "source_framework_version_id",
+        "as_of"
+      ],
+      "lifecycle_state_source": {
+        "table": "regulatory.requirement_assessments",
+        "column": "lifecycle_state",
+        "entity_type": "RequirementAssessment",
+        "allowed_values": "Actual published lifecycle registry/vocabulary for this entity; unknown/unpublished input rejects400; no new state list"
+      }
+    },
+    {
+      "matrix_type": "frameworks_frameworks",
+      "row_types": [
+        "FrameworkVersion"
+      ],
+      "column_types": [
+        "FrameworkVersion"
+      ],
+      "tables": [
+        "regulatory.framework_versions",
+        "regulatory.framework_crosswalks",
+        "regulatory.normative_unit_crosswalk_mappings",
+        "regulatory.requirement_crosswalk_mappings",
+        "regulatory.control_crosswalk_mappings"
+      ],
+      "canonical_join_edges": [
+        [
+          "regulatory.framework_crosswalks.source_framework_version_id",
+          "regulatory.framework_versions.framework_version_id"
+        ],
+        [
+          "regulatory.framework_crosswalks.target_framework_version_id",
+          "regulatory.framework_versions.framework_version_id"
+        ]
+      ],
+      "required_source_permissions": [
+        "compliance.framework.read"
+      ],
+      "additional_entry_permission": "reporting.matrix.read",
+      "source_capabilities": "Each effective source permission retains its actual capability/entitlement; no implicit Risk or advanced Reporting entitlement",
+      "supported_filters": [
+        "as_of",
+        "source_framework_version_id",
+        "query",
+        "row_cursor",
+        "column_cursor",
+        "cell_cursor",
+        "row_limit",
+        "column_limit",
+        "cell_limit",
+        "target_framework_version_id",
+        "lifecycle_state"
+      ],
+      "temporal_semantics": "effective_interval",
+      "notes": "Both source/target editions required. Item detail adds corresponding unit/requirement/control read permissions. no_match target NULL is displayed as a justified source relation, not a fabricated target node; no compliance transfer.",
+      "new_business_calculation": false,
+      "required_filters": [
+        "source_framework_version_id",
+        "target_framework_version_id",
+        "as_of"
+      ],
+      "lifecycle_state_source": {
+        "table": "regulatory.framework_crosswalks",
+        "column": "lifecycle_state",
+        "entity_type": "FrameworkCrosswalk",
+        "allowed_values": "Actual published lifecycle registry/vocabulary for this entity; unknown/unpublished input rejects400; no new state list"
+      }
+    },
+    {
+      "matrix_type": "obligations_applicability",
+      "row_types": [
+        "Requirement"
+      ],
+      "column_types": [
+        "RequirementApplicability"
+      ],
+      "tables": [
+        "regulatory.requirements",
+        "regulatory.requirement_applicabilities"
+      ],
+      "canonical_join_edges": [
+        [
+          "regulatory.requirement_applicabilities.requirement_id",
+          "regulatory.requirements.requirement_id"
+        ]
+      ],
+      "required_source_permissions": [
+        "compliance.requirement.read",
+        "compliance.applicability.read"
+      ],
+      "additional_entry_permission": "reporting.matrix.read",
+      "source_capabilities": "Each effective source permission retains its actual capability/entitlement; no implicit Risk or advanced Reporting entitlement",
+      "supported_filters": [
+        "as_of",
+        "source_framework_version_id",
+        "query",
+        "row_cursor",
+        "column_cursor",
+        "cell_cursor",
+        "row_limit",
+        "column_limit",
+        "cell_limit",
+        "requirement_id",
+        "scope_subject_id",
+        "lifecycle_state"
+      ],
+      "temporal_semantics": "effective_interval",
+      "notes": "Subject filter matches actual scope_subject_id; tenant-wide applicability stays distinct. No legal applicability inferred from narrative.",
+      "new_business_calculation": false,
+      "required_filters": [
+        "source_framework_version_id",
+        "as_of"
+      ],
+      "lifecycle_state_source": {
+        "table": "regulatory.requirement_applicabilities",
+        "column": "lifecycle_state",
+        "entity_type": "RequirementApplicability",
+        "allowed_values": "Actual published lifecycle registry/vocabulary for this entity; unknown/unpublished input rejects400; no new state list"
+      }
+    },
+    {
+      "matrix_type": "issues_actions",
+      "row_types": [
+        "Issue"
+      ],
+      "column_types": [
+        "Action"
+      ],
+      "tables": [
+        "remediation.issues",
+        "remediation.actions",
+        "remediation.action_verifications"
+      ],
+      "canonical_join_edges": [
+        [
+          "remediation.actions.issue_id",
+          "remediation.issues.issue_id"
+        ],
+        [
+          "remediation.action_verifications.action_id",
+          "remediation.actions.action_id"
+        ]
+      ],
+      "required_source_permissions": [
+        "remediation.issue.read",
+        "remediation.action.read"
+      ],
+      "additional_entry_permission": "reporting.matrix.read",
+      "source_capabilities": "Each effective source permission retains its actual capability/entitlement; no implicit Risk or advanced Reporting entitlement",
+      "supported_filters": [
+        "as_of",
+        "query",
+        "row_cursor",
+        "column_cursor",
+        "cell_cursor",
+        "row_limit",
+        "column_limit",
+        "cell_limit",
+        "issue_id",
+        "action_id",
+        "lifecycle_state"
+      ],
+      "temporal_semantics": "current_state_with_as_of_population",
+      "notes": "as_of filters created_at population; lifecycle is current at read_at unless an existing canonical historical snapshot is explicitly available. Do not reconstruct past states from current fields; verification detail requires its effective permission.",
+      "new_business_calculation": false,
+      "required_filters": [
+        "as_of"
+      ],
+      "lifecycle_state_source": {
+        "table": "remediation.actions",
+        "column": "lifecycle_state",
+        "entity_type": "Action",
+        "allowed_values": "Actual published lifecycle registry/vocabulary for this entity; unknown/unpublished input rejects400; no new state list"
+      }
+    }
+  ],
+  "limits": {
+    "row_limit": {
+      "default": 50,
+      "maximum": 200
+    },
+    "column_limit": {
+      "default": 50,
+      "maximum": 200
+    },
+    "cell_limit": {
+      "default": 500,
+      "maximum": 2500
+    }
+  },
+  "page_policy": "Separate typed row/column/cell keyset cursors; no hidden truncation. Cursor HMAC binds authorized projected ID/version fingerprint, actor, tenant, permissions, asOf, filters and sort; current drift rejects409. Repeatable-read transaction per page, no snapshot creation or DB lease.",
+  "filter_policy": "Unsupported filter for matrix_type rejects400, not silently ignored. Frameworks matrix requires both exact editions; other framework filters only where a canonical join exists. source_framework_version_id mandatory when its Requirement population must be bounded.",
+  "empty_policy": "Authorized empty relation set is empty; dependency/rights failure is not silently converted to valid empty data. Hidden-object counts never returned.",
+  "normative_calculations": false,
+  "paired_period_filters": "period_start and period_end must be both present or absent; start<end; assessed_at range is [start,end).",
+  "cell_window_policy": "Cell cursors bind the exact row/column window. Exhaust next_cell_cursor for that window before advancing an axis; repeat the same authorized axes in continuation responses. All cell references must resolve to an axis in that window."
+}

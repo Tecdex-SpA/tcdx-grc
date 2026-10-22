@@ -1,0 +1,187 @@
+[
+  {
+    "name": "focused-tests",
+    "command": [
+      "pnpm",
+      "exec",
+      "vitest",
+      "run",
+      "apps/backend/src/configuration/control-definition-references.test.ts",
+      "apps/backend/src/configuration/control-adjustment-policy.test.ts",
+      "apps/backend/src/normative-library",
+      "apps/frontend/src/normative-library-workspace.test.tsx",
+      "apps/frontend/src/normative-library-client.test.ts",
+      "apps/frontend/src/core-grc.test.tsx"
+    ],
+    "exit_code": 0,
+    "log": "focused-tests.log"
+  },
+  {
+    "name": "library-assets",
+    "command": [
+      "node",
+      "scripts/normative-library/generate-contract-assets.mjs",
+      "--check"
+    ],
+    "exit_code": 0,
+    "log": "library-assets.log"
+  },
+  {
+    "name": "canonical-assets",
+    "command": [
+      "pnpm",
+      "contracts:verify"
+    ],
+    "exit_code": 0,
+    "log": "canonical-assets.log"
+  },
+  {
+    "name": "rector-integrity",
+    "command": [
+      "bash",
+      "scripts/verify-rector-governance.sh"
+    ],
+    "exit_code": 0,
+    "log": "rector-integrity.log"
+  },
+  {
+    "name": "rector-status",
+    "command": [
+      "bash",
+      "scripts/test-rector-governance-status.sh"
+    ],
+    "exit_code": 0,
+    "log": "rector-status.log"
+  },
+  {
+    "name": "whitespace",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "log": "whitespace.log"
+  },
+  {
+    "name": "typecheck",
+    "command": [
+      "pnpm",
+      "typecheck"
+    ],
+    "exit_code": 0,
+    "log": "typecheck.log"
+  },
+  {
+    "name": "build",
+    "command": [
+      "pnpm",
+      "build"
+    ],
+    "exit_code": 0,
+    "log": "build.log"
+  },
+  {
+    "name": "rights-assets",
+    "command": [
+      "node",
+      "scripts/normative-library/generate-rights-contract.mjs",
+      "--check"
+    ],
+    "exit_code": 0,
+    "log": "rights-assets.log"
+  },
+  {
+    "name": "canonical-repeat",
+    "command": [
+      "pnpm",
+      "contracts:verify"
+    ],
+    "exit_code": 0,
+    "log": "canonical-repeat.log"
+  },
+  {
+    "name": "secrets",
+    "command": [
+      "pnpm",
+      "secrets:scan"
+    ],
+    "exit_code": 0,
+    "log": "secrets.log"
+  },
+  {
+    "name": "frontend-build-repeat",
+    "command": [
+      "pnpm",
+      "--filter",
+      "@tcdx-grc/frontend",
+      "build"
+    ],
+    "exit_code": 0,
+    "log": "frontend-build-repeat.log"
+  },
+  {
+    "name": "frontend-typecheck",
+    "command": [
+      "pnpm",
+      "--filter",
+      "@tcdx-grc/frontend",
+      "typecheck"
+    ],
+    "exit_code": 0,
+    "log": "frontend-typecheck.log"
+  },
+  {
+    "name": "frontend-final-build",
+    "command": [
+      "pnpm",
+      "--filter",
+      "@tcdx-grc/frontend",
+      "build"
+    ],
+    "exit_code": 0,
+    "log": "frontend-final-build.log"
+  },
+  {
+    "name": "frontend-final-tests",
+    "command": [
+      "pnpm",
+      "exec",
+      "vitest",
+      "run",
+      "apps/frontend/src/normative-library-workspace.test.tsx",
+      "apps/frontend/src/core-grc.test.tsx"
+    ],
+    "exit_code": 0,
+    "log": "frontend-final-tests.log"
+  },
+  {
+    "name": "final-library-assets",
+    "command": [
+      "node",
+      "scripts/normative-library/generate-contract-assets.mjs",
+      "--check"
+    ],
+    "exit_code": 0,
+    "log": "final-library-assets.log"
+  },
+  {
+    "name": "final-rector-integrity",
+    "command": [
+      "bash",
+      "scripts/verify-rector-governance.sh"
+    ],
+    "exit_code": 0,
+    "log": "final-rector-integrity.log"
+  },
+  {
+    "name": "final-whitespace",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "log": "final-whitespace.log"
+  }
+]

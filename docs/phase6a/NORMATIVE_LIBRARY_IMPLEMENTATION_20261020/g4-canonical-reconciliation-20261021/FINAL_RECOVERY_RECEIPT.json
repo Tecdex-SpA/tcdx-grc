@@ -1,0 +1,61 @@
+{
+  "status": "PASS_LOGICAL_SNAPSHOT_RECOVERY_ONLY",
+  "reference": "QA-LOGICAL-e923e6ecc44845c6920c8fd975f34675",
+  "verified_utc": "2026-10-21T23:08:56.762883+00:00",
+  "source": "QA 192.168.2.40:5432/tcdx-grc",
+  "snapshot_utc": "2026-10-21T22:46:47.129323+00:00",
+  "dump_sha256": "754e1810ca4a0242814a3a02d6e6f9821774b35eb304f300b09a3665616141a5",
+  "dump_size_bytes": 2544085,
+  "dump_tool": "pg_dump (PostgreSQL) 16.14 (Homebrew)",
+  "restore_postgres": "16.15",
+  "file_encryption": "NONE_EXPLICIT_PO_DIRECTION",
+  "at_rest": "FileVault ON, private home directory0700 / backup0600",
+  "custody": "andresbarouh local PO account; ~/.tcdx-grc-qa-recovery/<reference>/tcdx-grc.pgdump",
+  "retention": "Retain as the recovery copy pending PO adoption and explicit disposal decision; no automatic deletion",
+  "coverage": {
+    "tables": 243,
+    "ledger_checksums": 34,
+    "all_table_row_counts": "MATCH_SAME_DUMP_SNAPSHOT",
+    "columns_indexes_functions_triggers_extensions": "MATCH",
+    "constraints": {
+      "raw_definition_differences": 180,
+      "compared_total": 2857,
+      "semantic_AST_equivalence": "180_OF_180_PASS",
+      "all_others": "EXACT_MATCH"
+    },
+    "invalid_constraints": "NONE",
+    "invalid_indexes": "NONE",
+    "source_writes": "NONE",
+    "temporary_restore_cleanup": "VERIFIED_DESTROYED"
+  },
+  "limits": [
+    "Logical snapshot only; no PITR or recovery of the other four databases",
+    "No cluster/global role secrets copied; only referenced application role recreated NOLOGIN for isolated restore, database ACL/owners retained",
+    "Filesystem protection relies on FileVault and local account custody; artifact is NOT independently encrypted or portable as encrypted media",
+    "QA application, external object storage, secrets, jobs and E2E recovery are outside this database-only drill",
+    "Backup point must be reconsidered if QA changes before a future adoption; no future recovery point is inferred"
+  ],
+  "evidence": [
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/g4-canonical-reconciliation-20261021/BACKUP_RESTORE_ATTEMPT_02.json",
+      "sha256": "2f7a9fed89e8af97fc494cdb9203cd66bcdb0d0fdc517d11c86dce0bfdccb590"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/g4-canonical-reconciliation-20261021/BACKUP_RESTORE_FINAL.json",
+      "sha256": "2dac7a8ecfa4fd63899098633c18ce798110fe2894c368cb5cf5024c52996865"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/g4-canonical-reconciliation-20261021/BACKUP_RESTORE_RECONCILED.json",
+      "sha256": "e772d4afb0a127d7464240431a4e6b8ee60c6d5acdc01c51521cb6b847d75323"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/g4-canonical-reconciliation-20261021/CONSTRAINT_EQUIVALENCE.json",
+      "sha256": "38c6d8c60549b456f7ad2a082d58a45079151250c86bd9f80c534b2b11eecbab"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/g4-canonical-reconciliation-20261021/NORMALIZER_TESTS.json",
+      "sha256": "2ebd511a270bc7a67256b345ffefa68fdb55ee5258866341c816110596c3335b"
+    }
+  ],
+  "qa_ddl_dml_history_writes": "NONE"
+}

@@ -1,0 +1,35 @@
+--- a/apps/backend/src/security/iam-publication-runtime.ts
++++ b/apps/backend/src/security/iam-publication-runtime.ts
+@@ -1,4 +1,7 @@
+ import {loadInitialSourcePublication} from "./initial-source-lifecycle-publication.js";
++import {prepareLibraryPublication} from './normative-library-publication.js';
++import {readFile} from 'node:fs/promises';
++import {createHash} from 'node:crypto';
+ import type { Kysely } from "kysely";
+ import type { BackendConfig, RuntimeEnvironment } from "../config.js";
+ import type { FoundationDatabase } from "../database.js";
+@@ -18,6 +21,9 @@
+   if (!!c04wRoot !== !!c04wSha || (!present.length && c04wRoot)) throw new Error("INCOMPLETE_C04W_PUBLICATION_CONFIGURATION");
+   const initialRoot=env.TCDX_INITIAL_SOURCE_PUBLICATION_ROOT,initialSha=env.TCDX_INITIAL_SOURCE_PUBLICATION_MANIFEST_SHA256;
+   if(!!initialRoot!==!!initialSha||(!present.length&&initialRoot)) throw new Error("INCOMPLETE_INITIAL_SOURCE_PUBLICATION_CONFIGURATION");
++  const libraryNames=['TCDX_LIBRARY_PUBLICATION_ROOT','TCDX_LIBRARY_PUBLICATION_INPUT_FILE','TCDX_LIBRARY_PUBLICATION_INPUT_SHA256'] as const;
++  const libraryPresent=libraryNames.filter(name=>env[name]);
++  if(libraryPresent.length&&(libraryPresent.length!==libraryNames.length||!present.length))throw new Error('INCOMPLETE_LIBRARY_PUBLICATION_CONFIGURATION');
+   if (!present.length) return undefined;
+   if (present.length !== names.length || config.nodeEnv !== "qa") throw new Error("INCOMPLETE_OR_NON_QA_IAM_PUBLICATION_CONFIGURATION");
+   const files = await loadIamPublicationFiles({ profilePath: env[names[0]]!, approvedProfileSha256: env[names[1]]!,
+@@ -27,7 +33,13 @@
+     throw new Error("IAM_PROFILE_RUNTIME_IDENTITY_MISMATCH");
+   const c04w = c04wRoot && c04wSha ? await loadC04wLifecyclePublication(c04wRoot, c04wSha) : undefined;
+   const initial=initialRoot&&initialSha?await loadInitialSourcePublication(initialRoot,initialSha):undefined;
+-  const service = new IamPublicationService(db, tokens, files, IamPublicationService.credentialFile(files.profile.credential_ref), c04w, initial);
++  let library;
++  if(libraryPresent.length){
++    const bytes=await readFile(env.TCDX_LIBRARY_PUBLICATION_INPUT_FILE!);
++    if(!/^[a-f0-9]{64}$/.test(env.TCDX_LIBRARY_PUBLICATION_INPUT_SHA256!)||createHash('sha256').update(bytes).digest('hex')!==env.TCDX_LIBRARY_PUBLICATION_INPUT_SHA256)throw new Error('LIBRARY_PUBLICATION_INPUT_INTEGRITY');
++    library=await prepareLibraryPublication(env.TCDX_LIBRARY_PUBLICATION_ROOT!,JSON.parse(bytes.toString('utf8')));
++  }
++  const service = new IamPublicationService(db, tokens, files, IamPublicationService.credentialFile(files.profile.credential_ref), c04w, initial, library);
+   tokens.configureMachineProfile({ profile: files.profile, resolvePrincipal: proof => service.resolvePrincipal(proof) }, config.nodeEnv);
+   return service;
+ }

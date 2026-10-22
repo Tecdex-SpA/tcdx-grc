@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa01-migration36-adoption-20261022/verify.py",
+    "--check-backup"
+  ],
+  "started_utc": "2026-10-22T15:28:40.142015+00:00",
+  "finished_utc": "2026-10-22T15:28:40.673942+00:00",
+  "exit_code": 0,
+  "stdout": "{\n  \"integrity\": \"PASS\",\n  \"QA01_GATE\": \"PASS\",\n  \"migration36\": \"APPLIED_VERIFIED_ONCE\",\n  \"history\": \"36_EXACT\",\n  \"schema\": \"244_TABLES_3630_COLUMNS_ZERO_MISMATCHES\",\n  \"business_fingerprints\": \"244_IDENTICAL_5097_ROWS\",\n  \"backup\": \"ACTUAL_ISOLATED_PG16_RESTORE_VERIFIED\",\n  \"backup_file_local_check\": \"PASS\",\n  \"QA_connections_this_verifier\": \"NONE\",\n  \"received_files\": \"PRESERVED_EXCEPT_DOCUMENTED_STATUS_APPEND\",\n  \"files_created\": 39,\n  \"files_modified\": 1\n}\n",
+  "stderr": "",
+  "database": false,
+  "read_only": false
+}

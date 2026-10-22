@@ -1,0 +1,68 @@
+{
+  "scope": "QA physical adoption only; no functional/runtime enablement",
+  "evidence": [
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/GO_NO_GO.json",
+      "sha256": "758a6140b5cb96c2d380a3907a5b3d022ee5b164866e7718a7889f9dbcfcfb27"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/CANONICAL_APPLY.json",
+      "sha256": "05b89661004c99d31b0a684d1f127da54f151b7b6d8d742c2319f5b87d95e4e0"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/CANONICAL_VERIFY.json",
+      "sha256": "7ba1dc106d85c1fd9e04ed9e70b068c746d7a1294a7c7e357c22f34695347cff"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/IMMEDIATE.json",
+      "sha256": "949b3b1f8e21eb854933200d7c539209f8b13ef70a474677dbfb91902dc0be95"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/POST.json",
+      "sha256": "bb4f2167321535b2b92eeb14c4e5be6513c8d009fd7554e6556a38a768194511"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/OBJECT_DELTAS.json",
+      "sha256": "9101a6cc81aa819dcd7425f6385286320d9420e6ea66f5c1b4c2eb5c1467ea86"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/POST_GATES.json",
+      "sha256": "ef9cc8ed4179a357bf3fa3b37ad86377652f2d7b8dc8d1c867eccbbc60e8c0bb"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/TLS_VALIDATION.json",
+      "sha256": "4d0ba9a108c00c7e7feb261d76a84334cf823e28c4fc073ba8016d04db77c4f9"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/QA_ADMINISTRATIVE_PUBLIC_CERT.pem",
+      "sha256": "0a99469321c1117cdf3154a7e5c5e50dd42f719af7b8b1a647fa0bb55179519b"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/UNIT_TESTS.json",
+      "sha256": "05800c0596e262075edc87287fbaa94572a1c8eff4029320be0b04570a85bb02"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/TYPECHECK_FINAL.json",
+      "sha256": "505b7145ffac27b178d527dcd151d7e4d9e5f7ed15dcd63e4322f2d1c68496b9"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/RECTOR_FINAL.json",
+      "sha256": "6434056917c872e808767e76c6451e748f1dca6f7db148b078d0f850ee086bab"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/BACKUP_AVAILABLE.json",
+      "sha256": "cee103714d5b948466cbccbcab6386ad5653e19892d38f632b9727a32a1063a7"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/SOURCE_DELTAS.json",
+      "sha256": "881125c441650efdf396c7de13c38467b11c5e189ad3d0ee67bc0fee1d66a82f"
+    }
+  ],
+  "adoption_receipt": {
+    "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/ADOPTION_RECEIPT.json",
+    "sha256": "692a68842fa8a807adb1a7a8937e16e3f7432967716cfd53e73ccd871d5e9450"
+  },
+  "prior_tests_reused": "149 PG16.15 physical behavior checks and17 canonical synthetic gates; none repeated in QA",
+  "current_validation": "4 TLS checks,4 unit tests,typecheck,rector and18 post-adoption checks PASS",
+  "sensitive_data": "Only public certificate, sanitized catalog metadata and aggregate hashes/counts; no keys, credentials or database rows"
+}

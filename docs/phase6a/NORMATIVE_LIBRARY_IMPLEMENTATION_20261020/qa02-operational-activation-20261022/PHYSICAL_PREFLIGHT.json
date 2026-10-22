@@ -1,0 +1,85 @@
+{
+  "status": "PASS_READ_ONLY_NO_DRIFT",
+  "checks": {
+    "qa01_relations_unchanged": true,
+    "qa01_columns_unchanged": true,
+    "qa01_constraints_unchanged": true,
+    "qa01_indexes_unchanged": true,
+    "qa01_functions_unchanged": true,
+    "qa01_triggers_unchanged": true,
+    "qa01_authority_catalog_unchanged": true,
+    "qa01_typed_default_exact_unchanged": true,
+    "qa01_ledger_unchanged": true,
+    "244_fingerprints_5097_rows_unchanged": true,
+    "36_migrations_exact": true,
+    "migration36_once": true,
+    "QA_TLS_verify_full_16_15": true,
+    "health": true,
+    "no_conflicting_activity": true,
+    "B06_target_bindings_absent": true,
+    "four_Definitions_absent": true,
+    "H04_sources_and_rights_absent": true,
+    "no_prior_slice_audits": true,
+    "existing_principal_active": true,
+    "eight_catalog_permissions_pending": true
+  },
+  "observed_active_tenants": [
+    {
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "tenant_code": "TECDEX",
+      "lifecycle_state": "active"
+    },
+    {
+      "tenant_id": "01a1137a-1351-76b8-ac8a-0bb109ca8e22",
+      "tenant_code": "ACME-1",
+      "lifecycle_state": "active"
+    },
+    {
+      "tenant_id": "01a11820-ae9f-7485-93e5-942eaec71121",
+      "tenant_code": "ACME 2",
+      "lifecycle_state": "active"
+    }
+  ],
+  "tenants_are_not_an_approved_input": true,
+  "operational_interval": "NOT_SELECTED_NO_AUTHENTICATED_EXECUTOR",
+  "missing_roles": [
+    {
+      "tenant_id": "01a1137a-1351-76b8-ac8a-0bb109ca8e22",
+      "role_code": "TENANT_ADMIN",
+      "count": 0
+    },
+    {
+      "tenant_id": "01a1137a-1351-76b8-ac8a-0bb109ca8e22",
+      "role_code": "GRC_MANAGER",
+      "count": 0
+    },
+    {
+      "tenant_id": "01a1137a-1351-76b8-ac8a-0bb109ca8e22",
+      "role_code": "COMPLIANCE_MANAGER",
+      "count": 0
+    },
+    {
+      "tenant_id": "01a1137a-1351-76b8-ac8a-0bb109ca8e22",
+      "role_code": "CONTROL_OWNER",
+      "count": 0
+    },
+    {
+      "tenant_id": "01a1137a-1351-76b8-ac8a-0bb109ca8e22",
+      "role_code": "EVIDENCE_OWNER",
+      "count": 0
+    },
+    {
+      "tenant_id": "01a1137a-1351-76b8-ac8a-0bb109ca8e22",
+      "role_code": "ACTION_OWNER",
+      "count": 0
+    },
+    {
+      "tenant_id": "01a1137a-1351-76b8-ac8a-0bb109ca8e22",
+      "role_code": "VIEWER",
+      "count": 0
+    }
+  ],
+  "missing_role_consequence": "ACME-1 cannot be included in tenantIds with the current canonical publisher; no missing roles created and no tenant list inferred",
+  "activation_gate": "BLOCKED_MISSING_LOCAL_AUTHENTICATED_EXECUTOR",
+  "QA_writes": "NONE"
+}

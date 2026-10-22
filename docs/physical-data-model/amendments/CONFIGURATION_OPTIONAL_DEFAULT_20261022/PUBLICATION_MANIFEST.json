@@ -1,0 +1,47 @@
+{
+  "baseline": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "status": "LOCAL_CORRECTIVE_CONTRACT_PREPARATION",
+  "authorization": {
+    "path": "docs/physical-data-model/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/AUTHORIZATION.json",
+    "sha256": "fbea834463aa70903b66b4f655f096bc54d73638f66d1a17e81a4e6483444100"
+  },
+  "files": [
+    {
+      "path": "docs/physical-data-model/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/CONTRACT.json",
+      "sha256": "5321c850b959adb1219c59ef52450457938b25dfe01240e9638ea65597550ed6"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/DDL_SPEC.sql",
+      "sha256": "4fc817fa8ba6b8149dce1d484a301b511b24f8d4329038fd1e72265c9cd0bfc3"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/PG16_CONSTRAINT.json",
+      "sha256": "5d5d774bac7c5508f54c6d3b6d7b83142d830b43904737be388ceb8bf0c01816"
+    },
+    {
+      "path": "docs/physical-data-model/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/PG16_PREDECESSOR.json",
+      "sha256": "21279c2547813911cac256b2ed55a9e69cc1692220f300f436ad8c12c4992b1c"
+    },
+    {
+      "path": "docs/executable-contracts/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/CONTRACT.json",
+      "sha256": "fcee41313476cc81b5f5ae3841472fbf1c03d99d151ac49172835790418551c1"
+    }
+  ],
+  "migration": {
+    "id": "20261022141304",
+    "filename": "20261022141304_configuration_optional_default.sql",
+    "sha256": "4fc817fa8ba6b8149dce1d484a301b511b24f8d4329038fd1e72265c9cd0bfc3",
+    "transactional": true,
+    "preconditions": [
+      "exact_35_predecessor_checksums",
+      "approved_LOCAL_DEFINITIONS_01_forward_only_correction",
+      "separate_environment_execution_authorization"
+    ],
+    "postconditions": [
+      "244_domain_tables_unchanged",
+      "optional_absence_or_one_correctly_typed_default",
+      "all_existing_business_rows_unchanged",
+      "ledger_36_atomic_with_DDL"
+    ]
+  }
+}

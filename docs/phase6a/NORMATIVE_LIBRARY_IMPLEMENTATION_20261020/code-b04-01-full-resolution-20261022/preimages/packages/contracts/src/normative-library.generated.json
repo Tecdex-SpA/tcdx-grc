@@ -1,0 +1,2362 @@
+{
+  "registry": {
+    "new_operations": [
+      {
+        "operation_id": "knowledgeSourceCreate",
+        "path": "/knowledge-sources",
+        "method": "post",
+        "permission": "knowledge.knowledge_source.create",
+        "policy": "KNOWLEDGE_TENANT_AUTHOR",
+        "context": "TENANT",
+        "request_schema": "KnowledgeSourceCreateRequest",
+        "response_schema": "KnowledgeSourceResult",
+        "success": 201,
+        "audit_event": "audit.knowledge.knowledge_source.create.v1",
+        "domain_event": "knowledge.knowledge_source.created.v1",
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "knowledgeSourceGet",
+        "path": "/knowledge-sources/{id}",
+        "method": "get",
+        "permission": "knowledge.knowledge_source.read",
+        "policy": "KNOWLEDGE_TENANT_READ",
+        "context": "TENANT",
+        "request_schema": null,
+        "response_schema": "KnowledgeSourceResult",
+        "success": 200,
+        "audit_event": null,
+        "domain_event": null,
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "knowledgeItemCreate",
+        "path": "/knowledge-items",
+        "method": "post",
+        "permission": "knowledge.knowledge_item.create",
+        "policy": "KNOWLEDGE_TENANT_AUTHOR",
+        "context": "TENANT",
+        "request_schema": "KnowledgeItemCreateRequest",
+        "response_schema": "KnowledgeItemResult",
+        "success": 201,
+        "audit_event": "audit.knowledge.knowledge_item.create.v1",
+        "domain_event": "knowledge.knowledge_item.created.v1",
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "knowledgeItemGet",
+        "path": "/knowledge-items/{id}",
+        "method": "get",
+        "permission": "knowledge.knowledge_item.read",
+        "policy": "KNOWLEDGE_TENANT_READ",
+        "context": "TENANT",
+        "request_schema": null,
+        "response_schema": "KnowledgeItemResult",
+        "success": 200,
+        "audit_event": null,
+        "domain_event": null,
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "knowledgeVersionCreate",
+        "path": "/knowledge-items/{id}/versions",
+        "method": "post",
+        "permission": "knowledge.knowledge_item.create",
+        "policy": "KNOWLEDGE_TENANT_AUTHOR",
+        "context": "TENANT",
+        "request_schema": "KnowledgeVersionWriteRequest",
+        "response_schema": "KnowledgeVersionResult",
+        "success": 201,
+        "audit_event": "audit.knowledge.knowledge_version.create.v1",
+        "domain_event": "knowledge.knowledge_version.created.v1",
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "knowledgeVersionList",
+        "path": "/knowledge-versions",
+        "method": "get",
+        "permission": "knowledge.knowledge_item.read",
+        "policy": "KNOWLEDGE_TENANT_READ",
+        "context": "TENANT",
+        "request_schema": null,
+        "response_schema": "KnowledgeVersionPage",
+        "success": 200,
+        "audit_event": null,
+        "domain_event": null,
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "knowledgeVersionGet",
+        "path": "/knowledge-versions/{id}",
+        "method": "get",
+        "permission": "knowledge.knowledge_item.read",
+        "policy": "KNOWLEDGE_TENANT_READ",
+        "context": "TENANT",
+        "request_schema": null,
+        "response_schema": "KnowledgeVersionResult",
+        "success": 200,
+        "audit_event": null,
+        "domain_event": null,
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "knowledgeVersionUpdate",
+        "path": "/knowledge-versions/{id}",
+        "method": "patch",
+        "permission": "knowledge.knowledge_item.update",
+        "policy": "KNOWLEDGE_TENANT_AUTHOR",
+        "context": "TENANT",
+        "request_schema": "KnowledgeVersionWriteRequest",
+        "response_schema": "KnowledgeVersionResult",
+        "success": 200,
+        "audit_event": "audit.knowledge.knowledge_version.update.v1",
+        "domain_event": "knowledge.knowledge_version.updated.v1",
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "knowledgeVersionReview",
+        "path": "/knowledge-versions/{id}:review",
+        "method": "post",
+        "permission": "knowledge.knowledge_item.review",
+        "policy": "KNOWLEDGE_TENANT_REVIEW",
+        "context": "TENANT",
+        "request_schema": "KnowledgeReviewRequest",
+        "response_schema": "KnowledgeVersionResult",
+        "success": 200,
+        "audit_event": "audit.knowledge.knowledge_version.review.v1",
+        "domain_event": "knowledge.knowledge_version.reviewed.v1",
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "knowledgeVersionPublish",
+        "path": "/knowledge-versions/{id}:publish",
+        "method": "post",
+        "permission": "knowledge.knowledge_item.publish",
+        "policy": "KNOWLEDGE_TENANT_PUBLISH",
+        "context": "TENANT",
+        "request_schema": "KnowledgePublishRequest",
+        "response_schema": "KnowledgeVersionResult",
+        "success": 200,
+        "audit_event": "audit.knowledge.knowledge_version.publish.v1",
+        "domain_event": "knowledge.knowledge_version.published.v1",
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "platformKnowledgeSourceCreate",
+        "path": "/platform/knowledge-sources",
+        "method": "post",
+        "permission": "knowledge.knowledge_source.create",
+        "policy": "KNOWLEDGE_GLOBAL_AUTHOR",
+        "context": "PLATFORM",
+        "request_schema": "KnowledgeSourceCreateRequest",
+        "response_schema": "KnowledgeSourceResult",
+        "success": 201,
+        "audit_event": "audit.knowledge.knowledge_source.create.v1",
+        "domain_event": "knowledge.knowledge_source.created.v1",
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "platformKnowledgeSourceGet",
+        "path": "/platform/knowledge-sources/{id}",
+        "method": "get",
+        "permission": "knowledge.knowledge_source.read",
+        "policy": "KNOWLEDGE_GLOBAL_READ",
+        "context": "PLATFORM",
+        "request_schema": null,
+        "response_schema": "KnowledgeSourceResult",
+        "success": 200,
+        "audit_event": null,
+        "domain_event": null,
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "platformKnowledgeItemCreate",
+        "path": "/platform/knowledge-items",
+        "method": "post",
+        "permission": "knowledge.knowledge_item.create",
+        "policy": "KNOWLEDGE_GLOBAL_AUTHOR",
+        "context": "PLATFORM",
+        "request_schema": "KnowledgeItemCreateRequest",
+        "response_schema": "KnowledgeItemResult",
+        "success": 201,
+        "audit_event": "audit.knowledge.knowledge_item.create.v1",
+        "domain_event": "knowledge.knowledge_item.created.v1",
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "platformKnowledgeItemGet",
+        "path": "/platform/knowledge-items/{id}",
+        "method": "get",
+        "permission": "knowledge.knowledge_item.read",
+        "policy": "KNOWLEDGE_GLOBAL_READ",
+        "context": "PLATFORM",
+        "request_schema": null,
+        "response_schema": "KnowledgeItemResult",
+        "success": 200,
+        "audit_event": null,
+        "domain_event": null,
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "platformKnowledgeVersionCreate",
+        "path": "/platform/knowledge-items/{id}/versions",
+        "method": "post",
+        "permission": "knowledge.knowledge_item.create",
+        "policy": "KNOWLEDGE_GLOBAL_AUTHOR",
+        "context": "PLATFORM",
+        "request_schema": "KnowledgeVersionWriteRequest",
+        "response_schema": "KnowledgeVersionResult",
+        "success": 201,
+        "audit_event": "audit.knowledge.knowledge_version.create.v1",
+        "domain_event": "knowledge.knowledge_version.created.v1",
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "platformKnowledgeVersionList",
+        "path": "/platform/knowledge-versions",
+        "method": "get",
+        "permission": "knowledge.knowledge_item.read",
+        "policy": "KNOWLEDGE_GLOBAL_READ",
+        "context": "PLATFORM",
+        "request_schema": null,
+        "response_schema": "KnowledgeVersionPage",
+        "success": 200,
+        "audit_event": null,
+        "domain_event": null,
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "platformKnowledgeVersionGet",
+        "path": "/platform/knowledge-versions/{id}",
+        "method": "get",
+        "permission": "knowledge.knowledge_item.read",
+        "policy": "KNOWLEDGE_GLOBAL_READ",
+        "context": "PLATFORM",
+        "request_schema": null,
+        "response_schema": "KnowledgeVersionResult",
+        "success": 200,
+        "audit_event": null,
+        "domain_event": null,
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "platformKnowledgeVersionUpdate",
+        "path": "/platform/knowledge-versions/{id}",
+        "method": "patch",
+        "permission": "knowledge.knowledge_item.update",
+        "policy": "KNOWLEDGE_GLOBAL_AUTHOR",
+        "context": "PLATFORM",
+        "request_schema": "KnowledgeVersionWriteRequest",
+        "response_schema": "KnowledgeVersionResult",
+        "success": 200,
+        "audit_event": "audit.knowledge.knowledge_version.update.v1",
+        "domain_event": "knowledge.knowledge_version.updated.v1",
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "platformKnowledgeVersionReview",
+        "path": "/platform/knowledge-versions/{id}:review",
+        "method": "post",
+        "permission": "knowledge.knowledge_item.review",
+        "policy": "KNOWLEDGE_GLOBAL_REVIEW",
+        "context": "PLATFORM",
+        "request_schema": "KnowledgeReviewRequest",
+        "response_schema": "KnowledgeVersionResult",
+        "success": 200,
+        "audit_event": "audit.knowledge.knowledge_version.review.v1",
+        "domain_event": "knowledge.knowledge_version.reviewed.v1",
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "platformKnowledgeVersionPublish",
+        "path": "/platform/knowledge-versions/{id}:publish",
+        "method": "post",
+        "permission": "knowledge.knowledge_item.publish",
+        "policy": "KNOWLEDGE_GLOBAL_PUBLISH",
+        "context": "PLATFORM",
+        "request_schema": "KnowledgePublishRequest",
+        "response_schema": "KnowledgeVersionResult",
+        "success": 200,
+        "audit_event": "audit.knowledge.knowledge_version.publish.v1",
+        "domain_event": "knowledge.knowledge_version.published.v1",
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "configurationOverrideGet",
+        "path": "/configuration-overrides/{id}",
+        "method": "get",
+        "permission": "configuration.configuration_override.read",
+        "policy": "CONTROL_OVERRIDE_READ",
+        "context": "TENANT",
+        "request_schema": null,
+        "response_schema": "ControlOverrideResult",
+        "success": 200,
+        "audit_event": null,
+        "domain_event": null,
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "configurationOverrideUpdate",
+        "path": "/configuration-overrides/{id}",
+        "method": "patch",
+        "permission": "configuration.configuration_override.update",
+        "policy": "CONTROL_OVERRIDE_AUTHOR",
+        "context": "TENANT",
+        "request_schema": "ControlOverrideUpdateRequest",
+        "response_schema": "ControlOverrideResult",
+        "success": 200,
+        "audit_event": "audit.configuration.configuration_override.update.v1",
+        "domain_event": "configuration.configuration_override.updated.v1",
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "configurationOverrideReview",
+        "path": "/configuration-overrides/{id}:review",
+        "method": "post",
+        "permission": "configuration.configuration_override.review",
+        "policy": "CONTROL_OVERRIDE_REVIEWER",
+        "context": "TENANT",
+        "request_schema": "ControlOverrideReviewRequest",
+        "response_schema": "ControlOverrideResult",
+        "success": 200,
+        "audit_event": "audit.configuration.configuration_override.review.v1",
+        "domain_event": "configuration.configuration_override.reviewed.v1",
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "configurationOverrideDecide",
+        "path": "/configuration-overrides/{id}:decide",
+        "method": "post",
+        "permission": "configuration.configuration_override.approve",
+        "policy": "CONTROL_OVERRIDE_DECIDER",
+        "context": "TENANT",
+        "request_schema": "ControlOverrideDecideRequest",
+        "response_schema": "ControlOverrideResult",
+        "success": 200,
+        "audit_event": "audit.configuration.configuration_override.decide.v1",
+        "domain_event": "configuration.configuration_override.decided.v1",
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "controlConfigurationOverrideList",
+        "path": "/control-versions/{id}/configuration-overrides",
+        "method": "get",
+        "permission": "configuration.configuration_override.read",
+        "policy": "CONTROL_OVERRIDE_READ",
+        "context": "TENANT",
+        "request_schema": null,
+        "response_schema": "ControlOverridePage",
+        "success": 200,
+        "audit_event": null,
+        "domain_event": null,
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "matrixRead",
+        "path": "/matrices/{matrix_type}",
+        "method": "get",
+        "permission": "reporting.matrix.read",
+        "policy": "MATRIX_SOURCE_INTERSECTION",
+        "context": "TENANT",
+        "request_schema": null,
+        "response_schema": "MatrixReadResult",
+        "success": 200,
+        "audit_event": null,
+        "domain_event": null,
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "knowledgeSourceList",
+        "path": "/knowledge-sources",
+        "method": "get",
+        "permission": "knowledge.knowledge_source.read",
+        "policy": "KNOWLEDGE_TENANT_READ",
+        "context": "TENANT",
+        "request_schema": null,
+        "response_schema": "KnowledgeSourcePage",
+        "success": 200,
+        "audit_event": null,
+        "domain_event": null,
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "knowledgeItemList",
+        "path": "/knowledge-items",
+        "method": "get",
+        "permission": "knowledge.knowledge_item.read",
+        "policy": "KNOWLEDGE_TENANT_READ",
+        "context": "TENANT",
+        "request_schema": null,
+        "response_schema": "KnowledgeItemPage",
+        "success": 200,
+        "audit_event": null,
+        "domain_event": null,
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "platformKnowledgeSourceList",
+        "path": "/platform/knowledge-sources",
+        "method": "get",
+        "permission": "knowledge.knowledge_source.read",
+        "policy": "KNOWLEDGE_GLOBAL_READ",
+        "context": "PLATFORM",
+        "request_schema": null,
+        "response_schema": "KnowledgeSourcePage",
+        "success": 200,
+        "audit_event": null,
+        "domain_event": null,
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      },
+      {
+        "operation_id": "platformKnowledgeItemList",
+        "path": "/platform/knowledge-items",
+        "method": "get",
+        "permission": "knowledge.knowledge_item.read",
+        "policy": "KNOWLEDGE_GLOBAL_READ",
+        "context": "PLATFORM",
+        "request_schema": null,
+        "response_schema": "KnowledgeItemPage",
+        "success": 200,
+        "audit_event": null,
+        "domain_event": null,
+        "implementation": "NOT_IMPLEMENTED",
+        "runtime_grants": "NOT_ACTIVATED"
+      }
+    ],
+    "existing_specializations": [
+      {
+        "operation_id": "configurationOverrideCreate",
+        "request_schema": "ConfigurationOverrideCreateWithControlScope",
+        "control_scope_response": "ControlOverrideResult",
+        "status_code": 202,
+        "existing_scopes_preserved": true
+      },
+      {
+        "operation_id": "applicabilityCreate",
+        "request_schema": "ApplicabilityCreateRequest",
+        "added_optional_field": "context_knowledge_version_id",
+        "audit_payload_profile": "APPLICABILITY_CONTEXT_V1"
+      },
+      {
+        "operation_id": "effectiveConfigurationGet",
+        "added_optional_persisted_field": "control_version_id",
+        "calculation_or_materialization": false
+      },
+      {
+        "operation_id": "applicabilitySubmit",
+        "audit_payload_profile": "APPLICABILITY_CONTEXT_V1",
+        "existing_lifecycle_permission_sod_cas_preserved": true
+      },
+      {
+        "operation_id": "applicabilityApprove",
+        "audit_payload_profile": "APPLICABILITY_CONTEXT_V1",
+        "existing_lifecycle_permission_sod_cas_preserved": true
+      }
+    ],
+    "extended_pack_enums": []
+  },
+  "existingOperations": [
+    {
+      "operation_id": "configurationOverrideCreate",
+      "path": "/configuration-overrides",
+      "method": "post",
+      "context": "TENANT",
+      "request_schema": "ControlOverrideCreateRequest",
+      "response_schema": "ControlOverrideResult",
+      "success": 202,
+      "permission": "configuration.configuration_override.create",
+      "policy": "CONTROL_OVERRIDE_AUTHOR",
+      "audit_event": "audit.configuration.configuration_override.create.v1",
+      "domain_event": "configuration.configuration_override.created.v1"
+    }
+  ],
+  "itemInitial": {
+    "source": "Product Owner reply in current conversation, 2026-10-20",
+    "decision": "Sí, KnowledgeItem inicial active como raíz editorial (recomendado).",
+    "operation_ids": [
+      "knowledgeItemCreate",
+      "platformKnowledgeItemCreate"
+    ],
+    "server_owned_initial_lifecycle_state": "active",
+    "meaning": "Editorial identity/version root only; reviewed/published authority is exclusively KnowledgeVersion. Item active is not normative authenticity, rights or official regulatory publication.",
+    "client_controlled_state": false,
+    "version_initial_state": "draft",
+    "source_initial_state": "active",
+    "runtime_activation": false,
+    "predecessor_receipt": {
+      "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/CONTRACT_PUBLICATION_RECEIPT.json",
+      "sha256": "55fabcdc4ddf4bcab641d9104874649fddb8ae9aeb7a771af93c569cf3fe9699"
+    }
+  },
+  "sourceCapabilities": {
+    "platform.tenant_user.onboard": "CORE_PLATFORM",
+    "platform.membership.read": "CORE_PLATFORM",
+    "platform.user_identity.read": "CORE_PLATFORM",
+    "platform.tenant.create AND platform.user_identity.read": "CORE_PLATFORM",
+    "platform.role.administer": "CORE_PLATFORM",
+    "platform.managed_identity.read": "CORE_PLATFORM",
+    "platform.managed_identity.create": "CORE_PLATFORM",
+    "platform.managed_identity.administer": "CORE_PLATFORM",
+    "organization.subject.read": "CORE_PLATFORM",
+    "organization.subject.create": "CORE_PLATFORM",
+    "platform.tenant_account_classification.update": "CORE_PLATFORM",
+    "platform.regulatory_pack_validation_access.create": "CORE_PLATFORM",
+    "platform.regulatory_pack_validation_access.read": "CORE_PLATFORM",
+    "platform.regulatory_pack_validation_access.archive": "CORE_PLATFORM",
+    "platform.subscription_regulatory_pack.read": "CORE_PLATFORM",
+    "platform.subscription_regulatory_pack.create": "CORE_PLATFORM",
+    "platform.subscription_regulatory_pack.archive": "CORE_PLATFORM",
+    "authenticated context": "CORE_PLATFORM",
+    "public authentication context": "CORE_PLATFORM",
+    "platform.tenant.read": "CORE_PLATFORM",
+    "platform.tenant.create": "CORE_PLATFORM",
+    "platform.subscription.create": "CORE_PLATFORM",
+    "platform.tenant.archive": "CORE_PLATFORM",
+    "platform.membership.create": "CORE_PLATFORM",
+    "platform.membership_invitation.read": "CORE_PLATFORM",
+    "platform.membership_invitation.create": "CORE_PLATFORM",
+    "platform.membership_invitation.update": "CORE_PLATFORM",
+    "platform.role.assign": "CORE_PLATFORM",
+    "platform.role.read": "CORE_PLATFORM",
+    "platform.impersonation_session.impersonate": "CORE_PLATFORM",
+    "compliance.normative_unit.read": "ISO_COMPLIANCE",
+    "compliance.requirement.read": "ISO_COMPLIANCE",
+    "compliance.applicability.read": "ISO_COMPLIANCE",
+    "compliance.applicability.create": "ISO_COMPLIANCE",
+    "compliance.applicability.submit": "ISO_COMPLIANCE",
+    "compliance.applicability.approve": "ISO_COMPLIANCE",
+    "compliance.requirement_assessment.read": "ISO_COMPLIANCE",
+    "compliance.requirement_assessment.create": "ISO_COMPLIANCE",
+    "compliance.requirement_assessment.update": "ISO_COMPLIANCE",
+    "compliance.requirement_assessment.submit": "ISO_COMPLIANCE",
+    "compliance.requirement_assessment.approve": "ISO_COMPLIANCE",
+    "compliance.soa.publish": "ISO_COMPLIANCE",
+    "knowledge.regulatory_pack.publish": "REGULATORY_INTELLIGENCE",
+    "controls.control.create": "CONTROLS_ASSURANCE",
+    "controls.control_assessment.read": "CONTROLS_ASSURANCE",
+    "controls.control_assessment.create": "CONTROLS_ASSURANCE",
+    "controls.control_assessment.update": "CONTROLS_ASSURANCE",
+    "controls.control_assessment.submit": "CONTROLS_ASSURANCE",
+    "controls.control_assessment.review": "CONTROLS_ASSURANCE",
+    "controls.control_assessment.approve": "CONTROLS_ASSURANCE",
+    "controls.assurance_test.execute": "CONTROLS_ASSURANCE",
+    "controls.assurance_test.review": "CONTROLS_ASSURANCE",
+    "controls.assurance_test.approve": "CONTROLS_ASSURANCE",
+    "evidence.document.create": "EVIDENCE_DOCUMENTS",
+    "evidence.document.update": "EVIDENCE_DOCUMENTS",
+    "evidence.evidence.read": "EVIDENCE_DOCUMENTS",
+    "evidence.evidence_request.read": "EVIDENCE_DOCUMENTS",
+    "evidence.evidence_request.create": "EVIDENCE_DOCUMENTS",
+    "evidence.evidence_request.submit": "EVIDENCE_DOCUMENTS",
+    "evidence.evidence.submit": "EVIDENCE_DOCUMENTS",
+    "evidence.evidence.review": "EVIDENCE_DOCUMENTS",
+    "evidence.evidence.approve": "EVIDENCE_DOCUMENTS",
+    "evidence.evidence.reject": "EVIDENCE_DOCUMENTS",
+    "remediation.issue.read": "ISSUES_ACTIONS",
+    "remediation.issue.create": "ISSUES_ACTIONS",
+    "remediation.issue.transition": "ISSUES_ACTIONS",
+    "remediation.action.create": "ISSUES_ACTIONS",
+    "remediation.action.transition": "ISSUES_ACTIONS",
+    "remediation.action.verify": "ISSUES_ACTIONS",
+    "risk.risk.create": "OPERATIONAL_RISK",
+    "risk.risk_assessment.create": "OPERATIONAL_RISK",
+    "risk.risk_assessment.submit": "OPERATIONAL_RISK",
+    "risk.treatment.create": "OPERATIONAL_RISK",
+    "risk.treatment.approve": "OPERATIONAL_RISK",
+    "risk.acceptance.create": "OPERATIONAL_RISK",
+    "risk.acceptance.approve": "OPERATIONAL_RISK",
+    "operations.incident.create": "INCIDENTS_LOSS",
+    "operations.supplier_assessment.create": "THIRD_PARTIES",
+    "operations.continuity_plan.create": "RESILIENCE",
+    "operations.survey.create": "SURVEYS",
+    "operations.survey.submit": "SURVEYS",
+    "audit.audit.create": "AUDIT",
+    "audit.audit.approve": "AUDIT",
+    "audit.audit_test.execute": "AUDIT",
+    "integration.integration.configure": "INTEGRATION_HUB",
+    "integration.sync_run.execute": "INTEGRATION_HUB",
+    "data.measurement.execute": "DATA_TRUST",
+    "data.lineage.review": "DATA_TRUST",
+    "data.rule.execute": "RULES_IMPACT",
+    "data.snapshot.read": "DATA_TRUST",
+    "reporting.report_run.execute": "REPORT_STUDIO or ISO_REPORTING",
+    "reporting.report.approve": "REPORT_STUDIO or ISO_REPORTING",
+    "reporting.report.publish": "REPORT_STUDIO or ISO_REPORTING",
+    "ai.ai_recommendation.create": "AI_ASSISTANCE",
+    "ai.ai_recommendation.review": "AI_ASSISTANCE",
+    "configuration.configuration_definition.publish": "CORE_PLATFORM",
+    "configuration.configuration_override.create": "CORE_PLATFORM",
+    "configuration.effective_configuration.read": "CORE_PLATFORM",
+    "privacy.retention_policy.read": "PRIVACY",
+    "privacy.retention_policy.create": "PRIVACY",
+    "privacy.retention_policy.update": "PRIVACY",
+    "privacy.retention_policy.review": "PRIVACY",
+    "privacy.retention_policy.approve": "PRIVACY",
+    "privacy.retention_policy.publish": "PRIVACY",
+    "privacy.retention_policy.legal_hold.release": "PRIVACY",
+    "privacy.data_subject_request.create": "PRIVACY",
+    "privacy.data_subject_request.approve": "PRIVACY",
+    "privacy.erasure_execution.execute": "PRIVACY",
+    "privacy.erasure_execution.review": "PRIVACY",
+    "platform.lifecycle_transition.publish": "CORE_PLATFORM",
+    "compliance.soa.read": "ISO_COMPLIANCE",
+    "compliance.soa.create": "ISO_COMPLIANCE",
+    "controls.control.read": "CONTROLS_ASSURANCE",
+    "controls.assurance_test.read": "CONTROLS_ASSURANCE",
+    "controls.assurance_test.create": "CONTROLS_ASSURANCE",
+    "evidence.evidence.create": "EVIDENCE_DOCUMENTS",
+    "remediation.action.read": "ISSUES_ACTIONS",
+    "compliance.methodology.read": "ISO_COMPLIANCE",
+    "controls.methodology.read": "CONTROLS_ASSURANCE",
+    "compliance.framework.read": "ISO_COMPLIANCE",
+    "platform.membership_reference.read": "CORE_PLATFORM",
+    "privacy.retention_policy_reference.read": "EVIDENCE_DOCUMENTS",
+    "knowledge.knowledge_source.create": "CORE_PLATFORM",
+    "knowledge.knowledge_source.read": "CORE_PLATFORM",
+    "knowledge.knowledge_item.create": "CORE_PLATFORM",
+    "knowledge.knowledge_item.read": "CORE_PLATFORM",
+    "knowledge.knowledge_item.update": "CORE_PLATFORM",
+    "knowledge.knowledge_item.review": "CORE_PLATFORM",
+    "knowledge.knowledge_item.publish": "CORE_PLATFORM",
+    "configuration.configuration_override.read": "CORE_PLATFORM",
+    "configuration.configuration_override.update": "CORE_PLATFORM",
+    "configuration.configuration_override.review": "CORE_PLATFORM",
+    "configuration.configuration_override.approve": "CORE_PLATFORM",
+    "reporting.matrix.read": "CORE_PLATFORM"
+  },
+  "matrices": {
+    "types": [
+      {
+        "matrix_type": "requirements_controls",
+        "row_types": [
+          "Requirement"
+        ],
+        "column_types": [
+          "ControlVersion"
+        ],
+        "tables": [
+          "regulatory.requirements",
+          "regulatory.requirement_control_mappings",
+          "controls.control_versions"
+        ],
+        "canonical_join_edges": [
+          [
+            "regulatory.requirement_control_mappings.requirement_id",
+            "regulatory.requirements.requirement_id"
+          ],
+          [
+            "regulatory.requirement_control_mappings.control_version_id",
+            "controls.control_versions.control_version_id"
+          ]
+        ],
+        "required_source_permissions": [
+          "compliance.requirement.read",
+          "controls.control.read"
+        ],
+        "additional_entry_permission": "reporting.matrix.read",
+        "source_capabilities": "Each effective source permission retains its actual capability/entitlement; no implicit Risk or advanced Reporting entitlement",
+        "supported_filters": [
+          "as_of",
+          "source_framework_version_id",
+          "query",
+          "row_cursor",
+          "column_cursor",
+          "cell_cursor",
+          "row_limit",
+          "column_limit",
+          "cell_limit",
+          "requirement_id",
+          "control_version_id",
+          "lifecycle_state"
+        ],
+        "temporal_semantics": "effective_interval",
+        "notes": "Mapping editorial is not assessment; no compliance conclusion by link. NormativeUnitControlMapping is separate, not fabricated Requirement.",
+        "new_business_calculation": false,
+        "required_filters": [
+          "source_framework_version_id",
+          "as_of"
+        ],
+        "lifecycle_state_source": {
+          "table": "regulatory.requirement_control_mappings",
+          "column": "lifecycle_state",
+          "entity_type": "RequirementControlMapping",
+          "allowed_values": "Actual published lifecycle registry/vocabulary for this entity; unknown/unpublished input rejects400; no new state list"
+        }
+      },
+      {
+        "matrix_type": "controls_evidence",
+        "row_types": [
+          "Control",
+          "ControlVersion"
+        ],
+        "column_types": [
+          "EvidenceVersion"
+        ],
+        "tables": [
+          "controls.controls",
+          "controls.control_versions",
+          "evidence.evidence_links",
+          "evidence.evidence_versions"
+        ],
+        "canonical_join_edges": [
+          [
+            "evidence.evidence_links.control_id",
+            "controls.controls.control_id"
+          ],
+          [
+            "evidence.evidence_links.control_version_id",
+            "controls.control_versions.control_version_id"
+          ],
+          [
+            "evidence.evidence_links.evidence_version_id",
+            "evidence.evidence_versions.evidence_version_id"
+          ]
+        ],
+        "required_source_permissions": [
+          "controls.control.read",
+          "evidence.evidence.read"
+        ],
+        "additional_entry_permission": "reporting.matrix.read",
+        "source_capabilities": "Each effective source permission retains its actual capability/entitlement; no implicit Risk or advanced Reporting entitlement",
+        "supported_filters": [
+          "as_of",
+          "query",
+          "row_cursor",
+          "column_cursor",
+          "cell_cursor",
+          "row_limit",
+          "column_limit",
+          "cell_limit",
+          "control_id",
+          "control_version_id",
+          "lifecycle_state"
+        ],
+        "temporal_semantics": "effective_interval",
+        "notes": "Rows distinguish Control from exact ControlVersion target. No guessed latest version for a control_id link. Source reference alone does not demonstrate tenant implementation.",
+        "new_business_calculation": false,
+        "required_filters": [
+          "as_of"
+        ],
+        "lifecycle_state_source": {
+          "table": "evidence.evidence_versions",
+          "column": "lifecycle_state",
+          "entity_type": "EvidenceVersion",
+          "allowed_values": "Actual published lifecycle registry/vocabulary for this entity; unknown/unpublished input rejects400; no new state list"
+        }
+      },
+      {
+        "matrix_type": "requirements_assessments",
+        "row_types": [
+          "Requirement"
+        ],
+        "column_types": [
+          "RequirementAssessment"
+        ],
+        "tables": [
+          "regulatory.requirements",
+          "regulatory.requirement_applicabilities",
+          "regulatory.requirement_assessments"
+        ],
+        "canonical_join_edges": [
+          [
+            "regulatory.requirement_applicabilities.requirement_id",
+            "regulatory.requirements.requirement_id"
+          ],
+          [
+            "regulatory.requirement_assessments.requirement_applicability_id",
+            "regulatory.requirement_applicabilities.requirement_applicability_id"
+          ]
+        ],
+        "required_source_permissions": [
+          "compliance.requirement.read",
+          "compliance.applicability.read",
+          "compliance.requirement_assessment.read"
+        ],
+        "additional_entry_permission": "reporting.matrix.read",
+        "source_capabilities": "Each effective source permission retains its actual capability/entitlement; no implicit Risk or advanced Reporting entitlement",
+        "supported_filters": [
+          "as_of",
+          "source_framework_version_id",
+          "query",
+          "row_cursor",
+          "column_cursor",
+          "cell_cursor",
+          "row_limit",
+          "column_limit",
+          "cell_limit",
+          "requirement_id",
+          "scope_subject_id",
+          "period_start",
+          "period_end",
+          "result_status",
+          "lifecycle_state"
+        ],
+        "temporal_semantics": "effective_interval",
+        "notes": "Applicability interval governs population; assessment time/result remain persisted values, unknown periods/method refs stay NULL. Period filters assessed_at, not an invented measured period.",
+        "new_business_calculation": false,
+        "required_filters": [
+          "source_framework_version_id",
+          "as_of"
+        ],
+        "lifecycle_state_source": {
+          "table": "regulatory.requirement_assessments",
+          "column": "lifecycle_state",
+          "entity_type": "RequirementAssessment",
+          "allowed_values": "Actual published lifecycle registry/vocabulary for this entity; unknown/unpublished input rejects400; no new state list"
+        }
+      },
+      {
+        "matrix_type": "frameworks_frameworks",
+        "row_types": [
+          "FrameworkVersion"
+        ],
+        "column_types": [
+          "FrameworkVersion"
+        ],
+        "tables": [
+          "regulatory.framework_versions",
+          "regulatory.framework_crosswalks",
+          "regulatory.normative_unit_crosswalk_mappings",
+          "regulatory.requirement_crosswalk_mappings",
+          "regulatory.control_crosswalk_mappings"
+        ],
+        "canonical_join_edges": [
+          [
+            "regulatory.framework_crosswalks.source_framework_version_id",
+            "regulatory.framework_versions.framework_version_id"
+          ],
+          [
+            "regulatory.framework_crosswalks.target_framework_version_id",
+            "regulatory.framework_versions.framework_version_id"
+          ]
+        ],
+        "required_source_permissions": [
+          "compliance.framework.read"
+        ],
+        "additional_entry_permission": "reporting.matrix.read",
+        "source_capabilities": "Each effective source permission retains its actual capability/entitlement; no implicit Risk or advanced Reporting entitlement",
+        "supported_filters": [
+          "as_of",
+          "source_framework_version_id",
+          "query",
+          "row_cursor",
+          "column_cursor",
+          "cell_cursor",
+          "row_limit",
+          "column_limit",
+          "cell_limit",
+          "target_framework_version_id",
+          "lifecycle_state"
+        ],
+        "temporal_semantics": "effective_interval",
+        "notes": "Both source/target editions required. Item detail adds corresponding unit/requirement/control read permissions. no_match target NULL is displayed as a justified source relation, not a fabricated target node; no compliance transfer.",
+        "new_business_calculation": false,
+        "required_filters": [
+          "source_framework_version_id",
+          "target_framework_version_id",
+          "as_of"
+        ],
+        "lifecycle_state_source": {
+          "table": "regulatory.framework_crosswalks",
+          "column": "lifecycle_state",
+          "entity_type": "FrameworkCrosswalk",
+          "allowed_values": "Actual published lifecycle registry/vocabulary for this entity; unknown/unpublished input rejects400; no new state list"
+        }
+      },
+      {
+        "matrix_type": "obligations_applicability",
+        "row_types": [
+          "Requirement"
+        ],
+        "column_types": [
+          "RequirementApplicability"
+        ],
+        "tables": [
+          "regulatory.requirements",
+          "regulatory.requirement_applicabilities"
+        ],
+        "canonical_join_edges": [
+          [
+            "regulatory.requirement_applicabilities.requirement_id",
+            "regulatory.requirements.requirement_id"
+          ]
+        ],
+        "required_source_permissions": [
+          "compliance.requirement.read",
+          "compliance.applicability.read"
+        ],
+        "additional_entry_permission": "reporting.matrix.read",
+        "source_capabilities": "Each effective source permission retains its actual capability/entitlement; no implicit Risk or advanced Reporting entitlement",
+        "supported_filters": [
+          "as_of",
+          "source_framework_version_id",
+          "query",
+          "row_cursor",
+          "column_cursor",
+          "cell_cursor",
+          "row_limit",
+          "column_limit",
+          "cell_limit",
+          "requirement_id",
+          "scope_subject_id",
+          "lifecycle_state"
+        ],
+        "temporal_semantics": "effective_interval",
+        "notes": "Subject filter matches actual scope_subject_id; tenant-wide applicability stays distinct. No legal applicability inferred from narrative.",
+        "new_business_calculation": false,
+        "required_filters": [
+          "source_framework_version_id",
+          "as_of"
+        ],
+        "lifecycle_state_source": {
+          "table": "regulatory.requirement_applicabilities",
+          "column": "lifecycle_state",
+          "entity_type": "RequirementApplicability",
+          "allowed_values": "Actual published lifecycle registry/vocabulary for this entity; unknown/unpublished input rejects400; no new state list"
+        }
+      },
+      {
+        "matrix_type": "issues_actions",
+        "row_types": [
+          "Issue"
+        ],
+        "column_types": [
+          "Action"
+        ],
+        "tables": [
+          "remediation.issues",
+          "remediation.actions",
+          "remediation.action_verifications"
+        ],
+        "canonical_join_edges": [
+          [
+            "remediation.actions.issue_id",
+            "remediation.issues.issue_id"
+          ],
+          [
+            "remediation.action_verifications.action_id",
+            "remediation.actions.action_id"
+          ]
+        ],
+        "required_source_permissions": [
+          "remediation.issue.read",
+          "remediation.action.read"
+        ],
+        "additional_entry_permission": "reporting.matrix.read",
+        "source_capabilities": "Each effective source permission retains its actual capability/entitlement; no implicit Risk or advanced Reporting entitlement",
+        "supported_filters": [
+          "as_of",
+          "query",
+          "row_cursor",
+          "column_cursor",
+          "cell_cursor",
+          "row_limit",
+          "column_limit",
+          "cell_limit",
+          "issue_id",
+          "action_id",
+          "lifecycle_state"
+        ],
+        "temporal_semantics": "current_state_with_as_of_population",
+        "notes": "as_of filters created_at population; lifecycle is current at read_at unless an existing canonical historical snapshot is explicitly available. Do not reconstruct past states from current fields; verification detail requires its effective permission.",
+        "new_business_calculation": false,
+        "required_filters": [
+          "as_of"
+        ],
+        "lifecycle_state_source": {
+          "table": "remediation.actions",
+          "column": "lifecycle_state",
+          "entity_type": "Action",
+          "allowed_values": "Actual published lifecycle registry/vocabulary for this entity; unknown/unpublished input rejects400; no new state list"
+        }
+      }
+    ],
+    "limits": {
+      "row_limit": {
+        "default": 50,
+        "maximum": 200
+      },
+      "column_limit": {
+        "default": 50,
+        "maximum": 200
+      },
+      "cell_limit": {
+        "default": 500,
+        "maximum": 2500
+      }
+    },
+    "page_policy": "Separate typed row/column/cell keyset cursors; no hidden truncation. Cursor HMAC binds authorized projected ID/version fingerprint, actor, tenant, permissions, asOf, filters and sort; current drift rejects409. Repeatable-read transaction per page, no snapshot creation or DB lease.",
+    "filter_policy": "Unsupported filter for matrix_type rejects400, not silently ignored. Frameworks matrix requires both exact editions; other framework filters only where a canonical join exists. source_framework_version_id mandatory when its Requirement population must be bounded.",
+    "empty_policy": "Authorized empty relation set is empty; dependency/rights failure is not silently converted to valid empty data. Hidden-object counts never returned.",
+    "normative_calculations": false,
+    "paired_period_filters": "period_start and period_end must be both present or absent; start<end; assessed_at range is [start,end).",
+    "cell_window_policy": "Cell cursors bind the exact row/column window. Exhaust next_cell_cursor for that window before advancing an axis; repeat the same authorized axes in continuation responses. All cell references must resolve to an axis in that window."
+  },
+  "definitions": {
+    "scope": "FOUR_APPROVED_ADJUSTMENTS_ONLY",
+    "definitions": [
+      {
+        "configuration_code": "control_operational_activity",
+        "version_number": 1,
+        "value_type": "text",
+        "owner_domain": "controls",
+        "ownership_class": "PLATFORM_CONTROL",
+        "tenant_overridable": true,
+        "object_overridable": true,
+        "allowed_scope_levels": [
+          "control_version"
+        ],
+        "default_text_value": null,
+        "base_control_version_field": "execution_method",
+        "label_es": "Actividades operativas",
+        "value_schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 65536,
+          "pattern": ".*\\S.*"
+        },
+        "confirmation_semantics": null,
+        "activation": "EXACT_DATA_MANIFEST_AND_SEPARATE_PO_SEED_OR_IMPORT_AUTHORIZATION",
+        "actor_ids": "RESOLVE_REAL_AUTHORIZED_ACTOR_AT_EXECUTION_NO_PLACEHOLDER_UUID"
+      },
+      {
+        "configuration_code": "control_recommended_evidence",
+        "version_number": 1,
+        "value_type": "text",
+        "owner_domain": "controls",
+        "ownership_class": "PLATFORM_CONTROL",
+        "tenant_overridable": true,
+        "object_overridable": true,
+        "allowed_scope_levels": [
+          "control_version"
+        ],
+        "default_text_value": null,
+        "base_control_version_field": "minimum_evidence",
+        "label_es": "Evidencias recomendadas",
+        "value_schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 65536,
+          "pattern": ".*\\S.*"
+        },
+        "confirmation_semantics": null,
+        "activation": "EXACT_DATA_MANIFEST_AND_SEPARATE_PO_SEED_OR_IMPORT_AUTHORIZATION",
+        "actor_ids": "RESOLVE_REAL_AUTHORIZED_ACTOR_AT_EXECUTION_NO_PLACEHOLDER_UUID"
+      },
+      {
+        "configuration_code": "control_operational_frequency",
+        "version_number": 1,
+        "value_type": "text",
+        "owner_domain": "controls",
+        "ownership_class": "PLATFORM_CONTROL",
+        "tenant_overridable": true,
+        "object_overridable": true,
+        "allowed_scope_levels": [
+          "control_version"
+        ],
+        "default_text_value": null,
+        "base_control_version_field": "frequency_code",
+        "label_es": "Periodicidad",
+        "value_schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": ".*\\S.*",
+          "enum": [
+            "continuous",
+            "daily",
+            "weekly",
+            "monthly",
+            "quarterly",
+            "semiannual",
+            "annual",
+            "event_driven"
+          ]
+        },
+        "confirmation_semantics": null,
+        "activation": "EXACT_DATA_MANIFEST_AND_SEPARATE_PO_SEED_OR_IMPORT_AUTHORIZATION",
+        "actor_ids": "RESOLVE_REAL_AUTHORIZED_ACTOR_AT_EXECUTION_NO_PLACEHOLDER_UUID"
+      },
+      {
+        "configuration_code": "control_operational_confirmation",
+        "version_number": 1,
+        "value_type": "text",
+        "owner_domain": "controls",
+        "ownership_class": "PLATFORM_CONTROL",
+        "tenant_overridable": true,
+        "object_overridable": true,
+        "allowed_scope_levels": [
+          "control_version"
+        ],
+        "default_text_value": null,
+        "base_control_version_field": null,
+        "label_es": "Nivel de confirmación operativa",
+        "value_schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": ".*\\S.*"
+        },
+        "confirmation_semantics": "Tenant-authored descriptive operational level, unranked, no automatic sufficiency/compliance/authenticity meaning; not a new enum or method",
+        "activation": "EXACT_DATA_MANIFEST_AND_SEPARATE_PO_SEED_OR_IMPORT_AUTHORIZATION",
+        "actor_ids": "RESOLVE_REAL_AUTHORIZED_ACTOR_AT_EXECUTION_NO_PLACEHOLDER_UUID"
+      }
+    ],
+    "default_policy": "No invented values. Absence uses original ControlVersion field when present; confirmation remains explicitly unconfigured, not zero/FAIL. Tenant policy may set an authorized value through same workflow.",
+    "periodicity_source": "CV-03 ControlFrequency exact existing values; calendar semantics preserved",
+    "json_critical_values": false,
+    "runtime_inserted": false,
+    "base_binding_authority": "Versioned closed contract descriptors name actual ControlVersion columns. Future materialization preserves descriptor/version in ConfigurationDefinition scopes/validation metadata and resolution input_hash; no tenant/ID conditions or arbitrary SQL field names."
+  },
+  "lifecycle": {
+    "status": "CONTRACT_ONLY_REGISTRY_NOT_ACTIVATED",
+    "bindings": [
+      {
+        "operation_id": "knowledgeVersionUpdate",
+        "entity_type": "KnowledgeVersion",
+        "from_state": "draft",
+        "to_state": "draft",
+        "command_code": "knowledgeVersionUpdate",
+        "permission_code": "knowledge.knowledge_item.update",
+        "allowed_scopes": [
+          "tenant"
+        ],
+        "precondition_policy_ref": "KNOWLEDGE_TENANT_AUTHOR",
+        "sod_policy_ref": "KNOWLEDGE_TENANT_AUTHOR",
+        "side_effect_event_codes": [
+          "knowledge.knowledge_version.updated.v1"
+        ],
+        "audit_event_code": "audit.knowledge.knowledge_version.update.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      {
+        "operation_id": "knowledgeVersionReview",
+        "entity_type": "KnowledgeVersion",
+        "from_state": "draft",
+        "to_state": "reviewed",
+        "command_code": "knowledgeVersionReview.reviewed",
+        "permission_code": "knowledge.knowledge_item.review",
+        "allowed_scopes": [
+          "tenant"
+        ],
+        "precondition_policy_ref": "KNOWLEDGE_TENANT_REVIEW",
+        "sod_policy_ref": "KNOWLEDGE_TENANT_REVIEW",
+        "side_effect_event_codes": [
+          "knowledge.knowledge_version.reviewed.v1"
+        ],
+        "audit_event_code": "audit.knowledge.knowledge_version.review.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      {
+        "operation_id": "knowledgeVersionReview",
+        "entity_type": "KnowledgeVersion",
+        "from_state": "draft",
+        "to_state": "rejected",
+        "command_code": "knowledgeVersionReview.rejected",
+        "permission_code": "knowledge.knowledge_item.review",
+        "allowed_scopes": [
+          "tenant"
+        ],
+        "precondition_policy_ref": "KNOWLEDGE_TENANT_REVIEW",
+        "sod_policy_ref": "KNOWLEDGE_TENANT_REVIEW",
+        "side_effect_event_codes": [
+          "knowledge.knowledge_version.reviewed.v1"
+        ],
+        "audit_event_code": "audit.knowledge.knowledge_version.review.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      {
+        "operation_id": "knowledgeVersionPublish",
+        "entity_type": "KnowledgeVersion",
+        "from_state": "reviewed",
+        "to_state": "published",
+        "command_code": "knowledgeVersionPublish",
+        "permission_code": "knowledge.knowledge_item.publish",
+        "allowed_scopes": [
+          "tenant"
+        ],
+        "precondition_policy_ref": "KNOWLEDGE_TENANT_PUBLISH",
+        "sod_policy_ref": "KNOWLEDGE_TENANT_PUBLISH",
+        "side_effect_event_codes": [
+          "knowledge.knowledge_version.published.v1"
+        ],
+        "audit_event_code": "audit.knowledge.knowledge_version.publish.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      {
+        "operation_id": "platformKnowledgeVersionUpdate",
+        "entity_type": "KnowledgeVersion",
+        "from_state": "draft",
+        "to_state": "draft",
+        "command_code": "platformKnowledgeVersionUpdate",
+        "permission_code": "knowledge.knowledge_item.update",
+        "allowed_scopes": [
+          "platform"
+        ],
+        "precondition_policy_ref": "KNOWLEDGE_GLOBAL_AUTHOR",
+        "sod_policy_ref": "KNOWLEDGE_GLOBAL_AUTHOR",
+        "side_effect_event_codes": [
+          "knowledge.knowledge_version.updated.v1"
+        ],
+        "audit_event_code": "audit.knowledge.knowledge_version.update.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      {
+        "operation_id": "platformKnowledgeVersionReview",
+        "entity_type": "KnowledgeVersion",
+        "from_state": "draft",
+        "to_state": "reviewed",
+        "command_code": "platformKnowledgeVersionReview.reviewed",
+        "permission_code": "knowledge.knowledge_item.review",
+        "allowed_scopes": [
+          "platform"
+        ],
+        "precondition_policy_ref": "KNOWLEDGE_GLOBAL_REVIEW",
+        "sod_policy_ref": "KNOWLEDGE_GLOBAL_REVIEW",
+        "side_effect_event_codes": [
+          "knowledge.knowledge_version.reviewed.v1"
+        ],
+        "audit_event_code": "audit.knowledge.knowledge_version.review.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      {
+        "operation_id": "platformKnowledgeVersionReview",
+        "entity_type": "KnowledgeVersion",
+        "from_state": "draft",
+        "to_state": "rejected",
+        "command_code": "platformKnowledgeVersionReview.rejected",
+        "permission_code": "knowledge.knowledge_item.review",
+        "allowed_scopes": [
+          "platform"
+        ],
+        "precondition_policy_ref": "KNOWLEDGE_GLOBAL_REVIEW",
+        "sod_policy_ref": "KNOWLEDGE_GLOBAL_REVIEW",
+        "side_effect_event_codes": [
+          "knowledge.knowledge_version.reviewed.v1"
+        ],
+        "audit_event_code": "audit.knowledge.knowledge_version.review.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      {
+        "operation_id": "platformKnowledgeVersionPublish",
+        "entity_type": "KnowledgeVersion",
+        "from_state": "reviewed",
+        "to_state": "published",
+        "command_code": "platformKnowledgeVersionPublish",
+        "permission_code": "knowledge.knowledge_item.publish",
+        "allowed_scopes": [
+          "platform"
+        ],
+        "precondition_policy_ref": "KNOWLEDGE_GLOBAL_PUBLISH",
+        "sod_policy_ref": "KNOWLEDGE_GLOBAL_PUBLISH",
+        "side_effect_event_codes": [
+          "knowledge.knowledge_version.published.v1"
+        ],
+        "audit_event_code": "audit.knowledge.knowledge_version.publish.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      {
+        "operation_id": "configurationOverrideUpdate",
+        "entity_type": "ConfigurationOverride",
+        "from_state": "draft",
+        "to_state": "draft",
+        "command_code": "configurationOverrideUpdate",
+        "permission_code": "configuration.configuration_override.update",
+        "allowed_scopes": [
+          "tenant"
+        ],
+        "precondition_policy_ref": "CONTROL_OVERRIDE_AUTHOR",
+        "sod_policy_ref": "CONTROL_OVERRIDE_AUTHOR",
+        "side_effect_event_codes": [
+          "configuration.configuration_override.updated.v1"
+        ],
+        "audit_event_code": "audit.configuration.configuration_override.update.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      {
+        "operation_id": "configurationOverrideReview",
+        "entity_type": "ConfigurationOverride",
+        "from_state": "draft",
+        "to_state": "reviewed",
+        "command_code": "configurationOverrideReview.reviewed",
+        "permission_code": "configuration.configuration_override.review",
+        "allowed_scopes": [
+          "tenant"
+        ],
+        "precondition_policy_ref": "CONTROL_OVERRIDE_REVIEWER",
+        "sod_policy_ref": "CONTROL_OVERRIDE_REVIEWER",
+        "side_effect_event_codes": [
+          "configuration.configuration_override.reviewed.v1"
+        ],
+        "audit_event_code": "audit.configuration.configuration_override.review.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      {
+        "operation_id": "configurationOverrideReview",
+        "entity_type": "ConfigurationOverride",
+        "from_state": "draft",
+        "to_state": "rejected",
+        "command_code": "configurationOverrideReview.rejected",
+        "permission_code": "configuration.configuration_override.review",
+        "allowed_scopes": [
+          "tenant"
+        ],
+        "precondition_policy_ref": "CONTROL_OVERRIDE_REVIEWER",
+        "sod_policy_ref": "CONTROL_OVERRIDE_REVIEWER",
+        "side_effect_event_codes": [
+          "configuration.configuration_override.reviewed.v1"
+        ],
+        "audit_event_code": "audit.configuration.configuration_override.review.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      {
+        "operation_id": "configurationOverrideDecide",
+        "entity_type": "ConfigurationOverride",
+        "from_state": "reviewed",
+        "to_state": "approved",
+        "command_code": "configurationOverrideDecide.approved",
+        "permission_code": "configuration.configuration_override.approve",
+        "allowed_scopes": [
+          "tenant"
+        ],
+        "precondition_policy_ref": "CONTROL_OVERRIDE_DECIDER",
+        "sod_policy_ref": "CONTROL_OVERRIDE_DECIDER",
+        "side_effect_event_codes": [
+          "configuration.configuration_override.decided.v1"
+        ],
+        "audit_event_code": "audit.configuration.configuration_override.decide.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      {
+        "operation_id": "configurationOverrideDecide",
+        "entity_type": "ConfigurationOverride",
+        "from_state": "reviewed",
+        "to_state": "rejected",
+        "command_code": "configurationOverrideDecide.rejected",
+        "permission_code": "configuration.configuration_override.approve",
+        "allowed_scopes": [
+          "tenant"
+        ],
+        "precondition_policy_ref": "CONTROL_OVERRIDE_DECIDER",
+        "sod_policy_ref": "CONTROL_OVERRIDE_DECIDER",
+        "side_effect_event_codes": [
+          "configuration.configuration_override.decided.v1"
+        ],
+        "audit_event_code": "audit.configuration.configuration_override.decide.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      }
+    ],
+    "no_new_effective_state": "Vigencia is derived from approved interval and succession; no persisted effective enum",
+    "config_create": "Existing create event/audit preserved; control_version specialization creates draft only",
+    "guard_revision_policy": "New runtime registry versions must be resolved against the actual current registry at separately authorized activation; no historical edge update or guessed version 1",
+    "runtime_publication": false
+  },
+  "decisionDispatch": {
+    "status": "CONTRACT_EFFECTIVE_ONLY_ON_RECEIPT",
+    "decision_field": "decision",
+    "bindings": [
+      {
+        "operation_id": "knowledgeVersionReview",
+        "from_state": "draft",
+        "to_state": "reviewed",
+        "previous_command_code": "knowledgeVersionReview",
+        "command_code": "knowledgeVersionReview.reviewed"
+      },
+      {
+        "operation_id": "knowledgeVersionReview",
+        "from_state": "draft",
+        "to_state": "rejected",
+        "previous_command_code": "knowledgeVersionReview",
+        "command_code": "knowledgeVersionReview.rejected"
+      },
+      {
+        "operation_id": "platformKnowledgeVersionReview",
+        "from_state": "draft",
+        "to_state": "reviewed",
+        "previous_command_code": "platformKnowledgeVersionReview",
+        "command_code": "platformKnowledgeVersionReview.reviewed"
+      },
+      {
+        "operation_id": "platformKnowledgeVersionReview",
+        "from_state": "draft",
+        "to_state": "rejected",
+        "previous_command_code": "platformKnowledgeVersionReview",
+        "command_code": "platformKnowledgeVersionReview.rejected"
+      },
+      {
+        "operation_id": "configurationOverrideReview",
+        "from_state": "draft",
+        "to_state": "reviewed",
+        "previous_command_code": "configurationOverrideReview",
+        "command_code": "configurationOverrideReview.reviewed"
+      },
+      {
+        "operation_id": "configurationOverrideReview",
+        "from_state": "draft",
+        "to_state": "rejected",
+        "previous_command_code": "configurationOverrideReview",
+        "command_code": "configurationOverrideReview.rejected"
+      },
+      {
+        "operation_id": "configurationOverrideDecide",
+        "from_state": "reviewed",
+        "to_state": "approved",
+        "previous_command_code": "configurationOverrideDecide",
+        "command_code": "configurationOverrideDecide.approved"
+      },
+      {
+        "operation_id": "configurationOverrideDecide",
+        "from_state": "reviewed",
+        "to_state": "rejected",
+        "previous_command_code": "configurationOverrideDecide",
+        "command_code": "configurationOverrideDecide.rejected"
+      }
+    ],
+    "audit_command_code": "Keep the canonical API operation ID in AuditEvent.command_code as before; LifecycleTransitionDefinition lookup alone uses the decision-qualified internal command_code. Audit code, ownership, actor, from/to state, hash, correlation and outcome are unchanged.",
+    "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+    "runtime_activation": false
+  },
+  "policies": {
+    "predicate_language": "Closed normative ALL-of conditions; implementation must encode and test each predicate, not parse prose or infer grants",
+    "policies": {
+      "KNOWLEDGE_GLOBAL_READ": {
+        "all_of": [
+          "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+          "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+          "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+          "PlatformRoleAssignment active for PLATFORM_ADMIN or PLATFORM_SUPPORT with explicit read grant; tenant header forbidden",
+          "Only GLOBAL_REFERENCE/PLATFORM_CONTROL Knowledge; never private tenant content",
+          "PLATFORM_SUPPORT is metadata-only regardless of staff status; protected bodies/tenant content are not included",
+          "Content rights and classification govern each act; a global reference grants no pack licence"
+        ],
+        "otherwise": "DENY",
+        "runtime_activated": false
+      },
+      "KNOWLEDGE_SUPPORT_METADATA": {
+        "all_of": [
+          "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+          "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+          "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+          "PLATFORM_SUPPORT active, explicit global read permission only",
+          "Projection strips content and sensitive locators/refs; no creation/review/publication/tenant scope or impersonation inferred"
+        ],
+        "otherwise": "DENY",
+        "runtime_activated": false
+      },
+      "KNOWLEDGE_GLOBAL_AUTHOR": {
+        "all_of": [
+          "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+          "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+          "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+          "PLATFORM_ADMIN active PlatformRoleAssignment and explicit corresponding permission; tenant header forbidden",
+          "Knowledge ownership PLATFORM_CONTROL for original editorial; authentic normative sources remain Regulatory entities, no override of official source",
+          "No PlatformSupport or tenant role permission substitution",
+          "REVIEW/PUBLISH require identity different from version author; reviewer may publish the same reviewed hash; no fictitious second identity",
+          "PUBLISH requires reviewed exact artifact, source/rights/classification/citations checked and immutable storage/hash verified; not official regulatory publication"
+        ],
+        "otherwise": "DENY",
+        "runtime_activated": false
+      },
+      "KNOWLEDGE_GLOBAL_REVIEW": {
+        "all_of": [
+          "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+          "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+          "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+          "PLATFORM_ADMIN active PlatformRoleAssignment and explicit corresponding permission; tenant header forbidden",
+          "Knowledge ownership PLATFORM_CONTROL for original editorial; authentic normative sources remain Regulatory entities, no override of official source",
+          "No PlatformSupport or tenant role permission substitution",
+          "REVIEW/PUBLISH require identity different from version author; reviewer may publish the same reviewed hash; no fictitious second identity",
+          "PUBLISH requires reviewed exact artifact, source/rights/classification/citations checked and immutable storage/hash verified; not official regulatory publication"
+        ],
+        "otherwise": "DENY",
+        "runtime_activated": false
+      },
+      "KNOWLEDGE_GLOBAL_PUBLISH": {
+        "all_of": [
+          "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+          "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+          "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+          "PLATFORM_ADMIN active PlatformRoleAssignment and explicit corresponding permission; tenant header forbidden",
+          "Knowledge ownership PLATFORM_CONTROL for original editorial; authentic normative sources remain Regulatory entities, no override of official source",
+          "No PlatformSupport or tenant role permission substitution",
+          "REVIEW/PUBLISH require identity different from version author; reviewer may publish the same reviewed hash; no fictitious second identity",
+          "PUBLISH requires reviewed exact artifact, source/rights/classification/citations checked and immutable storage/hash verified; not official regulatory publication"
+        ],
+        "otherwise": "DENY",
+        "runtime_activated": false
+      },
+      "KNOWLEDGE_TENANT_READ": {
+        "all_of": [
+          "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+          "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+          "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+          "Active Membership in selected tenant and explicit tenant read permission",
+          "Tenant-owned Source/Item/Version must have the same tenant; global versions additionally require visible targets and source/pack access",
+          "Published global metadata/guide reads do not confer global edit rights; drafts only their authorized tenant/global editorial actors",
+          "Content projection/search/filter/count obey rights and target read permissions before pagination; forbidden objects concealed identically to not-found"
+        ],
+        "otherwise": "DENY",
+        "runtime_activated": false
+      },
+      "KNOWLEDGE_TENANT_AUTHOR": {
+        "all_of": [
+          "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+          "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+          "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+          "Active tenant Membership and explicit permission on same-tenant TENANT_OWNED Source/Item/Version",
+          "Authoring: TENANT_ADMIN/GRC_MANAGER only by actual grants; review/publish: GRC_MANAGER only by actual grants",
+          "No global item/source mutation or cross-tenant target even for Platform staff",
+          "REVIEW/PUBLISH author identity differs; review binds exact body+target manifest; reviewer may publish own review of another author",
+          "Context body requires contexto_empresarial Subject link; private Subject and source ownership match tenant; no legal/permission inference from text"
+        ],
+        "otherwise": "DENY",
+        "runtime_activated": false
+      },
+      "KNOWLEDGE_TENANT_REVIEW": {
+        "all_of": [
+          "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+          "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+          "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+          "Active tenant Membership and explicit permission on same-tenant TENANT_OWNED Source/Item/Version",
+          "Authoring: TENANT_ADMIN/GRC_MANAGER only by actual grants; review/publish: GRC_MANAGER only by actual grants",
+          "No global item/source mutation or cross-tenant target even for Platform staff",
+          "REVIEW/PUBLISH author identity differs; review binds exact body+target manifest; reviewer may publish own review of another author",
+          "Context body requires contexto_empresarial Subject link; private Subject and source ownership match tenant; no legal/permission inference from text"
+        ],
+        "otherwise": "DENY",
+        "runtime_activated": false
+      },
+      "KNOWLEDGE_TENANT_PUBLISH": {
+        "all_of": [
+          "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+          "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+          "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+          "Active tenant Membership and explicit permission on same-tenant TENANT_OWNED Source/Item/Version",
+          "Authoring: TENANT_ADMIN/GRC_MANAGER only by actual grants; review/publish: GRC_MANAGER only by actual grants",
+          "No global item/source mutation or cross-tenant target even for Platform staff",
+          "REVIEW/PUBLISH author identity differs; review binds exact body+target manifest; reviewer may publish own review of another author",
+          "Context body requires contexto_empresarial Subject link; private Subject and source ownership match tenant; no legal/permission inference from text"
+        ],
+        "otherwise": "DENY",
+        "runtime_activated": false
+      },
+      "CONTROL_OVERRIDE_READ": {
+        "all_of": [
+          "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+          "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+          "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+          "Active tenant Membership, CORE_PLATFORM and corresponding existing configuration permission/scope",
+          "Object is one of four exact published Definition codes in CONFIGURATION_DEFINITIONS.json, correct Definition version, tenant/object override allowed",
+          "scope_level=control_version, target is a same-tenant TENANT_OWNED ControlVersion; contextual writes cannot alter global source or methodological minima"
+        ],
+        "otherwise": "DENY",
+        "runtime_activated": false
+      },
+      "CONTROL_OVERRIDE_AUTHOR": {
+        "all_of": [
+          "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+          "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+          "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+          "Active tenant Membership, CORE_PLATFORM and corresponding existing configuration permission/scope",
+          "Object is one of four exact published Definition codes in CONFIGURATION_DEFINITIONS.json, correct Definition version, tenant/object override allowed",
+          "scope_level=control_version, target is a same-tenant TENANT_OWNED ControlVersion; contextual writes cannot alter global source or methodological minima",
+          "Create by existing TENANT_ADMIN/GRC_MANAGER grants; update only own draft; other actors cannot rewrite a draft under a read/review grant"
+        ],
+        "otherwise": "DENY",
+        "runtime_activated": false
+      },
+      "CONTROL_OVERRIDE_REVIEWER": {
+        "all_of": [
+          "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+          "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+          "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+          "Active tenant Membership, CORE_PLATFORM and corresponding existing configuration permission/scope",
+          "Object is one of four exact published Definition codes in CONFIGURATION_DEFINITIONS.json, correct Definition version, tenant/object override allowed",
+          "scope_level=control_version, target is a same-tenant TENANT_OWNED ControlVersion; contextual writes cannot alter global source or methodological minima",
+          "GRC_MANAGER with explicit effective review/approve respectively; author cannot review or decide even with accumulated roles",
+          "Review/decision on exact ETag/hash and typed target; reviewed source and rights remain eligible",
+          "Reviewer may decide the same version authored by another identity; no third person is universally required; stricter applicable SoD remains",
+          "Approve grant remains operational NONE until separately authorized IAM publication; data schema change does not activate it"
+        ],
+        "otherwise": "DENY",
+        "runtime_activated": false
+      },
+      "CONTROL_OVERRIDE_DECIDER": {
+        "all_of": [
+          "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+          "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+          "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+          "Active tenant Membership, CORE_PLATFORM and corresponding existing configuration permission/scope",
+          "Object is one of four exact published Definition codes in CONFIGURATION_DEFINITIONS.json, correct Definition version, tenant/object override allowed",
+          "scope_level=control_version, target is a same-tenant TENANT_OWNED ControlVersion; contextual writes cannot alter global source or methodological minima",
+          "GRC_MANAGER with explicit effective review/approve respectively; author cannot review or decide even with accumulated roles",
+          "Review/decision on exact ETag/hash and typed target; reviewed source and rights remain eligible",
+          "Reviewer may decide the same version authored by another identity; no third person is universally required; stricter applicable SoD remains",
+          "Approve grant remains operational NONE until separately authorized IAM publication; data schema change does not activate it"
+        ],
+        "otherwise": "DENY",
+        "runtime_activated": false
+      },
+      "MATRIX_SOURCE_INTERSECTION": {
+        "all_of": [
+          "Authenticated HUMAN_INTERACTIVE canonical UserIdentity; no identity/role/tenant supplied in body",
+          "Published effective Permission, role assignment, capability/entitlement and object scope; default DENY",
+          "Current authorization rechecked under locks on mutation and on idempotent replay; audit failure rolls back",
+          "Tenant context required; matrix permission does not grant any source permission",
+          "Required per-type source read permissions and capabilities in MATRIX_TYPES.json; ALL required before reads",
+          "Object ownership and global pack/validation access checked for both axes, relation, inspector and result",
+          "Filter invisible data before existence/count/search/keyset/hash; no totals or density leaking inaccessible rows",
+          "Cursors bound to actor, tenant, permissions, type, editions, asOf and filters; reauthorize each page; drift rejects409, never truncates silently",
+          "Known accessible source metadata may identify a content restriction; existence of a private unauthorized object is never disclosed",
+          "No SQL, generic table names, caller-owned tenant or arbitrary axes; no derived compliance calculations"
+        ],
+        "otherwise": "DENY",
+        "runtime_activated": false
+      }
+    },
+    "override_approval_contract_grant": "GRC_MANAGER / configuration.configuration_override.approve / tenant / CONTROL_OVERRIDE_DECIDER / four Definitions only; NONE operational today",
+    "external_source_policy": "Rights apply per act and source. Unknown rights never become authorized=true. Metadata/original editorial independent uses continue.",
+    "operational_activation": "NOT_AUTHORIZED"
+  },
+  "events": {
+    "events": [
+      {
+        "event_code": "knowledge.knowledge_source.created.v1",
+        "audit_event_code": "audit.knowledge.knowledge_source.create.v1",
+        "operation_id": "knowledgeSourceCreate",
+        "aggregate_type": "KnowledgeSource",
+        "payload_schema": "MaterialChangePayload",
+        "ownership": "TENANT_OWNED",
+        "sensitive_text": "HASH_AND_IDS_ONLY"
+      },
+      {
+        "event_code": "knowledge.knowledge_item.created.v1",
+        "audit_event_code": "audit.knowledge.knowledge_item.create.v1",
+        "operation_id": "knowledgeItemCreate",
+        "aggregate_type": "KnowledgeItem",
+        "payload_schema": "MaterialChangePayload",
+        "ownership": "TENANT_OWNED",
+        "sensitive_text": "HASH_AND_IDS_ONLY"
+      },
+      {
+        "event_code": "knowledge.knowledge_version.created.v1",
+        "audit_event_code": "audit.knowledge.knowledge_version.create.v1",
+        "operation_id": "knowledgeVersionCreate",
+        "aggregate_type": "KnowledgeVersion",
+        "payload_schema": "MaterialChangePayload",
+        "ownership": "TENANT_OWNED",
+        "sensitive_text": "HASH_AND_IDS_ONLY"
+      },
+      {
+        "event_code": "knowledge.knowledge_version.updated.v1",
+        "audit_event_code": "audit.knowledge.knowledge_version.update.v1",
+        "operation_id": "knowledgeVersionUpdate",
+        "aggregate_type": "KnowledgeVersion",
+        "payload_schema": "MaterialChangePayload",
+        "ownership": "TENANT_OWNED",
+        "sensitive_text": "HASH_AND_IDS_ONLY"
+      },
+      {
+        "event_code": "knowledge.knowledge_version.reviewed.v1",
+        "audit_event_code": "audit.knowledge.knowledge_version.review.v1",
+        "operation_id": "knowledgeVersionReview",
+        "aggregate_type": "KnowledgeVersion",
+        "payload_schema": "MaterialChangePayload",
+        "ownership": "TENANT_OWNED",
+        "sensitive_text": "HASH_AND_IDS_ONLY"
+      },
+      {
+        "event_code": "knowledge.knowledge_version.published.v1",
+        "audit_event_code": "audit.knowledge.knowledge_version.publish.v1",
+        "operation_id": "knowledgeVersionPublish",
+        "aggregate_type": "KnowledgeVersion",
+        "payload_schema": "MaterialChangePayload",
+        "ownership": "TENANT_OWNED",
+        "sensitive_text": "HASH_AND_IDS_ONLY"
+      },
+      {
+        "event_code": "knowledge.knowledge_source.created.v1",
+        "audit_event_code": "audit.knowledge.knowledge_source.create.v1",
+        "operation_id": "platformKnowledgeSourceCreate",
+        "aggregate_type": "KnowledgeSource",
+        "payload_schema": "MaterialChangePayload",
+        "ownership": "PLATFORM_CONTROL_NO_TENANT",
+        "sensitive_text": "HASH_AND_IDS_ONLY"
+      },
+      {
+        "event_code": "knowledge.knowledge_item.created.v1",
+        "audit_event_code": "audit.knowledge.knowledge_item.create.v1",
+        "operation_id": "platformKnowledgeItemCreate",
+        "aggregate_type": "KnowledgeItem",
+        "payload_schema": "MaterialChangePayload",
+        "ownership": "PLATFORM_CONTROL_NO_TENANT",
+        "sensitive_text": "HASH_AND_IDS_ONLY"
+      },
+      {
+        "event_code": "knowledge.knowledge_version.created.v1",
+        "audit_event_code": "audit.knowledge.knowledge_version.create.v1",
+        "operation_id": "platformKnowledgeVersionCreate",
+        "aggregate_type": "KnowledgeVersion",
+        "payload_schema": "MaterialChangePayload",
+        "ownership": "PLATFORM_CONTROL_NO_TENANT",
+        "sensitive_text": "HASH_AND_IDS_ONLY"
+      },
+      {
+        "event_code": "knowledge.knowledge_version.updated.v1",
+        "audit_event_code": "audit.knowledge.knowledge_version.update.v1",
+        "operation_id": "platformKnowledgeVersionUpdate",
+        "aggregate_type": "KnowledgeVersion",
+        "payload_schema": "MaterialChangePayload",
+        "ownership": "PLATFORM_CONTROL_NO_TENANT",
+        "sensitive_text": "HASH_AND_IDS_ONLY"
+      },
+      {
+        "event_code": "knowledge.knowledge_version.reviewed.v1",
+        "audit_event_code": "audit.knowledge.knowledge_version.review.v1",
+        "operation_id": "platformKnowledgeVersionReview",
+        "aggregate_type": "KnowledgeVersion",
+        "payload_schema": "MaterialChangePayload",
+        "ownership": "PLATFORM_CONTROL_NO_TENANT",
+        "sensitive_text": "HASH_AND_IDS_ONLY"
+      },
+      {
+        "event_code": "knowledge.knowledge_version.published.v1",
+        "audit_event_code": "audit.knowledge.knowledge_version.publish.v1",
+        "operation_id": "platformKnowledgeVersionPublish",
+        "aggregate_type": "KnowledgeVersion",
+        "payload_schema": "MaterialChangePayload",
+        "ownership": "PLATFORM_CONTROL_NO_TENANT",
+        "sensitive_text": "HASH_AND_IDS_ONLY"
+      },
+      {
+        "event_code": "configuration.configuration_override.updated.v1",
+        "audit_event_code": "audit.configuration.configuration_override.update.v1",
+        "operation_id": "configurationOverrideUpdate",
+        "aggregate_type": "ConfigurationOverride",
+        "payload_schema": "MaterialChangePayload",
+        "ownership": "TENANT_OWNED",
+        "sensitive_text": "HASH_AND_IDS_ONLY"
+      },
+      {
+        "event_code": "configuration.configuration_override.reviewed.v1",
+        "audit_event_code": "audit.configuration.configuration_override.review.v1",
+        "operation_id": "configurationOverrideReview",
+        "aggregate_type": "ConfigurationOverride",
+        "payload_schema": "MaterialChangePayload",
+        "ownership": "TENANT_OWNED",
+        "sensitive_text": "HASH_AND_IDS_ONLY"
+      },
+      {
+        "event_code": "configuration.configuration_override.decided.v1",
+        "audit_event_code": "audit.configuration.configuration_override.decide.v1",
+        "operation_id": "configurationOverrideDecide",
+        "aggregate_type": "ConfigurationOverride",
+        "payload_schema": "MaterialChangePayload",
+        "ownership": "TENANT_OWNED",
+        "sensitive_text": "HASH_AND_IDS_ONLY"
+      }
+    ],
+    "payload_schema": "02_OPENAPI_NORMATIVE_LIBRARY.json#/components/schemas/MaterialChangePayload",
+    "common_envelope": "Existing executable04/08/12: ownership conditional tenant, canonical actor, correlation/causation, unique event ID; classification confidential; no source bodies/credentials",
+    "audit_change_policy": "Canonical AuditEvent actor columns and typed closed payloads preserve review/decision authority; no free IDs as business relation substitutes",
+    "transaction": "For the new domain-event operations in events[]: mutation + required AuditEvent + OutboxEvent + IdempotencyRecord atomically commit. Existing applicability operations follow applicability_context_binding.transaction; no blanket outbox requirement on create.",
+    "no_read_mutations": true,
+    "applicability_context_binding": {
+      "profile": "APPLICABILITY_CONTEXT_V1",
+      "schema": "APPLICABILITY_CONTEXT_AUDIT_SCHEMA.json",
+      "storage": "ops_audit.audit_events.before_payload/after_payload.applicability_context_v1; additive namespaced profile alongside preserved existing payload fields",
+      "operations": [
+        {
+          "operation_id": "applicabilityCreate",
+          "audit_event_code": "audit.compliance.applicability.create.v1",
+          "domain_event": null,
+          "before": "No aggregate before create; before_payload context profile absent",
+          "after": "Persisted draft and exact nullable context snapshot"
+        },
+        {
+          "operation_id": "applicabilitySubmit",
+          "audit_event_code": "audit.compliance.applicability.submit.v1",
+          "domain_event": "compliance.applicability.submitted.v1",
+          "before": "Exact locked pre-command aggregate/context",
+          "after": "Exact submitted aggregate/context, same pinned KnowledgeVersion"
+        },
+        {
+          "operation_id": "applicabilityApprove",
+          "audit_event_code": "audit.compliance.applicability.approve.v1",
+          "domain_event": "compliance.applicability.approved.v1",
+          "before": "Exact locked pre-command aggregate/context",
+          "after": "Exact approved aggregate/context, same pinned KnowledgeVersion"
+        }
+      ],
+      "authority": "Canonical AuditEvent aggregate_type=RequirementApplicability, aggregate_id=exact row ID, ownership_class=TENANT_OWNED and authenticated tenant; actor_user_identity_id is the authorized actual human, actor_service_principal_id NULL, command_code exact operation. Actor authority, existing permission/scope/SoD and Knowledge published-review authority are revalidated in the same transaction; context is input, never legal authority.",
+      "version_integrity": "Profile snapshots exact knowledge_version_id + knowledge_item_id + version_number + content_hash and context Subject from typed context link under locks. FK matches authenticated tenant; scope_subject_id matches context Subject, or tenant-wide organization context. Hash verifies immutable body/link manifest; no latest-version lookup or text copy.",
+      "null_history": "New command with no context records context=null. Historical absence of the profile means not recorded, never invented context or backfill. Existing v1 event codes and payload fields retain meaning; no new event code/version or second audit stream.",
+      "transaction": "Mutation, single existing material AuditEvent and IdempotencyRecord atomically commit. Submit/approve retain their existing domain events/outbox. Create retains NONE and has no newly required outbox. Audit failure rolls back. Replay reauthorizes, checks original request fingerprint, returns original persisted result and creates no duplicate material audit/event.",
+      "concurrency": "Existing expected_version/row_version CAS for submit/approve remains. Creation uses its existing idempotency/transaction contract; no invented If-Match on create. Locks freeze referenced context; submitted/approved context is immutable.",
+      "correlation": "Canonical correlation_id/request/causation, server occurred_at and outcome use executable04/08/12. No actor supplied by body, no protected text/secrets.",
+      "no_retroactivity": "Changing or superseding Knowledge never changes a prior decision/snapshot. Any revised decision is a new governed applicability version; prior NULLs and audit records remain immutable."
+    }
+  },
+  "permissions": {
+    "catalogue_delta": [
+      {
+        "code": "knowledge.knowledge_item.read",
+        "capability": "CORE_PLATFORM",
+        "resource": "knowledge_item",
+        "action": "read",
+        "contract_grants": [
+          {
+            "role": "PLATFORM_ADMIN",
+            "scope": "platform",
+            "policy": "KNOWLEDGE_GLOBAL_READ"
+          },
+          {
+            "role": "PLATFORM_SUPPORT",
+            "scope": "platform",
+            "policy": "KNOWLEDGE_SUPPORT_METADATA"
+          },
+          {
+            "role": "TENANT_ADMIN",
+            "scope": "tenant",
+            "policy": "KNOWLEDGE_TENANT_READ"
+          },
+          {
+            "role": "GRC_MANAGER",
+            "scope": "tenant",
+            "policy": "KNOWLEDGE_TENANT_READ"
+          },
+          {
+            "role": "COMPLIANCE_MANAGER",
+            "scope": "tenant",
+            "policy": "KNOWLEDGE_TENANT_READ"
+          },
+          {
+            "role": "CONTROL_OWNER",
+            "scope": "tenant",
+            "policy": "KNOWLEDGE_TENANT_READ"
+          },
+          {
+            "role": "EVIDENCE_OWNER",
+            "scope": "tenant",
+            "policy": "KNOWLEDGE_TENANT_READ"
+          },
+          {
+            "role": "ACTION_OWNER",
+            "scope": "tenant",
+            "policy": "KNOWLEDGE_TENANT_READ"
+          },
+          {
+            "role": "VIEWER",
+            "scope": "tenant",
+            "policy": "KNOWLEDGE_TENANT_READ"
+          }
+        ],
+        "runtime_activated": false,
+        "global_tenant_split": true
+      },
+      {
+        "code": "knowledge.knowledge_item.create",
+        "capability": "CORE_PLATFORM",
+        "resource": "knowledge_item",
+        "action": "create",
+        "contract_grants": [
+          {
+            "role": "PLATFORM_ADMIN",
+            "scope": "platform",
+            "policy": "KNOWLEDGE_GLOBAL_AUTHOR"
+          },
+          {
+            "role": "TENANT_ADMIN",
+            "scope": "tenant",
+            "policy": "KNOWLEDGE_TENANT_AUTHOR"
+          },
+          {
+            "role": "GRC_MANAGER",
+            "scope": "tenant",
+            "policy": "KNOWLEDGE_TENANT_AUTHOR"
+          }
+        ],
+        "runtime_activated": false,
+        "global_tenant_split": true
+      },
+      {
+        "code": "knowledge.knowledge_item.update",
+        "capability": "CORE_PLATFORM",
+        "resource": "knowledge_item",
+        "action": "update",
+        "contract_grants": [
+          {
+            "role": "PLATFORM_ADMIN",
+            "scope": "platform",
+            "policy": "KNOWLEDGE_GLOBAL_AUTHOR"
+          },
+          {
+            "role": "TENANT_ADMIN",
+            "scope": "tenant",
+            "policy": "KNOWLEDGE_TENANT_AUTHOR"
+          },
+          {
+            "role": "GRC_MANAGER",
+            "scope": "tenant",
+            "policy": "KNOWLEDGE_TENANT_AUTHOR"
+          }
+        ],
+        "runtime_activated": false,
+        "global_tenant_split": true
+      },
+      {
+        "code": "knowledge.knowledge_item.review",
+        "capability": "CORE_PLATFORM",
+        "resource": "knowledge_item",
+        "action": "review",
+        "contract_grants": [
+          {
+            "role": "PLATFORM_ADMIN",
+            "scope": "platform",
+            "policy": "KNOWLEDGE_GLOBAL_REVIEW"
+          },
+          {
+            "role": "GRC_MANAGER",
+            "scope": "tenant",
+            "policy": "KNOWLEDGE_TENANT_REVIEW"
+          }
+        ],
+        "runtime_activated": false,
+        "global_tenant_split": true
+      },
+      {
+        "code": "knowledge.knowledge_item.publish",
+        "capability": "CORE_PLATFORM",
+        "resource": "knowledge_item",
+        "action": "publish",
+        "contract_grants": [
+          {
+            "role": "PLATFORM_ADMIN",
+            "scope": "platform",
+            "policy": "KNOWLEDGE_GLOBAL_PUBLISH"
+          },
+          {
+            "role": "GRC_MANAGER",
+            "scope": "tenant",
+            "policy": "KNOWLEDGE_TENANT_PUBLISH"
+          }
+        ],
+        "runtime_activated": false,
+        "global_tenant_split": true
+      },
+      {
+        "code": "knowledge.knowledge_source.read",
+        "capability": "CORE_PLATFORM",
+        "resource": "knowledge_source",
+        "action": "read",
+        "contract_grants": [
+          {
+            "role": "PLATFORM_ADMIN",
+            "scope": "platform",
+            "policy": "KNOWLEDGE_GLOBAL_READ"
+          },
+          {
+            "role": "PLATFORM_SUPPORT",
+            "scope": "platform",
+            "policy": "KNOWLEDGE_SUPPORT_METADATA"
+          },
+          {
+            "role": "TENANT_ADMIN",
+            "scope": "tenant",
+            "policy": "KNOWLEDGE_TENANT_READ"
+          },
+          {
+            "role": "GRC_MANAGER",
+            "scope": "tenant",
+            "policy": "KNOWLEDGE_TENANT_READ"
+          },
+          {
+            "role": "COMPLIANCE_MANAGER",
+            "scope": "tenant",
+            "policy": "KNOWLEDGE_TENANT_READ"
+          },
+          {
+            "role": "CONTROL_OWNER",
+            "scope": "tenant",
+            "policy": "KNOWLEDGE_TENANT_READ"
+          },
+          {
+            "role": "EVIDENCE_OWNER",
+            "scope": "tenant",
+            "policy": "KNOWLEDGE_TENANT_READ"
+          },
+          {
+            "role": "ACTION_OWNER",
+            "scope": "tenant",
+            "policy": "KNOWLEDGE_TENANT_READ"
+          },
+          {
+            "role": "VIEWER",
+            "scope": "tenant",
+            "policy": "KNOWLEDGE_TENANT_READ"
+          }
+        ],
+        "runtime_activated": false,
+        "global_tenant_split": true
+      },
+      {
+        "code": "knowledge.knowledge_source.create",
+        "capability": "CORE_PLATFORM",
+        "resource": "knowledge_source",
+        "action": "create",
+        "contract_grants": [
+          {
+            "role": "PLATFORM_ADMIN",
+            "scope": "platform",
+            "policy": "KNOWLEDGE_GLOBAL_AUTHOR"
+          },
+          {
+            "role": "TENANT_ADMIN",
+            "scope": "tenant",
+            "policy": "KNOWLEDGE_TENANT_AUTHOR"
+          },
+          {
+            "role": "GRC_MANAGER",
+            "scope": "tenant",
+            "policy": "KNOWLEDGE_TENANT_AUTHOR"
+          }
+        ],
+        "runtime_activated": false,
+        "global_tenant_split": true
+      },
+      {
+        "code": "reporting.matrix.read",
+        "capability": "CORE_PLATFORM",
+        "resource": "matrix",
+        "action": "read",
+        "contract_grants": [
+          {
+            "role": "TENANT_ADMIN",
+            "scope": "tenant",
+            "policy": "MATRIX_SOURCE_INTERSECTION"
+          },
+          {
+            "role": "GRC_MANAGER",
+            "scope": "tenant",
+            "policy": "MATRIX_SOURCE_INTERSECTION"
+          },
+          {
+            "role": "COMPLIANCE_MANAGER",
+            "scope": "tenant",
+            "policy": "MATRIX_SOURCE_INTERSECTION"
+          },
+          {
+            "role": "CONTROL_OWNER",
+            "scope": "tenant",
+            "policy": "MATRIX_SOURCE_INTERSECTION"
+          },
+          {
+            "role": "EVIDENCE_OWNER",
+            "scope": "tenant",
+            "policy": "MATRIX_SOURCE_INTERSECTION"
+          },
+          {
+            "role": "ACTION_OWNER",
+            "scope": "tenant",
+            "policy": "MATRIX_SOURCE_INTERSECTION"
+          },
+          {
+            "role": "VIEWER",
+            "scope": "tenant",
+            "policy": "MATRIX_SOURCE_INTERSECTION"
+          }
+        ],
+        "runtime_activated": false,
+        "no_reporting_advanced_entitlement": true
+      }
+    ],
+    "existing_permission_limited_grant": {
+      "code": "configuration.configuration_override.approve",
+      "capability": "CORE_PLATFORM",
+      "current_base_grant": "NONE",
+      "contract_role": "GRC_MANAGER",
+      "scope": "tenant",
+      "policy": "CONTROL_OVERRIDE_DECIDER",
+      "only_configuration_codes": [
+        "control_operational_activity",
+        "control_recommended_evidence",
+        "control_operational_frequency",
+        "control_operational_confirmation"
+      ],
+      "runtime_activation": "NOT_AUTHORIZED_NOT_EXECUTED"
+    },
+    "existing_configuration_grants": "Preserved exactly; new control_version use must pass its ObjectPolicy. No broad grant or Platform/Support tenant mutation.",
+    "source_resource_necessity": "knowledge_source read/create over canonical KnowledgeSource is necessary to register genuine provenance before Item creation; no arbitrary source CRUD, extra entity or implicit source fabrication. Registry resource addition is explicit in RECTOR_DELTA."
+  },
+  "regulatory": {
+    "pack_codes": [
+      "ISO_9001_2015",
+      "ISO_9001_2026",
+      "ISO_IEC_27001_2022",
+      "ISO_IEC_42001_2023",
+      "CL_LEY_21719",
+      "CL_LEY_21663"
+    ],
+    "new_code": "CL_LEY_21663",
+    "convention_evidence": "Existing CL_LEY_21719 follows CL_LEY_<number>; same generic model",
+    "source_type": "law",
+    "jurisdiction": "Chile",
+    "commercial_family_created": false,
+    "entitlements_granted": false,
+    "candidate_counts": {
+      "ISO_9001_2015": 27,
+      "ISO_IEC_27001_2022": 116,
+      "ISO_IEC_42001_2023": 45,
+      "CL_LEY_21663": 10,
+      "CL_LEY_21719": 13
+    },
+    "separate_ISO_9001_2026_proposals": 104,
+    "preliminary_crosswalks": 6,
+    "official_pack_gate": "REGULATORY_PACK_CL_LEY_21663",
+    "official_pack_pass": false,
+    "semantic_homologation": "NOT_EXECUTED",
+    "source_temporal_policy": "Authentic source/version/disposition conditions, never universal tenant applicability",
+    "states": "CONTENT_AUTHORITY_AND_TESTING.md; no new combined content lifecycle"
+  },
+  "importContract": {
+    "contract_name": "TCDX Unified Compliance Control Catalog canonical import contract",
+    "version": "1.1+NORMATIVE_LIBRARY_20261020",
+    "rector_basis": [
+      "44_CONTRATO_ESTRUCTURA_NORMATIVA_REQUISITOS_CONTROLES.md",
+      "37_REGULATORY_PACK_CONTRACT.md",
+      "41_BASELINE_REGULATORIO_OBLIGATORIO.md",
+      "35_SOURCE_PRECEDENCE_CONFLICT_RESOLUTION_POLICY.md"
+    ],
+    "scope": [
+      "ISO_9001_2015",
+      "ISO_9001_2026",
+      "ISO_IEC_27001_2022",
+      "ISO_IEC_42001_2023",
+      "CL_LEY_21719",
+      "CL_LEY_21663"
+    ],
+    "rules": [
+      "Do not add or alter physical schema to fit this catalog.",
+      "Do not import full ISO normative text unless a licensed source is supplied by TCDX.",
+      "NormativeUnit is editorial structure; Requirement is atomic evaluable obligation; Control is operational/reference mechanism.",
+      "Annex A catalog controls are Control/ControlVersion regulatory_reference, not Requirement.",
+      "TCDX baseline controls are PLATFORM_CONTROL, tenant_id NULL, control_origin tcdx_baseline.",
+      "Tenant controls must be instantiated through canonical flows and based_on_control_version_id; do not duplicate global controls by seed.",
+      "UUIDs are UUIDv7 created by the importer. No UUID is stored in this catalog. Upsert/identity uses business keys.",
+      "Published history is immutable. Future licensed reconciliation creates governed versions/mappings; it does not rewrite prior published identities.",
+      "Crosswalks are typed. Do not create generic object_type/object_id relations.",
+      "QA/development use of provisional ISO summaries is allowed; official compliance/readiness use is blocked until licensing and review gates pass.",
+      "Preserve all 211 source candidate IDs and 104 independent proposals; no declaration of315 verified obligations.",
+      "Ten Law21.663 candidates retained; six crosswalks remain preliminary until homologation.",
+      "Raw candidates are manifest/source artifacts until true canonical identity/source/provenance can be assigned; do not fabricate source-origin, authorized/licensed flags or business UUIDs.",
+      "Test publication uses existing NON_AUTHORITATIVE_TEST_PACK, validation provenance/access and contextual rights; official pack gates remain independent.",
+      "The new scope is an amendment of the import contract, not a new 49-file catalogue or permission to run the v1.1 importer on incoming ZIPs."
+    ],
+    "fail_closed_conditions": [
+      "unknown framework_code",
+      "unresolved parent NormativeUnit",
+      "unresolved Requirement normative unit",
+      "unknown TCDX baseline control in RequirementControlMapping",
+      "duplicate business key",
+      "attempt to materialize quarantined relation",
+      "attempt to mark ISO content official/licensed without licensed source manifest"
+    ],
+    "predecessor": {
+      "path": "data/regulatory/catalogs/tcdx-unified-compliance-control-catalog/v1.1/canonical_import_contract.json",
+      "sha256": "5cc7549a2451425916ffb158b05b3cc386f5ac78c5d0e0f0ea58ad0cdb5f009e",
+      "version": "1.1"
+    },
+    "executed_imports": false,
+    "adapter_implementation_authorized": false,
+    "source_origin_delta": {
+      "existing": [
+        "licensed_file",
+        "official_source"
+      ],
+      "added": "received_preliminary_file",
+      "necessity": "Regulatory SourceOrigin currently has only licensed_file and official_source; neither truthfully represents a received preliminary preparation/review ZIP. Supporting source roles describe purpose, not acquisition origin. No reinterpretation of either existing origin is allowed.",
+      "representation": "Import input/provenance artifact only, included in canonical import checksum; no new physical column, table, or authority class",
+      "constraints": {
+        "authorityClass": "NON_AUTHORITATIVE_TEST_PACK",
+        "authorized": false,
+        "licenseClassification": "non_authoritative_test_pack",
+        "commercialPublicationEligible": false,
+        "certificationAssertionEligible": false,
+        "devDemoExecutionEligible": true,
+        "forbidden_source_role": "authorized_normative_source"
+      },
+      "rights": "Receipt is not a license. Preserve actual rights per act and source; unknown rights deny protected reproduction only. licenseClassification describes non-authoritative use, not a grant of rights.",
+      "source_locator": "Immutable received artifact/member locator with SHA256 and edition, via existing governance.provenance and object provenanceRef. officialUri identifies the authentic external reference when known; it never claims the received ZIP is official. Missing authentic source identity keeps raw candidates outside canonical import.",
+      "promotion": "No in-place origin/authority promotion. Later authentic source creates governed source/version and explicit reviewed mappings; no historical rewrite."
+    },
+    "law_21663_compatibility": {
+      "sourceType": "law",
+      "authorized_origin": "official_source",
+      "authorized_source": "Authentic Chilean legal source with exact edition/disposition citations and source checksum; verify publisher/URI/source against that artifact before official publication",
+      "preliminary_origin": "received_preliminary_file",
+      "temporal": "Per authentic edition/disposition and transition conditions. Never reuse the fixed CL_LEY_21719 principal effective date or invent a uniform date. Unresolved temporal metadata blocks the affected canonical import, not independent package work.",
+      "existing_21719": "Preserve existing official source, date and historical versions literally. No reclassification of its published official source as test content.",
+      "adapter_delta": "Dispatch both law codes by their published source contracts. Only ISO codes require sourceType=standard. Extend allowlists and governed input validation without executing the historical v1.1 catalogue importer on these ZIPs.",
+      "approval": "Official gate retains Regulatory Content Steward, Compliance Manager, GRC Manager and the legal/security review applicable to the authentic law source; source coverage and operational SoD are not waived by development authorization."
+    },
+    "provisional_execution_boundary": {
+      "review": "Preserve reviewed=false/pending candidates and real review outcomes; receipt or shape validation does not approve them.",
+      "access": "Existing RegulatoryPackValidationAccess, validation provenance and demo/test tenant classifications, development/test/qa only; no production official use. No access rows or grants created by this contract.",
+      "identities": "211 candidates, 104 independent proposals and six preliminary crosswalks remain source populations, not homologated canonical obligations.",
+      "rights_provenance": "Preserve original ZIP SHA, member locator/row ID/hash, publisher as actually declared, edition, reception/source provenance and actual rights evidence separately from review and official publication.",
+      "gates": "Each package source/edition/coverage/review/official gate is independent; unavailable rights for one protected body do not block unrelated metadata, original editorial or permitted internal tests."
+    }
+  },
+  "sources": {
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_B06_REGISTRY_20261020/CONTRACT_PUBLICATION_RECEIPT.json": "04f048e05e8c9b1bb5b00c87ee8f191434812d205fd99bba417766cc23ffeed5",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_B06_REGISTRY_20261020/PUBLICATION_MANIFEST.json": "c3dcddbb8c4a9000e43bfc7d78bdc40a5ea462fe6c19c5b51979610d449b2457",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_ITEM_INITIAL_20261020/CONTRACT_PUBLICATION_RECEIPT.json": "933f771a7432984f1292bded55b692d521f76d987202d6189c0db95cb1c44ca4",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_ITEM_INITIAL_20261020/PUBLICATION_MANIFEST.json": "c6ceb0a8e733c71d2913f240f5a8ed723c4c6f13573e0e2852b0da71af21b724",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_ITEM_INITIAL_20261020/DELTA.json": "aebdabc69e9644f90c6af09990ceb28334e5facb4af6d5a4ebb24eeedb732584",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/02_OPENAPI_NORMATIVE_LIBRARY.json": "3cf4b1a0c4fb176ad317a1075c124e92707e77e4240ed72b0d088a1358804c10",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/OPERATIONS.json": "f0e148f1456c44a44987ddf674f6859d171748b6bbc1057189773d2c4dd3fe06",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/APPLICABILITY_CONTEXT_AUDIT_SCHEMA.json": "c8ede2b7671439e3da4e9d31ef4bc5b4634354043b28ec2247fa24b8bbeca588",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/MATRIX_TYPES.json": "1ec8b55dfb0d696fc2465cfda873725400de27720bd092b2b0dda3d3dee481e3",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/CONFIGURATION_DEFINITIONS.json": "3779d8eacd48bf7df28804e70c7fdc62d9c5b43719a94f4a3e57e7a6a1aa01cc",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_B06_REGISTRY_20261020/LIFECYCLE_BINDINGS.json": "cd3d571bc6ac99007eb98b492a3d61d2a00da203979b31ea8d7cacea9de96b66",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_B06_REGISTRY_20261020/DECISION_DISPATCH.json": "69c4840c647b37130225542a80eabed41eb6332e9b2ca8dcd25ee58cf52c790a",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/OBJECT_POLICIES.json": "e098248ac24aa2d5a94866990f809677bbfbcf9e5135bfb4e246fec51a8a378c",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/EVENTS_AND_AUDIT.json": "897413fbc2820851920bbb0c37e8d340b5bb4d30726a369001f9850ccbbad214",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/PERMISSIONS_AND_GRANTS.json": "62ad3c7f7017b7f5a6d7e57970a56a6655ebcbcfd636e70e0744e72c8fe3af17",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/REGULATORY_SCOPE.json": "9a50e45e4b9107108012838ec7ea274f8dfbfebec47e00d764d3d0513d62a344",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/CANONICAL_IMPORT_CONTRACT.json": "aec73ab226692ad9b92f14822d4ddc89c3f60ee329bfe1f8533d27ad495c4751"
+  }
+}

@@ -1,0 +1,71 @@
+[
+  {
+    "check": "sealed-code-unit-contract",
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "packages/contracts/src",
+      "apps/frontend/src",
+      "apps/backend/src/core-grc",
+      "apps/backend/src/normative-library",
+      "apps/backend/src/configuration",
+      "apps/backend/src/regulatory",
+      "apps/backend/src/app.test.ts",
+      "--exclude",
+      "**/*.postgres.test.ts",
+      "--maxWorkers=2"
+    ],
+    "duration_seconds": 8.868,
+    "status": "PASS",
+    "exit_code": 0,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/sealed-code-unit-contract.log",
+    "sha256": "375d8097e566cf8f1e5989f2eb5a3e2a5c9c9edc6b5de28211de307781271ff7"
+  },
+  {
+    "check": "sealed-code-focused",
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "apps/backend/src/normative-library",
+      "apps/backend/src/configuration",
+      "apps/frontend/src/normative-library-client.test.ts",
+      "--exclude",
+      "**/*.postgres.test.ts",
+      "--maxWorkers=2"
+    ],
+    "duration_seconds": 2.409,
+    "status": "PASS",
+    "exit_code": 0,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/sealed-code-focused.log",
+    "sha256": "e4b23f02a7c1f133d50f001ab0529087b1bd90b1d2de87246915ba83cce60ac8"
+  },
+  {
+    "check": "sealed-code-backend-build-lint",
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "-p",
+      "apps/backend/tsconfig.json"
+    ],
+    "duration_seconds": 0.621,
+    "status": "PASS",
+    "exit_code": 0,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/sealed-code-backend-build-lint.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "check": "sealed-h04-data",
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "scripts/normative-library/generate-rights-contract.mjs",
+      "--check"
+    ],
+    "duration_seconds": 0.036,
+    "status": "PASS",
+    "exit_code": 0,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/sealed-h04-data.log",
+    "sha256": "3e6984c39fcd6e91c249739ae3666285fee41b43ecc87a48dd7e405eabd308ff"
+  }
+]

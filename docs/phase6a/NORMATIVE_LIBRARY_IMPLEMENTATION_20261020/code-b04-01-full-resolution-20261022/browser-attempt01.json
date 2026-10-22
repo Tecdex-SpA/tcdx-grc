@@ -1,0 +1,502 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.4.0/bin/node",
+      "/Users/andresbarouh/repos/tcdx-grc/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "scripts/normative-library/playwright-b04-resolution.config.ts"
+    ],
+    "configFile": "/Users/andresbarouh/repos/tcdx-grc/scripts/normative-library/playwright-b04-resolution.config.ts",
+    "rootDir": "/Users/andresbarouh/repos/tcdx-grc/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-b04-01-full-resolution-20261022/browser",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "desktop",
+        "name": "desktop",
+        "testDir": "/Users/andresbarouh/repos/tcdx-grc/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "b04-contextual-resolution.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-b04-01-full-resolution-20261022/browser",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "narrow",
+        "name": "narrow",
+        "testDir": "/Users/andresbarouh/repos/tcdx-grc/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "b04-contextual-resolution.spec.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-b04-01-full-resolution-20261022/browser-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "\"/opt/homebrew/Cellar/node/26.4.0/bin/node\" \"/Users/andresbarouh/repos/tcdx-grc/apps/frontend/node_modules/vite/bin/vite.js\" preview --host 127.0.0.1 --port 4184 --strictPort",
+      "cwd": "/Users/andresbarouh/repos/tcdx-grc/apps/frontend",
+      "url": "http://127.0.0.1:4184",
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [
+    {
+      "title": "b04-contextual-resolution.spec.ts",
+      "file": "b04-contextual-resolution.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "creates initial B04 using real canonical handlers without Platform or override-read permission",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1030,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T12:29:02.540Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d463bea8a81120cda335-4e929c873b802ca6b318",
+          "file": "b04-contextual-resolution.spec.ts",
+          "line": 38,
+          "column": 1
+        },
+        {
+          "title": "control change clears prior Definition/value and backend checks new target",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 330,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T12:29:03.973Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d463bea8a81120cda335-4b36c837127f17338cc2",
+          "file": "b04-contextual-resolution.spec.ts",
+          "line": 51,
+          "column": 1
+        },
+        {
+          "title": "stale Definition is rejected by write and selection invalidated automatically",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 354,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T12:29:04.309Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d463bea8a81120cda335-d9289272ece6462564b5",
+          "file": "b04-contextual-resolution.spec.ts",
+          "line": 54,
+          "column": 1
+        },
+        {
+          "title": "empty, denied and dependency errors remain explicit and cannot submit",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 321,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T12:29:04.668Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d463bea8a81120cda335-ae4753e950d13f06d276",
+          "file": "b04-contextual-resolution.spec.ts",
+          "line": 57,
+          "column": 1
+        },
+        {
+          "title": "published periodicity vocabulary is understandable and saved through the same B04 command",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 30071,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/andresbarouh/repos/tcdx-grc/e2e/b04-contextual-resolution.spec.ts",
+                        "column": 22,
+                        "line": 33
+                      },
+                      "message": "Error: locator.evaluate: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('Valor propuesto', { exact: true })\u001b[22m\n\n\n  31 |  await page.getByLabel('Parámetro a personalizar').selectOption(id);\n  32 |  const valueField=page.getByLabel('Valor propuesto',{exact:true});\n> 33 |  if(await valueField.evaluate(el=>el.tagName==='SELECT'))await valueField.selectOption('monthly');else await valueField.fill('Propuesta sintética del navegador');\n     |                      ^\n  34 |  await page.getByLabel('Vigente desde',{exact:true}).fill('2026-10-23T09:00');\n  35 |  await page.getByLabel('Vigente hasta',{exact:true}).fill('2026-12-23T09:00');\n  36 |  await page.getByLabel('Fundamento de la propuesta').fill('Validación aislada del flujo B04.');\n    at fillProposal (/Users/andresbarouh/repos/tcdx-grc/e2e/b04-contextual-resolution.spec.ts:33:22)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/b04-contextual-resolution.spec.ts:66:202"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T12:29:04.995Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-b04-01-full-resolution-20261022/browser/b04-contextual-resolution--f4fdf-hrough-the-same-B04-command-desktop/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-b04-01-full-resolution-20261022/browser/b04-contextual-resolution--f4fdf-hrough-the-same-B04-command-desktop/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d463bea8a81120cda335-a4508fdf33452d09abc7",
+          "file": "b04-contextual-resolution.spec.ts",
+          "line": 65,
+          "column": 1
+        },
+        {
+          "title": "creates initial B04 using real canonical handlers without Platform or override-read permission",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "narrow",
+              "projectName": "narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 471,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T12:29:35.574Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d463bea8a81120cda335-d96f4b7bc336cb60f492",
+          "file": "b04-contextual-resolution.spec.ts",
+          "line": 38,
+          "column": 1
+        },
+        {
+          "title": "control change clears prior Definition/value and backend checks new target",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "narrow",
+              "projectName": "narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 228,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T12:29:36.152Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d463bea8a81120cda335-41cc6834e62ec79d33e3",
+          "file": "b04-contextual-resolution.spec.ts",
+          "line": 51,
+          "column": 1
+        },
+        {
+          "title": "stale Definition is rejected by write and selection invalidated automatically",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "narrow",
+              "projectName": "narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 327,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T12:29:36.383Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d463bea8a81120cda335-25e87093b1d388aa67a2",
+          "file": "b04-contextual-resolution.spec.ts",
+          "line": 54,
+          "column": 1
+        },
+        {
+          "title": "empty, denied and dependency errors remain explicit and cannot submit",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "narrow",
+              "projectName": "narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 298,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T12:29:36.714Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d463bea8a81120cda335-23c29643454444e4847d",
+          "file": "b04-contextual-resolution.spec.ts",
+          "line": 57,
+          "column": 1
+        },
+        {
+          "title": "published periodicity vocabulary is understandable and saved through the same B04 command",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "narrow",
+              "projectName": "narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 30058,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/andresbarouh/repos/tcdx-grc/e2e/b04-contextual-resolution.spec.ts",
+                        "column": 22,
+                        "line": 33
+                      },
+                      "message": "Error: locator.evaluate: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('Valor propuesto', { exact: true })\u001b[22m\n\n\n  31 |  await page.getByLabel('Parámetro a personalizar').selectOption(id);\n  32 |  const valueField=page.getByLabel('Valor propuesto',{exact:true});\n> 33 |  if(await valueField.evaluate(el=>el.tagName==='SELECT'))await valueField.selectOption('monthly');else await valueField.fill('Propuesta sintética del navegador');\n     |                      ^\n  34 |  await page.getByLabel('Vigente desde',{exact:true}).fill('2026-10-23T09:00');\n  35 |  await page.getByLabel('Vigente hasta',{exact:true}).fill('2026-12-23T09:00');\n  36 |  await page.getByLabel('Fundamento de la propuesta').fill('Validación aislada del flujo B04.');\n    at fillProposal (/Users/andresbarouh/repos/tcdx-grc/e2e/b04-contextual-resolution.spec.ts:33:22)\n    at /Users/andresbarouh/repos/tcdx-grc/e2e/b04-contextual-resolution.spec.ts:66:202"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T12:29:37.017Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-b04-01-full-resolution-20261022/browser/b04-contextual-resolution--f4fdf-hrough-the-same-B04-command-narrow/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-b04-01-full-resolution-20261022/browser/b04-contextual-resolution--f4fdf-hrough-the-same-B04-command-narrow/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d463bea8a81120cda335-41a8bb58c9f7b484de90",
+          "file": "b04-contextual-resolution.spec.ts",
+          "line": 65,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-22T12:29:01.300Z",
+    "duration": 65855.05,
+    "expected": 8,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "PROJECT": "GRC_TECDEX",
+  "ACTIVE_BASELINE": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "status": "APPLIED_VERIFIED_PHYSICAL_SCOPE_ONLY",
+  "migration_id": "20261021221204",
+  "migration": {
+    "path": "database/migrations/20261021221204_normative_library_b01_b09_h04_pv01.sql",
+    "sha256": "9279159e88c60fff03f998e33008fb0d675f53e4423df638c9e54f709a773798"
+  },
+  "canonical_manifest": {
+    "path": "database/migrations/manifest.json",
+    "sha256": "70ecaa0f4bbf168a1f5e4c3cefbd734036217dc7b09ac3d4a11b65f9cbc66152"
+  },
+  "canonical_runner": {
+    "path": "scripts/foundations/migrate.ts",
+    "sha256": "05166431e5d2769b3b3b004bb76109811446aa1512476e464d611cbde9df289d"
+  },
+  "canonical_verifier": {
+    "path": "scripts/foundations/verify-schema.ts",
+    "sha256": "d42dc350676cd130d4c3ac45dbe870e928de42a6f8e3fa5dab7b34b7c6b598de"
+  },
+  "effective_contract_receipt": {
+    "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_PV01_PUBLICATION_20261021/CONTRACT_PUBLICATION_RECEIPT.json",
+    "sha256": "a8c6fc08180b64faedae257f2751c4dacc9747eab7b8b83e3d09f5a03c18d472"
+  },
+  "target": {
+    "environment": "QA",
+    "logical_host": "db-tecdex",
+    "hostaddr": "192.168.2.40",
+    "port": 5432,
+    "database": "tcdx-grc",
+    "PostgreSQL": "16.15",
+    "cluster": "16/main",
+    "TLS": "verify-full exclusive approved public certificate",
+    "peer_sha256": "FB:68:09:DA:13:9E:E3:E5:2C:2F:1F:EA:D7:5B:11:92:7B:04:B8:96:7A:2B:5D:B8:46:9C:B6:70:E3:BB:A3:E6"
+  },
+  "window": {
+    "window_started_utc": "2026-10-21T23:41:38.793496+00:00",
+    "window_expires_utc": "2026-10-22T00:11:38.793496+00:00",
+    "window_closed_utc": "2026-10-21T23:43:29.506226+00:00"
+  },
+  "execution_seconds": 1.635,
+  "ledger": {
+    "before": 34,
+    "after": 35,
+    "history_34_preserved": true,
+    "technical_writes": "ONE_CANONICAL_APPLIED_RECORD_ATOMIC_WITH_DDL",
+    "business_DML": "NONE"
+  },
+  "gates": {
+    "ARCHITECTURAL_CONSISTENCY_GATE": "PASS",
+    "MIGRATION_INTEGRITY_GATE": "PASS",
+    "DATABASE_DRIFT_GATE": "PASS",
+    "POST_ADOPTION_INTEGRITY_GATE": "PASS"
+  },
+  "post_checks_passed": 18,
+  "historical_business_table_fingerprints": "242_OF_242_MATCH",
+  "schema_delta_counts": {
+    "relations": {
+      "added": 2,
+      "removed": 0,
+      "changed": 0
+    },
+    "columns": {
+      "added": 38,
+      "removed": 0,
+      "changed": 0
+    },
+    "constraints": {
+      "added": 42,
+      "removed": 1,
+      "changed": 0
+    },
+    "indexes": {
+      "added": 15,
+      "removed": 1,
+      "changed": 0
+    },
+    "functions": {
+      "added": 8,
+      "removed": 0,
+      "changed": 0
+    },
+    "triggers": {
+      "added": 12,
+      "removed": 0,
+      "changed": 0
+    }
+  },
+  "recovery_reference": "QA-LOGICAL-e923e6ecc44845c6920c8fd975f34675",
+  "recovery_limit": "Logical pre-adoption snapshot22:46:47UTC; no PITR; no rollback or restoration needed/executed in QA",
+  "restrictions_preserved": {
+    "IAM_registry_Definitions": "NOT_ACTIVATED",
+    "normative_imports": "NONE",
+    "deployments": "NONE",
+    "production": "NONE",
+    "DNS_server_cert_global_config_changes": "NONE",
+    "Git_commit_push_merge_stage": "NONE",
+    "STEP6A5": "NOT_STARTED",
+    "STEP6A6": "NOT_STARTED"
+  },
+  "not_asserted": [
+    "B01\u2013B09 operational enablement or functional completion",
+    "Application runtime/RBAC/SoD/E2E QA",
+    "Real content licenses/homologation/publication",
+    "New QA synthetic negative writes;149 SQL/17 runner isolated checks reused only for prior scope"
+  ],
+  "evidence": [
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/GO_NO_GO.json",
+      "sha256": "758a6140b5cb96c2d380a3907a5b3d022ee5b164866e7718a7889f9dbcfcfb27"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/CANONICAL_APPLY.json",
+      "sha256": "05b89661004c99d31b0a684d1f127da54f151b7b6d8d742c2319f5b87d95e4e0"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/CANONICAL_VERIFY.json",
+      "sha256": "7ba1dc106d85c1fd9e04ed9e70b068c746d7a1294a7c7e357c22f34695347cff"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/IMMEDIATE.json",
+      "sha256": "949b3b1f8e21eb854933200d7c539209f8b13ef70a474677dbfb91902dc0be95"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/POST.json",
+      "sha256": "bb4f2167321535b2b92eeb14c4e5be6513c8d009fd7554e6556a38a768194511"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/OBJECT_DELTAS.json",
+      "sha256": "9101a6cc81aa819dcd7425f6385286320d9420e6ea66f5c1b4c2eb5c1467ea86"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/POST_GATES.json",
+      "sha256": "ef9cc8ed4179a357bf3fa3b37ad86377652f2d7b8dc8d1c867eccbbc60e8c0bb"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/TLS_VALIDATION.json",
+      "sha256": "4d0ba9a108c00c7e7feb261d76a84334cf823e28c4fc073ba8016d04db77c4f9"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/QA_ADMINISTRATIVE_PUBLIC_CERT.pem",
+      "sha256": "0a99469321c1117cdf3154a7e5c5e50dd42f719af7b8b1a647fa0bb55179519b"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/UNIT_TESTS.json",
+      "sha256": "05800c0596e262075edc87287fbaa94572a1c8eff4029320be0b04570a85bb02"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/TYPECHECK_FINAL.json",
+      "sha256": "505b7145ffac27b178d527dcd151d7e4d9e5f7ed15dcd63e4322f2d1c68496b9"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/RECTOR_FINAL.json",
+      "sha256": "6434056917c872e808767e76c6451e748f1dca6f7db148b078d0f850ee086bab"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/BACKUP_AVAILABLE.json",
+      "sha256": "cee103714d5b948466cbccbcab6386ad5653e19892d38f632b9727a32a1063a7"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/SOURCE_DELTAS.json",
+      "sha256": "881125c441650efdf396c7de13c38467b11c5e189ad3d0ee67bc0fee1d66a82f"
+    }
+  ],
+  "issuer_scope": "Technical execution receipt; no new contract publication, baseline or simulated human signature"
+}

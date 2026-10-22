@@ -1,0 +1,30 @@
+{
+  "status": "BLOCKED_CURRENT_RECOVERABILITY_NOT_PROVEN",
+  "references": [
+    {
+      "script": "scripts/phase6a3/qa-apply-migrations.sh",
+      "directory": "/var/backups/tcdx-grc/step6a3-basebackup-cLtKoTUJ",
+      "declared_sha256": "3d60cc2174815d349c0f92ef5ba84f2ac088f8ba0db84449e8dbb87027b4bb81",
+      "file_date": "NOT_VERIFIED",
+      "current_existence_checksum_restore": "NOT_VERIFIED"
+    },
+    {
+      "script": "scripts/phase6a3/qa-apply-c04w-r2.sh",
+      "directory": "/var/backups/tcdx-grc/step6a3-basebackup-w5UXYYlC",
+      "declared_sha256": "776b79ea7f7f44850a1175441086a95ba8d3a45677b8437abd9557982072f60e",
+      "historical_restore_precondition": "33 ledger rows before C04W; current QA has34",
+      "file_date": "NOT_VERIFIED",
+      "current_existence_checksum_restore": "NOT_VERIFIED"
+    }
+  ],
+  "source_sha256": {
+    "scripts/phase6a3/qa-apply-migrations.sh": "7b91297ec98f0515e9dda0050577185f2206393e9b6537dce60281179b321483",
+    "scripts/phase6a3/qa-apply-c04w-r2.sh": "60dccde53dfce41f93a90dcc0d5f7031a88d9cff3f92182fbda24b5f3c30a3ce"
+  },
+  "archive_mode": "off",
+  "archived_wal_count": 0,
+  "PITR": "NOT_PROVEN",
+  "ssh_metadata_inspection": "DENIED_AUTHENTICATION; no evidence of actual file presence/mtime/recovery obtained",
+  "physical_backup_perimeter": "Cluster has4 other connectable user databases, so existing full-cluster backup scripts exceed a tcdx-grc-only copy without a separately approved perimeter",
+  "no_backup_or_restore_executed": true
+}

@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-operational-preparation-20261022/verify.py"
+  ],
+  "started_utc": "2026-10-22T15:28:41.640664+00:00",
+  "finished_utc": "2026-10-22T15:28:41.722593+00:00",
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-operational-preparation-20261022/verify.py\", line 34, in <module>\n    assert p.is_file() and digest(p) == expected, 'Seal mismatch: ' + relative\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Seal mismatch: apps/backend/src/security/normative-library-publication.postgres.test.ts\n",
+  "database": false,
+  "read_only": false
+}

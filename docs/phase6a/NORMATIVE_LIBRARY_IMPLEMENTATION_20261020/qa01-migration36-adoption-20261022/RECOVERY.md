@@ -1,0 +1,9 @@
+# Recuperación QA-01
+
+Disponible: `/Users/andresbarouh/.tcdx-grc-qa-recovery/QA01-LOGICAL-0680ff6898e747d8ba2d56b9a171e1ca/tcdx-grc.pgdump`; SHA256 `20b82102bf622f707b217187149ef87bf9e73c99d8dd883b7d8eb23e6c5d7e34`. Archivo custom recuperable verificado con pg_restore16.15; snapshot 2026-10-22T15:11:22.724Z. Directorio0700/archivo0600 en cuentaPO FileVault. Conservar hasta disposición PO explícita; no sobrescribir ni copiar a lugares públicos. No es PITR ni incluye roles globales con secretos, otras bases, object storage o aplicaciones.
+
+Antes de commit: runner canónico hace ROLLBACK de toda la transacción, incluidos CHECK/ledger, ante errores. Tras fallo de apply no reintentar ni reparar a mano: inspección read-only, preservar evidencias y confirmar estado. Timeout/lock conflict se detiene, nunca se mata una sesión.
+
+Después de commit: no DOWN improvisado ni edición del ledger; el CHECK antiguo podría rechazar defaultsNULL válidos tras activación futura. El backup recupera el punto completo previo. Probar recuperación con pg_restore --exit-on-error --single-transaction en PostgreSQL16 aislado sin red/puertos/volumen, max_locks_per_transaction=1024, roles propietarios necesarios NOLOGIN; comparar catálogo y245fingerprints con SNAPSHOT_METADATA privado. Este ensayo fue realizado y destruido. Los pasos exactos constan en backup.mts y recibos.
+
+Una restauración sobre QA requiere establecer que es segura respecto de actividad/cambios posteriores y del punto de recuperación, preservar evidencia y seguir la orden de recuperación aplicable. No ejecutarla por inferencia ni reemplazar la base mientras haya usuarios/cambios sin reconciliar. En QA-01 postcheck PASS, por lo que no se ejecutó recuperación ni rollback. El procedimiento evita reparaciones manuales y deja un archivo realmente restaurado disponible.

@@ -1,0 +1,910 @@
+{
+  "status": "PASS_NARROW_ARRAY_CAST_EQUIVALENCE",
+  "parser": "pglast6.17 PostgreSQL16 grammar",
+  "rule": "Distribute only text[] casts over nonempty arrays of unbounded varchar string literals; preserve all values, operators and metadata",
+  "constraints": 180,
+  "AST_positive_assertions": 180,
+  "AST_negative_assertions": 180,
+  "assertions": [
+    {
+      "object": "audit.audit_competency_requirements:ck_audit_competency_requirements__team_role",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "audit.audit_competency_validations:ck_audit_competency_validations__validation_outcome",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "audit.audit_samples:ck_audit_samples__result_status",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "audit.audit_team_assignments:ck_audit_team_assignments__team_role",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "audit.audit_tests:ck_audit_tests__result_status",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "audit.auditor_competency_assertions:ck_auditor_competency_assertions__assertion_status",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "config.configuration_definition_scopes:ck_configuration_definition_scopes__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "config.configuration_definition_scopes:ck_configuration_definition_scopes__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "config.configuration_definitions:ck_configuration_definitions__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "config.configuration_definitions:ck_configuration_definitions__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "config.configuration_overrides:ck_configuration_overrides__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "config.configuration_overrides:ck_configuration_overrides__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "config.configuration_validation_rules:ck_configuration_validation_rules__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "config.configuration_validation_rules:ck_configuration_validation_rules__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "controls.assurance_samples:ck_assurance_samples__result_status",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "controls.assurance_tests:ck_assurance_tests__result_status",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "controls.control_assessments:ck_control_assessments__result_status",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "controls.control_effectiveness_methodologies:ck_cem_publication",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "controls.control_objectives:ck_control_objectives__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "controls.control_objectives:ck_control_objectives__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "controls.control_versions:ck_control_versions__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "controls.control_versions:ck_control_versions__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "controls.controls:ck_controls__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "controls.controls:ck_controls__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.calculation_runs:ck_calculation_runs__calculation_status",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.data_quality_assessments:ck_data_quality_assessments__result_status",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.formula_definition_parameters:ck_formula_definition_parameters__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.formula_definition_parameters:ck_formula_definition_parameters__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.formula_definitions:ck_formula_definitions__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.formula_definitions:ck_formula_definitions__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.metric_definition_inputs:ck_metric_definition_inputs__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.metric_definition_inputs:ck_metric_definition_inputs__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.metric_definition_thresholds:ck_metric_definition_thresholds__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.metric_definition_thresholds:ck_metric_definition_thresholds__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.metric_definitions:ck_metric_definitions__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.metric_definitions:ck_metric_definitions__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.metric_measurements:ck_metric_measurements__result_status",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.observation_type_source_types:ck_observation_type_source_types__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.observation_type_source_types:ck_observation_type_source_types__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.observation_type_subject_types:ck_observation_type_subject_types__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.observation_type_subject_types:ck_observation_type_subject_types__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.observation_types:ck_observation_types__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.observation_types:ck_observation_types__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.snapshot_items:ck_snapshot_items__result_status",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.source_precedence_policies:ck_source_precedence_policies__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.source_precedence_policies:ck_source_precedence_policies__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.source_precedence_policy_key_fields:ck_source_precedence_policy_key_fields__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.source_precedence_policy_key_fields:ck_source_precedence_policy_key_fields__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.source_precedence_policy_sources:ck_source_precedence_policy_sources__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "data.source_precedence_policy_sources:ck_source_precedence_policy_sources__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "evidence.file_upload_intents:ck_file_upload_intents__classification",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "evidence.file_upload_intents:ck_file_upload_intents__lifecycle",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "iam.role_permissions:ck_role_permissions__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "iam.role_permissions:ck_role_permissions__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "iam.roles:ck_roles__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "iam.roles:ck_roles__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "iam.service_principals:ck_service_principals__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "iam.service_principals:ck_service_principals__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "iam.tenant_membership_invitations:ck_tenant_membership_invitations__lifecycle",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "integration.external_schema_mappings:ck_external_schema_mappings__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "integration.external_schema_mappings:ck_external_schema_mappings__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "integration.sync_runs:ck_sync_runs__calculation_status",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "knowledge.knowledge_items:ck_knowledge_items__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "knowledge.knowledge_items:ck_knowledge_items__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "knowledge.knowledge_sources:ck_knowledge_sources__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "knowledge.knowledge_sources:ck_knowledge_sources__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "knowledge.knowledge_versions:ck_knowledge_versions__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "knowledge.knowledge_versions:ck_knowledge_versions__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "knowledge.regulatory_change_reviews:ck_regulatory_change_reviews__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "knowledge.regulatory_change_reviews:ck_regulatory_change_reviews__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "knowledge.regulatory_changes:ck_regulatory_changes__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "knowledge.regulatory_changes:ck_regulatory_changes__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "ops_audit.audit_events:ck_audit_events__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "ops_audit.audit_events:ck_audit_events__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "ops_audit.idempotency_records:ck_idempotency_records__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "ops_audit.idempotency_records:ck_idempotency_records__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "ops_audit.job_executions:ck_job_executions__calculation_status",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "ops_audit.job_executions:ck_job_executions__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "ops_audit.job_executions:ck_job_executions__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "ops_audit.outbox_events:ck_outbox_events__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "ops_audit.outbox_events:ck_outbox_events__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "ops_audit.system_health_events:ck_system_health_events__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "ops_audit.system_health_events:ck_system_health_events__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "platform.feature_flags:ck_feature_flags__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "platform.feature_flags:ck_feature_flags__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "platform.regulatory_pack_validation_accesses:ck_regulatory_pack_validation_accesses__lifecycle",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "platform.subscription_regulatory_packs:ck_subscription_regulatory_packs__lifecycle",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "platform.tenants:ck_tenants__data_classification",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "privacy.data_categories:ck_data_categories__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "privacy.data_categories:ck_data_categories__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "privacy.data_subject_categories:ck_data_subject_categories__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "privacy.data_subject_categories:ck_data_subject_categories__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "privacy.dpias:ck_dpias__result_status",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "privacy.legal_bases:ck_legal_bases__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "privacy.legal_bases:ck_legal_bases__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "privacy.retention_policies:ck_retention_policies__lifecycle",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "privacy.retention_policies:ck_retention_policies__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "privacy.retention_policies:ck_retention_policies__policy_kind",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "privacy.retention_policies:ck_retention_policies__publication_effective_from",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "privacy.retention_policies:ck_retention_policies__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "privacy.retention_policy_applicabilities:retention_policy_applicabilities_classification_check",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "privacy.retention_policy_applicabilities:retention_policy_applicabilities_lifecycle_state_check",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.compliance_methodologies:ck_cm_publication",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.control_crosswalk_mappings:ck_control_crosswalk_mappings__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.control_crosswalk_mappings:ck_control_crosswalk_mappings__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.control_crosswalk_mappings:ck_control_xwalk_direction",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.framework_crosswalks:ck_framework_crosswalks__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.framework_crosswalks:ck_framework_crosswalks__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.framework_versions:ck_framework_versions__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.framework_versions:ck_framework_versions__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.frameworks:ck_frameworks__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.frameworks:ck_frameworks__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.normative_unit_control_mappings:ck_normative_unit_control_mappings__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.normative_unit_control_mappings:ck_normative_unit_control_mappings__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.normative_unit_crosswalk_mappings:ck_normative_unit_crosswalk_mappings__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.normative_unit_crosswalk_mappings:ck_normative_unit_crosswalk_mappings__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.normative_unit_crosswalk_mappings:ck_nu_xwalk_direction",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.normative_units:ck_normative_units__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.normative_units:ck_normative_units__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.regulatory_pack_validation_provenances:ck_regulatory_pack_validation_provenances__source_role",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.requirement_applicabilities:ck_requirement_applicabilities__decision_closed",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.requirement_assessments:ck_requirement_assessments__result_status",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.requirement_control_mappings:ck_requirement_control_mappings__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.requirement_control_mappings:ck_requirement_control_mappings__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.requirement_crosswalk_mappings:ck_req_xwalk_direction",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.requirement_crosswalk_mappings:ck_requirement_crosswalk_mappings__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.requirement_crosswalk_mappings:ck_requirement_crosswalk_mappings__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.requirements:ck_requirements__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "regulatory.requirements:ck_requirements__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "reporting.dashboard_definitions:ck_dashboard_definitions__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "reporting.dashboard_definitions:ck_dashboard_definitions__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "reporting.dashboard_widgets:ck_dashboard_widgets__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "reporting.dashboard_widgets:ck_dashboard_widgets__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "reporting.report_definition_parameters:ck_report_definition_parameters__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "reporting.report_definition_parameters:ck_report_definition_parameters__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "reporting.report_definitions:ck_report_definitions__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "reporting.report_definitions:ck_report_definitions__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "reporting.report_runs:ck_report_runs__calculation_status",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "reporting.report_runs:ck_report_runs__result_status",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "reporting.report_templates:ck_report_templates__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "reporting.report_templates:ck_report_templates__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "resilience.recovery_tests:ck_recovery_tests__result_status",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "resilience.resilience_exercises:ck_resilience_exercises__result_status",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "risk.impact_scale_definitions:ck_impact_scale_definitions__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "risk.impact_scale_definitions:ck_impact_scale_definitions__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "risk.impact_scale_dimension_criteria:ck_impact_scale_dimension_criteria__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "risk.impact_scale_dimension_criteria:ck_impact_scale_dimension_criteria__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "risk.impact_scale_levels:ck_impact_scale_levels__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "risk.impact_scale_levels:ck_impact_scale_levels__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "risk.likelihood_scale_definitions:ck_likelihood_scale_definitions__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "risk.likelihood_scale_definitions:ck_likelihood_scale_definitions__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "risk.likelihood_scale_levels:ck_likelihood_scale_levels__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "risk.likelihood_scale_levels:ck_likelihood_scale_levels__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "risk.risk_assessments:ck_risk_assessments__result_status",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "risk.risk_methodologies:ck_risk_methodologies__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "risk.risk_methodologies:ck_risk_methodologies__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "risk.risk_taxonomies:ck_risk_taxonomies__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "risk.risk_taxonomies:ck_risk_taxonomies__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "rules.automation_policies:ck_automation_policies__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "rules.automation_policies:ck_automation_policies__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "rules.grc_impact_mappings:ck_grc_impact_mappings__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "rules.grc_impact_mappings:ck_grc_impact_mappings__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "rules.rule_definition_inputs:ck_rule_definition_inputs__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "rules.rule_definition_inputs:ck_rule_definition_inputs__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "rules.rule_definition_thresholds:ck_rule_definition_thresholds__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "rules.rule_definition_thresholds:ck_rule_definition_thresholds__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "rules.rule_definitions:ck_rule_definitions__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "rules.rule_definitions:ck_rule_definitions__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "rules.rule_evaluations:ck_rule_evaluations__result_status",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "survey.survey_options:ck_survey_options__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "survey.survey_options:ck_survey_options__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "survey.survey_question_validation_rules:ck_survey_question_validation_rules__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "survey.survey_question_validation_rules:ck_survey_question_validation_rules__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "survey.survey_questions:ck_survey_questions__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "survey.survey_questions:ck_survey_questions__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "survey.survey_versions:ck_survey_versions__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "survey.survey_versions:ck_survey_versions__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "survey.surveys:ck_surveys__ownership_class",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "survey.surveys:ck_surveys__tenant_ownership",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    },
+    {
+      "object": "third_party.supplier_assessments:ck_supplier_assessments__result_status",
+      "normalized_AST_equal": true,
+      "changed_literal_rejected": true
+    }
+  ]
+}

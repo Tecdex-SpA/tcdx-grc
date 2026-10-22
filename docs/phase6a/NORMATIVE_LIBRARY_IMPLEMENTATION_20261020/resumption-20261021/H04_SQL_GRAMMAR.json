@@ -1,0 +1,26 @@
+{
+  "status": "PASS_SQL_AND_PLPGSQL_GRAMMAR_ONLY",
+  "source": {
+    "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_RIGHTS_20261021/DDL_SPEC.sql",
+    "sha256": "9c54852dfb82a6ebaafa8c36dc7b09c68fed4185f476aae9424f623b68223b04"
+  },
+  "replacement": {
+    "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_SQL_GRAMMAR_20261021/DDL_SPEC.sql",
+    "sha256": "0841e1c9136400ca88a43ba06e9308fcb4b17eb51df296b2d7bda4d1f87c9a4c"
+  },
+  "delta": "Parenthesize one CASE expression in IF; no columns/constraints/policies/permissions/semantics changed",
+  "initial_finding": "parse_sql passed four statements; parse_plpgsql rejected unparenthesized CASE in IF with syntax error at end of input",
+  "postgresql_parser": [
+    16,
+    1
+  ],
+  "statements": 4,
+  "plpgsql_functions": 1,
+  "runtime_constraints": "NOT_TESTED",
+  "ddl_execution": "NONE",
+  "authorization": "Current PO focused order: indispensable demonstrated successor corrections; no repeated ratification",
+  "successor_receipt": {
+    "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_SQL_GRAMMAR_20261021/CONTRACT_PUBLICATION_RECEIPT.json",
+    "sha256": "cf2eee2ef255ad33e41728205cd959821e7b0eca2a1bd30f3c30968d2cf84f03"
+  }
+}

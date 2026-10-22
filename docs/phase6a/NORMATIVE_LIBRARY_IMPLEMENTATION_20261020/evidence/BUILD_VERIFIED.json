@@ -1,0 +1,50 @@
+[
+  {
+    "check": "contracts-build-verified",
+    "status": "PASS",
+    "exit_code": 0,
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "-p",
+      "packages/contracts/tsconfig.json"
+    ],
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/evidence/contracts-build-verified.log"
+  },
+  {
+    "check": "backend-build-verified",
+    "status": "PASS",
+    "exit_code": 0,
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "-p",
+      "apps/backend/tsconfig.json"
+    ],
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/evidence/backend-build-verified.log"
+  },
+  {
+    "check": "frontend-typecheck-verified",
+    "status": "PASS",
+    "exit_code": 0,
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "-p",
+      "apps/frontend/tsconfig.json",
+      "--noEmit"
+    ],
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/evidence/frontend-typecheck-verified.log"
+  },
+  {
+    "check": "source-diff-whitespace",
+    "status": "PASS",
+    "exit_code": 0,
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/evidence/source-diff-whitespace.log"
+  }
+]

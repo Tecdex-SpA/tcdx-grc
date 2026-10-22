@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+    "node_modules/typescript/bin/tsc",
+    "-p",
+    "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/g4-canonical-reconciliation-20261021/tsconfig.check.json"
+  ],
+  "duration_seconds": 0.0741,
+  "exit_code": 1,
+  "stdout": "scripts/foundations/db.ts(24,3): error TS2375: Type '{ host: string; port: number; database: string; user: string; password: string | undefined; ssl: false | { rejectUnauthorized: boolean; }; }' is not assignable to type 'DatabaseConfig' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'password' are incompatible.\n    Type 'string | undefined' is not assignable to type 'string'.\n      Type 'undefined' is not assignable to type 'string'.\nscripts/foundations/verify-schema.ts(55,3): error TS2322: Type 'Set<string | undefined>' is not assignable to type 'Set<string>'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\nscripts/foundations/verify-schema.ts(135,186): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nscripts/foundations/verify-schema.ts(161,66): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n",
+  "stderr": ""
+}

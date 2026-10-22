@@ -1,0 +1,139 @@
+{
+  "status": "PASS_METADATA_ONLY",
+  "keys": [
+    {
+      "relation": "knowledge.knowledge_versions",
+      "referenced_columns": [
+        "knowledge_version_id"
+      ],
+      "state": "MATCH",
+      "validated_keys": [
+        "pk_knowledge_versions"
+      ]
+    },
+    {
+      "relation": "knowledge.knowledge_versions",
+      "referenced_columns": [
+        "tenant_id",
+        "knowledge_version_id"
+      ],
+      "state": "MATCH",
+      "validated_keys": [
+        "uq_knowledge_versions__tenant_id_knowledge_version_id"
+      ]
+    },
+    {
+      "relation": "knowledge.knowledge_sources",
+      "referenced_columns": [
+        "knowledge_source_id"
+      ],
+      "state": "MATCH",
+      "validated_keys": [
+        "pk_knowledge_sources"
+      ]
+    },
+    {
+      "relation": "regulatory.normative_units",
+      "referenced_columns": [
+        "normative_unit_id"
+      ],
+      "state": "MATCH",
+      "validated_keys": [
+        "pk_normative_units"
+      ]
+    },
+    {
+      "relation": "regulatory.requirements",
+      "referenced_columns": [
+        "requirement_id"
+      ],
+      "state": "MATCH",
+      "validated_keys": [
+        "pk_requirements"
+      ]
+    },
+    {
+      "relation": "controls.control_versions",
+      "referenced_columns": [
+        "control_version_id"
+      ],
+      "state": "MATCH",
+      "validated_keys": [
+        "pk_control_versions"
+      ]
+    },
+    {
+      "relation": "controls.control_versions",
+      "referenced_columns": [
+        "tenant_id",
+        "control_version_id"
+      ],
+      "state": "MATCH",
+      "validated_keys": [
+        "uq_control_versions__tenant_id_control_version_id"
+      ]
+    },
+    {
+      "relation": "org.subjects",
+      "referenced_columns": [
+        "subject_id"
+      ],
+      "state": "MATCH",
+      "validated_keys": [
+        "pk_subjects"
+      ]
+    },
+    {
+      "relation": "config.configuration_overrides",
+      "referenced_columns": [
+        "tenant_id",
+        "configuration_override_id"
+      ],
+      "state": "MATCH",
+      "validated_keys": [
+        "uq_configuration_overrides__tenant_id_configuration_override_id"
+      ]
+    },
+    {
+      "relation": "regulatory.regulatory_pack_versions",
+      "referenced_columns": [
+        "regulatory_pack_version_id"
+      ],
+      "state": "MATCH",
+      "validated_keys": [
+        "pk_regulatory_pack_versions"
+      ]
+    },
+    {
+      "relation": "iam.user_identities",
+      "referenced_columns": [
+        "user_identity_id"
+      ],
+      "state": "MATCH",
+      "validated_keys": [
+        "pk_user_identities"
+      ]
+    },
+    {
+      "relation": "platform.tenants",
+      "referenced_columns": [
+        "tenant_id"
+      ],
+      "state": "MATCH",
+      "validated_keys": [
+        "pk_tenants"
+      ]
+    },
+    {
+      "relation": "ops_audit.audit_events",
+      "referenced_columns": [
+        "audit_event_id"
+      ],
+      "state": "MATCH",
+      "validated_keys": [
+        "pk_audit_events"
+      ]
+    }
+  ],
+  "data_rights_or_authorization": "NOT_INFERRED_FROM_FKS"
+}

@@ -1,0 +1,33 @@
+{
+  "status": "PASS_CONTRACT_PUBLICATION_REVIEW",
+  "baseline_id": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "authorization": {
+    "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_PV01_PUBLICATION_20261021/AUTHORIZATION.json",
+    "sha256": "7e55f0eef6b0ea8ed66bffe22698c2df96e31e666a0b46421b24e8acdf1285b9"
+  },
+  "candidate_manifest": {
+    "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_PHYSICAL_VALIDATION_20261021/PUBLICATION_MANIFEST_CANDIDATE.json",
+    "sha256": "b1328e9fe106d7587939f933cbb880f5834302f2ab41e4e8cdf9fa55fd1f2225"
+  },
+  "effective_function_delta": {
+    "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_PHYSICAL_VALIDATION_20261021/DDL_SPEC.sql",
+    "sha256": "43bd138f9c66d30efb785cafa83bf90dbf1bce45448a8b434f3678225b33f4dd"
+  },
+  "verified_evidence": {
+    "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/physical-validation-20261021/attempt-03/RESULT.json",
+    "sha256": "3351b45f855f87f506df2a00316dccd76849edf2439737b2dce1a0195eb0ab7a"
+  },
+  "original_defect": {
+    "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/physical-validation-20261021/attempt-02/103-rights_pack_exact_positive.log",
+    "sha256": "e97005f2f7ead9b27f24a0e3f6922c80fb121334a9d3c5cd6bc5435bcfda9bcb"
+  },
+  "checks": "149 SQL payload hashes, SQLSTATE/constraint/result logs and prior 850 artifact hashes verified; exact one-function delta verified; protected original 4359 bytes verified",
+  "prepublication_gates": {
+    "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/pv-h04-01-publication-20261021/GATES_PREPUBLICATION.json",
+    "sha256": "2ac7a5523aff48c241f14c56ec20dae6143ae50615774984028d8d615e62411c"
+  },
+  "physical_reexecution": "NONE; reuse immutable PostgreSQL16.15 validation evidence",
+  "scope_changes": "NONE; no new domain/schema/API/policies/roles/grants or runtime wiring",
+  "legal_rights": "NOT_ASSERTED_WITHOUT_EVIDENCE",
+  "human_signature_of_derived_bytes": false
+}

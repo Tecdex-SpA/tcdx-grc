@@ -1,3 +1,4 @@
+import { publishedCoverage } from "./testing/published-coverage.js";
 import { describe, expect, it } from "vitest";
 import expectedSchemaSource from "../../../database/expected-schema.json?raw";
 import matrix from "../../../docs/executable-contracts/03_API_RESOURCE_OPERATION_MATRIX.md?raw";
@@ -150,11 +151,11 @@ describe("PRE-F5B executable-contract closure", () => {
   const operations = parseOperations(openApi);
 
   it("keeps cumulative operation counts after the approved Phase 5 additions", () => {
-    expect(operations.size).toBe(Number(matrix.match(/`CONTRACTUAL_OPERATIONS=(\d+)`/)?.[1]));
-    expect([...operations.values()].filter(({ method }) => method === "get")).toHaveLength(Number(matrix.match(/`PUBLIC_READ_OPERATIONS=(\d+)`/)?.[1]));
-    expect([...operations.values()].filter(({ method }) => method === "post")).toHaveLength(111);
+    expect(operations.size).toBe(publishedCoverage(matrix).total);
+    expect([...operations.values()].filter(({ method }) => method === "get")).toHaveLength(publishedCoverage(matrix).reads);
+    expect([...operations.values()].filter(({ method }) => method === "post")).toHaveLength(publishedCoverage(matrix).posts);
     expect([...operations.values()].filter(({ method }) => method === "put")).toHaveLength(1);
-    expect(matrix).toContain(`\`CONTRACTUAL_OPERATIONS=${operations.size}\``);
+    expect(matrix).toContain(`\`CONTRACTUAL_OPERATIONS=${publishedCoverage(matrix).historicalTotal}\``);
     expect(matrix).toContain("`PUBLIC_MUTATING_OPERATIONS=112`");
   });
 
@@ -296,7 +297,7 @@ describe("PRE-F5B executable-contract closure", () => {
 
   it("preserves PRE-F5B's historical no-runtime-seed claim within the cumulative table inventory", () => {
     const expectedSchema = JSON.parse(expectedSchemaSource) as { tables: Array<{ name: string }> };
-    expect(expectedSchema.tables).toHaveLength(242);
+    expect(expectedSchema.tables).toHaveLength(244);
     for (const table of ["evidence.file_objects", "evidence.evidences", "evidence.evidence_versions", "evidence.evidence_links"]) {
       expect(expectedSchema.tables.some(({ name }) => name === table), table).toBe(true);
     }

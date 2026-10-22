@@ -1,0 +1,4 @@
+BEGIN;
+DO $$ BEGIN IF EXISTS(SELECT FROM knowledge.knowledge_source_usage_rights) THEN RAISE EXCEPTION 'fixture leakage'; END IF; END $$;
+SET CONSTRAINTS ALL IMMEDIATE;
+ROLLBACK;

@@ -1,0 +1,17 @@
+{
+  "extends": "../../../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "paths": {
+      "pg": [
+        "../../../../node_modules/.pnpm/@types+pg@8.23.1/node_modules/@types/pg/index.d.ts"
+      ]
+    },
+    "rootDir": "../../../.."
+  },
+  "include": [
+    "../../../../scripts/foundations/verify-schema.ts",
+    "schema-definition.test.ts"
+  ]
+}

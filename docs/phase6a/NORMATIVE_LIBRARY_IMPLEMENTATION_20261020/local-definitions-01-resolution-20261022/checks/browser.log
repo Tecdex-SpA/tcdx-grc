@@ -1,0 +1,21 @@
+[WebServer] (node:33807) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 10 tests using 1 worker
+
+(node:33809) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop] › e2e/b04-contextual-resolution.spec.ts:39:1 › creates initial B04 using real canonical handlers without Platform or override-read permission (749ms)
+  ✓   2 [desktop] › e2e/b04-contextual-resolution.spec.ts:52:1 › control change clears prior Definition/value and backend checks new target (233ms)
+  ✓   3 [desktop] › e2e/b04-contextual-resolution.spec.ts:55:1 › stale Definition is rejected by write and selection invalidated automatically (375ms)
+  ✓   4 [desktop] › e2e/b04-contextual-resolution.spec.ts:58:1 › empty, denied and dependency errors remain explicit and cannot submit (293ms)
+  ✓   5 [desktop] › e2e/b04-contextual-resolution.spec.ts:66:1 › published periodicity vocabulary is understandable and saved through the same B04 command (346ms)
+(node:33822) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   6 [narrow] › e2e/b04-contextual-resolution.spec.ts:39:1 › creates initial B04 using real canonical handlers without Platform or override-read permission (451ms)
+  ✓   7 [narrow] › e2e/b04-contextual-resolution.spec.ts:52:1 › control change clears prior Definition/value and backend checks new target (264ms)
+  ✓   8 [narrow] › e2e/b04-contextual-resolution.spec.ts:55:1 › stale Definition is rejected by write and selection invalidated automatically (330ms)
+  ✓   9 [narrow] › e2e/b04-contextual-resolution.spec.ts:58:1 › empty, denied and dependency errors remain explicit and cannot submit (294ms)
+  ✓  10 [narrow] › e2e/b04-contextual-resolution.spec.ts:66:1 › published periodicity vocabulary is understandable and saved through the same B04 command (325ms)
+
+  10 passed (5.5s)

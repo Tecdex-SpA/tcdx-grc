@@ -1,0 +1,82 @@
+--- a/apps/backend/src/security/normative-library-publication.postgres.test.ts
++++ b/apps/backend/src/security/normative-library-publication.postgres.test.ts
+@@ -13,6 +13,7 @@
+ import {readControlDefinitionReferences} from '../configuration/control-definition-references.js';
+ import {mutateControlAdjustment} from '../configuration/control-adjustment-service.js';
+ import {CanonicalControlAdjustmentPolicy} from '../configuration/control-adjustment-policy.js';
++import {controlOverrideEtag,resolveControlAdjustment,type ControlDefinition,type ControlVersionFacts} from '../configuration/control-adjustments.js';
+ import {permitsSourceUse,type RightsRecord,type RightsRequest} from '../normative-library/rights.js';
+ import {recordSourceRights,revokeSourceRights} from '../normative-library/rights-publication.js';
+ 
+@@ -61,7 +62,7 @@
+  });
+  it('rolls back catalog, bindings and audits on any failure',async()=>{
+   const before=await count();
+-  await sql`CREATE FUNCTION public.library_audit_fault() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN IF NEW.aggregate_type='LifecycleTransitionDefinition' THEN RAISE EXCEPTION 'synthetic audit fault'; END IF; RETURN NEW; END $$`.execute(db);
++  await sql`CREATE FUNCTION public.library_audit_fault() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN IF NEW.aggregate_type='ConfigurationDefinition' THEN RAISE EXCEPTION 'synthetic audit fault'; END IF; RETURN NEW; END $$`.execute(db);
+   await sql`CREATE TRIGGER library_audit_fault BEFORE INSERT ON ops_audit.audit_events FOR EACH ROW EXECUTE FUNCTION public.library_audit_fault()`.execute(db);
+   try{await expect(publish()).rejects.toThrow('synthetic audit fault');expect(await count()).toBe(before);expect((await sql`SELECT * FROM iam.permissions WHERE permission_code='knowledge.knowledge_item.read'`.execute(db)).rows).toHaveLength(0);}
+   finally{await sql`DROP TRIGGER library_audit_fault ON ops_audit.audit_events`.execute(db);await sql`DROP FUNCTION public.library_audit_fault()`.execute(db);}
+@@ -69,7 +70,7 @@
+  it('publishes the exact catalog and 13 bindings atomically, and replays without duplicates',async()=>{
+   const first=await publish();expect(first).toMatchObject({permissions:8,bindings:13});expect(first.created).toBeGreaterThan(0);
+   const audits=await count();expect(await publish()).toMatchObject({created:0,audited:0});expect(await count()).toBe(audits);
+-  expect((await sql`SELECT * FROM platform.schema_migrations`.execute(db)).rows).toHaveLength(35);
++  expect((await sql`SELECT * FROM platform.schema_migrations`.execute(db)).rows).toHaveLength(36);
+  });
+  it('serializes two concurrent replays without duplicate rows or audit',async()=>{
+   const before=await count();for(const result of await Promise.all([publish(),publish()]))expect(result).toMatchObject({created:0,audited:0});expect(await count()).toBe(before);
+@@ -85,11 +86,15 @@
+   await rollback(async tx=>{await sql`DELETE FROM ops_audit.lifecycle_transition_side_effects WHERE lifecycle_transition_definition_id=${rows[0]!.id}::uuid`.execute(tx);await expect(publishLibraryOperationalData(tx,principal,newUuidV7(),p)).rejects.toMatchObject({statusCode:409});});
+   await rollback(async tx=>{await sql`UPDATE ops_audit.lifecycle_transition_side_effects SET ordinal=2 WHERE lifecycle_transition_definition_id=${rows[0]!.id}::uuid`.execute(tx);await expect(publishLibraryOperationalData(tx,principal,newUuidV7(),p)).rejects.toMatchObject({statusCode:409});});
+  });
+- it.each(c.definitions.definitions)('proves the physical blocker for $configuration_code@1 without inventing a default',async d=>{
++ it.each(c.definitions.definitions)('materializes $configuration_code@1 with semantic NULL and exact scope/rule, preserving its original base',async d=>{
+   const prepared=prepareLibraryDefinitions().find(r=>r.descriptor.configuration_code===d.configuration_code)!;
+   expect(prepared.descriptor.default_text_value).toBe(null);expect(prepared.scope.scope_level).toBe('control_version');expect(prepared.validation_rule.operand_text_value).toMatch(new RegExp('^'+d.configuration_code+'@1:[a-f0-9]{64}$'));
+-  await expect(db.transaction().execute(tx=>sql`INSERT INTO config.configuration_definitions(configuration_definition_id,ownership_class,configuration_code,version_number,value_type,tenant_overridable,object_overridable,owner_domain,lifecycle_state,effective_from,effective_to,published_at)
+-   VALUES(${newUuidV7()}::uuid,'PLATFORM_CONTROL',${d.configuration_code},1,'text',TRUE,TRUE,'controls','published',${from}::timestamptz,${to}::timestamptz,transaction_timestamp())`.execute(tx))).rejects.toMatchObject({code:'23514',constraint:'ck_configuration_definitions__typed_default'});
++  const defs=(await sql<ControlDefinition&{default_text_value:null}>`SELECT d.*,ARRAY(SELECT scope_level FROM config.configuration_definition_scopes s WHERE s.configuration_definition_id=d.configuration_definition_id) AS allowed_scope_levels FROM config.configuration_definitions d WHERE configuration_code=${d.configuration_code}`.execute(db)).rows;
++  expect(defs).toHaveLength(1);expect(defs[0]!.default_text_value).toBe(null);
++  const cv=(await sql<ControlVersionFacts>`SELECT * FROM controls.control_versions WHERE control_version_id=${control}::uuid`.execute(db)).rows[0]!;
++  const resolved=resolveControlAdjustment({tenantId:tenants[0]!,asOf:new Date().toISOString(),definition:defs[0]!,control:cv,overrides:[]});
++  expect(resolved.value).toBe(d.base_control_version_field?cv[d.base_control_version_field as keyof ControlVersionFacts]:null);
++  await rollback(async tx=>{await sql`UPDATE config.configuration_validation_rules SET operand_text_value='synthetic-drift' WHERE configuration_definition_id=${defs[0]!.configuration_definition_id}::uuid`.execute(tx);await expect(publishLibraryOperationalData(tx,principal,newUuidV7(),p)).rejects.toMatchObject({statusCode:422});});
+  });
+  it('enforces canonical roles, Platform/Tenant separation, missing permission, default DENY and tenant isolation',async()=>{
+   const author=await resolveTenantActor(db,identity(users.author),tenants[0]);expect(author.capabilityGroups.has('CORE_PLATFORM')).toBe(true);expect(author.permissions.has('knowledge.knowledge_item.create')).toBe(true);
+@@ -100,15 +105,30 @@
+   expect(()=>authorizeLibraryOperation(author,'platformKnowledgeSourceCreate')).toThrow();expect(()=>authorizeLibraryOperation(support,'knowledgeSourceCreate')).toThrow();
+   await expect(readControlDefinitionReferences(db,{identity:identity(users.author),tenantId:tenants[1]!,id:control,query:{}})).rejects.toMatchObject({statusCode:404});
+  });
++ it('preserves code/version uniqueness and refuses unapproved Definition versions rather than overwriting them',async()=>{
++  const code=c.definitions.definitions[0]!.configuration_code;
++  await expect(db.transaction().execute(tx=>sql`INSERT INTO config.configuration_definitions(configuration_definition_id,ownership_class,configuration_code,version_number,value_type,tenant_overridable,object_overridable,owner_domain,lifecycle_state,effective_from,effective_to)
++   VALUES(${newUuidV7()}::uuid,'PLATFORM_CONTROL',${code},1,'text',TRUE,TRUE,'controls','published',${from}::timestamptz,${to}::timestamptz)`.execute(tx))).rejects.toMatchObject({code:'23505'});
++  await rollback(async tx=>{await sql`INSERT INTO config.configuration_definitions(configuration_definition_id,ownership_class,configuration_code,version_number,value_type,tenant_overridable,object_overridable,owner_domain,lifecycle_state,effective_from,effective_to)
++   VALUES(${newUuidV7()}::uuid,'PLATFORM_CONTROL',${code},2,'text',TRUE,TRUE,'controls','published',${from}::timestamptz,${to}::timestamptz)`.execute(tx);await expect(publishLibraryOperationalData(tx,principal,newUuidV7(),p)).rejects.toMatchObject({statusCode:409});});
++ });
+  it('denies an inactive publisher and enforces registry permission FK integrity',async()=>{
+   await rollback(async tx=>{await sql`UPDATE iam.service_principals SET lifecycle_state='inactive' WHERE service_principal_id=${principal}::uuid`.execute(tx);await expect(publishLibraryOperationalData(tx,principal,newUuidV7(),p)).rejects.toMatchObject({statusCode:409});});
+   await expect(db.transaction().execute(tx=>sql`UPDATE ops_audit.lifecycle_transition_definitions SET permission_id=${newUuidV7()}::uuid WHERE command_code='knowledgeVersionUpdate'`.execute(tx))).rejects.toMatchObject({code:'23503'});
+  });
+- it('preserves contextual B04 discovery as legitimately empty under the physical Definitions blocker',async()=>{
++ it('discovers four valid Definitions, creates B04, revalidates on save and completes review/decision under actual B06',async()=>{
+   const refs=await readControlDefinitionReferences(db,{identity:identity(users.author),tenantId:tenants[0]!,id:control,query:{}});
+-  expect(refs.items).toEqual([]);
+-  const input={identity:identity(users.author),tenantId:tenants[0]!,operationId:'configurationOverrideCreate' as const,idempotencyKey:'synthetic-b04-create',correlationId:newUuidV7(),body:{configuration_definition_id:newUuidV7(),scope_level:'control_version',control_version_id:control,text_value:'Synthetic operational activity',effective_from:from,effective_to:to,rationale:'Synthetic isolated test'}};
+-  await expect(mutateControlAdjustment(db,new CanonicalControlAdjustmentPolicy(),input)).rejects.toMatchObject({statusCode:409});
++  expect(refs.items).toHaveLength(4);const selected=refs.items.find(r=>r.configuration_code==='control_operational_activity')!;
++  const input={identity:identity(users.author),tenantId:tenants[0]!,operationId:'configurationOverrideCreate' as const,idempotencyKey:'synthetic-b04-create',correlationId:newUuidV7(),body:{configuration_definition_id:selected.configuration_definition_id,scope_level:'control_version',control_version_id:control,text_value:'Synthetic operational activity',effective_from:from,effective_to:to,rationale:'Synthetic isolated test'}};
++  const policy=new CanonicalControlAdjustmentPolicy();
++  const created=await mutateControlAdjustment(db,policy,input);expect(created.response.result).toMatchObject({lifecycle_state:'draft',configuration_definition_id:selected.configuration_definition_id});
++  expect((await mutateControlAdjustment(db,policy,input)).replay).toBe(true);
++  const id=String(created.response.resource_id);
++  const etag=async()=>{const row=(await sql<Record<string,unknown>>`SELECT *,override_version::text,effective_from::text,effective_to::text FROM config.configuration_overrides WHERE configuration_override_id=${id}::uuid`.execute(db)).rows[0]!;const audits=(await sql<{audit_event_id:string}>`SELECT audit_event_id FROM ops_audit.audit_events WHERE aggregate_type='ConfigurationOverride' AND aggregate_id=${id}::uuid AND outcome='succeeded'`.execute(db)).rows;return controlOverrideEtag(row,audits.map(r=>r.audit_event_id));};
++  await expect(mutateControlAdjustment(db,policy,{...input,operationId:'configurationOverrideReview',targetId:id,idempotencyKey:newUuidV7(),ifMatch:await etag(),body:{decision:'reviewed',rationale:'Synthetic self-review negative'}})).rejects.toMatchObject({statusCode:403});
++  const reviewed=await mutateControlAdjustment(db,policy,{...input,identity:identity(users.reviewer),operationId:'configurationOverrideReview',targetId:id,idempotencyKey:newUuidV7(),ifMatch:await etag(),body:{decision:'reviewed',rationale:'Synthetic independent review'}});expect(reviewed.response.result).toMatchObject({lifecycle_state:'reviewed'});
++  const decided=await mutateControlAdjustment(db,policy,{...input,identity:identity(users.reviewer),operationId:'configurationOverrideDecide',targetId:id,idempotencyKey:newUuidV7(),ifMatch:await etag(),body:{decision:'approved',rationale:'Synthetic reviewed decision'}});expect(decided.response.result).toMatchObject({lifecycle_state:'approved'});
++  await expect(mutateControlAdjustment(db,policy,{...input,idempotencyKey:newUuidV7(),body:{...input.body,configuration_definition_id:newUuidV7()}})).rejects.toMatchObject({statusCode:409});
+  });
+ 
+  const record=():RightsRecord=>({knowledge_source_usage_right_id:newUuidV7(),knowledge_source_id:source,ownership_class:'TENANT_OWNED',tenant_id:tenants[0]!,audience_tenant_id:tenants[0]!,content_hash:'a'.repeat(64),edition_ref:'SYNTHETIC_ONLY',regulatory_pack_version_id:null,use_act:'consultation',use_environment:'test',content_kind:'editorial',effective_from:from,effective_to:to,revoked_at:null,evidence_ref:'SYNTHETIC_ISOLATED_EVIDENCE',evidence_hash:'b'.repeat(64),recorded_audit_event_id:newUuidV7()});

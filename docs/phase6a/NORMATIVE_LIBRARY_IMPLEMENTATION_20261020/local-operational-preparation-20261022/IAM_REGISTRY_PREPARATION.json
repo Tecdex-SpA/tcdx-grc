@@ -1,0 +1,898 @@
+{
+  "status": "DERIVED_LOCAL_PREPARATION_NOT_ACTIVATED",
+  "sources": {
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_B06_REGISTRY_20261020/CONTRACT_PUBLICATION_RECEIPT.json": "04f048e05e8c9b1bb5b00c87ee8f191434812d205fd99bba417766cc23ffeed5",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_B06_REGISTRY_20261020/PUBLICATION_MANIFEST.json": "c3dcddbb8c4a9000e43bfc7d78bdc40a5ea462fe6c19c5b51979610d449b2457",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_ITEM_INITIAL_20261020/CONTRACT_PUBLICATION_RECEIPT.json": "933f771a7432984f1292bded55b692d521f76d987202d6189c0db95cb1c44ca4",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_ITEM_INITIAL_20261020/PUBLICATION_MANIFEST.json": "c6ceb0a8e733c71d2913f240f5a8ed723c4c6f13573e0e2852b0da71af21b724",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_ITEM_INITIAL_20261020/DELTA.json": "aebdabc69e9644f90c6af09990ceb28334e5facb4af6d5a4ebb24eeedb732584",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/02_OPENAPI_NORMATIVE_LIBRARY.json": "3cf4b1a0c4fb176ad317a1075c124e92707e77e4240ed72b0d088a1358804c10",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/OPERATIONS.json": "f0e148f1456c44a44987ddf674f6859d171748b6bbc1057189773d2c4dd3fe06",
+    "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-b04-01-full-resolution-20261022/contracts/RECEIPT.json": "3662685bcb54cfa91145d9df5362eb73a79b47dbb3418f4b27d196a1cdcb3f76",
+    "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-b04-01-full-resolution-20261022/contracts/CONTRACT.json": "8b05af374583ae082e5d82d657c202aaae53d1cc6784be87205a907924374ca2",
+    "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-b04-01-full-resolution-20261022/contracts/OPENAPI_DELTA.json": "c355b93cef264eff114687936d64ab189c8e630f5b27e0102ccf2e4b5d956d9c",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/APPLICABILITY_CONTEXT_AUDIT_SCHEMA.json": "c8ede2b7671439e3da4e9d31ef4bc5b4634354043b28ec2247fa24b8bbeca588",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/OBJECT_POLICIES.json": "e098248ac24aa2d5a94866990f809677bbfbcf9e5135bfb4e246fec51a8a378c",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/MATRIX_TYPES.json": "1ec8b55dfb0d696fc2465cfda873725400de27720bd092b2b0dda3d3dee481e3",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/CONFIGURATION_DEFINITIONS.json": "3779d8eacd48bf7df28804e70c7fdc62d9c5b43719a94f4a3e57e7a6a1aa01cc",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_B06_REGISTRY_20261020/LIFECYCLE_BINDINGS.json": "cd3d571bc6ac99007eb98b492a3d61d2a00da203979b31ea8d7cacea9de96b66",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_B06_REGISTRY_20261020/DECISION_DISPATCH.json": "69c4840c647b37130225542a80eabed41eb6332e9b2ca8dcd25ee58cf52c790a",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/EVENTS_AND_AUDIT.json": "897413fbc2820851920bbb0c37e8d340b5bb4d30726a369001f9850ccbbad214",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/PERMISSIONS_AND_GRANTS.json": "62ad3c7f7017b7f5a6d7e57970a56a6655ebcbcfd636e70e0744e72c8fe3af17",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/REGULATORY_SCOPE.json": "9a50e45e4b9107108012838ec7ea274f8dfbfebec47e00d764d3d0513d62a344",
+    "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/CANONICAL_IMPORT_CONTRACT.json": "aec73ab226692ad9b92f14822d4ddc89c3f60ee329bfe1f8533d27ad495c4751"
+  },
+  "catalogue_delta": [
+    {
+      "code": "knowledge.knowledge_item.read",
+      "capability": "CORE_PLATFORM",
+      "resource": "knowledge_item",
+      "action": "read",
+      "contract_grants": [
+        {
+          "role": "PLATFORM_ADMIN",
+          "scope": "platform",
+          "policy": "KNOWLEDGE_GLOBAL_READ"
+        },
+        {
+          "role": "PLATFORM_SUPPORT",
+          "scope": "platform",
+          "policy": "KNOWLEDGE_SUPPORT_METADATA"
+        },
+        {
+          "role": "TENANT_ADMIN",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "GRC_MANAGER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "COMPLIANCE_MANAGER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "CONTROL_OWNER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "EVIDENCE_OWNER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "ACTION_OWNER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "VIEWER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        }
+      ],
+      "runtime_activated": false,
+      "global_tenant_split": true
+    },
+    {
+      "code": "knowledge.knowledge_item.create",
+      "capability": "CORE_PLATFORM",
+      "resource": "knowledge_item",
+      "action": "create",
+      "contract_grants": [
+        {
+          "role": "PLATFORM_ADMIN",
+          "scope": "platform",
+          "policy": "KNOWLEDGE_GLOBAL_AUTHOR"
+        },
+        {
+          "role": "TENANT_ADMIN",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_AUTHOR"
+        },
+        {
+          "role": "GRC_MANAGER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_AUTHOR"
+        }
+      ],
+      "runtime_activated": false,
+      "global_tenant_split": true
+    },
+    {
+      "code": "knowledge.knowledge_item.update",
+      "capability": "CORE_PLATFORM",
+      "resource": "knowledge_item",
+      "action": "update",
+      "contract_grants": [
+        {
+          "role": "PLATFORM_ADMIN",
+          "scope": "platform",
+          "policy": "KNOWLEDGE_GLOBAL_AUTHOR"
+        },
+        {
+          "role": "TENANT_ADMIN",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_AUTHOR"
+        },
+        {
+          "role": "GRC_MANAGER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_AUTHOR"
+        }
+      ],
+      "runtime_activated": false,
+      "global_tenant_split": true
+    },
+    {
+      "code": "knowledge.knowledge_item.review",
+      "capability": "CORE_PLATFORM",
+      "resource": "knowledge_item",
+      "action": "review",
+      "contract_grants": [
+        {
+          "role": "PLATFORM_ADMIN",
+          "scope": "platform",
+          "policy": "KNOWLEDGE_GLOBAL_REVIEW"
+        },
+        {
+          "role": "GRC_MANAGER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_REVIEW"
+        }
+      ],
+      "runtime_activated": false,
+      "global_tenant_split": true
+    },
+    {
+      "code": "knowledge.knowledge_item.publish",
+      "capability": "CORE_PLATFORM",
+      "resource": "knowledge_item",
+      "action": "publish",
+      "contract_grants": [
+        {
+          "role": "PLATFORM_ADMIN",
+          "scope": "platform",
+          "policy": "KNOWLEDGE_GLOBAL_PUBLISH"
+        },
+        {
+          "role": "GRC_MANAGER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_PUBLISH"
+        }
+      ],
+      "runtime_activated": false,
+      "global_tenant_split": true
+    },
+    {
+      "code": "knowledge.knowledge_source.read",
+      "capability": "CORE_PLATFORM",
+      "resource": "knowledge_source",
+      "action": "read",
+      "contract_grants": [
+        {
+          "role": "PLATFORM_ADMIN",
+          "scope": "platform",
+          "policy": "KNOWLEDGE_GLOBAL_READ"
+        },
+        {
+          "role": "PLATFORM_SUPPORT",
+          "scope": "platform",
+          "policy": "KNOWLEDGE_SUPPORT_METADATA"
+        },
+        {
+          "role": "TENANT_ADMIN",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "GRC_MANAGER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "COMPLIANCE_MANAGER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "CONTROL_OWNER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "EVIDENCE_OWNER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "ACTION_OWNER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "VIEWER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        }
+      ],
+      "runtime_activated": false,
+      "global_tenant_split": true
+    },
+    {
+      "code": "knowledge.knowledge_source.create",
+      "capability": "CORE_PLATFORM",
+      "resource": "knowledge_source",
+      "action": "create",
+      "contract_grants": [
+        {
+          "role": "PLATFORM_ADMIN",
+          "scope": "platform",
+          "policy": "KNOWLEDGE_GLOBAL_AUTHOR"
+        },
+        {
+          "role": "TENANT_ADMIN",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_AUTHOR"
+        },
+        {
+          "role": "GRC_MANAGER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_AUTHOR"
+        }
+      ],
+      "runtime_activated": false,
+      "global_tenant_split": true
+    },
+    {
+      "code": "reporting.matrix.read",
+      "capability": "CORE_PLATFORM",
+      "resource": "matrix",
+      "action": "read",
+      "contract_grants": [
+        {
+          "role": "TENANT_ADMIN",
+          "scope": "tenant",
+          "policy": "MATRIX_SOURCE_INTERSECTION"
+        },
+        {
+          "role": "GRC_MANAGER",
+          "scope": "tenant",
+          "policy": "MATRIX_SOURCE_INTERSECTION"
+        },
+        {
+          "role": "COMPLIANCE_MANAGER",
+          "scope": "tenant",
+          "policy": "MATRIX_SOURCE_INTERSECTION"
+        },
+        {
+          "role": "CONTROL_OWNER",
+          "scope": "tenant",
+          "policy": "MATRIX_SOURCE_INTERSECTION"
+        },
+        {
+          "role": "EVIDENCE_OWNER",
+          "scope": "tenant",
+          "policy": "MATRIX_SOURCE_INTERSECTION"
+        },
+        {
+          "role": "ACTION_OWNER",
+          "scope": "tenant",
+          "policy": "MATRIX_SOURCE_INTERSECTION"
+        },
+        {
+          "role": "VIEWER",
+          "scope": "tenant",
+          "policy": "MATRIX_SOURCE_INTERSECTION"
+        }
+      ],
+      "runtime_activated": false,
+      "no_reporting_advanced_entitlement": true
+    }
+  ],
+  "existing_permission_limited_grant": {
+    "code": "configuration.configuration_override.approve",
+    "capability": "CORE_PLATFORM",
+    "current_base_grant": "NONE",
+    "contract_role": "GRC_MANAGER",
+    "scope": "tenant",
+    "policy": "CONTROL_OVERRIDE_DECIDER",
+    "only_configuration_codes": [
+      "control_operational_activity",
+      "control_recommended_evidence",
+      "control_operational_frequency",
+      "control_operational_confirmation"
+    ],
+    "runtime_activation": "NOT_AUTHORIZED_NOT_EXECUTED"
+  },
+  "approved_base_pairs": [
+    {
+      "permission": "knowledge.knowledge_item.read",
+      "role": "PLATFORM_ADMIN",
+      "scope": "platform",
+      "policy": "KNOWLEDGE_GLOBAL_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_item.read",
+      "role": "PLATFORM_SUPPORT",
+      "scope": "platform",
+      "policy": "KNOWLEDGE_SUPPORT_METADATA"
+    },
+    {
+      "permission": "knowledge.knowledge_item.read",
+      "role": "TENANT_ADMIN",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_item.read",
+      "role": "GRC_MANAGER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_item.read",
+      "role": "COMPLIANCE_MANAGER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_item.read",
+      "role": "CONTROL_OWNER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_item.read",
+      "role": "EVIDENCE_OWNER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_item.read",
+      "role": "ACTION_OWNER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_item.read",
+      "role": "VIEWER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_item.create",
+      "role": "PLATFORM_ADMIN",
+      "scope": "platform",
+      "policy": "KNOWLEDGE_GLOBAL_AUTHOR"
+    },
+    {
+      "permission": "knowledge.knowledge_item.create",
+      "role": "TENANT_ADMIN",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_AUTHOR"
+    },
+    {
+      "permission": "knowledge.knowledge_item.create",
+      "role": "GRC_MANAGER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_AUTHOR"
+    },
+    {
+      "permission": "knowledge.knowledge_item.update",
+      "role": "PLATFORM_ADMIN",
+      "scope": "platform",
+      "policy": "KNOWLEDGE_GLOBAL_AUTHOR"
+    },
+    {
+      "permission": "knowledge.knowledge_item.update",
+      "role": "TENANT_ADMIN",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_AUTHOR"
+    },
+    {
+      "permission": "knowledge.knowledge_item.update",
+      "role": "GRC_MANAGER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_AUTHOR"
+    },
+    {
+      "permission": "knowledge.knowledge_item.review",
+      "role": "PLATFORM_ADMIN",
+      "scope": "platform",
+      "policy": "KNOWLEDGE_GLOBAL_REVIEW"
+    },
+    {
+      "permission": "knowledge.knowledge_item.review",
+      "role": "GRC_MANAGER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_REVIEW"
+    },
+    {
+      "permission": "knowledge.knowledge_item.publish",
+      "role": "PLATFORM_ADMIN",
+      "scope": "platform",
+      "policy": "KNOWLEDGE_GLOBAL_PUBLISH"
+    },
+    {
+      "permission": "knowledge.knowledge_item.publish",
+      "role": "GRC_MANAGER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_PUBLISH"
+    },
+    {
+      "permission": "knowledge.knowledge_source.read",
+      "role": "PLATFORM_ADMIN",
+      "scope": "platform",
+      "policy": "KNOWLEDGE_GLOBAL_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_source.read",
+      "role": "PLATFORM_SUPPORT",
+      "scope": "platform",
+      "policy": "KNOWLEDGE_SUPPORT_METADATA"
+    },
+    {
+      "permission": "knowledge.knowledge_source.read",
+      "role": "TENANT_ADMIN",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_source.read",
+      "role": "GRC_MANAGER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_source.read",
+      "role": "COMPLIANCE_MANAGER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_source.read",
+      "role": "CONTROL_OWNER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_source.read",
+      "role": "EVIDENCE_OWNER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_source.read",
+      "role": "ACTION_OWNER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_source.read",
+      "role": "VIEWER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_READ"
+    },
+    {
+      "permission": "knowledge.knowledge_source.create",
+      "role": "PLATFORM_ADMIN",
+      "scope": "platform",
+      "policy": "KNOWLEDGE_GLOBAL_AUTHOR"
+    },
+    {
+      "permission": "knowledge.knowledge_source.create",
+      "role": "TENANT_ADMIN",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_AUTHOR"
+    },
+    {
+      "permission": "knowledge.knowledge_source.create",
+      "role": "GRC_MANAGER",
+      "scope": "tenant",
+      "policy": "KNOWLEDGE_TENANT_AUTHOR"
+    },
+    {
+      "permission": "reporting.matrix.read",
+      "role": "TENANT_ADMIN",
+      "scope": "tenant",
+      "policy": "MATRIX_SOURCE_INTERSECTION"
+    },
+    {
+      "permission": "reporting.matrix.read",
+      "role": "GRC_MANAGER",
+      "scope": "tenant",
+      "policy": "MATRIX_SOURCE_INTERSECTION"
+    },
+    {
+      "permission": "reporting.matrix.read",
+      "role": "COMPLIANCE_MANAGER",
+      "scope": "tenant",
+      "policy": "MATRIX_SOURCE_INTERSECTION"
+    },
+    {
+      "permission": "reporting.matrix.read",
+      "role": "CONTROL_OWNER",
+      "scope": "tenant",
+      "policy": "MATRIX_SOURCE_INTERSECTION"
+    },
+    {
+      "permission": "reporting.matrix.read",
+      "role": "EVIDENCE_OWNER",
+      "scope": "tenant",
+      "policy": "MATRIX_SOURCE_INTERSECTION"
+    },
+    {
+      "permission": "reporting.matrix.read",
+      "role": "ACTION_OWNER",
+      "scope": "tenant",
+      "policy": "MATRIX_SOURCE_INTERSECTION"
+    },
+    {
+      "permission": "reporting.matrix.read",
+      "role": "VIEWER",
+      "scope": "tenant",
+      "policy": "MATRIX_SOURCE_INTERSECTION"
+    },
+    {
+      "permission": "configuration.configuration_override.approve",
+      "role": "GRC_MANAGER",
+      "scope": "tenant",
+      "policy": "CONTROL_OVERRIDE_DECIDER"
+    }
+  ],
+  "counts": {
+    "permissions": 8,
+    "base_role_permission_pairs": 39,
+    "tenant_pairs_per_explicit_target": 30,
+    "b06_bindings": 13
+  },
+  "bindings": [
+    {
+      "operation_id": "knowledgeVersionUpdate",
+      "entity_type": "KnowledgeVersion",
+      "from_state": "draft",
+      "to_state": "draft",
+      "command_code": "knowledgeVersionUpdate",
+      "permission_code": "knowledge.knowledge_item.update",
+      "allowed_scopes": [
+        "tenant"
+      ],
+      "precondition_policy_ref": "KNOWLEDGE_TENANT_AUTHOR",
+      "sod_policy_ref": "KNOWLEDGE_TENANT_AUTHOR",
+      "side_effect_event_codes": [
+        "knowledge.knowledge_version.updated.v1"
+      ],
+      "audit_event_code": "audit.knowledge.knowledge_version.update.v1",
+      "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+      "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+      "system_actor_allowed": false,
+      "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+      "runtime_inserted": false,
+      "contract_binding_version": 1,
+      "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+      "notification_policy": "NONE",
+      "recalculation_policy": "NONE"
+    },
+    {
+      "operation_id": "knowledgeVersionReview",
+      "entity_type": "KnowledgeVersion",
+      "from_state": "draft",
+      "to_state": "reviewed",
+      "command_code": "knowledgeVersionReview.reviewed",
+      "permission_code": "knowledge.knowledge_item.review",
+      "allowed_scopes": [
+        "tenant"
+      ],
+      "precondition_policy_ref": "KNOWLEDGE_TENANT_REVIEW",
+      "sod_policy_ref": "KNOWLEDGE_TENANT_REVIEW",
+      "side_effect_event_codes": [
+        "knowledge.knowledge_version.reviewed.v1"
+      ],
+      "audit_event_code": "audit.knowledge.knowledge_version.review.v1",
+      "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+      "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+      "system_actor_allowed": false,
+      "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+      "runtime_inserted": false,
+      "contract_binding_version": 1,
+      "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+      "notification_policy": "NONE",
+      "recalculation_policy": "NONE"
+    },
+    {
+      "operation_id": "knowledgeVersionReview",
+      "entity_type": "KnowledgeVersion",
+      "from_state": "draft",
+      "to_state": "rejected",
+      "command_code": "knowledgeVersionReview.rejected",
+      "permission_code": "knowledge.knowledge_item.review",
+      "allowed_scopes": [
+        "tenant"
+      ],
+      "precondition_policy_ref": "KNOWLEDGE_TENANT_REVIEW",
+      "sod_policy_ref": "KNOWLEDGE_TENANT_REVIEW",
+      "side_effect_event_codes": [
+        "knowledge.knowledge_version.reviewed.v1"
+      ],
+      "audit_event_code": "audit.knowledge.knowledge_version.review.v1",
+      "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+      "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+      "system_actor_allowed": false,
+      "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+      "runtime_inserted": false,
+      "contract_binding_version": 1,
+      "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+      "notification_policy": "NONE",
+      "recalculation_policy": "NONE"
+    },
+    {
+      "operation_id": "knowledgeVersionPublish",
+      "entity_type": "KnowledgeVersion",
+      "from_state": "reviewed",
+      "to_state": "published",
+      "command_code": "knowledgeVersionPublish",
+      "permission_code": "knowledge.knowledge_item.publish",
+      "allowed_scopes": [
+        "tenant"
+      ],
+      "precondition_policy_ref": "KNOWLEDGE_TENANT_PUBLISH",
+      "sod_policy_ref": "KNOWLEDGE_TENANT_PUBLISH",
+      "side_effect_event_codes": [
+        "knowledge.knowledge_version.published.v1"
+      ],
+      "audit_event_code": "audit.knowledge.knowledge_version.publish.v1",
+      "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+      "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+      "system_actor_allowed": false,
+      "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+      "runtime_inserted": false,
+      "contract_binding_version": 1,
+      "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+      "notification_policy": "NONE",
+      "recalculation_policy": "NONE"
+    },
+    {
+      "operation_id": "platformKnowledgeVersionUpdate",
+      "entity_type": "KnowledgeVersion",
+      "from_state": "draft",
+      "to_state": "draft",
+      "command_code": "platformKnowledgeVersionUpdate",
+      "permission_code": "knowledge.knowledge_item.update",
+      "allowed_scopes": [
+        "platform"
+      ],
+      "precondition_policy_ref": "KNOWLEDGE_GLOBAL_AUTHOR",
+      "sod_policy_ref": "KNOWLEDGE_GLOBAL_AUTHOR",
+      "side_effect_event_codes": [
+        "knowledge.knowledge_version.updated.v1"
+      ],
+      "audit_event_code": "audit.knowledge.knowledge_version.update.v1",
+      "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+      "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+      "system_actor_allowed": false,
+      "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+      "runtime_inserted": false,
+      "contract_binding_version": 1,
+      "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+      "notification_policy": "NONE",
+      "recalculation_policy": "NONE"
+    },
+    {
+      "operation_id": "platformKnowledgeVersionReview",
+      "entity_type": "KnowledgeVersion",
+      "from_state": "draft",
+      "to_state": "reviewed",
+      "command_code": "platformKnowledgeVersionReview.reviewed",
+      "permission_code": "knowledge.knowledge_item.review",
+      "allowed_scopes": [
+        "platform"
+      ],
+      "precondition_policy_ref": "KNOWLEDGE_GLOBAL_REVIEW",
+      "sod_policy_ref": "KNOWLEDGE_GLOBAL_REVIEW",
+      "side_effect_event_codes": [
+        "knowledge.knowledge_version.reviewed.v1"
+      ],
+      "audit_event_code": "audit.knowledge.knowledge_version.review.v1",
+      "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+      "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+      "system_actor_allowed": false,
+      "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+      "runtime_inserted": false,
+      "contract_binding_version": 1,
+      "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+      "notification_policy": "NONE",
+      "recalculation_policy": "NONE"
+    },
+    {
+      "operation_id": "platformKnowledgeVersionReview",
+      "entity_type": "KnowledgeVersion",
+      "from_state": "draft",
+      "to_state": "rejected",
+      "command_code": "platformKnowledgeVersionReview.rejected",
+      "permission_code": "knowledge.knowledge_item.review",
+      "allowed_scopes": [
+        "platform"
+      ],
+      "precondition_policy_ref": "KNOWLEDGE_GLOBAL_REVIEW",
+      "sod_policy_ref": "KNOWLEDGE_GLOBAL_REVIEW",
+      "side_effect_event_codes": [
+        "knowledge.knowledge_version.reviewed.v1"
+      ],
+      "audit_event_code": "audit.knowledge.knowledge_version.review.v1",
+      "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+      "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+      "system_actor_allowed": false,
+      "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+      "runtime_inserted": false,
+      "contract_binding_version": 1,
+      "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+      "notification_policy": "NONE",
+      "recalculation_policy": "NONE"
+    },
+    {
+      "operation_id": "platformKnowledgeVersionPublish",
+      "entity_type": "KnowledgeVersion",
+      "from_state": "reviewed",
+      "to_state": "published",
+      "command_code": "platformKnowledgeVersionPublish",
+      "permission_code": "knowledge.knowledge_item.publish",
+      "allowed_scopes": [
+        "platform"
+      ],
+      "precondition_policy_ref": "KNOWLEDGE_GLOBAL_PUBLISH",
+      "sod_policy_ref": "KNOWLEDGE_GLOBAL_PUBLISH",
+      "side_effect_event_codes": [
+        "knowledge.knowledge_version.published.v1"
+      ],
+      "audit_event_code": "audit.knowledge.knowledge_version.publish.v1",
+      "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+      "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+      "system_actor_allowed": false,
+      "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+      "runtime_inserted": false,
+      "contract_binding_version": 1,
+      "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+      "notification_policy": "NONE",
+      "recalculation_policy": "NONE"
+    },
+    {
+      "operation_id": "configurationOverrideUpdate",
+      "entity_type": "ConfigurationOverride",
+      "from_state": "draft",
+      "to_state": "draft",
+      "command_code": "configurationOverrideUpdate",
+      "permission_code": "configuration.configuration_override.update",
+      "allowed_scopes": [
+        "tenant"
+      ],
+      "precondition_policy_ref": "CONTROL_OVERRIDE_AUTHOR",
+      "sod_policy_ref": "CONTROL_OVERRIDE_AUTHOR",
+      "side_effect_event_codes": [
+        "configuration.configuration_override.updated.v1"
+      ],
+      "audit_event_code": "audit.configuration.configuration_override.update.v1",
+      "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+      "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+      "system_actor_allowed": false,
+      "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+      "runtime_inserted": false,
+      "contract_binding_version": 1,
+      "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+      "notification_policy": "NONE",
+      "recalculation_policy": "NONE"
+    },
+    {
+      "operation_id": "configurationOverrideReview",
+      "entity_type": "ConfigurationOverride",
+      "from_state": "draft",
+      "to_state": "reviewed",
+      "command_code": "configurationOverrideReview.reviewed",
+      "permission_code": "configuration.configuration_override.review",
+      "allowed_scopes": [
+        "tenant"
+      ],
+      "precondition_policy_ref": "CONTROL_OVERRIDE_REVIEWER",
+      "sod_policy_ref": "CONTROL_OVERRIDE_REVIEWER",
+      "side_effect_event_codes": [
+        "configuration.configuration_override.reviewed.v1"
+      ],
+      "audit_event_code": "audit.configuration.configuration_override.review.v1",
+      "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+      "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+      "system_actor_allowed": false,
+      "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+      "runtime_inserted": false,
+      "contract_binding_version": 1,
+      "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+      "notification_policy": "NONE",
+      "recalculation_policy": "NONE"
+    },
+    {
+      "operation_id": "configurationOverrideReview",
+      "entity_type": "ConfigurationOverride",
+      "from_state": "draft",
+      "to_state": "rejected",
+      "command_code": "configurationOverrideReview.rejected",
+      "permission_code": "configuration.configuration_override.review",
+      "allowed_scopes": [
+        "tenant"
+      ],
+      "precondition_policy_ref": "CONTROL_OVERRIDE_REVIEWER",
+      "sod_policy_ref": "CONTROL_OVERRIDE_REVIEWER",
+      "side_effect_event_codes": [
+        "configuration.configuration_override.reviewed.v1"
+      ],
+      "audit_event_code": "audit.configuration.configuration_override.review.v1",
+      "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+      "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+      "system_actor_allowed": false,
+      "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+      "runtime_inserted": false,
+      "contract_binding_version": 1,
+      "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+      "notification_policy": "NONE",
+      "recalculation_policy": "NONE"
+    },
+    {
+      "operation_id": "configurationOverrideDecide",
+      "entity_type": "ConfigurationOverride",
+      "from_state": "reviewed",
+      "to_state": "approved",
+      "command_code": "configurationOverrideDecide.approved",
+      "permission_code": "configuration.configuration_override.approve",
+      "allowed_scopes": [
+        "tenant"
+      ],
+      "precondition_policy_ref": "CONTROL_OVERRIDE_DECIDER",
+      "sod_policy_ref": "CONTROL_OVERRIDE_DECIDER",
+      "side_effect_event_codes": [
+        "configuration.configuration_override.decided.v1"
+      ],
+      "audit_event_code": "audit.configuration.configuration_override.decide.v1",
+      "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+      "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+      "system_actor_allowed": false,
+      "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+      "runtime_inserted": false,
+      "contract_binding_version": 1,
+      "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+      "notification_policy": "NONE",
+      "recalculation_policy": "NONE"
+    },
+    {
+      "operation_id": "configurationOverrideDecide",
+      "entity_type": "ConfigurationOverride",
+      "from_state": "reviewed",
+      "to_state": "rejected",
+      "command_code": "configurationOverrideDecide.rejected",
+      "permission_code": "configuration.configuration_override.approve",
+      "allowed_scopes": [
+        "tenant"
+      ],
+      "precondition_policy_ref": "CONTROL_OVERRIDE_DECIDER",
+      "sod_policy_ref": "CONTROL_OVERRIDE_DECIDER",
+      "side_effect_event_codes": [
+        "configuration.configuration_override.decided.v1"
+      ],
+      "audit_event_code": "audit.configuration.configuration_override.decide.v1",
+      "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+      "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+      "system_actor_allowed": false,
+      "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+      "runtime_inserted": false,
+      "contract_binding_version": 1,
+      "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+      "notification_policy": "NONE",
+      "recalculation_policy": "NONE"
+    }
+  ],
+  "real_targets": [],
+  "real_actors": [],
+  "registry_versions": "UNASSIGNED_UNTIL_EXACT_CANONICAL_REGISTRY_PREFLIGHT",
+  "runtime_activation": "NONE"
+}

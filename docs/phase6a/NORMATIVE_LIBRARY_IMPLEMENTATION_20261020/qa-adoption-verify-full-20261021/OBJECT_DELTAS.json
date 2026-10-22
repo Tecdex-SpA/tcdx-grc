@@ -1,0 +1,1000 @@
+{
+  "relations": {
+    "added": [
+      {
+        "oid": "106059",
+        "name": "knowledge.knowledge_source_usage_rights",
+        "owner": "postgres",
+        "relkind": "r",
+        "relrowsecurity": false,
+        "relforcerowsecurity": false
+      },
+      {
+        "oid": "105954",
+        "name": "knowledge.knowledge_version_context_links",
+        "owner": "postgres",
+        "relkind": "r",
+        "relrowsecurity": false,
+        "relforcerowsecurity": false
+      }
+    ],
+    "removed": [],
+    "changed": []
+  },
+  "columns": {
+    "added": [
+      {
+        "name": "control_version_id",
+        "type": "uuid",
+        "relation": "config.configuration_overrides",
+        "attnotnull": false,
+        "default_expression": null
+      },
+      {
+        "name": "supersedes_configuration_override_id",
+        "type": "uuid",
+        "relation": "config.configuration_overrides",
+        "attnotnull": false,
+        "default_expression": null
+      },
+      {
+        "name": "control_version_id",
+        "type": "uuid",
+        "relation": "config.effective_configurations",
+        "attnotnull": false,
+        "default_expression": null
+      },
+      {
+        "name": "audience_tenant_id",
+        "type": "uuid",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "attnotnull": false,
+        "default_expression": null
+      },
+      {
+        "name": "content_hash",
+        "type": "character(64)",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "name": "content_kind",
+        "type": "character varying(24)",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "name": "created_at",
+        "type": "timestamp with time zone",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "attnotnull": true,
+        "default_expression": "CURRENT_TIMESTAMP"
+      },
+      {
+        "name": "created_by_user_identity_id",
+        "type": "uuid",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "name": "edition_ref",
+        "type": "text",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "name": "effective_from",
+        "type": "timestamp with time zone",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "name": "effective_to",
+        "type": "timestamp with time zone",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "name": "evidence_hash",
+        "type": "character(64)",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "name": "evidence_ref",
+        "type": "text",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "name": "knowledge_source_id",
+        "type": "uuid",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "name": "knowledge_source_usage_right_id",
+        "type": "uuid",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "name": "ownership_class",
+        "type": "character varying(24)",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "name": "recorded_audit_event_id",
+        "type": "uuid",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "name": "regulatory_pack_version_id",
+        "type": "uuid",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "attnotnull": false,
+        "default_expression": null
+      },
+      {
+        "name": "revoked_at",
+        "type": "timestamp with time zone",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "attnotnull": false,
+        "default_expression": null
+      },
+      {
+        "name": "revoked_audit_event_id",
+        "type": "uuid",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "attnotnull": false,
+        "default_expression": null
+      },
+      {
+        "name": "tenant_id",
+        "type": "uuid",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "attnotnull": false,
+        "default_expression": null
+      },
+      {
+        "name": "use_act",
+        "type": "character varying(24)",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "name": "use_environment",
+        "type": "character varying(16)",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "name": "context_role",
+        "type": "character varying(32)",
+        "relation": "knowledge.knowledge_version_context_links",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "name": "control_version_id",
+        "type": "uuid",
+        "relation": "knowledge.knowledge_version_context_links",
+        "attnotnull": false,
+        "default_expression": null
+      },
+      {
+        "name": "created_at",
+        "type": "timestamp with time zone",
+        "relation": "knowledge.knowledge_version_context_links",
+        "attnotnull": true,
+        "default_expression": "CURRENT_TIMESTAMP"
+      },
+      {
+        "name": "created_by_user_identity_id",
+        "type": "uuid",
+        "relation": "knowledge.knowledge_version_context_links",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "name": "excerpt_hash",
+        "type": "character(64)",
+        "relation": "knowledge.knowledge_version_context_links",
+        "attnotnull": false,
+        "default_expression": null
+      },
+      {
+        "name": "knowledge_version_context_link_id",
+        "type": "uuid",
+        "relation": "knowledge.knowledge_version_context_links",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "name": "knowledge_version_id",
+        "type": "uuid",
+        "relation": "knowledge.knowledge_version_context_links",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "name": "normative_unit_id",
+        "type": "uuid",
+        "relation": "knowledge.knowledge_version_context_links",
+        "attnotnull": false,
+        "default_expression": null
+      },
+      {
+        "name": "ownership_class",
+        "type": "character varying(24)",
+        "relation": "knowledge.knowledge_version_context_links",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "name": "provenance_ref",
+        "type": "text",
+        "relation": "knowledge.knowledge_version_context_links",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "name": "requirement_id",
+        "type": "uuid",
+        "relation": "knowledge.knowledge_version_context_links",
+        "attnotnull": false,
+        "default_expression": null
+      },
+      {
+        "name": "source_locator",
+        "type": "text",
+        "relation": "knowledge.knowledge_version_context_links",
+        "attnotnull": true,
+        "default_expression": null
+      },
+      {
+        "name": "subject_id",
+        "type": "uuid",
+        "relation": "knowledge.knowledge_version_context_links",
+        "attnotnull": false,
+        "default_expression": null
+      },
+      {
+        "name": "tenant_id",
+        "type": "uuid",
+        "relation": "knowledge.knowledge_version_context_links",
+        "attnotnull": false,
+        "default_expression": null
+      },
+      {
+        "name": "context_knowledge_version_id",
+        "type": "uuid",
+        "relation": "regulatory.requirement_applicabilities",
+        "attnotnull": false,
+        "default_expression": null
+      }
+    ],
+    "removed": [],
+    "changed": []
+  },
+  "constraints": {
+    "added": [
+      {
+        "oid": "106022",
+        "name": "ck_config_override__control_scope",
+        "contype": "c",
+        "relation": "config.configuration_overrides",
+        "definition": "CHECK ((scope_level::text <> 'control_version'::text OR control_version_id IS NOT NULL AND tenant_id IS NOT NULL AND ownership_class::text = 'TENANT_OWNED'::text AND num_nonnulls(methodology_id, regulatory_pack_version_id, scope_subject_id) = 0) AND (control_version_id IS NULL OR scope_level::text = 'control_version'::text) AND (supersedes_configuration_override_id IS NULL OR scope_level::text = 'control_version'::text AND supersedes_configuration_override_id <> configuration_override_id))",
+        "convalidated": true,
+        "relation_oid": "91177",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "106056",
+        "name": "ck_control_override__succession",
+        "contype": "t",
+        "relation": "config.configuration_overrides",
+        "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+        "convalidated": true,
+        "relation_oid": "91177",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "106012",
+        "name": "fk_config_override__control",
+        "contype": "f",
+        "relation": "config.configuration_overrides",
+        "definition": "FOREIGN KEY (tenant_id, control_version_id) REFERENCES controls.control_versions(tenant_id, control_version_id) ON DELETE RESTRICT",
+        "convalidated": true,
+        "relation_oid": "91177",
+        "referenced_relation_oid": "90322"
+      },
+      {
+        "oid": "106017",
+        "name": "fk_config_override__previous",
+        "contype": "f",
+        "relation": "config.configuration_overrides",
+        "definition": "FOREIGN KEY (tenant_id, supersedes_configuration_override_id) REFERENCES config.configuration_overrides(tenant_id, configuration_override_id) ON DELETE RESTRICT",
+        "convalidated": true,
+        "relation_oid": "91177",
+        "referenced_relation_oid": "91177"
+      },
+      {
+        "oid": "106031",
+        "name": "ck_effective_config__control_scope",
+        "contype": "c",
+        "relation": "config.effective_configurations",
+        "definition": "CHECK (control_version_id IS NULL OR resolved_for_subject_id IS NULL)",
+        "convalidated": true,
+        "relation_oid": "91185",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "106026",
+        "name": "fk_effective_config__control",
+        "contype": "f",
+        "relation": "config.effective_configurations",
+        "definition": "FOREIGN KEY (tenant_id, control_version_id) REFERENCES controls.control_versions(tenant_id, control_version_id) ON DELETE RESTRICT",
+        "convalidated": true,
+        "relation_oid": "91185",
+        "referenced_relation_oid": "90322"
+      },
+      {
+        "oid": "106066",
+        "name": "ck_knowledge_source_usage_rights__act",
+        "contype": "c",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "definition": "CHECK (use_act::text = ANY (ARRAY['consultation'::character varying, 'extraction'::character varying, 'storage'::character varying, 'presentation'::character varying, 'export'::character varying, 'import'::character varying, 'publication'::character varying]::text[]))",
+        "convalidated": true,
+        "relation_oid": "106059",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "106068",
+        "name": "ck_knowledge_source_usage_rights__content",
+        "contype": "c",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "definition": "CHECK (content_kind::text = ANY (ARRAY['metadata'::character varying, 'editorial'::character varying, 'tenant_context'::character varying, 'third_party'::character varying]::text[]))",
+        "convalidated": true,
+        "relation_oid": "106059",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "106067",
+        "name": "ck_knowledge_source_usage_rights__environment",
+        "contype": "c",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "definition": "CHECK (use_environment::text = ANY (ARRAY['development'::character varying, 'test'::character varying, 'qa'::character varying, 'production'::character varying]::text[]))",
+        "convalidated": true,
+        "relation_oid": "106059",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "106071",
+        "name": "ck_knowledge_source_usage_rights__evidence",
+        "contype": "c",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "definition": "CHECK (btrim(edition_ref) <> ''::text AND btrim(evidence_ref) <> ''::text)",
+        "convalidated": true,
+        "relation_oid": "106059",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "106069",
+        "name": "ck_knowledge_source_usage_rights__hashes",
+        "contype": "c",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "definition": "CHECK (content_hash ~ '^[a-f0-9]{64}$'::text AND evidence_hash ~ '^[a-f0-9]{64}$'::text)",
+        "convalidated": true,
+        "relation_oid": "106059",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "106070",
+        "name": "ck_knowledge_source_usage_rights__interval",
+        "contype": "c",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "definition": "CHECK (effective_from < effective_to)",
+        "convalidated": true,
+        "relation_oid": "106059",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "106063",
+        "name": "ck_knowledge_source_usage_rights__ownership",
+        "contype": "c",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "definition": "CHECK ((ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying]::text[])) AND (ownership_class::text = 'TENANT_OWNED'::text) = (tenant_id IS NOT NULL))",
+        "convalidated": true,
+        "relation_oid": "106059",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "106072",
+        "name": "ck_knowledge_source_usage_rights__revocation",
+        "contype": "c",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "definition": "CHECK ((revoked_at IS NULL) = (revoked_audit_event_id IS NULL) AND (revoked_at IS NULL OR revoked_at >= created_at))",
+        "convalidated": true,
+        "relation_oid": "106059",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "106064",
+        "name": "ck_knowledge_source_usage_rights__tenant",
+        "contype": "c",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "definition": "CHECK (tenant_id IS NULL OR audience_tenant_id = tenant_id)",
+        "convalidated": true,
+        "relation_oid": "106059",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "106065",
+        "name": "ck_knowledge_source_usage_rights__tenant_audience",
+        "contype": "c",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "definition": "CHECK (tenant_id IS NULL OR audience_tenant_id IS NOT NULL)",
+        "convalidated": true,
+        "relation_oid": "106059",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "106092",
+        "name": "knowledge_source_usage_rights_audience_tenant_id_fkey",
+        "contype": "f",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "definition": "FOREIGN KEY (audience_tenant_id) REFERENCES platform.tenants(tenant_id) ON DELETE RESTRICT",
+        "convalidated": true,
+        "relation_oid": "106059",
+        "referenced_relation_oid": "89895"
+      },
+      {
+        "oid": "106077",
+        "name": "knowledge_source_usage_rights_created_by_user_identity_id_fkey",
+        "contype": "f",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "definition": "FOREIGN KEY (created_by_user_identity_id) REFERENCES iam.user_identities(user_identity_id) ON DELETE RESTRICT",
+        "convalidated": true,
+        "relation_oid": "106059",
+        "referenced_relation_oid": "89971"
+      },
+      {
+        "oid": "106087",
+        "name": "knowledge_source_usage_rights_knowledge_source_id_fkey",
+        "contype": "f",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "definition": "FOREIGN KEY (knowledge_source_id) REFERENCES knowledge.knowledge_sources(knowledge_source_id) ON DELETE RESTRICT",
+        "convalidated": true,
+        "relation_oid": "106059",
+        "referenced_relation_oid": "91428"
+      },
+      {
+        "oid": "106076",
+        "name": "knowledge_source_usage_rights_pkey",
+        "contype": "p",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "definition": "PRIMARY KEY (knowledge_source_usage_right_id)",
+        "convalidated": true,
+        "relation_oid": "106059",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "106102",
+        "name": "knowledge_source_usage_rights_recorded_audit_event_id_fkey",
+        "contype": "f",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "definition": "FOREIGN KEY (recorded_audit_event_id) REFERENCES ops_audit.audit_events(audit_event_id) ON DELETE RESTRICT",
+        "convalidated": true,
+        "relation_oid": "106059",
+        "referenced_relation_oid": "91520"
+      },
+      {
+        "oid": "106097",
+        "name": "knowledge_source_usage_rights_regulatory_pack_version_id_fkey",
+        "contype": "f",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "definition": "FOREIGN KEY (regulatory_pack_version_id) REFERENCES regulatory.regulatory_pack_versions(regulatory_pack_version_id) ON DELETE RESTRICT",
+        "convalidated": true,
+        "relation_oid": "106059",
+        "referenced_relation_oid": "90168"
+      },
+      {
+        "oid": "106107",
+        "name": "knowledge_source_usage_rights_revoked_audit_event_id_fkey",
+        "contype": "f",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "definition": "FOREIGN KEY (revoked_audit_event_id) REFERENCES ops_audit.audit_events(audit_event_id) ON DELETE RESTRICT",
+        "convalidated": true,
+        "relation_oid": "106059",
+        "referenced_relation_oid": "91520"
+      },
+      {
+        "oid": "106082",
+        "name": "knowledge_source_usage_rights_tenant_id_fkey",
+        "contype": "f",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "definition": "FOREIGN KEY (tenant_id) REFERENCES platform.tenants(tenant_id) ON DELETE RESTRICT",
+        "convalidated": true,
+        "relation_oid": "106059",
+        "referenced_relation_oid": "89895"
+      },
+      {
+        "oid": "106041",
+        "name": "ck_knowledge_context__compatibility",
+        "contype": "t",
+        "relation": "knowledge.knowledge_version_context_links",
+        "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+        "convalidated": true,
+        "relation_oid": "105954",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "105962",
+        "name": "ck_knowledge_context__context",
+        "contype": "c",
+        "relation": "knowledge.knowledge_version_context_links",
+        "definition": "CHECK (context_role::text <> 'contexto_empresarial'::text OR subject_id IS NOT NULL)",
+        "convalidated": true,
+        "relation_oid": "105954",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "105963",
+        "name": "ck_knowledge_context__locator",
+        "contype": "c",
+        "relation": "knowledge.knowledge_version_context_links",
+        "definition": "CHECK (btrim(source_locator) <> ''::text AND btrim(provenance_ref) <> ''::text)",
+        "convalidated": true,
+        "relation_oid": "105954",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "105959",
+        "name": "ck_knowledge_context__ownership",
+        "contype": "c",
+        "relation": "knowledge.knowledge_version_context_links",
+        "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying]::text[]))",
+        "convalidated": true,
+        "relation_oid": "105954",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "105961",
+        "name": "ck_knowledge_context__role",
+        "contype": "c",
+        "relation": "knowledge.knowledge_version_context_links",
+        "definition": "CHECK (context_role::text = ANY (ARRAY['comprender'::character varying, 'implementar'::character varying, 'demostrar'::character varying, 'contexto_empresarial'::character varying]::text[]))",
+        "convalidated": true,
+        "relation_oid": "105954",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "105958",
+        "name": "ck_knowledge_context__target_xor",
+        "contype": "c",
+        "relation": "knowledge.knowledge_version_context_links",
+        "definition": "CHECK (num_nonnulls(normative_unit_id, requirement_id, control_version_id, subject_id) = 1)",
+        "convalidated": true,
+        "relation_oid": "105954",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "105960",
+        "name": "ck_knowledge_context__tenant",
+        "contype": "c",
+        "relation": "knowledge.knowledge_version_context_links",
+        "definition": "CHECK ((ownership_class::text = 'TENANT_OWNED'::text) = (tenant_id IS NOT NULL))",
+        "convalidated": true,
+        "relation_oid": "105954",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "105970",
+        "name": "knowledge_version_context_link_created_by_user_identity_id_fkey",
+        "contype": "f",
+        "relation": "knowledge.knowledge_version_context_links",
+        "definition": "FOREIGN KEY (created_by_user_identity_id) REFERENCES iam.user_identities(user_identity_id) ON DELETE RESTRICT",
+        "convalidated": true,
+        "relation_oid": "105954",
+        "referenced_relation_oid": "89971"
+      },
+      {
+        "oid": "105995",
+        "name": "knowledge_version_context_links_control_version_id_fkey",
+        "contype": "f",
+        "relation": "knowledge.knowledge_version_context_links",
+        "definition": "FOREIGN KEY (control_version_id) REFERENCES controls.control_versions(control_version_id) ON DELETE RESTRICT",
+        "convalidated": true,
+        "relation_oid": "105954",
+        "referenced_relation_oid": "90322"
+      },
+      {
+        "oid": "105980",
+        "name": "knowledge_version_context_links_knowledge_version_id_fkey",
+        "contype": "f",
+        "relation": "knowledge.knowledge_version_context_links",
+        "definition": "FOREIGN KEY (knowledge_version_id) REFERENCES knowledge.knowledge_versions(knowledge_version_id) ON DELETE RESTRICT",
+        "convalidated": true,
+        "relation_oid": "105954",
+        "referenced_relation_oid": "91448"
+      },
+      {
+        "oid": "105985",
+        "name": "knowledge_version_context_links_normative_unit_id_fkey",
+        "contype": "f",
+        "relation": "knowledge.knowledge_version_context_links",
+        "definition": "FOREIGN KEY (normative_unit_id) REFERENCES regulatory.normative_units(normative_unit_id) ON DELETE RESTRICT",
+        "convalidated": true,
+        "relation_oid": "105954",
+        "referenced_relation_oid": "90218"
+      },
+      {
+        "oid": "105967",
+        "name": "knowledge_version_context_links_pkey",
+        "contype": "p",
+        "relation": "knowledge.knowledge_version_context_links",
+        "definition": "PRIMARY KEY (knowledge_version_context_link_id)",
+        "convalidated": true,
+        "relation_oid": "105954",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "105990",
+        "name": "knowledge_version_context_links_requirement_id_fkey",
+        "contype": "f",
+        "relation": "knowledge.knowledge_version_context_links",
+        "definition": "FOREIGN KEY (requirement_id) REFERENCES regulatory.requirements(requirement_id) ON DELETE RESTRICT",
+        "convalidated": true,
+        "relation_oid": "105954",
+        "referenced_relation_oid": "90226"
+      },
+      {
+        "oid": "106000",
+        "name": "knowledge_version_context_links_subject_id_fkey",
+        "contype": "f",
+        "relation": "knowledge.knowledge_version_context_links",
+        "definition": "FOREIGN KEY (subject_id) REFERENCES org.subjects(subject_id) ON DELETE RESTRICT",
+        "convalidated": true,
+        "relation_oid": "105954",
+        "referenced_relation_oid": "90124"
+      },
+      {
+        "oid": "105975",
+        "name": "knowledge_version_context_links_tenant_id_fkey",
+        "contype": "f",
+        "relation": "knowledge.knowledge_version_context_links",
+        "definition": "FOREIGN KEY (tenant_id) REFERENCES platform.tenants(tenant_id) ON DELETE RESTRICT",
+        "convalidated": true,
+        "relation_oid": "105954",
+        "referenced_relation_oid": "89895"
+      },
+      {
+        "oid": "105969",
+        "name": "uq_knowledge_context__semantic",
+        "contype": "u",
+        "relation": "knowledge.knowledge_version_context_links",
+        "definition": "UNIQUE NULLS NOT DISTINCT (knowledge_version_id, context_role, normative_unit_id, requirement_id, control_version_id, subject_id)",
+        "convalidated": true,
+        "relation_oid": "105954",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "106011",
+        "name": "uq_knowledge_versions__item_version",
+        "contype": "u",
+        "relation": "knowledge.knowledge_versions",
+        "definition": "UNIQUE (knowledge_item_id, version_number)",
+        "convalidated": true,
+        "relation_oid": "91448",
+        "referenced_relation_oid": "0"
+      },
+      {
+        "oid": "106033",
+        "name": "fk_applicability__context",
+        "contype": "f",
+        "relation": "regulatory.requirement_applicabilities",
+        "definition": "FOREIGN KEY (tenant_id, context_knowledge_version_id) REFERENCES knowledge.knowledge_versions(tenant_id, knowledge_version_id) ON DELETE RESTRICT",
+        "convalidated": true,
+        "relation_oid": "90234",
+        "referenced_relation_oid": "91448"
+      }
+    ],
+    "removed": [
+      {
+        "oid": "92872",
+        "name": "uq_knowledge_versions__version_number",
+        "contype": "u",
+        "relation": "knowledge.knowledge_versions",
+        "definition": "UNIQUE (version_number)",
+        "convalidated": true,
+        "relation_oid": "91448",
+        "referenced_relation_oid": "0"
+      }
+    ],
+    "changed": []
+  },
+  "indexes": {
+    "added": [
+      {
+        "name": "ix_config_override__control_interval",
+        "relation": "config.configuration_overrides",
+        "definition": "CREATE INDEX ix_config_override__control_interval ON config.configuration_overrides USING btree (tenant_id, control_version_id, configuration_definition_id, effective_from, effective_to)",
+        "indisready": true,
+        "indisvalid": true
+      },
+      {
+        "name": "uq_config_override__approved_successor",
+        "relation": "config.configuration_overrides",
+        "definition": "CREATE UNIQUE INDEX uq_config_override__approved_successor ON config.configuration_overrides USING btree (tenant_id, supersedes_configuration_override_id) WHERE (((scope_level)::text = 'control_version'::text) AND ((lifecycle_state)::text = 'approved'::text) AND (supersedes_configuration_override_id IS NOT NULL))",
+        "indisready": true,
+        "indisvalid": true
+      },
+      {
+        "name": "uq_config_override__control_revision",
+        "relation": "config.configuration_overrides",
+        "definition": "CREATE UNIQUE INDEX uq_config_override__control_revision ON config.configuration_overrides USING btree (tenant_id, configuration_definition_id, control_version_id, override_version, effective_from) WHERE ((scope_level)::text = 'control_version'::text)",
+        "indisready": true,
+        "indisvalid": true
+      },
+      {
+        "name": "uq_effective_config__control_inputs",
+        "relation": "config.effective_configurations",
+        "definition": "CREATE UNIQUE INDEX uq_effective_config__control_inputs ON config.effective_configurations USING btree (tenant_id, configuration_definition_id, control_version_id, effective_at, input_hash) WHERE (control_version_id IS NOT NULL)",
+        "indisready": true,
+        "indisvalid": true
+      },
+      {
+        "name": "ix_knowledge_source_usage_rights__lookup",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "definition": "CREATE INDEX ix_knowledge_source_usage_rights__lookup ON knowledge.knowledge_source_usage_rights USING btree (knowledge_source_id, content_hash, audience_tenant_id, use_act, use_environment, regulatory_pack_version_id, effective_from, effective_to)",
+        "indisready": true,
+        "indisvalid": true
+      },
+      {
+        "name": "knowledge_source_usage_rights_pkey",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "definition": "CREATE UNIQUE INDEX knowledge_source_usage_rights_pkey ON knowledge.knowledge_source_usage_rights USING btree (knowledge_source_usage_right_id)",
+        "indisready": true,
+        "indisvalid": true
+      },
+      {
+        "name": "ix_knowledge_context__control",
+        "relation": "knowledge.knowledge_version_context_links",
+        "definition": "CREATE INDEX ix_knowledge_context__control ON knowledge.knowledge_version_context_links USING btree (control_version_id) WHERE (control_version_id IS NOT NULL)",
+        "indisready": true,
+        "indisvalid": true
+      },
+      {
+        "name": "ix_knowledge_context__requirement",
+        "relation": "knowledge.knowledge_version_context_links",
+        "definition": "CREATE INDEX ix_knowledge_context__requirement ON knowledge.knowledge_version_context_links USING btree (requirement_id) WHERE (requirement_id IS NOT NULL)",
+        "indisready": true,
+        "indisvalid": true
+      },
+      {
+        "name": "ix_knowledge_context__subject",
+        "relation": "knowledge.knowledge_version_context_links",
+        "definition": "CREATE INDEX ix_knowledge_context__subject ON knowledge.knowledge_version_context_links USING btree (tenant_id, subject_id) WHERE (subject_id IS NOT NULL)",
+        "indisready": true,
+        "indisvalid": true
+      },
+      {
+        "name": "ix_knowledge_context__tenant_version",
+        "relation": "knowledge.knowledge_version_context_links",
+        "definition": "CREATE INDEX ix_knowledge_context__tenant_version ON knowledge.knowledge_version_context_links USING btree (tenant_id, knowledge_version_id)",
+        "indisready": true,
+        "indisvalid": true
+      },
+      {
+        "name": "ix_knowledge_context__unit",
+        "relation": "knowledge.knowledge_version_context_links",
+        "definition": "CREATE INDEX ix_knowledge_context__unit ON knowledge.knowledge_version_context_links USING btree (normative_unit_id) WHERE (normative_unit_id IS NOT NULL)",
+        "indisready": true,
+        "indisvalid": true
+      },
+      {
+        "name": "knowledge_version_context_links_pkey",
+        "relation": "knowledge.knowledge_version_context_links",
+        "definition": "CREATE UNIQUE INDEX knowledge_version_context_links_pkey ON knowledge.knowledge_version_context_links USING btree (knowledge_version_context_link_id)",
+        "indisready": true,
+        "indisvalid": true
+      },
+      {
+        "name": "uq_knowledge_context__semantic",
+        "relation": "knowledge.knowledge_version_context_links",
+        "definition": "CREATE UNIQUE INDEX uq_knowledge_context__semantic ON knowledge.knowledge_version_context_links USING btree (knowledge_version_id, context_role, normative_unit_id, requirement_id, control_version_id, subject_id) NULLS NOT DISTINCT",
+        "indisready": true,
+        "indisvalid": true
+      },
+      {
+        "name": "uq_knowledge_versions__item_version",
+        "relation": "knowledge.knowledge_versions",
+        "definition": "CREATE UNIQUE INDEX uq_knowledge_versions__item_version ON knowledge.knowledge_versions USING btree (knowledge_item_id, version_number)",
+        "indisready": true,
+        "indisvalid": true
+      },
+      {
+        "name": "ix_applicability__context",
+        "relation": "regulatory.requirement_applicabilities",
+        "definition": "CREATE INDEX ix_applicability__context ON regulatory.requirement_applicabilities USING btree (tenant_id, context_knowledge_version_id) WHERE (context_knowledge_version_id IS NOT NULL)",
+        "indisready": true,
+        "indisvalid": true
+      }
+    ],
+    "removed": [
+      {
+        "name": "uq_knowledge_versions__version_number",
+        "relation": "knowledge.knowledge_versions",
+        "definition": "CREATE UNIQUE INDEX uq_knowledge_versions__version_number ON knowledge.knowledge_versions USING btree (version_number)",
+        "indisready": true,
+        "indisvalid": true
+      }
+    ],
+    "changed": []
+  },
+  "functions": {
+    "added": [
+      {
+        "oid": "106054",
+        "name": "config.check_control_override_successor",
+        "owner": "postgres",
+        "arguments": "",
+        "prosecdef": false,
+        "definition_sha256": "a63f6f572a0fbc3e5805f604d489c03120f846e521ce0d651006cdf4a030f41e"
+      },
+      {
+        "oid": "106052",
+        "name": "config.guard_control_override_history",
+        "owner": "postgres",
+        "arguments": "",
+        "prosecdef": false,
+        "definition_sha256": "1dd7d1f78369e5c442ba55e0aaa28930012e7a8a72b9bc5050f302f8d8b1c2ea"
+      },
+      {
+        "oid": "106039",
+        "name": "knowledge.check_context_link",
+        "owner": "postgres",
+        "arguments": "",
+        "prosecdef": false,
+        "definition_sha256": "6e0d7b2ac13e4bcbe09b96233dd0ad14498171a2e368377fa1c38e2b3a171b79"
+      },
+      {
+        "oid": "106113",
+        "name": "knowledge.enforce_source_usage_rights",
+        "owner": "postgres",
+        "arguments": "",
+        "prosecdef": false,
+        "definition_sha256": "a4166e1f62889e027226b8a180eb2a5c0b1679bfb9d2babae72e161b2144e997"
+      },
+      {
+        "oid": "106042",
+        "name": "knowledge.guard_context_link",
+        "owner": "postgres",
+        "arguments": "",
+        "prosecdef": false,
+        "definition_sha256": "38e15de974998cc626487746b80137561e1d33d432aa1eed047d8b914125b056"
+      },
+      {
+        "oid": "106044",
+        "name": "knowledge.guard_context_target_owner",
+        "owner": "postgres",
+        "arguments": "",
+        "prosecdef": false,
+        "definition_sha256": "7a968da39cba97d497c170c35e48d746a89dd70453d8437cccf147a3f1a90e07"
+      },
+      {
+        "oid": "106050",
+        "name": "knowledge.guard_published_version_core",
+        "owner": "postgres",
+        "arguments": "",
+        "prosecdef": false,
+        "definition_sha256": "25db53adc98cb72cc15755f7315da8b6f45b958e0c929e3ebd245cb4f7fb6933"
+      },
+      {
+        "oid": "106057",
+        "name": "regulatory.guard_context_decision_history",
+        "owner": "postgres",
+        "arguments": "",
+        "prosecdef": false,
+        "definition_sha256": "c8d05b46583277d1eb92c1bca6cafc310edd567113b91d7e1e5d69f954f4f7a0"
+      }
+    ],
+    "removed": [],
+    "changed": []
+  },
+  "triggers": {
+    "added": [
+      {
+        "name": "ck_control_override__history",
+        "relation": "config.configuration_overrides",
+        "tgenabled": "O",
+        "definition": "CREATE TRIGGER ck_control_override__history BEFORE DELETE OR UPDATE ON config.configuration_overrides FOR EACH ROW EXECUTE FUNCTION config.guard_control_override_history()"
+      },
+      {
+        "name": "ck_control_override__succession",
+        "relation": "config.configuration_overrides",
+        "tgenabled": "O",
+        "definition": "CREATE CONSTRAINT TRIGGER ck_control_override__succession AFTER INSERT OR UPDATE ON config.configuration_overrides DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION config.check_control_override_successor()"
+      },
+      {
+        "name": "ck_context_target__control",
+        "relation": "controls.control_versions",
+        "tgenabled": "O",
+        "definition": "CREATE TRIGGER ck_context_target__control BEFORE UPDATE OF tenant_id, ownership_class ON controls.control_versions FOR EACH ROW EXECUTE FUNCTION knowledge.guard_context_target_owner('control_version_id')"
+      },
+      {
+        "name": "trg_knowledge_source_usage_rights__integrity",
+        "relation": "knowledge.knowledge_source_usage_rights",
+        "tgenabled": "O",
+        "definition": "CREATE TRIGGER trg_knowledge_source_usage_rights__integrity BEFORE INSERT OR DELETE OR UPDATE ON knowledge.knowledge_source_usage_rights FOR EACH ROW EXECUTE FUNCTION knowledge.enforce_source_usage_rights()"
+      },
+      {
+        "name": "ck_knowledge_context__compatibility",
+        "relation": "knowledge.knowledge_version_context_links",
+        "tgenabled": "O",
+        "definition": "CREATE CONSTRAINT TRIGGER ck_knowledge_context__compatibility AFTER INSERT OR UPDATE ON knowledge.knowledge_version_context_links DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION knowledge.check_context_link()"
+      },
+      {
+        "name": "ck_knowledge_context__immutable",
+        "relation": "knowledge.knowledge_version_context_links",
+        "tgenabled": "O",
+        "definition": "CREATE TRIGGER ck_knowledge_context__immutable BEFORE INSERT OR DELETE OR UPDATE ON knowledge.knowledge_version_context_links FOR EACH ROW EXECUTE FUNCTION knowledge.guard_context_link()"
+      },
+      {
+        "name": "ck_context_source__owner",
+        "relation": "knowledge.knowledge_versions",
+        "tgenabled": "O",
+        "definition": "CREATE TRIGGER ck_context_source__owner BEFORE UPDATE OF tenant_id, ownership_class ON knowledge.knowledge_versions FOR EACH ROW EXECUTE FUNCTION knowledge.guard_context_target_owner('knowledge_version_id')"
+      },
+      {
+        "name": "ck_knowledge_version__published_core",
+        "relation": "knowledge.knowledge_versions",
+        "tgenabled": "O",
+        "definition": "CREATE TRIGGER ck_knowledge_version__published_core BEFORE DELETE OR UPDATE ON knowledge.knowledge_versions FOR EACH ROW EXECUTE FUNCTION knowledge.guard_published_version_core()"
+      },
+      {
+        "name": "ck_context_target__subject",
+        "relation": "org.subjects",
+        "tgenabled": "O",
+        "definition": "CREATE TRIGGER ck_context_target__subject BEFORE UPDATE OF tenant_id ON org.subjects FOR EACH ROW EXECUTE FUNCTION knowledge.guard_context_target_owner('subject_id')"
+      },
+      {
+        "name": "ck_context_target__unit",
+        "relation": "regulatory.normative_units",
+        "tgenabled": "O",
+        "definition": "CREATE TRIGGER ck_context_target__unit BEFORE UPDATE OF tenant_id, ownership_class ON regulatory.normative_units FOR EACH ROW EXECUTE FUNCTION knowledge.guard_context_target_owner('normative_unit_id')"
+      },
+      {
+        "name": "ck_applicability__context_history",
+        "relation": "regulatory.requirement_applicabilities",
+        "tgenabled": "O",
+        "definition": "CREATE TRIGGER ck_applicability__context_history BEFORE UPDATE OF context_knowledge_version_id ON regulatory.requirement_applicabilities FOR EACH ROW EXECUTE FUNCTION regulatory.guard_context_decision_history()"
+      },
+      {
+        "name": "ck_context_target__requirement",
+        "relation": "regulatory.requirements",
+        "tgenabled": "O",
+        "definition": "CREATE TRIGGER ck_context_target__requirement BEFORE UPDATE OF tenant_id, ownership_class ON regulatory.requirements FOR EACH ROW EXECUTE FUNCTION knowledge.guard_context_target_owner('requirement_id')"
+      }
+    ],
+    "removed": [],
+    "changed": []
+  }
+}

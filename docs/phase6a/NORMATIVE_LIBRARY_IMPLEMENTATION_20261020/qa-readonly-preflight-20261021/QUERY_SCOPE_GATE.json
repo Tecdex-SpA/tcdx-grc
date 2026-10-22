@@ -1,0 +1,159 @@
+{
+  "status": "PASS",
+  "parser": "PostgreSQL16.1 offline grammar",
+  "scope": "All persisted QA SQL scripts, including initial network-denied attempt. psql client guards removed only for parsing; never executed DDL/DML, procedures, locks, ANALYZE or unapproved SQL functions.",
+  "files": [
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-readonly-preflight-20261021/BOUNDED_CARDINALITIES.sql",
+      "sha256": "292ec5b1409047ff48f41e9dff9b61ec299e46bfb235f2b876a04a02ddaa74f8",
+      "statement_kinds": {
+        "TransactionStmt": 2,
+        "VariableShowStmt": 1,
+        "SelectStmt": 16
+      },
+      "functions": [
+        "count",
+        "current_database",
+        "current_setting",
+        "inet_server_addr",
+        "inet_server_port",
+        "jsonb_agg",
+        "jsonb_build_object",
+        "pg_is_in_recovery",
+        "to_jsonb",
+        "version"
+      ],
+      "status": "PASS_SELECT_SHOW_READONLY_TRANSACTION_ONLY"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-readonly-preflight-20261021/BOUNDED_INTEGRITY_AGGREGATES.sql",
+      "sha256": "78c014a8469431239390f24d447cef7cc3cbe2592d0289f57a9e6dbecfeb2c5f",
+      "statement_kinds": {
+        "TransactionStmt": 2,
+        "VariableShowStmt": 1,
+        "SelectStmt": 17
+      },
+      "functions": [
+        "count",
+        "current_database",
+        "current_setting",
+        "inet_server_addr",
+        "inet_server_port",
+        "jsonb_agg",
+        "jsonb_build_object",
+        "max",
+        "pg_is_in_recovery",
+        "to_jsonb",
+        "version"
+      ],
+      "status": "PASS_SELECT_SHOW_READONLY_TRANSACTION_ONLY"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-readonly-preflight-20261021/CATALOG_INSPECTION.sql",
+      "sha256": "f6871f16c62a6ebc7a457925317e99091c8d07e3bb562f300f5a95f4f4bc44e7",
+      "statement_kinds": {
+        "TransactionStmt": 2,
+        "VariableShowStmt": 1,
+        "SelectStmt": 12
+      },
+      "functions": [
+        "current_database",
+        "current_setting",
+        "format_type",
+        "inet_server_addr",
+        "inet_server_port",
+        "jsonb_agg",
+        "jsonb_build_object",
+        "pg_describe_object",
+        "pg_get_constraintdef",
+        "pg_get_expr",
+        "pg_get_function_identity_arguments",
+        "pg_get_functiondef",
+        "pg_get_indexdef",
+        "pg_get_triggerdef",
+        "pg_get_userbyid",
+        "pg_is_in_recovery",
+        "to_jsonb",
+        "version"
+      ],
+      "status": "PASS_SELECT_SHOW_READONLY_TRANSACTION_ONLY"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-readonly-preflight-20261021/CATALOG_INSPECTION_ATTEMPT_02.sql",
+      "sha256": "f6871f16c62a6ebc7a457925317e99091c8d07e3bb562f300f5a95f4f4bc44e7",
+      "statement_kinds": {
+        "TransactionStmt": 2,
+        "VariableShowStmt": 1,
+        "SelectStmt": 12
+      },
+      "functions": [
+        "current_database",
+        "current_setting",
+        "format_type",
+        "inet_server_addr",
+        "inet_server_port",
+        "jsonb_agg",
+        "jsonb_build_object",
+        "pg_describe_object",
+        "pg_get_constraintdef",
+        "pg_get_expr",
+        "pg_get_function_identity_arguments",
+        "pg_get_functiondef",
+        "pg_get_indexdef",
+        "pg_get_triggerdef",
+        "pg_get_userbyid",
+        "pg_is_in_recovery",
+        "to_jsonb",
+        "version"
+      ],
+      "status": "PASS_SELECT_SHOW_READONLY_TRANSACTION_ONLY"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-readonly-preflight-20261021/FK_ROOT_METADATA.sql",
+      "sha256": "4dd648c7100445f76ea3547c610c29c2e83e4d5b10fd71f112ec54080f55aa54",
+      "statement_kinds": {
+        "TransactionStmt": 2,
+        "VariableShowStmt": 1,
+        "SelectStmt": 5
+      },
+      "functions": [
+        "current_database",
+        "current_setting",
+        "format_type",
+        "inet_server_addr",
+        "inet_server_port",
+        "jsonb_agg",
+        "jsonb_build_object",
+        "pg_get_constraintdef",
+        "pg_get_expr",
+        "pg_get_userbyid",
+        "pg_is_in_recovery",
+        "to_jsonb",
+        "version"
+      ],
+      "status": "PASS_SELECT_SHOW_READONLY_TRANSACTION_ONLY"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-readonly-preflight-20261021/STRUCTURAL_AGGREGATES.sql",
+      "sha256": "002e5ef0db318f05f8962682fe04a341b2c7f37473efb3aa0a7d245bd754f0ea",
+      "statement_kinds": {
+        "TransactionStmt": 2,
+        "VariableShowStmt": 1,
+        "SelectStmt": 4
+      },
+      "functions": [
+        "count",
+        "current_database",
+        "current_setting",
+        "inet_server_addr",
+        "inet_server_port",
+        "jsonb_agg",
+        "jsonb_build_object",
+        "pg_is_in_recovery",
+        "to_jsonb",
+        "version"
+      ],
+      "status": "PASS_SELECT_SHOW_READONLY_TRANSACTION_ONLY"
+    }
+  ]
+}

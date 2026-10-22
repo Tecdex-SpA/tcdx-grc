@@ -1,0 +1,179 @@
+{
+  "events": [
+    {
+      "event_code": "knowledge.knowledge_source.created.v1",
+      "audit_event_code": "audit.knowledge.knowledge_source.create.v1",
+      "operation_id": "knowledgeSourceCreate",
+      "aggregate_type": "KnowledgeSource",
+      "payload_schema": "MaterialChangePayload",
+      "ownership": "TENANT_OWNED",
+      "sensitive_text": "HASH_AND_IDS_ONLY"
+    },
+    {
+      "event_code": "knowledge.knowledge_item.created.v1",
+      "audit_event_code": "audit.knowledge.knowledge_item.create.v1",
+      "operation_id": "knowledgeItemCreate",
+      "aggregate_type": "KnowledgeItem",
+      "payload_schema": "MaterialChangePayload",
+      "ownership": "TENANT_OWNED",
+      "sensitive_text": "HASH_AND_IDS_ONLY"
+    },
+    {
+      "event_code": "knowledge.knowledge_version.created.v1",
+      "audit_event_code": "audit.knowledge.knowledge_version.create.v1",
+      "operation_id": "knowledgeVersionCreate",
+      "aggregate_type": "KnowledgeVersion",
+      "payload_schema": "MaterialChangePayload",
+      "ownership": "TENANT_OWNED",
+      "sensitive_text": "HASH_AND_IDS_ONLY"
+    },
+    {
+      "event_code": "knowledge.knowledge_version.updated.v1",
+      "audit_event_code": "audit.knowledge.knowledge_version.update.v1",
+      "operation_id": "knowledgeVersionUpdate",
+      "aggregate_type": "KnowledgeVersion",
+      "payload_schema": "MaterialChangePayload",
+      "ownership": "TENANT_OWNED",
+      "sensitive_text": "HASH_AND_IDS_ONLY"
+    },
+    {
+      "event_code": "knowledge.knowledge_version.reviewed.v1",
+      "audit_event_code": "audit.knowledge.knowledge_version.review.v1",
+      "operation_id": "knowledgeVersionReview",
+      "aggregate_type": "KnowledgeVersion",
+      "payload_schema": "MaterialChangePayload",
+      "ownership": "TENANT_OWNED",
+      "sensitive_text": "HASH_AND_IDS_ONLY"
+    },
+    {
+      "event_code": "knowledge.knowledge_version.published.v1",
+      "audit_event_code": "audit.knowledge.knowledge_version.publish.v1",
+      "operation_id": "knowledgeVersionPublish",
+      "aggregate_type": "KnowledgeVersion",
+      "payload_schema": "MaterialChangePayload",
+      "ownership": "TENANT_OWNED",
+      "sensitive_text": "HASH_AND_IDS_ONLY"
+    },
+    {
+      "event_code": "knowledge.knowledge_source.created.v1",
+      "audit_event_code": "audit.knowledge.knowledge_source.create.v1",
+      "operation_id": "platformKnowledgeSourceCreate",
+      "aggregate_type": "KnowledgeSource",
+      "payload_schema": "MaterialChangePayload",
+      "ownership": "PLATFORM_CONTROL_NO_TENANT",
+      "sensitive_text": "HASH_AND_IDS_ONLY"
+    },
+    {
+      "event_code": "knowledge.knowledge_item.created.v1",
+      "audit_event_code": "audit.knowledge.knowledge_item.create.v1",
+      "operation_id": "platformKnowledgeItemCreate",
+      "aggregate_type": "KnowledgeItem",
+      "payload_schema": "MaterialChangePayload",
+      "ownership": "PLATFORM_CONTROL_NO_TENANT",
+      "sensitive_text": "HASH_AND_IDS_ONLY"
+    },
+    {
+      "event_code": "knowledge.knowledge_version.created.v1",
+      "audit_event_code": "audit.knowledge.knowledge_version.create.v1",
+      "operation_id": "platformKnowledgeVersionCreate",
+      "aggregate_type": "KnowledgeVersion",
+      "payload_schema": "MaterialChangePayload",
+      "ownership": "PLATFORM_CONTROL_NO_TENANT",
+      "sensitive_text": "HASH_AND_IDS_ONLY"
+    },
+    {
+      "event_code": "knowledge.knowledge_version.updated.v1",
+      "audit_event_code": "audit.knowledge.knowledge_version.update.v1",
+      "operation_id": "platformKnowledgeVersionUpdate",
+      "aggregate_type": "KnowledgeVersion",
+      "payload_schema": "MaterialChangePayload",
+      "ownership": "PLATFORM_CONTROL_NO_TENANT",
+      "sensitive_text": "HASH_AND_IDS_ONLY"
+    },
+    {
+      "event_code": "knowledge.knowledge_version.reviewed.v1",
+      "audit_event_code": "audit.knowledge.knowledge_version.review.v1",
+      "operation_id": "platformKnowledgeVersionReview",
+      "aggregate_type": "KnowledgeVersion",
+      "payload_schema": "MaterialChangePayload",
+      "ownership": "PLATFORM_CONTROL_NO_TENANT",
+      "sensitive_text": "HASH_AND_IDS_ONLY"
+    },
+    {
+      "event_code": "knowledge.knowledge_version.published.v1",
+      "audit_event_code": "audit.knowledge.knowledge_version.publish.v1",
+      "operation_id": "platformKnowledgeVersionPublish",
+      "aggregate_type": "KnowledgeVersion",
+      "payload_schema": "MaterialChangePayload",
+      "ownership": "PLATFORM_CONTROL_NO_TENANT",
+      "sensitive_text": "HASH_AND_IDS_ONLY"
+    },
+    {
+      "event_code": "configuration.configuration_override.updated.v1",
+      "audit_event_code": "audit.configuration.configuration_override.update.v1",
+      "operation_id": "configurationOverrideUpdate",
+      "aggregate_type": "ConfigurationOverride",
+      "payload_schema": "MaterialChangePayload",
+      "ownership": "TENANT_OWNED",
+      "sensitive_text": "HASH_AND_IDS_ONLY"
+    },
+    {
+      "event_code": "configuration.configuration_override.reviewed.v1",
+      "audit_event_code": "audit.configuration.configuration_override.review.v1",
+      "operation_id": "configurationOverrideReview",
+      "aggregate_type": "ConfigurationOverride",
+      "payload_schema": "MaterialChangePayload",
+      "ownership": "TENANT_OWNED",
+      "sensitive_text": "HASH_AND_IDS_ONLY"
+    },
+    {
+      "event_code": "configuration.configuration_override.decided.v1",
+      "audit_event_code": "audit.configuration.configuration_override.decide.v1",
+      "operation_id": "configurationOverrideDecide",
+      "aggregate_type": "ConfigurationOverride",
+      "payload_schema": "MaterialChangePayload",
+      "ownership": "TENANT_OWNED",
+      "sensitive_text": "HASH_AND_IDS_ONLY"
+    }
+  ],
+  "payload_schema": "02_OPENAPI_NORMATIVE_LIBRARY.json#/components/schemas/MaterialChangePayload",
+  "common_envelope": "Existing executable04/08/12: ownership conditional tenant, canonical actor, correlation/causation, unique event ID; classification confidential; no source bodies/credentials",
+  "audit_change_policy": "Canonical AuditEvent actor columns and typed closed payloads preserve review/decision authority; no free IDs as business relation substitutes",
+  "transaction": "For the new domain-event operations in events[]: mutation + required AuditEvent + OutboxEvent + IdempotencyRecord atomically commit. Existing applicability operations follow applicability_context_binding.transaction; no blanket outbox requirement on create.",
+  "no_read_mutations": true,
+  "applicability_context_binding": {
+    "profile": "APPLICABILITY_CONTEXT_V1",
+    "schema": "APPLICABILITY_CONTEXT_AUDIT_SCHEMA.json",
+    "storage": "ops_audit.audit_events.before_payload/after_payload.applicability_context_v1; additive namespaced profile alongside preserved existing payload fields",
+    "operations": [
+      {
+        "operation_id": "applicabilityCreate",
+        "audit_event_code": "audit.compliance.applicability.create.v1",
+        "domain_event": null,
+        "before": "No aggregate before create; before_payload context profile absent",
+        "after": "Persisted draft and exact nullable context snapshot"
+      },
+      {
+        "operation_id": "applicabilitySubmit",
+        "audit_event_code": "audit.compliance.applicability.submit.v1",
+        "domain_event": "compliance.applicability.submitted.v1",
+        "before": "Exact locked pre-command aggregate/context",
+        "after": "Exact submitted aggregate/context, same pinned KnowledgeVersion"
+      },
+      {
+        "operation_id": "applicabilityApprove",
+        "audit_event_code": "audit.compliance.applicability.approve.v1",
+        "domain_event": "compliance.applicability.approved.v1",
+        "before": "Exact locked pre-command aggregate/context",
+        "after": "Exact approved aggregate/context, same pinned KnowledgeVersion"
+      }
+    ],
+    "authority": "Canonical AuditEvent aggregate_type=RequirementApplicability, aggregate_id=exact row ID, ownership_class=TENANT_OWNED and authenticated tenant; actor_user_identity_id is the authorized actual human, actor_service_principal_id NULL, command_code exact operation. Actor authority, existing permission/scope/SoD and Knowledge published-review authority are revalidated in the same transaction; context is input, never legal authority.",
+    "version_integrity": "Profile snapshots exact knowledge_version_id + knowledge_item_id + version_number + content_hash and context Subject from typed context link under locks. FK matches authenticated tenant; scope_subject_id matches context Subject, or tenant-wide organization context. Hash verifies immutable body/link manifest; no latest-version lookup or text copy.",
+    "null_history": "New command with no context records context=null. Historical absence of the profile means not recorded, never invented context or backfill. Existing v1 event codes and payload fields retain meaning; no new event code/version or second audit stream.",
+    "transaction": "Mutation, single existing material AuditEvent and IdempotencyRecord atomically commit. Submit/approve retain their existing domain events/outbox. Create retains NONE and has no newly required outbox. Audit failure rolls back. Replay reauthorizes, checks original request fingerprint, returns original persisted result and creates no duplicate material audit/event.",
+    "concurrency": "Existing expected_version/row_version CAS for submit/approve remains. Creation uses its existing idempotency/transaction contract; no invented If-Match on create. Locks freeze referenced context; submitted/approved context is immutable.",
+    "correlation": "Canonical correlation_id/request/causation, server occurred_at and outcome use executable04/08/12. No actor supplied by body, no protected text/secrets.",
+    "no_retroactivity": "Changing or superseding Knowledge never changes a prior decision/snapshot. Any revised decision is a new governed applicability version; prior NULLs and audit records remain immutable."
+  }
+}

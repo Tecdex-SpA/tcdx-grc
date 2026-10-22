@@ -1,0 +1,18 @@
+{
+  "mode": "PRE",
+  "command": [
+    "node22.23.2",
+    "--experimental-strip-types",
+    "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-verify-full-20261021/inspect.mts",
+    "PRE"
+  ],
+  "finished_utc": "2026-10-21T23:37:57.086450+00:00",
+  "exit_code": 0,
+  "duration_seconds": 6.607,
+  "stdout": "{\"phase\":\"PRE\",\"status\":\"PASS_READ_ONLY_INSPECTION\",\"duration_ms\":6522}\n",
+  "stderr": "(node:4764) DeprecationWarning: pgpass support is deprecated and will be removed in pg@9.0. You can provide an async function as the password property to the Client/Pool constructor that returns a password instead. Within this function you can call the pgpass module in your own code.\n(Use `node --trace-deprecation ...` to show where the warning was created)\n",
+  "TLS": "verify-full; host=db-tecdex; hostaddr=192.168.2.40; only PO-approved certificate",
+  "test_mode": "DISABLED",
+  "isolated_rebuild": "DISABLED",
+  "session_options": "-c statement_timeout=60000 -c lock_timeout=2000 -c idle_in_transaction_session_timeout=30000 -c application_name=grc_qa_approved_verify_full -c default_transaction_read_only=on"
+}

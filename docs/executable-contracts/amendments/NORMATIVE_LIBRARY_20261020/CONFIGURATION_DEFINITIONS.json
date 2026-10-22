@@ -1,0 +1,116 @@
+{
+  "scope": "FOUR_APPROVED_ADJUSTMENTS_ONLY",
+  "definitions": [
+    {
+      "configuration_code": "control_operational_activity",
+      "version_number": 1,
+      "value_type": "text",
+      "owner_domain": "controls",
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_overridable": true,
+      "object_overridable": true,
+      "allowed_scope_levels": [
+        "control_version"
+      ],
+      "default_text_value": null,
+      "base_control_version_field": "execution_method",
+      "label_es": "Actividades operativas",
+      "value_schema": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 65536,
+        "pattern": ".*\\S.*"
+      },
+      "confirmation_semantics": null,
+      "activation": "EXACT_DATA_MANIFEST_AND_SEPARATE_PO_SEED_OR_IMPORT_AUTHORIZATION",
+      "actor_ids": "RESOLVE_REAL_AUTHORIZED_ACTOR_AT_EXECUTION_NO_PLACEHOLDER_UUID"
+    },
+    {
+      "configuration_code": "control_recommended_evidence",
+      "version_number": 1,
+      "value_type": "text",
+      "owner_domain": "controls",
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_overridable": true,
+      "object_overridable": true,
+      "allowed_scope_levels": [
+        "control_version"
+      ],
+      "default_text_value": null,
+      "base_control_version_field": "minimum_evidence",
+      "label_es": "Evidencias recomendadas",
+      "value_schema": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 65536,
+        "pattern": ".*\\S.*"
+      },
+      "confirmation_semantics": null,
+      "activation": "EXACT_DATA_MANIFEST_AND_SEPARATE_PO_SEED_OR_IMPORT_AUTHORIZATION",
+      "actor_ids": "RESOLVE_REAL_AUTHORIZED_ACTOR_AT_EXECUTION_NO_PLACEHOLDER_UUID"
+    },
+    {
+      "configuration_code": "control_operational_frequency",
+      "version_number": 1,
+      "value_type": "text",
+      "owner_domain": "controls",
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_overridable": true,
+      "object_overridable": true,
+      "allowed_scope_levels": [
+        "control_version"
+      ],
+      "default_text_value": null,
+      "base_control_version_field": "frequency_code",
+      "label_es": "Periodicidad",
+      "value_schema": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 64,
+        "pattern": ".*\\S.*",
+        "enum": [
+          "continuous",
+          "daily",
+          "weekly",
+          "monthly",
+          "quarterly",
+          "semiannual",
+          "annual",
+          "event_driven"
+        ]
+      },
+      "confirmation_semantics": null,
+      "activation": "EXACT_DATA_MANIFEST_AND_SEPARATE_PO_SEED_OR_IMPORT_AUTHORIZATION",
+      "actor_ids": "RESOLVE_REAL_AUTHORIZED_ACTOR_AT_EXECUTION_NO_PLACEHOLDER_UUID"
+    },
+    {
+      "configuration_code": "control_operational_confirmation",
+      "version_number": 1,
+      "value_type": "text",
+      "owner_domain": "controls",
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_overridable": true,
+      "object_overridable": true,
+      "allowed_scope_levels": [
+        "control_version"
+      ],
+      "default_text_value": null,
+      "base_control_version_field": null,
+      "label_es": "Nivel de confirmación operativa",
+      "value_schema": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128,
+        "pattern": ".*\\S.*"
+      },
+      "confirmation_semantics": "Tenant-authored descriptive operational level, unranked, no automatic sufficiency/compliance/authenticity meaning; not a new enum or method",
+      "activation": "EXACT_DATA_MANIFEST_AND_SEPARATE_PO_SEED_OR_IMPORT_AUTHORIZATION",
+      "actor_ids": "RESOLVE_REAL_AUTHORIZED_ACTOR_AT_EXECUTION_NO_PLACEHOLDER_UUID"
+    }
+  ],
+  "default_policy": "No invented values. Absence uses original ControlVersion field when present; confirmation remains explicitly unconfigured, not zero/FAIL. Tenant policy may set an authorized value through same workflow.",
+  "periodicity_source": "CV-03 ControlFrequency exact existing values; calendar semantics preserved",
+  "json_critical_values": false,
+  "runtime_inserted": false,
+  "base_binding_authority": "Versioned closed contract descriptors name actual ControlVersion columns. Future materialization preserves descriptor/version in ConfigurationDefinition scopes/validation metadata and resolution input_hash; no tenant/ID conditions or arbitrary SQL field names."
+}

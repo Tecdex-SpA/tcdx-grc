@@ -1,0 +1,208 @@
+{
+  "paths": {
+    "/control-versions/{id}/configuration-definition-references": {
+      "get": {
+        "operationId": "controlConfigurationDefinitionReferenceList",
+        "summary": "Referencias de parámetros elegibles para una propuesta de ajuste del control",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CorrelationId"
+          },
+          {
+            "$ref": "#/components/parameters/TenantContext"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/UuidV7"
+            }
+          }
+        ],
+        "x-tcdx-permission": "configuration.configuration_override.create",
+        "x-tcdx-capability": "CORE_PLATFORM",
+        "x-tcdx-scope": "tenant",
+        "x-tcdx-policy": "CONTROL_OVERRIDE_DEFINITION_REFERENCE",
+        "x-tcdx-audit-event": "NONE",
+        "x-tcdx-domain-events": "NONE",
+        "x-tcdx-transaction-boundary": "RO",
+        "x-tcdx-idempotency-class": "NATURALLY_IDEMPOTENT",
+        "responses": {
+          "200": {
+            "description": "Referencias completas elegibles a evaluated_at; no autoriza el comando futuro.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ControlDefinitionReferencePage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "TCDX.VALIDATION.FAILED",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "TCDX.AUTHENTICATION.REQUIRED or INVALID",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "TCDX.AUTHORIZATION.DENIED",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "TCDX.RESOURCE.NOT_FOUND",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "TCDX.CONFLICT.RESOURCE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "TCDX.INVARIANT.VIOLATION",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "TCDX.DEPENDENCY.UNAVAILABLE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "TCDX.INTERNAL.FAILURE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ControlDefinitionReferencePage": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "control_version_id",
+          "evaluated_at",
+          "items"
+        ],
+        "properties": {
+          "control_version_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "evaluated_at": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          },
+          "items": {
+            "type": "array",
+            "maxItems": 4,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "configuration_definition_id",
+                "configuration_code",
+                "definition_version",
+                "value_type",
+                "scope_level",
+                "effective_from",
+                "effective_to",
+                "published_at"
+              ],
+              "properties": {
+                "configuration_definition_id": {
+                  "$ref": "#/components/schemas/UuidV7"
+                },
+                "configuration_code": {
+                  "enum": [
+                    "control_operational_activity",
+                    "control_recommended_evidence",
+                    "control_operational_frequency",
+                    "control_operational_confirmation"
+                  ]
+                },
+                "definition_version": {
+                  "$ref": "#/components/schemas/NormativeLibraryPositiveInt64"
+                },
+                "value_type": {
+                  "const": "text"
+                },
+                "scope_level": {
+                  "const": "control_version"
+                },
+                "effective_from": {
+                  "$ref": "#/components/schemas/UtcTimestamp"
+                },
+                "effective_to": {
+                  "$ref": "#/components/schemas/UtcTimestamp"
+                },
+                "published_at": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/UtcTimestamp"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

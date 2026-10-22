@@ -1,0 +1,24 @@
+{
+  "status": "PASS_ISOLATED_PHYSICAL_AND_GRAMMAR_CANDIDATE_ONLY",
+  "finding": "PV-H04-01",
+  "publication": "NOT_PERFORMED_CANDIDATE_ONLY",
+  "ddl": {
+    "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_PHYSICAL_VALIDATION_20261021/DDL_SPEC.sql",
+    "sha256": "43bd138f9c66d30efb785cafa83bf90dbf1bce45448a8b434f3678225b33f4dd"
+  },
+  "physical_result": {
+    "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/physical-validation-20261021/attempt-03/RESULT.json",
+    "sha256": "3351b45f855f87f506df2a00316dccd76849edf2439737b2dce1a0195eb0ab7a"
+  },
+  "original_failure": {
+    "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/physical-validation-20261021/attempt-02/103-rights_pack_exact_positive.log",
+    "sha256": "e97005f2f7ead9b27f24a0e3f6922c80fb121334a9d3c5cd6bc5435bcfda9bcb"
+  },
+  "postgresql": "16.15",
+  "grammar_parser": "PG16.1 / pglast 6.17; parse_sql and parse_plpgsql PASS; 1 statement / 1 function",
+  "tests": "149/149 PASS; original effective H04 127/129, two package cases FAIL 42703",
+  "scope": "Exact global pack lookup under FOR SHARE; existing FK; no new persistence/API/permissions/roles/registry",
+  "real_rights_evidence": "NONE_NOT_ASSERTED",
+  "runtime_qa": "NOT_EXECUTED",
+  "human_signature_of_derived_bytes": false
+}

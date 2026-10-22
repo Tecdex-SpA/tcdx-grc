@@ -1,0 +1,34 @@
+{
+  "scope": "local_readonly_and_isolated_tests_only",
+  "date": "2026-10-22",
+  "baseline": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "branch": "fix/step6a3-v112-continuity-20261016",
+  "head": "4a275264a7522031e62bf09f598c9d56e21d25e0",
+  "index": "EMPTY_PRESERVED",
+  "entry_visible_files": 4993,
+  "entry_visible_files_aggregate_sha256": "ddf91dfe406efad4982665ce0591b8310f3fb9da67897ec28d59cdbc8d605db1",
+  "checks": [
+    {"id":"adoption_integrity","result":"PASS","detail":"APPLIED_VERIFIED_PHYSICAL_SCOPE_ONLY; 18 post-gates; 242/242 fingerprints; ledger 34+1"},
+    {"id":"normative_library_assets","result":"PASS","detail":"24 schemas; 30 new operations"},
+    {"id":"rector_baseline_integrity","result":"PASS","detail":"protected baseline documents verified"},
+    {"id":"rector_status_generator","result":"FAIL","detail":"Generated artifact drift: database/migrations/manifest.json; canonical generator stops at C04W/34"},
+    {"id":"historical_continuation_verifier","result":"EXPECTED_STALE_FAIL","detail":"inventory predates authorized physical-adoption deltas; preserved as historical evidence"},
+    {"id":"focused_tests","result":"PASS","detail":"159 tests in 12 files; unit, contract, Fastify inject and React component scope"},
+    {"id":"contracts_typecheck_build","result":"PASS"},
+    {"id":"backend_typecheck_build","result":"PASS"},
+    {"id":"frontend_typecheck_build","result":"PASS","detail":"bundle lacks normative-library/matrix strings because shell does not import components"},
+    {"id":"qa_runtime_e2e","result":"NOT_RUN"},
+    {"id":"human_ui_review","result":"PENDING"}
+  ],
+  "operations": {
+    "qa_sql_connections": 0,
+    "qa_ddl": 0,
+    "qa_dml": 0,
+    "imports": 0,
+    "iam_registry_activations": 0,
+    "deployments": 0,
+    "production_changes": 0,
+    "git_mutations": 0
+  }
+}
+
