@@ -10,6 +10,8 @@ from pathlib import Path
 import socket
 import subprocess
 import sys
+import re
+import time
 
 def run(args):
     result = subprocess.run(args, capture_output=True, text=True, timeout=120)
@@ -23,6 +25,11 @@ def main():
     if len(sys.argv) != 4:
         raise RuntimeError("USAGE: qa-iam-publication-runtime IMAGE_ID SOURCE_SHA CONFIG_DIRECTORY")
     image_id, source_sha, directory = sys.argv[1:]
+    name = os.environ.get("TCDX_QA_OPERATOR_NAME", "tcdx-grc-step6a3-publication-operator")
+    if not re.fullmatch(r"tcdx-grc-step6a3-[a-z0-9-]+-operator", name):
+        raise RuntimeError("CANONICAL_OPERATOR_NAME_REQUIRED")
+    replace = os.environ.get("TCDX_QA_OPERATOR_REPLACE") == "integrated-qa-release-20261022"
+    previous = json.loads(run(["docker", "inspect", name]))[0] if replace else None
     config = Path(directory)
     if not config.is_dir() or config.stat().st_mode & 0o077:
         raise RuntimeError("PROTECTED_CONFIG_DIRECTORY_REQUIRED")
@@ -55,7 +62,13 @@ def main():
     env["TCDX_COMMERCIAL_APPROVED_MANIFEST_SHA256"] = manifest_sha
     env["TCDX_COMMERCIAL_CATALOG_OPERATOR_SOCKET"] = "/run/tcdx-operator/catalog.sock"
     env["TCDX_QA_EXISTING_SESSION_ORIGIN"] = "http://127.0.0.1:4000"
-    operator_dir = config / "operator"
+    library_root = os.environ.get("TCDX_LIBRARY_PUBLICATION_ROOT")
+    if library_root:
+        for key in ("TCDX_LIBRARY_PUBLICATION_ROOT", "TCDX_LIBRARY_PUBLICATION_INPUT_FILE", "TCDX_LIBRARY_PUBLICATION_INPUT_SHA256"):
+            if not os.environ.get(key):
+                raise RuntimeError("COMPLETE_LIBRARY_PUBLICATION_CONFIGURATION_REQUIRED")
+            env[key] = os.environ[key]
+    operator_dir = Path(next(m["Source"] for m in previous["Mounts"] if m["Destination"] == "/run/tcdx-operator")) if previous else config / "operator"
     operator_dir.mkdir(mode=0o700, exist_ok=True)
     private_env = config / "operator.private.env"
     fd = os.open(private_env, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
@@ -65,25 +78,60 @@ def main():
                 if "\n" in value or "\r" in value:
                     raise RuntimeError("UNSUPPORTED_RUNTIME_ENV_VALUE")
                 stream.write(key + "=" + value + "\n")
-        args = ["docker", "run", "-d", "--name", "tcdx-grc-step6a3-publication-operator",
+        args = ["docker", "run", "-d", "--name", name,
                 "--network", "host", "--read-only", "--tmpfs", "/tmp:rw,noexec,nosuid,size=16m",
                 "--security-opt", "no-new-privileges:true", "--env-file", str(private_env)]
         for host in current["HostConfig"].get("ExtraHosts") or []:
             args += ["--add-host", host]
         for mount in current["Mounts"]:
+            if mount["Destination"] in {"/run/config/step6a3-iam", "/run/secrets/iam_publisher_client_secret"}:
+                continue
             if mount["Type"] != "bind":
                 raise RuntimeError("REVIEWED_BIND_MOUNTS_REQUIRED")
             args += ["--mount", "type=bind,src=" + mount["Source"] + ",dst=" + mount["Destination"] + ",readonly"]
         args += ["--mount", f"type=bind,src={config},dst=/run/config/step6a3-iam,readonly",
                  "--mount", f"type=bind,src={operator_dir},dst=/run/tcdx-operator",
                  "--mount", f"type=bind,src={secret},dst=/run/secrets/iam_publisher_client_secret,readonly",
-                 image_id, "node", "apps/backend/dist/security/publication-operator-server.js"]
+                 ]
+        if library_root:
+            release_mount = os.environ.get("TCDX_LIBRARY_RELEASE_HOST_DIRECTORY")
+            if not release_mount or not Path(release_mount).is_dir():
+                raise RuntimeError("LIBRARY_RELEASE_CUSTODY_REQUIRED")
+            args += ["--mount", f"type=bind,src={release_mount},dst=/run/config/library-release,readonly"]
+        args += [image_id, "node", "apps/backend/dist/security/publication-operator-server.js"]
+        rollback = name + "-rollback-integrated-qa-20261022"
+        if replace:
+            if subprocess.run(["docker", "inspect", rollback], capture_output=True).returncode == 0:
+                raise RuntimeError("OPERATOR_ROLLBACK_ALREADY_EXISTS")
+            run(["docker", "stop", "-t", "20", name])
+            run(["docker", "rename", name, rollback])
         container_id = run(args)
+        try:
+            ready = False
+            for _ in range(30):
+                observed = json.loads(run(["docker", "inspect", name]))[0]
+                if not observed["State"]["Running"]:
+                    break
+                logs = run(["docker", "logs", "--tail", "10", name])
+                if "QA_PRIVATE_PUBLICATION_OPERATOR_READY" in logs:
+                    ready = True
+                    break
+                time.sleep(1)
+            if not ready:
+                raise RuntimeError("OPERATOR_STARTUP_NOT_READY")
+        except Exception:
+            subprocess.run(["docker", "stop", "-t", "10", name], capture_output=True)
+            subprocess.run(["docker", "rename", name, name + "-failed-integrated-qa-20261022"], capture_output=True)
+            if replace:
+                run(["docker", "rename", rollback, name])
+                run(["docker", "start", name])
+            raise
         evidence = {"operator_container_id": container_id, "image_id": image_id, "source_sha256": source_sha,
                     "previous_backend_container_id": current["Id"], "previous_backend_image": current["Image"],
                     "manifest_sha256": manifest_sha, "configuration_hashes": {k: env[k + "_SHA256"] for k in filenames},
                     "qa_application_release_changed": False, "database_structure_changed": False}
-        (config / "operator-runtime-evidence.json").write_text(json.dumps(evidence, indent=2) + "\n")
+        evidence.update(operator_name=name, ready=True, library_configured=bool(library_root), rollback_container=rollback if replace else None)
+        (config / (name + "-integrated-runtime-evidence.json" if replace else "operator-runtime-evidence.json")).write_text(json.dumps(evidence, indent=2) + "\n")
         print(json.dumps(evidence))
     finally:
         private_env.unlink(missing_ok=True)

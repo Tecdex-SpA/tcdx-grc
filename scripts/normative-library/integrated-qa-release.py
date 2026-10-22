@@ -104,16 +104,17 @@ if __name__ == '__main__':
         assert component in ['backend','frontend']
         assert git('status','--porcelain')==''
         revision=git('rev-parse','HEAD')
-        archive=CUSTODY/'source.tar'
+        archive=CUSTODY/('source-'+revision+'.tar')
         if not archive.exists(): subprocess.run(['git','archive','--format=tar','--output',str(archive),revision],cwd=ROOT,check=True)
         source_hash=sha(archive)
         tag='tcdx-grc-'+component+':integrated-qa-20261022'
         args=['docker','build','--platform','linux/amd64','--label','org.opencontainers.image.revision='+revision,'--label','tcdx.source.sha256='+source_hash,'-f','apps/'+component+'/Dockerfile','-t',tag,'.']
         start=now()
-        with (CUSTODY/('image-'+component+'.log')).open('x') as log: p=subprocess.run(args,cwd=ROOT,stdout=log,stderr=subprocess.STDOUT)
+        build_name=component+('-'+sys.argv[3] if len(sys.argv)>3 else '')
+        with (CUSTODY/('image-'+build_name+'.log')).open('x') as log: p=subprocess.run(args,cwd=ROOT,stdout=log,stderr=subprocess.STDOUT)
         if p.returncode: print('IMAGE_BUILD_FAILED_'+component);sys.exit(p.returncode)
         info=json.loads(subprocess.check_output(['docker','image','inspect',tag],text=True))[0]
         assert info['Architecture']=='amd64' and info['Config']['Labels']['org.opencontainers.image.revision']==revision
-        save('image-'+component+'.json',{'source_commit':revision,'source_archive_sha256':source_hash,'image_id':info['Id'],'tag':tag,'started_utc':start,'finished_utc':now(),'architecture':'amd64','build_exit_code':0})
+        save('image-'+build_name+'.json',{'source_commit':revision,'source_archive_sha256':source_hash,'source_archive':str(archive),'image_id':info['Id'],'tag':tag,'started_utc':start,'finished_utc':now(),'architecture':'amd64','build_exit_code':0})
         print(json.dumps({'component':component,'image_id':info['Id'],'source_commit':revision}))
     else: raise SystemExit('inventory | check NAME COMMAND...')

@@ -1,6 +1,8 @@
 """Promote only a reviewed QA application container, retaining its exact rollback runtime."""
 import json
+import hashlib
 import os
+from pathlib import Path
 import shlex
 import subprocess
 import sys
@@ -31,6 +33,9 @@ def main():
     current = inspect("container", name)
     if candidate["Id"] != image_id or candidate["Architecture"] != "amd64" or candidate["Os"] != "linux":
         raise RuntimeError("AMD64_IMAGE_MISMATCH")
+    source_revision = os.environ.get("QA_RELEASE_SOURCE_COMMIT")
+    if source_revision and (candidate["Config"].get("Labels") or {}).get("org.opencontainers.image.revision") != source_revision:
+        raise RuntimeError("RELEASE_SOURCE_COMMIT_MISMATCH")
     if not current["State"]["Running"] or current["State"].get("Health", {}).get("Status") != "healthy":
         raise RuntimeError("CURRENT_RUNTIME_NOT_HEALTHY")
     if current["Config"].get("User") != candidate["Config"].get("User"):
@@ -44,6 +49,7 @@ def main():
     if subprocess.run(["docker", "container", "inspect", rollback], capture_output=True).returncode == 0:
         raise RuntimeError("ROLLBACK_NAME_ALREADY_USED")
     env = current["Config"]["Env"]
+    extra_mounts = []
     if "NODE_ENV=qa" not in env:
         raise RuntimeError("QA_ENVIRONMENT_REQUIRED")
     if kind == "backend":
@@ -52,6 +58,17 @@ def main():
             raise RuntimeError("POSITIVE_SESSION_POLICY_REQUIRED")
         env = [value for value in env if value.split("=", 1)[0] not in replacements]
         env.extend(key + "=" + value for key, value in replacements.items())
+        certificate = os.environ.get("QA_DATABASE_TLS_ROOT_CERT")
+        if certificate:
+            cert = Path(certificate)
+            expected = os.environ.get("QA_DATABASE_TLS_ROOT_CERT_SHA256")
+            if not cert.is_file() or cert.is_symlink() or hashlib.sha256(cert.read_bytes()).hexdigest() != expected:
+                raise RuntimeError("APPROVED_QA_DATABASE_CERTIFICATE_REQUIRED")
+            database = {"DATABASE_HOST": "db-tecdex", "DATABASE_HOSTADDR": "192.168.2.40",
+                        "DATABASE_SSL_MODE": "verify-full", "DATABASE_SSL_ROOT_CERT": "/run/config/qa-database-root.pem"}
+            env = [value for value in env if value.split("=", 1)[0] not in database]
+            env.extend(key + "=" + value for key, value in database.items())
+            extra_mounts.append("type=bind,src=" + str(cert) + ",dst=/run/config/qa-database-root.pem,readonly")
     if any("\n" in value or "\r" in value for value in env):
         raise RuntimeError("UNSUPPORTED_ENV_VALUE")
     health = current["Config"].get("Healthcheck")
@@ -93,6 +110,8 @@ def main():
             raise RuntimeError("UNSUPPORTED_MOUNT_TYPE")
         args.extend(["--mount", "type=" + mount["Type"] + ",src=" + source + ",dst=" + mount["Destination"]
                      + ("" if mount["RW"] else ",readonly")])
+    for mount in extra_mounts:
+        args.extend(["--mount", mount])
     args.extend(["--health-cmd", shlex.join(health["Test"][1:]) if health["Test"][0] == "CMD" else health["Test"][1]])
     for key, option in (("Interval", "interval"), ("Timeout", "timeout"), ("StartPeriod", "start-period")):
         if health.get(key):
