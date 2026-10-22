@@ -8,7 +8,7 @@ import {createClient} from '../foundations/db.ts';
 import {collect,guard,dataQueries} from '../../docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa01-migration36-adoption-20261022/inspect.mts';
 const root=new URL('../../',import.meta.url).pathname;
 const custody=root+'.release-custody/integrated-qa-release-20261022';
-const mode=process.argv[2];if(!['PRE','PRE_RETRY','POST','POST_FINAL','POST_TENANT','BACKUP'].includes(mode??''))throw Error('READ_ONLY_OR_BACKUP_REQUIRED');
+const mode=process.argv[2];if(!['PRE','PRE_RETRY','POST','POST_FINAL','POST_TENANT','B04_REFERENCES','SOD_AVAILABILITY','BACKUP'].includes(mode??''))throw Error('READ_ONLY_OR_BACKUP_REQUIRED');
 process.umask(0o077);
 const sha=(b:Buffer|string)=>createHash('sha256').update(b).digest('hex');
 const run=(cmd:string,args:string[],options:any={})=>{const p=spawnSync(cmd,args,{encoding:'utf8',timeout:180000,maxBuffer:32*1024*1024,...options});if(p.status!==0)throw Error('Subprocess failed: '+cmd);return p.stdout as string;};
@@ -19,7 +19,17 @@ try{
  const ledger=(await c.query('SELECT migration_id,filename,content_sha256,outcome FROM platform.schema_migrations ORDER BY migration_id')).rows;
  const manifest=JSON.parse(readFileSync(root+'database/migrations/manifest.json','utf8')).migrations;
  if(ledger.length!==36||JSON.stringify(ledger)!==JSON.stringify(manifest.map((m:any)=>({migration_id:m.id,filename:m.filename,content_sha256:m.sha256,outcome:'applied'}))))throw Error('Exact36 ledger required');
- if(mode!=='BACKUP'){
+ if(mode==='SOD_AVAILABILITY'){
+  const tenants=JSON.parse(readFileSync(custody+'/stage-tenant.json','utf8')).publication_input.tenantIds;
+  if(tenants.length!==1)throw Error('Exact authorized tenant required');
+  result.existing_independent_reviewers=(await c.query("SELECT count(DISTINCT u.user_identity_id)::int AS active_grc_managers_other_than_po FROM iam.user_identities u JOIN iam.tenant_memberships m USING(user_identity_id) JOIN iam.membership_roles mr USING(tenant_membership_id) JOIN iam.roles r USING(role_id) WHERE m.tenant_id=$1::uuid AND mr.tenant_id=m.tenant_id AND r.tenant_id=m.tenant_id AND u.lifecycle_state='active' AND m.membership_state='active' AND (m.ended_at IS NULL OR m.ended_at>transaction_timestamp()) AND mr.valid_from<=transaction_timestamp() AND (mr.valid_to IS NULL OR mr.valid_to>transaction_timestamp()) AND r.role_code='GRC_MANAGER' AND r.lifecycle_state='published' AND u.email_normalized IS DISTINCT FROM $2",[tenants[0],'andres.barouh@tecdex.net'])).rows[0];
+  await c.query('ROLLBACK');result.status='PASS_READ_ONLY';
+ }else if(mode==='B04_REFERENCES'){
+  const tenants=JSON.parse(readFileSync(custody+'/stage-tenant.json','utf8')).publication_input.tenantIds;
+  if(tenants.length!==1)throw Error('Exact authorized tenant required');
+  result.control_versions=(await c.query('SELECT control_version_id::text,lifecycle_state FROM controls.control_versions WHERE tenant_id=$1::uuid ORDER BY control_version_id LIMIT 5',[tenants[0]])).rows;
+  await c.query('ROLLBACK');result.status='PASS_READ_ONLY';
+ }else if(mode!=='BACKUP'){
   result.results=await collect(async q=>(await c.query(q)).rows[0].jsonb_build_object);
   result.activation=await c.query("SELECT aggregate_type,event_code,count(*)::int FROM ops_audit.audit_events WHERE command_code='normativeLibraryOperationalPublication' GROUP BY aggregate_type,event_code ORDER BY aggregate_type,event_code").then(r=>r.rows);
   result.definitions=await c.query("SELECT configuration_definition_id::text,configuration_code,version_number,value_type,lifecycle_state,effective_from::text,effective_to::text,num_nonnulls(default_boolean_value,default_integer_value,default_decimal_value,default_text_value,default_timestamp_value,default_duration_seconds_value,default_json_value) defaults FROM config.configuration_definitions WHERE configuration_code IN ('control_operational_activity','control_recommended_evidence','control_operational_frequency','control_operational_confirmation') ORDER BY configuration_code").then(r=>r.rows);

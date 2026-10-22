@@ -1,5 +1,21 @@
-# Continuidad del release integrado
+# Continuidad única — INTEGRATED_QA_RELEASE_20261022
 
-Release INTEGRATED_QA_RELEASE_20261022, en progreso bajo autorización global PO. Usar este único working tree y la rama de integración existente. No duplicar repositorio ni solicitar otra autorización para correcciones técnicas ordinarias dentro del alcance.
+Estado: QA operativo, release integral PARTIAL por E2E positivo dual-actor pendiente. Baseline TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16, POST_STEP6A4_PRE_STEP6A5. No iniciar STEP6A5/6A6.
 
-Leer RELEASE.md, VALIDATION.md y RESULT.json junto al estado Git y runtime; los commits/digests/recibos finales establecerán la continuidad compartida entre cuentas. La custodia local ignorada conserva inventario y logs técnicos; secretos, respaldos, archivos de preservación y caches se excluyen de Git. No se inicia STEP6A5/STEP6A6 ni se modifica producción.
+Usar el working tree original /Users/andresbarouh/repos/tcdx-grc y la rama fix/step6a3-v112-continuity-20261016. No clonar para sustituir archivos locales ni copiar credenciales entre cuentas. Fuente backend683da92fc7f3f2a92bd1bfd9b12d4d2dbe53660c, frontend97a00013f48b1b630ddb34c41754472ced3c1395. Los commits posteriores de sellado no cambian los binarios desplegados. Identificar el sellado con git log -1 --format=%H -- docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/integrated-qa-release-20261022/RESULT.json.
+
+PR borrador https://github.com/Tecdex-SpA/tcdx-grc/pull/23; no merge, bypass ni force push. Verificar git status --short, git rev-parse HEAD y gh pr checks 23. No interpretar un CI verde como aceptación de E2E no ejecutado.
+
+RESULT.json contiene imágenes, IDs13/4/8, manifiestos de publicación, destinos y cuarenta hashes. Verificación sin QA: python3 scripts/normative-library/integrated-qa-release.py verify. La evidencia técnica local está en .release-custody/integrated-qa-release-20261022, ignorada deliberadamente; no incluye las credenciales ni el dump. Si otra máquina no dispone de la custodia, declarar esa falta y comprobar el runtime legítimamente, sin fabricar evidencia. Las tres cuentas sobre este mismo workspace pueden verificarla sin memoria conversacional.
+
+No repetir QA01 ni aplicar migración36. Las36 migraciones y el esquema QA están íntegros. Backups privados existentes y preactivación INTEGRATED-QA-45c8f11cf2604f1298230fa3cbcf8ea5 permanecen bajo custodia FileVault, restauración245 tablas verificada; sin PITR declarado. No restaurar una instantánea indiscriminadamente sobre QA ni eliminar auditorías para revertir las activaciones.
+
+Backend192.168.2.45 y frontend192.168.2.46 saludables; dominio exclusivo https://grc.tecdex.net/. Principal M2M existente, secret protegido en QA, OAuth2 client credentials RS256. Operadores/socket siguen siendo los canónicos: contenedor tcdx-grc-step6a3-publication-operator, socket interno /run/tcdx-operator/catalog.sock; otros tres operadores existentes también actualizados. No leer/imprimir/copiar el secret ni usar credenciales DB como autenticación operacional.
+
+Input global original inmutable y input tenant sucesor mantienen la misma vigencia de Definitions. Único tenant autorizado: TecDex01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9. Trece bindings, cuatro Definitions y94 auditorías ya publicados; no volver a activar como si estuvieran pendientes. Replay canónico exacto comprobado: cero creaciones/auditorías. Para futuras comprobaciones autorizadas usar la iteración v4 del orquestador existente; su omisión seleccionaría un recibo anterior. No cambiar inputs/fechas, añadir tenants o reconstruir la preparación por suposiciones.
+
+Rollback de aplicación conservado: backend tcdx-grc-backend-rollback-integrated-qa-20261022-v4; frontend tcdx-grc-frontend-rollback-integrated-qa-20261022. Los recibos de cada operador identifican su rollback exacto. Revertir un contenedor no revierte DML; la reversión de datos necesita su propio plan canónico, no SQL directo para borrar historia.
+
+Única decisión humana indispensable para cerrar el E2E positivo: identificar una identidad humana existente distinta del PO y decidir su asignación canónica GRC_MANAGER al tenant TecDex. Actualmente hay cero revisores independientes activos. No crear roles/M2M ni escoger un usuario por conveniencia; no pedir contraseñas en el chat. Usar después el login existente Zoho/Managed Identity en navegador, conservar SoD y ejecutar el recorrido positivo pendiente sobre datos sintéticos autorizados. No solicitar un nuevo prompt para trabajo ordinario independiente ya autorizado.
+
+H04 desplegado y probado sintéticamente con objeto privado eliminado; no fuentes comerciales ni derechos de terceros habilitados. No producción, importación comercial, infraestructura nueva ni fase posterior. Mantener PARTIAL hasta demostrar los recorridos pendientes; HUMAN_UI_REVIEW nunca se autoaprueba.

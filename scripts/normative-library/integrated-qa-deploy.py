@@ -30,6 +30,27 @@ def ssh(host, command, input=None, timeout=240):
     if p.returncode: raise RuntimeError('QA_REMOTE_COMMAND_FAILED: ' + p.stdout[-900:] + p.stderr[-300:])
     return p.stdout.strip()
 mode = sys.argv[1]
+if mode == 'status':
+    from urllib.request import urlopen
+    snapshots={}
+    for component,host in HOSTS.items():
+        source="import json,subprocess\nd=json.loads(subprocess.check_output(['docker','inspect','tcdx-grc-"+component+"'],text=True))[0]\nprint(json.dumps({'container_id':d['Id'],'image_id':d['Image'],'running':d['State']['Running'],'health':d['State'].get('Health',{}).get('Status'),'source_commit':d['Config']['Labels']['org.opencontainers.image.revision']}))\n"
+        snapshots[component]=json.loads(ssh(host,'python3 -',source))
+        assert snapshots[component]['image_id']==image(component)['image_id'] and snapshots[component]['health']=='healthy'
+    expected=ssh(HOSTS['frontend'],"docker exec tcdx-grc-frontend node -e \"console.log(require('crypto').createHash('sha256').update(require('fs').readFileSync('dist/index.html')).digest('hex'))\"")
+    with urlopen('https://grc.tecdex.net/',timeout=15) as response:
+        public={'status':response.status,'index_sha256':hashlib.sha256(response.read()).hexdigest()}
+    assert public['status']==200 and public['index_sha256']==expected
+    with urlopen('https://grc.tecdex.net/api/v1/auth/providers',timeout=15) as response: providers=response.status
+    ready=json.loads(ssh(HOSTS['backend'],"curl --fail --silent --show-error http://127.0.0.1:4000/health/ready"))
+    save('runtime-status'+SUFFIX+'.json',{'captured_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'components':snapshots,'public_https':public,'public_index_matches_deployed_image':True,'providers_http':providers,'backend_ready':ready})
+    print(json.dumps({'status':'PASS','components':snapshots,'public_https':public,'backend_ready':ready}))
+    sys.exit(0)
+if mode == 'h04-synthetic':
+    receipt=json.loads(ssh(HOSTS['backend'],'docker exec -i tcdx-grc-backend node --input-type=module',(ROOT/'scripts/normative-library/qa-release-h04-synthetic.mjs').read_text()))
+    save('h04-synthetic'+SUFFIX+'.json',receipt)
+    print(json.dumps(receipt))
+    sys.exit(0)
 if mode in ['diagnose','runtime']:
     command='docker exec -i '+('tcdx-grc-backend node --input-type=module - backend' if mode=='runtime' else 'tcdx-grc-step6a3-publication-operator node --input-type=module')
     receipt=json.loads(ssh(HOSTS['backend'],command,(ROOT/'scripts/normative-library/qa-release-operator-diagnostic.mjs').read_text()))

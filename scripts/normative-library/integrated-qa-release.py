@@ -87,7 +87,7 @@ if __name__ == '__main__':
     elif sys.argv[1] == 'check': check(sys.argv[2], sys.argv[3:])
     elif sys.argv[1] == 'database':
         mode=sys.argv[2]
-        assert mode in ['PRE','PRE_RETRY','POST','POST_FINAL','POST_TENANT','BACKUP','schema']
+        assert mode in ['PRE','PRE_RETRY','POST','POST_FINAL','POST_TENANT','B04_REFERENCES','SOD_AVAILABILITY','BACKUP','schema']
         spec=importlib.util.spec_from_file_location('qa_release_env',ROOT/'docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa01-migration36-adoption-20261022/operator.py')
         prior=importlib.util.module_from_spec(spec)
         sys.dont_write_bytecode=True
@@ -125,6 +125,28 @@ if __name__ == '__main__':
         result={'status':'PASS','schema_catalogues_unchanged':categories,'fingerprints_verified':244,'unchanged_tables':244-len(changed),'changed_tables':changed,'approved_deltas':expected,'additional_changes':'Existing identity login timestamps and canonical login audit only','publication_audit_count':audit_count,'tenant_activations':tenant_ids}
         save('physical-comparison'+('-tenant' if tenant_mode else '')+'.json',result)
         print(json.dumps(result))
+    elif sys.argv[1] == 'verify':
+        dossier=ROOT/'docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/integrated-qa-release-20261022'
+        result=json.loads((dossier/'RESULT.json').read_text())
+        assert result['PROJECT']=='GRC_TECDEX' and result['EXECUTION']=='INTEGRATED_QA_RELEASE_20261022'
+        assert result['CANONICAL_DOMAIN']=='https://grc.tecdex.net/'
+        for component in ['backend','frontend']:
+            entry=result['components'][component]
+            assert git('cat-file','-t',entry['source_commit'])=='commit'
+            assert len(entry['image_id'])==71 and entry['image_id'].startswith('sha256:')
+        missing=[]
+        for reference in result['evidence']:
+            path=ROOT/reference['path']
+            if not path.is_file(): missing.append(reference['path']);continue
+            assert sha(path)==reference['sha256'], reference['path']
+        assert not missing, 'Missing local custody: '+repr(missing)
+        assert len(result['definitions'])==4 and all(d['defaults']==0 for d in result['definitions'])
+        assert len(result['bindings'])==13 and len({b['id'] for b in result['bindings']})==13
+        assert result['audit']['global']==64 and result['audit']['tenant']==30
+        assert result['ISO_COMMERCIAL_IMPORTS']==result['PRODUCTION_CHANGES']=='NONE'
+        assert result['STEP6A5']==result['STEP6A6']=='NOT_STARTED'
+        assert result['INTEGRATED_QA_RELEASE_GATE']=='PARTIAL' and result['independent_reviewers']==0
+        print(json.dumps({'offline_evidence_integrity':'PASS','QA_contacted':False,'release_gate':result['INTEGRATED_QA_RELEASE_GATE'],'verified_references':len(result['evidence']),'functional_completion_not_inferred':True}))
     elif sys.argv[1] == 'image':
         component=sys.argv[2]
         assert component in ['backend','frontend']
