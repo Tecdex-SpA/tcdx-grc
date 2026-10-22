@@ -1,0 +1,3266 @@
+{
+  "config": {
+    "argv": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "/Users/andresbarouh/repos/tcdx-grc/node_modules/@playwright/test/cli.js",
+      "test",
+      "e2e/step6a4-business-forms.spec.ts",
+      "--project=chromium-desktop",
+      "--project=chromium-narrow",
+      "--workers=4",
+      "--reporter=line,json"
+    ],
+    "configFile": "/Users/andresbarouh/repos/tcdx-grc/playwright.config.ts",
+    "rootDir": "/Users/andresbarouh/repos/tcdx-grc/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/andresbarouh/repos/tcdx-grc/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/andresbarouh/repos/tcdx-grc/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/andresbarouh/repos/tcdx-grc/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium-laptop",
+        "name": "chromium-laptop",
+        "testDir": "/Users/andresbarouh/repos/tcdx-grc/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/andresbarouh/repos/tcdx-grc/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium-tablet",
+        "name": "chromium-tablet",
+        "testDir": "/Users/andresbarouh/repos/tcdx-grc/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/andresbarouh/repos/tcdx-grc/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium-narrow",
+        "name": "chromium-narrow",
+        "testDir": "/Users/andresbarouh/repos/tcdx-grc/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 4,
+    "webServer": {
+      "command": "npm --prefix apps/frontend run dev -- --host 127.0.0.1 --port 4173",
+      "url": "http://127.0.0.1:4173",
+      "reuseExistingServer": true
+    }
+  },
+  "suites": [
+    {
+      "title": "step6a4-business-forms.spec.ts",
+      "file": "step6a4-business-forms.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "FORM-01 applicabilityCreate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2155,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:26:52.929Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-41cf21f56c2e4cf98d36",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-02 applicabilitySubmit browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 852,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:26:55.345Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-c8cc3020399e02a86fbe",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-03 applicabilityApprove browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 786,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:26:56.216Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-4c1e17ee5ce850446ae4",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-04 requirementAssessmentCreate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 925,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:26:57.009Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-20106e2354380c4b11ef",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-05 requirementAssessmentStart browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 696,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:26:57.940Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-f199b17ecf84e7194cfb",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-06 requirementAssessmentSubmit browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 627,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:26:58.642Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-b7b47aea6beda7773b00",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-07 requirementAssessmentApprove browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 710,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:26:59.273Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-3d635ef877af6cc10280",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-08 soaCreate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1094,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:26:59.987Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-9afd943ae986ad84f8a3",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-09 soaPublish browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 627,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:01.085Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-ceba1f9753de5556b9de",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-10 controlInstantiate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1107,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:01.718Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-d9042f42a2c73c7b7979",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-11 controlAssessmentCreate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 746,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:02.830Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-2cd4bd7ef2cd6ccca6ca",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-12 controlAssessmentStart browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 648,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:03.581Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-e3e06e0609e79af4ac77",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-13 controlAssessmentSubmit browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 698,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:04.234Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-8dd4faa5b176f9698980",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-14 controlAssessmentReview browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 679,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:04.936Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-a77bbd080142a33f94c3",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-15 controlAssessmentApprove browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 674,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:05.619Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-0a3500c26aec13c672b3",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-16 assuranceTestCreate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 725,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:06.296Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-9688fc6e5e1d6a319f72",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-17 assuranceTestStart browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 648,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:07.025Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-2d8923da60090f98c6eb",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-18 assuranceTestExecute browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 973,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:07.681Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-ff1f61f9ad820d7dabee",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-19 assuranceTestReview browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 748,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:08.662Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-5514b3e7f297a6453be3",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-20 assuranceTestApprove browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 688,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:09.415Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-63174a38c6cee5e8225e",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-21 evidenceRequestCreate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 828,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:10.110Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-d28c88692439bb7b572a",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-22 evidenceRequestFulfill browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 754,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:10.945Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-5f41154e12ff1a1666da",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-23 evidenceCreate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1487,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:11.704Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-5bdbbfa7513250e0d50a",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-24 evidenceSubmit browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 613,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:13.198Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-07c7f20b84180e374c1b",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-25 evidenceReviewStart browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 620,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:13.815Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-e5087f67fef5064c4cd6",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-26 evidenceApprove browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 570,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:14.439Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-3af062588a97bc6a1a88",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-27 evidenceReject browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 604,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:15.015Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-946b9a08c6f636f866ae",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-28 retentionPolicyCreate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 761,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:15.623Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-521f096c89ce473d26d5",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-29 retentionPolicyUpdate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 623,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:16.389Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-bd5ee5ef488c4eda4365",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-30 retentionPolicyReview browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 654,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:17.016Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-98b56d59477015c3a628",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-31 retentionPolicyApprove browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 654,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:17.675Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-2f35272566c654163d54",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-32 retentionPolicyPublish browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 703,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:18.340Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-9d84689da9883ac83689",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-33 issueCreate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 984,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:19.049Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-3651bcf29b0ac02e4b7c",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-34 issueTriage browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 666,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:20.044Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-1ff8f7808fb7968dc0ab",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-35 issueStartRemediation browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 647,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:20.715Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-c967ebd8b1218f80098e",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-36 issueRequestVerification browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 696,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:21.369Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-e1cc4b5c64017da21ffa",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-37 issueVerifyClose browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 757,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:22.071Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-656f7981c1d45e86ad75",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-38 actionCreate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 785,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:22.832Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-efe273d3356554acd152",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-39 actionStart browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 593,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:23.623Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-2eae34d5d71a15b676be",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-40 actionSubmitForReview browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 627,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:24.222Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-8b0c9525fdcfaed95b5e",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-41 actionComplete browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 651,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:24.853Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-a523a4dc5be939e17853",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-42 actionVerify browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 674,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:25.507Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-e50ac2e64649d7f7c64b",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "STEP6A4 conflict preserves entries, refreshes explicitly and permission failures are safe [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 628,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:26.185Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-b260c1af73f58691856b",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 116,
+          "column": 1
+        },
+        {
+          "title": "STEP6A4 missing action permission hides interaction [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 321,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:26.817Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-f16b5e3495152b807e25",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 123,
+          "column": 1
+        },
+        {
+          "title": "STEP6A4 lookup denial remains distinct from empty options and blocks invalid submit [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 463,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:27.142Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-67e5e097aa212aedc90e",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 125,
+          "column": 1
+        },
+        {
+          "title": "STEP6A4 command denial preserves inputs and never leaks server detail [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 525,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:27.608Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-c85c7cf3ea0676aa4fb8",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 132,
+          "column": 1
+        },
+        {
+          "title": "FORM-01 applicabilityCreate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1912,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:26:52.927Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-b30f113e6f1fb1a34084",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-02 applicabilitySubmit browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 752,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:26:55.105Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-aa491fd2c3ec43ac95ed",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-03 applicabilityApprove browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 717,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:26:55.882Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-d6e0b25d332620cdd688",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-04 requirementAssessmentCreate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 690,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:26:56.612Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-26b8588b42d30a7a7003",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-05 requirementAssessmentStart browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 758,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:26:57.312Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-061288b96f68c526d90c",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-06 requirementAssessmentSubmit browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 593,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:26:58.075Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-7d0b1cc386c03cc7b335",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-07 requirementAssessmentApprove browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 587,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:26:58.673Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-b5843ade1be6d2aa05f3",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-08 soaCreate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 894,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:26:59.265Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-95bbf318dcc396576266",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-09 soaPublish browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 706,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:00.164Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-3563c7184a3e94f9ff19",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-10 controlInstantiate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 867,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:00.874Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-0fbb5ff06fd5c58bcb7a",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-11 controlAssessmentCreate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 760,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:01.745Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-ffafe499b8a40ab21cdc",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-12 controlAssessmentStart browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 595,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:02.509Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-504b7428d4c35930e26b",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-13 controlAssessmentSubmit browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 619,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:03.108Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-b3e3a07a81e8bc148e83",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-14 controlAssessmentReview browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 591,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:03.732Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-8ebfc6bf4fb02cd8f629",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-15 controlAssessmentApprove browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 610,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:04.332Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-adb2cdbd0d943f8445c4",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-16 assuranceTestCreate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 637,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:04.948Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-bd34325c0c0dd7f0f4a5",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-17 assuranceTestStart browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 536,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:05.589Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-e508df80a90c3a4473c0",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-18 assuranceTestExecute browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 754,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:06.128Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-f50f2541604bedc0be88",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-19 assuranceTestReview browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 564,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:06.887Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-8d62e7faf92a5dc42174",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-20 assuranceTestApprove browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 569,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:07.456Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-3223b2dd67b7d183e115",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-21 evidenceRequestCreate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 732,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:08.029Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-e48d953294ec46efaddd",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-22 evidenceRequestFulfill browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 687,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:08.767Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-1c4224db2c9091e36761",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-23 evidenceCreate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1259,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:09.464Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-20d31f5c5dba658f68dd",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-24 evidenceSubmit browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 558,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:10.728Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-9c92cf95432ffe5da292",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-25 evidenceReviewStart browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 639,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:11.292Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-74574d1ae4c1bcf61678",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-26 evidenceApprove browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 647,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:11.938Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-e03996887bbe010247b9",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-27 evidenceReject browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 621,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:12.591Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-d5d03d7d59d0027b4d07",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-28 retentionPolicyCreate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 673,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:13.216Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-d39dab1f6716c25809c6",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-29 retentionPolicyUpdate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 604,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:13.893Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-7b86f3b8d95ac0874bcd",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-30 retentionPolicyReview browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 532,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:14.503Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-e9a75ba471a51f04e85d",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-31 retentionPolicyApprove browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 594,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:15.041Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-6487283f85934037e32f",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-32 retentionPolicyPublish browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 617,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:15.638Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-cb10e0aaae0553fddeaa",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-33 issueCreate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 728,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:16.259Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-25fc7d2ebcb603cc40d3",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-34 issueTriage browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 600,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:16.993Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-9c9053512b300b42ee62",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-35 issueStartRemediation browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 589,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:17.597Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-e1bd481a34f4b90f9566",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-36 issueRequestVerification browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 609,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:18.190Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-468f586e2eba040b33e1",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-37 issueVerifyClose browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 594,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:18.803Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-d296ed6a03edf63a15d5",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-38 actionCreate browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 753,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:19.401Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-d4e7a6da670f7cbe0fce",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-39 actionStart browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 611,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:20.159Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-dcf65405c46cf3691c9f",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-40 actionSubmitForReview browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 586,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:20.778Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-c08cf78b41cbf0ff1783",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-41 actionComplete browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 672,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:21.370Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-e0877b10d4ead9ee3e5b",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "FORM-42 actionVerify browser component payload and accessibility [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 721,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:22.048Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-6431267c59d006b41158",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 65,
+          "column": 2
+        },
+        {
+          "title": "STEP6A4 conflict preserves entries, refreshes explicitly and permission failures are safe [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 607,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:22.774Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-174026423cd3d172778e",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 116,
+          "column": 1
+        },
+        {
+          "title": "STEP6A4 missing action permission hides interaction [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 405,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:23.387Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-10150af59f5f362269d3",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 123,
+          "column": 1
+        },
+        {
+          "title": "STEP6A4 lookup denial remains distinct from empty options and blocks invalid submit [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 375,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:23.799Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-f891b1c31d21990d2150",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 125,
+          "column": 1
+        },
+        {
+          "title": "STEP6A4 command denial preserves inputs and never leaks server detail [mock API]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-narrow",
+              "projectName": "chromium-narrow",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 546,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T13:27:24.181Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "72b7084d19bfc3e01fa1-b729ef12c97dd6f8ad9b",
+          "file": "step6a4-business-forms.spec.ts",
+          "line": 132,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-20T13:26:51.705Z",
+    "duration": 36514.295999999995,
+    "expected": 92,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

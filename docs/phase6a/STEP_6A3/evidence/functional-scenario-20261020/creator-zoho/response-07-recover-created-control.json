@@ -1,0 +1,84 @@
+{
+  "status": 200,
+  "body": {
+    "control_id": "01a15910-4a71-71ea-ad1d-bd772cf3358f",
+    "row_version": 1,
+    "ownership_class": "TENANT_OWNED",
+    "control_code": "QA_STEP6A3_TRAZABILIDAD_DOCUMENTAL_001",
+    "name": "QA STEP6A3 — Validación de trazabilidad documental",
+    "control_origin": "tenant_instantiated",
+    "based_on_control_version_id": "01a0ea93-d236-7544-8b75-b3d5d16b0007",
+    "business_owner_subject_id": "01a0f27e-b912-72d2-a08e-c5fcbd4efe43",
+    "lifecycle_state": "active",
+    "versions": [
+      {
+        "control_version_id": "01a15910-4a71-71ea-ad1d-c1b7e37d9a50",
+        "control_id": "01a15910-4a71-71ea-ad1d-bd772cf3358f",
+        "version_number": 1,
+        "objective": "Validar exclusivamente en QA TECDEX el flujo contractual de carga, finalización, vinculación tipada, creación, persistencia y recuperación de evidencia documental en PASO 9.2B. No acredita cumplimiento normativo ni eficacia de controles reales.",
+        "control_type": "preventive",
+        "nature": "hybrid",
+        "frequency_code": "event_driven",
+        "execution_method": "Usar el documento sintético GRC_Tecdex_Evidencia_QA_STEP6A3.pdf como fixture y plan de prueba; user3 ejecuta la creación de evidencia, con vínculo a este control QA y conservación del FileObject finalizado. Registrar el resultado real sin anticipar PASS.",
+        "verification_method": "Comprobar respuesta de creación, ID persistido, consulta y recuperación tras recarga, mismo tenant y FileObject, y trazabilidad de auditoría conforme a las operaciones oficiales.",
+        "minimum_evidence": "Documento sintético de prueba identificado como QA, con procedencia auténtica, más resultado real de la ejecución y referencias de evidencia/archivo. El PDF sin completar es sólo fixture/plan, no prueba de eficacia ni aceptación final.",
+        "suggested_owner_role_code": null,
+        "lifecycle_state": "active",
+        "effective_from": null,
+        "effective_to": null,
+        "published_at": null,
+        "superseded_by_id": null
+      }
+    ],
+    "objectives": [],
+    "scopes": [],
+    "normative_relations": [
+      {
+        "mapping_id": "01a0ea93-e822-74b3-9d3f-54e387d2d014",
+        "target_kind": "requirement",
+        "target_id": "01a0ea93-a44a-7332-83c2-e6c836678a9e",
+        "target_code": "ISO_9001_2026-R-019",
+        "locator": "7.2",
+        "framework_code": "ISO_9001_2026",
+        "framework_name": "ISO 9001:2026",
+        "edition": "2026",
+        "framework_version_id": "01a0ea93-867a-7432-a041-2179e0a543f8",
+        "mapping_type": "supports",
+        "coverage_contribution": null,
+        "mapping_state": "draft",
+        "provenance_ref": "PROV:TCDX:BASELINE_CONTROLS:v1",
+        "access_mode": "non_authoritative_validation"
+      }
+    ],
+    "crosswalk_relations": [],
+    "applicability_relations": [],
+    "contract_provenance": [
+      {
+        "root": {
+          "entity_id": "01a15910-4a71-71ea-ad1d-bd772cf3358f",
+          "entity_type": "Control",
+          "entity_version": {
+            "kind": "row_version",
+            "value": "1"
+          }
+        },
+        "occurrences": [
+          {
+            "code": "event_driven",
+            "entity_id": "01a15910-4a71-71ea-ad1d-c1b7e37d9a50",
+            "family_id": "CV-03",
+            "input_path": "frequency_code",
+            "entity_type": "ControlVersion",
+            "entity_version": {
+              "kind": "version_number",
+              "value": "1"
+            }
+          }
+        ],
+        "manifest_sha256": "81e559c96f687c319d415bb57b97187f17f91d884b35594b4ce0db7b68862b83",
+        "profile_version": 1,
+        "contract_version": "STEP6A3_VOCABULARIES_v1"
+      }
+    ]
+  }
+}

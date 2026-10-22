@@ -1,0 +1,11 @@
+{
+  "PREDEPLOYMENT_GATE": "PASS",
+  "time": "2026-10-20T17:15:56.413145+00:00",
+  "scope": "STEP6A4 frontend only; P3/P5 included",
+  "git_operations": "NONE",
+  "rollback_container": "tcdx-grc-frontend-rollback-step6a4-integral-p3-p5-20261020",
+  "procedure": "scripts/phase6a4/qa-promote-frontend.py; only rollback/failed names adapted",
+  "authorization": "Current PO integral QA instruction; rector45/49/DR003",
+  "local_evidence": "97 tests/typecheck/lint/build verified sealed; corrective sources exact; fresh asset checks below",
+  "baseline": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16"
+}

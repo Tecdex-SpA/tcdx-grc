@@ -1,0 +1,43 @@
+{
+  "captured_at": "2026-10-20T16:10:04.762Z",
+  "transaction_read_only": "on",
+  "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+  "target_id": "01a15942-6048-7405-b0a8-6253ff64f9bb",
+  "state": [
+    {
+      "requirement_assessment_id": "01a15942-6048-7405-b0a8-6253ff64f9bb",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "lifecycle_state": "in_progress",
+      "row_version": "2",
+      "result_status": "no_data",
+      "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "updated_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+    }
+  ],
+  "audit": [
+    {
+      "event_code": "audit.compliance.requirement_assessment.start.v1",
+      "command_code": "requirementAssessmentStart",
+      "outcome": "success",
+      "aggregate_type": "RequirementAssessment",
+      "aggregate_id": "01a15942-6048-7405-b0a8-6253ff64f9bb",
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "correlation_id": "01a15a03-1cea-714a-9b5e-12cddf40c66b",
+      "occurred_at": "2026-10-20T15:51:55.901Z",
+      "before_version": null,
+      "after_version": "2"
+    },
+    {
+      "event_code": "audit.compliance.requirement_assessment.create.v1",
+      "command_code": "requirementAssessmentCreate",
+      "outcome": "success",
+      "aggregate_type": "RequirementAssessment",
+      "aggregate_id": "01a15942-6048-7405-b0a8-6253ff64f9bb",
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "correlation_id": "01a15942-6030-76da-87a8-e8dee63bc044",
+      "occurred_at": "2026-10-20T12:21:24.662Z",
+      "before_version": null,
+      "after_version": "1"
+    }
+  ]
+}

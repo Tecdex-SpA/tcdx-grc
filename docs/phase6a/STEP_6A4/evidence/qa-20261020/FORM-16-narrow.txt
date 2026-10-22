@@ -1,0 +1,120 @@
+Browser tab: 1477742241, Title: "Tecdex GRC", URL: "https://grc.tecdex.net/controles".
+1 AXWebArea Tecdex GRC, URL: grc.tecdex.net/controles
+	2 container root
+		3 container
+			4 image Tecdex
+			5 text GRC
+			6 container Navegación principal
+				7 button Panel principal
+				98 button Normas
+				9 button Cumplimiento
+				10 button Requisitos
+				11 button Controles
+				12 button Evidencias
+				13 button Acciones
+				99 text CONFIGURACIONES
+				100 button Empresas
+				101 button Usuarios
+				102 button Identidades gestionadas
+			18 text Tecdex GRC Gobernanza y cumplimiento
+		19 container
+			267 button Abrir navegación
+			20 text Buscar
+			21 search text field (settable) Buscar
+			26 text U
+			29 button Cerrar sesión
+		30 container
+			31 tab group Submódulos
+				104 tab (selectable, settable, boolean) Controles, Value: 0
+				105 tab (selectable, settable, boolean) Evaluaciones de control, Value: 0
+				106 tab (selected, settable, boolean) Pruebas de aseguramiento, Value: 1
+			179 text ESPACIO OPERATIVO
+			180 heading Pruebas de aseguramiento, Value: 1
+				181 text Pruebas de aseguramiento
+			182 text Registros vigentes dentro de tu alcance autorizado.
+			183 button Nuevo registro
+			184 text Estado
+			185 pop up button (collapsed, settable) Description: Filtrar por estado, Value: Todos, Secondary Actions: Expand
+				186 menu
+					187 (selected) Todos
+					188 Planificada
+					189 En progreso
+					190 Completada
+					191 Revisada
+					192 Aprobada
+			193 container Pruebas de aseguramiento
+				194 table
+					195 row
+						196 cell
+							197 text REGISTRO
+						198 cell
+							199 text REFERENCIA
+						200 cell
+							201 text ESTADO
+						202 cell
+							203 text VERSIÓN
+						204 cell
+							205 text ACCIONES
+					206 row
+						207 cell
+							208 text QA-F5-20261007-ASSURANCE · Aprobada
+						209 cell
+							210 text QA-F5-20261007-ASSURANCE
+						211 cell
+							212 text Aprobada
+						213 cell
+							214 text 5
+						215 cell
+							216 button Ver detalle
+			217 container Planificar prueba de control
+				218 container
+					219 text ALTA CONTROLADA
+					220 heading Planificar prueba de control, Value: 2, ID: create-title
+						221 text Planificar prueba de control
+					222 button Cerrar creación
+				268 container
+					269 text Completa los datos de la operación con información de tu empresa.
+					270 container Información principal
+						271 text Información principal
+						272 container
+							273 text Código de prueba
+							274 text field (settable) Código de prueba
+						275 container
+							276 text Obligatorio  · Código de negocio definido por ti; no es un identificador técnico.
+					277 container Relaciones y versiones
+						278 text Relaciones y versiones
+						279 container
+							280 text Buscar Control
+							281 search text field (settable) Buscar Control
+						282 button Buscar
+						283 text Control
+						284 pop up button (collapsed, settable) Control, Value: Selecciona una opción, Secondary Actions: Expand
+							285 menu
+								286 (selected) Selecciona una opción
+								287 QA_STEP6A3_TRAZABILIDAD_DOCUMENTAL_001 · QA STEP6A3 — Validación de trazabilidad documental · v1 · Activo · ISO 9001:2026
+								288 QA-F5-20261007-CONTROL · QA Phase5 20261007 - Control de requisitos de clientes · v1 · Activo · ISO 9001:2026
+						289 button Cargar más opciones
+						290 text Obligatorio
+						291 text Versión de control
+						292 pop up button (disabled, collapsed, settable) Versión de control, Value: Selecciona una opción, Secondary Actions: Expand
+							293 menu
+								294 (disabled) Selecciona una opción
+						295 text Selecciona primero el objeto de origen.
+						296 text Obligatorio
+					297 container Fechas y conservación
+						298 text Fechas y conservación
+						299 text Fecha planificada
+						300 date field (settable) Fecha planificada
+							301 container
+								302 stepper
+								303 stepper
+								304 stepper
+								305 stepper
+								306 stepper
+								307 stepper
+							308 pop up button Mostrar el selector de fecha y hora locales Mostrar el selector de fecha y hora locales
+						309 text Hora local de la empresa: America/Santiago
+						310 text Opcional
+				266 button Crear registro
+
+The focused UI element is 222 button Cerrar creación

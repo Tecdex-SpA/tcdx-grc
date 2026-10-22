@@ -1,0 +1,236 @@
+{
+  "access": {
+    "status": 200,
+    "body": {
+      "available_tenant_contexts": [
+        {
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "tenant_display_name": "TecDex",
+          "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+          "membership_state": "active",
+          "effective_role_codes": [
+            "EVIDENCE_OWNER",
+            "PRIVACY_MANAGER"
+          ]
+        }
+      ],
+      "effective_platform_role_codes": []
+    }
+  },
+  "authorization": {
+    "status": 200,
+    "body": {
+      "evaluated_at": "2026-10-20T11:20:35.465Z",
+      "platform_permissions": [],
+      "tenant_permissions": {
+        "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+        "permissions": {
+          "compliance.applicability.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.applicability.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.applicability.submit": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.framework.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.methodology.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.normative_unit.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.requirement_assessment.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.requirement_assessment.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.requirement_assessment.submit": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.requirement_assessment.update": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.requirement.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.soa.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "controls.assurance_test.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "controls.control_assessment.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "controls.control.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "evidence.document.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "evidence.evidence_request.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "evidence.evidence_request.submit": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "evidence.evidence.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "evidence.evidence.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "organization.subject.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "platform.membership_reference.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.data_subject_request.archive": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.data_subject_request.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.data_subject_request.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.data_subject_request.review": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.data_subject_request.transition": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.data_subject_request.update": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.erasure_execution.execute": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.erasure_execution.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.erasure_execution.review": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.retention_policy_reference.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.retention_policy.archive": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.retention_policy.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.retention_policy.publish": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.retention_policy.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.retention_policy.review": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.retention_policy.update": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "remediation.action.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "remediation.issue.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ]
+        },
+        "default_timezone": "America/Santiago"
+      }
+    }
+  },
+  "control_create_granted": false,
+  "evidence_create_granted": true,
+  "membership_enumeration_granted": false
+}

@@ -1,0 +1,139 @@
+{
+  "node": "v22.23.2",
+  "scope": "STEP6A4 local only; component mocks do not establish backend or QA E2E",
+  "checks": [
+    {
+      "id": "typecheck",
+      "command": [
+        "pnpm",
+        "run",
+        "typecheck"
+      ],
+      "start": "2026-10-20T13:26:50.044Z",
+      "end": "2026-10-20T13:26:51.387Z",
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "docs/phase6a/STEP_6A4/evidence/local-20261020/typecheck.log"
+    },
+    {
+      "id": "lint",
+      "command": [
+        "pnpm",
+        "run",
+        "lint"
+      ],
+      "start": "2026-10-20T13:26:51.388Z",
+      "end": "2026-10-20T13:26:52.497Z",
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "docs/phase6a/STEP_6A4/evidence/local-20261020/lint.log"
+    },
+    {
+      "id": "build",
+      "command": [
+        "pnpm",
+        "run",
+        "build"
+      ],
+      "start": "2026-10-20T13:26:52.497Z",
+      "end": "2026-10-20T13:26:54.568Z",
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "docs/phase6a/STEP_6A4/evidence/local-20261020/build.log"
+    },
+    {
+      "id": "form-assets",
+      "command": [
+        "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+        "scripts/phase6a4/generate-form-assets.mjs",
+        "--check"
+      ],
+      "start": "2026-10-20T13:26:54.569Z",
+      "end": "2026-10-20T13:26:55.399Z",
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "docs/phase6a/STEP_6A4/evidence/local-20261020/form-assets.log"
+    },
+    {
+      "id": "contract-assets",
+      "command": [
+        "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+        "scripts/foundations/generate-contract-assets.mjs",
+        "--check"
+      ],
+      "start": "2026-10-20T13:26:55.399Z",
+      "end": "2026-10-20T13:26:55.595Z",
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "docs/phase6a/STEP_6A4/evidence/local-20261020/contract-assets.log"
+    },
+    {
+      "id": "unit-component",
+      "command": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "apps/frontend/src/business-forms.test.tsx",
+        "apps/frontend/src/core-grc.test.tsx",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=docs/phase6a/STEP_6A4/evidence/local-20261020/unit-results.json"
+      ],
+      "start": "2026-10-20T13:26:55.596Z",
+      "end": "2026-10-20T13:26:58.041Z",
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "docs/phase6a/STEP_6A4/evidence/local-20261020/unit-component.log"
+    },
+    {
+      "id": "reference-inventory",
+      "command": [
+        "python3",
+        "scripts/phase6a4/consolidate-evidence.py"
+      ],
+      "start": "2026-10-20T13:31:04.101970+00:00",
+      "end": "2026-10-20T13:31:04.324111+00:00",
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "docs/phase6a/STEP_6A4/evidence/local-20261020/reference-inventory.log"
+    },
+    {
+      "id": "secret-scan",
+      "command": [
+        "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+        "scripts/foundations/secret-scan.mjs"
+      ],
+      "start": "2026-10-20T13:31:04.324195+00:00",
+      "end": "2026-10-20T13:31:07.007796+00:00",
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "docs/phase6a/STEP_6A4/evidence/local-20261020/secret-scan.log"
+    },
+    {
+      "id": "rector-governance",
+      "command": [
+        "bash",
+        "scripts/verify-rector-governance.sh"
+      ],
+      "start": "2026-10-20T13:31:07.007856+00:00",
+      "end": "2026-10-20T13:31:07.317096+00:00",
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "docs/phase6a/STEP_6A4/evidence/local-20261020/rector-governance.log"
+    },
+    {
+      "id": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "start": "2026-10-20T13:31:07.317152+00:00",
+      "end": "2026-10-20T13:31:07.349175+00:00",
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "docs/phase6a/STEP_6A4/evidence/local-20261020/whitespace.log"
+    }
+  ]
+}

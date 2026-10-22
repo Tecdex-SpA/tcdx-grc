@@ -1,0 +1,17 @@
+{
+  "PREDEPLOYMENT_GATE": "PASS",
+  "recorded_at_utc": "2026-10-20T13:40:33.159975+00:00",
+  "baseline": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "branch": "fix/step6a3-v112-continuity-20261016",
+  "HEAD": "4a275264a7522031e62bf09f598c9d56e21d25e0",
+  "sealed_local_files_verified": 126,
+  "index_empty": true,
+  "deployment_scope": "frontend only",
+  "procedure_source": "docs/phase6a/STEP_6A3/EVIDENCE_CONTROL_SELECTOR_DEPLOY_20261019.md",
+  "promoter_adaptation": "rollback and failed container names only; runtime cloning and checks unchanged",
+  "rollback_container": "tcdx-grc-frontend-rollback-step6a4-ux-business-forms-20261020",
+  "incorrect_domain_matches": [],
+  "rector_gate": "PASS",
+  "local_checks_reused": "sealed CHECKS.json, RESULT.json; source bytes unchanged",
+  "build_source_files": 89
+}

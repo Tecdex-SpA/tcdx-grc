@@ -1,0 +1,73 @@
+{
+  "recorded_at_utc": "2026-10-20T12:25:06.843914+00:00",
+  "baseline": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "domain": "https://grc.tecdex.net/",
+  "environment": "QA",
+  "tenant": "TECDEX",
+  "CFG_D_OPERATIONAL_ACCEPTANCE": "PASS",
+  "UI_V112_TECHNICAL_REVIEW": "PASS",
+  "UI_V112_HUMAN_ACCEPTANCE": "PASS",
+  "RECTOR_GATE": "PASS",
+  "STEP6A3_CLOSURE": "PASS",
+  "STEP6A3": "PASS",
+  "human_ui_results": {
+    "UI-1": "PASS",
+    "UI-2": "PASS",
+    "UI-3": "PASS",
+    "UI-4": "PASS",
+    "UI-5": "PASS",
+    "UI-6": "PASS",
+    "UI-7": "PASS"
+  },
+  "PO_functional_results": {
+    "9.2B": "PASS",
+    "9.3": "PASS",
+    "9.4": "PASS"
+  },
+  "technical_checks_reused": 20,
+  "persistence_checks_reused": 18,
+  "pending_step6a3_blockers": [],
+  "STEP6A4": {
+    "state": "NOT_STARTED",
+    "next_stage": true,
+    "gate": "UX_BUSINESS_FORMS",
+    "authorization": "PENDING"
+  },
+  "STEP6A5": "NOT_STARTED",
+  "UI7_request": {
+    "status": "RECORDED_FOR_LATER_EVALUATION",
+    "stage": "STEP6A5",
+    "blocking": false,
+    "implementation_authorized": false,
+    "contractual_scope_changed": false,
+    "detail": "Not specified by PO; do not infer implementation."
+  },
+  "changes": {
+    "documentation_and_receipts_only": true,
+    "product_code": false,
+    "PostgreSQL": false,
+    "IAM_RBAC": false,
+    "contracts": false,
+    "migrations": false,
+    "deployment": false,
+    "main": false,
+    "baseline": false
+  },
+  "functional_tests_repeated": false,
+  "new_QA_queries_or_mutations": false,
+  "unresolved_rector_conflicts": [],
+  "branch": "fix/step6a3-v112-continuity-20261016",
+  "origin_commit": "4a275264a7522031e62bf09f598c9d56e21d25e0",
+  "files_changed": [
+    "docs/phase6a/STEP_6A3/FINAL_CLOSURE_REPORT_20261020.md",
+    "docs/phase6a/STEP_6A3/RESIDUAL_CLOSEOUT_REPORT_20261020.md",
+    "docs/phase6a/STEP_6A3/FORMAL_CLOSURE_EVALUATION_20261020.md",
+    "docs/governance/MASTER_EXECUTION_STATUS.md",
+    "docs/phase6a/STEP_6A3/evidence/residual-closeout-20261020/RESULT.json",
+    "docs/phase6a/STEP_6A3/evidence/residual-closeout-20261020/SHA256SUMS.txt",
+    "docs/phase6a/STEP_6A3/evidence/final-closure-20261020"
+  ],
+  "human_receipt": "docs/phase6a/STEP_6A3/evidence/final-closure-20261020/HUMAN_UI_ACCEPTANCE_RECEIPT.json",
+  "report": "docs/phase6a/STEP_6A3/FINAL_CLOSURE_REPORT_20261020.md",
+  "report_sha256": "94bccbe95cc0094b4e6fdfb7a9e8703a1a20e77408e0c987f4b76689b0514fa3"
+}

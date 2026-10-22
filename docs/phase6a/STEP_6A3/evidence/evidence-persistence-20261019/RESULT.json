@@ -1,0 +1,59 @@
+{
+  "master_regent": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "rector_gate": "PASS_FOR_READ_ONLY_DIAGNOSIS_AND_LOCAL_CORRECTION",
+  "step6a3": "PARTIAL_BLOCKED_PENDING_FUNCTIONAL_ACCEPTANCE",
+  "step6a4": "NOT_STARTED",
+  "qa_observed_at": "2026-10-19T15:51:38.297Z",
+  "target": "QA_EVID_RET_001",
+  "tenant": "TECDEX",
+  "exists": false,
+  "total_tenant_evidence": 1,
+  "successful_creations_after_rejection": 0,
+  "idempotency_records_after_rejection": 0,
+  "rejection_correlation": "01a154d0-bc78-7408-a08f-ab026aa4b06f",
+  "file_object": {
+    "file_object_id": "01a154d0-bb8c-7305-94e0-04279e8330b3",
+    "created_at": "2026-10-19T15:38:48.060Z",
+    "scan_status": "passed",
+    "size_bytes": "73014",
+    "source_provenance": "interna",
+    "created_by_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+    "used_by_evidence": false
+  },
+  "cause": "The evidence POST was rejected for provenance_ref before creation. File finalization succeeded separately. The tenant contains exactly its previous evidence, so filters, permissions and pagination cannot explain the missing new record.",
+  "provenance_serialization": "The field labelled Referencia de procedencia maps directly to form.provenance_ref and is sent when nonempty. Procedencia del archivo maps instead to source_provenance for upload. No field-serialization defect was demonstrated.",
+  "request_body_limitation": "The rejected POST body is not available in the read-only audit receipt; the exact entered value cannot be reconstructed. The supplied field error and backend validation prove rejection of the creation, not successful persistence.",
+  "demonstrated_frontend_defect": "The post-upload creation-rejection path mislabeled all failures as upload failures and changed the retention reference context after finalization, clearing policy/file_object_id and preventing a transfer-free retry.",
+  "minimal_local_correction": [
+    "Distinguish the upload stage from the creation stage and display the rejected field plus correlation.",
+    "Keep the upload policy reference context stable after successful finalization, preserving FileObject for retry."
+  ],
+  "validation": {
+    "rector_integrity": "PASS",
+    "frontend_typecheck": "PASS",
+    "focused_local_playwright": "PASS_1_CHROMIUM_DESKTOP",
+    "whitespace": "PASS",
+    "qa_creation_or_transfer": "NOT_PERFORMED"
+  },
+  "files_changed": [
+    "apps/frontend/src/core-grc.tsx",
+    "e2e/core-grc-ui.spec.ts",
+    "scripts/phase6a3/qa-evidence-persistence-readonly.cjs",
+    "docs/governance/MASTER_EXECUTION_STATUS.md",
+    "docs/phase6a/STEP_6A3/evidence/evidence-persistence-20261019"
+  ],
+  "layers": {
+    "frontend_local": true,
+    "backend": false,
+    "contracts": false,
+    "postgresql_schema": false,
+    "qa_data_mutations": false,
+    "rbac_iam": false,
+    "storage_architecture": false,
+    "qa_deployment": false,
+    "production": false
+  },
+  "qa_deployment": "NOT_PERFORMED: the creation accepts populated provenance_ref through its existing contract; no backend/storage deployment is needed. The focused frontend correction is local and is not claimed active in QA.",
+  "next_step": "Reissue only the authorized evidence-create POST with the existing finalized FileObject and the user-supplied provenance_ref, preserving the original remaining business fields and links. Do not upload the PDF again. If the form was closed/reloaded, its local upload state is gone; the existing FileObject must be reused explicitly, not reuploaded. No new recovery capability or hardcoded FileObject was introduced.",
+  "unresolved_rector_conflicts": []
+}

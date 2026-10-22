@@ -1,0 +1,39 @@
+{
+  "form_id": "FORM-05",
+  "operation_id": "requirementAssessmentStart",
+  "environment": "QA",
+  "origin": "https://grc.tecdex.net/",
+  "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+  "actor_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+  "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+  "object_id": "01a15942-6048-7405-b0a8-6253ff64f9bb",
+  "path": "/api/v1/requirement-assessments/01a15942-6048-7405-b0a8-6253ff64f9bb:start",
+  "permission": "compliance.requirement_assessment.update",
+  "granted_scope": "tenant",
+  "prior_attempt": {
+    "http_status": 401,
+    "payload_sha256": "454bef1ab5efbd4c6b3b6928fbef1f9d214f6cd84cb44a940478399dd2f9a1db",
+    "idempotency_header_present": true,
+    "commit": false,
+    "proof": "FORM-05-before-db.json and FORM-05-after-401-db.json have identical state, row_version and audit history"
+  },
+  "successful_attempt": {
+    "http_status": 202,
+    "payload_sha256": "454bef1ab5efbd4c6b3b6928fbef1f9d214f6cd84cb44a940478399dd2f9a1db",
+    "idempotency_header_present": true,
+    "ui_after": "The QA list showed En progreso, row_version 2; network metadata showed POST 202 and follow-up GET 200",
+    "initial_state": "not_assessed",
+    "initial_row_version": 1,
+    "final_state": "in_progress",
+    "final_row_version": 2,
+    "database_proof": "FORM-05-after-202-db.json",
+    "audit_event_code": "audit.compliance.requirement_assessment.start.v1",
+    "audit_command_code": "requirementAssessmentStart",
+    "audit_outcome": "success",
+    "audit_correlation_id": "01a15a03-1cea-714a-9b5e-12cddf40c66b",
+    "audit_occurred_at": "2026-10-20T15:51:55.901Z"
+  },
+  "result": "PASS",
+  "scope_limit": "This receipt proves command, backend authorization, persistence, state and audit for FORM-05 only; it does not prove all 42 forms or human acceptance.",
+  "no_secrets_captured": true
+}

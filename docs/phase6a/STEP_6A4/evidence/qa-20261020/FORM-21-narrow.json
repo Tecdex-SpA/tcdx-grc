@@ -1,0 +1,151 @@
+{
+  "dialogs": [
+    {
+      "bounds": {
+        "height": 844,
+        "width": 390
+      },
+      "label": "create-title",
+      "modal": "true"
+    }
+  ],
+  "fields": [
+    {
+      "disabled": false,
+      "label": "Código de solicitud",
+      "max": null,
+      "min": null,
+      "required": true,
+      "tag": "INPUT",
+      "type": "text"
+    },
+    {
+      "disabled": false,
+      "label": "Marco normativo",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción",
+        "ISO_9001_2026 · ISO 9001:2026 · 2026 · v1 · Borrador"
+      ],
+      "required": false,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Buscar Requisito",
+      "max": null,
+      "min": null,
+      "required": false,
+      "tag": "INPUT",
+      "type": "search"
+    },
+    {
+      "disabled": true,
+      "label": "Requisito",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción"
+      ],
+      "required": false,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Buscar Control",
+      "max": null,
+      "min": null,
+      "required": false,
+      "tag": "INPUT",
+      "type": "search"
+    },
+    {
+      "disabled": false,
+      "label": "Control",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción",
+        "QA_STEP6A3_TRAZABILIDAD_DOCUMENTAL_001 · QA STEP6A3 — Validación de trazabilidad documental · v1 · Activo · ISO 9001:2026",
+        "QA-F5-20261007-CONTROL · QA Phase5 20261007 - Control de requisitos de clientes · v1 · Activo · ISO 9001:2026"
+      ],
+      "required": false,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Evaluación de requisito",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción",
+        "No evaluada",
+        "Evaluada · 20 oct 2026, 9:04:17 GMT-3",
+        "Aprobada · 8 oct 2026, 7:08:37 GMT-3"
+      ],
+      "required": false,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Evaluación de control",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción",
+        "En progreso",
+        "Completada · 15 oct 2026, 16:56:11 GMT-3",
+        "Aprobada · 8 oct 2026, 7:08:38 GMT-3"
+      ],
+      "required": false,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Prueba de control",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción",
+        "QA-F5-20261007-ASSURANCE · Aprobada"
+      ],
+      "required": false,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": true,
+      "label": "Responsable",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción"
+      ],
+      "required": false,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Fecha límite",
+      "max": null,
+      "min": null,
+      "required": false,
+      "tag": "INPUT",
+      "type": "datetime-local"
+    }
+  ],
+  "focus": "Cerrar creación",
+  "horizontalOverflow": false,
+  "url": "https://grc.tecdex.net/evidencias",
+  "viewport": {
+    "height": 844,
+    "width": 390
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "master_regent": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "authorization": "Explicit PO request: correct QA session duration only, minimum idle 30 minutes, renewable tokens, preserve higher absolute limit and security; do not modify production/schema/roles; do not close STEP6A3/start STEP6A4.",
+  "rector_gate_for_bounded_correction": "PASS",
+  "step6a3": "PARTIAL_BLOCKED_PENDING_FUNCTIONAL_ACCEPTANCE",
+  "step6a4": "NOT_STARTED",
+  "root_cause": "TCDX application JWT had fixed 300-second lifetime; backend discarded external refresh tokens, frontend had no renewal and cleared its tab session on protected API 401. Keycloak already allowed 1800 seconds idle and 36000 seconds absolute.",
+  "previous": {
+    "application_access_seconds": 300,
+    "application_renewal": false,
+    "keycloak_idle_seconds": 1800,
+    "keycloak_absolute_seconds": 36000,
+    "client_session_limits": "inherit realm"
+  },
+  "new": {
+    "application_access_seconds": 300,
+    "managed_identity_renewal": true,
+    "application_idle_seconds": 1800,
+    "application_absolute_seconds": 36000,
+    "keycloak_limits": "unchanged",
+    "refresh_credential_custody": "backend process memory only; no offline token"
+  },
+  "layers_changed": {
+    "database_schema": false,
+    "roles_permissions": false,
+    "canonical_domain_contracts": false,
+    "executable_auth_runtime_contract": true,
+    "backend": true,
+    "frontend_session_management": true,
+    "visuals": false,
+    "qa_runtime_configuration_and_containers": true,
+    "infrastructure_topology": false,
+    "production": false
+  },
+  "preserved": [
+    "MFA pwd+otp",
+    "signature/issuer/audience/time validation",
+    "RBAC and tenant isolation",
+    "canonical identity lifecycle",
+    "revocation",
+    "audit",
+    "secure flow cookies",
+    "manual logout"
+  ],
+  "checks": "checks.json",
+  "image_scope_parity": "image-scope-parity.json",
+  "deployment": {
+    "backend": {
+      "image_id": "sha256:f4ed625346fc4712f27945d5248aa1b93e3b324772ef5e06c8d37e1102f57129",
+      "host": "192.168.2.45"
+    },
+    "frontend": {
+      "image_id": "sha256:368404b2ab4aecdec6d74b871dad86c3255a0e5f901b36ebe26e372351ff8a3e",
+      "host": "192.168.2.46"
+    }
+  },
+  "runtime_validation": "PENDING_NEW_HUMAN_LOGIN_AND_30_MINUTE_OBSERVATION",
+  "unresolved_rector_conflicts": [],
+  "implementation_files": [
+    "apps/backend/src/config.ts",
+    "apps/backend/src/server.ts",
+    "apps/backend/src/security/application-token.ts",
+    "apps/backend/src/security/browser-token-renewal.ts",
+    "apps/backend/src/security/browser-token-renewal.test.ts",
+    "apps/backend/src/security/oidc-browser.ts",
+    "apps/backend/src/security/authentication.test.ts",
+    "apps/backend/src/security/publication-operator-server.ts",
+    "apps/frontend/src/browser-auth.ts",
+    "apps/frontend/src/browser-auth.test.ts",
+    "apps/frontend/src/main.tsx",
+    "deploy/qa/session-duration.json",
+    "docs/executable-contracts/amendments/STEP_6A3_QA_SESSION_DURATION_20261019/DELTA.md",
+    "scripts/phase6a3/qa-promote-session-duration.py",
+    "scripts/phase6a3/qa-deploy-session-duration.py",
+    "scripts/phase6a3/qa-persist-session-policy.py",
+    "scripts/phase6a3/qa-session-continuity.mjs",
+    "scripts/phase6a3/qa-session-image-parity.py",
+    "scripts/phase6a3/qa-session-runtime-receipt.cjs",
+    "scripts/phase6a3/qa-session-settings.py",
+    "scripts/phase6a3/qa-session-settings.mjs"
+  ],
+  "evidence_directory": "docs/phase6a/STEP_6A3/evidence/session-duration-20261019",
+  "measurement_history": [
+    "attempt1: measurement script used Fetch status() instead of status; corrected; not a session PASS",
+    "attempt2: provider refresh accepted (session refresh timestamp 14:40:05Z), application rejected reused initial nonce requirement; corrected per OIDC Core 12.2, MFA and session binding retained"
+  ],
+  "human_acceptance": "PENDING; login acknowledgements are not STEP6A3 acceptance"
+}

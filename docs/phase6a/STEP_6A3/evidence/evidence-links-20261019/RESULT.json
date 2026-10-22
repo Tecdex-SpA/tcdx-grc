@@ -1,0 +1,36 @@
+{
+  "RECTOR_GATE": "PASS",
+  "MASTER_REGENT": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "STEP6A3": "PARTIAL_BLOCKED",
+  "STEP6A4": "NOT_STARTED",
+  "functional_acceptance": "PENDING",
+  "root_cause": "Ordinary Evidence Owner creation with empty links fails contextual domain precondition; finalized file uses published applicability and actor has no source exception.",
+  "contract": {
+    "links_required": true,
+    "omission_allowed": false,
+    "empty_array_schema_allowed": true,
+    "empty_array_domain": "restricted retention source routes; not this ordinary creation",
+    "ordinary_links_minimum": 1
+  },
+  "file_preserved": {
+    "file_object_id": "01a15505-0565-758c-a3fd-1c4142fde098",
+    "scan_status": "passed",
+    "created_at": "2026-10-19T16:35:54.835Z",
+    "created_by_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+    "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+    "retention_policy_applicability_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45",
+    "applicability_state": "published",
+    "classification": "internal",
+    "used_by_evidence": false
+  },
+  "implementation_changed": false,
+  "deployments": 0,
+  "qa_writes": 0,
+  "qa_transfers": 0,
+  "checks": {
+    "focused_vitest": "4 PASS, 22 skipped",
+    "rector_governance": "PASS exit0",
+    "whitespace": "PASS"
+  },
+  "semantic_target_eligibility": "Not determined without genuine relation to PDF; existing tenant objects and reader permissions recorded without inventing links."
+}

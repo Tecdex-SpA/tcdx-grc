@@ -1,0 +1,174 @@
+Browser tab: 1477742241, Title: "Tecdex GRC", URL: "https://grc.tecdex.net/controles".
+1 AXWebArea Tecdex GRC, URL: grc.tecdex.net/controles
+	2 container root
+		3 container
+			4 image Tecdex
+			5 text GRC
+			6 container Navegación principal
+				7 button Panel principal
+				98 button Normas
+				9 button Cumplimiento
+				10 button Requisitos
+				11 button Controles
+				12 button Evidencias
+				13 button Acciones
+				99 text CONFIGURACIONES
+				100 button Empresas
+				101 button Usuarios
+				102 button Identidades gestionadas
+			18 text Tecdex GRC Gobernanza y cumplimiento
+		19 container
+			20 text Buscar
+			21 search text field (settable) Buscar
+			173 text Empresa
+			174 pop up button (collapsed, settable) Description: Empresa activa, Value: TecDex, Secondary Actions: Expand
+				175 menu
+					176 (selected) TecDex
+			26 text U Usuario autorizado
+			177 container Administrador de la plataforma · Responsable de acción · Rol personalizado · Auditor · Auditor líder · Rol personalizado · Responsable de cumplimiento · Rol personalizado · Responsable de control · Rol personalizado · Responsable de evidencia · Rol personalizado · Responsable GRC · Revisor legal · Responsable de privacidad · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Administrador de la empresa · Consulta
+				178 text Platform ·  TecDex ·  Administrador de la plataforma · Responsable de acción · Rol personalizado · Auditor · Auditor líder · Rol personalizado · Responsable de cumplimiento · Rol personalizado · Responsable de control · Rol personalizado · Responsable de evidencia · Rol personalizado · Responsable GRC · Revisor legal · Responsable de privacidad · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Administrador de la empresa · Consulta
+			29 button Cerrar sesión
+		30 container
+			31 tab group Submódulos
+				104 tab (selectable, settable, boolean) Controles, Value: 0
+				105 tab (selected, settable, boolean) Evaluaciones de control, Value: 1
+				106 tab (selectable, settable, boolean) Pruebas de aseguramiento, Value: 0
+			113 text ESPACIO OPERATIVO
+			114 heading Evaluaciones de control, Value: 1
+				115 text Evaluaciones de control
+			116 text Registros vigentes dentro de tu alcance autorizado.
+			117 button Nuevo registro
+			118 text Estado
+			119 pop up button (collapsed, settable) Description: Filtrar por estado, Value: Todos, Secondary Actions: Expand
+				120 menu
+					121 (selected) Todos
+					122 Planificada
+					123 En progreso
+					124 Completada
+					125 Revisada
+					126 Aprobada
+			127 container Evaluaciones de control
+				128 table
+					129 row
+						130 cell
+							131 text REGISTRO
+						132 cell
+							133 text REFERENCIA
+						134 cell
+							135 text ESTADO
+						136 cell
+							137 text VERSIÓN
+						138 cell
+							139 text ACCIONES
+					140 row
+						141 cell
+							142 text En progreso
+						143 cell
+							144 text No informado
+						145 cell
+							146 text En progreso
+						147 cell
+							148 text 2
+						149 cell
+							150 button Ver detalle
+					151 row
+						152 cell
+							153 text Completada · pendiente de contexto de zona horaria de la empresa.
+						154 cell
+							155 text No informado
+						156 cell
+							157 text Completada
+						158 cell
+							159 text 3
+						160 cell
+							161 button Ver detalle
+					162 row
+						163 cell
+							164 text Aprobada · pendiente de contexto de zona horaria de la empresa.
+						165 cell
+							166 text Sin probar
+						167 cell
+							168 text Aprobada
+						169 cell
+							170 text 5
+						171 cell
+							172 button Ver detalle
+			179 container Evaluaciones de control
+				180 container
+					181 text DETALLE DEL REGISTRO
+					182 heading Evaluaciones de control, Value: 2, ID: detail-title
+						183 text Evaluaciones de control
+					184 button Cerrar detalle
+				185 text Procedencia del vocabulario contractual no registrada
+				203 text En progreso
+				204 definition list
+					205 container Evaluación de control
+						206 text Evaluación de control
+					207 text En progreso
+					208 container Versión
+						209 text Versión
+					210 text 2
+					211 container Control
+						212 text Control
+					213 text Cargando referencia…
+					214 container Versión del control
+						215 text Versión del control
+					216 text Cargando referencia…
+					217 container Referencia metodológica
+						218 text Referencia metodológica
+					219 text Control effectiveness rector baseline · v1
+					220 container Estado
+						221 text Estado
+					222 text En progreso
+					223 container Estado del resultado
+						224 text Estado del resultado
+					225 text Sin datos
+				186 container
+					187 heading Completar evaluación de control, Value: 3
+						226 text Completar evaluación de control
+					227 container Información principal
+						228 text Información principal
+						229 container
+							230 text Estado del resultado
+							231 pop up button (collapsed, settable) Description: Estado del resultado, Value: Selecciona una opción, Secondary Actions: Expand
+								232 menu
+									233 (selected) Selecciona una opción
+									234 Válido
+									235 Sin datos
+									236 Datos insuficientes
+									237 Cobertura insuficiente
+									238 Fuente desactualizada
+									239 Fuentes en conflicto
+									240 Dependencia pendiente
+									241 Datos de entrada no válidos
+									242 Error de la fuente
+									243 Error de cálculo
+									244 No aplicable
+									245 Sustituida
+						246 text Obligatorio
+						247 container
+							248 text Conclusión
+							249 pop up button (collapsed, settable) Description: Conclusión, Value: Selecciona una opción, Secondary Actions: Expand
+								250 menu
+									251 (selected) Selecciona una opción
+									252 Efectivo
+									253 Efectivo parcialmente
+									254 No efectivo
+									255 Sin probar
+									256 Evidencia insuficiente
+						257 text Opcional
+						258 container
+							259 text Efectividad de diseño
+							260 stepper (settable) Efectividad de diseño
+						261 text Opcional
+						262 container
+							263 text Efectividad operativa
+							264 stepper (settable) Efectividad operativa
+						265 text Opcional
+						266 container
+							267 text Cobertura (%)
+							268 stepper (settable) Cobertura (%)
+						269 text Opcional
+					202 button Completar
+
+The focused UI element is 184 button Cerrar detalle

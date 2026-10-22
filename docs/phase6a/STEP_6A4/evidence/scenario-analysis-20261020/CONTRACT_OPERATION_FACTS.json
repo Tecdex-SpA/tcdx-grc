@@ -1,0 +1,1590 @@
+{
+  "source": "docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml",
+  "sha256": "32b02f7d817f70e41507c2d464e2bcf647034e0c152877eb2ffdd148a4a02620",
+  "operations": [
+    {
+      "operation_id": "applicabilityCreate",
+      "path": "/requirement-applicabilities",
+      "method": "post",
+      "description": "Derived from 22,30,44. Actor: Compliance Manager. Tenant semantics: Requirement accessible; optional Subject same tenant. Contract shape: ApplicabilityCreate → Applicability.",
+      "permission": "`compliance.applicability.create`",
+      "scope": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "audit": "`audit.compliance.applicability.create.v1`",
+      "physical_entities": "`regulatory.requirement_applicabilities`",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "requirement_id",
+          "applicability_decision",
+          "effective_from"
+        ],
+        "if": {
+          "properties": {
+            "applicability_decision": {
+              "const": "not_applicable"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "rationale"
+          ],
+          "properties": {
+            "rationale": {
+              "type": "string",
+              "pattern": ".*\\S.*"
+            }
+          }
+        },
+        "properties": {
+          "requirement_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "scope_subject_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "applicability_decision": {
+            "type": "string",
+            "enum": [
+              "applicable",
+              "not_applicable"
+            ]
+          },
+          "rationale": {
+            "type": "string"
+          },
+          "effective_from": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          },
+          "effective_to": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          }
+        },
+        "description": "Requirement must be accessible; scope Subject, when present, is active, effective and belongs to the selected tenant. Rationale is required and nonblank for not_applicable; applicable permits omission. Version, tenant and initial lifecycle are server-controlled."
+      }
+    },
+    {
+      "operation_id": "applicabilitySubmit",
+      "path": "/requirement-applicabilities/{id}:submit",
+      "method": "post",
+      "description": "Derived from 21,22,44. Actor: author. Tenant semantics: exact row_version and rationale required. Contract shape: ApplicabilitySubmitRequest.expected_version → Applicability.",
+      "permission": "`compliance.applicability.submit`",
+      "scope": "tenant/owned",
+      "capability": "ISO_COMPLIANCE",
+      "audit": "`audit.compliance.applicability.submit.v1`",
+      "physical_entities": "applicability",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version",
+          "rationale"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    {
+      "operation_id": "applicabilityApprove",
+      "path": "/requirement-applicabilities/{id}:approve",
+      "method": "post",
+      "description": "Derived from 22,44. Actor: authorized reviewer. Tenant semantics: SoD; same tenant; global Requirement unchanged. Contract shape: ApplicabilityApproveRequest.expected_version → Applicability.",
+      "permission": "`compliance.applicability.approve`",
+      "scope": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "audit": "`audit.compliance.applicability.approve.v1`",
+      "physical_entities": "applicability",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          }
+        },
+        "description": "Approval actor and timestamp come only from the authorized server context; SoD remains mandatory."
+      }
+    },
+    {
+      "operation_id": "requirementAssessmentCreate",
+      "path": "/requirement-assessments",
+      "method": "post",
+      "description": "Derived from 21,44. Actor: Compliance Manager. Tenant semantics: applicability same tenant; no NormativeUnit assessment. Contract shape: AssessmentCreate → Assessment.",
+      "permission": "`compliance.requirement_assessment.create`",
+      "scope": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "audit": "`audit.compliance.requirement_assessment.create.v1`",
+      "physical_entities": "`regulatory.requirement_assessments`",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "requirement_applicability_id",
+          "methodology_version_ref"
+        ],
+        "properties": {
+          "requirement_applicability_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "methodology_version_ref": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "effective_configuration_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          }
+        },
+        "description": "Applicability and optional EffectiveConfiguration must be same-tenant and compatible; methodology_version_ref resolves a published effective ComplianceMethodology. Initial lifecycle/result state is server-controlled."
+      }
+    },
+    {
+      "operation_id": "requirementAssessmentStart",
+      "path": "/requirement-assessments/{id}:start",
+      "method": "post",
+      "description": "Derived from 21. Actor: assessor. Tenant semantics: `not_assessed→in_progress`. Contract shape: RequirementAssessmentStartRequest.expected_version → Assessment.",
+      "permission": "`compliance.requirement_assessment.update`",
+      "scope": "assigned/tenant",
+      "capability": "ISO_COMPLIANCE",
+      "audit": "`audit.compliance.requirement_assessment.start.v1`",
+      "physical_entities": "assessment",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    {
+      "operation_id": "requirementAssessmentSubmit",
+      "path": "/requirement-assessments/{id}:submit",
+      "method": "post",
+      "description": "Derived from 21,38. Actor: assessor. Tenant semantics: `in_progress→assessed`; result fields separate. Contract shape: RequirementAssessmentSubmitRequest.expected_version → Assessment.",
+      "permission": "`compliance.requirement_assessment.submit`",
+      "scope": "assigned/tenant",
+      "capability": "ISO_COMPLIANCE",
+      "audit": "`audit.compliance.requirement_assessment.submit.v1`",
+      "physical_entities": "assessment",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version",
+          "result_status"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "result_status": {
+            "$ref": "#/components/schemas/ResultStatus"
+          },
+          "domain_conclusion": {
+            "type": "string",
+            "enum": [
+              "not_assessed",
+              "compliant",
+              "partially_compliant",
+              "non_compliant",
+              "not_applicable",
+              "insufficient_evidence"
+            ]
+          },
+          "coverage_percent": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          }
+        },
+        "description": "result_status and domain_conclusion are distinct; assessed_at is server-generated."
+      }
+    },
+    {
+      "operation_id": "requirementAssessmentApprove",
+      "path": "/requirement-assessments/{id}:approve",
+      "method": "post",
+      "description": "Derived from 21,22. Actor: reviewer. Tenant semantics: SoD; `assessed→approved`. Contract shape: RequirementAssessmentApproveRequest.expected_version → Assessment.",
+      "permission": "`compliance.requirement_assessment.approve`",
+      "scope": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "audit": "`audit.compliance.requirement_assessment.approve.v1`",
+      "physical_entities": "assessment",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          }
+        },
+        "description": "SoD and the assessed-to-approved precondition are enforced from authoritative state."
+      }
+    },
+    {
+      "operation_id": "soaPublish",
+      "path": "/statements-of-applicability/{id}:publish",
+      "method": "post",
+      "description": "Derived from 22,41,44. Actor: GRC/Compliance Manager. Tenant semantics: version complete; controls accessible; immutable after publish. Contract shape: SoaPublishRequest.expected_version → SoA.",
+      "permission": "`compliance.soa.publish`",
+      "scope": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "audit": "`audit.compliance.soa.publish.v1`",
+      "physical_entities": "SoA/items",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version",
+          "reason"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    {
+      "operation_id": "controlInstantiate",
+      "path": "/controls:instantiate",
+      "method": "post",
+      "description": "Derived from 41,44. Actor: Control/GRC Manager. Tenant semantics: based_on global accessible; creates tenant Control. Contract shape: ControlInstantiate → Control.",
+      "permission": "`controls.control.create`",
+      "scope": "tenant",
+      "capability": "CONTROLS_ASSURANCE",
+      "audit": "`audit.controls.control.instantiate.v1`",
+      "physical_entities": "`controls.controls/control_versions`",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "based_on_control_version_id",
+          "control_code",
+          "name",
+          "business_owner_subject_id",
+          "objective",
+          "control_type",
+          "nature",
+          "frequency_code",
+          "execution_method",
+          "verification_method",
+          "minimum_evidence"
+        ],
+        "properties": {
+          "based_on_control_version_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "control_code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "business_owner_subject_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "objective": {
+            "type": "string",
+            "minLength": 1
+          },
+          "control_type": {
+            "type": "string",
+            "enum": [
+              "preventive",
+              "detective",
+              "corrective",
+              "directive"
+            ]
+          },
+          "nature": {
+            "type": "string",
+            "enum": [
+              "manual",
+              "automated",
+              "hybrid"
+            ]
+          },
+          "frequency_code": {
+            "$ref": "#/components/schemas/ControlFrequency"
+          },
+          "execution_method": {
+            "type": "string",
+            "minLength": 1
+          },
+          "verification_method": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minimum_evidence": {
+            "type": "string",
+            "minLength": 1
+          },
+          "suggested_owner_role_code": {
+            "$ref": "#/components/schemas/SuggestedBusinessOwnerRole"
+          },
+          "effective_from": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          },
+          "effective_to": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          }
+        },
+        "description": "Creates only a TENANT_OWNED tenant_instantiated Control and version 1 from an accessible global/platform ControlVersion."
+      }
+    },
+    {
+      "operation_id": "controlAssessmentCreate",
+      "path": "/control-assessments",
+      "method": "post",
+      "description": "Derived from 21,39. Actor: Control Owner. Tenant semantics: tenant Control and methodology compatible. Contract shape: AssessmentCreate → ControlAssessment.",
+      "permission": "`controls.control_assessment.create`",
+      "scope": "tenant/owned",
+      "capability": "CONTROLS_ASSURANCE",
+      "audit": "`audit.controls.control_assessment.create.v1`",
+      "physical_entities": "`controls.control_assessments`",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "control_id",
+          "control_version_id",
+          "methodology_version_ref"
+        ],
+        "properties": {
+          "control_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "control_version_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "methodology_version_ref": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "effective_configuration_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          }
+        },
+        "description": "Control, version and optional EffectiveConfiguration must be compatible and belong to the selected tenant where applicable."
+      }
+    },
+    {
+      "operation_id": "controlAssessmentStart",
+      "path": "/control-assessments/{id}:start",
+      "method": "post",
+      "description": "Control Owner with tenant scope; exact planned-to-in_progress transition using the target row_version. No assignee or creator ownership inference.",
+      "permission": "`controls.control_assessment.update`",
+      "scope": "tenant",
+      "capability": "CONTROLS_ASSURANCE",
+      "audit": "`audit.controls.control_assessment.start.v1`",
+      "physical_entities": "`controls.control_assessments`",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    {
+      "operation_id": "controlAssessmentSubmit",
+      "path": "/control-assessments/{id}:complete",
+      "method": "post",
+      "description": "Derived from 21,38,39. Actor: assessor. Tenant semantics: `in_progress→completed`; coverage/status explicit. Contract shape: ControlAssessmentSubmitRequest.expected_version → ControlAssessment.",
+      "permission": "`controls.control_assessment.submit`",
+      "scope": "owned_object, tenant",
+      "capability": "CONTROLS_ASSURANCE",
+      "audit": "`audit.controls.control_assessment.complete.v1`",
+      "physical_entities": "`controls.control_assessments`, `controls.controls`",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version",
+          "result_status"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "result_status": {
+            "$ref": "#/components/schemas/ResultStatus"
+          },
+          "domain_conclusion": {
+            "type": "string",
+            "enum": [
+              "effective",
+              "partially_effective",
+              "ineffective",
+              "not_tested",
+              "insufficient_evidence"
+            ]
+          },
+          "design_effectiveness": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "operating_effectiveness": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "coverage_percent": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          }
+        },
+        "description": "Overall effectiveness is derived by the compatible methodology and is not client authority; assessed_at is server-generated."
+      }
+    },
+    {
+      "operation_id": "controlAssessmentReview",
+      "path": "/control-assessments/{id}:review",
+      "method": "post",
+      "description": "Derived from 21,22. Actor: reviewer. Tenant semantics: `completed→reviewed`; independence policy. Contract shape: ControlAssessmentReviewRequest.expected_version → ControlAssessment.",
+      "permission": "`controls.control_assessment.review`",
+      "scope": "tenant",
+      "capability": "CONTROLS_ASSURANCE",
+      "audit": "`audit.controls.control_assessment.review.v1`",
+      "physical_entities": "assessment",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    {
+      "operation_id": "controlAssessmentApprove",
+      "path": "/control-assessments/{id}:approve",
+      "method": "post",
+      "description": "Derived from 21,22. Actor: approver. Tenant semantics: `reviewed→approved`; SoD. Contract shape: ControlAssessmentApproveRequest.expected_version → ControlAssessment.",
+      "permission": "`controls.control_assessment.approve`",
+      "scope": "tenant",
+      "capability": "CONTROLS_ASSURANCE",
+      "audit": "`audit.controls.control_assessment.approve.v1`",
+      "physical_entities": "assessment",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          }
+        },
+        "description": "SoD and reviewed-to-approved state are enforced from authoritative state."
+      }
+    },
+    {
+      "operation_id": "assuranceTestStart",
+      "path": "/assurance-tests/{id}:start",
+      "method": "post",
+      "description": "DR-PRE-F5C-2026-09-21-005: exact planned-to-in_progress transition using the target AssuranceTest row_version.",
+      "permission": "`controls.assurance_test.execute`",
+      "scope": "assigned_object, audit_engagement",
+      "capability": "CONTROLS_ASSURANCE",
+      "audit": "`audit.controls.assurance_test.start.v1`",
+      "physical_entities": "`controls.assurance_tests`",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    {
+      "operation_id": "assuranceTestExecute",
+      "path": "/assurance-tests/{id}:execute",
+      "method": "post",
+      "description": "Derived from 21,22. Actor: assigned tester. Tenant semantics: evidence/samples same tenant; no autoapproval. Contract shape: AssuranceTestExecuteRequest.expected_version → AssuranceTest.",
+      "permission": "`controls.assurance_test.execute`",
+      "scope": "assigned",
+      "capability": "CONTROLS_ASSURANCE",
+      "audit": "`audit.controls.assurance_test.execute.v1`",
+      "physical_entities": "assurance tests/samples",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version",
+          "result_status"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "result_status": {
+            "$ref": "#/components/schemas/ResultStatus"
+          },
+          "domain_conclusion": {
+            "type": "string",
+            "enum": [
+              "effective",
+              "partially_effective",
+              "ineffective",
+              "not_tested",
+              "insufficient_evidence"
+            ]
+          },
+          "samples": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AssuranceSampleExecuteInput"
+            }
+          }
+        },
+        "description": "Executor identity and executed_at are server-derived; samples, when supplied, must be same-tenant and internally consistent."
+      }
+    },
+    {
+      "operation_id": "assuranceTestReview",
+      "path": "/assurance-tests/{id}:review",
+      "method": "post",
+      "description": "DR-PRE-F5C-2026-09-21-005: exact completed-to-reviewed transition with reviewer independence and target row_version CAS.",
+      "permission": "`controls.assurance_test.review`",
+      "scope": "tenant, audit_engagement",
+      "capability": "CONTROLS_ASSURANCE",
+      "audit": "`audit.controls.assurance_test.review.v1`",
+      "physical_entities": "`controls.assurance_tests`",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    {
+      "operation_id": "assuranceTestApprove",
+      "path": "/assurance-tests/{id}:approve",
+      "method": "post",
+      "description": "DR-PRE-F5C-2026-09-21-005: exact reviewed-to-approved transition with SoD and target row_version CAS.",
+      "permission": "`controls.assurance_test.approve`",
+      "scope": "tenant",
+      "capability": "CONTROLS_ASSURANCE",
+      "audit": "`audit.controls.assurance_test.approve.v1`",
+      "physical_entities": "`controls.assurance_tests`",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          }
+        },
+        "description": "SoD and reviewed-to-approved state are enforced from authoritative state."
+      }
+    },
+    {
+      "operation_id": "evidenceRequestCreate",
+      "path": "/evidence-requests",
+      "method": "post",
+      "description": "Derived from 24,44. Actor: authorized domain owner. Tenant semantics: exactly one typed target, same tenant/global accessible. Contract shape: EvidenceRequestCreate → EvidenceRequest.",
+      "permission": "`evidence.evidence_request.create`",
+      "scope": "tenant",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "audit": "`audit.evidence.request.create.v1`",
+      "physical_entities": "request",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "request_code"
+        ],
+        "oneOf": [
+          {
+            "required": [
+              "requirement_id"
+            ]
+          },
+          {
+            "required": [
+              "control_id"
+            ]
+          },
+          {
+            "required": [
+              "requirement_assessment_id"
+            ]
+          },
+          {
+            "required": [
+              "control_assessment_id"
+            ]
+          },
+          {
+            "required": [
+              "assurance_test_id"
+            ]
+          }
+        ],
+        "properties": {
+          "request_code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "requirement_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "control_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "requirement_assessment_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "control_assessment_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "assurance_test_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "assigned_membership_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "due_at": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          }
+        },
+        "description": "Exactly one approved typed target must be present; target existence, visibility, type and tenant compatibility are validated before persistence."
+      }
+    },
+    {
+      "operation_id": "evidenceRequestFulfill",
+      "path": "/evidence-requests/{id}:fulfill",
+      "method": "post",
+      "description": "Derived from 21,24. Actor: Evidence Owner. Tenant semantics: EvidenceVersion eligible and same tenant. Contract shape: EvidenceRequestFulfillRequest.expected_version → EvidenceRequest.",
+      "permission": "`evidence.evidence_request.submit`",
+      "scope": "assigned/tenant",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "audit": "`audit.lifecycle.evidence_request.fulfill.v1`",
+      "physical_entities": "request/fulfillments",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version",
+          "evidence_version_id"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "evidence_version_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          }
+        }
+      }
+    },
+    {
+      "operation_id": "evidenceSubmit",
+      "path": "/evidence-versions/{id}:submit",
+      "method": "post",
+      "description": "Derived from 21,24. Actor: Evidence Owner. Tenant semantics: scan PASS; typed links; `draft→submitted`. Contract shape: EvidenceSubmitRequest.expected_version → EvidenceVersion.",
+      "permission": "`evidence.evidence.submit`",
+      "scope": "owned/assigned/tenant",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "audit": "`audit.evidence.evidence.submit.v1`",
+      "physical_entities": "evidence/version/links",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    {
+      "operation_id": "evidenceReviewStart",
+      "path": "/evidence-versions/{id}:start-review",
+      "method": "post",
+      "description": "Derived from 21,22. Actor: reviewer. Tenant semantics: reviewer eligible; `submitted→under_review`. Contract shape: EvidenceReviewStartRequest.expected_version → EvidenceVersion.",
+      "permission": "`evidence.evidence.review`",
+      "scope": "assigned/tenant",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "audit": "`audit.evidence.evidence.start_review.v1`",
+      "physical_entities": "evidence/version/review",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    {
+      "operation_id": "evidenceApprove",
+      "path": "/evidence-versions/{id}:approve",
+      "method": "post",
+      "description": "Derived from 21,22,24. Actor: reviewer. Tenant semantics: SoD; relevance/sufficiency; `under_review→approved`. Contract shape: EvidenceApproveRequest.expected_version → EvidenceVersion.",
+      "permission": "`evidence.evidence.approve`",
+      "scope": "tenant",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "audit": "`audit.evidence.evidence.approve.v1`",
+      "physical_entities": "version/review",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version",
+          "rationale"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "sufficiency": {
+            "$ref": "#/components/schemas/EvidenceSufficiency"
+          },
+          "relevance": {
+            "$ref": "#/components/schemas/EvidenceRelevance"
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "description": "Decision=approved, reviewer identity and reviewed_at are server-derived; submitter/reviewer SoD is enforced."
+      }
+    },
+    {
+      "operation_id": "evidenceReject",
+      "path": "/evidence-versions/{id}:reject",
+      "method": "post",
+      "description": "Derived from 21,24. Actor: reviewer. Tenant semantics: reason required; `under_review→rejected`. Contract shape: EvidenceRejectRequest.expected_version → EvidenceVersion.",
+      "permission": "`evidence.evidence.reject`",
+      "scope": "tenant",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "audit": "`audit.evidence.evidence.reject.v1`",
+      "physical_entities": "version/review",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version",
+          "rationale"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "sufficiency": {
+            "$ref": "#/components/schemas/EvidenceSufficiency"
+          },
+          "relevance": {
+            "$ref": "#/components/schemas/EvidenceRelevance"
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "description": "Decision=rejected, reviewer identity and reviewed_at are server-derived; rejection reason is mandatory."
+      }
+    },
+    {
+      "operation_id": "issueCreate",
+      "path": "/issues",
+      "method": "post",
+      "description": "Derived from 21,44. Actor: authorized domain actor. Tenant semantics: typed origin only; same tenant. Contract shape: IssueCreate → Issue.",
+      "permission": "`remediation.issue.create`",
+      "scope": "tenant",
+      "capability": "ISSUES_ACTIONS",
+      "audit": "`audit.remediation.issue.create.v1`",
+      "physical_entities": "issues/origins",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "issue_code",
+          "issue_kind",
+          "title",
+          "description",
+          "severity",
+          "priority",
+          "origin_role"
+        ],
+        "oneOf": [
+          {
+            "required": [
+              "requirement_assessment_id"
+            ]
+          },
+          {
+            "required": [
+              "control_assessment_id"
+            ]
+          },
+          {
+            "required": [
+              "assurance_test_id"
+            ]
+          }
+        ],
+        "properties": {
+          "issue_code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "issue_kind": {
+            "type": "string",
+            "enum": [
+              "finding",
+              "non_conformity",
+              "gap",
+              "exception",
+              "audit_observation"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "$ref": "#/components/schemas/IssueSeverity"
+          },
+          "priority": {
+            "$ref": "#/components/schemas/IssuePriority"
+          },
+          "business_owner_subject_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "due_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "requirement_assessment_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "control_assessment_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "assurance_test_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "origin_role": {
+            "$ref": "#/components/schemas/IssueOriginRole"
+          }
+        },
+        "description": "Exactly one Core GRC typed origin is accepted in Phase 5; risk, incident, supplier and audit origins remain outside this slice."
+      }
+    },
+    {
+      "operation_id": "issueTriage",
+      "path": "/issues/{id}:triage",
+      "method": "post",
+      "description": "Derived from 21. Actor: GRC/domain manager. Tenant semantics: `open→triaged`; severity != lifecycle. Contract shape: IssueTriageRequest.expected_version → Issue.",
+      "permission": "`remediation.issue.transition`",
+      "scope": "tenant",
+      "capability": "ISSUES_ACTIONS",
+      "audit": "`audit.remediation.issue.triage.v1`",
+      "physical_entities": "issue",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version",
+          "severity",
+          "priority"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "severity": {
+            "$ref": "#/components/schemas/IssueSeverity"
+          },
+          "priority": {
+            "$ref": "#/components/schemas/IssuePriority"
+          },
+          "business_owner_subject_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "due_date": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "description": "Severity and priority remain distinct from the open-to-triaged lifecycle transition."
+      }
+    },
+    {
+      "operation_id": "issueStartRemediation",
+      "path": "/issues/{id}:start-remediation",
+      "method": "post",
+      "description": "DR-PRE-F5C-2026-09-21-005: explicit triaged-to-remediation_in_progress command; Actions never close the Issue implicitly.",
+      "permission": "`remediation.issue.transition`",
+      "scope": "tenant, assigned_object, owned_object",
+      "capability": "ISSUES_ACTIONS",
+      "audit": "`audit.remediation.issue.start_remediation.v1`",
+      "physical_entities": "`remediation.issues`",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    {
+      "operation_id": "issueRequestVerification",
+      "path": "/issues/{id}:request-verification",
+      "method": "post",
+      "description": "DR-PRE-F5C-2026-09-21-005: explicit remediation_in_progress-to-pending_verification command.",
+      "permission": "`remediation.issue.transition`",
+      "scope": "tenant, assigned_object, owned_object",
+      "capability": "ISSUES_ACTIONS",
+      "audit": "`audit.remediation.issue.request_verification.v1`",
+      "physical_entities": "`remediation.issues`",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    {
+      "operation_id": "issueVerifyClose",
+      "path": "/issues/{id}:verify-close",
+      "method": "post",
+      "description": "DR-PRE-F5C-2026-09-21-005: explicit pending_verification-to-verified_closed command with independent-verifier policy.",
+      "permission": "`remediation.issue.transition`",
+      "scope": "tenant, assigned_object, owned_object",
+      "capability": "ISSUES_ACTIONS",
+      "audit": "`audit.remediation.issue.verify_close.v1`",
+      "physical_entities": "`remediation.issues`",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version",
+          "verification_decision",
+          "rationale"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "verification_decision": {
+            "type": "string",
+            "enum": [
+              "accepted"
+            ]
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "description": "Verifier identity and closed_at are server-derived; required SoD is enforced before closing the Issue."
+      }
+    },
+    {
+      "operation_id": "actionCreate",
+      "path": "/issues/{issue_id}/actions",
+      "method": "post",
+      "description": "Derived from 21,42. Actor: GRC/domain manager. Tenant semantics: issue same tenant; owner scope resolved. Contract shape: ActionCreate → Action.",
+      "permission": "`remediation.action.create`",
+      "scope": "tenant",
+      "capability": "ISSUES_ACTIONS",
+      "audit": "`audit.remediation.action.create.v1`",
+      "physical_entities": "actions",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "action_code",
+          "title",
+          "description",
+          "priority"
+        ],
+        "properties": {
+          "action_code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "priority": {
+            "$ref": "#/components/schemas/ActionPriority"
+          },
+          "assigned_membership_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "due_date": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "description": "Parent Issue is the path identity and must belong to the selected tenant; initial state is pending."
+      }
+    },
+    {
+      "operation_id": "actionStart",
+      "path": "/actions/{id}:start",
+      "method": "post",
+      "description": "Derived from 21. Actor: Action Owner. Tenant semantics: `pending→in_progress`. Contract shape: ActionStartRequest.expected_version → Action.",
+      "permission": "`remediation.action.transition`",
+      "scope": "assigned/owned",
+      "capability": "ISSUES_ACTIONS",
+      "audit": "`audit.remediation.action.start.v1`",
+      "physical_entities": "action",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    {
+      "operation_id": "actionComplete",
+      "path": "/actions/{id}:complete",
+      "method": "post",
+      "description": "Derived from 21,22. Actor: Action Owner. Tenant semantics: closure evidence; `in_review→completed`. Contract shape: ActionCompleteRequest.expected_version → Action.",
+      "permission": "`remediation.action.transition`",
+      "scope": "assigned/owned",
+      "capability": "ISSUES_ACTIONS",
+      "audit": "`audit.remediation.action.complete.v1`",
+      "physical_entities": "action/evidence links",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version",
+          "evidence_version_id",
+          "link_role"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "evidence_version_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "link_role": {
+            "$ref": "#/components/schemas/ActionEvidenceLinkRole"
+          }
+        },
+        "description": "Closure EvidenceVersion must be eligible and same-tenant; completion is allowed only from in_review and never verifies the Action."
+      }
+    },
+    {
+      "operation_id": "actionSubmitForReview",
+      "path": "/actions/{id}:submit-for-review",
+      "method": "post",
+      "description": "Approved by DR-PRE-F5B-2026-09-21-004. Explicit `in_progress→in_review` Action transition; it never completes the Action.",
+      "permission": "`remediation.action.transition`",
+      "scope": "assigned_object, owned_object",
+      "capability": "ISSUES_ACTIONS",
+      "audit": "`audit.remediation.action.submit_review.v1`",
+      "physical_entities": "`remediation.actions`, audit/idempotency",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          }
+        },
+        "description": "Executes only action.submit_review from in_progress to in_review."
+      }
+    },
+    {
+      "operation_id": "actionVerify",
+      "path": "/actions/{id}:verify",
+      "method": "post",
+      "description": "Derived from 21,22. Actor: independent verifier. Tenant semantics: completer≠verifier under policy; `completed→verified`. Contract shape: ActionVerifyRequest.expected_version → Action.",
+      "permission": "`remediation.action.verify`",
+      "scope": "tenant",
+      "capability": "ISSUES_ACTIONS",
+      "audit": "`audit.remediation.action.verify.v1`",
+      "physical_entities": "action/verifications",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version",
+          "verification_decision",
+          "rationale"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "verification_decision": {
+            "type": "string",
+            "enum": [
+              "accepted"
+            ]
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 1
+          },
+          "retest_reference": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "description": "Verifier identity and verified_at are server-derived; the verifier/completer SoD policy is enforced."
+      }
+    },
+    {
+      "operation_id": "retentionPolicyCreate",
+      "path": "/retention-policies",
+      "method": "post",
+      "description": "Phase 5 RetentionPolicy amendment. Creates only a tenant-owned draft; lifecycle, effective interval, row_version, actor and disposition semantics are server-controlled.",
+      "permission": "`privacy.retention_policy.create`",
+      "scope": "tenant",
+      "capability": "PRIVACY",
+      "audit": "`audit.privacy.retention_policy.create.v1`",
+      "physical_entities": "`privacy.retention_policies`, audit/idempotency",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "policy_code",
+          "version_number",
+          "policy_kind",
+          "trigger_event_code",
+          "precedence_rank",
+          "is_mandatory"
+        ],
+        "properties": {
+          "policy_code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "version_number": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1
+          },
+          "policy_kind": {
+            "type": "string",
+            "enum": [
+              "legal_hold",
+              "mandatory_regulatory_policy",
+              "contractual_policy",
+              "tenant_policy",
+              "product_baseline"
+            ]
+          },
+          "retention_seconds": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          },
+          "trigger_event_code": {
+            "type": "string",
+            "enum": [
+              "expiry_or_closure"
+            ]
+          },
+          "precedence_rank": {
+            "type": "integer",
+            "enum": [
+              500,
+              400,
+              300,
+              200,
+              100
+            ]
+          },
+          "is_mandatory": {
+            "type": "boolean"
+          }
+        },
+        "description": "For legal_hold retention_seconds is absent and persisted NULL; for every other kind it is a required nonnegative integer. Precedence must match policy_kind exactly (500/400/300/200/100). effective_from, effective_to, lifecycle, row_version, regulatory source and disposition are not caller-controlled."
+      }
+    },
+    {
+      "operation_id": "retentionPolicyUpdate",
+      "path": "/retention-policies/{id}:update",
+      "method": "post",
+      "description": "Updates retention_seconds and is_mandatory on a tenant draft. Strong If-Match is the sole concurrency authority.",
+      "permission": "`privacy.retention_policy.update`",
+      "scope": "tenant",
+      "capability": "PRIVACY",
+      "audit": "`audit.privacy.retention_policy.update.v1`",
+      "physical_entities": "`privacy.retention_policies`, audit/idempotency",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "is_mandatory"
+        ],
+        "properties": {
+          "retention_seconds": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          },
+          "is_mandatory": {
+            "type": "boolean"
+          }
+        },
+        "description": "Draft-only update; legal_hold omits retention_seconds and all other kinds require it. Strong If-Match supplies row_version. Policy identity, kind, trigger, precedence and lifecycle remain server-controlled."
+      }
+    },
+    {
+      "operation_id": "retentionPolicyReview",
+      "path": "/retention-policies/{id}:review",
+      "method": "post",
+      "description": "Transitions a tenant RetentionPolicy from draft to under_review with strong If-Match against row_version.",
+      "permission": "`privacy.retention_policy.review`",
+      "scope": "tenant",
+      "capability": "PRIVACY",
+      "audit": "`audit.privacy.retention_policy.review.v1`",
+      "physical_entities": "`privacy.retention_policies`, lifecycle registry, audit/idempotency",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "maxProperties": 0,
+        "description": "Empty command body. The sole API concurrency precondition is the strong If-Match header."
+      }
+    },
+    {
+      "operation_id": "retentionPolicyApprove",
+      "path": "/retention-policies/{id}:approve",
+      "method": "post",
+      "description": "Transitions under_review to approved. Legal Reviewer must be a different UserIdentity from the policy author.",
+      "permission": "`privacy.retention_policy.approve`",
+      "scope": "tenant",
+      "capability": "PRIVACY",
+      "audit": "`audit.privacy.retention_policy.approve.v1`",
+      "physical_entities": "`privacy.retention_policies`, lifecycle registry, audit/idempotency",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "maxProperties": 0,
+        "description": "Empty command body. The sole API concurrency precondition is the strong If-Match header."
+      }
+    },
+    {
+      "operation_id": "retentionPolicyPublish",
+      "path": "/retention-policies/{id}:publish",
+      "method": "post",
+      "description": "H-004. Transitions approved to published, sets effective_from atomically from the server transaction timestamp and leaves effective_to NULL.",
+      "permission": "`privacy.retention_policy.publish`",
+      "scope": "tenant",
+      "capability": "PRIVACY",
+      "audit": "`audit.privacy.retention_policy.publish.v1`",
+      "physical_entities": "`privacy.retention_policies`, outbox/audit/idempotency",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "maxProperties": 0,
+        "description": "Empty command body. The sole API concurrency precondition is the strong If-Match header."
+      }
+    },
+    {
+      "operation_id": "soaCreate",
+      "path": "/statements-of-applicability",
+      "method": "post",
+      "description": "DR-PRE-F5C-2026-09-21-005: creates one draft StatementOfApplicability and its initial item set in one tenant-scoped transaction.",
+      "permission": "`compliance.soa.create`",
+      "scope": "tenant",
+      "capability": "ISO_COMPLIANCE",
+      "audit": "`audit.compliance.soa.create.v1`",
+      "physical_entities": "`regulatory.statements_of_applicability`, `regulatory.statement_of_applicability_items`",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "framework_version_id",
+          "title",
+          "items"
+        ],
+        "properties": {
+          "framework_version_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "effective_from": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          },
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/components/schemas/SoaItemCreateInput"
+            }
+          }
+        },
+        "description": "Tenant, soa_version, initial draft state, row_version and technical identities are server-controlled."
+      }
+    },
+    {
+      "operation_id": "assuranceTestCreate",
+      "path": "/assurance-tests",
+      "method": "post",
+      "description": "DR-PRE-F5C-2026-09-21-005: creates a planned AssuranceTest against a same-tenant Control and its compatible version.",
+      "permission": "`controls.assurance_test.create`",
+      "scope": "tenant, audit_engagement",
+      "capability": "CONTROLS_ASSURANCE",
+      "audit": "`audit.controls.assurance_test.create.v1`",
+      "physical_entities": "`controls.assurance_tests`",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "control_id",
+          "control_version_id",
+          "test_code"
+        ],
+        "properties": {
+          "control_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "control_version_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "test_code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "planned_at": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          }
+        },
+        "description": "Creates only planned state; tenant, row_version, actors and lifecycle timestamps are server-controlled."
+      }
+    },
+    {
+      "operation_id": "evidenceCreate",
+      "path": "/evidence",
+      "method": "post",
+      "description": "Approved by DR-PRE-F5B-2026-09-21-004. Materializes a distinct Evidence aggregate, its first draft EvidenceVersion and requested typed EvidenceLinks from one finalized, scan-PASS FileObject in one transaction; no binary is duplicated and no signed URL is persisted.",
+      "permission": "`evidence.evidence.create`",
+      "scope": "tenant, assigned_object, owned_object",
+      "capability": "EVIDENCE_DOCUMENTS",
+      "audit": "`audit.evidence.evidence.create.v1`",
+      "physical_entities": "`evidence.file_objects`, `evidence.evidences`, `evidence.evidence_versions`, `evidence.evidence_links`, audit/outbox/idempotency",
+      "schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "evidence_code",
+          "evidence_type",
+          "retention_policy_id",
+          "source_kind",
+          "file_object_id",
+          "provenance_ref",
+          "links"
+        ],
+        "properties": {
+          "evidence_code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "evidence_type": {
+            "$ref": "#/components/schemas/EvidenceType"
+          },
+          "business_owner_subject_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "valid_from": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          },
+          "valid_to": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          },
+          "retention_policy_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "source_kind": {
+            "$ref": "#/components/schemas/EvidenceSourceKind"
+          },
+          "file_object_id": {
+            "$ref": "#/components/schemas/UuidV7"
+          },
+          "period_start": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          },
+          "period_end": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          },
+          "effective_from": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          },
+          "effective_to": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          },
+          "expires_at": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          },
+          "provenance_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "links": {
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/components/schemas/EvidenceLinkCreateInput"
+            }
+          }
+        },
+        "description": "FileObject must be finalized, usable and scan-PASS; all objects and policies must be tenant-compatible. Evidence, first draft version and links are created atomically."
+      }
+    }
+  ]
+}

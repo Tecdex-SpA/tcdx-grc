@@ -1,0 +1,50 @@
+[
+  {
+    "id": "rector-governance",
+    "command": [
+      "bash",
+      "scripts/verify-rector-governance.sh"
+    ],
+    "exit_code": 0,
+    "status": "PASS"
+  },
+  {
+    "id": "rector-status",
+    "command": [
+      "bash",
+      "scripts/test-rector-governance-status.sh"
+    ],
+    "exit_code": 0,
+    "status": "PASS"
+  },
+  {
+    "id": "contract-assets",
+    "command": [
+      "node",
+      "scripts/foundations/generate-contract-assets.mjs",
+      "--check"
+    ],
+    "exit_code": 0,
+    "status": "PASS"
+  },
+  {
+    "id": "form-assets",
+    "command": [
+      "node",
+      "scripts/phase6a4/generate-form-assets.mjs",
+      "--check"
+    ],
+    "exit_code": 0,
+    "status": "PASS"
+  },
+  {
+    "id": "whitespace",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "status": "PASS"
+  }
+]

@@ -1,0 +1,1128 @@
+{
+  "nodes": [
+    {
+      "FORM_ID": "FORM-01",
+      "OPERATION_ID": "applicabilityCreate",
+      "JOURNEY": "R1",
+      "SOURCE_STATE": "NEW_RECORD",
+      "EXPECTED_RESULT_STATE": "draft",
+      "CLASSIFICATION": "BLOCKED_MISSING_SCENARIO"
+    },
+    {
+      "FORM_ID": "FORM-02",
+      "OPERATION_ID": "applicabilitySubmit",
+      "JOURNEY": "R1",
+      "SOURCE_STATE": "draft",
+      "EXPECTED_RESULT_STATE": "submitted",
+      "CLASSIFICATION": "BLOCKED_BUSINESS_STATE"
+    },
+    {
+      "FORM_ID": "FORM-03",
+      "OPERATION_ID": "applicabilityApprove",
+      "JOURNEY": "R1",
+      "SOURCE_STATE": "submitted",
+      "EXPECTED_RESULT_STATE": "approved",
+      "CLASSIFICATION": "BLOCKED_BUSINESS_STATE"
+    },
+    {
+      "FORM_ID": "FORM-04",
+      "OPERATION_ID": "requirementAssessmentCreate",
+      "JOURNEY": "R1",
+      "SOURCE_STATE": "NEW_RECORD",
+      "EXPECTED_RESULT_STATE": "not_assessed",
+      "CLASSIFICATION": "BLOCKED_MISSING_SCENARIO"
+    },
+    {
+      "FORM_ID": "FORM-05",
+      "OPERATION_ID": "requirementAssessmentStart",
+      "JOURNEY": "R1",
+      "SOURCE_STATE": "not_assessed",
+      "EXPECTED_RESULT_STATE": "in_progress",
+      "CLASSIFICATION": "BLOCKED_AUTHORIZATION"
+    },
+    {
+      "FORM_ID": "FORM-06",
+      "OPERATION_ID": "requirementAssessmentSubmit",
+      "JOURNEY": "R1",
+      "SOURCE_STATE": "in_progress",
+      "EXPECTED_RESULT_STATE": "assessed",
+      "CLASSIFICATION": "BLOCKED_BUSINESS_STATE"
+    },
+    {
+      "FORM_ID": "FORM-07",
+      "OPERATION_ID": "requirementAssessmentApprove",
+      "JOURNEY": "R1",
+      "SOURCE_STATE": "assessed",
+      "EXPECTED_RESULT_STATE": "approved",
+      "CLASSIFICATION": "BLOCKED_MISSING_SCENARIO"
+    },
+    {
+      "FORM_ID": "FORM-08",
+      "OPERATION_ID": "soaCreate",
+      "JOURNEY": "R1",
+      "SOURCE_STATE": "NEW_RECORD",
+      "EXPECTED_RESULT_STATE": "draft",
+      "CLASSIFICATION": "BLOCKED_MISSING_SCENARIO"
+    },
+    {
+      "FORM_ID": "FORM-09",
+      "OPERATION_ID": "soaPublish",
+      "JOURNEY": "R1",
+      "SOURCE_STATE": "draft",
+      "EXPECTED_RESULT_STATE": "published",
+      "CLASSIFICATION": "BLOCKED_BUSINESS_STATE"
+    },
+    {
+      "FORM_ID": "FORM-10",
+      "OPERATION_ID": "controlInstantiate",
+      "JOURNEY": "R2",
+      "SOURCE_STATE": "NEW_RECORD",
+      "EXPECTED_RESULT_STATE": "active",
+      "CLASSIFICATION": "BLOCKED_MISSING_SCENARIO"
+    },
+    {
+      "FORM_ID": "FORM-11",
+      "OPERATION_ID": "controlAssessmentCreate",
+      "JOURNEY": "R2",
+      "SOURCE_STATE": "NEW_RECORD",
+      "EXPECTED_RESULT_STATE": "planned",
+      "CLASSIFICATION": "BLOCKED_MISSING_SCENARIO"
+    },
+    {
+      "FORM_ID": "FORM-12",
+      "OPERATION_ID": "controlAssessmentStart",
+      "JOURNEY": "R2",
+      "SOURCE_STATE": "planned",
+      "EXPECTED_RESULT_STATE": "in_progress",
+      "CLASSIFICATION": "BLOCKED_BUSINESS_STATE"
+    },
+    {
+      "FORM_ID": "FORM-13",
+      "OPERATION_ID": "controlAssessmentSubmit",
+      "JOURNEY": "R2",
+      "SOURCE_STATE": "in_progress",
+      "EXPECTED_RESULT_STATE": "completed",
+      "CLASSIFICATION": "BLOCKED_AUTHORIZATION"
+    },
+    {
+      "FORM_ID": "FORM-14",
+      "OPERATION_ID": "controlAssessmentReview",
+      "JOURNEY": "R2",
+      "SOURCE_STATE": "completed",
+      "EXPECTED_RESULT_STATE": "reviewed",
+      "CLASSIFICATION": "BLOCKED_MISSING_ACTOR"
+    },
+    {
+      "FORM_ID": "FORM-15",
+      "OPERATION_ID": "controlAssessmentApprove",
+      "JOURNEY": "R2",
+      "SOURCE_STATE": "reviewed",
+      "EXPECTED_RESULT_STATE": "approved",
+      "CLASSIFICATION": "BLOCKED_MISSING_ACTOR"
+    },
+    {
+      "FORM_ID": "FORM-16",
+      "OPERATION_ID": "assuranceTestCreate",
+      "JOURNEY": "R2",
+      "SOURCE_STATE": "NEW_RECORD",
+      "EXPECTED_RESULT_STATE": "planned",
+      "CLASSIFICATION": "BLOCKED_MISSING_SCENARIO"
+    },
+    {
+      "FORM_ID": "FORM-17",
+      "OPERATION_ID": "assuranceTestStart",
+      "JOURNEY": "R2",
+      "SOURCE_STATE": "planned",
+      "EXPECTED_RESULT_STATE": "in_progress",
+      "CLASSIFICATION": "BLOCKED_MISSING_PERMISSION"
+    },
+    {
+      "FORM_ID": "FORM-18",
+      "OPERATION_ID": "assuranceTestExecute",
+      "JOURNEY": "R2",
+      "SOURCE_STATE": "in_progress",
+      "EXPECTED_RESULT_STATE": "completed",
+      "CLASSIFICATION": "BLOCKED_MISSING_PERMISSION"
+    },
+    {
+      "FORM_ID": "FORM-19",
+      "OPERATION_ID": "assuranceTestReview",
+      "JOURNEY": "R2",
+      "SOURCE_STATE": "completed",
+      "EXPECTED_RESULT_STATE": "reviewed",
+      "CLASSIFICATION": "BLOCKED_BUSINESS_STATE"
+    },
+    {
+      "FORM_ID": "FORM-20",
+      "OPERATION_ID": "assuranceTestApprove",
+      "JOURNEY": "R2",
+      "SOURCE_STATE": "reviewed",
+      "EXPECTED_RESULT_STATE": "approved",
+      "CLASSIFICATION": "BLOCKED_MISSING_ACTOR"
+    },
+    {
+      "FORM_ID": "FORM-21",
+      "OPERATION_ID": "evidenceRequestCreate",
+      "JOURNEY": "R3",
+      "SOURCE_STATE": "NEW_RECORD",
+      "EXPECTED_RESULT_STATE": "open",
+      "CLASSIFICATION": "BLOCKED_MISSING_SCENARIO"
+    },
+    {
+      "FORM_ID": "FORM-22",
+      "OPERATION_ID": "evidenceRequestFulfill",
+      "JOURNEY": "R3",
+      "SOURCE_STATE": "open",
+      "EXPECTED_RESULT_STATE": "fulfilled",
+      "CLASSIFICATION": "BLOCKED_BUSINESS_STATE"
+    },
+    {
+      "FORM_ID": "FORM-23",
+      "OPERATION_ID": "evidenceCreate",
+      "JOURNEY": "R3",
+      "SOURCE_STATE": "NEW_RECORD",
+      "EXPECTED_RESULT_STATE": "draft",
+      "CLASSIFICATION": "BLOCKED_MISSING_SCENARIO"
+    },
+    {
+      "FORM_ID": "FORM-24",
+      "OPERATION_ID": "evidenceSubmit",
+      "JOURNEY": "R3",
+      "SOURCE_STATE": "draft",
+      "EXPECTED_RESULT_STATE": "submitted",
+      "CLASSIFICATION": "BLOCKED_MISSING_PERMISSION"
+    },
+    {
+      "FORM_ID": "FORM-25",
+      "OPERATION_ID": "evidenceReviewStart",
+      "JOURNEY": "R3",
+      "SOURCE_STATE": "submitted",
+      "EXPECTED_RESULT_STATE": "under_review",
+      "CLASSIFICATION": "BLOCKED_BUSINESS_STATE"
+    },
+    {
+      "FORM_ID": "FORM-26",
+      "OPERATION_ID": "evidenceApprove",
+      "JOURNEY": "R3",
+      "SOURCE_STATE": "under_review",
+      "EXPECTED_RESULT_STATE": "approved",
+      "CLASSIFICATION": "BLOCKED_BUSINESS_STATE"
+    },
+    {
+      "FORM_ID": "FORM-27",
+      "OPERATION_ID": "evidenceReject",
+      "JOURNEY": "R3",
+      "SOURCE_STATE": "under_review",
+      "EXPECTED_RESULT_STATE": "rejected",
+      "CLASSIFICATION": "BLOCKED_BUSINESS_STATE"
+    },
+    {
+      "FORM_ID": "FORM-28",
+      "OPERATION_ID": "retentionPolicyCreate",
+      "JOURNEY": "R3",
+      "SOURCE_STATE": "NEW_RECORD",
+      "EXPECTED_RESULT_STATE": "draft",
+      "CLASSIFICATION": "BLOCKED_MISSING_SCENARIO"
+    },
+    {
+      "FORM_ID": "FORM-29",
+      "OPERATION_ID": "retentionPolicyUpdate",
+      "JOURNEY": "R3",
+      "SOURCE_STATE": "draft",
+      "EXPECTED_RESULT_STATE": "draft",
+      "CLASSIFICATION": "BLOCKED_BUSINESS_STATE"
+    },
+    {
+      "FORM_ID": "FORM-30",
+      "OPERATION_ID": "retentionPolicyReview",
+      "JOURNEY": "R3",
+      "SOURCE_STATE": "draft",
+      "EXPECTED_RESULT_STATE": "under_review",
+      "CLASSIFICATION": "BLOCKED_BUSINESS_STATE"
+    },
+    {
+      "FORM_ID": "FORM-31",
+      "OPERATION_ID": "retentionPolicyApprove",
+      "JOURNEY": "R3",
+      "SOURCE_STATE": "under_review",
+      "EXPECTED_RESULT_STATE": "approved",
+      "CLASSIFICATION": "BLOCKED_BUSINESS_STATE"
+    },
+    {
+      "FORM_ID": "FORM-32",
+      "OPERATION_ID": "retentionPolicyPublish",
+      "JOURNEY": "R3",
+      "SOURCE_STATE": "approved",
+      "EXPECTED_RESULT_STATE": "published",
+      "CLASSIFICATION": "BLOCKED_BUSINESS_STATE"
+    },
+    {
+      "FORM_ID": "FORM-33",
+      "OPERATION_ID": "issueCreate",
+      "JOURNEY": "R4",
+      "SOURCE_STATE": "NEW_RECORD",
+      "EXPECTED_RESULT_STATE": "open",
+      "CLASSIFICATION": "BLOCKED_MISSING_SCENARIO"
+    },
+    {
+      "FORM_ID": "FORM-34",
+      "OPERATION_ID": "issueTriage",
+      "JOURNEY": "R4",
+      "SOURCE_STATE": "open",
+      "EXPECTED_RESULT_STATE": "triaged",
+      "CLASSIFICATION": "BLOCKED_BUSINESS_STATE"
+    },
+    {
+      "FORM_ID": "FORM-35",
+      "OPERATION_ID": "issueStartRemediation",
+      "JOURNEY": "R4",
+      "SOURCE_STATE": "triaged",
+      "EXPECTED_RESULT_STATE": "remediation_in_progress",
+      "CLASSIFICATION": "BLOCKED_BUSINESS_STATE"
+    },
+    {
+      "FORM_ID": "FORM-36",
+      "OPERATION_ID": "issueRequestVerification",
+      "JOURNEY": "R4",
+      "SOURCE_STATE": "remediation_in_progress",
+      "EXPECTED_RESULT_STATE": "pending_verification",
+      "CLASSIFICATION": "BLOCKED_BUSINESS_STATE"
+    },
+    {
+      "FORM_ID": "FORM-37",
+      "OPERATION_ID": "issueVerifyClose",
+      "JOURNEY": "R4",
+      "SOURCE_STATE": "pending_verification",
+      "EXPECTED_RESULT_STATE": "verified_closed",
+      "CLASSIFICATION": "BLOCKED_MISSING_ACTOR"
+    },
+    {
+      "FORM_ID": "FORM-38",
+      "OPERATION_ID": "actionCreate",
+      "JOURNEY": "R4",
+      "SOURCE_STATE": "NEW_RECORD",
+      "EXPECTED_RESULT_STATE": "pending",
+      "CLASSIFICATION": "BLOCKED_MISSING_SCENARIO"
+    },
+    {
+      "FORM_ID": "FORM-39",
+      "OPERATION_ID": "actionStart",
+      "JOURNEY": "R4",
+      "SOURCE_STATE": "pending",
+      "EXPECTED_RESULT_STATE": "in_progress",
+      "CLASSIFICATION": "BLOCKED_MISSING_PERMISSION"
+    },
+    {
+      "FORM_ID": "FORM-40",
+      "OPERATION_ID": "actionSubmitForReview",
+      "JOURNEY": "R4",
+      "SOURCE_STATE": "in_progress",
+      "EXPECTED_RESULT_STATE": "in_review",
+      "CLASSIFICATION": "BLOCKED_MISSING_PERMISSION"
+    },
+    {
+      "FORM_ID": "FORM-41",
+      "OPERATION_ID": "actionComplete",
+      "JOURNEY": "R4",
+      "SOURCE_STATE": "in_review",
+      "EXPECTED_RESULT_STATE": "completed",
+      "CLASSIFICATION": "BLOCKED_MISSING_PERMISSION"
+    },
+    {
+      "FORM_ID": "FORM-42",
+      "OPERATION_ID": "actionVerify",
+      "JOURNEY": "R4",
+      "SOURCE_STATE": "completed",
+      "EXPECTED_RESULT_STATE": "verified",
+      "CLASSIFICATION": "BLOCKED_MISSING_ACTOR"
+    }
+  ],
+  "operation_edges": [
+    {
+      "SOURCE": "FORM-01",
+      "TARGET": "FORM-02",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "draft enables source draft",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-02",
+      "TARGET": "FORM-03",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "submitted enables source submitted",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-04",
+      "TARGET": "FORM-05",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "not_assessed enables source not_assessed",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-05",
+      "TARGET": "FORM-06",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "in_progress enables source in_progress",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-06",
+      "TARGET": "FORM-07",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "assessed enables source assessed",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-08",
+      "TARGET": "FORM-09",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "draft enables source draft",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-11",
+      "TARGET": "FORM-12",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "planned enables source planned",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-12",
+      "TARGET": "FORM-13",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "in_progress enables source in_progress",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-13",
+      "TARGET": "FORM-14",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "completed enables source completed",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-14",
+      "TARGET": "FORM-15",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "reviewed enables source reviewed",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-16",
+      "TARGET": "FORM-17",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "planned enables source planned",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-17",
+      "TARGET": "FORM-18",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "in_progress enables source in_progress",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-18",
+      "TARGET": "FORM-19",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "completed enables source completed",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-19",
+      "TARGET": "FORM-20",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "reviewed enables source reviewed",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-21",
+      "TARGET": "FORM-22",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "open enables source open",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-23",
+      "TARGET": "FORM-24",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "draft enables source draft",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-24",
+      "TARGET": "FORM-25",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "submitted enables source submitted",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-25",
+      "TARGET": "FORM-26",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "under_review enables source under_review",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-28",
+      "TARGET": "FORM-29",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "draft enables source draft",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-30",
+      "TARGET": "FORM-31",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "under_review enables source under_review",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-31",
+      "TARGET": "FORM-32",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "approved enables source approved",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-33",
+      "TARGET": "FORM-34",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "open enables source open",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-34",
+      "TARGET": "FORM-35",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "triaged enables source triaged",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-35",
+      "TARGET": "FORM-36",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "remediation_in_progress enables source remediation_in_progress",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-36",
+      "TARGET": "FORM-37",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "pending_verification enables source pending_verification",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-38",
+      "TARGET": "FORM-39",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "pending enables source pending",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-39",
+      "TARGET": "FORM-40",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "in_progress enables source in_progress",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-40",
+      "TARGET": "FORM-41",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "in_review enables source in_review",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-41",
+      "TARGET": "FORM-42",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "completed enables source completed",
+      "REQUIREDNESS": "Source state required; creating this record anew is not mandatory",
+      "SOURCE_CONTRACT": "21; STEP_6A1/04; published lifecycle registry",
+      "LIMIT": "No transition executed"
+    },
+    {
+      "SOURCE": "FORM-25",
+      "TARGET": "FORM-27",
+      "TYPE": "MUTUALLY_EXCLUSIVE_BRANCH",
+      "RELATION": "under_review -> rejected; separate genuine version from approved branch",
+      "REQUIREDNESS": "Alternative to FORM26 for same version",
+      "SOURCE_CONTRACT": "21 Evidence; OpenAPI EvidenceRejectRequest",
+      "LIMIT": "No synthetic rejection decision"
+    },
+    {
+      "SOURCE": "FORM-28",
+      "TARGET": "FORM-30",
+      "TYPE": "STATE_PRODUCER_ALTERNATIVE_EXISTING_OBJECT_ALLOWED",
+      "RELATION": "draft -> review; update is optional",
+      "REQUIREDNESS": "FORM29 not a mandatory prerequisite",
+      "SOURCE_CONTRACT": "21; RetentionPolicyReviewRequest",
+      "LIMIT": "Do not impose optional edit as a business dependency"
+    },
+    {
+      "SOURCE": "FORM-01",
+      "TARGET": "FORM-04",
+      "TYPE": "TYPED_REFERENCE_REUSABLE",
+      "RELATION": "Applicability same tenant; approval not imposed at create",
+      "REQUIREDNESS": "Existing eligible entity may satisfy; see canonical dependency requiredness",
+      "SOURCE_CONTRACT": "DEP-04 STEP_6A2/01",
+      "LIMIT": "Grouped journey is not a new parent relationship"
+    },
+    {
+      "SOURCE": "FORM-10",
+      "TARGET": "FORM-11",
+      "TYPE": "TYPED_REFERENCE_REUSABLE",
+      "RELATION": "Compatible Control/ControlVersion",
+      "REQUIREDNESS": "Existing eligible entity may satisfy; see canonical dependency requiredness",
+      "SOURCE_CONTRACT": "DEP-13 STEP_6A2/01",
+      "LIMIT": "Grouped journey is not a new parent relationship"
+    },
+    {
+      "SOURCE": "FORM-10",
+      "TARGET": "FORM-16",
+      "TYPE": "TYPED_REFERENCE_REUSABLE",
+      "RELATION": "Compatible Control/ControlVersion; no ControlAssessment parent",
+      "REQUIREDNESS": "Existing eligible entity may satisfy; see canonical dependency requiredness",
+      "SOURCE_CONTRACT": "DEP-15 STEP_6A2/01",
+      "LIMIT": "Grouped journey is not a new parent relationship"
+    },
+    {
+      "SOURCE": "FORM-10",
+      "TARGET": "FORM-08",
+      "TYPE": "TYPED_REFERENCE_REUSABLE",
+      "RELATION": "Optional tenant pair in SoA; no applicability parent",
+      "REQUIREDNESS": "Existing eligible entity may satisfy; see canonical dependency requiredness",
+      "SOURCE_CONTRACT": "DEP-10 STEP_6A2/01",
+      "LIMIT": "Grouped journey is not a new parent relationship"
+    },
+    {
+      "SOURCE": "FORM-26",
+      "TARGET": "FORM-22",
+      "TYPE": "TYPED_REFERENCE_REUSABLE",
+      "RELATION": "Approved EvidenceVersion + matching typed link; existing alternative allowed",
+      "REQUIREDNESS": "Existing eligible entity may satisfy; see canonical dependency requiredness",
+      "SOURCE_CONTRACT": "DEP-31 STEP_6A2/01",
+      "LIMIT": "Grouped journey is not a new parent relationship"
+    },
+    {
+      "SOURCE": "FORM-33",
+      "TARGET": "FORM-38",
+      "TYPE": "TYPED_REFERENCE_REUSABLE",
+      "RELATION": "Issue path parent",
+      "REQUIREDNESS": "Existing eligible entity may satisfy; see canonical dependency requiredness",
+      "SOURCE_CONTRACT": "DEP-35 STEP_6A2/01",
+      "LIMIT": "Grouped journey is not a new parent relationship"
+    },
+    {
+      "SOURCE": "FORM-26",
+      "TARGET": "FORM-41",
+      "TYPE": "TYPED_REFERENCE_REUSABLE",
+      "RELATION": "Approved closure evidence; existing alternative allowed",
+      "REQUIREDNESS": "Existing eligible entity may satisfy; see canonical dependency requiredness",
+      "SOURCE_CONTRACT": "DEP-36 STEP_6A2/01",
+      "LIMIT": "Grouped journey is not a new parent relationship"
+    }
+  ],
+  "canonical_reference_dependencies": [
+    {
+      "DEP_ID": "DEP-01",
+      "SOURCE": "FrameworkVersion",
+      "TARGET": "Requirement",
+      "RELATION": "Requirement.framework_version_id",
+      "REQUIREDNESS": "required",
+      "OPERATION": "requirementList",
+      "CONSTRAINT": "Pack visibility; no current-requirement lifecycle filter",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-02",
+      "SOURCE": "Requirement",
+      "TARGET": "RequirementApplicability",
+      "RELATION": "requirement_id",
+      "REQUIREDNESS": "required",
+      "OPERATION": "applicabilityCreate",
+      "CONSTRAINT": "Accessible reference; draft generated",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-03",
+      "SOURCE": "Subject",
+      "TARGET": "RequirementApplicability",
+      "RELATION": "scope_subject_id",
+      "REQUIREDNESS": "optional; NULL = tenant-wide",
+      "OPERATION": "applicabilityCreate",
+      "CONSTRAINT": "active/effective Subject",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-04",
+      "SOURCE": "RequirementApplicability",
+      "TARGET": "RequirementAssessment",
+      "RELATION": "requirement_applicability_id",
+      "REQUIREDNESS": "required",
+      "OPERATION": "requirementAssessmentCreate",
+      "CONSTRAINT": "Handler checks existence/tenant; no approval-state create guard found",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-05",
+      "SOURCE": "ComplianceMethodology",
+      "TARGET": "RequirementAssessment",
+      "RELATION": "methodology_version_ref",
+      "REQUIREDNESS": "required",
+      "OPERATION": "requirementAssessmentCreate",
+      "CONSTRAINT": "published/effective/domain-compatible",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-06",
+      "SOURCE": "EffectiveConfiguration",
+      "TARGET": "RequirementAssessment / ControlAssessment",
+      "RELATION": "effective_configuration_id",
+      "REQUIREDNESS": "optional",
+      "OPERATION": "requirementAssessmentCreate / controlAssessmentCreate",
+      "CONSTRAINT": "same tenant/domain; published definition; missing business resolution contract",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-07",
+      "SOURCE": "FrameworkVersion",
+      "TARGET": "SoA",
+      "RELATION": "framework_version_id",
+      "REQUIREDNESS": "required",
+      "OPERATION": "soaCreate",
+      "CONSTRAINT": "Accessible version; header starts draft",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-08",
+      "SOURCE": "SoA",
+      "TARGET": "SoAItem",
+      "RELATION": "statement_of_applicability_id",
+      "REQUIREDNESS": "required header; one+ items",
+      "OPERATION": "soaCreate",
+      "CONSTRAINT": "Atomic draft header/item creation",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-09",
+      "SOURCE": "Reference ControlVersion",
+      "TARGET": "SoAItem",
+      "RELATION": "reference_control_version_id",
+      "REQUIREDNESS": "required per item",
+      "OPERATION": "soaCreate",
+      "CONSTRAINT": "Accessible reference version",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-10",
+      "SOURCE": "Tenant Control + ControlVersion",
+      "TARGET": "SoAItem",
+      "RELATION": "tenant_control_id + tenant_control_version_id",
+      "REQUIREDNESS": "optional compatible pair",
+      "OPERATION": "soaCreate",
+      "CONSTRAINT": "both or neither; matching tenant parent/version",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-11",
+      "SOURCE": "Global ControlVersion",
+      "TARGET": "Tenant Control",
+      "RELATION": "based_on_control_version_id",
+      "REQUIREDNESS": "required for instantiate",
+      "OPERATION": "controlInstantiate",
+      "CONSTRAINT": "Pack-entitled base; tenant active generated",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-12",
+      "SOURCE": "Subject",
+      "TARGET": "Tenant Control / Evidence / Issue",
+      "RELATION": "business_owner_subject_id",
+      "REQUIREDNESS": "required Control; optional Evidence/Issue",
+      "OPERATION": "controlInstantiate / evidenceCreate / issueCreate",
+      "CONSTRAINT": "Control checks selectable Subject; other handlers check tenant existence",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-13",
+      "SOURCE": "Tenant Control + ControlVersion",
+      "TARGET": "ControlAssessment",
+      "RELATION": "control_id + control_version_id",
+      "REQUIREDNESS": "required compatible pair",
+      "OPERATION": "controlAssessmentCreate",
+      "CONSTRAINT": "same tenant, version matches control",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-14",
+      "SOURCE": "ControlEffectivenessMethodology",
+      "TARGET": "ControlAssessment",
+      "RELATION": "methodology_version_ref",
+      "REQUIREDNESS": "required",
+      "OPERATION": "controlAssessmentCreate",
+      "CONSTRAINT": "published/effective/domain-compatible",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-15",
+      "SOURCE": "Tenant Control + ControlVersion",
+      "TARGET": "AssuranceTest",
+      "RELATION": "control_id + control_version_id",
+      "REQUIREDNESS": "required compatible pair",
+      "OPERATION": "assuranceTestCreate",
+      "CONSTRAINT": "same tenant, version matches control",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-16",
+      "SOURCE": "AssuranceTest",
+      "TARGET": "AssuranceSample",
+      "RELATION": "assurance_test_id",
+      "REQUIREDNESS": "optional samples array",
+      "OPERATION": "assuranceTestExecute",
+      "CONSTRAINT": "in_progress; counts/period/result validated",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-17",
+      "SOURCE": "Requirement",
+      "TARGET": "EvidenceRequest",
+      "RELATION": "requirement_id",
+      "REQUIREDNESS": "exactly one of five typed targets",
+      "OPERATION": "evidenceRequestCreate",
+      "CONSTRAINT": "Accessible target; no target lifecycle gate in create handler",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-18",
+      "SOURCE": "Control",
+      "TARGET": "EvidenceRequest",
+      "RELATION": "control_id",
+      "REQUIREDNESS": "exactly one of five typed targets",
+      "OPERATION": "evidenceRequestCreate",
+      "CONSTRAINT": "Accessible target; no target lifecycle gate in create handler",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-19",
+      "SOURCE": "RequirementAssessment",
+      "TARGET": "EvidenceRequest",
+      "RELATION": "requirement_assessment_id",
+      "REQUIREDNESS": "exactly one of five typed targets",
+      "OPERATION": "evidenceRequestCreate",
+      "CONSTRAINT": "Accessible target; no target lifecycle gate in create handler",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-20",
+      "SOURCE": "ControlAssessment",
+      "TARGET": "EvidenceRequest",
+      "RELATION": "control_assessment_id",
+      "REQUIREDNESS": "exactly one of five typed targets",
+      "OPERATION": "evidenceRequestCreate",
+      "CONSTRAINT": "Accessible target; no target lifecycle gate in create handler",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-21",
+      "SOURCE": "AssuranceTest",
+      "TARGET": "EvidenceRequest",
+      "RELATION": "assurance_test_id",
+      "REQUIREDNESS": "exactly one of five typed targets",
+      "OPERATION": "evidenceRequestCreate",
+      "CONSTRAINT": "Accessible target; no target lifecycle gate in create handler",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-22",
+      "SOURCE": "TenantMembership",
+      "TARGET": "EvidenceRequest / Action",
+      "RELATION": "assigned_membership_id",
+      "REQUIREDNESS": "optional",
+      "OPERATION": "evidenceRequestCreate / actionCreate",
+      "CONSTRAINT": "existence + same tenant; active-only eligibility not established",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-23",
+      "SOURCE": "FileUploadIntent",
+      "TARGET": "FileObject",
+      "RELATION": "file_object_id on promotion",
+      "REQUIREDNESS": "required upload path",
+      "OPERATION": "uploadIntentCreate / uploadFinalize",
+      "CONSTRAINT": "quarantine -> scanning -> promoted; scan PASS",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-24",
+      "SOURCE": "FileObject",
+      "TARGET": "EvidenceVersion",
+      "RELATION": "file_object_id",
+      "REQUIREDNESS": "required for current evidenceCreate",
+      "OPERATION": "evidenceCreate",
+      "CONSTRAINT": "finalized, same tenant, scan passed",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-25",
+      "SOURCE": "RetentionPolicy",
+      "TARGET": "FileObject / Evidence",
+      "RELATION": "retention_policy_id",
+      "REQUIREDNESS": "required",
+      "OPERATION": "uploadIntentCreate / evidenceCreate",
+      "CONSTRAINT": "allowed global/same tenant; exact selector eligibility RR-G04",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-26",
+      "SOURCE": "Document",
+      "TARGET": "DocumentVersion",
+      "RELATION": "document_id",
+      "REQUIREDNESS": "required child",
+      "OPERATION": "No business Document UI/command in these workspaces",
+      "CONSTRAINT": "Canonical version relationship; not new UI authority",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-27",
+      "SOURCE": "DocumentVersion",
+      "TARGET": "EvidenceVersion",
+      "RELATION": "document_version_id",
+      "REQUIREDNESS": "optional canonical relation",
+      "OPERATION": "No current evidenceCreate input",
+      "CONSTRAINT": "Projection is returned but current create supports FileObject",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-28",
+      "SOURCE": "Evidence",
+      "TARGET": "EvidenceVersion",
+      "RELATION": "evidence_id",
+      "REQUIREDNESS": "required; first version atomic",
+      "OPERATION": "evidenceCreate / evidenceGet",
+      "CONSTRAINT": "draft then version workflow",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-29",
+      "SOURCE": "EvidenceVersion",
+      "TARGET": "Requirement / Control / ControlVersion / RequirementAssessment / ControlAssessment / AssuranceTest",
+      "RELATION": "EvidenceLink typed FK",
+      "REQUIREDNESS": "one+ links; exactly one target per link",
+      "OPERATION": "evidenceCreate",
+      "CONSTRAINT": "Accessible target; ControlVersion-only never proves tenant implementation",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-30",
+      "SOURCE": "EvidenceVersion",
+      "TARGET": "EvidenceReview",
+      "RELATION": "evidence_id + evidence_version_id",
+      "REQUIREDNESS": "review record on approve/reject",
+      "OPERATION": "evidenceApprove / evidenceReject",
+      "CONSTRAINT": "under_review; independent submitter/reviewer",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-31",
+      "SOURCE": "EvidenceVersion",
+      "TARGET": "EvidenceRequest fulfillment",
+      "RELATION": "evidence_request_fulfillments",
+      "REQUIREDNESS": "required selected version",
+      "OPERATION": "evidenceRequestFulfill",
+      "CONSTRAINT": "request open; eligible approved version + matching typed target",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-32",
+      "SOURCE": "RequirementAssessment",
+      "TARGET": "Issue",
+      "RELATION": "IssueOrigin.requirement_assessment_id",
+      "REQUIREDNESS": "exactly one of three create origins",
+      "OPERATION": "issueCreate",
+      "CONSTRAINT": "Accessible tenant origin; no source lifecycle create guard found",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-33",
+      "SOURCE": "ControlAssessment",
+      "TARGET": "Issue",
+      "RELATION": "IssueOrigin.control_assessment_id",
+      "REQUIREDNESS": "exactly one of three create origins",
+      "OPERATION": "issueCreate",
+      "CONSTRAINT": "Accessible tenant origin; no source lifecycle create guard found",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-34",
+      "SOURCE": "AssuranceTest",
+      "TARGET": "Issue",
+      "RELATION": "IssueOrigin.assurance_test_id",
+      "REQUIREDNESS": "exactly one of three create origins",
+      "OPERATION": "issueCreate",
+      "CONSTRAINT": "Accessible tenant origin; no source lifecycle create guard found",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-35",
+      "SOURCE": "Issue",
+      "TARGET": "Action",
+      "RELATION": "issue_id",
+      "REQUIREDNESS": "required path parent",
+      "OPERATION": "actionCreate",
+      "CONSTRAINT": "Same tenant existing issue; initial pending",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-36",
+      "SOURCE": "EvidenceVersion",
+      "TARGET": "Action closure",
+      "RELATION": "action_evidence_links.evidence_version_id",
+      "REQUIREDNESS": "required complete",
+      "OPERATION": "actionComplete",
+      "CONSTRAINT": "Action in_review; eligible approved evidence version",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-37",
+      "SOURCE": "Action",
+      "TARGET": "ActionVerification",
+      "RELATION": "action_id",
+      "REQUIREDNESS": "required command context",
+      "OPERATION": "actionVerify",
+      "CONSTRAINT": "completed; accepted; independent verifier/completer/assignee",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    },
+    {
+      "DEP_ID": "DEP-38",
+      "SOURCE": "Requirement",
+      "TARGET": "ControlVersion",
+      "RELATION": "RequirementControlMapping",
+      "REQUIREDNESS": "canonical M:N mapping",
+      "OPERATION": "controlList / controlGet",
+      "CONSTRAINT": "Entitled framework/control references; applicability uses effective approved rows",
+      "SOURCE_PATH": "docs/phase6a/STEP_6A2/01_BUSINESS_NAVIGATION_ARCHITECTURE.md"
+    }
+  ],
+  "sod_constraints": [
+    {
+      "source": "FORM-02",
+      "target": "FORM-03",
+      "constraint": "prior actor distinct"
+    },
+    {
+      "source": "FORM-06",
+      "target": "FORM-07",
+      "constraint": "prior actor distinct + sufficient method/result"
+    },
+    {
+      "source": "FORM-13",
+      "target": "FORM-14",
+      "constraint": "prior actor distinct"
+    },
+    {
+      "source": "FORM-14",
+      "target": "FORM-15",
+      "constraint": "prior actor distinct + sufficient method/result"
+    },
+    {
+      "source": "FORM-18",
+      "target": "FORM-19",
+      "constraint": "prior actor distinct"
+    },
+    {
+      "source": "FORM-19",
+      "target": "FORM-20",
+      "constraint": "prior actor distinct"
+    },
+    {
+      "source": "FORM-23",
+      "target": "FORM-26",
+      "constraint": "author/submitter vs approver"
+    },
+    {
+      "source": "FORM-23",
+      "target": "FORM-27",
+      "constraint": "author/submitter vs reviewer"
+    },
+    {
+      "source": "FORM-28",
+      "target": "FORM-31",
+      "constraint": "policy author vs approver"
+    },
+    {
+      "source": "FORM-36",
+      "target": "FORM-37",
+      "constraint": "prior actor vs verifier"
+    },
+    {
+      "source": "FORM-41",
+      "target": "FORM-42",
+      "constraint": "completer/prior actor and assignee vs verifier"
+    }
+  ],
+  "unsupported_inferred_edges": [
+    "ControlAssessment -> AssuranceTest parent",
+    "RequirementApplicability -> SoAItem parent"
+  ],
+  "optimization": "4 business journeys,11 entity chains, one evidence approval/rejection fork; not a mathematical minimum of people/clicks"
+}

@@ -1,0 +1,128 @@
+{
+  "capturedAt": "2026-10-19T15:11:45.999Z",
+  "realm": [
+    {
+      "id": "6a4d499c-2ce7-404e-982a-eecd70fa3573",
+      "name": "tcdx-managed-identity",
+      "sso_idle_timeout": 1800,
+      "sso_max_lifespan": 36000,
+      "access_token_lifespan": 300,
+      "revoke_refresh_token": false,
+      "refresh_token_max_reuse": 0
+    }
+  ],
+  "attributes": [
+    {
+      "name": "actionTokenGeneratedByAdminLifespan",
+      "value": "43200"
+    },
+    {
+      "name": "actionTokenGeneratedByUserLifespan",
+      "value": "300"
+    },
+    {
+      "name": "clientOfflineSessionIdleTimeout",
+      "value": "0"
+    },
+    {
+      "name": "clientOfflineSessionMaxLifespan",
+      "value": "0"
+    },
+    {
+      "name": "clientSessionIdleTimeout",
+      "value": "0"
+    },
+    {
+      "name": "clientSessionMaxLifespan",
+      "value": "0"
+    },
+    {
+      "name": "oauth2DeviceCodeLifespan",
+      "value": "600"
+    },
+    {
+      "name": "offlineSessionMaxLifespan",
+      "value": "5184000"
+    },
+    {
+      "name": "offlineSessionMaxLifespanEnabled",
+      "value": "false"
+    },
+    {
+      "name": "parRequestUriLifespan",
+      "value": "60"
+    }
+  ],
+  "client": [
+    {
+      "id": "d3c7bcb1-6b5f-4574-be1f-bacd230722b8",
+      "client_id": "tcdx-grc",
+      "enabled": true
+    }
+  ],
+  "clientAttributes": [
+    {
+      "name": "backchannel.logout.revoke.offline.tokens",
+      "value": "false"
+    },
+    {
+      "name": "backchannel.logout.session.required",
+      "value": "true"
+    },
+    {
+      "name": "standard.token.exchange.enabled",
+      "value": "false"
+    }
+  ],
+  "events": [
+    {
+      "type": "CODE_TO_TOKEN",
+      "error": null,
+      "count": 4
+    },
+    {
+      "type": "LOGIN",
+      "error": null,
+      "count": 4
+    },
+    {
+      "type": "LOGIN_ERROR",
+      "error": "invalid_user_credentials",
+      "count": 2
+    }
+  ],
+  "sessions": [
+    {
+      "created_at": "2026-10-19T14:36:04.000Z",
+      "refreshed_at": "2026-10-19T14:40:05.000Z",
+      "authentication_time": "1792420564"
+    },
+    {
+      "created_at": "2026-10-19T14:51:36.000Z",
+      "refreshed_at": "2026-10-19T15:04:05.000Z",
+      "authentication_time": "1792421524"
+    }
+  ],
+  "amr": [
+    {
+      "authenticator": "auth-otp-form",
+      "name": "default.reference.maxAge",
+      "value": "600"
+    },
+    {
+      "authenticator": "auth-otp-form",
+      "name": "default.reference.value",
+      "value": "otp"
+    },
+    {
+      "authenticator": "auth-username-password-form",
+      "name": "default.reference.maxAge",
+      "value": "600"
+    },
+    {
+      "authenticator": "auth-username-password-form",
+      "name": "default.reference.value",
+      "value": "pwd"
+    }
+  ]
+}

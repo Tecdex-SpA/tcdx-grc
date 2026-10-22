@@ -1,0 +1,938 @@
+{
+  "capturedAt": "2026-10-19T15:51:38.297Z",
+  "queryMode": "REPEATABLE READ READ ONLY",
+  "tenant": [
+    {
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "tenant_code": "TECDEX"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "01a118e4-ba56-76e7-aa44-cc8b23930648",
+      "evidence_code": "QA-F5-20261007-EVIDENCE",
+      "lifecycle_state": "draft",
+      "created_at": "2026-10-08T00:23:25.526Z",
+      "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+    }
+  ],
+  "audit": [
+    {
+      "occurred_at": "2026-10-19T15:38:48.060Z",
+      "correlation_id": "01a154d0-bb73-77ab-a49c-ab770e76883a",
+      "event_code": "audit.evidence.file.finalize.v1",
+      "command_code": "uploadFinalize",
+      "outcome": "success",
+      "aggregate_type": "FileObject",
+      "aggregate_id": "01a154d0-bb8c-7305-94e0-04279e8330b3",
+      "actor_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "after_payload": {
+        "sha256": "15530426a92243b89903530ff9ea88ef445651f2d41677418b3dc67f24c02c2b",
+        "size_bytes": "73014",
+        "row_version": 1,
+        "scan_status": "passed",
+        "effective_to": null,
+        "declared_mime": "application/pdf",
+        "detected_mime": "application/pdf",
+        "classification": "internal",
+        "effective_from": null,
+        "file_object_id": "01a154d0-bb8c-7305-94e0-04279e8330b3",
+        "storage_version": "82135b61-3ce0-4044-a0dd-59b8bf36f813",
+        "original_filename": "ACME_Chile_SpA_Anexo_Retencion_Documental_QA_SIMULADO_20261015.pdf",
+        "scan_completed_at": "2026-10-19T15:38:48.195Z",
+        "source_provenance": "interna",
+        "contract_provenance": {
+          "root": {
+            "entity_id": "01a154d0-bb8c-7305-94e0-04279e8330b3",
+            "entity_type": "FileObject",
+            "entity_version": {
+              "kind": "row_version",
+              "value": "1"
+            }
+          },
+          "occurrences": [
+            {
+              "code": "internal",
+              "entity_id": "01a154d0-bb8c-7305-94e0-04279e8330b3",
+              "family_id": "CV-01",
+              "input_path": "classification",
+              "entity_type": "FileObject",
+              "entity_version": {
+                "kind": "row_version",
+                "value": "1"
+              }
+            }
+          ],
+          "manifest_sha256": "81e559c96f687c319d415bb57b97187f17f91d884b35594b4ce0db7b68862b83",
+          "profile_version": 1,
+          "contract_version": "STEP6A3_VOCABULARIES_v1"
+        },
+        "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+        "retention_policy_applicability_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45"
+      }
+    },
+    {
+      "occurred_at": "2026-10-19T15:38:47.779Z",
+      "correlation_id": "01a154d0-ba4c-708a-b3c3-dad65ba3a6e8",
+      "event_code": "audit.evidence.file.upload_requested.v1",
+      "command_code": "uploadIntentCreate",
+      "outcome": "success",
+      "aggregate_type": "FileUploadIntent",
+      "aggregate_id": "01a154d0-ba7c-7613-94ea-3ccdd96e48ee",
+      "actor_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "after_payload": {
+        "expires_at": "2026-10-19T15:43:47.804Z",
+        "lifecycle_state": "pending_upload",
+        "upload_intent_id": "01a154d0-ba7c-7613-94ea-3ccdd96e48ee",
+        "contract_provenance": {
+          "root": {
+            "entity_id": "01a154d0-ba7c-7613-94ea-3ccdd96e48ee",
+            "entity_type": "FileUploadIntent",
+            "entity_version": {
+              "kind": "row_version",
+              "value": "1"
+            }
+          },
+          "occurrences": [
+            {
+              "code": "internal",
+              "entity_id": "01a154d0-ba7c-7613-94ea-3ccdd96e48ee",
+              "family_id": "CV-01",
+              "input_path": "classification",
+              "entity_type": "FileUploadIntent",
+              "entity_version": {
+                "kind": "row_version",
+                "value": "1"
+              }
+            }
+          ],
+          "manifest_sha256": "81e559c96f687c319d415bb57b97187f17f91d884b35594b4ce0db7b68862b83",
+          "profile_version": 1,
+          "contract_version": "STEP6A3_VOCABULARIES_v1"
+        }
+      }
+    },
+    {
+      "occurred_at": "2026-10-19T15:33:56.126Z",
+      "correlation_id": "01a154cc-4713-769b-9521-6044af79846d",
+      "event_code": "audit.evidence.file.finalize.v1",
+      "command_code": "uploadFinalize",
+      "outcome": "success",
+      "aggregate_type": "FileObject",
+      "aggregate_id": "01a154cc-472f-70c9-b6f1-e45e99e20a26",
+      "actor_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "after_payload": {
+        "sha256": "15530426a92243b89903530ff9ea88ef445651f2d41677418b3dc67f24c02c2b",
+        "size_bytes": "73014",
+        "row_version": 1,
+        "scan_status": "passed",
+        "effective_to": null,
+        "declared_mime": "application/pdf",
+        "detected_mime": "application/pdf",
+        "classification": "internal",
+        "effective_from": null,
+        "file_object_id": "01a154cc-472f-70c9-b6f1-e45e99e20a26",
+        "storage_version": "e1cbbac1-2ec1-408f-890b-4bc0642d2e2c",
+        "original_filename": "ACME_Chile_SpA_Anexo_Retencion_Documental_QA_SIMULADO_20261015.pdf",
+        "scan_completed_at": "2026-10-19T15:33:56.484Z",
+        "source_provenance": "interna",
+        "contract_provenance": {
+          "root": {
+            "entity_id": "01a154cc-472f-70c9-b6f1-e45e99e20a26",
+            "entity_type": "FileObject",
+            "entity_version": {
+              "kind": "row_version",
+              "value": "1"
+            }
+          },
+          "occurrences": [
+            {
+              "code": "internal",
+              "entity_id": "01a154cc-472f-70c9-b6f1-e45e99e20a26",
+              "family_id": "CV-01",
+              "input_path": "classification",
+              "entity_type": "FileObject",
+              "entity_version": {
+                "kind": "row_version",
+                "value": "1"
+              }
+            }
+          ],
+          "manifest_sha256": "81e559c96f687c319d415bb57b97187f17f91d884b35594b4ce0db7b68862b83",
+          "profile_version": 1,
+          "contract_version": "STEP6A3_VOCABULARIES_v1"
+        },
+        "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+        "retention_policy_applicability_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45"
+      }
+    },
+    {
+      "occurred_at": "2026-10-19T15:33:55.901Z",
+      "correlation_id": "01a154cc-462e-746c-866e-d67cbea713de",
+      "event_code": "audit.evidence.file.upload_requested.v1",
+      "command_code": "uploadIntentCreate",
+      "outcome": "success",
+      "aggregate_type": "FileUploadIntent",
+      "aggregate_id": "01a154cc-465c-73d6-83ac-f3e5a8c606b0",
+      "actor_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "after_payload": {
+        "expires_at": "2026-10-19T15:38:55.933Z",
+        "lifecycle_state": "pending_upload",
+        "upload_intent_id": "01a154cc-465c-73d6-83ac-f3e5a8c606b0",
+        "contract_provenance": {
+          "root": {
+            "entity_id": "01a154cc-465c-73d6-83ac-f3e5a8c606b0",
+            "entity_type": "FileUploadIntent",
+            "entity_version": {
+              "kind": "row_version",
+              "value": "1"
+            }
+          },
+          "occurrences": [
+            {
+              "code": "internal",
+              "entity_id": "01a154cc-465c-73d6-83ac-f3e5a8c606b0",
+              "family_id": "CV-01",
+              "input_path": "classification",
+              "entity_type": "FileUploadIntent",
+              "entity_version": {
+                "kind": "row_version",
+                "value": "1"
+              }
+            }
+          ],
+          "manifest_sha256": "81e559c96f687c319d415bb57b97187f17f91d884b35594b4ce0db7b68862b83",
+          "profile_version": 1,
+          "contract_version": "STEP6A3_VOCABULARIES_v1"
+        }
+      }
+    },
+    {
+      "occurred_at": "2026-10-19T14:32:49.251Z",
+      "correlation_id": "01a15494-5362-7711-953a-84d03719e00f",
+      "event_code": "audit.evidence.file.finalize.v1",
+      "command_code": "uploadFinalize",
+      "outcome": "success",
+      "aggregate_type": "FileObject",
+      "aggregate_id": "01a15494-537d-7002-8a97-b7115b0e3009",
+      "actor_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "after_payload": {
+        "sha256": "15530426a92243b89903530ff9ea88ef445651f2d41677418b3dc67f24c02c2b",
+        "size_bytes": "73014",
+        "row_version": 1,
+        "scan_status": "passed",
+        "effective_to": null,
+        "declared_mime": "application/pdf",
+        "detected_mime": "application/pdf",
+        "classification": "internal",
+        "effective_from": null,
+        "file_object_id": "01a15494-537d-7002-8a97-b7115b0e3009",
+        "storage_version": "8799bb41-c0ca-4587-b5d7-b6aec41f79f1",
+        "original_filename": "ACME_Chile_SpA_Anexo_Retencion_Documental_QA_SIMULADO_20261015.pdf",
+        "scan_completed_at": "2026-10-19T14:32:49.605Z",
+        "source_provenance": "interno",
+        "contract_provenance": {
+          "root": {
+            "entity_id": "01a15494-537d-7002-8a97-b7115b0e3009",
+            "entity_type": "FileObject",
+            "entity_version": {
+              "kind": "row_version",
+              "value": "1"
+            }
+          },
+          "occurrences": [
+            {
+              "code": "internal",
+              "entity_id": "01a15494-537d-7002-8a97-b7115b0e3009",
+              "family_id": "CV-01",
+              "input_path": "classification",
+              "entity_type": "FileObject",
+              "entity_version": {
+                "kind": "row_version",
+                "value": "1"
+              }
+            }
+          ],
+          "manifest_sha256": "81e559c96f687c319d415bb57b97187f17f91d884b35594b4ce0db7b68862b83",
+          "profile_version": 1,
+          "contract_version": "STEP6A3_VOCABULARIES_v1"
+        },
+        "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+        "retention_policy_applicability_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45"
+      }
+    },
+    {
+      "occurred_at": "2026-10-19T14:32:49.001Z",
+      "correlation_id": "01a15494-525e-7428-99d3-f3041937aba5",
+      "event_code": "audit.evidence.file.upload_requested.v1",
+      "command_code": "uploadIntentCreate",
+      "outcome": "success",
+      "aggregate_type": "FileUploadIntent",
+      "aggregate_id": "01a15494-528f-74d6-ba49-e55aa662c5f4",
+      "actor_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "after_payload": {
+        "expires_at": "2026-10-19T14:37:49.039Z",
+        "lifecycle_state": "pending_upload",
+        "upload_intent_id": "01a15494-528f-74d6-ba49-e55aa662c5f4",
+        "contract_provenance": {
+          "root": {
+            "entity_id": "01a15494-528f-74d6-ba49-e55aa662c5f4",
+            "entity_type": "FileUploadIntent",
+            "entity_version": {
+              "kind": "row_version",
+              "value": "1"
+            }
+          },
+          "occurrences": [
+            {
+              "code": "internal",
+              "entity_id": "01a15494-528f-74d6-ba49-e55aa662c5f4",
+              "family_id": "CV-01",
+              "input_path": "classification",
+              "entity_type": "FileUploadIntent",
+              "entity_version": {
+                "kind": "row_version",
+                "value": "1"
+              }
+            }
+          ],
+          "manifest_sha256": "81e559c96f687c319d415bb57b97187f17f91d884b35594b4ce0db7b68862b83",
+          "profile_version": 1,
+          "contract_version": "STEP6A3_VOCABULARIES_v1"
+        }
+      }
+    },
+    {
+      "occurred_at": "2026-10-19T14:05:53.174Z",
+      "correlation_id": "01a1547b-aa98-74d0-91d7-7c234d43b07e",
+      "event_code": "audit.evidence.file.finalize.v1",
+      "command_code": "uploadFinalize",
+      "outcome": "success",
+      "aggregate_type": "FileObject",
+      "aggregate_id": "01a1547b-aab1-7322-a40b-e8a881145bd3",
+      "actor_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "after_payload": {
+        "sha256": "641a2ce1495f1fa55cde55b6b989570a0881ff08b51851e93ef20eedfc974788",
+        "size_bytes": "79468",
+        "row_version": 1,
+        "scan_status": "passed",
+        "effective_to": null,
+        "declared_mime": "application/pdf",
+        "detected_mime": "application/pdf",
+        "classification": "internal",
+        "effective_from": null,
+        "file_object_id": "01a1547b-aab1-7322-a40b-e8a881145bd3",
+        "storage_version": "0fac5336-5896-44a9-aea0-8eb368397e32",
+        "original_filename": "Anexo_Retencion_Documental_Modelo_Para_Firma.pdf",
+        "scan_completed_at": "2026-10-19T14:05:53.323Z",
+        "source_provenance": "interno",
+        "contract_provenance": {
+          "root": {
+            "entity_id": "01a1547b-aab1-7322-a40b-e8a881145bd3",
+            "entity_type": "FileObject",
+            "entity_version": {
+              "kind": "row_version",
+              "value": "1"
+            }
+          },
+          "occurrences": [
+            {
+              "code": "internal",
+              "entity_id": "01a1547b-aab1-7322-a40b-e8a881145bd3",
+              "family_id": "CV-01",
+              "input_path": "classification",
+              "entity_type": "FileObject",
+              "entity_version": {
+                "kind": "row_version",
+                "value": "1"
+              }
+            }
+          ],
+          "manifest_sha256": "81e559c96f687c319d415bb57b97187f17f91d884b35594b4ce0db7b68862b83",
+          "profile_version": 1,
+          "contract_version": "STEP6A3_VOCABULARIES_v1"
+        },
+        "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+        "retention_policy_applicability_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45"
+      }
+    },
+    {
+      "occurred_at": "2026-10-19T14:05:52.947Z",
+      "correlation_id": "01a1547b-a9aa-743e-81fe-672891e6c22e",
+      "event_code": "audit.evidence.file.upload_requested.v1",
+      "command_code": "uploadIntentCreate",
+      "outcome": "success",
+      "aggregate_type": "FileUploadIntent",
+      "aggregate_id": "01a1547b-a9d8-722b-8a29-b192b2184604",
+      "actor_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "after_payload": {
+        "expires_at": "2026-10-19T14:10:52.984Z",
+        "lifecycle_state": "pending_upload",
+        "upload_intent_id": "01a1547b-a9d8-722b-8a29-b192b2184604",
+        "contract_provenance": {
+          "root": {
+            "entity_id": "01a1547b-a9d8-722b-8a29-b192b2184604",
+            "entity_type": "FileUploadIntent",
+            "entity_version": {
+              "kind": "row_version",
+              "value": "1"
+            }
+          },
+          "occurrences": [
+            {
+              "code": "internal",
+              "entity_id": "01a1547b-a9d8-722b-8a29-b192b2184604",
+              "family_id": "CV-01",
+              "input_path": "classification",
+              "entity_type": "FileUploadIntent",
+              "entity_version": {
+                "kind": "row_version",
+                "value": "1"
+              }
+            }
+          ],
+          "manifest_sha256": "81e559c96f687c319d415bb57b97187f17f91d884b35594b4ce0db7b68862b83",
+          "profile_version": 1,
+          "contract_version": "STEP6A3_VOCABULARIES_v1"
+        }
+      }
+    },
+    {
+      "occurred_at": "2026-10-19T14:04:11.997Z",
+      "correlation_id": "01a1547a-1f5f-72fb-b5ae-0dd07a8ea988",
+      "event_code": "audit.evidence.file.finalize.v1",
+      "command_code": "uploadFinalize",
+      "outcome": "success",
+      "aggregate_type": "FileObject",
+      "aggregate_id": "01a1547a-1f7b-74fb-b751-8deed1475032",
+      "actor_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "after_payload": {
+        "sha256": "641a2ce1495f1fa55cde55b6b989570a0881ff08b51851e93ef20eedfc974788",
+        "size_bytes": "79468",
+        "row_version": 1,
+        "scan_status": "passed",
+        "effective_to": null,
+        "declared_mime": "application/pdf",
+        "detected_mime": "application/pdf",
+        "classification": "internal",
+        "effective_from": null,
+        "file_object_id": "01a1547a-1f7b-74fb-b751-8deed1475032",
+        "storage_version": "0fead667-172a-4df1-873e-ec5ede3d7f11",
+        "original_filename": "Anexo_Retencion_Documental_Modelo_Para_Firma.pdf",
+        "scan_completed_at": "2026-10-19T14:04:12.481Z",
+        "source_provenance": "interno",
+        "contract_provenance": {
+          "root": {
+            "entity_id": "01a1547a-1f7b-74fb-b751-8deed1475032",
+            "entity_type": "FileObject",
+            "entity_version": {
+              "kind": "row_version",
+              "value": "1"
+            }
+          },
+          "occurrences": [
+            {
+              "code": "internal",
+              "entity_id": "01a1547a-1f7b-74fb-b751-8deed1475032",
+              "family_id": "CV-01",
+              "input_path": "classification",
+              "entity_type": "FileObject",
+              "entity_version": {
+                "kind": "row_version",
+                "value": "1"
+              }
+            }
+          ],
+          "manifest_sha256": "81e559c96f687c319d415bb57b97187f17f91d884b35594b4ce0db7b68862b83",
+          "profile_version": 1,
+          "contract_version": "STEP6A3_VOCABULARIES_v1"
+        },
+        "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+        "retention_policy_applicability_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45"
+      }
+    },
+    {
+      "occurred_at": "2026-10-19T14:04:11.688Z",
+      "correlation_id": "01a1547a-1e29-76d0-932f-f1095e886e9a",
+      "event_code": "audit.evidence.file.upload_requested.v1",
+      "command_code": "uploadIntentCreate",
+      "outcome": "success",
+      "aggregate_type": "FileUploadIntent",
+      "aggregate_id": "01a1547a-1e63-763e-b19b-0b34c6f5a3cf",
+      "actor_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "after_payload": {
+        "expires_at": "2026-10-19T14:09:11.748Z",
+        "lifecycle_state": "pending_upload",
+        "upload_intent_id": "01a1547a-1e63-763e-b19b-0b34c6f5a3cf",
+        "contract_provenance": {
+          "root": {
+            "entity_id": "01a1547a-1e63-763e-b19b-0b34c6f5a3cf",
+            "entity_type": "FileUploadIntent",
+            "entity_version": {
+              "kind": "row_version",
+              "value": "1"
+            }
+          },
+          "occurrences": [
+            {
+              "code": "internal",
+              "entity_id": "01a1547a-1e63-763e-b19b-0b34c6f5a3cf",
+              "family_id": "CV-01",
+              "input_path": "classification",
+              "entity_type": "FileUploadIntent",
+              "entity_version": {
+                "kind": "row_version",
+                "value": "1"
+              }
+            }
+          ],
+          "manifest_sha256": "81e559c96f687c319d415bb57b97187f17f91d884b35594b4ce0db7b68862b83",
+          "profile_version": 1,
+          "contract_version": "STEP6A3_VOCABULARIES_v1"
+        }
+      }
+    },
+    {
+      "occurred_at": "2026-10-08T00:24:52.577Z",
+      "correlation_id": "01a118e6-0e50-7055-8d3c-10f986b7dc2c",
+      "event_code": "audit.evidence.evidence.approve.v1",
+      "command_code": "evidenceApprove",
+      "outcome": "success",
+      "aggregate_type": "EvidenceVersion",
+      "aggregate_id": "01a118e4-ba56-76e7-aa44-d03594933d9c",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "after_payload": {
+        "links": [
+          {
+            "claim": "QA lifecycle evidence only",
+            "control_id": "01a118d7-6222-7470-8a85-306e07659f4a",
+            "effective_to": null,
+            "effective_from": null,
+            "requirement_id": null,
+            "evidence_link_id": "01a118e4-ba61-7356-9807-4884643b1388",
+            "assurance_test_id": null,
+            "control_version_id": null,
+            "evidence_version_id": "01a118e4-ba56-76e7-aa44-d03594933d9c",
+            "control_assessment_id": null,
+            "requirement_assessment_id": null
+          }
+        ],
+        "reviews": [
+          {
+            "decision": "approved",
+            "rationale": "Revisión independiente de archivo QA sanitizado; prueba funcional no autoritativa",
+            "relevance": "relevant",
+            "evidence_id": "01a118e4-ba56-76e7-aa44-cc8b23930648",
+            "reviewed_at": "2026-10-08T00:24:52.582Z",
+            "sufficiency": "sufficient",
+            "evidence_review_id": "01a118e6-0e66-76b8-95dc-7f27da646ffc",
+            "evidence_version_id": "01a118e4-ba56-76e7-aa44-d03594933d9c",
+            "reviewer_membership_id": "01a118c3-b108-7636-abcf-7cb86725320e"
+          }
+        ],
+        "expires_at": null,
+        "period_end": null,
+        "approved_at": "2026-10-08T00:24:52.579Z",
+        "evidence_id": "01a118e4-ba56-76e7-aa44-cc8b23930648",
+        "row_version": 4,
+        "effective_to": null,
+        "period_start": null,
+        "published_at": "2026-10-08T00:24:52.579Z",
+        "submitted_at": "2026-10-08T00:23:26.101Z",
+        "effective_from": null,
+        "file_object_id": "01a118e4-618b-74c5-b3ae-d4e2fa0ce4eb",
+        "provenance_ref": "QA Phase5 non authoritative",
+        "version_number": 1,
+        "lifecycle_state": "approved",
+        "superseded_by_id": null,
+        "document_version_id": null,
+        "evidence_version_id": "01a118e4-ba56-76e7-aa44-d03594933d9c"
+      }
+    },
+    {
+      "occurred_at": "2026-10-08T00:24:52.341Z",
+      "correlation_id": "01a118e6-0d65-74c7-9121-7d4a6542ad8d",
+      "event_code": "audit.evidence.evidence.start_review.v1",
+      "command_code": "evidenceReviewStart",
+      "outcome": "success",
+      "aggregate_type": "EvidenceVersion",
+      "aggregate_id": "01a118e4-ba56-76e7-aa44-d03594933d9c",
+      "actor_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+      "after_payload": {
+        "links": [
+          {
+            "claim": "QA lifecycle evidence only",
+            "control_id": "01a118d7-6222-7470-8a85-306e07659f4a",
+            "effective_to": null,
+            "effective_from": null,
+            "requirement_id": null,
+            "evidence_link_id": "01a118e4-ba61-7356-9807-4884643b1388",
+            "assurance_test_id": null,
+            "control_version_id": null,
+            "evidence_version_id": "01a118e4-ba56-76e7-aa44-d03594933d9c",
+            "control_assessment_id": null,
+            "requirement_assessment_id": null
+          }
+        ],
+        "reviews": [],
+        "expires_at": null,
+        "period_end": null,
+        "approved_at": null,
+        "evidence_id": "01a118e4-ba56-76e7-aa44-cc8b23930648",
+        "row_version": 3,
+        "effective_to": null,
+        "period_start": null,
+        "published_at": null,
+        "submitted_at": "2026-10-08T00:23:26.101Z",
+        "effective_from": null,
+        "file_object_id": "01a118e4-618b-74c5-b3ae-d4e2fa0ce4eb",
+        "provenance_ref": "QA Phase5 non authoritative",
+        "version_number": 1,
+        "lifecycle_state": "under_review",
+        "superseded_by_id": null,
+        "document_version_id": null,
+        "evidence_version_id": "01a118e4-ba56-76e7-aa44-d03594933d9c"
+      }
+    },
+    {
+      "occurred_at": "2026-10-08T00:23:26.099Z",
+      "correlation_id": "01a118e4-bc82-77c3-bd63-17f9cc09b59b",
+      "event_code": "audit.evidence.evidence.submit.v1",
+      "command_code": "evidenceSubmit",
+      "outcome": "success",
+      "aggregate_type": "EvidenceVersion",
+      "aggregate_id": "01a118e4-ba56-76e7-aa44-d03594933d9c",
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "after_payload": {
+        "links": [
+          {
+            "claim": "QA lifecycle evidence only",
+            "control_id": "01a118d7-6222-7470-8a85-306e07659f4a",
+            "effective_to": null,
+            "effective_from": null,
+            "requirement_id": null,
+            "evidence_link_id": "01a118e4-ba61-7356-9807-4884643b1388",
+            "assurance_test_id": null,
+            "control_version_id": null,
+            "evidence_version_id": "01a118e4-ba56-76e7-aa44-d03594933d9c",
+            "control_assessment_id": null,
+            "requirement_assessment_id": null
+          }
+        ],
+        "reviews": [],
+        "expires_at": null,
+        "period_end": null,
+        "approved_at": null,
+        "evidence_id": "01a118e4-ba56-76e7-aa44-cc8b23930648",
+        "row_version": 2,
+        "effective_to": null,
+        "period_start": null,
+        "published_at": null,
+        "submitted_at": "2026-10-08T00:23:26.101Z",
+        "effective_from": null,
+        "file_object_id": "01a118e4-618b-74c5-b3ae-d4e2fa0ce4eb",
+        "provenance_ref": "QA Phase5 non authoritative",
+        "version_number": 1,
+        "lifecycle_state": "submitted",
+        "superseded_by_id": null,
+        "document_version_id": null,
+        "evidence_version_id": "01a118e4-ba56-76e7-aa44-d03594933d9c"
+      }
+    },
+    {
+      "occurred_at": "2026-10-08T00:23:25.526Z",
+      "correlation_id": "01a118e4-ba46-7767-8d01-c6636d3770b4",
+      "event_code": "audit.evidence.evidence.create.v1",
+      "command_code": "evidenceCreate",
+      "outcome": "success",
+      "aggregate_type": "Evidence",
+      "aggregate_id": "01a118e4-ba56-76e7-aa44-cc8b23930648",
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "after_payload": {
+        "valid_to": null,
+        "versions": [
+          {
+            "expires_at": null,
+            "period_end": null,
+            "approved_at": null,
+            "evidence_id": "01a118e4-ba56-76e7-aa44-cc8b23930648",
+            "row_version": 1,
+            "effective_to": null,
+            "period_start": null,
+            "published_at": null,
+            "submitted_at": null,
+            "effective_from": null,
+            "file_object_id": "01a118e4-618b-74c5-b3ae-d4e2fa0ce4eb",
+            "provenance_ref": "QA Phase5 non authoritative",
+            "version_number": 1,
+            "lifecycle_state": "draft",
+            "superseded_by_id": null,
+            "document_version_id": null,
+            "evidence_version_id": "01a118e4-ba56-76e7-aa44-d03594933d9c"
+          }
+        ],
+        "valid_from": null,
+        "evidence_id": "01a118e4-ba56-76e7-aa44-cc8b23930648",
+        "row_version": 1,
+        "source_kind": "file",
+        "evidence_code": "QA-F5-20261007-EVIDENCE",
+        "evidence_type": "document",
+        "lifecycle_state": "draft",
+        "retention_policy_id": "01a118bf-386d-76be-a26d-e7b322136302",
+        "business_owner_subject_id": "01a0f27e-b912-72d2-a08e-c5fcbd4efe43"
+      }
+    },
+    {
+      "occurred_at": "2026-10-08T00:23:02.800Z",
+      "correlation_id": "01a118e4-617d-7072-b1eb-d90ad6ab0d48",
+      "event_code": "audit.evidence.file.finalize.v1",
+      "command_code": "uploadFinalize",
+      "outcome": "success",
+      "aggregate_type": "FileObject",
+      "aggregate_id": "01a118e4-618b-74c5-b3ae-d4e2fa0ce4eb",
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "after_payload": {
+        "sha256": "562e23a018ba5754b5cb7c901d6aabc01ebe716adb4ec95d76f9477bcb3c3103",
+        "size_bytes": "360",
+        "row_version": 1,
+        "scan_status": "passed",
+        "effective_to": null,
+        "declared_mime": "text/plain",
+        "detected_mime": "text/plain",
+        "classification": "internal",
+        "effective_from": null,
+        "file_object_id": "01a118e4-618b-74c5-b3ae-d4e2fa0ce4eb",
+        "storage_version": "bf9a065a-2591-42ce-97d0-d4846949693b",
+        "original_filename": "tcdx-grc-phase5-qa-evidence-20261007.txt",
+        "scan_completed_at": "2026-10-08T00:23:02.927Z",
+        "source_provenance": "QA Phase5 non authoritative sanitized file",
+        "retention_policy_id": "01a118bf-386d-76be-a26d-e7b322136302"
+      }
+    },
+    {
+      "occurred_at": "2026-10-08T00:23:02.625Z",
+      "correlation_id": "01a118e4-60c4-72cf-975a-f24b496a6ba4",
+      "event_code": "audit.evidence.file.upload_requested.v1",
+      "command_code": "uploadIntentCreate",
+      "outcome": "success",
+      "aggregate_type": "FileUploadIntent",
+      "aggregate_id": "01a118e4-60e1-77dc-bcd6-8f2705ef9436",
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "after_payload": {
+        "expires_at": "2026-10-08T00:28:02.626Z",
+        "lifecycle_state": "pending_upload",
+        "upload_intent_id": "01a118e4-60e1-77dc-bcd6-8f2705ef9436"
+      }
+    },
+    {
+      "occurred_at": "2026-10-08T00:22:04.229Z",
+      "correlation_id": "01a118e3-7cae-77ee-a3f3-143fcb3d7aa6",
+      "event_code": "audit.evidence.request.create.v1",
+      "command_code": "evidenceRequestCreate",
+      "outcome": "success",
+      "aggregate_type": "EvidenceRequest",
+      "aggregate_id": "01a118e3-7cc3-746e-83d5-6e9c11e9368b",
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "after_payload": {
+        "due_at": "2026-10-14T00:00:00.000Z",
+        "control_id": "01a118d7-6222-7470-8a85-306e07659f4a",
+        "row_version": 1,
+        "fulfilled_at": null,
+        "request_code": "QA-F5-20261007-REQUEST",
+        "requirement_id": null,
+        "lifecycle_state": "open",
+        "assurance_test_id": null,
+        "evidence_request_id": "01a118e3-7cc3-746e-83d5-6e9c11e9368b",
+        "control_assessment_id": null,
+        "assigned_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+        "requirement_assessment_id": null,
+        "requested_by_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "table_schema": "evidence",
+      "table_name": "evidences",
+      "column_name": "evidence_id"
+    },
+    {
+      "table_schema": "evidence",
+      "table_name": "evidences",
+      "column_name": "created_at"
+    },
+    {
+      "table_schema": "evidence",
+      "table_name": "evidences",
+      "column_name": "created_by_user_identity_id"
+    },
+    {
+      "table_schema": "evidence",
+      "table_name": "evidences",
+      "column_name": "created_by_service_principal_id"
+    },
+    {
+      "table_schema": "evidence",
+      "table_name": "evidences",
+      "column_name": "updated_at"
+    },
+    {
+      "table_schema": "evidence",
+      "table_name": "evidences",
+      "column_name": "updated_by_user_identity_id"
+    },
+    {
+      "table_schema": "evidence",
+      "table_name": "evidences",
+      "column_name": "updated_by_service_principal_id"
+    },
+    {
+      "table_schema": "evidence",
+      "table_name": "evidences",
+      "column_name": "row_version"
+    },
+    {
+      "table_schema": "evidence",
+      "table_name": "evidences",
+      "column_name": "tenant_id"
+    },
+    {
+      "table_schema": "evidence",
+      "table_name": "evidences",
+      "column_name": "evidence_code"
+    },
+    {
+      "table_schema": "evidence",
+      "table_name": "evidences",
+      "column_name": "evidence_type"
+    },
+    {
+      "table_schema": "evidence",
+      "table_name": "evidences",
+      "column_name": "business_owner_subject_id"
+    },
+    {
+      "table_schema": "evidence",
+      "table_name": "evidences",
+      "column_name": "lifecycle_state"
+    },
+    {
+      "table_schema": "evidence",
+      "table_name": "evidences",
+      "column_name": "valid_from"
+    },
+    {
+      "table_schema": "evidence",
+      "table_name": "evidences",
+      "column_name": "valid_to"
+    },
+    {
+      "table_schema": "evidence",
+      "table_name": "evidences",
+      "column_name": "retention_policy_id"
+    },
+    {
+      "table_schema": "evidence",
+      "table_name": "evidences",
+      "column_name": "source_kind"
+    },
+    {
+      "table_schema": "ops_audit",
+      "table_name": "idempotency_records",
+      "column_name": "idempotency_record_id"
+    },
+    {
+      "table_schema": "ops_audit",
+      "table_name": "idempotency_records",
+      "column_name": "created_at"
+    },
+    {
+      "table_schema": "ops_audit",
+      "table_name": "idempotency_records",
+      "column_name": "created_by_user_identity_id"
+    },
+    {
+      "table_schema": "ops_audit",
+      "table_name": "idempotency_records",
+      "column_name": "created_by_service_principal_id"
+    },
+    {
+      "table_schema": "ops_audit",
+      "table_name": "idempotency_records",
+      "column_name": "ownership_class"
+    },
+    {
+      "table_schema": "ops_audit",
+      "table_name": "idempotency_records",
+      "column_name": "tenant_id"
+    },
+    {
+      "table_schema": "ops_audit",
+      "table_name": "idempotency_records",
+      "column_name": "actor_user_identity_id"
+    },
+    {
+      "table_schema": "ops_audit",
+      "table_name": "idempotency_records",
+      "column_name": "actor_service_principal_id"
+    },
+    {
+      "table_schema": "ops_audit",
+      "table_name": "idempotency_records",
+      "column_name": "operation_code"
+    },
+    {
+      "table_schema": "ops_audit",
+      "table_name": "idempotency_records",
+      "column_name": "idempotency_key"
+    },
+    {
+      "table_schema": "ops_audit",
+      "table_name": "idempotency_records",
+      "column_name": "request_hash"
+    },
+    {
+      "table_schema": "ops_audit",
+      "table_name": "idempotency_records",
+      "column_name": "result_status_code"
+    },
+    {
+      "table_schema": "ops_audit",
+      "table_name": "idempotency_records",
+      "column_name": "result_ref"
+    },
+    {
+      "table_schema": "ops_audit",
+      "table_name": "idempotency_records",
+      "column_name": "response_hash"
+    },
+    {
+      "table_schema": "ops_audit",
+      "table_name": "idempotency_records",
+      "column_name": "first_seen_at"
+    },
+    {
+      "table_schema": "ops_audit",
+      "table_name": "idempotency_records",
+      "column_name": "expires_at"
+    }
+  ],
+  "rejectedAt": "2026-10-19T15:38:48.312Z",
+  "subsequent": [
+    {
+      "successful_creations_after_rejection": 0
+    }
+  ],
+  "idempotency": [],
+  "uploaded": [
+    {
+      "file_object_id": "01a154d0-bb8c-7305-94e0-04279e8330b3",
+      "created_at": "2026-10-19T15:38:48.060Z",
+      "scan_status": "passed",
+      "size_bytes": "73014",
+      "source_provenance": "interna",
+      "created_by_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "used_by_evidence": false
+    }
+  ]
+}

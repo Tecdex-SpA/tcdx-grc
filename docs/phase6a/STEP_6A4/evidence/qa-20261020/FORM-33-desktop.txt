@@ -1,0 +1,185 @@
+Browser tab: 1477742241, Title: "Tecdex GRC", URL: "https://grc.tecdex.net/acciones".
+1 AXWebArea Tecdex GRC, URL: grc.tecdex.net/acciones
+	2 container root
+		3 container
+			4 image Tecdex
+			5 text GRC
+			6 container Navegación principal
+				7 button Panel principal
+				213 button Normas
+				9 button Cumplimiento
+				10 button Requisitos
+				11 button Controles
+				12 button Evidencias
+				13 button Acciones
+				214 text CONFIGURACIONES
+				215 button Empresas
+				216 button Usuarios
+				217 button Identidades gestionadas
+			18 text Tecdex GRC Gobernanza y cumplimiento
+		19 container
+			20 text Buscar
+			21 search text field (settable) Buscar
+			167 text Empresa
+			168 pop up button (collapsed, settable) Description: Empresa activa, Value: TecDex, Secondary Actions: Expand
+				169 menu
+					170 (selected) TecDex
+			26 text U Usuario autorizado
+			171 container Administrador de la plataforma · Responsable de acción · Rol personalizado · Auditor · Auditor líder · Rol personalizado · Responsable de cumplimiento · Rol personalizado · Responsable de control · Rol personalizado · Responsable de evidencia · Rol personalizado · Responsable GRC · Revisor legal · Responsable de privacidad · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Administrador de la empresa · Consulta
+				218 text Platform ·  TecDex ·  Administrador de la plataforma · Responsable de acción · Rol personalizado · Auditor · Auditor líder · Rol personalizado · Responsable de cumplimiento · Rol personalizado · Responsable de control · Rol personalizado · Responsable de evidencia · Rol personalizado · Responsable GRC · Revisor legal · Responsable de privacidad · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Administrador de la empresa · Consulta
+			29 button Cerrar sesión
+		30 container
+			31 tab group Submódulos
+				173 tab (selected, settable, boolean) Hallazgos y brechas, Value: 1
+				174 tab (selectable, settable, boolean) Acciones, Value: 0
+			175 text ESPACIO OPERATIVO
+			176 heading Hallazgos y brechas, Value: 1
+				177 text Hallazgos y brechas
+			178 text Registros vigentes dentro de tu alcance autorizado.
+			219 button Nuevo registro
+			220 text Estado
+			179 pop up button (collapsed, settable) Description: Filtrar por estado, Value: Todos, Secondary Actions: Expand
+				180 menu
+					181 (selected) Todos
+					182 Abierta
+					183 Clasificada
+					184 En remediación
+					185 Pendiente de verificación
+					186 Cierre verificado
+					187 Descartada
+					188 Reabierta
+			189 container Hallazgos y brechas
+				190 table
+					191 row
+						192 cell
+							193 text REGISTRO
+						194 cell
+							195 text REFERENCIA
+						196 cell
+							197 text ESTADO
+						198 cell
+							199 text VERSIÓN
+						200 cell
+							201 text ACCIONES
+					202 row
+						203 cell
+							204 text QA-F5-20261007-ISSUE · QA Phase5 - evidencia de validación pendiente · Cierre verificado
+						205 cell
+							206 text QA Phase5 - evidencia de validación pendiente
+						207 cell
+							208 text Cierre verificado
+						209 cell
+							210 text 5
+						211 cell
+							212 button Ver detalle
+			221 container Registrar hallazgo
+				222 container
+					223 text ALTA CONTROLADA
+					224 heading Registrar hallazgo, Value: 2, ID: create-title
+						225 text Registrar hallazgo
+					226 button Cerrar creación
+				227 container
+					228 text Completa los datos de la operación con información de tu empresa.
+					229 container Información principal
+						230 text Información principal
+						231 container
+							232 text Código de hallazgo
+							233 text field (settable) Código de hallazgo
+						234 container
+							235 text Obligatorio  · Código de negocio definido por ti; no es un identificador técnico.
+						236 container
+							237 text Tipo de hallazgo
+							238 pop up button (collapsed, settable) Description: Tipo de hallazgo, Value: Selecciona una opción, Secondary Actions: Expand
+								239 menu
+									240 (selected) Selecciona una opción
+									241 Hallazgo
+									242 No conformidad
+									243 Brecha
+									244 Excepción
+									245 Observación de auditoría
+						246 text Obligatorio
+						247 container
+							248 text Título
+							249 text field (settable) Título
+						250 text Obligatorio
+						251 container
+							252 text Descripción
+							253 text field (settable) Descripción
+						254 text Obligatorio
+						255 container
+							256 text Severidad
+							257 pop up button (collapsed, settable) Description: Severidad, Value: Selecciona una opción, Secondary Actions: Expand
+								258 menu
+									259 (selected) Selecciona una opción
+									260 Crítica
+									261 Mayor
+									262 Moderada
+									263 Menor
+						264 text Obligatorio
+						265 container
+							266 text Prioridad
+							267 pop up button (collapsed, settable) Description: Prioridad, Value: Selecciona una opción, Secondary Actions: Expand
+								268 menu
+									269 (selected) Selecciona una opción
+									270 Urgente
+									271 Alta
+									272 Normal
+									273 Baja
+						274 text Obligatorio
+						275 container
+							276 text Rol de origen
+							277 pop up button (collapsed, settable) Description: Rol de origen, Value: Selecciona una opción, Secondary Actions: Expand
+								278 menu
+									279 (selected) Selecciona una opción
+									280 Origen desencadenante
+						281 text Obligatorio
+					282 container Relaciones y versiones
+						283 text Relaciones y versiones
+						284 text Evaluación de requisito
+						285 pop up button (collapsed, settable) Evaluación de requisito, Value: Selecciona una opción, Secondary Actions: Expand
+							286 menu
+								287 (selected) Selecciona una opción
+								288 No evaluada
+								289 Evaluada · 20 oct 2026, 9:04:17 GMT-3
+								290 Aprobada · 8 oct 2026, 7:08:37 GMT-3
+						291 text Opcional
+						292 text Evaluación de control
+						293 pop up button (collapsed, settable) Evaluación de control, Value: Selecciona una opción, Secondary Actions: Expand
+							294 menu
+								295 (selected) Selecciona una opción
+								296 En progreso
+								297 Completada · 15 oct 2026, 16:56:11 GMT-3
+								298 Aprobada · 8 oct 2026, 7:08:38 GMT-3
+						299 text Opcional
+						300 text Prueba de control
+						301 pop up button (collapsed, settable) Prueba de control, Value: Selecciona una opción, Secondary Actions: Expand
+							302 menu
+								303 (selected) Selecciona una opción
+								304 QA-F5-20261007-ASSURANCE · Aprobada
+						305 text Opcional
+					306 container Responsables
+						307 text Responsables
+						308 container
+							309 text Buscar Responsable de negocio
+							310 search text field (settable) Buscar Responsable de negocio
+						311 button Buscar
+						312 text Responsable de negocio
+						313 pop up button (collapsed, settable) Responsable de negocio, Value: Selecciona una opción, Secondary Actions: Expand
+							314 menu
+								315 (selected) Selecciona una opción
+								316 TecDex · Organización · Activo
+						317 text Opcional
+					318 container Fechas y conservación
+						319 text Fechas y conservación
+						320 container
+							321 text Fecha límite
+							322 date field (settable) Fecha límite
+								323 container
+									324 stepper
+									325 stepper
+									326 stepper
+								327 pop up button Mostrar el selector de fechas Mostrar el selector de fechas
+						328 text Opcional
+				329 button Crear registro
+
+The focused UI element is 226 button Cerrar creación

@@ -1,0 +1,91 @@
+
+ RUN  v5.0.1 /Users/andresbarouh/repos/tcdx-grc
+
+ ✓ apps/frontend/src/reference-selectors.test.tsx (6 tests) 13ms
+ ✓ apps/frontend/src/core-grc.test.tsx (13 tests) 8ms
+ ❯ apps/frontend/src/business-origin-fields.test.tsx (30 tests | 4 failed) 22ms
+   ✓ evidenceRequestCreate: published exclusive reference contract (19)
+     ✓ projects only the exact published alternatives; no auxiliary origin FK or anyOf 1ms
+     ✓ rejects no origin with an actionable field error 0ms
+     ✓ accepts one valid requirement_id, with optional fields and no context in payload 14ms
+     ✓ accepts one valid control_id, with optional fields and no context in payload 0ms
+     ✓ accepts one valid requirement_assessment_id, with optional fields and no context in payload 0ms
+     ✓ accepts one valid control_assessment_id, with optional fields and no context in payload 0ms
+     ✓ accepts one valid assurance_test_id, with optional fields and no context in payload 0ms
+     ✓ rejects simultaneous requirement_id / control_id 0ms
+     ✓ rejects simultaneous requirement_id / requirement_assessment_id 0ms
+     ✓ rejects simultaneous requirement_id / control_assessment_id 0ms
+     ✓ rejects simultaneous requirement_id / assurance_test_id 0ms
+     ✓ rejects simultaneous control_id / requirement_assessment_id 0ms
+     ✓ rejects simultaneous control_id / control_assessment_id 0ms
+     ✓ rejects simultaneous control_id / assurance_test_id 0ms
+     ✓ rejects simultaneous requirement_assessment_id / control_assessment_id 0ms
+     ✓ rejects simultaneous requirement_assessment_id / assurance_test_id 0ms
+     ✓ rejects simultaneous control_assessment_id / assurance_test_id 0ms
+     ✓ clears all incompatible references and context-dependent assignee when switching; preserves optional independent values 0ms
+     ✓ continues rejecting malformed references and unsupported auxiliary IDs 0ms
+   ❯ issueCreate: published exclusive reference contract (10)
+     ✓ projects only the exact published alternatives; no auxiliary origin FK or anyOf 0ms
+     ✓ rejects no origin with an actionable field error 0ms
+     × accepts one valid requirement_assessment_id, with optional fields and no context in payload 2ms
+     × accepts one valid control_assessment_id, with optional fields and no context in payload 0ms
+     × accepts one valid assurance_test_id, with optional fields and no context in payload 0ms
+     ✓ rejects simultaneous requirement_assessment_id / control_assessment_id 0ms
+     ✓ rejects simultaneous requirement_assessment_id / assurance_test_id 0ms
+     ✓ rejects simultaneous control_assessment_id / assurance_test_id 0ms
+     × clears all incompatible references and context-dependent assignee when switching; preserves optional independent values 1ms
+     ✓ continues rejecting malformed references and unsupported auxiliary IDs 0ms
+   ✓ does not enable origin UI or alter grouping requirements for other schemas 0ms
+ ✓ apps/frontend/src/business-forms.test.tsx (48 tests) 38ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  apps/frontend/src/business-origin-fields.test.tsx > issueCreate: published exclusive reference contract > accepts one valid requirement_assessment_id, with optional fields and no context in payload
+ FAIL  apps/frontend/src/business-origin-fields.test.tsx > issueCreate: published exclusive reference contract > accepts one valid control_assessment_id, with optional fields and no context in payload
+ FAIL  apps/frontend/src/business-origin-fields.test.tsx > issueCreate: published exclusive reference contract > accepts one valid assurance_test_id, with optional fields and no context in payload
+AssertionError: [{"instancePath":"/severity","schemaPath":"#/components/schemas/IssueSeverity/enum","keyword":"enum","params":{"allowedValues":["critical","major","moderate","minor"]},"message":"must be equal to one of the allowed values"},{"instancePath":"/origin_role","schemaPath":"#/components/schemas/IssueOriginRole/enum","keyword":"enum","params":{"allowedValues":["trigger"]},"message":"must be equal to one of the allowed values"}]: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ apps/frontend/src/business-origin-fields.test.tsx:31:110
+     29|    const optional=schema==='EvidenceRequestCreateRequest'?{assigned_me…
+     30|    const normalized=normalizeForm(schema,{...base,[field]:id,...option…
+     31|    expect(normalized.errors).toEqual({});expect(validator(normalized.b…
+       |                                                                                                              ^
+     32|    expect(validateForm(schema,normalized.body)).toEqual({});
+     33|    expect(fields.filter(key=>key in normalized.body)).toEqual([field]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  apps/frontend/src/business-origin-fields.test.tsx > issueCreate: published exclusive reference contract > clears all incompatible references and context-dependent assignee when switching; preserves optional independent values
+AssertionError: expected { …(2) } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "origin_role": "Revisa el valor y el formato de este campo.",
++   "severity": "Revisa el valor y el formato de este campo.",
++ }
+
+ ❯ apps/frontend/src/business-origin-fields.test.tsx:49:43
+     47|    if(schema==='EvidenceRequestCreateRequest')expect(changed).not.toHa…
+     48|    const corrected={...base,[fields.at(-1)!]:id};
+     49|    expect(validateForm(schema,corrected)).toEqual({});expect(validator…
+       |                                           ^
+     50|   });
+     51|   it('continues rejecting malformed references and unsupported auxilia…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  4 failed | 93 passed (97)
+   Start at  13:40:42
+   Duration  601ms (import 53%, transform 41%, tests 5%, worker 1%)
+

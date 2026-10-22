@@ -1,0 +1,7 @@
+{
+  "image": "sha256:f4ed625346fc4712f27945d5248aa1b93e3b324772ef5e06c8d37e1102f57129",
+  "container_id": "0800ad076084814749a3f5636ed4c9598a667b583503127b5c99ef18284ffd87",
+  "health": "healthy",
+  "service_sha256": "1fa3584e2817414bfe4d2bb92cc65f99a14897753d4a0d5507b0e594079b3147",
+  "links_guard": "const tenantAdminSource = initialSource || (actor.roles.includes(\"TENANT_ADMIN\") && !actor.roles.includes(\"EVIDENCE_OWNER\"));\n    if (tenantAdminSource && (file.rows[0].created_by_user_identity_id !== actor.userIdentityId\n        || !Array.isArray(body.links) || body.links.length !== 0)) {\n        throw new FoundationError(\"TCDX.AUTHORIZATION.DENIED\", \"Access denied\", 403);\n    }\n    if (!Array.isArray(body.links) || (body.links.length === 0 && !tenantAdminSource)) {\n        throw new FoundationError(\"TCDX.VALIDATION.FAILED\", \"Validation failed\", 400, false, { field: \"links\" });\n    }\n    "
+}

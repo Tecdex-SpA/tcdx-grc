@@ -1,0 +1,79 @@
+{
+  "FRONTEND_QA_DEPLOY": "PASS",
+  "RECTOR_GATE": "PASS",
+  "TENANT_ISOLATION": "PASS",
+  "BACKEND_UNCHANGED": "YES",
+  "DATABASE_UNCHANGED": "YES",
+  "CONTRACTS_UNCHANGED": "YES",
+  "MASTER_REGENT": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "STEP6A3": "PARTIAL_BLOCKED",
+  "STEP6A4": "NOT_STARTED",
+  "PASO9_2B": "BLOCKED_TEST_DATA",
+  "HUMAN_UI_REVIEW": "PENDING",
+  "source_commit": "4a275264a7522031e62bf09f598c9d56e21d25e0",
+  "source_branch": "fix/step6a3-v112-continuity-20261016",
+  "source_is_uncommitted_working_tree": true,
+  "product_correction_files": [
+    "apps/frontend/src/reference-read.ts",
+    "apps/frontend/src/structured-reference-fields.tsx"
+  ],
+  "product_files_changed_during_deployment_task": [],
+  "verification_files_added": [
+    "apps/frontend/src/evidence-link-selector-deploy.test.ts",
+    "scripts/phase6a3/qa-verify-evidence-control-selector-image.py",
+    "scripts/phase6a3/qa-promote-evidence-control-selector-frontend.py",
+    "scripts/phase6a3/qa-deploy-evidence-control-selector-frontend.py",
+    "scripts/phase6a3/qa-evidence-selector-public.config.ts"
+  ],
+  "git_mutations": [],
+  "checks": {
+    "focused_vitest": "6 PASS",
+    "frontend_typecheck": "PASS",
+    "frontend_build": "PASS",
+    "amd64_image_build": "PASS",
+    "image_playwright": "2 PASS desktop/narrow",
+    "public_https_bundle_playwright": "2 PASS desktop/narrow; API mocked, no QA data writes",
+    "other_link_categories": "4 focal adapter tests PASS; non-control JSX unchanged",
+    "rector_governance": "PASS exit0",
+    "whitespace": "PASS"
+  },
+  "image": {
+    "status": "PASS",
+    "image_id": "sha256:b4fdbc1ce487269f5a531cafcebdbfc2dcae8f029780a689a65bf8c704bf9564",
+    "architecture": "linux/amd64",
+    "bundle": "index-CNgO5Y7x.js",
+    "bundle_sha256": "c1876e91991ad27c22f8276ff560f69f4a79d7c48e874297bc3b73952bd8a03e",
+    "test": "EvidenceLink control_id excludes global references and preserves tenant controls; desktop and narrow; no uploads or creations",
+    "qa_requests": 0,
+    "source_sha256": {
+      "apps/frontend/src/reference-read.ts": "d511cfd1085a4f343516c32f2d11a63ef4fc699edb9b481d37bec99f120b1b0b",
+      "apps/frontend/src/structured-reference-fields.tsx": "b7da399310bbf39951524a5b1dc480992e75004f16173cb8e1d6df6dd3659ebc"
+    }
+  },
+  "qa": {
+    "status": "PASS",
+    "frontend": {
+      "container_id": "2d62c54c98b13da44b598cd5d641e50d3eeee877c86c45677e347247ef9a1c37",
+      "image_id": "sha256:b4fdbc1ce487269f5a531cafcebdbfc2dcae8f029780a689a65bf8c704bf9564",
+      "running": true,
+      "health": "healthy",
+      "restart_count": 0
+    },
+    "canonical_origin": "https://grc.tecdex.net/",
+    "https_status": 200,
+    "tls_certificate_validation": "PASS",
+    "public_bundle": "/assets/index-CNgO5Y7x.js",
+    "public_bundle_sha256": "c1876e91991ad27c22f8276ff560f69f4a79d7c48e874297bc3b73952bd8a03e",
+    "file_object_reuse": "Preserves a finalized FileObject within the same open form; does not recover one from a closed/reloaded form.",
+    "qa_evidence_created": false,
+    "qa_files_transferred": false
+  },
+  "backend_identity_before_after": "IDENTICAL",
+  "qa_sql_executed": false,
+  "qa_data_writes": 0,
+  "qa_files_transferred": 0,
+  "production_modified": false,
+  "deployment_contracts_changed": false,
+  "new_rector_conflicts": [],
+  "remaining_blocker": "No accredited genuine document-target match; no tenant implementation of intended EVIDENCE-001. Functional acceptance pending."
+}

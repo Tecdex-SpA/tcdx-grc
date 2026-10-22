@@ -1,0 +1,89 @@
+{
+  "dialogs": [
+    {
+      "bounds": {
+        "height": 1000,
+        "width": 560
+      },
+      "label": "detail-title",
+      "modal": "true"
+    }
+  ],
+  "fields": [
+    {
+      "disabled": false,
+      "label": "Estado del resultado",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción",
+        "Válido",
+        "Sin datos",
+        "Datos insuficientes",
+        "Cobertura insuficiente",
+        "Fuente desactualizada",
+        "Fuentes en conflicto",
+        "Dependencia pendiente",
+        "Datos de entrada no válidos",
+        "Error de la fuente",
+        "Error de cálculo",
+        "No aplicable",
+        "Sustituida"
+      ],
+      "required": true,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Conclusión",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción",
+        "Efectivo",
+        "Efectivo parcialmente",
+        "No efectivo",
+        "Sin probar",
+        "Evidencia insuficiente"
+      ],
+      "required": false,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Efectividad de diseño",
+      "max": "100",
+      "min": "0",
+      "required": false,
+      "tag": "INPUT",
+      "type": "number"
+    },
+    {
+      "disabled": false,
+      "label": "Efectividad operativa",
+      "max": "100",
+      "min": "0",
+      "required": false,
+      "tag": "INPUT",
+      "type": "number"
+    },
+    {
+      "disabled": false,
+      "label": "Cobertura (%)",
+      "max": "100",
+      "min": "0",
+      "required": false,
+      "tag": "INPUT",
+      "type": "number"
+    }
+  ],
+  "focus": "Cerrar detalle",
+  "horizontalOverflow": false,
+  "url": "https://grc.tecdex.net/controles",
+  "viewport": {
+    "height": 1000,
+    "width": 1440
+  }
+}

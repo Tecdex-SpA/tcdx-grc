@@ -1,0 +1,273 @@
+{
+  "dialogs": [
+    {
+      "bounds": {
+        "height": 844,
+        "width": 390
+      },
+      "label": "create-title",
+      "modal": "true"
+    }
+  ],
+  "fields": [
+    {
+      "disabled": false,
+      "label": "Archivo de evidencia",
+      "max": null,
+      "min": null,
+      "required": false,
+      "tag": "INPUT",
+      "type": "file"
+    },
+    {
+      "disabled": false,
+      "label": "Clasificación del archivo",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción",
+        "Pública",
+        "Interna",
+        "Confidencial",
+        "Restringida"
+      ],
+      "required": false,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Procedencia del archivo",
+      "max": null,
+      "min": null,
+      "required": false,
+      "tag": "INPUT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Código de evidencia",
+      "max": null,
+      "min": null,
+      "required": true,
+      "tag": "INPUT",
+      "type": "text"
+    },
+    {
+      "disabled": false,
+      "label": "Tipo de evidencia",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción",
+        "Documento",
+        "Registro",
+        "Imagen",
+        "Informe"
+      ],
+      "required": true,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Origen",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción",
+        "Archivo aportado",
+        "Registro de sistema",
+        "Observación humana",
+        "Registro externo"
+      ],
+      "required": true,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Política de retención",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción",
+        "Política de la organización · QA_RET_ORD_001 · v1 · Publicada"
+      ],
+      "required": true,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": true,
+      "label": "Aplicabilidad de retención",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción"
+      ],
+      "required": false,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Referencia de procedencia",
+      "max": null,
+      "min": null,
+      "required": true,
+      "tag": "INPUT",
+      "type": "text"
+    },
+    {
+      "disabled": false,
+      "label": "Tipo de objetoSelecciona un tipoRequisitoControlVersión del controlEvaluación de requisitoEvaluación de controlPrueba de control",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona un tipo",
+        "Requisito",
+        "Control",
+        "Versión del control",
+        "Evaluación de requisito",
+        "Evaluación de control",
+        "Prueba de control"
+      ],
+      "required": false,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Prueba de control",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción",
+        "QA-F5-20261007-ASSURANCE · Aprobada"
+      ],
+      "required": true,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Declaración de evidencia",
+      "max": null,
+      "min": null,
+      "required": false,
+      "tag": "TEXTAREA",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Vigente desde",
+      "max": null,
+      "min": null,
+      "required": false,
+      "tag": "INPUT",
+      "type": "datetime-local"
+    },
+    {
+      "disabled": false,
+      "label": "Vigente hasta",
+      "max": null,
+      "min": null,
+      "required": false,
+      "tag": "INPUT",
+      "type": "datetime-local"
+    },
+    {
+      "disabled": false,
+      "label": "Buscar Responsable de negocio",
+      "max": null,
+      "min": null,
+      "required": false,
+      "tag": "INPUT",
+      "type": "search"
+    },
+    {
+      "disabled": false,
+      "label": "Responsable de negocio",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción",
+        "TecDex · Organización · Activo"
+      ],
+      "required": false,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Válida desde",
+      "max": null,
+      "min": null,
+      "required": false,
+      "tag": "INPUT",
+      "type": "datetime-local"
+    },
+    {
+      "disabled": false,
+      "label": "Válida hasta",
+      "max": null,
+      "min": null,
+      "required": false,
+      "tag": "INPUT",
+      "type": "datetime-local"
+    },
+    {
+      "disabled": false,
+      "label": "Inicio del período",
+      "max": null,
+      "min": null,
+      "required": false,
+      "tag": "INPUT",
+      "type": "datetime-local"
+    },
+    {
+      "disabled": false,
+      "label": "Fin del período",
+      "max": null,
+      "min": null,
+      "required": false,
+      "tag": "INPUT",
+      "type": "datetime-local"
+    },
+    {
+      "disabled": false,
+      "label": "Vigente desde",
+      "max": null,
+      "min": null,
+      "required": false,
+      "tag": "INPUT",
+      "type": "datetime-local"
+    },
+    {
+      "disabled": false,
+      "label": "Vigente hasta",
+      "max": null,
+      "min": null,
+      "required": false,
+      "tag": "INPUT",
+      "type": "datetime-local"
+    },
+    {
+      "disabled": false,
+      "label": "Vence el",
+      "max": null,
+      "min": null,
+      "required": false,
+      "tag": "INPUT",
+      "type": "datetime-local"
+    }
+  ],
+  "focus": "Agregar elemento",
+  "horizontalOverflow": false,
+  "url": "https://grc.tecdex.net/evidencias",
+  "viewport": {
+    "height": 844,
+    "width": 390
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "evidence": "LOCAL_SIMULATED_API_NOT_QA_PERSISTENCE",
+  "posts": [
+    {
+      "path": "/api/v1/issues",
+      "body": {
+        "issue_code": "HALL-LOCAL",
+        "title": "Hallazgo local",
+        "description": "Descripción local",
+        "issue_kind": "finding",
+        "severity": "minor",
+        "priority": "low",
+        "origin_role": "trigger",
+        "requirement_assessment_id": "018f47f2-6170-7bd0-9d43-12f644a2b111",
+        "business_owner_subject_id": "018f47f2-6170-7bd0-9d43-12f644a2b111",
+        "due_date": "2026-10-21"
+      }
+    }
+  ],
+  "reads": [
+    "/api/v1/subjects?page%5Bsize%5D=25",
+    "/api/v1/requirement-assessments?page%5Bsize%5D=25",
+    "/api/v1/control-assessments?page%5Bsize%5D=25",
+    "/api/v1/assurance-tests?page%5Bsize%5D=25",
+    "/api/v1/requirement-assessments?page%5Bsize%5D=25",
+    "/api/v1/issues"
+  ]
+}

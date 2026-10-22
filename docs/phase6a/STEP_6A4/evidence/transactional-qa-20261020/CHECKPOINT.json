@@ -1,0 +1,34 @@
+{
+  "baseline": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "branch": "fix/step6a3-v112-continuity-20261016",
+  "head": "4a275264a7522031e62bf09f598c9d56e21d25e0",
+  "environment": "QA",
+  "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+  "last_completed_operation": "FORM-05 / requirementAssessmentStart",
+  "completed_form_ids": ["FORM-05"],
+  "blocked_count": 41,
+  "failed_count": 0,
+  "not_applicable_count": 0,
+  "mutating_attempts": [
+    "FORM-05: HTTP 401, no state or audit change",
+    "FORM-05: HTTP 202, state in_progress/version 2, audit success"
+  ],
+  "do_not_retry": ["FORM-05 on 01a15942-6048-7405-b0a8-6253ff64f9bb"],
+  "evidence": [
+    "PREEXECUTION_GATE.json",
+    "FORM-05-before-db.json",
+    "FORM-05-after-401-db.json",
+    "FORM-05-after-202-db.json",
+    "FORM-05-transaction-receipt.json",
+    "OPERATION_EXECUTION_MATRIX.csv"
+  ],
+  "session_at_checkpoint": "Expired after successful FORM-05; later detail GET returned 401. Renew official login before any further command.",
+  "next_safe_operation": "None immediately: FORM-06 and FORM-13 require a genuine assessor result; other operations retain state, IAM scope, SoD, methodology or scenario blockers. Revalidate operation-specific gate after a real assessor supplies data.",
+  "open_risks": [
+    "A visible button or historical role list does not prove backend authorization for other operations.",
+    "FORM-06 source state now exists, but submitting no_data or insufficient_data without an assessor conclusion would be a fabricated business decision.",
+    "The prior 401 was proven no-commit; never retry FORM-05 after the 202 and audit success.",
+    "Only one real actor was authenticated; distinct actor SoD operations remain blocked."
+  ],
+  "secrets_stored": false
+}

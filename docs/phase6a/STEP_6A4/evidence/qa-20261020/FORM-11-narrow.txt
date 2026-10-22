@@ -1,0 +1,130 @@
+Browser tab: 1477742241, Title: "Tecdex GRC", URL: "https://grc.tecdex.net/controles".
+1 AXWebArea Tecdex GRC, URL: grc.tecdex.net/controles
+	2 container root
+		3 container
+			4 image Tecdex
+			5 text GRC
+			6 container Navegación principal
+				7 button Panel principal
+				98 button Normas
+				9 button Cumplimiento
+				10 button Requisitos
+				11 button Controles
+				12 button Evidencias
+				13 button Acciones
+				99 text CONFIGURACIONES
+				100 button Empresas
+				101 button Usuarios
+				102 button Identidades gestionadas
+			18 text Tecdex GRC Gobernanza y cumplimiento
+		19 container
+			206 button Abrir navegación
+			20 text Buscar
+			21 search text field (settable) Buscar
+			26 text U
+			29 button Cerrar sesión
+		30 container
+			31 tab group Submódulos
+				104 tab (selectable, settable, boolean) Controles, Value: 0
+				105 tab (selected, settable, boolean) Evaluaciones de control, Value: 1
+				106 tab (selectable, settable, boolean) Pruebas de aseguramiento, Value: 0
+			113 text ESPACIO OPERATIVO
+			114 heading Evaluaciones de control, Value: 1
+				115 text Evaluaciones de control
+			116 text Registros vigentes dentro de tu alcance autorizado.
+			117 button Nuevo registro
+			118 text Estado
+			119 pop up button (collapsed, settable) Description: Filtrar por estado, Value: Todos, Secondary Actions: Expand
+				120 menu
+					121 (selected) Todos
+					122 Planificada
+					123 En progreso
+					124 Completada
+					125 Revisada
+					126 Aprobada
+			127 container Evaluaciones de control
+				128 table
+					129 row
+						130 cell
+							131 text REGISTRO
+						132 cell
+							133 text REFERENCIA
+						134 cell
+							135 text ESTADO
+						136 cell
+							137 text VERSIÓN
+						138 cell
+							139 text ACCIONES
+					140 row
+						141 cell
+							142 text En progreso
+						143 cell
+							144 text No informado
+						145 cell
+							146 text En progreso
+						147 cell
+							148 text 2
+						149 cell
+							150 button Ver detalle
+					151 row
+						152 cell
+							153 text Completada · pendiente de contexto de zona horaria de la empresa.
+						154 cell
+							155 text No informado
+						156 cell
+							157 text Completada
+						158 cell
+							159 text 3
+						160 cell
+							161 button Ver detalle
+					162 row
+						163 cell
+							164 text Aprobada · pendiente de contexto de zona horaria de la empresa.
+						165 cell
+							166 text Sin probar
+						167 cell
+							168 text Aprobada
+						169 cell
+							170 text 5
+						171 cell
+							172 button Ver detalle
+			173 container Crear evaluación de control
+				174 container
+					175 text ALTA CONTROLADA
+					176 heading Crear evaluación de control, Value: 2, ID: create-title
+						177 text Crear evaluación de control
+					178 button Cerrar creación
+				207 container
+					208 text Completa los datos de la operación con información de tu empresa.
+					209 container Relaciones y versiones
+						210 text Relaciones y versiones
+						211 container
+							212 text Buscar Control
+							213 search text field (settable) Buscar Control
+						214 button Buscar
+						215 text Control
+						216 pop up button (collapsed, settable) Control, Value: Selecciona una opción, Secondary Actions: Expand
+							217 menu
+								218 (selected) Selecciona una opción
+								219 QA_STEP6A3_TRAZABILIDAD_DOCUMENTAL_001 · QA STEP6A3 — Validación de trazabilidad documental · v1 · Activo · ISO 9001:2026
+								220 QA-F5-20261007-CONTROL · QA Phase5 20261007 - Control de requisitos de clientes · v1 · Activo · ISO 9001:2026
+						221 button Cargar más opciones
+						222 text Obligatorio
+						223 text Versión de control
+						224 pop up button (disabled, collapsed, settable) Versión de control, Value: Selecciona una opción, Secondary Actions: Expand
+							225 menu
+								226 (disabled) Selecciona una opción
+						227 text Selecciona primero el objeto de origen.
+						228 text Obligatorio
+						229 text Referencia metodológica
+						230 pop up button (collapsed, settable) Referencia metodológica, Value: Selecciona una opción, Secondary Actions: Expand
+							231 menu
+								232 (selected) Selecciona una opción
+								233 Control effectiveness rector baseline · v1
+						234 text Obligatorio
+						235 text Configuración efectiva opcional
+						236 text No hay una configuración efectiva disponible para este contexto.
+						237 text Opcional
+				205 button Crear registro
+
+The focused UI element is 178 button Cerrar creación

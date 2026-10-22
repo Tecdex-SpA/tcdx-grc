@@ -1,0 +1,125 @@
+Browser tab: 1477742241, Title: "Tecdex GRC", URL: "https://grc.tecdex.net/controles".
+1 AXWebArea Tecdex GRC, URL: grc.tecdex.net/controles
+	2 container root
+		3 container
+			4 image Tecdex
+			5 text GRC
+			6 container Navegación principal
+				7 button Panel principal
+				98 button Normas
+				9 button Cumplimiento
+				10 button Requisitos
+				11 button Controles
+				12 button Evidencias
+				13 button Acciones
+				99 text CONFIGURACIONES
+				100 button Empresas
+				101 button Usuarios
+				102 button Identidades gestionadas
+			18 text Tecdex GRC Gobernanza y cumplimiento
+		19 container
+			20 text Buscar
+			21 search text field (settable) Buscar
+			173 text Empresa
+			174 pop up button (collapsed, settable) Description: Empresa activa, Value: TecDex, Secondary Actions: Expand
+				175 menu
+					176 (selected) TecDex
+			26 text U Usuario autorizado
+			177 container Administrador de la plataforma · Responsable de acción · Rol personalizado · Auditor · Auditor líder · Rol personalizado · Responsable de cumplimiento · Rol personalizado · Responsable de control · Rol personalizado · Responsable de evidencia · Rol personalizado · Responsable GRC · Revisor legal · Responsable de privacidad · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Administrador de la empresa · Consulta
+				178 text Platform ·  TecDex ·  Administrador de la plataforma · Responsable de acción · Rol personalizado · Auditor · Auditor líder · Rol personalizado · Responsable de cumplimiento · Rol personalizado · Responsable de control · Rol personalizado · Responsable de evidencia · Rol personalizado · Responsable GRC · Revisor legal · Responsable de privacidad · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Administrador de la empresa · Consulta
+			29 button Cerrar sesión
+		30 container
+			31 tab group Submódulos
+				104 tab (selectable, settable, boolean) Controles, Value: 0
+				105 tab (selectable, settable, boolean) Evaluaciones de control, Value: 0
+				106 tab (selected, settable, boolean) Pruebas de aseguramiento, Value: 1
+			179 text ESPACIO OPERATIVO
+			180 heading Pruebas de aseguramiento, Value: 1
+				181 text Pruebas de aseguramiento
+			182 text Registros vigentes dentro de tu alcance autorizado.
+			183 button Nuevo registro
+			184 text Estado
+			185 pop up button (collapsed, settable) Description: Filtrar por estado, Value: Todos, Secondary Actions: Expand
+				186 menu
+					187 (selected) Todos
+					188 Planificada
+					189 En progreso
+					190 Completada
+					191 Revisada
+					192 Aprobada
+			193 container Pruebas de aseguramiento
+				194 table
+					195 row
+						196 cell
+							197 text REGISTRO
+						198 cell
+							199 text REFERENCIA
+						200 cell
+							201 text ESTADO
+						202 cell
+							203 text VERSIÓN
+						204 cell
+							205 text ACCIONES
+					206 row
+						207 cell
+							208 text QA-F5-20261007-ASSURANCE · Aprobada
+						209 cell
+							210 text QA-F5-20261007-ASSURANCE
+						211 cell
+							212 text Aprobada
+						213 cell
+							214 text 5
+						215 cell
+							216 button Ver detalle
+			217 container Planificar prueba de control
+				218 container
+					219 text ALTA CONTROLADA
+					220 heading Planificar prueba de control, Value: 2, ID: create-title
+						221 text Planificar prueba de control
+					222 button Cerrar creación
+				223 text Completa los datos de la operación con información de tu empresa.
+				224 container
+					225 container Información principal
+						226 text Información principal
+						227 container
+							228 text Código de prueba
+							229 text field (settable) Código de prueba
+						230 container
+							231 text Obligatorio  · Código de negocio definido por ti; no es un identificador técnico.
+					232 container Relaciones y versiones
+						233 text Relaciones y versiones
+						234 container
+							235 text Buscar Control
+							236 search text field (settable) Buscar Control
+						237 button Buscar
+						238 text Control
+						239 pop up button (collapsed, settable) Control, Value: Selecciona una opción, Secondary Actions: Expand
+							240 menu
+								241 (selected) Selecciona una opción
+								242 QA_STEP6A3_TRAZABILIDAD_DOCUMENTAL_001 · QA STEP6A3 — Validación de trazabilidad documental · v1 · Activo · ISO 9001:2026
+								243 QA-F5-20261007-CONTROL · QA Phase5 20261007 - Control de requisitos de clientes · v1 · Activo · ISO 9001:2026
+						244 button Cargar más opciones
+						245 text Obligatorio
+						246 text Versión de control
+						247 pop up button (disabled, collapsed, settable) Versión de control, Value: Selecciona una opción, Secondary Actions: Expand
+							248 menu
+								249 (disabled) Selecciona una opción
+						250 text Selecciona primero el objeto de origen.
+						251 text Obligatorio
+					252 container Fechas y conservación
+						253 text Fechas y conservación
+						254 text Fecha planificada
+						255 date field (settable) Fecha planificada
+							256 container
+								257 stepper
+								258 stepper
+								259 stepper
+								260 stepper
+								261 stepper
+								262 stepper
+							263 pop up button Mostrar el selector de fecha y hora locales Mostrar el selector de fecha y hora locales
+						264 text Hora local de la empresa: America/Santiago
+						265 text Opcional
+				266 button Crear registro
+
+The focused UI element is 222 button Cerrar creación

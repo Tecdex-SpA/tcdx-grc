@@ -225,5 +225,86 @@
     "STEP_6A3": "PARTIAL_BLOCKED",
     "STEP_6A4": "NOT_STARTED",
     "functional_acceptance": "PENDING_USER"
+  },
+  "qa_findings_correction": {
+    "recorded_at_utc": "2026-10-16T16:38:02.203172+00:00",
+    "authorization": "PO STEP6A3 Corrección de hallazgos QA in current conversation",
+    "status": "PASS_LOCAL_PREPARED_NOT_DEPLOYED",
+    "RECTOR_GATE": "PASS_FOR_BOUNDED_CORRECTION; STEP6A3_CLOSURE_BLOCKED_PENDING_USER",
+    "findings": {
+      "precedence_rank": "Readonly and derived from approved policy_kind relation; legal_hold=500, mandatory_regulatory_policy=400, contractual_policy=300, tenant_policy=200, product_baseline=100. Existing backend invariant unchanged.",
+      "navigation": "Existing Evidencias/Aplicabilidad tab; Platform company detail links to /evidencias?tab=aplicabilidad-retencion only for matching active tenant and effective retention-read permission. Deep link survives authorization refresh/reload; no duplicated module."
+    },
+    "tests": {
+      "new_playwright_cases": 5,
+      "viewports": 2,
+      "unique_passed": 10,
+      "failed_remaining": 0,
+      "prior_60_reexecuted": false,
+      "coverage": [
+        "all five canonical precedence pairs and type changes; hold omits duration",
+        "Platform/Tenant authorized navigation and reload",
+        "Platform-only DENY without tenant reads",
+        "foreign company cannot reuse tenant permission",
+        "unauthorized deep link does not reveal retention tab"
+      ],
+      "note": "Initial failures corrected; reran only affected scenarios. API fixtures prove presentation/payload, not human authenticated QA."
+    },
+    "frontend_typecheck": "PASS",
+    "git_diff_check": "PASS",
+    "active_rector_integrity": "PASS_51_DOCUMENTS",
+    "HUMAN_UI_REVIEW": "PENDING",
+    "STEP_6A3": "PARTIAL_BLOCKED",
+    "STEP_6A4": "NOT_STARTED",
+    "architectural_layers_changed": [
+      "frontend",
+      "focused_e2e",
+      "existing_execution_evidence"
+    ],
+    "layers_unchanged": [
+      "PostgreSQL_schema",
+      "IAM_RBAC",
+      "backend",
+      "API_contracts",
+      "infrastructure",
+      "deployment_contracts"
+    ],
+    "files": [
+      {
+        "path": "apps/frontend/src/core-grc.tsx",
+        "sha256": "0274687e9e7cc1ea638ffff542fb458b103f0b419ee37154eb51c0f330d694b5"
+      },
+      {
+        "path": "e2e/core-grc-ui.spec.ts",
+        "sha256": "c5fafe6b6e589c0ec4255de73fda9e1a20b321dd73b8f670d3800e24ad6afba9"
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/QA_FINDING_precedence_chromium-desktop.png",
+        "sha256": "9baf33c93fdb32d8b640728faded0cf169c6af190ca055095f2c5eabc1a52fef"
+      },
+      {
+        "path": "docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/QA_FINDING_precedence_chromium-narrow.png",
+        "sha256": "57904f02a867059522b86397cf47cbad89bf7985e3307a341fc38ee837811a29"
+      },
+      {
+        "path": "docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/QA_FINDING_applicability_chromium-desktop.png",
+        "sha256": "5afa6f17c44c92aa335f660c958180dfeea1e544c4cda4e6834b6d55937d8562"
+      },
+      {
+        "path": "docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/QA_FINDING_applicability_chromium-narrow.png",
+        "sha256": "e13b358175bf689d0daaa042c7924941017aac98b1a0ef2ad4b7d4faa4be6c2e"
+      }
+    ],
+    "frontend_candidate": {
+      "tag": "tcdx-grc-frontend:retention-qa-findings-v112-20261016",
+      "source_sha256": "dd82aa3d9c53993e290b481e9c26dcd66755ee84231b9afa0eaa432964086834",
+      "status": "PASS_LOCAL_AMD64_NOT_DEPLOYED",
+      "image_id": "sha256:6f2802e4c433dc5789c4d2925ce8cb7f5724d2c17941c499d781d20ddbb9b640",
+      "architecture": "amd64",
+      "os": "linux"
+    },
+    "exact_ui_route": "Empresa activa autorizada -> Evidencias -> Aplicabilidad de retención -> Nuevo registro; shortcut Configuraciones/Empresas/Ver detalle/Abrir aplicabilidad de retención for same authorized active tenant"
   }
 }

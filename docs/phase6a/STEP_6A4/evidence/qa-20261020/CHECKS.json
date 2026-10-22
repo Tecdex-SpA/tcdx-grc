@@ -1,0 +1,47 @@
+{
+  "checks": [
+    {
+      "id": "rector-final",
+      "exit_code": 0,
+      "status": "PASS",
+      "command": [
+        "bash",
+        "scripts/verify-rector-governance.sh"
+      ]
+    },
+    {
+      "id": "contract-assets",
+      "exit_code": 0,
+      "status": "PASS",
+      "command": [
+        "node",
+        "scripts/foundations/generate-contract-assets.mjs",
+        "--check"
+      ]
+    },
+    {
+      "id": "form-assets",
+      "exit_code": 0,
+      "status": "PASS",
+      "command": [
+        "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+        "scripts/phase6a4/generate-form-assets.mjs",
+        "--check"
+      ]
+    },
+    {
+      "id": "diff-check",
+      "exit_code": 0,
+      "status": "PASS",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ]
+    }
+  ],
+  "reused_local_checks": "../local-20261020/CHECKS.json and RESULT.json: source hashes and126 sealed files unchanged",
+  "local_browser_api": "MOCKED_COMPONENT_ONLY",
+  "qa_browser_api": "REAL_EXISTING_QA_BACKEND; no request interception or fixture API",
+  "business_mutations_executed": 0
+}
