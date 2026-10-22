@@ -33,7 +33,7 @@ describe('published route composition in isolated Fastify inject, never QA',()=>
   const f=fixture();try{for(const op of [...NORMATIVE_LIBRARY.registry.new_operations,...NORMATIVE_LIBRARY.existingOperations]){
    const url='/api/v1'+op.path.replace('{id}',id).replace('{matrix_type}','requirements_controls');
    const response=await f.app.inject({method:op.method.toUpperCase() as 'GET'|'POST'|'PATCH',url,headers:{authorization:'Bearer fixture',...(op.context==='TENANT'?{'x-tcdx-tenant-id':id}:{}),'if-match':'"'+'a'.repeat(64)+'"','idempotency-key':'retry-one'},...(op.method==='get'?{}:{payload:{rationale:'Isolated fixture'}})});
-   expect(response.statusCode,op.operation_id).toBe(op.success);expect(response.json()).toEqual({operation:op.operation_id});expect(response.headers['cache-control']).toBe('no-store');expect(response.headers['idempotency-replayed']).toBe('true');
+   expect(response.statusCode,op.operation_id).toBe(op.success);expect(response.json()).toEqual({operation:op.operation_id});expect(response.headers['cache-control']).toBe('no-store, no-transform');expect(response.headers.etag).toBe('"'+'a'.repeat(64)+'"');expect(response.headers['idempotency-replayed']).toBe('true');
   }expect(f.calls).toHaveLength(32);}finally{await f.app.close();}
  });
  it('denies missing authentication, missing tenant and a Platform request carrying tenant before any handler',async()=>{

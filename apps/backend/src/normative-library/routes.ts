@@ -18,7 +18,9 @@ export function registerNormativeLibraryRoutes(app:FastifyInstance,identityVerif
   if(op.operation_id==='controlConfigurationDefinitionReferenceList'&&(request.body!==undefined||Object.keys(request.query??{}).length))invalid();
   const headers=request.headers;if(Array.isArray(headers['if-match'])||Array.isArray(headers['idempotency-key']))invalid('headers');
   const output=await composition.handlers.get(op.operation_id)!({identity,...(typeof tenant==='string'?{tenantId:tenant}:{}),...(params.id?{id:params.id}:{}),...(params.matrix_type?{matrixType:params.matrix_type}:{}),body:request.body,query:(request.query??{}) as Record<string,unknown>,correlationId:String(reply.getHeader('x-correlation-id')??request.id),idempotencyKey:String(headers['idempotency-key']??''),...(headers['if-match']?{ifMatch:String(headers['if-match'])}:{})});
-  if(output.etag)reply.header('etag',output.etag);if(output.replay)reply.header('idempotency-replayed','true');
+  // CAS uses the exact aggregate digest. Intermediary content encoding must not
+  // replace it with a representation-specific validator (for example -zstd).
+  if(output.etag)reply.header('etag',output.etag).header('cache-control','no-store, no-transform');if(output.replay)reply.header('idempotency-replayed','true');
   return reply.code(op.success).send(output.response);
  }
  // Same action-suffix dispatch as canonical core routes; Fastify normalizes adjacent parameter colons.
