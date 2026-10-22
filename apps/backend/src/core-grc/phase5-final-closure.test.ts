@@ -25,7 +25,13 @@ function executor(handler: (query: Query) => QueryResult | Promise<QueryResult>)
   const queryExecutor = {
     transformQuery: (node: unknown) => node,
     compileQuery: (node: Parameters<PostgresQueryCompiler["compileQuery"]>[0], queryId: Parameters<PostgresQueryCompiler["compileQuery"]>[1]) => compiler.compileQuery(node, queryId),
-    executeQuery: handler
+    executeQuery: (query:Query)=>{
+      // Existing INITIAL_SOURCE tenant serialization and ordinary published branch.
+      // Explicit fixture responses, not a bypass of the real retention guard.
+      if(query.sql.startsWith('SELECT pg_advisory_xact_lock')){expect(query.parameters[0]).toBe(tenantId);return {rows:[]};}
+      if(query.sql.startsWith('SELECT lifecycle_state FROM privacy.retention_policy_applicabilities')){expect(query.parameters).toEqual([tenantId,retentionApplicabilityId]);return {rows:[{lifecycle_state:'published'}]};}
+      return handler(query);
+    }
   };
   return { executeQuery: handler, getExecutor: () => queryExecutor } as unknown as Transaction<FoundationDatabase>;
 }

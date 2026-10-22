@@ -1,3 +1,4 @@
+import type {LibraryComposition} from '../normative-library/composition.js';
 import type { ScopeKind } from "@tcdx-grc/shared-types";
 import type { Kysely } from "kysely";
 import type { FoundationDatabase } from "../database.js";
@@ -5,6 +6,7 @@ import type { IdentityVerifier } from "../security/authentication.js";
 import type { FileStoragePort } from "../ports/file-storage.js";
 
 export type CoreGrcDependencies = {
+  normativeLibrary?: LibraryComposition;
   database: Kysely<FoundationDatabase>;
   identityVerifier: IdentityVerifier;
   fileStorage: FileStoragePort;

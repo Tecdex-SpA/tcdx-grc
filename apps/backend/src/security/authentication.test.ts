@@ -153,11 +153,11 @@ describe("Managed Identity signed AMR boundary", () => {
     };
     const now = Math.floor(Date.now() / 1_000);
     const createToken = async (options: {
-      amr?: unknown; issuer?: string; audience?: string | string[]; subject?: string | null; kid?: string;
+      nonce?: string | null; amr?: unknown; issuer?: string; audience?: string | string[]; subject?: string | null; kid?: string;
       expiry?: number; issuedAt?: number; authTime?: unknown; sid?: unknown; signingKey?: typeof privateKey;
     } = {}) => {
       const payload: Record<string, unknown> = {
-        nonce: "managed-nonce", name: "Managed fixture", email: "same@example.test",
+        ...(options.nonce === null ? {} : { nonce: options.nonce ?? "managed-nonce" }), name: "Managed fixture", email: "same@example.test",
         auth_time: options.authTime ?? now, sid: options.sid ?? "current-session",
         realm_access: { roles: ["admin"] }, resource_access: { "tcdx-grc": { roles: ["PLATFORM_ADMIN"] } },
         groups: ["tenant-admin"]
@@ -176,6 +176,15 @@ describe("Managed Identity signed AMR boundary", () => {
       });
       expect(Object.keys(proof).sort()).toEqual(["displayName", "email", "issuer", "subject"]);
     }
+    // OIDC Core 12.2: refresh ID tokens normally omit nonce; any returned nonce must match.
+    await expect(verifyOidcIdentityProof(config, await createToken({ nonce: null }), "managed-nonce", keys, "refresh"))
+      .resolves.toMatchObject({ subject: "stable-managed-subject" });
+    await expect(verifyOidcIdentityProof(config, await createToken({ nonce: "wrong" }), "managed-nonce", keys, "refresh"))
+      .rejects.toMatchObject({ statusCode: 401 });
+    await expect(verifyOidcIdentityProof(config, await createToken({ nonce: null }), "managed-nonce", keys))
+      .rejects.toMatchObject({ statusCode: 401 });
+    await expect(verifyOidcIdentityProof(config, await createToken({ nonce: null, amr: ["pwd"] }), "managed-nonce", keys, "refresh"))
+      .rejects.toMatchObject({ statusCode: 401 });
     for (const amr of [null, [], ["pwd"], ["otp"], ["pwd", "something"], "pwd otp", { pwd: true, otp: true }, ["pwd", "otp", 1]]) {
       await expect(verifyOidcIdentityProof(config, await createToken({ amr }), "managed-nonce", keys))
         .rejects.toMatchObject({ code: "TCDX.AUTHENTICATION.INVALID" });

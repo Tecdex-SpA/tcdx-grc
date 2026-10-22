@@ -1,3 +1,4 @@
+import {publishedInitialSourceDelta} from './published-initial-source.test-support.js';
 import { describe, expect, it } from "vitest";
 import { buildApp } from "../app.js";
 import { BlockedIdentityVerifier } from "../security/authentication.js";
@@ -51,7 +52,9 @@ describe("Phase 5 Core GRC route surface", () => {
       const response = await app.inject({ method, url, ...(method === "POST" ? { payload: {}, headers: { "idempotency-key": "test" } } : {}), ...(method === "PUT" ? { payload: Buffer.from("test"), headers: { "content-type": "application/octet-stream" } } : {}) });
       expect(response.statusCode, `${method} ${url}`).toBe(401);
     }
-    expect(mutations.size).toBe(51);
+    const added=publishedInitialSourceDelta();
+    for(const operation of added)expect(mutations.has(operation)).toBe(true);
+    expect(mutations.size).toBe(51+added.length);
     await app.close();
   });
 });

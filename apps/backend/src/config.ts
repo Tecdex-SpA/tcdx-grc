@@ -39,6 +39,7 @@ export type BackendConfig = {
     clientSecret?: string;
     issuer: string;
   };
+  browserSession?: { idleSeconds: number; maxSeconds: number };
   applicationJwt: {
     configured: boolean;
     issuer?: string;
@@ -262,6 +263,12 @@ export function loadConfig(environment: RuntimeEnvironment): BackendConfig {
         clientSecret: adminSecret
       } : {})
     },
+    ...(environment.APP_SESSION_IDLE_SECONDS || environment.APP_SESSION_MAX_SECONDS ? {
+      browserSession: {
+        idleSeconds: positiveInteger(required(environment, "APP_SESSION_IDLE_SECONDS"), "APP_SESSION_IDLE_SECONDS"),
+        maxSeconds: positiveInteger(required(environment, "APP_SESSION_MAX_SECONDS"), "APP_SESSION_MAX_SECONDS")
+      }
+    } : {}),
     applicationJwt: {
       configured: Boolean(privateKey && publicKey),
       ...(privateKey && publicKey ? {

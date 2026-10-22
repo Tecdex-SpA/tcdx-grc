@@ -1,3 +1,4 @@
+import {publishedInitialSourceDelta} from './published-initial-source.test-support.js';
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { PostgresQueryCompiler, type Transaction } from "kysely";
@@ -222,6 +223,7 @@ describe("Core GRC executable request and route contract", () => {
 
   it("matches all Phase 5 mutation routes, fields, scopes and extensions", () => {
     const operations = openApiOperations();
+    const initialSource=new Set(publishedInitialSourceDelta());
     const routeByOperation = new Map(coreGrcCommandRoutes.map(([operationId, path]) => [operationId, routeContractPath(path)]));
     expect([...mutations.keys()].sort()).toEqual([...routeByOperation.keys()].sort());
     expect([...operations.keys()].filter((operationId) => ["uploadIntentCreate", "uploadFinalize", "evidenceRequestFulfill", "controlAssessmentSubmit"].includes(operationId) && !mutations.has(operationId))).toEqual([]);
@@ -236,9 +238,9 @@ describe("Core GRC executable request and route contract", () => {
       expect(operation?.block, `${operationId} domain event`).toContain(definition.domainEvent ? `x-tcdx-domain-events: "\`${definition.domainEvent}\`"` : 'x-tcdx-domain-events: "NONE"');
       expect(operation?.block, `${operationId} idempotency`).toContain('x-tcdx-idempotency-class: "IDEMPOTENCY_KEY_REQUIRED"');
       expect(operation?.block, `${operationId} transaction`).toContain('x-tcdx-transaction-boundary: "TX"');
-      expect(operation?.block, `${operationId} response`).toContain("'202': { $ref: '#/components/responses/OperationSuccess' }");
+      expect(operation?.block, `${operationId} response`).toContain(`'${initialSource.has(operationId)?200:202}': { $ref: '#/components/responses/OperationSuccess' }`);
       const schema = requestSchema(operation!.schema!);
-      const retentionTransition = ["retentionPolicyUpdate", "retentionPolicySubmitForReview", "retentionPolicyReview", "retentionPolicyApprove", "retentionPolicyPublish", "retentionApplicabilitySubmitForReview", "retentionApplicabilityReview", "retentionApplicabilityApprove", "retentionApplicabilityPublish", "legalHoldRelease"].includes(operationId);
+      const retentionTransition = ["retentionApplicabilityBindInitialSource", "retentionPolicyUpdate", "retentionPolicySubmitForReview", "retentionPolicyReview", "retentionPolicyApprove", "retentionPolicyPublish", "retentionApplicabilitySubmitForReview", "retentionApplicabilityReview", "retentionApplicabilityApprove", "retentionApplicabilityPublish", "legalHoldRelease"].includes(operationId);
       const apiAllowed = retentionTransition ? definition.allowedFields.filter((field) => field !== "expected_version") : definition.allowedFields;
       const apiRequired = retentionTransition ? definition.requiredFields.filter((field) => field !== "expected_version") : definition.requiredFields;
       expect([...apiAllowed].sort(), `${operationId} fields`).toEqual(schema.properties.sort());
@@ -326,6 +328,60 @@ describe("Core GRC lifecycle, SoD and optimistic concurrency", () => {
     expect(resources.controlAssessment.ownedByCreator).toBe(false);
     expect(mutations.has("controlAssessmentSubmit")).toBe(true);
     expect(coreGrcCommandRoutes.some(([operationId]) => operationId === "controlAssessmentSubmit")).toBe(true);
+  });
+
+  describe("STEP6A3 evidence links domain precondition", () => {
+    const body = { evidence_code: "LOCAL-LINKS", evidence_type: "document", retention_policy_id: resourceId,
+      source_kind: "uploaded", file_object_id: actorId, provenance_ref: "local fixture", links: [] };
+    function fixture(statements: string[]) {
+      return executor(query => {
+        statements.push(query.sql);
+        if (query.sql.includes("FROM evidence.file_objects")) return { rows: [{ scan_status: "passed", retention_policy_id: resourceId, retention_policy_applicability_id: membershipId,
+          classification: "internal", scope_subject_id: null, processing_activity_id: null, created_by_user_identity_id: actorId }] };
+        if (query.sql.includes("FROM privacy.retention_policy_applicabilities a")) return { rows: [{ retention_policy_applicability_id: membershipId }] };
+        if (query.sql.startsWith("SELECT 1 AS found")) return { rows: [{ found: 1 }] };
+        return { rows: [{}] };
+      });
+    }
+    it("rejects empty links for an ordinary Evidence Owner before inserting Evidence", async () => {
+      const statements: string[] = [];
+      await expect(mutations.get("evidenceCreate")!.execute({transaction:fixture(statements),actor:{...actor,roles:["EVIDENCE_OWNER"]},body}))
+        .rejects.toMatchObject({code:"TCDX.VALIDATION.FAILED",details:{field:"links"}});
+      expect(statements.some(sql=>sql.startsWith("INSERT INTO"))).toBe(false);
+    });
+    it("accepts one existing same-tenant Control target for ordinary creation", async () => {
+      const statements: string[] = [];
+      await expect(mutations.get("evidenceCreate")!.execute({transaction:fixture(statements),actor:{...actor,roles:["EVIDENCE_OWNER"]},body:{...body,links:[{control_id:correlationId}]}}))
+        .resolves.toMatchObject({resource:"evidence"});
+      expect(statements.some(sql=>sql.startsWith("INSERT INTO evidence.evidence_links"))).toBe(true);
+    });
+    it("rejects a global control_id as NOT_FOUND while keeping tenant isolation", async () => {
+      const statements: string[] = [];
+      const base=fixture(statements);
+      const tx=executor(query=>{
+        if(query.sql.includes('FROM controls.controls WHERE')) {
+          expect(query.sql).toContain('tenant_id=$2::uuid');
+          expect(query.parameters).toEqual([correlationId,tenantId]);
+          return {rows:[]};
+        }
+        return base.executeQuery(query as never) as never;
+      });
+      await expect(mutations.get("evidenceCreate")!.execute({transaction:tx,actor:{...actor,roles:["EVIDENCE_OWNER"]},body:{...body,links:[{control_id:correlationId}]}}))
+        .rejects.toMatchObject({code:"TCDX.RESOURCE.NOT_FOUND"});
+      expect(statements.some(sql=>sql.startsWith("INSERT INTO evidence.evidence_links"))).toBe(false);
+    });
+    it("preserves empty links for an authored Tenant Admin retention source", async () => {
+      const statements: string[] = [];
+      await expect(mutations.get("evidenceCreate")!.execute({transaction:fixture(statements),actor:{...actor,roles:["TENANT_ADMIN"]},body}))
+        .resolves.toMatchObject({resource:"evidence"});
+      expect(statements.some(sql=>sql.startsWith("INSERT INTO evidence.evidence_links"))).toBe(false);
+    });
+    it("rejects omission of required links before querying persistence", async () => {
+      const statements: string[] = [];const {links:_,...withoutLinks}=body;
+      await expect(executeMutation(fixture(statements),actor,mutations.get("evidenceCreate")!,{body:withoutLinks,idempotencyKey:resourceId,correlationId}))
+        .rejects.toMatchObject({code:"TCDX.VALIDATION.FAILED",details:{field:"links"}});
+      expect(statements).toHaveLength(0);
+    });
   });
 
   it("links Evidence to its draft EvidenceVersion with exactly one typed target", async () => {

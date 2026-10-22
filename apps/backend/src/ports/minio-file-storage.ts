@@ -107,6 +107,13 @@ export class MinioFileStoragePort implements FileStoragePort {
     });
   }
 
+  /** Reuses this service client and private bucket; called only by a separately adopted library composition. */
+  async createKnowledgePorts() {
+    const {MinioKnowledgeCustody}=await import('../normative-library/custody.js');
+    const {MinioRightsEvidence}=await import('../normative-library/rights.js');
+    return {custody:new MinioKnowledgeCustody(this.client,this.config.bucket,this.config.maxUploadBytes),rightsEvidence:new MinioRightsEvidence(this.client,this.config.bucket)};
+  }
+
   async verifyReady(): Promise<void> {
     try {
       if (!(await this.client.bucketExists(this.config.bucket))) throw new FoundationError("TCDX.DEPENDENCY.UNAVAILABLE", "Object storage bucket is unavailable", 503, true);

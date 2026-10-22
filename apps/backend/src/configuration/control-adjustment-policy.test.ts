@@ -1,0 +1,12 @@
+import {describe,it,expect} from 'vitest';
+import {controlSchemaReference,validateControlRule} from './control-adjustment-policy.js';
+import {validateControlAdjustmentValue,assertOverrideSoD,type ControlDefinition} from './control-adjustments.js';
+import {NORMATIVE_LIBRARY} from '@tcdx-grc/contracts/normative-library';
+import type {CoreActor} from '../core-grc/model.js';
+const definition:ControlDefinition={configuration_definition_id:'018f47f2-6170-7000-8000-000000000001',configuration_code:'control_operational_frequency',version_number:1,lifecycle_state:'published',tenant_overridable:true,object_overridable:true,value_type:'text',allowed_scope_levels:['control_version']};
+function rule(){return {configuration_definition_id:definition.configuration_definition_id,ownership_class:'PLATFORM_CONTROL',tenant_id:null,rule_ordinal:1,operator:'contract_schema',error_code:'TCDX.VALIDATION.FAILED',operand_text_value:controlSchemaReference(definition),operand_boolean_value:null,operand_integer_value:null,operand_decimal_value:null,operand_timestamp_value:null,operand_duration_seconds_value:null,operand_json_value:null};}
+describe('canonical ControlVersion schema policy',()=>{
+ it('validates the exact metadata binding and does not ignore additional or changed superior rules',()=>{expect(()=>validateControlRule(definition,[rule()])).not.toThrow();for(const rows of [[],[rule(),rule()],[{...rule(),operator:'unknown'}],[{...rule(),operand_integer_value:1}],[{...rule(),operand_text_value:'other schema'}],[{...rule(),tenant_id:'other'}]])expect(()=>validateControlRule(definition,rows)).toThrow();});
+ it('keeps the published frequency codes and rejects invented calendar equivalences',()=>{const schema=NORMATIVE_LIBRARY.definitions.definitions.find(d=>d.configuration_code===definition.configuration_code)!.value_schema;expect(()=>validateControlAdjustmentValue('monthly',schema)).not.toThrow();expect(()=>validateControlAdjustmentValue('30_days',schema)).toThrow();});
+ it('denies self-approval even with accumulated tenant roles and effective grant',()=>{const p='configuration.configuration_override.approve';const actor={tenantId:'t',userIdentityId:'author',roles:['GRC_MANAGER','TENANT_ADMIN'],permissions:new Set([p]),permissionScopes:new Map([[p,new Set(['tenant'])]]),capabilityGroups:new Set(['CORE_PLATFORM'])} as unknown as CoreActor;expect(()=>assertOverrideSoD(actor,{tenant_id:'t',created_by_user_identity_id:'author'} as Parameters<typeof assertOverrideSoD>[1],'approve')).toThrow();});
+});

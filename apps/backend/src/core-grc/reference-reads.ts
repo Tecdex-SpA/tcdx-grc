@@ -112,7 +112,7 @@ async function authorizeMembership(ex:Executor,actor:CoreActor,q:ReferenceQuery)
  if(!fields.some(field=>row[field]===q.filters.tenant_membership_id)) hidden();
 }
 /** Fresh command eligibility uses the same persisted roots as CT01, without borrowing its read grant. */
-export async function assertSelectableFramework(ex:Executor,actor:CoreActor,id:string):Promise<void> {
+export async function assertSelectableFramework(ex:Executor,actor:CoreActor,id:string,lock=true):Promise<void> {
  const vis=await packVisibility(ex,actor.tenantId,actor.runtimeEnvironment);
  const official=[...vis.frameworkAccessModes].filter(([,mode])=>mode==="official").map(([id])=>id);
  const validation=[...vis.frameworkAccessModes].filter(([,mode])=>mode==="non_authoritative_validation").map(([id])=>id);
@@ -121,7 +121,7 @@ export async function assertSelectableFramework(ex:Executor,actor:CoreActor,id:s
  AND (fv.effective_from IS NULL OR fv.effective_from<=clock_timestamp()) AND (fv.effective_to IS NULL OR fv.effective_to>clock_timestamp())
  AND ((fv.tenant_id=${actor.tenantId}::uuid AND f.tenant_id=${actor.tenantId}::uuid AND fv.lifecycle_state='published' AND f.lifecycle_state='published')
  OR (fv.tenant_id IS NULL AND f.tenant_id IS NULL AND ((fv.framework_version_id=ANY(${official}::uuid[]) AND fv.lifecycle_state='published' AND f.lifecycle_state='published') OR fv.framework_version_id=ANY(${validation}::uuid[]))))
- FOR SHARE OF fv,f`.execute(ex);
+ ${sql.raw(lock ? "FOR SHARE OF fv,f" : "")}`.execute(ex);
  if(result.rows.length!==1) hidden();
 }
 export async function assertAssignableMembership(ex:Executor,tenantId:string,id:string):Promise<void> {

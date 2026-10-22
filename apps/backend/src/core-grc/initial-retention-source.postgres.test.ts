@@ -19,7 +19,7 @@ import {loadInitialSourcePublication,publishInitialSourceLifecycle} from "../sec
 import * as records from "../persistence/foundation-records.js";
 const enabled=process.env.TCDX_INITIAL_SOURCE_POSTGRES==='true';
 const rolledBack=new Error('INITIAL_SOURCE_LOCAL_ROLLBACK');
-const cases=['full source workflow and independent authors','CAS and idempotent replay','bind negatives and no publication without source','three retention revalidations and author checks','tenant permission and capability isolation','pending source cannot be ordinary evidence','audit failure rolls back source binding','source scan interval clause and independent review','source custody does not broaden document reads','tenant-only legacy DENY becomes authorized source submit under exact v2','ordinary tenant policy publication and upload without accreditation','ordinary product baseline publication and upload without accreditation','mandatory tenant policy still needs a formal source','contractual policy still needs a formal source','legal hold still needs a formal source','pending initial source cannot be published as ordinary'] as const;
+const cases=['full source workflow and independent authors','CAS and idempotent replay','bind negatives and no publication without source','three retention revalidations and author checks','tenant permission and capability isolation','pending source cannot be ordinary evidence','audit failure rolls back source binding','source scan interval clause and independent review','source custody does not broaden document reads','tenant-only legacy DENY becomes authorized source submit under exact v2','ordinary tenant policy publication and upload without accreditation','ordinary product baseline publication and upload without accreditation','mandatory tenant policy still needs a formal source','contractual policy still needs a formal source','legal hold still needs a formal source','pending initial source cannot be published as ordinary','ordinary upload accepts selected tenant subject and rejects foreign subject'] as const;
 
 describe.skipIf(!enabled)('INITIAL_SOURCE PG16 isolated rollback only',()=>{
 it('serializes competing source and publication transactions on the same tenant',async()=>{
@@ -71,7 +71,7 @@ for(const scenario of cases) it(scenario,async()=>{
     catch(e){await sql`ROLLBACK TO SAVEPOINT operation_case`.execute(tx);await sql`RELEASE SAVEPOINT operation_case`.execute(tx);throw e;}
    };
    const fixtureInstant=(await sql<{now:string}>`SELECT to_char(transaction_timestamp(),'YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS now`.execute(tx)).rows[0]!.now;
-   const ordinary = scenario===cases[10] || scenario===cases[11];
+   const ordinary = scenario===cases[10] || scenario===cases[11] || scenario===cases[16];
    const kind = scenario===cases[11] ? 'product_baseline' : scenario===cases[13] ? 'contractual_policy' : scenario===cases[14] ? 'legal_hold' : 'tenant_policy';
    const policy=(await run('retentionPolicyCreate','custodian',{policy_code:ids.tenant,version_number:1,policy_kind:kind,...(kind==='legal_hold'?{}:{retention_seconds:604800}),trigger_event_code:'expiry_or_closure',precedence_rank:kind==='product_baseline'?100:kind==='contractual_policy'?300:kind==='legal_hold'?500:200,is_mandatory:scenario===cases[12]})).response.retention_policy_id as string;
    await run('retentionPolicyReview','custodian',{expected_version:1},policy);
@@ -110,7 +110,16 @@ for(const scenario of cases) it(scenario,async()=>{
     expect(audits.rows[0]?.n).toBe(4);
     expect(await assertUploadRetention(tx,actor('owner'),ctx,'evidence.evidence.create')).toBe(false);
     await expect(assertUploadRetention(tx,actor('owner'),{...ctx,classification:'public'},'evidence.evidence.create')).rejects.toBeInstanceOf(FoundationError);
-    const uploaded=(await run('uploadIntentCreate','owner',{original_filename:'LOCAL-ORDINARY-TECHNICAL.pdf',declared_mime:'application/pdf',size_bytes:12,classification:'confidential',retention_policy_id:policy,retention_policy_applicability_id:app,source_provenance:'ISOLATED ORDINARY OPERATION TEST'})).response.upload_intent_id as string;
+    const uploadBody={original_filename:'LOCAL-ORDINARY-TECHNICAL.pdf',declared_mime:'application/pdf',size_bytes:12,classification:'confidential',retention_policy_id:policy,retention_policy_applicability_id:app,source_provenance:'ISOLATED ORDINARY OPERATION TEST'};
+    let selectedSubject: string | undefined;
+    if(scenario===cases[16]) {
+     selectedSubject=newUuidV7();const foreignSubject=newUuidV7();
+     await sql`INSERT INTO org.subjects(subject_id,tenant_id,subject_type,canonical_key,display_name,lifecycle_state,effective_from,created_by_user_identity_id,updated_by_user_identity_id)
+       VALUES(${selectedSubject}::uuid,${ids.tenant}::uuid,'organization',${`scope:${selectedSubject}`},'LOCAL SELECTED SUBJECT','active',transaction_timestamp(),${ids.custodian}::uuid,${ids.custodian}::uuid),
+             (${foreignSubject}::uuid,${ids.foreign}::uuid,'organization',${`scope:${foreignSubject}`},'FOREIGN SUBJECT','active',transaction_timestamp(),${ids.custodian}::uuid,${ids.custodian}::uuid)`.execute(tx);
+     await expect(run('uploadIntentCreate','owner',{...uploadBody,scope_subject_id:foreignSubject})).rejects.toMatchObject({code:'TCDX.RESOURCE.NOT_FOUND',statusCode:404});
+    }
+    const uploaded=(await run('uploadIntentCreate','owner',{...uploadBody,...(selectedSubject?{scope_subject_id:selectedSubject}:{})})).response.upload_intent_id as string;
     const finalized=await run('uploadFinalize','owner',{expected_version:1},uploaded);
     expect(finalized.response.retention_policy_applicability_id).toBe(app);
     throw rolledBack;

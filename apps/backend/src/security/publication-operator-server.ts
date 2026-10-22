@@ -13,7 +13,7 @@ export function existingQaHumanSessionVerifier(jwt: ApplicationJwtConfig, origin
     || endpoint.username || endpoint.password || endpoint.search || endpoint.hash) throw Error("EXISTING_QA_SESSION_LOOPBACK_REQUIRED");
   const unavailable = async (): Promise<never> => { throw new FoundationError("TCDX.AUTHENTICATION.INVALID", "Authentication failed", 401); };
   return { verifyBearerToken: async (token: string) => {
-    const sessions: ApplicationSessionStore = { register: unavailable, revoke: unavailable, revokePrincipal: unavailable,
+    const sessions: ApplicationSessionStore = { register: unavailable, revoke: unavailable, revokePrincipal: unavailable, isUnrevoked: async () => false,
       isActive: async () => {
         try {
           const response = await fetcher(`${endpoint.origin}/api/v2/auth/me/authorization`, {
@@ -47,6 +47,7 @@ async function main() {
     iamOperation: (operation, correlationId) => operation === "iam.provision" ? iam.provision(correlationId)
       : operation === "iam.revoke" ? iam.revoke(correlationId)
       : operation === "iam.initial_source.publish" ? iam.publishInitialSource(correlationId)
+      : operation === "iam.library.publish" ? iam.publishNormativeLibrary(correlationId)
       : operation === "iam.c04w.publish" ? iam.publishC04w(correlationId) : iam.publish(correlationId),
     identityVerifier: existingQaHumanSessionVerifier(jwt, origin)
   });

@@ -1,3 +1,4 @@
+import type {ApplicabilityContextHooks} from '../normative-library/applicability-persistence.js';
 import {captureVocabularyWrites,buildVocabularyProvenance} from "./vocabulary-provenance.js";
 import { createHash } from "node:crypto";
 import { CompiledQuery, sql, type Transaction } from "kysely";
@@ -131,7 +132,7 @@ function validateClosedBody(definition: MutationDefinition, body: Body): void {
 
 const resultStatuses = new Set(["valid", "no_data", "insufficient_data", "insufficient_coverage", "stale_source", "conflicting_sources", "dependency_pending", "invalid_input", "source_error", "calculation_error", "not_applicable", "superseded"]);
 const uuidFields = new Set([
-  "requirement_id", "scope_subject_id", "requirement_applicability_id", "methodology_version_ref", "effective_configuration_id", "framework_version_id",
+  "context_knowledge_version_id", "requirement_id", "scope_subject_id", "requirement_applicability_id", "methodology_version_ref", "effective_configuration_id", "framework_version_id",
   "reference_control_version_id", "tenant_control_id", "tenant_control_version_id", "based_on_control_version_id", "business_owner_subject_id", "control_id",
   "control_version_id", "assigned_membership_id", "assurance_test_id", "retention_policy_id", "retention_policy_applicability_id", "processing_activity_id", "file_object_id", "evidence_version_id", "issue_id",
   "requirement_assessment_id", "control_assessment_id"
@@ -805,10 +806,12 @@ async function createUploadIntent(context: MutationContext): Promise<MutationRes
   const { transaction: tx, actor, body } = context;
   const retentionPolicyId = string(body, "retention_policy_id");
   const applicabilityId = string(body, "retention_policy_applicability_id");
+  const scopeSubjectId = optionalString(body, "scope_subject_id");
+  if (scopeSubjectId) await assertSelectableSubject(tx, scopeSubjectId, actor.tenantId);
   await assertUploadRetention(tx, actor, {
     tenantId: actor.tenantId, applicabilityId, retentionPolicyId,
     classification: string(body, "classification"),
-    scopeSubjectId: optionalString(body, "scope_subject_id"),
+    scopeSubjectId,
     processingActivityId: optionalString(body, "processing_activity_id")
   }, "evidence.document.create");
   const id = newUuidV7();
@@ -1313,8 +1316,10 @@ addCreate("evidenceCreate", "evidence.evidence.create", "EVIDENCE_DOCUMENTS", "a
 addCreate("issueCreate", "remediation.issue.create", "ISSUES_ACTIONS", "audit.remediation.issue.create.v1", ["issue_code", "issue_kind", "title", "description", "severity", "priority", "business_owner_subject_id", "due_date", "requirement_assessment_id", "control_assessment_id", "assurance_test_id", "origin_role"], ["issue_code", "issue_kind", "title", "description", "severity", "priority", "origin_role"], createIssue, "remediation.issue.opened.v1");
 addCreate("actionCreate", "remediation.action.create", "ISSUES_ACTIONS", "audit.remediation.action.create.v1", ["action_code", "title", "description", "priority", "assigned_membership_id", "due_date"], ["action_code", "title", "description", "priority"], createAction, "remediation.action.created.v1");
 
-export async function executeMutation(transaction: Transaction<FoundationDatabase>, actor: CoreActor, definition: MutationDefinition, input: { body: Body; idempotencyKey: string; correlationId: string; fileStorage?: FileStoragePort; targetId?: string; parentId?: string }): Promise<{ response: Record<string, unknown>; replayed: boolean; afterCommit?: () => Promise<void>; deferredError?: FoundationError }> {
-  validateClosedBody(definition, input.body);
+export async function executeMutation(transaction: Transaction<FoundationDatabase>, actor: CoreActor, definition: MutationDefinition, input: { applicabilityHooks?:ApplicabilityContextHooks; body: Body; idempotencyKey: string; correlationId: string; fileStorage?: FileStoragePort; targetId?: string; parentId?: string }): Promise<{ response: Record<string, unknown>; replayed: boolean; afterCommit?: () => Promise<void>; deferredError?: FoundationError }> {
+  if(definition.operationId==='applicabilityCreate'&&input.body&&Object.hasOwn(input.body,'context_knowledge_version_id')&&!input.applicabilityHooks)throw new FoundationError('TCDX.DEPENDENCY.UNAVAILABLE','Contextual applicability is not adopted',503,true);
+  const validationDefinition=input.applicabilityHooks&&definition.operationId==='applicabilityCreate'?{...definition,allowedFields:[...definition.allowedFields,'context_knowledge_version_id']}:definition;
+  validateClosedBody(validationDefinition, input.body);
   requireAccess(actor, definition.permission, definition.capability, definition.scopes);
   if (!input.idempotencyKey || input.idempotencyKey.length > 255) throw new FoundationError("TCDX.VALIDATION.FAILED", "Idempotency-Key is required", 400, false, { field: "Idempotency-Key" });
   if (definition.operationId.startsWith("retentionApplicability") || ["uploadIntentCreate", "uploadFinalize", "evidenceCreate", "evidenceSubmit"].includes(definition.operationId)) await lockRetentionTenant(transaction, actor.tenantId);
@@ -1338,6 +1343,7 @@ export async function executeMutation(transaction: Transaction<FoundationDatabas
     const replay = definition.replay
       ? await definition.replay(context, { resource, id })
       : { response: await detailResource(transaction, actor, resources[resource], id, definition.permission) };
+    if(input.applicabilityHooks&&resource==='applicability')await input.applicabilityHooks.replay(transaction,actor,id);
     return { ...replay, replayed: true };
   }
   const context: MutationContext = {
@@ -1354,10 +1360,13 @@ export async function executeMutation(transaction: Transaction<FoundationDatabas
   try {
     const capture = await captureVocabularyWrites(()=>definition.execute(context));
     result = capture.result;
+    const contextAudit=input.applicabilityHooks&&result.resource==='applicability'&&['applicabilityCreate','applicabilitySubmit','applicabilityApprove'].includes(definition.operationId)?await input.applicabilityHooks.afterMutation(transaction,actor,definition.operationId,result.id,input.body):{};
     const response = result.response ?? await detailResource(transaction, actor, resources[result.resource], result.id, definition.permission);
+    const contextProfile=contextAudit.applicability_context_v1 as {context?:{knowledge_version_id:string}|null}|undefined;
+    if(contextProfile)response.context_knowledge_version_id=contextProfile.context?.knowledge_version_id??null;
     const resourceDefinition=resources[result.resource];
     const profile=buildVocabularyProvenance(definition.operationId,input.body,capture.writes,{table:resourceDefinition.table,entity:resourceDefinition.name,idColumn:resourceDefinition.idColumn,row:capture.writes.find(w=>w.table===resourceDefinition.table)?.row??response});
-    const auditAfter={...(result.auditAfter??response),...(profile?{contract_provenance:profile}:{})};
+    const auditAfter={...(result.auditAfter??response),...contextAudit,...(profile?{contract_provenance:profile}:{})};
     if(profile)response.contract_provenance=[...(Array.isArray(response.contract_provenance)?response.contract_provenance:[]),profile];
     await persistAuditEvent(transaction, { auditEventId: context.auditEventId!, ownershipClass: "TENANT_OWNED", tenantId: actor.tenantId, actor: { userIdentityId: actor.userIdentityId }, correlationId: input.correlationId, eventCode: definition.auditEvent, aggregateType: resources[result.resource].name, aggregateId: result.id, commandCode: definition.operationId, outcome: result.auditOutcome ?? "success", classification: "internal", ...(result.auditBefore ? { before: result.auditBefore } : {}), after: auditAfter });
     if (definition.domainEvent && !result.deferredError) await persistOutboxEvent(transaction, { outboxEventId: newUuidV7(), eventId: newUuidV7(), ownershipClass: "TENANT_OWNED", tenantId: actor.tenantId, actor: { userIdentityId: actor.userIdentityId }, correlationId: input.correlationId, eventType: definition.domainEvent, aggregateType: resources[result.resource].name, aggregateId: result.id, classification: "internal", payload: { aggregate_id: result.id, row_version: response.row_version } });
