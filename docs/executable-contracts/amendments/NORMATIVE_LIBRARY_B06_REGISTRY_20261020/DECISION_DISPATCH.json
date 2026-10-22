@@ -1,0 +1,65 @@
+{
+  "status": "CONTRACT_EFFECTIVE_ONLY_ON_RECEIPT",
+  "decision_field": "decision",
+  "bindings": [
+    {
+      "operation_id": "knowledgeVersionReview",
+      "from_state": "draft",
+      "to_state": "reviewed",
+      "previous_command_code": "knowledgeVersionReview",
+      "command_code": "knowledgeVersionReview.reviewed"
+    },
+    {
+      "operation_id": "knowledgeVersionReview",
+      "from_state": "draft",
+      "to_state": "rejected",
+      "previous_command_code": "knowledgeVersionReview",
+      "command_code": "knowledgeVersionReview.rejected"
+    },
+    {
+      "operation_id": "platformKnowledgeVersionReview",
+      "from_state": "draft",
+      "to_state": "reviewed",
+      "previous_command_code": "platformKnowledgeVersionReview",
+      "command_code": "platformKnowledgeVersionReview.reviewed"
+    },
+    {
+      "operation_id": "platformKnowledgeVersionReview",
+      "from_state": "draft",
+      "to_state": "rejected",
+      "previous_command_code": "platformKnowledgeVersionReview",
+      "command_code": "platformKnowledgeVersionReview.rejected"
+    },
+    {
+      "operation_id": "configurationOverrideReview",
+      "from_state": "draft",
+      "to_state": "reviewed",
+      "previous_command_code": "configurationOverrideReview",
+      "command_code": "configurationOverrideReview.reviewed"
+    },
+    {
+      "operation_id": "configurationOverrideReview",
+      "from_state": "draft",
+      "to_state": "rejected",
+      "previous_command_code": "configurationOverrideReview",
+      "command_code": "configurationOverrideReview.rejected"
+    },
+    {
+      "operation_id": "configurationOverrideDecide",
+      "from_state": "reviewed",
+      "to_state": "approved",
+      "previous_command_code": "configurationOverrideDecide",
+      "command_code": "configurationOverrideDecide.approved"
+    },
+    {
+      "operation_id": "configurationOverrideDecide",
+      "from_state": "reviewed",
+      "to_state": "rejected",
+      "previous_command_code": "configurationOverrideDecide",
+      "command_code": "configurationOverrideDecide.rejected"
+    }
+  ],
+  "audit_command_code": "Keep the canonical API operation ID in AuditEvent.command_code as before; LifecycleTransitionDefinition lookup alone uses the decision-qualified internal command_code. Audit code, ownership, actor, from/to state, hash, correlation and outcome are unchanged.",
+  "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+  "runtime_activation": false
+}

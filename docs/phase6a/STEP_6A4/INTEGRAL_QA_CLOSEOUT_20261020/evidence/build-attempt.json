@@ -1,0 +1,24 @@
+{
+  "command": [
+    "docker",
+    "build",
+    "--platform",
+    "linux/amd64",
+    "--file",
+    "apps/frontend/Dockerfile",
+    "--tag",
+    "tcdx-grc-frontend:step6a4-integral-p3-p5-20261020",
+    "--iidfile",
+    "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/STEP_6A4/INTEGRAL_QA_CLOSEOUT_20261020/evidence/image-id.txt",
+    "--label",
+    "net.tecdex.grc.slice=STEP6A4",
+    "--label",
+    "net.tecdex.grc.source-manifest-sha256=8b6e05d80713bc2dda858a4eb179a96d65f936fd01ed7e63b9dba94565053b1d",
+    "--label",
+    "org.opencontainers.image.revision=4a275264a7522031e62bf09f598c9d56e21d25e0",
+    "."
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-20T17:16:15.563163+00:00",
+  "ended_at": "2026-10-20T17:16:24.016232+00:00"
+}

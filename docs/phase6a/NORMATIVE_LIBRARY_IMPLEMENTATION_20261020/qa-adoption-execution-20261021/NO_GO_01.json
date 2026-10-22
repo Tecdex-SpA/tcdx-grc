@@ -1,0 +1,33 @@
+{
+  "at_utc": "2026-10-21T23:23:05.598455+00:00",
+  "decision": "NO_GO",
+  "gates": {
+    "rector": "PASS",
+    "backup_available_and_recoverable": "PASS_SNAPSHOT_ONLY",
+    "QA_target": "PASS",
+    "historical_34_checksums": "PASS",
+    "architecture_no_drift": {
+      "relations": true,
+      "columns": true,
+      "constraints": true,
+      "indexes": true,
+      "functions": true,
+      "triggers": true,
+      "ledger": true
+    },
+    "exact_published_migration": "PASS",
+    "activity_snapshot": "PASS_IDLE_ONLY",
+    "canonical_runner_trusted_TLS": "BLOCKED"
+  },
+  "backup_reference": "QA-LOGICAL-e923e6ecc44845c6920c8fd975f34675",
+  "backup_count_changes": [],
+  "backup_contents_comparison": "NOT_ASSERTED; counts match only. Current data aggregate hashes captured for a future authorized pre/post comparison.",
+  "preexisting_business_tables_fingerprinted": 242,
+  "transaction_read_only": "on",
+  "window": "NOT_STARTED",
+  "QA_DDL": "NONE",
+  "QA_ledger_writes": "NONE",
+  "blocking_error": "DEPTH_ZERO_SELF_SIGNED_CERT",
+  "next_required_reference": "Approved CA/public certificate or administrator-verified fingerprint for PostgreSQL QA; no TLS verification bypass inferred",
+  "recovery": "Before commit, canonical runner transaction rollback proven in isolated PG16; after commit no destructive reversal authorized; logical snapshot only, no PITR"
+}

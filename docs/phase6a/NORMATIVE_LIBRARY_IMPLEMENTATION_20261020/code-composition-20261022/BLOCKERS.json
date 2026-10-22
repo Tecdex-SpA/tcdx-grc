@@ -1,0 +1,66 @@
+{
+  "CODE_B04_01": {
+    "status": "BLOCKED_CONTRACT_DEPENDENCY",
+    "required_schema": "ControlOverrideCreateRequest",
+    "required_fields": [
+      "configuration_definition_id",
+      "scope_level",
+      "control_version_id",
+      "text_value",
+      "effective_from",
+      "effective_to",
+      "rationale"
+    ],
+    "available_configuration_operations": [
+      {
+        "method": "post",
+        "path": "/platform/configuration-definitions/{id}:publish",
+        "operation": "configurationDefinitionPublish"
+      },
+      {
+        "method": "post",
+        "path": "/configuration-overrides",
+        "operation": "configurationOverrideCreate"
+      },
+      {
+        "method": "get",
+        "path": "/effective-configurations/{id}",
+        "operation": "effectiveConfigurationGet"
+      },
+      {
+        "method": "post",
+        "path": "/platform/lifecycle-transition-definitions/{id}:publish",
+        "operation": "lifecycleTransitionPublish"
+      },
+      {
+        "method": "get",
+        "path": "/configuration-overrides/{id}",
+        "operation": "configurationOverrideGet"
+      },
+      {
+        "method": "patch",
+        "path": "/configuration-overrides/{id}",
+        "operation": "configurationOverrideUpdate"
+      },
+      {
+        "method": "post",
+        "path": "/configuration-overrides/{id}:review",
+        "operation": "configurationOverrideReview"
+      },
+      {
+        "method": "post",
+        "path": "/configuration-overrides/{id}:decide",
+        "operation": "configurationOverrideDecide"
+      },
+      {
+        "method": "get",
+        "path": "/control-versions/{id}/configuration-overrides",
+        "operation": "controlConfigurationOverrideList"
+      }
+    ],
+    "definition_contract": "CONFIGURATION_DEFINITIONS.json",
+    "definition_ids_published": false,
+    "reason": "Four codes/versioned descriptors exist, but no approved operation discovers selectable published Definition IDs. IDs are required by create. Operational data activation does not supply a client discovery contract. No new endpoint, hardcoded ID or manual UUID introduced.",
+    "next_safe_action": "PO contractual decision for authorized Definition discovery and exact physical bindings, without QA or activation under this instruction."
+  }
+}

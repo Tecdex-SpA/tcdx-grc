@@ -1,0 +1,5023 @@
+{
+  "captured_at": "2026-10-20T14:03:34.887Z",
+  "transaction": "REPEATABLE READ READ ONLY; ROLLBACK",
+  "transaction_read_only": "on",
+  "tenant": [
+    {
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "tenant_code": "TECDEX",
+      "lifecycle_state": "active"
+    }
+  ],
+  "actors": [
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "compliance.applicability.approve",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission_code": "compliance.applicability.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission_code": "compliance.applicability.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "compliance.applicability.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.applicability.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "QUALITY_MANAGER",
+      "permission_code": "compliance.applicability.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission_code": "compliance.applicability.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR",
+      "permission_code": "compliance.applicability.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR_LEAD",
+      "permission_code": "compliance.applicability.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission_code": "compliance.applicability.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "compliance.applicability.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "EXECUTIVE_BOARD_VIEWER",
+      "permission_code": "compliance.applicability.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "compliance.applicability.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "compliance.applicability.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.applicability.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "QUALITY_MANAGER",
+      "permission_code": "compliance.applicability.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "REPORT_VIEWER",
+      "permission_code": "compliance.applicability.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "VIEWER",
+      "permission_code": "compliance.applicability.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission_code": "compliance.applicability.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission_code": "compliance.applicability.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "compliance.applicability.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.applicability.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "QUALITY_MANAGER",
+      "permission_code": "compliance.applicability.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission_code": "compliance.framework.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR",
+      "permission_code": "compliance.framework.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR_LEAD",
+      "permission_code": "compliance.framework.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission_code": "compliance.framework.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "compliance.framework.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "EXECUTIVE_BOARD_VIEWER",
+      "permission_code": "compliance.framework.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "compliance.framework.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "compliance.framework.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.framework.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "QUALITY_MANAGER",
+      "permission_code": "compliance.framework.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "REGULATORY_CONTENT_STEWARD",
+      "permission_code": "compliance.framework.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "REPORT_VIEWER",
+      "permission_code": "compliance.framework.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "VIEWER",
+      "permission_code": "compliance.framework.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission_code": "compliance.methodology.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission_code": "compliance.methodology.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "compliance.methodology.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.methodology.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "QUALITY_MANAGER",
+      "permission_code": "compliance.methodology.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission_code": "compliance.normative_unit.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission_code": "compliance.normative_unit.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "compliance.normative_unit.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "EXECUTIVE_BOARD_VIEWER",
+      "permission_code": "compliance.normative_unit.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "compliance.normative_unit.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "compliance.normative_unit.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.normative_unit.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "QUALITY_MANAGER",
+      "permission_code": "compliance.normative_unit.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "REGULATORY_CONTENT_STEWARD",
+      "permission_code": "compliance.normative_unit.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "REPORT_VIEWER",
+      "permission_code": "compliance.normative_unit.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "VIEWER",
+      "permission_code": "compliance.normative_unit.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission_code": "compliance.requirement.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission_code": "compliance.requirement.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "compliance.requirement.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "EXECUTIVE_BOARD_VIEWER",
+      "permission_code": "compliance.requirement.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "compliance.requirement.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "compliance.requirement.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.requirement.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "QUALITY_MANAGER",
+      "permission_code": "compliance.requirement.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "REGULATORY_CONTENT_STEWARD",
+      "permission_code": "compliance.requirement.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "REPORT_VIEWER",
+      "permission_code": "compliance.requirement.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "VIEWER",
+      "permission_code": "compliance.requirement.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "compliance.requirement_assessment.approve",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "compliance.requirement_assessment.archive",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission_code": "compliance.requirement_assessment.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission_code": "compliance.requirement_assessment.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "compliance.requirement_assessment.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.requirement_assessment.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "QUALITY_MANAGER",
+      "permission_code": "compliance.requirement_assessment.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission_code": "compliance.requirement_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR",
+      "permission_code": "compliance.requirement_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR_LEAD",
+      "permission_code": "compliance.requirement_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission_code": "compliance.requirement_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "compliance.requirement_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "EXECUTIVE_BOARD_VIEWER",
+      "permission_code": "compliance.requirement_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "compliance.requirement_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "compliance.requirement_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.requirement_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "QUALITY_MANAGER",
+      "permission_code": "compliance.requirement_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "REPORT_VIEWER",
+      "permission_code": "compliance.requirement_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "VIEWER",
+      "permission_code": "compliance.requirement_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission_code": "compliance.requirement_assessment.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission_code": "compliance.requirement_assessment.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "compliance.requirement_assessment.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.requirement_assessment.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "QUALITY_MANAGER",
+      "permission_code": "compliance.requirement_assessment.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission_code": "compliance.requirement_assessment.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission_code": "compliance.requirement_assessment.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "compliance.requirement_assessment.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.requirement_assessment.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "QUALITY_MANAGER",
+      "permission_code": "compliance.requirement_assessment.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "compliance.soa.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "compliance.soa.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "compliance.soa.publish",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "compliance.soa.publish",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission_code": "compliance.soa.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR",
+      "permission_code": "compliance.soa.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR_LEAD",
+      "permission_code": "compliance.soa.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission_code": "compliance.soa.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "compliance.soa.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "EXECUTIVE_BOARD_VIEWER",
+      "permission_code": "compliance.soa.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "compliance.soa.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "compliance.soa.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.soa.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "QUALITY_MANAGER",
+      "permission_code": "compliance.soa.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "REPORT_VIEWER",
+      "permission_code": "compliance.soa.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "VIEWER",
+      "permission_code": "compliance.soa.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR",
+      "permission_code": "controls.assurance_test.approve",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR_LEAD",
+      "permission_code": "controls.assurance_test.approve",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "controls.assurance_test.approve",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR",
+      "permission_code": "controls.assurance_test.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR_LEAD",
+      "permission_code": "controls.assurance_test.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "controls.assurance_test.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR",
+      "permission_code": "controls.assurance_test.execute",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "controls.assurance_test.execute",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission_code": "controls.assurance_test.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR",
+      "permission_code": "controls.assurance_test.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR_LEAD",
+      "permission_code": "controls.assurance_test.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission_code": "controls.assurance_test.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "controls.assurance_test.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "controls.assurance_test.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "EXECUTIVE_BOARD_VIEWER",
+      "permission_code": "controls.assurance_test.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "controls.assurance_test.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "controls.assurance_test.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "QUALITY_MANAGER",
+      "permission_code": "controls.assurance_test.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "REPORT_VIEWER",
+      "permission_code": "controls.assurance_test.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "VIEWER",
+      "permission_code": "controls.assurance_test.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR",
+      "permission_code": "controls.assurance_test.review",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "controls.assurance_test.review",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "controls.control.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "controls.control.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission_code": "controls.control.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR",
+      "permission_code": "controls.control.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR_LEAD",
+      "permission_code": "controls.control.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission_code": "controls.control.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "controls.control.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "controls.control.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "EXECUTIVE_BOARD_VIEWER",
+      "permission_code": "controls.control.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "controls.control.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "controls.control.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PROCESS_OWNER",
+      "permission_code": "controls.control.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "QUALITY_MANAGER",
+      "permission_code": "controls.control.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "REPORT_VIEWER",
+      "permission_code": "controls.control.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "VIEWER",
+      "permission_code": "controls.control.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "controls.control_assessment.approve",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "controls.control_assessment.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "controls.control_assessment.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission_code": "controls.control_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR",
+      "permission_code": "controls.control_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR_LEAD",
+      "permission_code": "controls.control_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission_code": "controls.control_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "controls.control_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "controls.control_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "EXECUTIVE_BOARD_VIEWER",
+      "permission_code": "controls.control_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "controls.control_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "controls.control_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PROCESS_OWNER",
+      "permission_code": "controls.control_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "QUALITY_MANAGER",
+      "permission_code": "controls.control_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "REPORT_VIEWER",
+      "permission_code": "controls.control_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "VIEWER",
+      "permission_code": "controls.control_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR",
+      "permission_code": "controls.control_assessment.review",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "controls.control_assessment.review",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "controls.control_assessment.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "controls.control_assessment.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "controls.methodology.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "controls.methodology.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR",
+      "permission_code": "evidence.document.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "evidence.document.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.document.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "TENANT_ADMIN",
+      "permission_code": "evidence.document.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.document.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "TENANT_ADMIN",
+      "permission_code": "evidence.document.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "evidence.evidence.approve",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "evidence.evidence.approve",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "evidence.evidence.archive",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "evidence.evidence.archive",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.evidence.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "TENANT_ADMIN",
+      "permission_code": "evidence.evidence.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission_code": "evidence.evidence.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR",
+      "permission_code": "evidence.evidence.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR_LEAD",
+      "permission_code": "evidence.evidence.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission_code": "evidence.evidence.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "evidence.evidence.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "evidence.evidence.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.evidence.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "EXECUTIVE_BOARD_VIEWER",
+      "permission_code": "evidence.evidence.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "evidence.evidence.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "evidence.evidence.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "evidence.evidence.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "QUALITY_MANAGER",
+      "permission_code": "evidence.evidence.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "REPORT_VIEWER",
+      "permission_code": "evidence.evidence.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "TENANT_ADMIN",
+      "permission_code": "evidence.evidence.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "VIEWER",
+      "permission_code": "evidence.evidence.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "evidence.evidence.reject",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "evidence.evidence.reject",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR",
+      "permission_code": "evidence.evidence.review",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "evidence.evidence.review",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "evidence.evidence.review",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.evidence.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "TENANT_ADMIN",
+      "permission_code": "evidence.evidence.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.evidence.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR",
+      "permission_code": "evidence.evidence_request.archive",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR_LEAD",
+      "permission_code": "evidence.evidence_request.archive",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "evidence.evidence_request.archive",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "evidence.evidence_request.archive",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "evidence.evidence_request.archive",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR",
+      "permission_code": "evidence.evidence_request.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR_LEAD",
+      "permission_code": "evidence.evidence_request.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "evidence.evidence_request.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "evidence.evidence_request.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "evidence.evidence_request.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission_code": "evidence.evidence_request.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR",
+      "permission_code": "evidence.evidence_request.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR_LEAD",
+      "permission_code": "evidence.evidence_request.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission_code": "evidence.evidence_request.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "evidence.evidence_request.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "evidence.evidence_request.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.evidence_request.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "EXECUTIVE_BOARD_VIEWER",
+      "permission_code": "evidence.evidence_request.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "evidence.evidence_request.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "evidence.evidence_request.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "evidence.evidence_request.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "QUALITY_MANAGER",
+      "permission_code": "evidence.evidence_request.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "REPORT_VIEWER",
+      "permission_code": "evidence.evidence_request.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "VIEWER",
+      "permission_code": "evidence.evidence_request.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.evidence_request.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR",
+      "permission_code": "evidence.evidence_request.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR_LEAD",
+      "permission_code": "evidence.evidence_request.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "evidence.evidence_request.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "evidence.evidence_request.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "evidence.evidence_request.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission_code": "organization.subject.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission_code": "organization.subject.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "organization.subject.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "organization.subject.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "organization.subject.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "organization.subject.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PROCESS_OWNER",
+      "permission_code": "organization.subject.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "QUALITY_MANAGER",
+      "permission_code": "organization.subject.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "TENANT_ADMIN",
+      "permission_code": "organization.subject.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "privacy.retention_policy.approve",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "privacy.retention_policy.archive",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "privacy.retention_policy.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "TENANT_ADMIN",
+      "permission_code": "privacy.retention_policy.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "privacy.retention_policy.legal_hold.release",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "privacy.retention_policy.publish",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "TENANT_ADMIN",
+      "permission_code": "privacy.retention_policy.publish",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "privacy.retention_policy.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "privacy.retention_policy.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "privacy.retention_policy.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "TENANT_ADMIN",
+      "permission_code": "privacy.retention_policy.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "privacy.retention_policy.review",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "privacy.retention_policy.review",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "privacy.retention_policy.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "TENANT_ADMIN",
+      "permission_code": "privacy.retention_policy.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR_LEAD",
+      "permission_code": "remediation.action.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "remediation.action.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "remediation.action.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "QUALITY_MANAGER",
+      "permission_code": "remediation.action.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "RISK_MANAGER",
+      "permission_code": "remediation.action.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "ACTION_OWNER",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR_LEAD",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "EXECUTIVE_BOARD_VIEWER",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PROCESS_OWNER",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "QUALITY_MANAGER",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "REPORT_VIEWER",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "RISK_MANAGER",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "VIEWER",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "ACTION_OWNER",
+      "permission_code": "remediation.action.transition",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR",
+      "permission_code": "remediation.action.verify",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR_LEAD",
+      "permission_code": "remediation.action.verify",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "remediation.action.verify",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR",
+      "permission_code": "remediation.issue.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "remediation.issue.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "remediation.issue.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "QUALITY_MANAGER",
+      "permission_code": "remediation.issue.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "RISK_MANAGER",
+      "permission_code": "remediation.issue.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "ACTION_OWNER",
+      "permission_code": "remediation.issue.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AI_GOVERNANCE_MANAGER",
+      "permission_code": "remediation.issue.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR",
+      "permission_code": "remediation.issue.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "AUDITOR_LEAD",
+      "permission_code": "remediation.issue.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CISO_SECURITY_MANAGER",
+      "permission_code": "remediation.issue.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "COMPLIANCE_MANAGER",
+      "permission_code": "remediation.issue.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "remediation.issue.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "EXECUTIVE_BOARD_VIEWER",
+      "permission_code": "remediation.issue.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "remediation.issue.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "remediation.issue.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "remediation.issue.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "PROCESS_OWNER",
+      "permission_code": "remediation.issue.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "QUALITY_MANAGER",
+      "permission_code": "remediation.issue.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "REPORT_VIEWER",
+      "permission_code": "remediation.issue.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "RISK_MANAGER",
+      "permission_code": "remediation.issue.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "VIEWER",
+      "permission_code": "remediation.issue.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "membership_state": "active",
+      "role_code": "GRC_MANAGER",
+      "permission_code": "remediation.issue.transition",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "compliance.applicability.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "compliance.framework.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "compliance.normative_unit.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "compliance.requirement.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "compliance.requirement_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "compliance.soa.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "controls.assurance_test.execute",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "controls.assurance_test.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "controls.control.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "controls.control.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "controls.control_assessment.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "controls.control_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "controls.control_assessment.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "controls.control_assessment.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "controls.methodology.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "evidence.document.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.document.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.document.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.evidence.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "evidence.evidence.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.evidence.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "evidence.evidence.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.evidence.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.evidence.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "evidence.evidence_request.archive",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "evidence.evidence_request.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "evidence.evidence_request.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.evidence_request.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "evidence.evidence_request.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.evidence_request.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "evidence.evidence_request.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "organization.subject.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "privacy.retention_policy.approve",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "privacy.retention_policy.legal_hold.release",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "privacy.retention_policy.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "privacy.retention_policy.review",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "CONTROL_OWNER",
+      "permission_code": "remediation.issue.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a0e832-ccb7-7574-8316-0781503d47de",
+      "tenant_membership_id": "01a0e8a9-7935-736d-bc0c-4f7809291919",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "remediation.issue.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+      "tenant_membership_id": "01a11815-66e4-7334-96a8-2cf0a6b8c155",
+      "membership_state": "active",
+      "role_code": "TENANT_ADMIN",
+      "permission_code": "evidence.document.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+      "tenant_membership_id": "01a11815-66e4-7334-96a8-2cf0a6b8c155",
+      "membership_state": "active",
+      "role_code": "TENANT_ADMIN",
+      "permission_code": "evidence.document.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+      "tenant_membership_id": "01a11815-66e4-7334-96a8-2cf0a6b8c155",
+      "membership_state": "active",
+      "role_code": "TENANT_ADMIN",
+      "permission_code": "evidence.evidence.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+      "tenant_membership_id": "01a11815-66e4-7334-96a8-2cf0a6b8c155",
+      "membership_state": "active",
+      "role_code": "TENANT_ADMIN",
+      "permission_code": "evidence.evidence.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+      "tenant_membership_id": "01a11815-66e4-7334-96a8-2cf0a6b8c155",
+      "membership_state": "active",
+      "role_code": "TENANT_ADMIN",
+      "permission_code": "evidence.evidence.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+      "tenant_membership_id": "01a11815-66e4-7334-96a8-2cf0a6b8c155",
+      "membership_state": "active",
+      "role_code": "TENANT_ADMIN",
+      "permission_code": "organization.subject.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+      "tenant_membership_id": "01a11815-66e4-7334-96a8-2cf0a6b8c155",
+      "membership_state": "active",
+      "role_code": "TENANT_ADMIN",
+      "permission_code": "privacy.retention_policy.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+      "tenant_membership_id": "01a11815-66e4-7334-96a8-2cf0a6b8c155",
+      "membership_state": "active",
+      "role_code": "TENANT_ADMIN",
+      "permission_code": "privacy.retention_policy.publish",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+      "tenant_membership_id": "01a11815-66e4-7334-96a8-2cf0a6b8c155",
+      "membership_state": "active",
+      "role_code": "TENANT_ADMIN",
+      "permission_code": "privacy.retention_policy.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+      "tenant_membership_id": "01a11815-66e4-7334-96a8-2cf0a6b8c155",
+      "membership_state": "active",
+      "role_code": "TENANT_ADMIN",
+      "permission_code": "privacy.retention_policy.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.applicability.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.applicability.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.applicability.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.framework.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.methodology.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.normative_unit.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.requirement.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.requirement_assessment.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.requirement_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.requirement_assessment.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.requirement_assessment.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.soa.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "controls.assurance_test.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "controls.control.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "controls.control_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "evidence.evidence.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "evidence.evidence_request.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "organization.subject.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "privacy.retention_policy.archive",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "privacy.retention_policy.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "privacy.retention_policy.publish",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "privacy.retention_policy.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "privacy.retention_policy.review",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "privacy.retention_policy.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "tenant_membership_id": "01a146b7-f6ab-7616-a10e-2a993544c81c",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "remediation.issue.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b8-8e3c-74b1-867a-c83cb26cd835",
+      "tenant_membership_id": "01a146b9-05db-7240-8ece-a164aad5cce0",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "compliance.applicability.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b8-8e3c-74b1-867a-c83cb26cd835",
+      "tenant_membership_id": "01a146b9-05db-7240-8ece-a164aad5cce0",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "compliance.framework.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b8-8e3c-74b1-867a-c83cb26cd835",
+      "tenant_membership_id": "01a146b9-05db-7240-8ece-a164aad5cce0",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "compliance.normative_unit.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b8-8e3c-74b1-867a-c83cb26cd835",
+      "tenant_membership_id": "01a146b9-05db-7240-8ece-a164aad5cce0",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "compliance.requirement.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b8-8e3c-74b1-867a-c83cb26cd835",
+      "tenant_membership_id": "01a146b9-05db-7240-8ece-a164aad5cce0",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "compliance.requirement_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b8-8e3c-74b1-867a-c83cb26cd835",
+      "tenant_membership_id": "01a146b9-05db-7240-8ece-a164aad5cce0",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "compliance.soa.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b8-8e3c-74b1-867a-c83cb26cd835",
+      "tenant_membership_id": "01a146b9-05db-7240-8ece-a164aad5cce0",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "evidence.evidence.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b8-8e3c-74b1-867a-c83cb26cd835",
+      "tenant_membership_id": "01a146b9-05db-7240-8ece-a164aad5cce0",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "evidence.evidence_request.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b8-8e3c-74b1-867a-c83cb26cd835",
+      "tenant_membership_id": "01a146b9-05db-7240-8ece-a164aad5cce0",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "privacy.retention_policy.approve",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b8-8e3c-74b1-867a-c83cb26cd835",
+      "tenant_membership_id": "01a146b9-05db-7240-8ece-a164aad5cce0",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "privacy.retention_policy.legal_hold.release",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b8-8e3c-74b1-867a-c83cb26cd835",
+      "tenant_membership_id": "01a146b9-05db-7240-8ece-a164aad5cce0",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "privacy.retention_policy.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b8-8e3c-74b1-867a-c83cb26cd835",
+      "tenant_membership_id": "01a146b9-05db-7240-8ece-a164aad5cce0",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "privacy.retention_policy.review",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b8-8e3c-74b1-867a-c83cb26cd835",
+      "tenant_membership_id": "01a146b9-05db-7240-8ece-a164aad5cce0",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a146b8-8e3c-74b1-867a-c83cb26cd835",
+      "tenant_membership_id": "01a146b9-05db-7240-8ece-a164aad5cce0",
+      "membership_state": "active",
+      "role_code": "LEGAL_REVIEWER",
+      "permission_code": "remediation.issue.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.applicability.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.applicability.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.applicability.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.framework.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.methodology.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.normative_unit.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.requirement.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.requirement_assessment.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.requirement_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.requirement_assessment.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.requirement_assessment.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "compliance.soa.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "controls.assurance_test.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "controls.control.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "controls.control_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.document.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.document.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.evidence.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.evidence.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "evidence.evidence.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.evidence.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.evidence.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.evidence_request.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "evidence.evidence_request.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "evidence.evidence_request.submit",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "organization.subject.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "privacy.retention_policy.archive",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "privacy.retention_policy.create",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "privacy.retention_policy.publish",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "privacy.retention_policy.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "privacy.retention_policy.review",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "privacy.retention_policy.update",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "remediation.action.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "tenant_membership_id": "01a14724-0432-77a0-8dda-a82a2503b8b9",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "permission_code": "remediation.issue.read",
+      "scope_kind": "tenant"
+    }
+  ],
+  "capabilities": [
+    {
+      "capability_group": "AI_ASSISTANCE"
+    },
+    {
+      "capability_group": "AUDIT"
+    },
+    {
+      "capability_group": "CONTROLS_ASSURANCE"
+    },
+    {
+      "capability_group": "CORE_PLATFORM"
+    },
+    {
+      "capability_group": "DATA_TRUST"
+    },
+    {
+      "capability_group": "EVIDENCE_DOCUMENTS"
+    },
+    {
+      "capability_group": "GOVERNED_AUTOMATION"
+    },
+    {
+      "capability_group": "INCIDENTS_LOSS"
+    },
+    {
+      "capability_group": "INTEGRATION_HUB"
+    },
+    {
+      "capability_group": "ISO_COMPLIANCE"
+    },
+    {
+      "capability_group": "ISO_REPORTING"
+    },
+    {
+      "capability_group": "ISSUES_ACTIONS"
+    },
+    {
+      "capability_group": "OPERATIONAL_RISK"
+    },
+    {
+      "capability_group": "PRIVACY"
+    },
+    {
+      "capability_group": "REGULATORY_INTELLIGENCE"
+    },
+    {
+      "capability_group": "REPORT_STUDIO"
+    },
+    {
+      "capability_group": "RESILIENCE"
+    },
+    {
+      "capability_group": "RULES_IMPACT"
+    },
+    {
+      "capability_group": "SURVEYS"
+    },
+    {
+      "capability_group": "THIRD_PARTIES"
+    }
+  ],
+  "edges": [
+    {
+      "entity_type": "Action",
+      "from_state": "verified",
+      "command_code": "action.cancel",
+      "to_state": "cancelled",
+      "version_number": "1",
+      "permission_code": "remediation.action.transition",
+      "precondition_policy_ref": "contract:transition:Action:verified:action.cancel:v1",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "owned_object"
+      ]
+    },
+    {
+      "entity_type": "Action",
+      "from_state": "in_review",
+      "command_code": "action.complete",
+      "to_state": "completed",
+      "version_number": "2",
+      "permission_code": "remediation.action.transition",
+      "precondition_policy_ref": "contract:transition:Action:in_review:action.complete:v2",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "owned_object"
+      ]
+    },
+    {
+      "entity_type": "Action",
+      "from_state": "verified",
+      "command_code": "action.reopen",
+      "to_state": "reopened",
+      "version_number": "1",
+      "permission_code": "remediation.action.transition",
+      "precondition_policy_ref": "contract:transition:Action:verified:action.reopen:v1",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "owned_object"
+      ]
+    },
+    {
+      "entity_type": "Action",
+      "from_state": "pending",
+      "command_code": "action.start",
+      "to_state": "in_progress",
+      "version_number": "2",
+      "permission_code": "remediation.action.transition",
+      "precondition_policy_ref": "contract:transition:Action:pending:action.start:v2",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "owned_object"
+      ]
+    },
+    {
+      "entity_type": "Action",
+      "from_state": "in_progress",
+      "command_code": "action.submit_review",
+      "to_state": "in_review",
+      "version_number": "2",
+      "permission_code": "remediation.action.transition",
+      "precondition_policy_ref": "contract:transition:Action:in_progress:action.submit_review:v2",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "owned_object"
+      ]
+    },
+    {
+      "entity_type": "Action",
+      "from_state": "completed",
+      "command_code": "action.verify",
+      "to_state": "verified",
+      "version_number": "2",
+      "permission_code": "remediation.action.verify",
+      "precondition_policy_ref": "contract:transition:Action:completed:action.verify:v2",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "AssuranceTest",
+      "from_state": "reviewed",
+      "command_code": "assurance_test.approve",
+      "to_state": "approved",
+      "version_number": "2",
+      "permission_code": "controls.assurance_test.approve",
+      "precondition_policy_ref": "contract:transition:AssuranceTest:reviewed:assurance_test.approve:v2",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "AssuranceTest",
+      "from_state": "in_progress",
+      "command_code": "assurance_test.complete",
+      "to_state": "completed",
+      "version_number": "1",
+      "permission_code": "controls.assurance_test.execute",
+      "precondition_policy_ref": "contract:transition:AssuranceTest:in_progress:assurance_test.complete:v1",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "audit_engagement"
+      ]
+    },
+    {
+      "entity_type": "AssuranceTest",
+      "from_state": "in_progress",
+      "command_code": "assurance_test.execute",
+      "to_state": "completed",
+      "version_number": "1",
+      "permission_code": "controls.assurance_test.execute",
+      "precondition_policy_ref": "contract:transition:AssuranceTest:in_progress:assurance_test.execute:v1",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "audit_engagement"
+      ]
+    },
+    {
+      "entity_type": "AssuranceTest",
+      "from_state": "completed",
+      "command_code": "assurance_test.review",
+      "to_state": "reviewed",
+      "version_number": "2",
+      "permission_code": "controls.assurance_test.review",
+      "precondition_policy_ref": "contract:transition:AssuranceTest:completed:assurance_test.review:v2",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "audit_engagement",
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "AssuranceTest",
+      "from_state": "planned",
+      "command_code": "assurance_test.start",
+      "to_state": "in_progress",
+      "version_number": "2",
+      "permission_code": "controls.assurance_test.execute",
+      "precondition_policy_ref": "contract:transition:AssuranceTest:planned:assurance_test.start:v2",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "audit_engagement"
+      ]
+    },
+    {
+      "entity_type": "ControlAssessment",
+      "from_state": "reviewed",
+      "command_code": "control_assessment.approve",
+      "to_state": "approved",
+      "version_number": "2",
+      "permission_code": "controls.control_assessment.approve",
+      "precondition_policy_ref": "contract:transition:ControlAssessment:reviewed:control_assessment.approve:v2",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "ControlAssessment",
+      "from_state": "in_progress",
+      "command_code": "control_assessment.complete",
+      "to_state": "completed",
+      "version_number": "3",
+      "permission_code": "controls.control_assessment.submit",
+      "precondition_policy_ref": "contract:phase5-final:control-assessment-complete:v3",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "owned_object",
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "ControlAssessment",
+      "from_state": "completed",
+      "command_code": "control_assessment.review",
+      "to_state": "reviewed",
+      "version_number": "2",
+      "permission_code": "controls.control_assessment.review",
+      "precondition_policy_ref": "contract:transition:ControlAssessment:completed:control_assessment.review:v2",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "ControlAssessment",
+      "from_state": "planned",
+      "command_code": "control_assessment.start",
+      "to_state": "in_progress",
+      "version_number": "3",
+      "permission_code": "controls.control_assessment.update",
+      "precondition_policy_ref": "contract:phase5:control-assessment-start:tenant:v3",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "EvidenceRequest",
+      "from_state": "open",
+      "command_code": "evidence_request.cancel",
+      "to_state": "cancelled",
+      "version_number": "1",
+      "permission_code": "evidence.evidence_request.update",
+      "precondition_policy_ref": "contract:transition:EvidenceRequest:open:evidence_request.cancel:v1",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "EvidenceRequest",
+      "from_state": "open",
+      "command_code": "evidence_request.expire",
+      "to_state": "expired",
+      "version_number": "1",
+      "permission_code": "evidence.evidence_request.archive",
+      "precondition_policy_ref": "contract:transition:EvidenceRequest:open:evidence_request.expire:v1",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "EvidenceRequest",
+      "from_state": "open",
+      "command_code": "evidence_request.fulfill",
+      "to_state": "fulfilled",
+      "version_number": "2",
+      "permission_code": "evidence.evidence_request.submit",
+      "precondition_policy_ref": "contract:phase5-final:evidence-request-fulfill:v2",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "EvidenceVersion",
+      "from_state": "under_review",
+      "command_code": "evidence.approve",
+      "to_state": "approved",
+      "version_number": "1",
+      "permission_code": "evidence.evidence.approve",
+      "precondition_policy_ref": "contract:transition:EvidenceVersion:under_review:evidence.approve:v1",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "EvidenceVersion",
+      "from_state": "approved",
+      "command_code": "evidence.expire",
+      "to_state": "expired",
+      "version_number": "1",
+      "permission_code": "evidence.evidence.archive",
+      "precondition_policy_ref": "contract:transition:EvidenceVersion:approved:evidence.expire:v1",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "EvidenceVersion",
+      "from_state": "under_review",
+      "command_code": "evidence.reject",
+      "to_state": "rejected",
+      "version_number": "1",
+      "permission_code": "evidence.evidence.reject",
+      "precondition_policy_ref": "contract:transition:EvidenceVersion:under_review:evidence.reject:v1",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "EvidenceVersion",
+      "from_state": "rejected",
+      "command_code": "evidence.revise",
+      "to_state": "draft",
+      "version_number": "1",
+      "permission_code": "evidence.evidence.update",
+      "precondition_policy_ref": "contract:transition:EvidenceVersion:rejected:evidence.revise:v1",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "owned_object"
+      ]
+    },
+    {
+      "entity_type": "EvidenceVersion",
+      "from_state": "submitted",
+      "command_code": "evidence.start_review",
+      "to_state": "under_review",
+      "version_number": "1",
+      "permission_code": "evidence.evidence.review",
+      "precondition_policy_ref": "contract:transition:EvidenceVersion:submitted:evidence.start_review:v1",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "EvidenceVersion",
+      "from_state": "draft",
+      "command_code": "evidence.submit",
+      "to_state": "submitted",
+      "version_number": "2",
+      "permission_code": "evidence.evidence.submit",
+      "precondition_policy_ref": "contract:initial-retention-source-submit:v1.11",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "owned_object",
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "EvidenceVersion",
+      "from_state": "approved",
+      "command_code": "evidence.supersede",
+      "to_state": "superseded",
+      "version_number": "1",
+      "permission_code": "evidence.evidence.archive",
+      "precondition_policy_ref": "contract:transition:EvidenceVersion:approved:evidence.supersede:v1",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "Issue",
+      "from_state": "open",
+      "command_code": "issue.dismiss",
+      "to_state": "dismissed",
+      "version_number": "1",
+      "permission_code": "remediation.issue.transition",
+      "precondition_policy_ref": "contract:transition:Issue:open:issue.dismiss:v1",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "owned_object",
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "Issue",
+      "from_state": "triaged",
+      "command_code": "issue.dismiss",
+      "to_state": "dismissed",
+      "version_number": "1",
+      "permission_code": "remediation.issue.transition",
+      "precondition_policy_ref": "contract:transition:Issue:triaged:issue.dismiss:v1",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "owned_object",
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "Issue",
+      "from_state": "verified_closed",
+      "command_code": "issue.reopen",
+      "to_state": "reopened",
+      "version_number": "1",
+      "permission_code": "remediation.issue.transition",
+      "precondition_policy_ref": "contract:transition:Issue:verified_closed:issue.reopen:v1",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "owned_object",
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "Issue",
+      "from_state": "remediation_in_progress",
+      "command_code": "issue.request_verification",
+      "to_state": "pending_verification",
+      "version_number": "2",
+      "permission_code": "remediation.issue.transition",
+      "precondition_policy_ref": "contract:transition:Issue:remediation_in_progress:issue.request_verification:v2",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "owned_object",
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "Issue",
+      "from_state": "triaged",
+      "command_code": "issue.start_remediation",
+      "to_state": "remediation_in_progress",
+      "version_number": "2",
+      "permission_code": "remediation.issue.transition",
+      "precondition_policy_ref": "contract:transition:Issue:triaged:issue.start_remediation:v2",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "owned_object",
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "Issue",
+      "from_state": "open",
+      "command_code": "issue.triage",
+      "to_state": "triaged",
+      "version_number": "2",
+      "permission_code": "remediation.issue.transition",
+      "precondition_policy_ref": "contract:transition:Issue:open:issue.triage:v2",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "owned_object",
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "Issue",
+      "from_state": "pending_verification",
+      "command_code": "issue.verify_close",
+      "to_state": "verified_closed",
+      "version_number": "2",
+      "permission_code": "remediation.issue.transition",
+      "precondition_policy_ref": "contract:transition:Issue:pending_verification:issue.verify_close:v2",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "owned_object",
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "RequirementApplicability",
+      "from_state": "submitted",
+      "command_code": "applicability.approve",
+      "to_state": "approved",
+      "version_number": "1",
+      "permission_code": "compliance.applicability.approve",
+      "precondition_policy_ref": "contract:transition:RequirementApplicability:submitted:applicability.approve:v1",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "RequirementApplicability",
+      "from_state": "draft",
+      "command_code": "applicability.submit",
+      "to_state": "submitted",
+      "version_number": "1",
+      "permission_code": "compliance.applicability.submit",
+      "precondition_policy_ref": "contract:transition:RequirementApplicability:draft:applicability.submit:v1",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "owned_object",
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "RequirementApplicability",
+      "from_state": "approved",
+      "command_code": "applicability.supersede",
+      "to_state": "superseded",
+      "version_number": "1",
+      "permission_code": "compliance.applicability.approve",
+      "precondition_policy_ref": "contract:transition:RequirementApplicability:approved:applicability.supersede:v1",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "RequirementAssessment",
+      "from_state": "assessed",
+      "command_code": "requirement_assessment.approve",
+      "to_state": "approved",
+      "version_number": "2",
+      "permission_code": "compliance.requirement_assessment.approve",
+      "precondition_policy_ref": "contract:transition:RequirementAssessment:assessed:requirement_assessment.approve:v2",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "RequirementAssessment",
+      "from_state": "not_assessed",
+      "command_code": "requirement_assessment.start",
+      "to_state": "in_progress",
+      "version_number": "2",
+      "permission_code": "compliance.requirement_assessment.update",
+      "precondition_policy_ref": "contract:transition:RequirementAssessment:not_assessed:requirement_assessment.start:v2",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "owned_object",
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "RequirementAssessment",
+      "from_state": "in_progress",
+      "command_code": "requirement_assessment.submit",
+      "to_state": "assessed",
+      "version_number": "2",
+      "permission_code": "compliance.requirement_assessment.submit",
+      "precondition_policy_ref": "contract:transition:RequirementAssessment:in_progress:requirement_assessment.submit:v2",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "assigned_object",
+        "owned_object",
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "RequirementAssessment",
+      "from_state": "approved",
+      "command_code": "requirement_assessment.supersede",
+      "to_state": "superseded",
+      "version_number": "1",
+      "permission_code": "compliance.requirement_assessment.archive",
+      "precondition_policy_ref": "contract:transition:RequirementAssessment:approved:requirement_assessment.supersede:v1",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "RetentionPolicy",
+      "from_state": "under_review",
+      "command_code": "retention_policy.approve",
+      "to_state": "approved",
+      "version_number": "1",
+      "permission_code": "privacy.retention_policy.approve",
+      "precondition_policy_ref": "contract:phase5:retention-policy-approve:v1",
+      "sod_policy_ref": "contract:retention-policy-author-approver-distinct:v1",
+      "allowed_scopes": [
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "RetentionPolicy",
+      "from_state": "approved",
+      "command_code": "retention_policy.publish",
+      "to_state": "published",
+      "version_number": "1",
+      "permission_code": "privacy.retention_policy.publish",
+      "precondition_policy_ref": "contract:phase5:retention-policy-publish:v1",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "RetentionPolicy",
+      "from_state": "draft",
+      "command_code": "retention_policy.review",
+      "to_state": "under_review",
+      "version_number": "1",
+      "permission_code": "privacy.retention_policy.review",
+      "precondition_policy_ref": "contract:phase5:retention-policy-review:v1",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "RetentionPolicy",
+      "from_state": "draft",
+      "command_code": "retention_policy.submit_for_review",
+      "to_state": "under_review",
+      "version_number": "1",
+      "permission_code": "privacy.retention_policy.update",
+      "precondition_policy_ref": "docs/executable-contracts/candidates/STEP_6A3_C04W_CFGD_v1.10/DELTA.md#c-04w",
+      "sod_policy_ref": "docs/executable-contracts/candidates/STEP_6A3_C04W_CFGD_v1.10/DELTA.md#c-04w",
+      "allowed_scopes": [
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "StatementOfApplicability",
+      "from_state": "draft",
+      "command_code": "soa.publish",
+      "to_state": "published",
+      "version_number": "1",
+      "permission_code": "compliance.soa.publish",
+      "precondition_policy_ref": "contract:transition:StatementOfApplicability:draft:soa.publish:v1",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "tenant"
+      ]
+    },
+    {
+      "entity_type": "StatementOfApplicability",
+      "from_state": "published",
+      "command_code": "soa.supersede",
+      "to_state": "superseded",
+      "version_number": "1",
+      "permission_code": "compliance.soa.publish",
+      "precondition_policy_ref": "contract:transition:StatementOfApplicability:published:soa.supersede:v1",
+      "sod_policy_ref": "contract:default-deny-sod:v1",
+      "allowed_scopes": [
+        "tenant"
+      ]
+    }
+  ],
+  "inventory": {
+    "regulatory.requirement_applicabilities": {
+      "available": true,
+      "fields": [
+        "requirement_applicability_id",
+        "tenant_id",
+        "row_version",
+        "lifecycle_state",
+        "requirement_id",
+        "scope_subject_id",
+        "created_by_user_identity_id",
+        "updated_by_user_identity_id",
+        "approved_at",
+        "effective_from",
+        "effective_to"
+      ],
+      "rows": [
+        {
+          "requirement_applicability_id": "01a118c4-0331-73a7-97cc-c2eadd006b98",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "row_version": "3",
+          "lifecycle_state": "approved",
+          "requirement_id": "01a0ea93-a4b4-70c2-a621-720d94c90124",
+          "scope_subject_id": null,
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "updated_by_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+          "approved_at": "2026-10-07T23:51:07.305Z",
+          "effective_from": "2026-10-07T23:47:10.528Z",
+          "effective_to": null
+        }
+      ]
+    },
+    "regulatory.requirement_assessments": {
+      "available": true,
+      "fields": [
+        "requirement_applicability_id",
+        "requirement_assessment_id",
+        "effective_configuration_id",
+        "tenant_id",
+        "row_version",
+        "lifecycle_state",
+        "result_status",
+        "domain_conclusion",
+        "methodology_version_ref",
+        "effective_configuration_id",
+        "created_by_user_identity_id",
+        "updated_by_user_identity_id",
+        "approved_at"
+      ],
+      "rows": [
+        {
+          "requirement_applicability_id": "01a118c4-0331-73a7-97cc-c2eadd006b98",
+          "requirement_assessment_id": "01a11afc-7a61-743f-9add-fbd93a87ddd7",
+          "effective_configuration_id": null,
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "row_version": "4",
+          "lifecycle_state": "approved",
+          "result_status": "no_data",
+          "domain_conclusion": "insufficient_evidence",
+          "methodology_version_ref": "01a11900-0000-7001-8000-000000000001",
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "updated_by_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+          "approved_at": "2026-10-08T10:16:23.544Z"
+        },
+        {
+          "requirement_applicability_id": "01a118c4-0331-73a7-97cc-c2eadd006b98",
+          "requirement_assessment_id": "01a15932-85d5-7393-859e-15c5e589ecb9",
+          "effective_configuration_id": null,
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "row_version": "3",
+          "lifecycle_state": "assessed",
+          "result_status": "insufficient_data",
+          "domain_conclusion": null,
+          "methodology_version_ref": "01a11900-0000-7001-8000-000000000001",
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "updated_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "approved_at": null
+        },
+        {
+          "requirement_applicability_id": "01a118c4-0331-73a7-97cc-c2eadd006b98",
+          "requirement_assessment_id": "01a15942-6048-7405-b0a8-6253ff64f9bb",
+          "effective_configuration_id": null,
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "row_version": "1",
+          "lifecycle_state": "not_assessed",
+          "result_status": "no_data",
+          "domain_conclusion": null,
+          "methodology_version_ref": "01a11900-0000-7001-8000-000000000001",
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "updated_by_user_identity_id": null,
+          "approved_at": null
+        }
+      ]
+    },
+    "regulatory.statements_of_applicability": {
+      "available": true,
+      "fields": [
+        "statement_of_applicability_id",
+        "tenant_id",
+        "row_version",
+        "lifecycle_state",
+        "soa_version",
+        "framework_version_id",
+        "created_by_user_identity_id",
+        "updated_by_user_identity_id",
+        "approved_at",
+        "published_at",
+        "effective_from",
+        "effective_to"
+      ],
+      "rows": [
+        {
+          "statement_of_applicability_id": "01a118d9-f24c-7322-8e4e-6696516f0c56",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "row_version": "2",
+          "lifecycle_state": "published",
+          "soa_version": "1",
+          "framework_version_id": "01a0ea93-867a-7432-a041-2179e0a543f8",
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "updated_by_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+          "approved_at": "2026-10-08T00:12:13.445Z",
+          "published_at": "2026-10-08T00:12:13.445Z",
+          "effective_from": null,
+          "effective_to": null
+        }
+      ]
+    },
+    "regulatory.soa_items": {
+      "available": false
+    },
+    "controls.controls": {
+      "available": true,
+      "fields": [
+        "control_id",
+        "tenant_id",
+        "row_version",
+        "lifecycle_state",
+        "control_code",
+        "business_owner_subject_id",
+        "based_on_control_version_id",
+        "created_by_user_identity_id",
+        "updated_by_user_identity_id",
+        "ownership_class"
+      ],
+      "rows": [
+        {
+          "control_id": "01a118d7-6222-7470-8a85-306e07659f4a",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "row_version": "1",
+          "lifecycle_state": "active",
+          "control_code": "QA-F5-20261007-CONTROL",
+          "business_owner_subject_id": "01a0f27e-b912-72d2-a08e-c5fcbd4efe43",
+          "based_on_control_version_id": "01a0ea93-d739-7298-adf1-3a1336487617",
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "updated_by_user_identity_id": null,
+          "ownership_class": "TENANT_OWNED"
+        },
+        {
+          "control_id": "01a15910-4a71-71ea-ad1d-bd772cf3358f",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "row_version": "1",
+          "lifecycle_state": "active",
+          "control_code": "QA_STEP6A3_TRAZABILIDAD_DOCUMENTAL_001",
+          "business_owner_subject_id": "01a0f27e-b912-72d2-a08e-c5fcbd4efe43",
+          "based_on_control_version_id": "01a0ea93-d236-7544-8b75-b3d5d16b0007",
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "updated_by_user_identity_id": null,
+          "ownership_class": "TENANT_OWNED"
+        }
+      ]
+    },
+    "controls.control_versions": {
+      "available": true,
+      "fields": [
+        "control_id",
+        "control_version_id",
+        "tenant_id",
+        "lifecycle_state",
+        "version_number",
+        "created_by_user_identity_id",
+        "published_at",
+        "effective_from",
+        "effective_to",
+        "ownership_class"
+      ],
+      "rows": [
+        {
+          "control_id": "01a118d7-6222-7470-8a85-306e07659f4a",
+          "control_version_id": "01a118d7-6222-7470-8a85-35f52db6b5a0",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "lifecycle_state": "active",
+          "version_number": "1",
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "published_at": null,
+          "effective_from": "2026-10-07T23:47:10.528Z",
+          "effective_to": null,
+          "ownership_class": "TENANT_OWNED"
+        },
+        {
+          "control_id": "01a15910-4a71-71ea-ad1d-bd772cf3358f",
+          "control_version_id": "01a15910-4a71-71ea-ad1d-c1b7e37d9a50",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "lifecycle_state": "active",
+          "version_number": "1",
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "published_at": null,
+          "effective_from": null,
+          "effective_to": null,
+          "ownership_class": "TENANT_OWNED"
+        }
+      ]
+    },
+    "controls.control_assessments": {
+      "available": true,
+      "fields": [
+        "control_id",
+        "control_version_id",
+        "control_assessment_id",
+        "effective_configuration_id",
+        "tenant_id",
+        "row_version",
+        "lifecycle_state",
+        "result_status",
+        "domain_conclusion",
+        "methodology_version_ref",
+        "effective_configuration_id",
+        "created_by_user_identity_id",
+        "updated_by_user_identity_id"
+      ],
+      "rows": [
+        {
+          "control_id": "01a118d7-6222-7470-8a85-306e07659f4a",
+          "control_version_id": "01a118d7-6222-7470-8a85-35f52db6b5a0",
+          "control_assessment_id": "01a11afc-7f48-701e-9c0b-c2bc01ba0a5e",
+          "effective_configuration_id": null,
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "row_version": "5",
+          "lifecycle_state": "approved",
+          "result_status": "no_data",
+          "domain_conclusion": "not_tested",
+          "methodology_version_ref": "01a11900-0000-7001-8000-000000000002",
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "updated_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+        },
+        {
+          "control_id": "01a118d7-6222-7470-8a85-306e07659f4a",
+          "control_version_id": "01a118d7-6222-7470-8a85-35f52db6b5a0",
+          "control_assessment_id": "01a14122-06e4-748d-a3db-5935f64c1901",
+          "effective_configuration_id": null,
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "row_version": "3",
+          "lifecycle_state": "completed",
+          "result_status": "insufficient_data",
+          "domain_conclusion": null,
+          "methodology_version_ref": "01a11900-0000-7001-8000-000000000002",
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "updated_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+        },
+        {
+          "control_id": "01a15910-4a71-71ea-ad1d-bd772cf3358f",
+          "control_version_id": "01a15910-4a71-71ea-ad1d-c1b7e37d9a50",
+          "control_assessment_id": "01a15932-d59a-71cc-a65c-335ec33e5b4a",
+          "effective_configuration_id": null,
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "row_version": "2",
+          "lifecycle_state": "in_progress",
+          "result_status": "no_data",
+          "domain_conclusion": null,
+          "methodology_version_ref": "01a11900-0000-7001-8000-000000000002",
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "updated_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+        }
+      ]
+    },
+    "controls.assurance_tests": {
+      "available": true,
+      "fields": [
+        "control_id",
+        "control_version_id",
+        "assurance_test_id",
+        "tenant_id",
+        "row_version",
+        "lifecycle_state",
+        "result_status",
+        "domain_conclusion",
+        "test_code",
+        "executor_membership_id",
+        "reviewer_membership_id",
+        "created_by_user_identity_id",
+        "updated_by_user_identity_id",
+        "approved_at",
+        "reviewed_at"
+      ],
+      "rows": [
+        {
+          "control_id": "01a118d7-6222-7470-8a85-306e07659f4a",
+          "control_version_id": "01a118d7-6222-7470-8a85-35f52db6b5a0",
+          "assurance_test_id": "01a118d7-e604-7298-bae3-8b9da3eb809d",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "row_version": "5",
+          "lifecycle_state": "approved",
+          "result_status": "no_data",
+          "domain_conclusion": "not_tested",
+          "test_code": "QA-F5-20261007-ASSURANCE",
+          "executor_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+          "reviewer_membership_id": "01a118c3-b108-7636-abcf-7cb86725320e",
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "updated_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "approved_at": "2026-10-08T00:23:26.505Z",
+          "reviewed_at": "2026-10-08T00:12:13.176Z"
+        }
+      ]
+    },
+    "evidence.evidence_requests": {
+      "available": true,
+      "fields": [
+        "requirement_assessment_id",
+        "control_id",
+        "control_assessment_id",
+        "assurance_test_id",
+        "evidence_request_id",
+        "tenant_id",
+        "row_version",
+        "lifecycle_state",
+        "request_code",
+        "requirement_id",
+        "assigned_membership_id",
+        "requested_by_membership_id",
+        "created_by_user_identity_id",
+        "updated_by_user_identity_id"
+      ],
+      "rows": [
+        {
+          "requirement_assessment_id": null,
+          "control_id": "01a118d7-6222-7470-8a85-306e07659f4a",
+          "control_assessment_id": null,
+          "assurance_test_id": null,
+          "evidence_request_id": "01a118e3-7cc3-746e-83d5-6e9c11e9368b",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "row_version": "2",
+          "lifecycle_state": "fulfilled",
+          "request_code": "QA-F5-20261007-REQUEST",
+          "requirement_id": null,
+          "assigned_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+          "requested_by_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "updated_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+        }
+      ]
+    },
+    "evidence.evidences": {
+      "available": true,
+      "fields": [
+        "evidence_id",
+        "retention_policy_id",
+        "tenant_id",
+        "row_version",
+        "lifecycle_state",
+        "evidence_code",
+        "business_owner_subject_id",
+        "created_by_user_identity_id",
+        "updated_by_user_identity_id",
+        "valid_from",
+        "valid_to"
+      ],
+      "rows": [
+        {
+          "evidence_id": "01a118e4-ba56-76e7-aa44-cc8b23930648",
+          "retention_policy_id": "01a118bf-386d-76be-a26d-e7b322136302",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "row_version": "1",
+          "lifecycle_state": "draft",
+          "evidence_code": "QA-F5-20261007-EVIDENCE",
+          "business_owner_subject_id": "01a0f27e-b912-72d2-a08e-c5fcbd4efe43",
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "updated_by_user_identity_id": null,
+          "valid_from": null,
+          "valid_to": null
+        },
+        {
+          "evidence_id": "01a1591b-9ffe-74b2-89f8-975ccf4d2f61",
+          "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "row_version": "1",
+          "lifecycle_state": "draft",
+          "evidence_code": "QA_EVID_RET_001",
+          "business_owner_subject_id": "01a0f27e-b912-72d2-a08e-c5fcbd4efe43",
+          "created_by_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+          "updated_by_user_identity_id": null,
+          "valid_from": "2026-10-20T11:30:00.000Z",
+          "valid_to": null
+        }
+      ]
+    },
+    "evidence.evidence_versions": {
+      "available": true,
+      "fields": [
+        "evidence_id",
+        "evidence_version_id",
+        "retention_policy_applicability_id",
+        "tenant_id",
+        "row_version",
+        "lifecycle_state",
+        "version_number",
+        "created_by_user_identity_id",
+        "updated_by_user_identity_id",
+        "submitted_at",
+        "approved_at",
+        "published_at",
+        "effective_from",
+        "effective_to",
+        "period_start",
+        "period_end",
+        "file_object_id"
+      ],
+      "rows": [
+        {
+          "evidence_id": "01a118e4-ba56-76e7-aa44-cc8b23930648",
+          "evidence_version_id": "01a118e4-ba56-76e7-aa44-d03594933d9c",
+          "retention_policy_applicability_id": null,
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "row_version": "4",
+          "lifecycle_state": "approved",
+          "version_number": "1",
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "updated_by_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+          "submitted_at": "2026-10-08T00:23:26.101Z",
+          "approved_at": "2026-10-08T00:24:52.579Z",
+          "published_at": "2026-10-08T00:24:52.579Z",
+          "effective_from": null,
+          "effective_to": null,
+          "period_start": null,
+          "period_end": null,
+          "file_object_id": "01a118e4-618b-74c5-b3ae-d4e2fa0ce4eb"
+        },
+        {
+          "evidence_id": "01a1591b-9ffe-74b2-89f8-975ccf4d2f61",
+          "evidence_version_id": "01a1591b-9ffe-74b2-89f8-9aa35ddadafa",
+          "retention_policy_applicability_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "row_version": "1",
+          "lifecycle_state": "draft",
+          "version_number": "1",
+          "created_by_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+          "updated_by_user_identity_id": null,
+          "submitted_at": null,
+          "approved_at": null,
+          "published_at": null,
+          "effective_from": null,
+          "effective_to": null,
+          "period_start": null,
+          "period_end": null,
+          "file_object_id": "01a1591b-9f28-70c9-8930-bfd839ab8b41"
+        }
+      ]
+    },
+    "evidence.evidence_reviews": {
+      "available": true,
+      "fields": [
+        "evidence_id",
+        "evidence_version_id",
+        "evidence_review_id",
+        "tenant_id",
+        "reviewer_membership_id",
+        "created_by_user_identity_id",
+        "reviewed_at",
+        "decision"
+      ],
+      "rows": [
+        {
+          "evidence_id": "01a118e4-ba56-76e7-aa44-cc8b23930648",
+          "evidence_version_id": "01a118e4-ba56-76e7-aa44-d03594933d9c",
+          "evidence_review_id": "01a118e6-0e66-76b8-95dc-7f27da646ffc",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "reviewer_membership_id": "01a118c3-b108-7636-abcf-7cb86725320e",
+          "created_by_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+          "reviewed_at": "2026-10-08T00:24:52.582Z",
+          "decision": "approved"
+        }
+      ]
+    },
+    "evidence.evidence_links": {
+      "available": true,
+      "fields": [
+        "requirement_assessment_id",
+        "control_id",
+        "control_version_id",
+        "control_assessment_id",
+        "assurance_test_id",
+        "evidence_version_id",
+        "evidence_link_id",
+        "tenant_id",
+        "requirement_id",
+        "created_by_user_identity_id",
+        "effective_from",
+        "effective_to"
+      ],
+      "rows": [
+        {
+          "requirement_assessment_id": null,
+          "control_id": "01a118d7-6222-7470-8a85-306e07659f4a",
+          "control_version_id": null,
+          "control_assessment_id": null,
+          "assurance_test_id": null,
+          "evidence_version_id": "01a118e4-ba56-76e7-aa44-d03594933d9c",
+          "evidence_link_id": "01a118e4-ba61-7356-9807-4884643b1388",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "requirement_id": null,
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "effective_from": null,
+          "effective_to": null
+        },
+        {
+          "requirement_assessment_id": null,
+          "control_id": "01a15910-4a71-71ea-ad1d-bd772cf3358f",
+          "control_version_id": null,
+          "control_assessment_id": null,
+          "assurance_test_id": null,
+          "evidence_version_id": "01a1591b-9ffe-74b2-89f8-9aa35ddadafa",
+          "evidence_link_id": "01a1591b-a009-7509-81cc-5256db379831",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "requirement_id": null,
+          "created_by_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+          "effective_from": null,
+          "effective_to": null
+        }
+      ]
+    },
+    "privacy.retention_policies": {
+      "available": true,
+      "fields": [
+        "retention_policy_id",
+        "tenant_id",
+        "row_version",
+        "lifecycle_state",
+        "policy_code",
+        "version_number",
+        "created_by_user_identity_id",
+        "effective_from",
+        "effective_to",
+        "policy_kind",
+        "ownership_class"
+      ],
+      "rows": [
+        {
+          "retention_policy_id": "01a118bf-386d-76be-a26d-e7b322136302",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "row_version": "4",
+          "lifecycle_state": "published",
+          "policy_code": "QA-F5-20261007-RETENTION",
+          "version_number": "1",
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "effective_from": "2026-10-08T00:08:50.691Z",
+          "effective_to": null,
+          "policy_kind": "tenant_policy",
+          "ownership_class": "TENANT_OWNED"
+        },
+        {
+          "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "row_version": "4",
+          "lifecycle_state": "published",
+          "policy_code": "QA_RET_ORD_001",
+          "version_number": "1",
+          "created_by_user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+          "effective_from": "2026-10-16T22:44:06.837Z",
+          "effective_to": null,
+          "policy_kind": "tenant_policy",
+          "ownership_class": "TENANT_OWNED"
+        }
+      ]
+    },
+    "privacy.retention_policy_applicabilities": {
+      "available": true,
+      "fields": [
+        "retention_policy_id",
+        "retention_policy_applicability_id",
+        "tenant_id",
+        "row_version",
+        "lifecycle_state",
+        "version_number",
+        "scope_subject_id",
+        "created_by_user_identity_id",
+        "published_at",
+        "effective_from",
+        "effective_to",
+        "classification",
+        "purpose",
+        "source_evidence_version_id"
+      ],
+      "rows": [
+        {
+          "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+          "retention_policy_applicability_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "row_version": "4",
+          "lifecycle_state": "published",
+          "version_number": "1",
+          "scope_subject_id": null,
+          "created_by_user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+          "published_at": "2026-10-16T23:03:35.619Z",
+          "effective_from": "2026-10-16T22:59:00.000Z",
+          "effective_to": null,
+          "classification": "internal",
+          "purpose": "evidence_document",
+          "source_evidence_version_id": null
+        },
+        {
+          "retention_policy_id": "01a118bf-386d-76be-a26d-e7b322136302",
+          "retention_policy_applicability_id": "01a14126-bc97-7721-85e4-e34026cf4213",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "row_version": "2",
+          "lifecycle_state": "under_review",
+          "version_number": "1",
+          "scope_subject_id": "01a0f27e-b912-72d2-a08e-c5fcbd4efe43",
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "published_at": null,
+          "effective_from": null,
+          "effective_to": null,
+          "classification": "internal",
+          "purpose": "evidence_document",
+          "source_evidence_version_id": null
+        },
+        {
+          "retention_policy_id": "01a118bf-386d-76be-a26d-e7b322136302",
+          "retention_policy_applicability_id": "01a14127-94bf-72c7-b2b8-ad4c48fb0905",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "row_version": "2",
+          "lifecycle_state": "under_review",
+          "version_number": "1",
+          "scope_subject_id": null,
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "published_at": null,
+          "effective_from": null,
+          "effective_to": null,
+          "classification": "internal",
+          "purpose": "evidence_document",
+          "source_evidence_version_id": null
+        }
+      ]
+    },
+    "remediation.issues": {
+      "available": true,
+      "fields": [
+        "issue_id",
+        "tenant_id",
+        "row_version",
+        "lifecycle_state",
+        "business_owner_subject_id",
+        "created_by_user_identity_id",
+        "updated_by_user_identity_id"
+      ],
+      "rows": [
+        {
+          "issue_id": "01a118d9-ecd9-756a-a189-8b36d6c4e8ba",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "row_version": "5",
+          "lifecycle_state": "verified_closed",
+          "business_owner_subject_id": "01a0f27e-b912-72d2-a08e-c5fcbd4efe43",
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "updated_by_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355"
+        }
+      ]
+    },
+    "remediation.issue_origins": {
+      "available": true,
+      "fields": [
+        "requirement_assessment_id",
+        "control_assessment_id",
+        "assurance_test_id",
+        "issue_id",
+        "issue_origin_id",
+        "tenant_id",
+        "created_by_user_identity_id"
+      ],
+      "rows": [
+        {
+          "requirement_assessment_id": null,
+          "control_assessment_id": null,
+          "assurance_test_id": "01a118d7-e604-7298-bae3-8b9da3eb809d",
+          "issue_id": "01a118d9-ecd9-756a-a189-8b36d6c4e8ba",
+          "issue_origin_id": "01a118d9-ecde-773b-bbe7-f0e52498ab15",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+        }
+      ]
+    },
+    "remediation.actions": {
+      "available": true,
+      "fields": [
+        "issue_id",
+        "action_id",
+        "tenant_id",
+        "row_version",
+        "lifecycle_state",
+        "assigned_membership_id",
+        "created_by_user_identity_id",
+        "updated_by_user_identity_id"
+      ],
+      "rows": [
+        {
+          "issue_id": "01a118d9-ecd9-756a-a189-8b36d6c4e8ba",
+          "action_id": "01a118d9-ef97-71be-9827-c9aec1d2b3ea",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "row_version": "5",
+          "lifecycle_state": "verified",
+          "assigned_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "updated_by_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355"
+        }
+      ]
+    },
+    "remediation.action_verifications": {
+      "available": true,
+      "fields": [
+        "action_id",
+        "action_verification_id",
+        "tenant_id",
+        "created_by_user_identity_id",
+        "verification_decision"
+      ],
+      "rows": [
+        {
+          "action_id": "01a118d9-ef97-71be-9827-c9aec1d2b3ea",
+          "action_verification_id": "01a118e6-15ce-74c8-926e-5704f4867abf",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "created_by_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+          "verification_decision": "accepted"
+        }
+      ]
+    },
+    "regulatory.compliance_methodologies": {
+      "available": true,
+      "fields": [
+        "compliance_methodology_id",
+        "tenant_id",
+        "lifecycle_state",
+        "version_number",
+        "created_by_user_identity_id",
+        "published_at",
+        "effective_from",
+        "effective_to",
+        "ownership_class"
+      ],
+      "rows": []
+    },
+    "controls.control_effectiveness_methodologies": {
+      "available": true,
+      "fields": [
+        "control_effectiveness_methodology_id",
+        "tenant_id",
+        "lifecycle_state",
+        "version_number",
+        "created_by_user_identity_id",
+        "published_at",
+        "effective_from",
+        "effective_to",
+        "ownership_class"
+      ],
+      "rows": []
+    },
+    "config.effective_configurations": {
+      "available": true,
+      "fields": [
+        "effective_configuration_id",
+        "tenant_id",
+        "effective_configuration_id",
+        "created_by_user_identity_id"
+      ],
+      "rows": []
+    }
+  },
+  "fingerprints": {
+    "regulatory.requirement_applicabilities": {
+      "rows": 1,
+      "sha256": "e4971581f19775fd226cb32dfacb801767476d3c01e4e16e2d52e2e2fca3ced5"
+    },
+    "regulatory.requirement_assessments": {
+      "rows": 3,
+      "sha256": "9cbafbbdd86987945962acbcd7744184c43a043625864b43c397edc7bdc7390d"
+    },
+    "regulatory.statements_of_applicability": {
+      "rows": 1,
+      "sha256": "892dc19a5a80329cb0c474a49d1e9db5dbdb1128d19f92cc03e1e9de2ee02b37"
+    },
+    "controls.controls": {
+      "rows": 2,
+      "sha256": "fb21d1b3c1c9da8ab77c8e9e4763ec97512f056c09c3429e1b57b1cd79e06e98"
+    },
+    "controls.control_versions": {
+      "rows": 2,
+      "sha256": "84e81e7ac1207edb36efc5bd56e11f13ec7d3c34f4a391456f7b72f397fa1fe6"
+    },
+    "controls.control_assessments": {
+      "rows": 3,
+      "sha256": "1909d293f8be4532509ebd253d2460e9e2528f8ae7bb822ae0f289d9c87e4dc2"
+    },
+    "controls.assurance_tests": {
+      "rows": 1,
+      "sha256": "4dce1d212bd4698cf0081bd36e4b9d79b2c26fca01286cce2bfc56e93dbd5d51"
+    },
+    "evidence.evidence_requests": {
+      "rows": 1,
+      "sha256": "b8115be9d7b5177cc14288b1e9903c041ec1a3f55b9effcc0354982bfced4c6c"
+    },
+    "evidence.evidences": {
+      "rows": 2,
+      "sha256": "402fc8986ff650ba54c2b035e3eec250f91c68258df005a35245cc13e6ee72ec"
+    },
+    "evidence.evidence_versions": {
+      "rows": 2,
+      "sha256": "da07449fbe1cc47eec587090e8bdf5b3cdab9fa2b07080a7466f653f0622e332"
+    },
+    "evidence.evidence_reviews": {
+      "rows": 1,
+      "sha256": "08bdc1c8628ac726904ff10363dc3b07b919a88e66546e785005eb403ac2b12a"
+    },
+    "evidence.evidence_links": {
+      "rows": 2,
+      "sha256": "50bc9c9a0c2616b04cc8538402cda4dc5f6b54012e30ea12ee04a66c36fdc4a3"
+    },
+    "privacy.retention_policies": {
+      "rows": 2,
+      "sha256": "0617e15957d2b9e1f0544eeadaafb4273f17c057aa1d9502888f4e0617171e2d"
+    },
+    "privacy.retention_policy_applicabilities": {
+      "rows": 3,
+      "sha256": "52db8adf61f28feb1e5c087d0c1cc5b0b6560845856d2e1fd75d5e35363831ba"
+    },
+    "remediation.issues": {
+      "rows": 1,
+      "sha256": "00140b84c0545ac82e927ee396448d37075afc23e680cdc70b8ba322ba546640"
+    },
+    "remediation.issue_origins": {
+      "rows": 1,
+      "sha256": "31e7a4aa4990aa9dc8500d5514b68b2d56200412733c8eebc2311e569b37ebc7"
+    },
+    "remediation.actions": {
+      "rows": 1,
+      "sha256": "58727e03c3ce934eea46a24c720f5403e2bff3d467314b66e175451c8d23c844"
+    },
+    "remediation.action_verifications": {
+      "rows": 1,
+      "sha256": "359cd8eba45da160af951861d1b69cfdb3b3c5cc7abd5744f37671ec4f7af9ee"
+    },
+    "regulatory.compliance_methodologies": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "controls.control_effectiveness_methodologies": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "config.effective_configurations": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "iamFingerprints": {
+    "roles": {
+      "rows": 68,
+      "sha256": "bb6a265a6bfba841821ea1c2cc33e33e6dcab1682d180598ee5645830d580b92"
+    },
+    "permissions": {
+      "rows": 179,
+      "sha256": "c50846fe86a713a63f1d16d04e4797a8bb3f4b0db4044597ccbd2a70b9e4cf2d"
+    },
+    "role_permissions": {
+      "rows": 1366,
+      "sha256": "bcdefaff841e65732efd5659a808a12f1048b8d9a589144daa66edd56935fadb"
+    },
+    "membership_roles": {
+      "rows": 41,
+      "sha256": "9cd932067fc7609cb4d83a2fa2e80f2f5ecf7626dac199df27735089fade06e6"
+    },
+    "tenant_memberships": {
+      "rows": 8,
+      "sha256": "ac4fe5a6fb26fec59f6ed0b37051efaf9925e8dd5ea8019b69662b1acd2c051c"
+    }
+  },
+  "authorization_limit": "Live active grant+scope+entitlement facts, not authenticated command authorization, ObjectPolicy or transactional SoD PASS"
+}

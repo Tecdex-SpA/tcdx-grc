@@ -1,0 +1,18 @@
+import json,socket,datetime,hashlib
+from pathlib import Path
+assert socket.gethostname().split('.')[0]=='db-v4','Unexpected host'
+base=Path('/var/backups/tcdx-grc')
+rows=[]
+for d in sorted(base.glob('step6a3-basebackup-*')):
+ row={'directory':str(d),'artifacts':[]}
+ for name in ['base.tar.gpg','base.tar.gpg.sha256','isolated-restore-verification.txt','isolated-restore-verification.sha256','current-isolated-restore-verification.txt','current-isolated-restore-verification.sha256','c04w-r2-qa-migration-verification.txt']:
+  p=d/name
+  if not p.is_file():continue
+  st=p.stat();a={'name':name,'bytes':st.st_size,'mtime_utc':datetime.datetime.fromtimestamp(st.st_mtime,datetime.timezone.utc).isoformat()}
+  if name.endswith('.txt') and st.st_size<65536:
+   a['receipt_sha256']=hashlib.sha256(p.read_bytes()).hexdigest()
+   a['safe_status_lines']=[line for line in p.read_text().splitlines() if line.startswith(('PG_VERIFYBACKUP=','RECOVERY_GATE=','QA_COUNTS=','RESTORE_COUNTS='))]
+  if name=='base.tar.gpg.sha256' and st.st_size<1024:a['declared_encrypted_backup_sha256']=p.read_text().split()[0]
+  row['artifacts'].append(a)
+ rows.append(row)
+print(json.dumps({'host':socket.gethostname(),'access':'METADATA_AND_KNOWN_STATUS_RECEIPTS_ONLY_NO_DECRYPTION','backups':rows}))

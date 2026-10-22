@@ -1,0 +1,111 @@
+[
+  {
+    "name": "focused-tests",
+    "command": [
+      "pnpm",
+      "exec",
+      "vitest",
+      "run",
+      "apps/backend/src/normative-library",
+      "apps/backend/src/configuration/control-adjustment-policy.test.ts",
+      "apps/backend/src/configuration/resolver.test.ts",
+      "apps/backend/src/configuration/effective-read.test.ts",
+      "apps/backend/src/regulatory/library-law.test.ts",
+      "apps/frontend/src/normative-library.test.tsx",
+      "apps/frontend/src/normative-library-client.test.ts",
+      "apps/frontend/src/normative-library-workspace.test.tsx",
+      "apps/frontend/src/core-grc.test.tsx",
+      "apps/frontend/src/api-client.test.ts",
+      "apps/frontend/src/reference-read.test.ts",
+      "apps/backend/src/core-grc/routes.test.ts",
+      "apps/backend/src/core-grc/core-grc.test.ts",
+      "apps/backend/src/core-grc/phase5-final-closure.test.ts"
+    ],
+    "exit_code": 0,
+    "log": "focused-tests.log"
+  },
+  {
+    "name": "typecheck",
+    "command": [
+      "pnpm",
+      "typecheck"
+    ],
+    "exit_code": 0,
+    "log": "typecheck.log"
+  },
+  {
+    "name": "build",
+    "command": [
+      "pnpm",
+      "build"
+    ],
+    "exit_code": 0,
+    "log": "build.log"
+  },
+  {
+    "name": "contract-gate",
+    "command": [
+      "pnpm",
+      "contracts:verify"
+    ],
+    "exit_code": 0,
+    "log": "contract-gate.log"
+  },
+  {
+    "name": "library-assets",
+    "command": [
+      "node",
+      "scripts/normative-library/generate-contract-assets.mjs",
+      "--check"
+    ],
+    "exit_code": 0,
+    "log": "library-assets.log"
+  },
+  {
+    "name": "rights-assets",
+    "command": [
+      "node",
+      "scripts/normative-library/generate-rights-contract.mjs",
+      "--check"
+    ],
+    "exit_code": 0,
+    "log": "rights-assets.log"
+  },
+  {
+    "name": "rector-integrity",
+    "command": [
+      "bash",
+      "scripts/verify-rector-governance.sh"
+    ],
+    "exit_code": 0,
+    "log": "rector-integrity.log"
+  },
+  {
+    "name": "rector-status",
+    "command": [
+      "bash",
+      "scripts/test-rector-governance-status.sh"
+    ],
+    "exit_code": 0,
+    "log": "rector-status.log"
+  },
+  {
+    "name": "generator-repeat",
+    "command": [
+      "pnpm",
+      "contracts:verify"
+    ],
+    "exit_code": 0,
+    "log": "generator-repeat.log"
+  },
+  {
+    "name": "whitespace",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "log": "whitespace.log"
+  }
+]

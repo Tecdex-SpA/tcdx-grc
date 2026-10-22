@@ -1,0 +1,50 @@
+{
+  "diagnostic_gate": "PASS",
+  "transport_access_gate": "PASS",
+  "Library_runtime_capability_gate": "BLOCKED_NOT_DEPLOYED",
+  "hypotheses": {
+    "operator_not_started": "REFUTED_FOUR_RUNNING",
+    "operator_in_other_context": "CONFIRMED_QA_VM_CONTAINERS",
+    "socket_nonexistent": "REFUTED_FOUR_REMOTE_SOCKETS_CONNECTED",
+    "socket_other_path": "CONFIRMED_DISTINCT_HOST_BINDS_AND_CONTAINER_PATH",
+    "socket_permission_denial": "REFUTED_FOR_TECDEX_UID1000",
+    "M2M_credential_absent": "REFUTED_QA_CUSTODY_AND_READONLY_MOUNT_METADATA",
+    "incomplete_Library_configuration": "CONFIRMED_THREE_VARIABLES_ABSENT",
+    "Codex_account_incompatibility": "NOT_EVIDENCED_OS_USER_TECDEX_WORKS",
+    "network_or_environment": "LOCAL_DEFAULT_USER_AUTH_FAILED_AND_CAPTURE_SANDBOX_EPERM; AUTHORIZED_TECDEX_SSH_AND_PG_READONLY_SUCCEEDED",
+    "remote_code_lacks_Library": "CONFIRMED_FIVE_RUNTIMES_NO_MODULE_NO_DISPATCH_NO_METHOD"
+  },
+  "health_or_status_operation": "DOES_NOT_EXIST_IN_CANONICAL_PROTOCOL",
+  "probe": "UNIX_CONNECT_ZERO_BYTES_NO_COMMAND",
+  "credential_current_Keycloak_validity": "NOT_TESTED_NO_SECRET_READ_OR_TOKEN_REQUEST",
+  "SSH_administrative_session_reusable": true,
+  "human_GRC_session": "NOT_INSPECTED_NO_COOKIES_OR_TOKENS_ACCESSED",
+  "existing_active_platform_admins": 2,
+  "ACME1": {
+    "tenant_id": "01a1137a-1351-76b8-ac8a-0bb109ca8e22",
+    "tenant_code": "ACME-1",
+    "lifecycle_state": "active",
+    "role_rows": 0,
+    "memberships": 0,
+    "active_memberships": 0,
+    "membership_role_rows": 0
+  },
+  "ACME1_in_approved_targets": false,
+  "approved_targets_state": "PREPARATION_REAL_TARGETS_EMPTY_NO_OPERATIONAL_INPUT",
+  "schema_scan_repeated": false,
+  "QA01_repeated": false,
+  "VM_manual_action_needed": false,
+  "credential_action_needed": false,
+  "PO_decision_needed": [
+    "Authorize promotion of already-prepared canonical bytes to a private temporary QA executor, including configuration and cleanup, without application deployment",
+    "Specify exact tenantIds or global-only and effectiveFrom/effectiveTo for later QA02"
+  ],
+  "activations": 0,
+  "DDL": 0,
+  "DML": 0,
+  "new_processes_containers_services": 0,
+  "new_credentials_users_roles_grants": 0,
+  "remote_secret_file_contents_read": false,
+  "secrets_exported": false,
+  "tokens_requested": 0
+}

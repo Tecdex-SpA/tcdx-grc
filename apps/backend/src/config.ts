@@ -28,7 +28,9 @@ export type BackendConfig = {
     name: "tcdx-grc";
     user: string;
     password?: string;
-    sslMode: "disable" | "require" | "no-verify";
+    sslMode: "disable" | "require" | "no-verify" | "verify-full";
+    hostAddress?: string;
+    sslRootCert?: string;
   };
   oidc: OidcProviderConfig;
   managedIdentityOidc: OidcProviderConfig;
@@ -39,6 +41,7 @@ export type BackendConfig = {
     clientSecret?: string;
     issuer: string;
   };
+  browserSession?: { idleSeconds: number; maxSeconds: number };
   applicationJwt: {
     configured: boolean;
     issuer?: string;
@@ -147,7 +150,11 @@ export function loadConfig(environment: RuntimeEnvironment): BackendConfig {
   const databaseName = environment.DATABASE_NAME ?? "tcdx-grc";
   if (databaseName !== "tcdx-grc") throw new Error("Database identity must be tcdx-grc");
   const sslMode = environment.DATABASE_SSL_MODE ?? "require";
-  if (!["disable", "require", "no-verify"].includes(sslMode)) throw new Error("Invalid DATABASE_SSL_MODE");
+  if (!["disable", "require", "no-verify", "verify-full"].includes(sslMode)) throw new Error("Invalid DATABASE_SSL_MODE");
+  const databaseHostAddress = optionalRuntimeValue(environment, "DATABASE_HOSTADDR");
+  const databaseRootCert = optionalRuntimeValue(environment, "DATABASE_SSL_ROOT_CERT");
+  if (databaseHostAddress && sslMode !== "verify-full") throw new Error("DATABASE_HOSTADDR requires verify-full TLS");
+  if (sslMode === "verify-full" && !databaseRootCert) throw new Error("verify-full requires DATABASE_SSL_ROOT_CERT");
   const oidcValues = completeGroup(environment, ["OIDC_ISSUER", "OIDC_CLIENT_ID", "OIDC_CLIENT_SECRET", "OIDC_REDIRECT_URI"], "OIDC");
   const managedKeys = ["MANAGED_IDENTITY_OIDC_ISSUER", "MANAGED_IDENTITY_OIDC_CLIENT_ID", "MANAGED_IDENTITY_OIDC_REDIRECT_URI", "MANAGED_IDENTITY_OIDC_CLIENT_SECRET_FILE"] as const;
   const managedPresent = managedKeys.some((key) => optionalRuntimeValue(environment, key) !== undefined);
@@ -225,6 +232,8 @@ export function loadConfig(environment: RuntimeEnvironment): BackendConfig {
       name: "tcdx-grc",
       user: required(environment, "DATABASE_USER"),
       ...(databasePassword ? { password: databasePassword } : {}),
+      ...(databaseHostAddress ? { hostAddress: databaseHostAddress } : {}),
+      ...(databaseRootCert ? { sslRootCert: readFileSync(databaseRootCert, "utf8") } : {}),
       sslMode: sslMode as BackendConfig["database"]["sslMode"]
     },
     oidc: {
@@ -262,6 +271,12 @@ export function loadConfig(environment: RuntimeEnvironment): BackendConfig {
         clientSecret: adminSecret
       } : {})
     },
+    ...(environment.APP_SESSION_IDLE_SECONDS || environment.APP_SESSION_MAX_SECONDS ? {
+      browserSession: {
+        idleSeconds: positiveInteger(required(environment, "APP_SESSION_IDLE_SECONDS"), "APP_SESSION_IDLE_SECONDS"),
+        maxSeconds: positiveInteger(required(environment, "APP_SESSION_MAX_SECONDS"), "APP_SESSION_MAX_SECONDS")
+      }
+    } : {}),
     applicationJwt: {
       configured: Boolean(privateKey && publicKey),
       ...(privateKey && publicKey ? {

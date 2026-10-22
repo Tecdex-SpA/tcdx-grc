@@ -1,0 +1,98 @@
+{
+  "dialogs": [
+    {
+      "bounds": {
+        "height": 1000,
+        "width": 560
+      },
+      "label": "create-title",
+      "modal": "true"
+    }
+  ],
+  "fields": [
+    {
+      "disabled": false,
+      "label": "Código de acción",
+      "max": null,
+      "min": null,
+      "required": true,
+      "tag": "INPUT",
+      "type": "text"
+    },
+    {
+      "disabled": false,
+      "label": "Título",
+      "max": null,
+      "min": null,
+      "required": true,
+      "tag": "INPUT",
+      "type": "text"
+    },
+    {
+      "disabled": false,
+      "label": "Descripción",
+      "max": null,
+      "min": null,
+      "required": true,
+      "tag": "INPUT",
+      "type": "text"
+    },
+    {
+      "disabled": false,
+      "label": "Prioridad",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción",
+        "Urgente",
+        "Alta",
+        "Normal",
+        "Baja"
+      ],
+      "required": true,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Hallazgo",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción",
+        "QA-F5-20261007-ISSUE · QA Phase5 - evidencia de validación pendiente · Cierre verificado"
+      ],
+      "required": false,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": true,
+      "label": "Responsable",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción"
+      ],
+      "required": false,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Fecha límite",
+      "max": null,
+      "min": null,
+      "required": false,
+      "tag": "INPUT",
+      "type": "date"
+    }
+  ],
+  "focus": "Cerrar creación",
+  "horizontalOverflow": false,
+  "url": "https://grc.tecdex.net/acciones",
+  "viewport": {
+    "height": 1000,
+    "width": 1440
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "status": "PASS_HASH_PRESERVATION_AND_ISOLATED_SUCCESSOR",
+  "at_utc": "2026-10-21T15:04:34.866510+00:00",
+  "incoming_files_verified": 4359,
+  "files_created_this_run": 850,
+  "files_modified_this_run": 0,
+  "manifest_sha256": "82074a059e6f78845ebdd24582c094e60913eccc7bfba5aa6e4eac1c109cfae0",
+  "inventory_sha256": "5cfc92601a99cb691010700ccc4c6d6b76d2aa9e77ae6d97321ca3c8a7eaf9cf",
+  "exclusion_rationale": "Manifest cannot hash itself. Final integrity references manifest and is excluded to avoid a cycle. Incoming evidence/receipts are preserved, never re-sealed.",
+  "branch": "fix/step6a3-v112-continuity-20261016",
+  "head": "4a275264a7522031e62bf09f598c9d56e21d25e0",
+  "index": "EMPTY_PRESERVED",
+  "all_three_environments": "DESTROYED_VERIFIED",
+  "final_physical_checks": 149,
+  "verification_command": "python3 docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/physical-validation-20261021/verify.py"
+}

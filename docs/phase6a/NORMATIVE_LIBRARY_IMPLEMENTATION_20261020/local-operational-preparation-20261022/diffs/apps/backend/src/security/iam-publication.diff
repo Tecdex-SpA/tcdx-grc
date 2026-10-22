@@ -1,0 +1,35 @@
+--- a/apps/backend/src/security/iam-publication.ts
++++ b/apps/backend/src/security/iam-publication.ts
+@@ -1,4 +1,5 @@
+ import {publishInitialSourceLifecycle,type InitialSourcePublication} from "./initial-source-lifecycle-publication.js";
++import {publishLibraryOperationalData,type LibraryPublication} from './normative-library-publication.js';
+ import { createHash } from "node:crypto";
+ import { readFile, lstat } from "node:fs/promises";
+ import { sql, CompiledQuery, type Kysely, type Transaction } from "kysely";
+@@ -56,7 +57,8 @@
+   constructor(private readonly db: Kysely<FoundationDatabase>, private readonly tokens: ApplicationTokenService,
+     readonly configuration: Awaited<ReturnType<typeof loadIamPublicationFiles>>,
+     private readonly machineCredential: () => Promise<string>,
+-    private readonly c04wLifecycle?: C04wLifecyclePublication, private readonly initialSource?: InitialSourcePublication) {}
++    private readonly c04wLifecycle?: C04wLifecyclePublication, private readonly initialSource?: InitialSourcePublication,
++    private readonly normativePublication?: LibraryPublication) {}
+ 
+   static credentialFile(path: string): () => Promise<string> {
+     return async () => {
+@@ -163,6 +165,16 @@
+       await sql`SELECT service_principal_id FROM iam.service_principals WHERE principal_code=${this.configuration.profile.principal_code} AND ownership_class='PLATFORM_CONTROL' AND tenant_id IS NULL FOR SHARE`.execute(tx);
+       const id=await this.resolvePrincipal(proof,tx);
+       return publishInitialSourceLifecycle(tx,id,correlationId,config);
++    });
++  }
++
++  /** Explicit future invocation only; never called by startup or the existing publish command. */
++  async publishNormativeLibrary(correlationId:string,publication=this.normativePublication){
++    if(!publication)deny();
++    const proof=await this.tokens.authenticateMachine(await this.machineCredential());
++    return this.db.transaction().setIsolationLevel('read committed').execute(async tx=>{
++      const principal=await this.resolvePrincipal(proof,tx);
++      return publishLibraryOperationalData(tx,principal,correlationId,publication);
+     });
+   }
+ 

@@ -1,0 +1,2642 @@
+{
+  "indexes": [
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_regulatory_packs ON regulatory.regulatory_packs USING btree (regulatory_pack_id)",
+      "indexname": "pk_regulatory_packs",
+      "tablename": "regulatory_packs",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_regulatory_pack_versions ON regulatory.regulatory_pack_versions USING btree (regulatory_pack_version_id)",
+      "indexname": "pk_regulatory_pack_versions",
+      "tablename": "regulatory_pack_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_regulatory_sources ON regulatory.regulatory_sources USING btree (regulatory_source_id)",
+      "indexname": "pk_regulatory_sources",
+      "tablename": "regulatory_sources",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_regulatory_import_manifests ON regulatory.regulatory_import_manifests USING btree (regulatory_import_manifest_id)",
+      "indexname": "pk_regulatory_import_manifests",
+      "tablename": "regulatory_import_manifests",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_regulatory_coverage_manifests ON regulatory.regulatory_coverage_manifests USING btree (regulatory_coverage_manifest_id)",
+      "indexname": "pk_regulatory_coverage_manifests",
+      "tablename": "regulatory_coverage_manifests",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_frameworks ON regulatory.frameworks USING btree (framework_id)",
+      "indexname": "pk_frameworks",
+      "tablename": "frameworks",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_framework_versions ON regulatory.framework_versions USING btree (framework_version_id)",
+      "indexname": "pk_framework_versions",
+      "tablename": "framework_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_regulatory_pack_framework_versions ON regulatory.regulatory_pack_framework_versions USING btree (regulatory_pack_framework_version_id)",
+      "indexname": "pk_regulatory_pack_framework_versions",
+      "tablename": "regulatory_pack_framework_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_normative_units ON regulatory.normative_units USING btree (normative_unit_id)",
+      "indexname": "pk_normative_units",
+      "tablename": "normative_units",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_requirements ON regulatory.requirements USING btree (requirement_id)",
+      "indexname": "pk_requirements",
+      "tablename": "requirements",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_requirement_applicabilities ON regulatory.requirement_applicabilities USING btree (requirement_applicability_id)",
+      "indexname": "pk_requirement_applicabilities",
+      "tablename": "requirement_applicabilities",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_requirement_assessments ON regulatory.requirement_assessments USING btree (requirement_assessment_id)",
+      "indexname": "pk_requirement_assessments",
+      "tablename": "requirement_assessments",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_statements_of_applicability ON regulatory.statements_of_applicability USING btree (statement_of_applicability_id)",
+      "indexname": "pk_statements_of_applicability",
+      "tablename": "statements_of_applicability",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_statement_of_applicability_items ON regulatory.statement_of_applicability_items USING btree (statement_of_applicability_item_id)",
+      "indexname": "pk_statement_of_applicability_items",
+      "tablename": "statement_of_applicability_items",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_requirement_control_mappings ON regulatory.requirement_control_mappings USING btree (requirement_control_mapping_id)",
+      "indexname": "pk_requirement_control_mappings",
+      "tablename": "requirement_control_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_normative_unit_control_mappings ON regulatory.normative_unit_control_mappings USING btree (normative_unit_control_mapping_id)",
+      "indexname": "pk_normative_unit_control_mappings",
+      "tablename": "normative_unit_control_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_framework_crosswalks ON regulatory.framework_crosswalks USING btree (framework_crosswalk_id)",
+      "indexname": "pk_framework_crosswalks",
+      "tablename": "framework_crosswalks",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_normative_unit_crosswalk_mappings ON regulatory.normative_unit_crosswalk_mappings USING btree (normative_unit_crosswalk_mapping_id)",
+      "indexname": "pk_normative_unit_crosswalk_mappings",
+      "tablename": "normative_unit_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_requirement_crosswalk_mappings ON regulatory.requirement_crosswalk_mappings USING btree (requirement_crosswalk_mapping_id)",
+      "indexname": "pk_requirement_crosswalk_mappings",
+      "tablename": "requirement_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_control_crosswalk_mappings ON regulatory.control_crosswalk_mappings USING btree (control_crosswalk_mapping_id)",
+      "indexname": "pk_control_crosswalk_mappings",
+      "tablename": "control_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_configuration_definitions ON config.configuration_definitions USING btree (configuration_definition_id)",
+      "indexname": "pk_configuration_definitions",
+      "tablename": "configuration_definitions",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_configuration_definition_scopes ON config.configuration_definition_scopes USING btree (configuration_definition_scope_id)",
+      "indexname": "pk_configuration_definition_scopes",
+      "tablename": "configuration_definition_scopes",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_configuration_validation_rules ON config.configuration_validation_rules USING btree (configuration_validation_rule_id)",
+      "indexname": "pk_configuration_validation_rules",
+      "tablename": "configuration_validation_rules",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_configuration_overrides ON config.configuration_overrides USING btree (configuration_override_id)",
+      "indexname": "pk_configuration_overrides",
+      "tablename": "configuration_overrides",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_effective_configurations ON config.effective_configurations USING btree (effective_configuration_id)",
+      "indexname": "pk_effective_configurations",
+      "tablename": "effective_configurations",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_effective_configuration_layers ON config.effective_configuration_layers USING btree (effective_configuration_layer_id)",
+      "indexname": "pk_effective_configuration_layers",
+      "tablename": "effective_configuration_layers",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_knowledge_sources ON knowledge.knowledge_sources USING btree (knowledge_source_id)",
+      "indexname": "pk_knowledge_sources",
+      "tablename": "knowledge_sources",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_knowledge_items ON knowledge.knowledge_items USING btree (knowledge_item_id)",
+      "indexname": "pk_knowledge_items",
+      "tablename": "knowledge_items",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_knowledge_versions ON knowledge.knowledge_versions USING btree (knowledge_version_id)",
+      "indexname": "pk_knowledge_versions",
+      "tablename": "knowledge_versions",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_regulatory_changes ON knowledge.regulatory_changes USING btree (regulatory_change_id)",
+      "indexname": "pk_regulatory_changes",
+      "tablename": "regulatory_changes",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_regulatory_change_reviews ON knowledge.regulatory_change_reviews USING btree (regulatory_change_review_id)",
+      "indexname": "pk_regulatory_change_reviews",
+      "tablename": "regulatory_change_reviews",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_regulatory_packs__pack_code ON regulatory.regulatory_packs USING btree (pack_code)",
+      "indexname": "uq_regulatory_packs__pack_code",
+      "tablename": "regulatory_packs",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_regulatory_pack_versions__superseded_by_id_version_number ON regulatory.regulatory_pack_versions USING btree (superseded_by_id, version_number)",
+      "indexname": "uq_regulatory_pack_versions__superseded_by_id_version_number",
+      "tablename": "regulatory_pack_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_regulatory_pack_versions__regulatory_pack_id_version_number ON regulatory.regulatory_pack_versions USING btree (regulatory_pack_id, version_number)",
+      "indexname": "uq_regulatory_pack_versions__regulatory_pack_id_version_number",
+      "tablename": "regulatory_pack_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_regulatory_sources__source_code ON regulatory.regulatory_sources USING btree (source_code)",
+      "indexname": "uq_regulatory_sources__source_code",
+      "tablename": "regulatory_sources",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_frameworks__tenant_id_framework_id ON regulatory.frameworks USING btree (tenant_id, framework_id) NULLS NOT DISTINCT",
+      "indexname": "uq_frameworks__tenant_id_framework_id",
+      "tablename": "frameworks",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_frameworks__ownership_class_tenant_id_framework_code ON regulatory.frameworks USING btree (ownership_class, tenant_id, framework_code) NULLS NOT DISTINCT",
+      "indexname": "uq_frameworks__ownership_class_tenant_id_framework_code",
+      "tablename": "frameworks",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_framework_versions__tenant_id_framework_version_id ON regulatory.framework_versions USING btree (tenant_id, framework_version_id) NULLS NOT DISTINCT",
+      "indexname": "uq_framework_versions__tenant_id_framework_version_id",
+      "tablename": "framework_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_framework_versions__framework_id_version_number ON regulatory.framework_versions USING btree (framework_id, version_number)",
+      "indexname": "uq_framework_versions__framework_id_version_number",
+      "tablename": "framework_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_regulatory_pack_framework_versions__regulatory_pack_0e569fa3 ON regulatory.regulatory_pack_framework_versions USING btree (regulatory_pack_version_id, framework_version_id)",
+      "indexname": "uq_regulatory_pack_framework_versions__regulatory_pack_0e569fa3",
+      "tablename": "regulatory_pack_framework_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_normative_units__tenant_id_normative_unit_id ON regulatory.normative_units USING btree (tenant_id, normative_unit_id) NULLS NOT DISTINCT",
+      "indexname": "uq_normative_units__tenant_id_normative_unit_id",
+      "tablename": "normative_units",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_requirements__tenant_id_requirement_id ON regulatory.requirements USING btree (tenant_id, requirement_id) NULLS NOT DISTINCT",
+      "indexname": "uq_requirements__tenant_id_requirement_id",
+      "tablename": "requirements",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_requirements__requirement_code ON regulatory.requirements USING btree (requirement_code)",
+      "indexname": "uq_requirements__requirement_code",
+      "tablename": "requirements",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_requirement_applicabilities__tenant_id_requirement__3d4e680d ON regulatory.requirement_applicabilities USING btree (tenant_id, requirement_applicability_id) NULLS NOT DISTINCT",
+      "indexname": "uq_requirement_applicabilities__tenant_id_requirement__3d4e680d",
+      "tablename": "requirement_applicabilities",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_requirement_assessments__tenant_id_requirement_assessment_id ON regulatory.requirement_assessments USING btree (tenant_id, requirement_assessment_id) NULLS NOT DISTINCT",
+      "indexname": "uq_requirement_assessments__tenant_id_requirement_assessment_id",
+      "tablename": "requirement_assessments",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_statements_of_applicability__tenant_id_statement_of_1ab80631 ON regulatory.statements_of_applicability USING btree (tenant_id, statement_of_applicability_id) NULLS NOT DISTINCT",
+      "indexname": "uq_statements_of_applicability__tenant_id_statement_of_1ab80631",
+      "tablename": "statements_of_applicability",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_statement_of_applicability_items__tenant_id_stateme_94b81ee2 ON regulatory.statement_of_applicability_items USING btree (tenant_id, statement_of_applicability_item_id) NULLS NOT DISTINCT",
+      "indexname": "uq_statement_of_applicability_items__tenant_id_stateme_94b81ee2",
+      "tablename": "statement_of_applicability_items",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_requirement_control_mappings__tenant_id_requirement_5c6c5be2 ON regulatory.requirement_control_mappings USING btree (tenant_id, requirement_control_mapping_id) NULLS NOT DISTINCT",
+      "indexname": "uq_requirement_control_mappings__tenant_id_requirement_5c6c5be2",
+      "tablename": "requirement_control_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_normative_unit_control_mappings__tenant_id_normativ_ab346c84 ON regulatory.normative_unit_control_mappings USING btree (tenant_id, normative_unit_control_mapping_id) NULLS NOT DISTINCT",
+      "indexname": "uq_normative_unit_control_mappings__tenant_id_normativ_ab346c84",
+      "tablename": "normative_unit_control_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_framework_crosswalks__tenant_id_framework_crosswalk_id ON regulatory.framework_crosswalks USING btree (tenant_id, framework_crosswalk_id) NULLS NOT DISTINCT",
+      "indexname": "uq_framework_crosswalks__tenant_id_framework_crosswalk_id",
+      "tablename": "framework_crosswalks",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_framework_crosswalks__source_framework_version_id_t_5766c97d ON regulatory.framework_crosswalks USING btree (source_framework_version_id, target_framework_version_id, approved_by_user_identity_id)",
+      "indexname": "uq_framework_crosswalks__source_framework_version_id_t_5766c97d",
+      "tablename": "framework_crosswalks",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_normative_unit_crosswalk_mappings__tenant_id_normat_d33d4d58 ON regulatory.normative_unit_crosswalk_mappings USING btree (tenant_id, normative_unit_crosswalk_mapping_id) NULLS NOT DISTINCT",
+      "indexname": "uq_normative_unit_crosswalk_mappings__tenant_id_normat_d33d4d58",
+      "tablename": "normative_unit_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_requirement_crosswalk_mappings__tenant_id_requireme_b142215e ON regulatory.requirement_crosswalk_mappings USING btree (tenant_id, requirement_crosswalk_mapping_id) NULLS NOT DISTINCT",
+      "indexname": "uq_requirement_crosswalk_mappings__tenant_id_requireme_b142215e",
+      "tablename": "requirement_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_control_crosswalk_mappings__tenant_id_control_cross_3787e18c ON regulatory.control_crosswalk_mappings USING btree (tenant_id, control_crosswalk_mapping_id) NULLS NOT DISTINCT",
+      "indexname": "uq_control_crosswalk_mappings__tenant_id_control_cross_3787e18c",
+      "tablename": "control_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_configuration_definitions__tenant_id_configuration__c6037dc1 ON config.configuration_definitions USING btree (tenant_id, configuration_definition_id) NULLS NOT DISTINCT",
+      "indexname": "uq_configuration_definitions__tenant_id_configuration__c6037dc1",
+      "tablename": "configuration_definitions",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_configuration_definitions__ownership_class_tenant_i_5d128d58 ON config.configuration_definitions USING btree (ownership_class, tenant_id, configuration_code, version_number) NULLS NOT DISTINCT",
+      "indexname": "uq_configuration_definitions__ownership_class_tenant_i_5d128d58",
+      "tablename": "configuration_definitions",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_configuration_definition_scopes__tenant_id_configur_3dffacd2 ON config.configuration_definition_scopes USING btree (tenant_id, configuration_definition_scope_id) NULLS NOT DISTINCT",
+      "indexname": "uq_configuration_definition_scopes__tenant_id_configur_3dffacd2",
+      "tablename": "configuration_definition_scopes",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_configuration_validation_rules__tenant_id_configura_3f95fc78 ON config.configuration_validation_rules USING btree (tenant_id, configuration_validation_rule_id) NULLS NOT DISTINCT",
+      "indexname": "uq_configuration_validation_rules__tenant_id_configura_3f95fc78",
+      "tablename": "configuration_validation_rules",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_configuration_overrides__tenant_id_configuration_override_id ON config.configuration_overrides USING btree (tenant_id, configuration_override_id) NULLS NOT DISTINCT",
+      "indexname": "uq_configuration_overrides__tenant_id_configuration_override_id",
+      "tablename": "configuration_overrides",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_configuration_overrides__configuration_definition_i_e2f31294 ON config.configuration_overrides USING btree (configuration_definition_id, scope_level, methodology_id, regulatory_pack_version_id, scope_subject_id, override_version, effective_from)",
+      "indexname": "uq_configuration_overrides__configuration_definition_i_e2f31294",
+      "tablename": "configuration_overrides",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_effective_configurations__tenant_id_effective_confi_179bd4eb ON config.effective_configurations USING btree (tenant_id, effective_configuration_id) NULLS NOT DISTINCT",
+      "indexname": "uq_effective_configurations__tenant_id_effective_confi_179bd4eb",
+      "tablename": "effective_configurations",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_effective_configuration_layers__tenant_id_effective_22f0b03b ON config.effective_configuration_layers USING btree (tenant_id, effective_configuration_layer_id) NULLS NOT DISTINCT",
+      "indexname": "uq_effective_configuration_layers__tenant_id_effective_22f0b03b",
+      "tablename": "effective_configuration_layers",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_knowledge_sources__tenant_id_knowledge_source_id ON knowledge.knowledge_sources USING btree (tenant_id, knowledge_source_id) NULLS NOT DISTINCT",
+      "indexname": "uq_knowledge_sources__tenant_id_knowledge_source_id",
+      "tablename": "knowledge_sources",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_knowledge_sources__ownership_class_tenant_id_source_code ON knowledge.knowledge_sources USING btree (ownership_class, tenant_id, source_code) NULLS NOT DISTINCT",
+      "indexname": "uq_knowledge_sources__ownership_class_tenant_id_source_code",
+      "tablename": "knowledge_sources",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_knowledge_items__tenant_id_knowledge_item_id ON knowledge.knowledge_items USING btree (tenant_id, knowledge_item_id) NULLS NOT DISTINCT",
+      "indexname": "uq_knowledge_items__tenant_id_knowledge_item_id",
+      "tablename": "knowledge_items",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_knowledge_items__ownership_class_tenant_id_knowledge_code ON knowledge.knowledge_items USING btree (ownership_class, tenant_id, knowledge_code) NULLS NOT DISTINCT",
+      "indexname": "uq_knowledge_items__ownership_class_tenant_id_knowledge_code",
+      "tablename": "knowledge_items",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_knowledge_versions__tenant_id_knowledge_version_id ON knowledge.knowledge_versions USING btree (tenant_id, knowledge_version_id) NULLS NOT DISTINCT",
+      "indexname": "uq_knowledge_versions__tenant_id_knowledge_version_id",
+      "tablename": "knowledge_versions",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_regulatory_changes__tenant_id_regulatory_change_id ON knowledge.regulatory_changes USING btree (tenant_id, regulatory_change_id) NULLS NOT DISTINCT",
+      "indexname": "uq_regulatory_changes__tenant_id_regulatory_change_id",
+      "tablename": "regulatory_changes",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_regulatory_changes__change_code ON knowledge.regulatory_changes USING btree (change_code)",
+      "indexname": "uq_regulatory_changes__change_code",
+      "tablename": "regulatory_changes",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_regulatory_change_reviews__tenant_id_regulatory_cha_0a0c91e5 ON knowledge.regulatory_change_reviews USING btree (tenant_id, regulatory_change_review_id) NULLS NOT DISTINCT",
+      "indexname": "uq_regulatory_change_reviews__tenant_id_regulatory_cha_0a0c91e5",
+      "tablename": "regulatory_change_reviews",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_packs__created_by_user_identity_id ON regulatory.regulatory_packs USING btree (created_by_user_identity_id)",
+      "indexname": "ix_regulatory_packs__created_by_user_identity_id",
+      "tablename": "regulatory_packs",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_packs__created_by_service_principal_id ON regulatory.regulatory_packs USING btree (created_by_service_principal_id)",
+      "indexname": "ix_regulatory_packs__created_by_service_principal_id",
+      "tablename": "regulatory_packs",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_packs__updated_by_user_identity_id ON regulatory.regulatory_packs USING btree (updated_by_user_identity_id)",
+      "indexname": "ix_regulatory_packs__updated_by_user_identity_id",
+      "tablename": "regulatory_packs",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_packs__updated_by_service_principal_id ON regulatory.regulatory_packs USING btree (updated_by_service_principal_id)",
+      "indexname": "ix_regulatory_packs__updated_by_service_principal_id",
+      "tablename": "regulatory_packs",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_pack_versions__created_by_user_identity_id ON regulatory.regulatory_pack_versions USING btree (created_by_user_identity_id)",
+      "indexname": "ix_regulatory_pack_versions__created_by_user_identity_id",
+      "tablename": "regulatory_pack_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_pack_versions__created_by_service_principal_id ON regulatory.regulatory_pack_versions USING btree (created_by_service_principal_id)",
+      "indexname": "ix_regulatory_pack_versions__created_by_service_principal_id",
+      "tablename": "regulatory_pack_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_pack_versions__superseded_by_id ON regulatory.regulatory_pack_versions USING btree (superseded_by_id)",
+      "indexname": "ix_regulatory_pack_versions__superseded_by_id",
+      "tablename": "regulatory_pack_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_pack_versions__regulatory_pack_id ON regulatory.regulatory_pack_versions USING btree (regulatory_pack_id)",
+      "indexname": "ix_regulatory_pack_versions__regulatory_pack_id",
+      "tablename": "regulatory_pack_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_pack_versions__reviewed_by_user_identity_id ON regulatory.regulatory_pack_versions USING btree (reviewed_by_user_identity_id)",
+      "indexname": "ix_regulatory_pack_versions__reviewed_by_user_identity_id",
+      "tablename": "regulatory_pack_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_sources__created_by_user_identity_id ON regulatory.regulatory_sources USING btree (created_by_user_identity_id)",
+      "indexname": "ix_regulatory_sources__created_by_user_identity_id",
+      "tablename": "regulatory_sources",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_sources__created_by_service_principal_id ON regulatory.regulatory_sources USING btree (created_by_service_principal_id)",
+      "indexname": "ix_regulatory_sources__created_by_service_principal_id",
+      "tablename": "regulatory_sources",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_sources__updated_by_user_identity_id ON regulatory.regulatory_sources USING btree (updated_by_user_identity_id)",
+      "indexname": "ix_regulatory_sources__updated_by_user_identity_id",
+      "tablename": "regulatory_sources",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_sources__updated_by_service_principal_id ON regulatory.regulatory_sources USING btree (updated_by_service_principal_id)",
+      "indexname": "ix_regulatory_sources__updated_by_service_principal_id",
+      "tablename": "regulatory_sources",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_import_manifests__created_by_user_identity_id ON regulatory.regulatory_import_manifests USING btree (created_by_user_identity_id)",
+      "indexname": "ix_regulatory_import_manifests__created_by_user_identity_id",
+      "tablename": "regulatory_import_manifests",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_import_manifests__created_by_service_principal_id ON regulatory.regulatory_import_manifests USING btree (created_by_service_principal_id)",
+      "indexname": "ix_regulatory_import_manifests__created_by_service_principal_id",
+      "tablename": "regulatory_import_manifests",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_import_manifests__regulatory_pack_version_id ON regulatory.regulatory_import_manifests USING btree (regulatory_pack_version_id)",
+      "indexname": "ix_regulatory_import_manifests__regulatory_pack_version_id",
+      "tablename": "regulatory_import_manifests",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_import_manifests__regulatory_source_id ON regulatory.regulatory_import_manifests USING btree (regulatory_source_id)",
+      "indexname": "ix_regulatory_import_manifests__regulatory_source_id",
+      "tablename": "regulatory_import_manifests",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_import_manifests__imported_by_user_identity_id ON regulatory.regulatory_import_manifests USING btree (imported_by_user_identity_id)",
+      "indexname": "ix_regulatory_import_manifests__imported_by_user_identity_id",
+      "tablename": "regulatory_import_manifests",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_coverage_manifests__created_by_user_identity_id ON regulatory.regulatory_coverage_manifests USING btree (created_by_user_identity_id)",
+      "indexname": "ix_regulatory_coverage_manifests__created_by_user_identity_id",
+      "tablename": "regulatory_coverage_manifests",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_coverage_manifests__created_by_service_p_f5aa5592 ON regulatory.regulatory_coverage_manifests USING btree (created_by_service_principal_id)",
+      "indexname": "ix_regulatory_coverage_manifests__created_by_service_p_f5aa5592",
+      "tablename": "regulatory_coverage_manifests",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_coverage_manifests__regulatory_pack_version_id ON regulatory.regulatory_coverage_manifests USING btree (regulatory_pack_version_id)",
+      "indexname": "ix_regulatory_coverage_manifests__regulatory_pack_version_id",
+      "tablename": "regulatory_coverage_manifests",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_coverage_manifests__approved_by_user_identity_id ON regulatory.regulatory_coverage_manifests USING btree (approved_by_user_identity_id)",
+      "indexname": "ix_regulatory_coverage_manifests__approved_by_user_identity_id",
+      "tablename": "regulatory_coverage_manifests",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_frameworks__created_by_user_identity_id ON regulatory.frameworks USING btree (created_by_user_identity_id)",
+      "indexname": "ix_frameworks__created_by_user_identity_id",
+      "tablename": "frameworks",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_frameworks__created_by_service_principal_id ON regulatory.frameworks USING btree (created_by_service_principal_id)",
+      "indexname": "ix_frameworks__created_by_service_principal_id",
+      "tablename": "frameworks",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_frameworks__updated_by_user_identity_id ON regulatory.frameworks USING btree (updated_by_user_identity_id)",
+      "indexname": "ix_frameworks__updated_by_user_identity_id",
+      "tablename": "frameworks",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_frameworks__updated_by_service_principal_id ON regulatory.frameworks USING btree (updated_by_service_principal_id)",
+      "indexname": "ix_frameworks__updated_by_service_principal_id",
+      "tablename": "frameworks",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_frameworks__tenant_id ON regulatory.frameworks USING btree (tenant_id)",
+      "indexname": "ix_frameworks__tenant_id",
+      "tablename": "frameworks",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_frameworks__tenant_id_lifecycle_state ON regulatory.frameworks USING btree (tenant_id, lifecycle_state)",
+      "indexname": "ix_frameworks__tenant_id_lifecycle_state",
+      "tablename": "frameworks",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_framework_versions__created_by_user_identity_id ON regulatory.framework_versions USING btree (created_by_user_identity_id)",
+      "indexname": "ix_framework_versions__created_by_user_identity_id",
+      "tablename": "framework_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_framework_versions__created_by_service_principal_id ON regulatory.framework_versions USING btree (created_by_service_principal_id)",
+      "indexname": "ix_framework_versions__created_by_service_principal_id",
+      "tablename": "framework_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_framework_versions__tenant_id ON regulatory.framework_versions USING btree (tenant_id)",
+      "indexname": "ix_framework_versions__tenant_id",
+      "tablename": "framework_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_framework_versions__framework_id ON regulatory.framework_versions USING btree (framework_id)",
+      "indexname": "ix_framework_versions__framework_id",
+      "tablename": "framework_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_framework_versions__superseded_by_id ON regulatory.framework_versions USING btree (superseded_by_id)",
+      "indexname": "ix_framework_versions__superseded_by_id",
+      "tablename": "framework_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_framework_versions__tenant_id_lifecycle_state ON regulatory.framework_versions USING btree (tenant_id, lifecycle_state)",
+      "indexname": "ix_framework_versions__tenant_id_lifecycle_state",
+      "tablename": "framework_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_framework_versions__tenant_id_effective_from_effective_to ON regulatory.framework_versions USING btree (tenant_id, effective_from, effective_to)",
+      "indexname": "ix_framework_versions__tenant_id_effective_from_effective_to",
+      "tablename": "framework_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_pack_framework_versions__created_by_user_dc79bbb2 ON regulatory.regulatory_pack_framework_versions USING btree (created_by_user_identity_id)",
+      "indexname": "ix_regulatory_pack_framework_versions__created_by_user_dc79bbb2",
+      "tablename": "regulatory_pack_framework_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_pack_framework_versions__created_by_serv_b44c5222 ON regulatory.regulatory_pack_framework_versions USING btree (created_by_service_principal_id)",
+      "indexname": "ix_regulatory_pack_framework_versions__created_by_serv_b44c5222",
+      "tablename": "regulatory_pack_framework_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_pack_framework_versions__regulatory_pack_4eb18ec7 ON regulatory.regulatory_pack_framework_versions USING btree (regulatory_pack_version_id)",
+      "indexname": "ix_regulatory_pack_framework_versions__regulatory_pack_4eb18ec7",
+      "tablename": "regulatory_pack_framework_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_pack_framework_versions__framework_version_id ON regulatory.regulatory_pack_framework_versions USING btree (framework_version_id)",
+      "indexname": "ix_regulatory_pack_framework_versions__framework_version_id",
+      "tablename": "regulatory_pack_framework_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_normative_units__created_by_user_identity_id ON regulatory.normative_units USING btree (created_by_user_identity_id)",
+      "indexname": "ix_normative_units__created_by_user_identity_id",
+      "tablename": "normative_units",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_normative_units__created_by_service_principal_id ON regulatory.normative_units USING btree (created_by_service_principal_id)",
+      "indexname": "ix_normative_units__created_by_service_principal_id",
+      "tablename": "normative_units",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_normative_units__tenant_id ON regulatory.normative_units USING btree (tenant_id)",
+      "indexname": "ix_normative_units__tenant_id",
+      "tablename": "normative_units",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_normative_units__framework_version_id ON regulatory.normative_units USING btree (framework_version_id)",
+      "indexname": "ix_normative_units__framework_version_id",
+      "tablename": "normative_units",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_normative_units__parent_normative_unit_id ON regulatory.normative_units USING btree (parent_normative_unit_id)",
+      "indexname": "ix_normative_units__parent_normative_unit_id",
+      "tablename": "normative_units",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_normative_units__tenant_id_effective_from_effective_to ON regulatory.normative_units USING btree (tenant_id, effective_from, effective_to)",
+      "indexname": "ix_normative_units__tenant_id_effective_from_effective_to",
+      "tablename": "normative_units",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirements__created_by_user_identity_id ON regulatory.requirements USING btree (created_by_user_identity_id)",
+      "indexname": "ix_requirements__created_by_user_identity_id",
+      "tablename": "requirements",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirements__created_by_service_principal_id ON regulatory.requirements USING btree (created_by_service_principal_id)",
+      "indexname": "ix_requirements__created_by_service_principal_id",
+      "tablename": "requirements",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirements__tenant_id ON regulatory.requirements USING btree (tenant_id)",
+      "indexname": "ix_requirements__tenant_id",
+      "tablename": "requirements",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirements__framework_version_id ON regulatory.requirements USING btree (framework_version_id)",
+      "indexname": "ix_requirements__framework_version_id",
+      "tablename": "requirements",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirements__normative_unit_id ON regulatory.requirements USING btree (normative_unit_id)",
+      "indexname": "ix_requirements__normative_unit_id",
+      "tablename": "requirements",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirements__superseded_by_requirement_id ON regulatory.requirements USING btree (superseded_by_requirement_id)",
+      "indexname": "ix_requirements__superseded_by_requirement_id",
+      "tablename": "requirements",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirements__tenant_id_effective_from_effective_to ON regulatory.requirements USING btree (tenant_id, effective_from, effective_to)",
+      "indexname": "ix_requirements__tenant_id_effective_from_effective_to",
+      "tablename": "requirements",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_applicabilities__created_by_user_identity_id ON regulatory.requirement_applicabilities USING btree (created_by_user_identity_id)",
+      "indexname": "ix_requirement_applicabilities__created_by_user_identity_id",
+      "tablename": "requirement_applicabilities",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_applicabilities__created_by_service_principal_id ON regulatory.requirement_applicabilities USING btree (created_by_service_principal_id)",
+      "indexname": "ix_requirement_applicabilities__created_by_service_principal_id",
+      "tablename": "requirement_applicabilities",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_applicabilities__tenant_id ON regulatory.requirement_applicabilities USING btree (tenant_id)",
+      "indexname": "ix_requirement_applicabilities__tenant_id",
+      "tablename": "requirement_applicabilities",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_applicabilities__requirement_id ON regulatory.requirement_applicabilities USING btree (requirement_id)",
+      "indexname": "ix_requirement_applicabilities__requirement_id",
+      "tablename": "requirement_applicabilities",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_applicabilities__scope_subject_id ON regulatory.requirement_applicabilities USING btree (scope_subject_id)",
+      "indexname": "ix_requirement_applicabilities__scope_subject_id",
+      "tablename": "requirement_applicabilities",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_applicabilities__approved_by_user_identity_id ON regulatory.requirement_applicabilities USING btree (approved_by_user_identity_id)",
+      "indexname": "ix_requirement_applicabilities__approved_by_user_identity_id",
+      "tablename": "requirement_applicabilities",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_applicabilities__tenant_id_lifecycle_state ON regulatory.requirement_applicabilities USING btree (tenant_id, lifecycle_state)",
+      "indexname": "ix_requirement_applicabilities__tenant_id_lifecycle_state",
+      "tablename": "requirement_applicabilities",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_applicabilities__tenant_id_effective_fr_75a94856 ON regulatory.requirement_applicabilities USING btree (tenant_id, effective_from, effective_to)",
+      "indexname": "ix_requirement_applicabilities__tenant_id_effective_fr_75a94856",
+      "tablename": "requirement_applicabilities",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_assessments__created_by_user_identity_id ON regulatory.requirement_assessments USING btree (created_by_user_identity_id)",
+      "indexname": "ix_requirement_assessments__created_by_user_identity_id",
+      "tablename": "requirement_assessments",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_assessments__created_by_service_principal_id ON regulatory.requirement_assessments USING btree (created_by_service_principal_id)",
+      "indexname": "ix_requirement_assessments__created_by_service_principal_id",
+      "tablename": "requirement_assessments",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_assessments__tenant_id ON regulatory.requirement_assessments USING btree (tenant_id)",
+      "indexname": "ix_requirement_assessments__tenant_id",
+      "tablename": "requirement_assessments",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_assessments__requirement_applicability_id ON regulatory.requirement_assessments USING btree (requirement_applicability_id)",
+      "indexname": "ix_requirement_assessments__requirement_applicability_id",
+      "tablename": "requirement_assessments",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_assessments__methodology_version_ref ON regulatory.requirement_assessments USING btree (methodology_version_ref)",
+      "indexname": "ix_requirement_assessments__methodology_version_ref",
+      "tablename": "requirement_assessments",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_assessments__effective_configuration_id ON regulatory.requirement_assessments USING btree (effective_configuration_id)",
+      "indexname": "ix_requirement_assessments__effective_configuration_id",
+      "tablename": "requirement_assessments",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_assessments__superseded_by_id ON regulatory.requirement_assessments USING btree (superseded_by_id)",
+      "indexname": "ix_requirement_assessments__superseded_by_id",
+      "tablename": "requirement_assessments",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_assessments__tenant_id_lifecycle_state ON regulatory.requirement_assessments USING btree (tenant_id, lifecycle_state)",
+      "indexname": "ix_requirement_assessments__tenant_id_lifecycle_state",
+      "tablename": "requirement_assessments",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_statements_of_applicability__created_by_user_identity_id ON regulatory.statements_of_applicability USING btree (created_by_user_identity_id)",
+      "indexname": "ix_statements_of_applicability__created_by_user_identity_id",
+      "tablename": "statements_of_applicability",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_statements_of_applicability__created_by_service_principal_id ON regulatory.statements_of_applicability USING btree (created_by_service_principal_id)",
+      "indexname": "ix_statements_of_applicability__created_by_service_principal_id",
+      "tablename": "statements_of_applicability",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_statements_of_applicability__tenant_id ON regulatory.statements_of_applicability USING btree (tenant_id)",
+      "indexname": "ix_statements_of_applicability__tenant_id",
+      "tablename": "statements_of_applicability",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_statements_of_applicability__framework_version_id ON regulatory.statements_of_applicability USING btree (framework_version_id)",
+      "indexname": "ix_statements_of_applicability__framework_version_id",
+      "tablename": "statements_of_applicability",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_statements_of_applicability__superseded_by_id ON regulatory.statements_of_applicability USING btree (superseded_by_id)",
+      "indexname": "ix_statements_of_applicability__superseded_by_id",
+      "tablename": "statements_of_applicability",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_statements_of_applicability__tenant_id_lifecycle_state ON regulatory.statements_of_applicability USING btree (tenant_id, lifecycle_state)",
+      "indexname": "ix_statements_of_applicability__tenant_id_lifecycle_state",
+      "tablename": "statements_of_applicability",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_statements_of_applicability__tenant_id_effective_fr_a78c9176 ON regulatory.statements_of_applicability USING btree (tenant_id, effective_from, effective_to)",
+      "indexname": "ix_statements_of_applicability__tenant_id_effective_fr_a78c9176",
+      "tablename": "statements_of_applicability",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_statement_of_applicability_items__created_by_user_i_2e8c46a2 ON regulatory.statement_of_applicability_items USING btree (created_by_user_identity_id)",
+      "indexname": "ix_statement_of_applicability_items__created_by_user_i_2e8c46a2",
+      "tablename": "statement_of_applicability_items",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_statement_of_applicability_items__created_by_servic_ef4e1d6f ON regulatory.statement_of_applicability_items USING btree (created_by_service_principal_id)",
+      "indexname": "ix_statement_of_applicability_items__created_by_servic_ef4e1d6f",
+      "tablename": "statement_of_applicability_items",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_statement_of_applicability_items__tenant_id ON regulatory.statement_of_applicability_items USING btree (tenant_id)",
+      "indexname": "ix_statement_of_applicability_items__tenant_id",
+      "tablename": "statement_of_applicability_items",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_statement_of_applicability_items__statement_of_appl_71f7678b ON regulatory.statement_of_applicability_items USING btree (statement_of_applicability_id)",
+      "indexname": "ix_statement_of_applicability_items__statement_of_appl_71f7678b",
+      "tablename": "statement_of_applicability_items",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_statement_of_applicability_items__reference_control_d41227ba ON regulatory.statement_of_applicability_items USING btree (reference_control_version_id)",
+      "indexname": "ix_statement_of_applicability_items__reference_control_d41227ba",
+      "tablename": "statement_of_applicability_items",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_statement_of_applicability_items__tenant_control_id ON regulatory.statement_of_applicability_items USING btree (tenant_control_id)",
+      "indexname": "ix_statement_of_applicability_items__tenant_control_id",
+      "tablename": "statement_of_applicability_items",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_statement_of_applicability_items__tenant_control_version_id ON regulatory.statement_of_applicability_items USING btree (tenant_control_version_id)",
+      "indexname": "ix_statement_of_applicability_items__tenant_control_version_id",
+      "tablename": "statement_of_applicability_items",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_control_mappings__created_by_user_identity_id ON regulatory.requirement_control_mappings USING btree (created_by_user_identity_id)",
+      "indexname": "ix_requirement_control_mappings__created_by_user_identity_id",
+      "tablename": "requirement_control_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_control_mappings__created_by_service_pr_3f077670 ON regulatory.requirement_control_mappings USING btree (created_by_service_principal_id)",
+      "indexname": "ix_requirement_control_mappings__created_by_service_pr_3f077670",
+      "tablename": "requirement_control_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_control_mappings__tenant_id ON regulatory.requirement_control_mappings USING btree (tenant_id)",
+      "indexname": "ix_requirement_control_mappings__tenant_id",
+      "tablename": "requirement_control_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_control_mappings__requirement_id ON regulatory.requirement_control_mappings USING btree (requirement_id)",
+      "indexname": "ix_requirement_control_mappings__requirement_id",
+      "tablename": "requirement_control_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_control_mappings__control_version_id ON regulatory.requirement_control_mappings USING btree (control_version_id)",
+      "indexname": "ix_requirement_control_mappings__control_version_id",
+      "tablename": "requirement_control_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_control_mappings__source_precedence_policy_id ON regulatory.requirement_control_mappings USING btree (source_precedence_policy_id)",
+      "indexname": "ix_requirement_control_mappings__source_precedence_policy_id",
+      "tablename": "requirement_control_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_control_mappings__approved_by_user_identity_id ON regulatory.requirement_control_mappings USING btree (approved_by_user_identity_id)",
+      "indexname": "ix_requirement_control_mappings__approved_by_user_identity_id",
+      "tablename": "requirement_control_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_control_mappings__tenant_id_lifecycle_state ON regulatory.requirement_control_mappings USING btree (tenant_id, lifecycle_state)",
+      "indexname": "ix_requirement_control_mappings__tenant_id_lifecycle_state",
+      "tablename": "requirement_control_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_control_mappings__tenant_id_effective_f_b1de616b ON regulatory.requirement_control_mappings USING btree (tenant_id, effective_from, effective_to)",
+      "indexname": "ix_requirement_control_mappings__tenant_id_effective_f_b1de616b",
+      "tablename": "requirement_control_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_normative_unit_control_mappings__created_by_user_identity_id ON regulatory.normative_unit_control_mappings USING btree (created_by_user_identity_id)",
+      "indexname": "ix_normative_unit_control_mappings__created_by_user_identity_id",
+      "tablename": "normative_unit_control_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_normative_unit_control_mappings__created_by_service_03308af6 ON regulatory.normative_unit_control_mappings USING btree (created_by_service_principal_id)",
+      "indexname": "ix_normative_unit_control_mappings__created_by_service_03308af6",
+      "tablename": "normative_unit_control_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_normative_unit_control_mappings__tenant_id ON regulatory.normative_unit_control_mappings USING btree (tenant_id)",
+      "indexname": "ix_normative_unit_control_mappings__tenant_id",
+      "tablename": "normative_unit_control_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_normative_unit_control_mappings__normative_unit_id ON regulatory.normative_unit_control_mappings USING btree (normative_unit_id)",
+      "indexname": "ix_normative_unit_control_mappings__normative_unit_id",
+      "tablename": "normative_unit_control_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_normative_unit_control_mappings__control_version_id ON regulatory.normative_unit_control_mappings USING btree (control_version_id)",
+      "indexname": "ix_normative_unit_control_mappings__control_version_id",
+      "tablename": "normative_unit_control_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_normative_unit_control_mappings__tenant_id_lifecycle_state ON regulatory.normative_unit_control_mappings USING btree (tenant_id, lifecycle_state)",
+      "indexname": "ix_normative_unit_control_mappings__tenant_id_lifecycle_state",
+      "tablename": "normative_unit_control_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_normative_unit_control_mappings__tenant_id_effectiv_5e171347 ON regulatory.normative_unit_control_mappings USING btree (tenant_id, effective_from, effective_to)",
+      "indexname": "ix_normative_unit_control_mappings__tenant_id_effectiv_5e171347",
+      "tablename": "normative_unit_control_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_framework_crosswalks__created_by_user_identity_id ON regulatory.framework_crosswalks USING btree (created_by_user_identity_id)",
+      "indexname": "ix_framework_crosswalks__created_by_user_identity_id",
+      "tablename": "framework_crosswalks",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_framework_crosswalks__created_by_service_principal_id ON regulatory.framework_crosswalks USING btree (created_by_service_principal_id)",
+      "indexname": "ix_framework_crosswalks__created_by_service_principal_id",
+      "tablename": "framework_crosswalks",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_framework_crosswalks__tenant_id ON regulatory.framework_crosswalks USING btree (tenant_id)",
+      "indexname": "ix_framework_crosswalks__tenant_id",
+      "tablename": "framework_crosswalks",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_framework_crosswalks__source_framework_version_id ON regulatory.framework_crosswalks USING btree (source_framework_version_id)",
+      "indexname": "ix_framework_crosswalks__source_framework_version_id",
+      "tablename": "framework_crosswalks",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_framework_crosswalks__target_framework_version_id ON regulatory.framework_crosswalks USING btree (target_framework_version_id)",
+      "indexname": "ix_framework_crosswalks__target_framework_version_id",
+      "tablename": "framework_crosswalks",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_framework_crosswalks__approved_by_user_identity_id ON regulatory.framework_crosswalks USING btree (approved_by_user_identity_id)",
+      "indexname": "ix_framework_crosswalks__approved_by_user_identity_id",
+      "tablename": "framework_crosswalks",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_framework_crosswalks__tenant_id_lifecycle_state ON regulatory.framework_crosswalks USING btree (tenant_id, lifecycle_state)",
+      "indexname": "ix_framework_crosswalks__tenant_id_lifecycle_state",
+      "tablename": "framework_crosswalks",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_framework_crosswalks__tenant_id_effective_from_effective_to ON regulatory.framework_crosswalks USING btree (tenant_id, effective_from, effective_to)",
+      "indexname": "ix_framework_crosswalks__tenant_id_effective_from_effective_to",
+      "tablename": "framework_crosswalks",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_normative_unit_crosswalk_mappings__created_by_user__cb514289 ON regulatory.normative_unit_crosswalk_mappings USING btree (created_by_user_identity_id)",
+      "indexname": "ix_normative_unit_crosswalk_mappings__created_by_user__cb514289",
+      "tablename": "normative_unit_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_normative_unit_crosswalk_mappings__created_by_servi_dbb8d6f9 ON regulatory.normative_unit_crosswalk_mappings USING btree (created_by_service_principal_id)",
+      "indexname": "ix_normative_unit_crosswalk_mappings__created_by_servi_dbb8d6f9",
+      "tablename": "normative_unit_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_normative_unit_crosswalk_mappings__tenant_id ON regulatory.normative_unit_crosswalk_mappings USING btree (tenant_id)",
+      "indexname": "ix_normative_unit_crosswalk_mappings__tenant_id",
+      "tablename": "normative_unit_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_normative_unit_crosswalk_mappings__framework_crosswalk_id ON regulatory.normative_unit_crosswalk_mappings USING btree (framework_crosswalk_id)",
+      "indexname": "ix_normative_unit_crosswalk_mappings__framework_crosswalk_id",
+      "tablename": "normative_unit_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_normative_unit_crosswalk_mappings__source_normative_unit_id ON regulatory.normative_unit_crosswalk_mappings USING btree (source_normative_unit_id)",
+      "indexname": "ix_normative_unit_crosswalk_mappings__source_normative_unit_id",
+      "tablename": "normative_unit_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_normative_unit_crosswalk_mappings__target_normative_unit_id ON regulatory.normative_unit_crosswalk_mappings USING btree (target_normative_unit_id)",
+      "indexname": "ix_normative_unit_crosswalk_mappings__target_normative_unit_id",
+      "tablename": "normative_unit_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_normative_unit_crosswalk_mappings__reviewer_user_identity_id ON regulatory.normative_unit_crosswalk_mappings USING btree (reviewer_user_identity_id)",
+      "indexname": "ix_normative_unit_crosswalk_mappings__reviewer_user_identity_id",
+      "tablename": "normative_unit_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_crosswalk_mappings__created_by_user_identity_id ON regulatory.requirement_crosswalk_mappings USING btree (created_by_user_identity_id)",
+      "indexname": "ix_requirement_crosswalk_mappings__created_by_user_identity_id",
+      "tablename": "requirement_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_crosswalk_mappings__created_by_service__52c034b5 ON regulatory.requirement_crosswalk_mappings USING btree (created_by_service_principal_id)",
+      "indexname": "ix_requirement_crosswalk_mappings__created_by_service__52c034b5",
+      "tablename": "requirement_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_crosswalk_mappings__tenant_id ON regulatory.requirement_crosswalk_mappings USING btree (tenant_id)",
+      "indexname": "ix_requirement_crosswalk_mappings__tenant_id",
+      "tablename": "requirement_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_crosswalk_mappings__framework_crosswalk_id ON regulatory.requirement_crosswalk_mappings USING btree (framework_crosswalk_id)",
+      "indexname": "ix_requirement_crosswalk_mappings__framework_crosswalk_id",
+      "tablename": "requirement_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_crosswalk_mappings__source_requirement_id ON regulatory.requirement_crosswalk_mappings USING btree (source_requirement_id)",
+      "indexname": "ix_requirement_crosswalk_mappings__source_requirement_id",
+      "tablename": "requirement_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_crosswalk_mappings__target_requirement_id ON regulatory.requirement_crosswalk_mappings USING btree (target_requirement_id)",
+      "indexname": "ix_requirement_crosswalk_mappings__target_requirement_id",
+      "tablename": "requirement_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_requirement_crosswalk_mappings__reviewer_user_identity_id ON regulatory.requirement_crosswalk_mappings USING btree (reviewer_user_identity_id)",
+      "indexname": "ix_requirement_crosswalk_mappings__reviewer_user_identity_id",
+      "tablename": "requirement_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_control_crosswalk_mappings__created_by_user_identity_id ON regulatory.control_crosswalk_mappings USING btree (created_by_user_identity_id)",
+      "indexname": "ix_control_crosswalk_mappings__created_by_user_identity_id",
+      "tablename": "control_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_control_crosswalk_mappings__created_by_service_principal_id ON regulatory.control_crosswalk_mappings USING btree (created_by_service_principal_id)",
+      "indexname": "ix_control_crosswalk_mappings__created_by_service_principal_id",
+      "tablename": "control_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_control_crosswalk_mappings__tenant_id ON regulatory.control_crosswalk_mappings USING btree (tenant_id)",
+      "indexname": "ix_control_crosswalk_mappings__tenant_id",
+      "tablename": "control_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_control_crosswalk_mappings__framework_crosswalk_id ON regulatory.control_crosswalk_mappings USING btree (framework_crosswalk_id)",
+      "indexname": "ix_control_crosswalk_mappings__framework_crosswalk_id",
+      "tablename": "control_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_control_crosswalk_mappings__source_control_version_id ON regulatory.control_crosswalk_mappings USING btree (source_control_version_id)",
+      "indexname": "ix_control_crosswalk_mappings__source_control_version_id",
+      "tablename": "control_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_control_crosswalk_mappings__target_control_version_id ON regulatory.control_crosswalk_mappings USING btree (target_control_version_id)",
+      "indexname": "ix_control_crosswalk_mappings__target_control_version_id",
+      "tablename": "control_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_control_crosswalk_mappings__reviewer_user_identity_id ON regulatory.control_crosswalk_mappings USING btree (reviewer_user_identity_id)",
+      "indexname": "ix_control_crosswalk_mappings__reviewer_user_identity_id",
+      "tablename": "control_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_configuration_definitions__created_by_user_identity_id ON config.configuration_definitions USING btree (created_by_user_identity_id)",
+      "indexname": "ix_configuration_definitions__created_by_user_identity_id",
+      "tablename": "configuration_definitions",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_configuration_definitions__created_by_service_principal_id ON config.configuration_definitions USING btree (created_by_service_principal_id)",
+      "indexname": "ix_configuration_definitions__created_by_service_principal_id",
+      "tablename": "configuration_definitions",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_configuration_definitions__tenant_id ON config.configuration_definitions USING btree (tenant_id)",
+      "indexname": "ix_configuration_definitions__tenant_id",
+      "tablename": "configuration_definitions",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_configuration_definitions__tenant_id_lifecycle_state ON config.configuration_definitions USING btree (tenant_id, lifecycle_state)",
+      "indexname": "ix_configuration_definitions__tenant_id_lifecycle_state",
+      "tablename": "configuration_definitions",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_configuration_definitions__tenant_id_effective_from_1589e68a ON config.configuration_definitions USING btree (tenant_id, effective_from, effective_to)",
+      "indexname": "ix_configuration_definitions__tenant_id_effective_from_1589e68a",
+      "tablename": "configuration_definitions",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_configuration_definition_scopes__created_by_user_identity_id ON config.configuration_definition_scopes USING btree (created_by_user_identity_id)",
+      "indexname": "ix_configuration_definition_scopes__created_by_user_identity_id",
+      "tablename": "configuration_definition_scopes",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_configuration_definition_scopes__created_by_service_712a4208 ON config.configuration_definition_scopes USING btree (created_by_service_principal_id)",
+      "indexname": "ix_configuration_definition_scopes__created_by_service_712a4208",
+      "tablename": "configuration_definition_scopes",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_configuration_definition_scopes__tenant_id ON config.configuration_definition_scopes USING btree (tenant_id)",
+      "indexname": "ix_configuration_definition_scopes__tenant_id",
+      "tablename": "configuration_definition_scopes",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_configuration_definition_scopes__configuration_definition_id ON config.configuration_definition_scopes USING btree (configuration_definition_id)",
+      "indexname": "ix_configuration_definition_scopes__configuration_definition_id",
+      "tablename": "configuration_definition_scopes",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_configuration_validation_rules__created_by_user_identity_id ON config.configuration_validation_rules USING btree (created_by_user_identity_id)",
+      "indexname": "ix_configuration_validation_rules__created_by_user_identity_id",
+      "tablename": "configuration_validation_rules",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_configuration_validation_rules__created_by_service__80aafdc9 ON config.configuration_validation_rules USING btree (created_by_service_principal_id)",
+      "indexname": "ix_configuration_validation_rules__created_by_service__80aafdc9",
+      "tablename": "configuration_validation_rules",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_configuration_validation_rules__tenant_id ON config.configuration_validation_rules USING btree (tenant_id)",
+      "indexname": "ix_configuration_validation_rules__tenant_id",
+      "tablename": "configuration_validation_rules",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_configuration_validation_rules__configuration_definition_id ON config.configuration_validation_rules USING btree (configuration_definition_id)",
+      "indexname": "ix_configuration_validation_rules__configuration_definition_id",
+      "tablename": "configuration_validation_rules",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_configuration_overrides__created_by_user_identity_id ON config.configuration_overrides USING btree (created_by_user_identity_id)",
+      "indexname": "ix_configuration_overrides__created_by_user_identity_id",
+      "tablename": "configuration_overrides",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_configuration_overrides__created_by_service_principal_id ON config.configuration_overrides USING btree (created_by_service_principal_id)",
+      "indexname": "ix_configuration_overrides__created_by_service_principal_id",
+      "tablename": "configuration_overrides",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_configuration_overrides__tenant_id ON config.configuration_overrides USING btree (tenant_id)",
+      "indexname": "ix_configuration_overrides__tenant_id",
+      "tablename": "configuration_overrides",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_configuration_overrides__configuration_definition_id ON config.configuration_overrides USING btree (configuration_definition_id)",
+      "indexname": "ix_configuration_overrides__configuration_definition_id",
+      "tablename": "configuration_overrides",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_configuration_overrides__methodology_id ON config.configuration_overrides USING btree (methodology_id)",
+      "indexname": "ix_configuration_overrides__methodology_id",
+      "tablename": "configuration_overrides",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_configuration_overrides__regulatory_pack_version_id ON config.configuration_overrides USING btree (regulatory_pack_version_id)",
+      "indexname": "ix_configuration_overrides__regulatory_pack_version_id",
+      "tablename": "configuration_overrides",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_configuration_overrides__scope_subject_id ON config.configuration_overrides USING btree (scope_subject_id)",
+      "indexname": "ix_configuration_overrides__scope_subject_id",
+      "tablename": "configuration_overrides",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_configuration_overrides__approved_by_user_identity_id ON config.configuration_overrides USING btree (approved_by_user_identity_id)",
+      "indexname": "ix_configuration_overrides__approved_by_user_identity_id",
+      "tablename": "configuration_overrides",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_configuration_overrides__tenant_id_lifecycle_state ON config.configuration_overrides USING btree (tenant_id, lifecycle_state)",
+      "indexname": "ix_configuration_overrides__tenant_id_lifecycle_state",
+      "tablename": "configuration_overrides",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_configuration_overrides__tenant_id_effective_from_e_e731b89f ON config.configuration_overrides USING btree (tenant_id, effective_from, effective_to)",
+      "indexname": "ix_configuration_overrides__tenant_id_effective_from_e_e731b89f",
+      "tablename": "configuration_overrides",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_effective_configurations__created_by_user_identity_id ON config.effective_configurations USING btree (created_by_user_identity_id)",
+      "indexname": "ix_effective_configurations__created_by_user_identity_id",
+      "tablename": "effective_configurations",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_effective_configurations__created_by_service_principal_id ON config.effective_configurations USING btree (created_by_service_principal_id)",
+      "indexname": "ix_effective_configurations__created_by_service_principal_id",
+      "tablename": "effective_configurations",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_effective_configurations__tenant_id ON config.effective_configurations USING btree (tenant_id)",
+      "indexname": "ix_effective_configurations__tenant_id",
+      "tablename": "effective_configurations",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_effective_configurations__configuration_definition_id ON config.effective_configurations USING btree (configuration_definition_id)",
+      "indexname": "ix_effective_configurations__configuration_definition_id",
+      "tablename": "effective_configurations",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_effective_configurations__resolved_for_subject_id ON config.effective_configurations USING btree (resolved_for_subject_id)",
+      "indexname": "ix_effective_configurations__resolved_for_subject_id",
+      "tablename": "effective_configurations",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_effective_configuration_layers__created_by_user_identity_id ON config.effective_configuration_layers USING btree (created_by_user_identity_id)",
+      "indexname": "ix_effective_configuration_layers__created_by_user_identity_id",
+      "tablename": "effective_configuration_layers",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_effective_configuration_layers__created_by_service__316b2ec5 ON config.effective_configuration_layers USING btree (created_by_service_principal_id)",
+      "indexname": "ix_effective_configuration_layers__created_by_service__316b2ec5",
+      "tablename": "effective_configuration_layers",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_effective_configuration_layers__tenant_id ON config.effective_configuration_layers USING btree (tenant_id)",
+      "indexname": "ix_effective_configuration_layers__tenant_id",
+      "tablename": "effective_configuration_layers",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_effective_configuration_layers__effective_configuration_id ON config.effective_configuration_layers USING btree (effective_configuration_id)",
+      "indexname": "ix_effective_configuration_layers__effective_configuration_id",
+      "tablename": "effective_configuration_layers",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_effective_configuration_layers__configuration_definition_id ON config.effective_configuration_layers USING btree (configuration_definition_id)",
+      "indexname": "ix_effective_configuration_layers__configuration_definition_id",
+      "tablename": "effective_configuration_layers",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_effective_configuration_layers__configuration_override_id ON config.effective_configuration_layers USING btree (configuration_override_id)",
+      "indexname": "ix_effective_configuration_layers__configuration_override_id",
+      "tablename": "effective_configuration_layers",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_sources__created_by_user_identity_id ON knowledge.knowledge_sources USING btree (created_by_user_identity_id)",
+      "indexname": "ix_knowledge_sources__created_by_user_identity_id",
+      "tablename": "knowledge_sources",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_sources__created_by_service_principal_id ON knowledge.knowledge_sources USING btree (created_by_service_principal_id)",
+      "indexname": "ix_knowledge_sources__created_by_service_principal_id",
+      "tablename": "knowledge_sources",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_sources__updated_by_user_identity_id ON knowledge.knowledge_sources USING btree (updated_by_user_identity_id)",
+      "indexname": "ix_knowledge_sources__updated_by_user_identity_id",
+      "tablename": "knowledge_sources",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_sources__updated_by_service_principal_id ON knowledge.knowledge_sources USING btree (updated_by_service_principal_id)",
+      "indexname": "ix_knowledge_sources__updated_by_service_principal_id",
+      "tablename": "knowledge_sources",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_sources__tenant_id ON knowledge.knowledge_sources USING btree (tenant_id)",
+      "indexname": "ix_knowledge_sources__tenant_id",
+      "tablename": "knowledge_sources",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_sources__tenant_id_lifecycle_state ON knowledge.knowledge_sources USING btree (tenant_id, lifecycle_state)",
+      "indexname": "ix_knowledge_sources__tenant_id_lifecycle_state",
+      "tablename": "knowledge_sources",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_items__created_by_user_identity_id ON knowledge.knowledge_items USING btree (created_by_user_identity_id)",
+      "indexname": "ix_knowledge_items__created_by_user_identity_id",
+      "tablename": "knowledge_items",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_items__created_by_service_principal_id ON knowledge.knowledge_items USING btree (created_by_service_principal_id)",
+      "indexname": "ix_knowledge_items__created_by_service_principal_id",
+      "tablename": "knowledge_items",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_items__updated_by_user_identity_id ON knowledge.knowledge_items USING btree (updated_by_user_identity_id)",
+      "indexname": "ix_knowledge_items__updated_by_user_identity_id",
+      "tablename": "knowledge_items",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_items__updated_by_service_principal_id ON knowledge.knowledge_items USING btree (updated_by_service_principal_id)",
+      "indexname": "ix_knowledge_items__updated_by_service_principal_id",
+      "tablename": "knowledge_items",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_items__tenant_id ON knowledge.knowledge_items USING btree (tenant_id)",
+      "indexname": "ix_knowledge_items__tenant_id",
+      "tablename": "knowledge_items",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_items__knowledge_source_id ON knowledge.knowledge_items USING btree (knowledge_source_id)",
+      "indexname": "ix_knowledge_items__knowledge_source_id",
+      "tablename": "knowledge_items",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_items__tenant_id_lifecycle_state ON knowledge.knowledge_items USING btree (tenant_id, lifecycle_state)",
+      "indexname": "ix_knowledge_items__tenant_id_lifecycle_state",
+      "tablename": "knowledge_items",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_versions__created_by_user_identity_id ON knowledge.knowledge_versions USING btree (created_by_user_identity_id)",
+      "indexname": "ix_knowledge_versions__created_by_user_identity_id",
+      "tablename": "knowledge_versions",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_versions__created_by_service_principal_id ON knowledge.knowledge_versions USING btree (created_by_service_principal_id)",
+      "indexname": "ix_knowledge_versions__created_by_service_principal_id",
+      "tablename": "knowledge_versions",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_versions__tenant_id ON knowledge.knowledge_versions USING btree (tenant_id)",
+      "indexname": "ix_knowledge_versions__tenant_id",
+      "tablename": "knowledge_versions",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_versions__knowledge_item_id ON knowledge.knowledge_versions USING btree (knowledge_item_id)",
+      "indexname": "ix_knowledge_versions__knowledge_item_id",
+      "tablename": "knowledge_versions",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_versions__superseded_by_id ON knowledge.knowledge_versions USING btree (superseded_by_id)",
+      "indexname": "ix_knowledge_versions__superseded_by_id",
+      "tablename": "knowledge_versions",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_versions__tenant_id_lifecycle_state ON knowledge.knowledge_versions USING btree (tenant_id, lifecycle_state)",
+      "indexname": "ix_knowledge_versions__tenant_id_lifecycle_state",
+      "tablename": "knowledge_versions",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_versions__tenant_id_effective_from_effective_to ON knowledge.knowledge_versions USING btree (tenant_id, effective_from, effective_to)",
+      "indexname": "ix_knowledge_versions__tenant_id_effective_from_effective_to",
+      "tablename": "knowledge_versions",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_changes__created_by_user_identity_id ON knowledge.regulatory_changes USING btree (created_by_user_identity_id)",
+      "indexname": "ix_regulatory_changes__created_by_user_identity_id",
+      "tablename": "regulatory_changes",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_changes__created_by_service_principal_id ON knowledge.regulatory_changes USING btree (created_by_service_principal_id)",
+      "indexname": "ix_regulatory_changes__created_by_service_principal_id",
+      "tablename": "regulatory_changes",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_changes__tenant_id ON knowledge.regulatory_changes USING btree (tenant_id)",
+      "indexname": "ix_regulatory_changes__tenant_id",
+      "tablename": "regulatory_changes",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_changes__regulatory_source_id ON knowledge.regulatory_changes USING btree (regulatory_source_id)",
+      "indexname": "ix_regulatory_changes__regulatory_source_id",
+      "tablename": "regulatory_changes",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_changes__source_framework_version_id ON knowledge.regulatory_changes USING btree (source_framework_version_id)",
+      "indexname": "ix_regulatory_changes__source_framework_version_id",
+      "tablename": "regulatory_changes",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_changes__target_framework_version_id ON knowledge.regulatory_changes USING btree (target_framework_version_id)",
+      "indexname": "ix_regulatory_changes__target_framework_version_id",
+      "tablename": "regulatory_changes",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_changes__tenant_id_lifecycle_state ON knowledge.regulatory_changes USING btree (tenant_id, lifecycle_state)",
+      "indexname": "ix_regulatory_changes__tenant_id_lifecycle_state",
+      "tablename": "regulatory_changes",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_change_reviews__created_by_user_identity_id ON knowledge.regulatory_change_reviews USING btree (created_by_user_identity_id)",
+      "indexname": "ix_regulatory_change_reviews__created_by_user_identity_id",
+      "tablename": "regulatory_change_reviews",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_change_reviews__created_by_service_principal_id ON knowledge.regulatory_change_reviews USING btree (created_by_service_principal_id)",
+      "indexname": "ix_regulatory_change_reviews__created_by_service_principal_id",
+      "tablename": "regulatory_change_reviews",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_change_reviews__tenant_id ON knowledge.regulatory_change_reviews USING btree (tenant_id)",
+      "indexname": "ix_regulatory_change_reviews__tenant_id",
+      "tablename": "regulatory_change_reviews",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_change_reviews__regulatory_change_id ON knowledge.regulatory_change_reviews USING btree (regulatory_change_id)",
+      "indexname": "ix_regulatory_change_reviews__regulatory_change_id",
+      "tablename": "regulatory_change_reviews",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_regulatory_change_reviews__reviewer_user_identity_id ON knowledge.regulatory_change_reviews USING btree (reviewer_user_identity_id)",
+      "indexname": "ix_regulatory_change_reviews__reviewer_user_identity_id",
+      "tablename": "regulatory_change_reviews",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_requirement_applicabilities__tenant_id_requirement__cf3910e1 ON regulatory.requirement_applicabilities USING btree (tenant_id, requirement_id, scope_subject_id, applicability_version) NULLS NOT DISTINCT",
+      "indexname": "uq_requirement_applicabilities__tenant_id_requirement__cf3910e1",
+      "tablename": "requirement_applicabilities",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_statements_of_applicability__tenant_id_framework_ve_11f60c98 ON regulatory.statements_of_applicability USING btree (tenant_id, framework_version_id, soa_version) NULLS NOT DISTINCT",
+      "indexname": "uq_statements_of_applicability__tenant_id_framework_ve_11f60c98",
+      "tablename": "statements_of_applicability",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_statement_of_applicability_items__tenant_id_stateme_9e536872 ON regulatory.statement_of_applicability_items USING btree (tenant_id, statement_of_applicability_id, reference_control_version_id) NULLS NOT DISTINCT",
+      "indexname": "uq_statement_of_applicability_items__tenant_id_stateme_9e536872",
+      "tablename": "statement_of_applicability_items",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_requirement_control_mappings__business_version ON regulatory.requirement_control_mappings USING btree (requirement_id, control_version_id, mapping_type, mapping_version)",
+      "indexname": "uq_requirement_control_mappings__business_version",
+      "tablename": "requirement_control_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_normative_unit_control_mappings__business_version ON regulatory.normative_unit_control_mappings USING btree (normative_unit_id, control_version_id, mapping_version)",
+      "indexname": "uq_normative_unit_control_mappings__business_version",
+      "tablename": "normative_unit_control_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_nu_xwalk_business_version ON regulatory.normative_unit_crosswalk_mappings USING btree (framework_crosswalk_id, source_normative_unit_id, target_normative_unit_id, mapping_version_number) NULLS NOT DISTINCT",
+      "indexname": "uq_nu_xwalk_business_version",
+      "tablename": "normative_unit_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_req_xwalk_business_version ON regulatory.requirement_crosswalk_mappings USING btree (framework_crosswalk_id, source_requirement_id, target_requirement_id, mapping_version_number) NULLS NOT DISTINCT",
+      "indexname": "uq_req_xwalk_business_version",
+      "tablename": "requirement_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_control_xwalk_business_version ON regulatory.control_crosswalk_mappings USING btree (framework_crosswalk_id, source_control_version_id, target_control_version_id, mapping_version_number) NULLS NOT DISTINCT",
+      "indexname": "uq_control_xwalk_business_version",
+      "tablename": "control_crosswalk_mappings",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_normative_units__framework_version_id_source_locator ON regulatory.normative_units USING btree (framework_version_id, source_locator)",
+      "indexname": "uq_normative_units__framework_version_id_source_locator",
+      "tablename": "normative_units",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX regulatory_pack_validation_provenances_pkey ON regulatory.regulatory_pack_validation_provenances USING btree (regulatory_pack_validation_provenance_id)",
+      "indexname": "regulatory_pack_validation_provenances_pkey",
+      "tablename": "regulatory_pack_validation_provenances",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_regulatory_pack_validation_provenances__version ON regulatory.regulatory_pack_validation_provenances USING btree (regulatory_pack_version_id)",
+      "indexname": "uq_regulatory_pack_validation_provenances__version",
+      "tablename": "regulatory_pack_validation_provenances",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_regulatory_pack_validation_provenances__version_id ON regulatory.regulatory_pack_validation_provenances USING btree (regulatory_pack_version_id, regulatory_pack_validation_provenance_id)",
+      "indexname": "uq_regulatory_pack_validation_provenances__version_id",
+      "tablename": "regulatory_pack_validation_provenances",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX pk_cm ON regulatory.compliance_methodologies USING btree (compliance_methodology_id)",
+      "indexname": "pk_cm",
+      "tablename": "compliance_methodologies",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_cm_tenant_identity ON regulatory.compliance_methodologies USING btree (tenant_id, compliance_methodology_id) NULLS NOT DISTINCT",
+      "indexname": "uq_cm_tenant_identity",
+      "tablename": "compliance_methodologies",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_cm_code_version ON regulatory.compliance_methodologies USING btree (methodology_code, version_number)",
+      "indexname": "uq_cm_code_version",
+      "tablename": "compliance_methodologies",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_cm_selection ON regulatory.compliance_methodologies USING btree (lifecycle_state, effective_from, compliance_methodology_id)",
+      "indexname": "ix_cm_selection",
+      "tablename": "compliance_methodologies",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_ec__canonical_business_key ON config.effective_configurations USING btree (tenant_id, configuration_definition_id, resolved_for_subject_id, effective_at, input_hash) NULLS NOT DISTINCT",
+      "indexname": "uq_ec__canonical_business_key",
+      "tablename": "effective_configurations",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_ec_layers__parent_level_ordinal ON config.effective_configuration_layers USING btree (effective_configuration_id, precedence_level, ordinal)",
+      "indexname": "uq_ec_layers__parent_level_ordinal",
+      "tablename": "effective_configuration_layers",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_regulatory_packs__id_source_commercial ON regulatory.regulatory_packs USING btree (regulatory_pack_id, source_type)",
+      "indexname": "uq_regulatory_packs__id_source_commercial",
+      "tablename": "regulatory_packs",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_pack_versions__version_root_commercial ON regulatory.regulatory_pack_versions USING btree (regulatory_pack_version_id, regulatory_pack_id)",
+      "indexname": "uq_pack_versions__version_root_commercial",
+      "tablename": "regulatory_pack_versions",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX knowledge_version_context_links_pkey ON knowledge.knowledge_version_context_links USING btree (knowledge_version_context_link_id)",
+      "indexname": "knowledge_version_context_links_pkey",
+      "tablename": "knowledge_version_context_links",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_knowledge_context__semantic ON knowledge.knowledge_version_context_links USING btree (knowledge_version_id, context_role, normative_unit_id, requirement_id, control_version_id, subject_id) NULLS NOT DISTINCT",
+      "indexname": "uq_knowledge_context__semantic",
+      "tablename": "knowledge_version_context_links",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_context__tenant_version ON knowledge.knowledge_version_context_links USING btree (tenant_id, knowledge_version_id)",
+      "indexname": "ix_knowledge_context__tenant_version",
+      "tablename": "knowledge_version_context_links",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_context__unit ON knowledge.knowledge_version_context_links USING btree (normative_unit_id) WHERE (normative_unit_id IS NOT NULL)",
+      "indexname": "ix_knowledge_context__unit",
+      "tablename": "knowledge_version_context_links",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_context__requirement ON knowledge.knowledge_version_context_links USING btree (requirement_id) WHERE (requirement_id IS NOT NULL)",
+      "indexname": "ix_knowledge_context__requirement",
+      "tablename": "knowledge_version_context_links",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_context__control ON knowledge.knowledge_version_context_links USING btree (control_version_id) WHERE (control_version_id IS NOT NULL)",
+      "indexname": "ix_knowledge_context__control",
+      "tablename": "knowledge_version_context_links",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_context__subject ON knowledge.knowledge_version_context_links USING btree (tenant_id, subject_id) WHERE (subject_id IS NOT NULL)",
+      "indexname": "ix_knowledge_context__subject",
+      "tablename": "knowledge_version_context_links",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_knowledge_versions__item_version ON knowledge.knowledge_versions USING btree (knowledge_item_id, version_number)",
+      "indexname": "uq_knowledge_versions__item_version",
+      "tablename": "knowledge_versions",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_config_override__control_revision ON config.configuration_overrides USING btree (tenant_id, configuration_definition_id, control_version_id, override_version, effective_from) WHERE ((scope_level)::text = 'control_version'::text)",
+      "indexname": "uq_config_override__control_revision",
+      "tablename": "configuration_overrides",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_config_override__approved_successor ON config.configuration_overrides USING btree (tenant_id, supersedes_configuration_override_id) WHERE (((scope_level)::text = 'control_version'::text) AND ((lifecycle_state)::text = 'approved'::text) AND (supersedes_configuration_override_id IS NOT NULL))",
+      "indexname": "uq_config_override__approved_successor",
+      "tablename": "configuration_overrides",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_config_override__control_interval ON config.configuration_overrides USING btree (tenant_id, control_version_id, configuration_definition_id, effective_from, effective_to)",
+      "indexname": "ix_config_override__control_interval",
+      "tablename": "configuration_overrides",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX uq_effective_config__control_inputs ON config.effective_configurations USING btree (tenant_id, configuration_definition_id, control_version_id, effective_at, input_hash) WHERE (control_version_id IS NOT NULL)",
+      "indexname": "uq_effective_config__control_inputs",
+      "tablename": "effective_configurations",
+      "schemaname": "config",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_applicability__context ON regulatory.requirement_applicabilities USING btree (tenant_id, context_knowledge_version_id) WHERE (context_knowledge_version_id IS NOT NULL)",
+      "indexname": "ix_applicability__context",
+      "tablename": "requirement_applicabilities",
+      "schemaname": "regulatory",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX knowledge_source_usage_rights_pkey ON knowledge.knowledge_source_usage_rights USING btree (knowledge_source_usage_right_id)",
+      "indexname": "knowledge_source_usage_rights_pkey",
+      "tablename": "knowledge_source_usage_rights",
+      "schemaname": "knowledge",
+      "tablespace": null
+    },
+    {
+      "indexdef": "CREATE INDEX ix_knowledge_source_usage_rights__lookup ON knowledge.knowledge_source_usage_rights USING btree (knowledge_source_id, content_hash, audience_tenant_id, use_act, use_environment, regulatory_pack_version_id, effective_from, effective_to)",
+      "indexname": "ix_knowledge_source_usage_rights__lookup",
+      "tablename": "knowledge_source_usage_rights",
+      "schemaname": "knowledge",
+      "tablespace": null
+    }
+  ],
+  "triggers": [
+    {
+      "table": "knowledge.knowledge_version_context_links",
+      "definition": "CREATE CONSTRAINT TRIGGER ck_knowledge_context__compatibility AFTER INSERT OR UPDATE ON knowledge.knowledge_version_context_links DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION knowledge.check_context_link()"
+    },
+    {
+      "table": "knowledge.knowledge_version_context_links",
+      "definition": "CREATE TRIGGER ck_knowledge_context__immutable BEFORE INSERT OR DELETE OR UPDATE ON knowledge.knowledge_version_context_links FOR EACH ROW EXECUTE FUNCTION knowledge.guard_context_link()"
+    },
+    {
+      "table": "knowledge.knowledge_versions",
+      "definition": "CREATE TRIGGER ck_context_source__owner BEFORE UPDATE OF tenant_id, ownership_class ON knowledge.knowledge_versions FOR EACH ROW EXECUTE FUNCTION knowledge.guard_context_target_owner('knowledge_version_id')"
+    },
+    {
+      "table": "knowledge.knowledge_versions",
+      "definition": "CREATE TRIGGER ck_knowledge_version__published_core BEFORE DELETE OR UPDATE ON knowledge.knowledge_versions FOR EACH ROW EXECUTE FUNCTION knowledge.guard_published_version_core()"
+    },
+    {
+      "table": "config.configuration_overrides",
+      "definition": "CREATE TRIGGER ck_control_override__history BEFORE DELETE OR UPDATE ON config.configuration_overrides FOR EACH ROW EXECUTE FUNCTION config.guard_control_override_history()"
+    },
+    {
+      "table": "config.configuration_overrides",
+      "definition": "CREATE CONSTRAINT TRIGGER ck_control_override__succession AFTER INSERT OR UPDATE ON config.configuration_overrides DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION config.check_control_override_successor()"
+    },
+    {
+      "table": "regulatory.requirement_applicabilities",
+      "definition": "CREATE TRIGGER ck_applicability__context_history BEFORE UPDATE OF context_knowledge_version_id ON regulatory.requirement_applicabilities FOR EACH ROW EXECUTE FUNCTION regulatory.guard_context_decision_history()"
+    },
+    {
+      "table": "knowledge.knowledge_source_usage_rights",
+      "definition": "CREATE TRIGGER trg_knowledge_source_usage_rights__integrity BEFORE INSERT OR DELETE OR UPDATE ON knowledge.knowledge_source_usage_rights FOR EACH ROW EXECUTE FUNCTION knowledge.enforce_source_usage_rights()"
+    }
+  ],
+  "constraints": [
+    {
+      "name": "ck_requirement_applicabilities__created_actor_one",
+      "table": "regulatory.requirement_applicabilities",
+      "validated": true,
+      "definition": "CHECK ((num_nonnulls(created_by_user_identity_id, created_by_service_principal_id) <= 1))"
+    },
+    {
+      "name": "ck_requirement_applicabilities__decision_closed",
+      "table": "regulatory.requirement_applicabilities",
+      "validated": true,
+      "definition": "CHECK (((applicability_decision)::text = ANY ((ARRAY['applicable'::character varying, 'not_applicable'::character varying])::text[])))"
+    },
+    {
+      "name": "ck_requirement_applicabilities__effective_from_effective_to",
+      "table": "regulatory.requirement_applicabilities",
+      "validated": true,
+      "definition": "CHECK (((effective_to IS NULL) OR (effective_from IS NULL) OR (effective_to > effective_from)))"
+    },
+    {
+      "name": "ck_requirement_applicabilities__not_applicable_rationale",
+      "table": "regulatory.requirement_applicabilities",
+      "validated": true,
+      "definition": "CHECK ((((applicability_decision)::text <> 'not_applicable'::text) OR (length(btrim(rationale)) > 0)))"
+    },
+    {
+      "name": "ck_requirement_applicabilities__row_version_positive",
+      "table": "regulatory.requirement_applicabilities",
+      "validated": true,
+      "definition": "CHECK ((row_version > 0))"
+    },
+    {
+      "name": "ck_requirement_applicabilities__updated_actor_one",
+      "table": "regulatory.requirement_applicabilities",
+      "validated": true,
+      "definition": "CHECK ((num_nonnulls(updated_by_user_identity_id, updated_by_service_principal_id) <= 1))"
+    },
+    {
+      "name": "fk_applicability__context",
+      "table": "regulatory.requirement_applicabilities",
+      "validated": true,
+      "definition": "FOREIGN KEY (tenant_id, context_knowledge_version_id) REFERENCES knowledge.knowledge_versions(tenant_id, knowledge_version_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_requirement_applicabilities__approved_by_user_identity_id",
+      "table": "regulatory.requirement_applicabilities",
+      "validated": true,
+      "definition": "FOREIGN KEY (approved_by_user_identity_id) REFERENCES iam.user_identities(user_identity_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_requirement_applicabilities__created_by_service_principal_id",
+      "table": "regulatory.requirement_applicabilities",
+      "validated": true,
+      "definition": "FOREIGN KEY (created_by_service_principal_id) REFERENCES iam.service_principals(service_principal_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_requirement_applicabilities__created_by_user_identity_id",
+      "table": "regulatory.requirement_applicabilities",
+      "validated": true,
+      "definition": "FOREIGN KEY (created_by_user_identity_id) REFERENCES iam.user_identities(user_identity_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_requirement_applicabilities__requirement_id",
+      "table": "regulatory.requirement_applicabilities",
+      "validated": true,
+      "definition": "FOREIGN KEY (requirement_id) REFERENCES regulatory.requirements(requirement_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_requirement_applicabilities__scope_subject_id",
+      "table": "regulatory.requirement_applicabilities",
+      "validated": true,
+      "definition": "FOREIGN KEY (tenant_id, scope_subject_id) REFERENCES org.subjects(tenant_id, subject_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_requirement_applicabilities__superseded_by_id",
+      "table": "regulatory.requirement_applicabilities",
+      "validated": true,
+      "definition": "FOREIGN KEY (tenant_id, superseded_by_id) REFERENCES regulatory.requirement_applicabilities(tenant_id, requirement_applicability_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_requirement_applicabilities__tenant_id",
+      "table": "regulatory.requirement_applicabilities",
+      "validated": true,
+      "definition": "FOREIGN KEY (tenant_id) REFERENCES platform.tenants(tenant_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_requirement_applicabilities__updated_by_service_principal_id",
+      "table": "regulatory.requirement_applicabilities",
+      "validated": true,
+      "definition": "FOREIGN KEY (updated_by_service_principal_id) REFERENCES iam.service_principals(service_principal_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_requirement_applicabilities__updated_by_user_identity_id",
+      "table": "regulatory.requirement_applicabilities",
+      "validated": true,
+      "definition": "FOREIGN KEY (updated_by_user_identity_id) REFERENCES iam.user_identities(user_identity_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "pk_requirement_applicabilities",
+      "table": "regulatory.requirement_applicabilities",
+      "validated": true,
+      "definition": "PRIMARY KEY (requirement_applicability_id)"
+    },
+    {
+      "name": "uq_requirement_applicabilities__tenant_id_requirement__3d4e680d",
+      "table": "regulatory.requirement_applicabilities",
+      "validated": true,
+      "definition": "UNIQUE NULLS NOT DISTINCT (tenant_id, requirement_applicability_id)"
+    },
+    {
+      "name": "uq_requirement_applicabilities__tenant_id_requirement__cf3910e1",
+      "table": "regulatory.requirement_applicabilities",
+      "validated": true,
+      "definition": "UNIQUE NULLS NOT DISTINCT (tenant_id, requirement_id, scope_subject_id, applicability_version)"
+    },
+    {
+      "name": "ck_config_override__control_scope",
+      "table": "config.configuration_overrides",
+      "validated": true,
+      "definition": "CHECK (((((scope_level)::text <> 'control_version'::text) OR ((control_version_id IS NOT NULL) AND (tenant_id IS NOT NULL) AND ((ownership_class)::text = 'TENANT_OWNED'::text) AND (num_nonnulls(methodology_id, regulatory_pack_version_id, scope_subject_id) = 0))) AND ((control_version_id IS NULL) OR ((scope_level)::text = 'control_version'::text)) AND ((supersedes_configuration_override_id IS NULL) OR (((scope_level)::text = 'control_version'::text) AND (supersedes_configuration_override_id <> configuration_override_id)))))"
+    },
+    {
+      "name": "ck_configuration_overrides__created_actor_one",
+      "table": "config.configuration_overrides",
+      "validated": true,
+      "definition": "CHECK ((num_nonnulls(created_by_user_identity_id, created_by_service_principal_id) <= 1))"
+    },
+    {
+      "name": "ck_configuration_overrides__duration_seconds_value_nonnegative",
+      "table": "config.configuration_overrides",
+      "validated": true,
+      "definition": "CHECK (((duration_seconds_value IS NULL) OR (duration_seconds_value >= 0)))"
+    },
+    {
+      "name": "ck_configuration_overrides__effective_from_effective_to",
+      "table": "config.configuration_overrides",
+      "validated": true,
+      "definition": "CHECK (((effective_to IS NULL) OR (effective_from IS NULL) OR (effective_to > effective_from)))"
+    },
+    {
+      "name": "ck_configuration_overrides__ownership_class",
+      "table": "config.configuration_overrides",
+      "validated": true,
+      "definition": "CHECK (((ownership_class)::text = ANY ((ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying])::text[])))"
+    },
+    {
+      "name": "ck_configuration_overrides__tenant_ownership",
+      "table": "config.configuration_overrides",
+      "validated": true,
+      "definition": "CHECK ((((ownership_class)::text = ANY ((ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying])::text[])) = (tenant_id IS NOT NULL)))"
+    },
+    {
+      "name": "ck_configuration_overrides__typed_value_count",
+      "table": "config.configuration_overrides",
+      "validated": true,
+      "definition": "CHECK ((num_nonnulls(boolean_value, integer_value, decimal_value, text_value, timestamp_value, duration_seconds_value, json_value) = 1))"
+    },
+    {
+      "name": "ck_control_override__succession",
+      "table": "config.configuration_overrides",
+      "validated": true,
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
+    },
+    {
+      "name": "fk_config_override__control",
+      "table": "config.configuration_overrides",
+      "validated": true,
+      "definition": "FOREIGN KEY (tenant_id, control_version_id) REFERENCES controls.control_versions(tenant_id, control_version_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_config_override__previous",
+      "table": "config.configuration_overrides",
+      "validated": true,
+      "definition": "FOREIGN KEY (tenant_id, supersedes_configuration_override_id) REFERENCES config.configuration_overrides(tenant_id, configuration_override_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_configuration_overrides__approved_by_user_identity_id",
+      "table": "config.configuration_overrides",
+      "validated": true,
+      "definition": "FOREIGN KEY (approved_by_user_identity_id) REFERENCES iam.user_identities(user_identity_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_configuration_overrides__configuration_definition_id",
+      "table": "config.configuration_overrides",
+      "validated": true,
+      "definition": "FOREIGN KEY (configuration_definition_id) REFERENCES config.configuration_definitions(configuration_definition_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_configuration_overrides__created_by_service_principal_id",
+      "table": "config.configuration_overrides",
+      "validated": true,
+      "definition": "FOREIGN KEY (created_by_service_principal_id) REFERENCES iam.service_principals(service_principal_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_configuration_overrides__created_by_user_identity_id",
+      "table": "config.configuration_overrides",
+      "validated": true,
+      "definition": "FOREIGN KEY (created_by_user_identity_id) REFERENCES iam.user_identities(user_identity_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_configuration_overrides__regulatory_pack_version_id",
+      "table": "config.configuration_overrides",
+      "validated": true,
+      "definition": "FOREIGN KEY (regulatory_pack_version_id) REFERENCES regulatory.regulatory_pack_versions(regulatory_pack_version_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_configuration_overrides__scope_subject_id",
+      "table": "config.configuration_overrides",
+      "validated": true,
+      "definition": "FOREIGN KEY (tenant_id, scope_subject_id) REFERENCES org.subjects(tenant_id, subject_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_configuration_overrides__tenant_id",
+      "table": "config.configuration_overrides",
+      "validated": true,
+      "definition": "FOREIGN KEY (tenant_id) REFERENCES platform.tenants(tenant_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "pk_configuration_overrides",
+      "table": "config.configuration_overrides",
+      "validated": true,
+      "definition": "PRIMARY KEY (configuration_override_id)"
+    },
+    {
+      "name": "uq_configuration_overrides__configuration_definition_i_e2f31294",
+      "table": "config.configuration_overrides",
+      "validated": true,
+      "definition": "UNIQUE (configuration_definition_id, scope_level, methodology_id, regulatory_pack_version_id, scope_subject_id, override_version, effective_from)"
+    },
+    {
+      "name": "uq_configuration_overrides__tenant_id_configuration_override_id",
+      "table": "config.configuration_overrides",
+      "validated": true,
+      "definition": "UNIQUE NULLS NOT DISTINCT (tenant_id, configuration_override_id)"
+    },
+    {
+      "name": "ck_effective_config__control_scope",
+      "table": "config.effective_configurations",
+      "validated": true,
+      "definition": "CHECK (((control_version_id IS NULL) OR (resolved_for_subject_id IS NULL)))"
+    },
+    {
+      "name": "ck_effective_configurations__created_actor_one",
+      "table": "config.effective_configurations",
+      "validated": true,
+      "definition": "CHECK ((num_nonnulls(created_by_user_identity_id, created_by_service_principal_id) <= 1))"
+    },
+    {
+      "name": "ck_effective_configurations__effective_duration_second_c6f4ec0f",
+      "table": "config.effective_configurations",
+      "validated": true,
+      "definition": "CHECK (((effective_duration_seconds_value IS NULL) OR (effective_duration_seconds_value >= 0)))"
+    },
+    {
+      "name": "ck_effective_configurations__effective_value_count",
+      "table": "config.effective_configurations",
+      "validated": true,
+      "definition": "CHECK ((num_nonnulls(effective_boolean_value, effective_integer_value, effective_decimal_value, effective_text_value, effective_timestamp_value, effective_duration_seconds_value, effective_json_value) <= 1))"
+    },
+    {
+      "name": "fk_effective_config__control",
+      "table": "config.effective_configurations",
+      "validated": true,
+      "definition": "FOREIGN KEY (tenant_id, control_version_id) REFERENCES controls.control_versions(tenant_id, control_version_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_effective_configurations__configuration_definition_id",
+      "table": "config.effective_configurations",
+      "validated": true,
+      "definition": "FOREIGN KEY (configuration_definition_id) REFERENCES config.configuration_definitions(configuration_definition_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_effective_configurations__created_by_service_principal_id",
+      "table": "config.effective_configurations",
+      "validated": true,
+      "definition": "FOREIGN KEY (created_by_service_principal_id) REFERENCES iam.service_principals(service_principal_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_effective_configurations__created_by_user_identity_id",
+      "table": "config.effective_configurations",
+      "validated": true,
+      "definition": "FOREIGN KEY (created_by_user_identity_id) REFERENCES iam.user_identities(user_identity_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_effective_configurations__resolved_for_subject_id",
+      "table": "config.effective_configurations",
+      "validated": true,
+      "definition": "FOREIGN KEY (tenant_id, resolved_for_subject_id) REFERENCES org.subjects(tenant_id, subject_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_effective_configurations__tenant_id",
+      "table": "config.effective_configurations",
+      "validated": true,
+      "definition": "FOREIGN KEY (tenant_id) REFERENCES platform.tenants(tenant_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "pk_effective_configurations",
+      "table": "config.effective_configurations",
+      "validated": true,
+      "definition": "PRIMARY KEY (effective_configuration_id)"
+    },
+    {
+      "name": "uq_ec__canonical_business_key",
+      "table": "config.effective_configurations",
+      "validated": true,
+      "definition": "UNIQUE NULLS NOT DISTINCT (tenant_id, configuration_definition_id, resolved_for_subject_id, effective_at, input_hash)"
+    },
+    {
+      "name": "uq_effective_configurations__tenant_id_effective_confi_179bd4eb",
+      "table": "config.effective_configurations",
+      "validated": true,
+      "definition": "UNIQUE NULLS NOT DISTINCT (tenant_id, effective_configuration_id)"
+    },
+    {
+      "name": "ck_knowledge_context__compatibility",
+      "table": "knowledge.knowledge_version_context_links",
+      "validated": true,
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
+    },
+    {
+      "name": "ck_knowledge_context__context",
+      "table": "knowledge.knowledge_version_context_links",
+      "validated": true,
+      "definition": "CHECK ((((context_role)::text <> 'contexto_empresarial'::text) OR (subject_id IS NOT NULL)))"
+    },
+    {
+      "name": "ck_knowledge_context__locator",
+      "table": "knowledge.knowledge_version_context_links",
+      "validated": true,
+      "definition": "CHECK (((btrim(source_locator) <> ''::text) AND (btrim(provenance_ref) <> ''::text)))"
+    },
+    {
+      "name": "ck_knowledge_context__ownership",
+      "table": "knowledge.knowledge_version_context_links",
+      "validated": true,
+      "definition": "CHECK (((ownership_class)::text = ANY ((ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying])::text[])))"
+    },
+    {
+      "name": "ck_knowledge_context__role",
+      "table": "knowledge.knowledge_version_context_links",
+      "validated": true,
+      "definition": "CHECK (((context_role)::text = ANY ((ARRAY['comprender'::character varying, 'implementar'::character varying, 'demostrar'::character varying, 'contexto_empresarial'::character varying])::text[])))"
+    },
+    {
+      "name": "ck_knowledge_context__target_xor",
+      "table": "knowledge.knowledge_version_context_links",
+      "validated": true,
+      "definition": "CHECK ((num_nonnulls(normative_unit_id, requirement_id, control_version_id, subject_id) = 1))"
+    },
+    {
+      "name": "ck_knowledge_context__tenant",
+      "table": "knowledge.knowledge_version_context_links",
+      "validated": true,
+      "definition": "CHECK ((((ownership_class)::text = 'TENANT_OWNED'::text) = (tenant_id IS NOT NULL)))"
+    },
+    {
+      "name": "knowledge_version_context_link_created_by_user_identity_id_fkey",
+      "table": "knowledge.knowledge_version_context_links",
+      "validated": true,
+      "definition": "FOREIGN KEY (created_by_user_identity_id) REFERENCES iam.user_identities(user_identity_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "knowledge_version_context_links_control_version_id_fkey",
+      "table": "knowledge.knowledge_version_context_links",
+      "validated": true,
+      "definition": "FOREIGN KEY (control_version_id) REFERENCES controls.control_versions(control_version_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "knowledge_version_context_links_knowledge_version_id_fkey",
+      "table": "knowledge.knowledge_version_context_links",
+      "validated": true,
+      "definition": "FOREIGN KEY (knowledge_version_id) REFERENCES knowledge.knowledge_versions(knowledge_version_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "knowledge_version_context_links_normative_unit_id_fkey",
+      "table": "knowledge.knowledge_version_context_links",
+      "validated": true,
+      "definition": "FOREIGN KEY (normative_unit_id) REFERENCES regulatory.normative_units(normative_unit_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "knowledge_version_context_links_pkey",
+      "table": "knowledge.knowledge_version_context_links",
+      "validated": true,
+      "definition": "PRIMARY KEY (knowledge_version_context_link_id)"
+    },
+    {
+      "name": "knowledge_version_context_links_requirement_id_fkey",
+      "table": "knowledge.knowledge_version_context_links",
+      "validated": true,
+      "definition": "FOREIGN KEY (requirement_id) REFERENCES regulatory.requirements(requirement_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "knowledge_version_context_links_subject_id_fkey",
+      "table": "knowledge.knowledge_version_context_links",
+      "validated": true,
+      "definition": "FOREIGN KEY (subject_id) REFERENCES org.subjects(subject_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "knowledge_version_context_links_tenant_id_fkey",
+      "table": "knowledge.knowledge_version_context_links",
+      "validated": true,
+      "definition": "FOREIGN KEY (tenant_id) REFERENCES platform.tenants(tenant_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "uq_knowledge_context__semantic",
+      "table": "knowledge.knowledge_version_context_links",
+      "validated": true,
+      "definition": "UNIQUE NULLS NOT DISTINCT (knowledge_version_id, context_role, normative_unit_id, requirement_id, control_version_id, subject_id)"
+    },
+    {
+      "name": "ck_knowledge_source_usage_rights__act",
+      "table": "knowledge.knowledge_source_usage_rights",
+      "validated": true,
+      "definition": "CHECK (((use_act)::text = ANY ((ARRAY['consultation'::character varying, 'extraction'::character varying, 'storage'::character varying, 'presentation'::character varying, 'export'::character varying, 'import'::character varying, 'publication'::character varying])::text[])))"
+    },
+    {
+      "name": "ck_knowledge_source_usage_rights__content",
+      "table": "knowledge.knowledge_source_usage_rights",
+      "validated": true,
+      "definition": "CHECK (((content_kind)::text = ANY ((ARRAY['metadata'::character varying, 'editorial'::character varying, 'tenant_context'::character varying, 'third_party'::character varying])::text[])))"
+    },
+    {
+      "name": "ck_knowledge_source_usage_rights__environment",
+      "table": "knowledge.knowledge_source_usage_rights",
+      "validated": true,
+      "definition": "CHECK (((use_environment)::text = ANY ((ARRAY['development'::character varying, 'test'::character varying, 'qa'::character varying, 'production'::character varying])::text[])))"
+    },
+    {
+      "name": "ck_knowledge_source_usage_rights__evidence",
+      "table": "knowledge.knowledge_source_usage_rights",
+      "validated": true,
+      "definition": "CHECK (((btrim(edition_ref) <> ''::text) AND (btrim(evidence_ref) <> ''::text)))"
+    },
+    {
+      "name": "ck_knowledge_source_usage_rights__hashes",
+      "table": "knowledge.knowledge_source_usage_rights",
+      "validated": true,
+      "definition": "CHECK (((content_hash ~ '^[a-f0-9]{64}$'::text) AND (evidence_hash ~ '^[a-f0-9]{64}$'::text)))"
+    },
+    {
+      "name": "ck_knowledge_source_usage_rights__interval",
+      "table": "knowledge.knowledge_source_usage_rights",
+      "validated": true,
+      "definition": "CHECK ((effective_from < effective_to))"
+    },
+    {
+      "name": "ck_knowledge_source_usage_rights__ownership",
+      "table": "knowledge.knowledge_source_usage_rights",
+      "validated": true,
+      "definition": "CHECK ((((ownership_class)::text = ANY ((ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying])::text[])) AND (((ownership_class)::text = 'TENANT_OWNED'::text) = (tenant_id IS NOT NULL))))"
+    },
+    {
+      "name": "ck_knowledge_source_usage_rights__revocation",
+      "table": "knowledge.knowledge_source_usage_rights",
+      "validated": true,
+      "definition": "CHECK ((((revoked_at IS NULL) = (revoked_audit_event_id IS NULL)) AND ((revoked_at IS NULL) OR (revoked_at >= created_at))))"
+    },
+    {
+      "name": "ck_knowledge_source_usage_rights__tenant",
+      "table": "knowledge.knowledge_source_usage_rights",
+      "validated": true,
+      "definition": "CHECK (((tenant_id IS NULL) OR (audience_tenant_id = tenant_id)))"
+    },
+    {
+      "name": "ck_knowledge_source_usage_rights__tenant_audience",
+      "table": "knowledge.knowledge_source_usage_rights",
+      "validated": true,
+      "definition": "CHECK (((tenant_id IS NULL) OR (audience_tenant_id IS NOT NULL)))"
+    },
+    {
+      "name": "knowledge_source_usage_rights_audience_tenant_id_fkey",
+      "table": "knowledge.knowledge_source_usage_rights",
+      "validated": true,
+      "definition": "FOREIGN KEY (audience_tenant_id) REFERENCES platform.tenants(tenant_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "knowledge_source_usage_rights_created_by_user_identity_id_fkey",
+      "table": "knowledge.knowledge_source_usage_rights",
+      "validated": true,
+      "definition": "FOREIGN KEY (created_by_user_identity_id) REFERENCES iam.user_identities(user_identity_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "knowledge_source_usage_rights_knowledge_source_id_fkey",
+      "table": "knowledge.knowledge_source_usage_rights",
+      "validated": true,
+      "definition": "FOREIGN KEY (knowledge_source_id) REFERENCES knowledge.knowledge_sources(knowledge_source_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "knowledge_source_usage_rights_pkey",
+      "table": "knowledge.knowledge_source_usage_rights",
+      "validated": true,
+      "definition": "PRIMARY KEY (knowledge_source_usage_right_id)"
+    },
+    {
+      "name": "knowledge_source_usage_rights_recorded_audit_event_id_fkey",
+      "table": "knowledge.knowledge_source_usage_rights",
+      "validated": true,
+      "definition": "FOREIGN KEY (recorded_audit_event_id) REFERENCES ops_audit.audit_events(audit_event_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "knowledge_source_usage_rights_regulatory_pack_version_id_fkey",
+      "table": "knowledge.knowledge_source_usage_rights",
+      "validated": true,
+      "definition": "FOREIGN KEY (regulatory_pack_version_id) REFERENCES regulatory.regulatory_pack_versions(regulatory_pack_version_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "knowledge_source_usage_rights_revoked_audit_event_id_fkey",
+      "table": "knowledge.knowledge_source_usage_rights",
+      "validated": true,
+      "definition": "FOREIGN KEY (revoked_audit_event_id) REFERENCES ops_audit.audit_events(audit_event_id) ON DELETE RESTRICT"
+    },
+    {
+      "name": "knowledge_source_usage_rights_tenant_id_fkey",
+      "table": "knowledge.knowledge_source_usage_rights",
+      "validated": true,
+      "definition": "FOREIGN KEY (tenant_id) REFERENCES platform.tenants(tenant_id) ON DELETE RESTRICT"
+    }
+  ]
+}

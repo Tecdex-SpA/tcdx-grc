@@ -1,0 +1,26 @@
+{
+  "path": "/app/apps/backend/dist/core-grc/service.js",
+  "sha256": "1fa3584e2817414bfe4d2bb92cc65f99a14897753d4a0d5507b0e594079b3147",
+  "snippets": [
+    {
+      "marker": "Tenant-only submit is limited to its own pending initial source",
+      "present": true,
+      "excerpt": " !submitScopes.has(\"owned_object\") && !submitScopes.has(\"assigned_object\") && !initialSource) {\n        throw new FoundationError(\"TCDX.AUTHORIZATION.DENIED\", \"Tenant-only submit is limited to its own pending initial source\", 403);\n    }\n    if (row.scan_status !== \"passed\" || (Number(row.link_count) < 1 && !tenantAdminSource && !initialSource)) {\n        th"
+    },
+    {
+      "marker": "Published methodology does not establish complete sufficiency criteria",
+      "present": true,
+      "excerpt": "code === (domain === \"compliance\" ? \"BASELINE_COMPLIANCE\" : \"BASELINE_CONTROL_EFFECTIVENESS\")) {\n        throw new FoundationError(\"TCDX.INVARIANT.VIOLATION\", \"Published methodology does not establish complete sufficiency criteria\", 422, false, { result_status: \"insufficient_data\" });\n    }\n    if (current.result_status !== \"valid\") {\n        throw new Found"
+    },
+    {
+      "marker": "prior_actor === actor.userIdentityId",
+      "present": true,
+      "excerpt": "actor FROM ${definition.table} WHERE tenant_id=$1::uuid AND \"${definition.idColumn}\"=$2::uuid`, [actor.tenantId, targetId]));\n            if (previous.rows[0]?.prior_actor === actor.userIdentityId)\n                throw new FoundationError(\"TCDX.AUTHORIZATION.DENIED\", \"Access denied\", 403);\n        }\n        if (spec.before)\n            await spec.before(tx,"
+    },
+    {
+      "marker": "assigned_membership_id === actor.membershipId",
+      "present": true,
+      "excerpt": "\", entity: \"Action\", from: \"completed\", command: \"action.verify\", requiresDistinctActor: true, before: async (_tx, actor, _body, _id, current) => { if (current.assigned_membership_id === actor.membershipId)\n                throw new FoundationError(\"TCDX.AUTHORIZATION.DENIED\", \"Access denied\", 403); }, changes: () => ({ verified_at: new Date() }), after: asy"
+    }
+  ]
+}

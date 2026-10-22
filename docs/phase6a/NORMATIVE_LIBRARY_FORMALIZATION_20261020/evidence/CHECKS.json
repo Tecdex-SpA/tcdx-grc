@@ -1,0 +1,233 @@
+{
+  "scope": "Authorized documentary formalization only",
+  "status": "PASS",
+  "checks": [
+    {
+      "check": "COMMAND bash scripts/verify-rector-governance.sh",
+      "status": "PASS",
+      "details": {
+        "exit_code": 0,
+        "log": "evidence/rector-post.log"
+      }
+    },
+    {
+      "check": "COMMAND bash scripts/test-rector-governance-status.sh",
+      "status": "PASS",
+      "details": {
+        "exit_code": 0,
+        "log": "evidence/status-post.log"
+      }
+    },
+    {
+      "check": "COMMAND git diff --check",
+      "status": "PASS",
+      "details": {
+        "exit_code": 0,
+        "log": "evidence/diff-check.log"
+      }
+    },
+    {
+      "check": "ENTRY_PRESERVATION",
+      "status": "PASS",
+      "details": {
+        "status": "PASS",
+        "preexisting_files_checked": 4136,
+        "preexisting_files_changed": [],
+        "new_files_outside_dossier": [],
+        "head": "4a275264a7522031e62bf09f598c9d56e21d25e0",
+        "head_unchanged": true,
+        "branch": "fix/step6a3-v112-continuity-20261016",
+        "branch_unchanged": true,
+        "index_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "index_unchanged": true,
+        "scope": "All tracked and nonignored untracked files in entry snapshot; no claim about unrecorded ignored files or remote Git state",
+        "changes_authorized": "New documentation and documentary evidence inside this dossier only",
+        "runtime_activity": "None; no QA/DB/IA/infrastructure connections or mutation commands executed",
+        "git_publication": "None executed; no commit/push/merge/stage/checkout commands"
+      }
+    },
+    {
+      "check": "THIRTEEN_DELIVERABLES",
+      "status": "PASS",
+      "details": [
+        "01_PO_DECISIONS.md",
+        "02_FUNCTIONAL_SCOPE.md",
+        "03_ARCHITECTURAL_COMPATIBILITY.md",
+        "04_BINDING_RESOLUTION.md",
+        "05_NORMATIVE_HOMOLOGATION.md",
+        "06_TENANT_CUSTOMIZATION.md",
+        "07_GRAPHICAL_MATRICES.md",
+        "08_AI_READINESS.md",
+        "09_TASK_PACKET.md",
+        "10_TRACEABILITY_MATRIX.csv",
+        "11_ACCEPTANCE_CRITERIA.md",
+        "12_MULTICOUNT_CONTINUITY.md",
+        "13_CONSOLIDATED_RESULT.md"
+      ]
+    },
+    {
+      "check": "NINE_PO_DECISIONS",
+      "status": "PASS",
+      "details": {
+        "decisions": 9,
+        "scope": "Recorded PO authority; no invented signature"
+      }
+    },
+    {
+      "check": "N01_N17_TRACEABILITY",
+      "status": "PASS",
+      "details": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    {
+      "check": "TRACE_FIELDS_AND_DECISIONS",
+      "status": "PASS",
+      "details": {
+        "rows": 27,
+        "columns": [
+          "DECISION_PO",
+          "REQUISITO_FUNCIONAL",
+          "CONTRATO_RECTOR",
+          "ENTIDAD_CANONICA",
+          "OPERACION_API",
+          "API_STATUS",
+          "PERMISO",
+          "PERMISSION_STATUS",
+          "UI",
+          "PRUEBA",
+          "GATE",
+          "EVIDENCIA",
+          "BINDING"
+        ],
+        "meaning": "Filled trace fields include CANDIDATE/MISSING/NOT_RUN explicitly; not execution coverage"
+      }
+    },
+    {
+      "check": "AC01_AC26_SPECIFIED",
+      "status": "PASS",
+      "details": {
+        "cases": [
+          "AC01",
+          "AC02",
+          "AC03",
+          "AC04",
+          "AC05",
+          "AC06",
+          "AC07",
+          "AC08",
+          "AC09",
+          "AC10",
+          "AC11",
+          "AC12",
+          "AC13",
+          "AC14",
+          "AC15",
+          "AC16",
+          "AC17",
+          "AC18",
+          "AC19",
+          "AC20",
+          "AC21",
+          "AC22",
+          "AC23",
+          "AC24",
+          "AC25",
+          "AC26"
+        ],
+        "execution": "NOT_RUN"
+      }
+    },
+    {
+      "check": "SEPARATE_CANDIDATE_POPULATIONS",
+      "status": "PASS",
+      "details": {
+        "counts": {
+          "catalogue_211": 211,
+          "preparatory_104": 104
+        },
+        "unique_ids": {
+          "catalogue_211": 211,
+          "preparatory_104": 104
+        },
+        "semantic_validation": "NOT_EXECUTED"
+      }
+    },
+    {
+      "check": "SOURCE_BYTES",
+      "status": "PASS",
+      "details": {
+        "entries": 281,
+        "mismatches": [],
+        "does_not_establish": "Authenticity, semantic validation or legal rights"
+      }
+    },
+    {
+      "check": "REUSED_HISTORICAL_SEALS",
+      "status": "PASS",
+      "details": [
+        {
+          "dossier": "docs/phase6a/NORMATIVE_PACKAGE_RECTOR_REVIEW_20261020",
+          "entries": 32,
+          "mismatches": []
+        },
+        {
+          "dossier": "docs/phase6a/STEP_6A4/STEP6A4_FORMAL_CLOSURE_20261020",
+          "entries": 18,
+          "mismatches": []
+        }
+      ]
+    },
+    {
+      "check": "CURRENT_CLOSURE_AND_ACTIVE_AUTHORITY",
+      "status": "PASS",
+      "details": {
+        "source": "Latest formal closure append plus official active activation",
+        "historical_checker_output": "Older checkpoints printed by governance do not supersede latest append; no master write"
+      }
+    },
+    {
+      "check": "CANONICAL_ORIGIN",
+      "status": "PASS",
+      "details": {
+        "canonical": "https://grc.tecdex.net/"
+      }
+    },
+    {
+      "check": "AI_TARGETS_NOT_CONFLATED",
+      "status": "PASS",
+      "details": {
+        "connections": "NONE",
+        "reconciliation": "Deferred until authorized integration"
+      }
+    },
+    {
+      "check": "PROPOSALS_NOT_EFFECTIVE",
+      "status": "PASS",
+      "details": {
+        "scope": "Documentary resolution; active physical/API/IAM contracts unchanged"
+      }
+    }
+  ],
+  "product_tests": "NOT_RUN",
+  "semantic_validation": "NOT_EXECUTED",
+  "source_licence_validation": "NOT_EXECUTED",
+  "formalization_review": "PO decisions, canonical reuse/insufficiencies, candidate deltas, phase dependencies, traceability and acceptance plan documented; checks verify documentary consistency and preservation, not implementation correctness",
+  "restrictions": "No imports, SQL, deployment, QA mutation, IAM changes, Git publication or later-stage start"
+}

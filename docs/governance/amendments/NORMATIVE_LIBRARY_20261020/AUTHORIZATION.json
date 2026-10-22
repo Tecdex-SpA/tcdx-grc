@@ -1,0 +1,44 @@
+{
+  "authority": "Product Owner",
+  "received_date": "2026-10-20",
+  "source": "ORDEN DE EJECUCIÓN — MATERIALIZACIÓN Y PUBLICACIÓN CONTRACTUAL GOBERNADA, this session",
+  "baseline": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "decisions_D01_D09": "APPROVED",
+  "architectural_decisions": [
+    "B02",
+    "B04",
+    "B05",
+    "B06",
+    "B07",
+    "B08"
+  ],
+  "authorized": [
+    "Materialize B01-B09 contracts",
+    "Governed local contractual publication if gates pass",
+    "Document B10-B11",
+    "Amendments, logical/physical/API/permission/policy specifications and non-destructive checks"
+  ],
+  "excluded": [
+    "Migration execution",
+    "Normative imports",
+    "Deployment",
+    "Operational IAM grant activation",
+    "QA/production business data mutation",
+    "Infrastructure/DNS/secrets changes",
+    "AI connectivity",
+    "STEP6A5",
+    "STEP6A6",
+    "Git commit/push/merge without separate authority"
+  ],
+  "platform_roles": [
+    "PLATFORM_ADMIN",
+    "PLATFORM_SUPPORT"
+  ],
+  "platform_condition": "Separate effective permissions; support inherits nothing from admin; tenant roles do not gain Platform authority",
+  "ai_declared_host": "ia-engine.tcdx.int",
+  "ai_declared_ip": "192.168.2.44",
+  "ai_previous_contract_host": "ia2.tcdx.int",
+  "ai_identity_equivalence": "NOT_ESTABLISHED",
+  "human_signature_of_generated_hashes": false,
+  "permission_of_runtime_implementation": false
+}

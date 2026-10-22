@@ -1,0 +1,30 @@
+{
+  "PV-H04-01": {
+    "status": "REPRODUCED_ON_EFFECTIVE_DDL; CORRECTED_IN_UNPUBLISHED_SUCCESSOR",
+    "sqlstate": "42703",
+    "cause": "H04 selects tenant_id from the global regulatory_pack_versions table which has no tenant_id column",
+    "original_two_failures": [
+      "rights_pack_exact_positive",
+      "rights_pack_unknown_fk"
+    ],
+    "candidate": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_PHYSICAL_VALIDATION_20261021",
+    "corrected_results": "attempt-03 149/149 PASS",
+    "remaining_action": "PO decision to publish this exact successor; no migration implied"
+  },
+  "PV-TEST-01": {
+    "status": "RESOLVED_TEST_HARNESS_ONLY",
+    "cause": "psql verbose errors contain two spaces after ERROR:, exact-space matching falsely classified expected SQLSTATE responses",
+    "correction": "Match the exact expected five-character SQLSTATE token and expected constraint/message; original logs/results untouched",
+    "original_attempt": "attempt-01 61 PASS / 65 FAIL; 64 negative results were parser false negatives"
+  },
+  "PV-TEST-02": {
+    "status": "NOT_A_DDL_DEFECT; TEST_INPUT_CORRECTED_FROM_CONTRACT",
+    "cause": "Identical synthetic input_hash supplied for two distinct ControlVersions; published contract includes ControlVersion in input hash",
+    "authority": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/CONFIGURATION_APPROVAL_AND_CONCURRENCY.md paragraph 7; apps/backend/src/configuration/control-adjustments.ts:61",
+    "checks": "Same hash remains rejected; distinct controls with distinct hashes succeed. No uniqueness constraint changed."
+  },
+  "PV-TOOL-01": {
+    "status": "HISTORICAL_CLOSED_INVENTORY_EXPECTATION; NOT_TRANSFER_LOSS",
+    "detail": "verify-continuation.py PASS before creation. Re-invocation after ENTRY.json creation rejects that new file outside its sealed previous inventory. Previous verifier and evidence left unchanged. This successor verifies its own closed delta and all 4359 incoming hashes."
+  }
+}

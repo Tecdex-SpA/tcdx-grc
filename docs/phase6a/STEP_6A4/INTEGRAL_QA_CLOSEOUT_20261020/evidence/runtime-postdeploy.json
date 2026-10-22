@@ -1,0 +1,51 @@
+{
+  "status": "PASS",
+  "time": "2026-10-20T17:20:54.616029+00:00",
+  "frontend": {
+    "container_id": "a633d5527524b8cab6c1bfeaab046233cf64e9668346594a598464e925b7f46a",
+    "image_id": "sha256:e00413fcd947cdaea312583d610b52a205c2af7a8fa445327a8e8352d2a9e0f7",
+    "repo_digests": [],
+    "architecture": "amd64",
+    "os": "linux",
+    "started_at": "2026-10-20T17:17:50.263902436Z",
+    "running": true,
+    "health": "healthy",
+    "restart_count": 0,
+    "qa_environment": true,
+    "privileged": false,
+    "mounts_count": 0,
+    "configuration_sha256": "9f32c99cc2097d4f7acf0945dee2b2e6d290777363a056571546879faa83d3c2"
+  },
+  "backend": {
+    "container_id": "0800ad076084814749a3f5636ed4c9598a667b583503127b5c99ef18284ffd87",
+    "image_id": "sha256:f4ed625346fc4712f27945d5248aa1b93e3b324772ef5e06c8d37e1102f57129",
+    "repo_digests": [
+      "tcdx-grc-backend@sha256:f4ed625346fc4712f27945d5248aa1b93e3b324772ef5e06c8d37e1102f57129"
+    ],
+    "architecture": "amd64",
+    "os": "linux",
+    "started_at": "2026-10-19T14:44:17.521669245Z",
+    "running": true,
+    "health": "healthy",
+    "restart_count": 0,
+    "qa_environment": true,
+    "privileged": false,
+    "mounts_count": 9,
+    "configuration_sha256": "c3bb7828a8deffb24358da74904b02081673465a505e12cc47d34ce1a07aac2e"
+  },
+  "rollback": {
+    "container_id": "5b74e613dc8dc3a5ac38759960a09ffc80a15674dee9a70de882f857048f8fb2",
+    "image_id": "sha256:bc8f21f7edaa0779cfafbfee01afe324d81e7e39bf45d4e51302bc6b7303fdd6",
+    "repo_digests": [],
+    "architecture": "amd64",
+    "os": "linux",
+    "started_at": "2026-10-20T13:42:41.67045994Z",
+    "running": false,
+    "health": "unhealthy",
+    "restart_count": 0,
+    "qa_environment": true,
+    "privileged": false,
+    "mounts_count": 0,
+    "configuration_sha256": "fe7b938e1ae64b2e6ccc79a8e5017555e6ae6faa0653ad4b18f1485a28a2c97f"
+  }
+}

@@ -1,3 +1,4 @@
+import { REGULATORY_PACK_CODES } from "./model.js";
 import { FoundationError } from "../errors.js";
 import { calculateCoverage } from "./coverage.js";
 import { hashCanonical, sha256 } from "./hash.js";
@@ -92,6 +93,8 @@ export function candidateState(input: RegulatoryPackImportInput, coveragePercent
 
 function validateGovernance(input: RegulatoryPackImportInput): void {
   const governance = input.governance;
+  if (!["licensed_file", "official_source", "received_preliminary_file"].includes(input.source.origin)) fail("Unknown source origin");
+  if (input.source.origin === "received_preliminary_file" && governance.authorityClass !== "NON_AUTHORITATIVE_TEST_PACK") fail("Received preliminary files cannot claim normative authority");
   if (governance.sourceRoles.length === 0 || new Set(governance.sourceRoles).size !== governance.sourceRoles.length) {
     fail("Regulatory source roles must be present and unique");
   }
@@ -128,6 +131,7 @@ export function calculateImportChecksum(input: RegulatoryPackImportInput): strin
 }
 
 export function validateAndNormalize(input: RegulatoryPackImportInput): NormalizedRegulatoryPack {
+  if (!REGULATORY_PACK_CODES.includes(input.packCode)) fail("Unknown regulatory pack code");
   assertSha256(input.importChecksum, "importChecksum");
   assertSha256(input.source.sourceChecksum, "source.sourceChecksum");
   if (calculateImportChecksum(input) !== input.importChecksum) fail("Import checksum does not match the canonical source payload");
@@ -141,6 +145,10 @@ export function validateAndNormalize(input: RegulatoryPackImportInput): Normaliz
       fail("CL_LEY_21719 requires the official Biblioteca del Congreso Nacional source");
     }
     if (input.effectiveFrom !== "2026-12-01T00:00:00.000Z") fail("CL_LEY_21719 principal amendments require the governed effective date");
+  } else if (input.packCode === "CL_LEY_21663") {
+    if (input.source.sourceType !== "law") fail("CL_LEY_21663 requires a law source");
+    if (authorizedNormativeSource && (input.source.origin !== "official_source" || !input.source.definitivePublication)) fail("CL_LEY_21663 official use requires an authentic definitive legal source");
+    if (!input.edition.trim() || !input.source.publisher.trim() || !input.source.officialUri.trim() || input.effectiveFrom === null || !Number.isFinite(Date.parse(input.effectiveFrom))) fail("CL_LEY_21663 source edition and temporal metadata must be resolved");
   } else if (input.source.sourceType !== "standard") {
     fail("ISO packs require a standard source type");
   }

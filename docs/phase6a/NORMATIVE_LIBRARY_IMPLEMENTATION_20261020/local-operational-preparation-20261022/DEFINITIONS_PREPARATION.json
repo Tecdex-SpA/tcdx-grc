@@ -1,0 +1,166 @@
+{
+  "status": "PREPARED_DERIVED_MATERIALIZATION_BLOCKED_LOCAL_DEFINITIONS_01",
+  "authority": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/CONFIGURATION_DEFINITIONS.json",
+  "physical_ids": "UNASSIGNED",
+  "operational_activation": "NONE",
+  "definitions": [
+    {
+      "descriptor": {
+        "configuration_code": "control_operational_activity",
+        "version_number": 1,
+        "value_type": "text",
+        "owner_domain": "controls",
+        "ownership_class": "PLATFORM_CONTROL",
+        "tenant_overridable": true,
+        "object_overridable": true,
+        "allowed_scope_levels": [
+          "control_version"
+        ],
+        "default_text_value": null,
+        "base_control_version_field": "execution_method",
+        "label_es": "Actividades operativas",
+        "value_schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 65536,
+          "pattern": ".*\\S.*"
+        },
+        "confirmation_semantics": null,
+        "activation": "EXACT_DATA_MANIFEST_AND_SEPARATE_PO_SEED_OR_IMPORT_AUTHORIZATION",
+        "actor_ids": "RESOLVE_REAL_AUTHORIZED_ACTOR_AT_EXECUTION_NO_PLACEHOLDER_UUID"
+      },
+      "scope": {
+        "ownership_class": "PLATFORM_CONTROL",
+        "tenant_id": null,
+        "scope_level": "control_version"
+      },
+      "validation_rule": {
+        "rule_ordinal": 1,
+        "operator": "contract_schema",
+        "error_code": "TCDX.VALIDATION.FAILED",
+        "operand_text_value": "control_operational_activity@1:1912919c909dc91a0d3d9a8cee6c596d2b709332f2395ade9453ee9594260cf5"
+      }
+    },
+    {
+      "descriptor": {
+        "configuration_code": "control_recommended_evidence",
+        "version_number": 1,
+        "value_type": "text",
+        "owner_domain": "controls",
+        "ownership_class": "PLATFORM_CONTROL",
+        "tenant_overridable": true,
+        "object_overridable": true,
+        "allowed_scope_levels": [
+          "control_version"
+        ],
+        "default_text_value": null,
+        "base_control_version_field": "minimum_evidence",
+        "label_es": "Evidencias recomendadas",
+        "value_schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 65536,
+          "pattern": ".*\\S.*"
+        },
+        "confirmation_semantics": null,
+        "activation": "EXACT_DATA_MANIFEST_AND_SEPARATE_PO_SEED_OR_IMPORT_AUTHORIZATION",
+        "actor_ids": "RESOLVE_REAL_AUTHORIZED_ACTOR_AT_EXECUTION_NO_PLACEHOLDER_UUID"
+      },
+      "scope": {
+        "ownership_class": "PLATFORM_CONTROL",
+        "tenant_id": null,
+        "scope_level": "control_version"
+      },
+      "validation_rule": {
+        "rule_ordinal": 1,
+        "operator": "contract_schema",
+        "error_code": "TCDX.VALIDATION.FAILED",
+        "operand_text_value": "control_recommended_evidence@1:1912919c909dc91a0d3d9a8cee6c596d2b709332f2395ade9453ee9594260cf5"
+      }
+    },
+    {
+      "descriptor": {
+        "configuration_code": "control_operational_frequency",
+        "version_number": 1,
+        "value_type": "text",
+        "owner_domain": "controls",
+        "ownership_class": "PLATFORM_CONTROL",
+        "tenant_overridable": true,
+        "object_overridable": true,
+        "allowed_scope_levels": [
+          "control_version"
+        ],
+        "default_text_value": null,
+        "base_control_version_field": "frequency_code",
+        "label_es": "Periodicidad",
+        "value_schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": ".*\\S.*",
+          "enum": [
+            "continuous",
+            "daily",
+            "weekly",
+            "monthly",
+            "quarterly",
+            "semiannual",
+            "annual",
+            "event_driven"
+          ]
+        },
+        "confirmation_semantics": null,
+        "activation": "EXACT_DATA_MANIFEST_AND_SEPARATE_PO_SEED_OR_IMPORT_AUTHORIZATION",
+        "actor_ids": "RESOLVE_REAL_AUTHORIZED_ACTOR_AT_EXECUTION_NO_PLACEHOLDER_UUID"
+      },
+      "scope": {
+        "ownership_class": "PLATFORM_CONTROL",
+        "tenant_id": null,
+        "scope_level": "control_version"
+      },
+      "validation_rule": {
+        "rule_ordinal": 1,
+        "operator": "contract_schema",
+        "error_code": "TCDX.VALIDATION.FAILED",
+        "operand_text_value": "control_operational_frequency@1:9efa2a5652f6724f615d501aafa2126cf6beb180fec6e6967d6b0d37ea33820d"
+      }
+    },
+    {
+      "descriptor": {
+        "configuration_code": "control_operational_confirmation",
+        "version_number": 1,
+        "value_type": "text",
+        "owner_domain": "controls",
+        "ownership_class": "PLATFORM_CONTROL",
+        "tenant_overridable": true,
+        "object_overridable": true,
+        "allowed_scope_levels": [
+          "control_version"
+        ],
+        "default_text_value": null,
+        "base_control_version_field": null,
+        "label_es": "Nivel de confirmación operativa",
+        "value_schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": ".*\\S.*"
+        },
+        "confirmation_semantics": "Tenant-authored descriptive operational level, unranked, no automatic sufficiency/compliance/authenticity meaning; not a new enum or method",
+        "activation": "EXACT_DATA_MANIFEST_AND_SEPARATE_PO_SEED_OR_IMPORT_AUTHORIZATION",
+        "actor_ids": "RESOLVE_REAL_AUTHORIZED_ACTOR_AT_EXECUTION_NO_PLACEHOLDER_UUID"
+      },
+      "scope": {
+        "ownership_class": "PLATFORM_CONTROL",
+        "tenant_id": null,
+        "scope_level": "control_version"
+      },
+      "validation_rule": {
+        "rule_ordinal": 1,
+        "operator": "contract_schema",
+        "error_code": "TCDX.VALIDATION.FAILED",
+        "operand_text_value": "control_operational_confirmation@1:09282714f0ed8455af7131f41d70bc8546d943e647193a8bb393fe02f000f449"
+      }
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+[
+  {
+    "check": "last-context-hook",
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "apps/backend/src/normative-library/applicability-hooks.test.ts",
+      "--maxWorkers=2"
+    ],
+    "duration_seconds": 0.934,
+    "exit_code": 0,
+    "status": "PASS",
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/last-context-hook.log",
+    "sha256": "45baf98800755afc150aaebba7f0f47bc1473f0422830e00be0755a762ad849a"
+  },
+  {
+    "check": "last-backend-build-lint",
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "-p",
+      "apps/backend/tsconfig.json"
+    ],
+    "duration_seconds": 0.558,
+    "exit_code": 0,
+    "status": "PASS",
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/last-backend-build-lint.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

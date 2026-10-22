@@ -1,6 +1,6 @@
 import { createHash, randomBytes, timingSafeEqual } from "node:crypto";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { createRemoteJWKSet, jwtVerify, type JWTVerifyGetKey, type JWTPayload } from "jose";
+import { createRemoteJWKSet, decodeJwt, jwtVerify, type JWTVerifyGetKey, type JWTPayload } from "jose";
 import { sql, type Kysely, type Transaction } from "kysely";
 import type { BackendConfig } from "../config.js";
 import type { FoundationDatabase } from "../database.js";
@@ -8,6 +8,8 @@ import { FoundationError } from "../errors.js";
 import { persistAuditEvent, persistOutboxEvent } from "../persistence/foundation-records.js";
 import { newUuidV7 } from "../uuid.js";
 import { ApplicationTokenService, tokenFingerprint } from "./application-token.js";
+
+import { BrowserTokenRenewal } from "./browser-token-renewal.js";
 
 const FLOW_COOKIE = "__Host-tcdx_oidc_flow";
 const FLOW_MAX_AGE_SECONDS = 600;
@@ -82,15 +84,16 @@ export function buildTokenEndpointRequest(config: OidcConfig, code: string, veri
   return { body, headers };
 }
 
-export async function verifyOidcIdentityProof(config: OidcConfig, idToken: string, nonce: string, keySet: JWTVerifyGetKey): Promise<ExternalClaims> {
+export async function verifyOidcIdentityProof(config: OidcConfig, idToken: string, nonce: string, keySet: JWTVerifyGetKey, proofKind: "authentication" | "refresh" = "authentication"): Promise<ExternalClaims> {
   try {
     const { payload } = await jwtVerify(idToken, keySet, {
       issuer: config.issuer,
       audience: config.clientId,
       algorithms: config.allowedAlgorithms,
-      requiredClaims: ["iss", "aud", "sub", "iat", "exp", "nonce", ...(config.requiredAmr?.length ? ["amr", "auth_time", "sid"] : [])]
+      requiredClaims: ["iss", "aud", "sub", "iat", "exp", ...(proofKind === "authentication" ? ["nonce"] : []), ...(config.requiredAmr?.length ? ["amr", "auth_time", "sid"] : [])]
     });
-    if (payload.nonce !== nonce || !payload.iss || !payload.sub) throw authFailure();
+    if ((payload.nonce !== undefined || proofKind === "authentication") && payload.nonce !== nonce) throw authFailure();
+    if (!payload.iss || !payload.sub) throw authFailure();
     if (config.requiredAmr?.length) {
       const amr = payload.amr;
       const exactAudience = payload.aud === config.clientId
@@ -268,6 +271,7 @@ export async function acceptMembershipInvitation(
 }
 
 export class OidcBrowserClient {
+  private readonly renewal?: BrowserTokenRenewal;
   private metadataCache?: { metadata: ProviderMetadata; expiresAt: number };
   private keySet?: ReturnType<typeof createRemoteJWKSet>;
 
@@ -278,8 +282,11 @@ export class OidcBrowserClient {
     private readonly applicationTokens: ApplicationTokenService,
     private readonly identities = new PostgresOidcIdentityResolver(),
     private readonly flows = new OidcFlowStore(),
-    private readonly fetcher: typeof fetch = fetch
-  ) {}
+    private readonly fetcher: typeof fetch = fetch,
+    sessionPolicy?: { idleSeconds: number; maxSeconds: number }
+  ) {
+    if (sessionPolicy) this.renewal = new BrowserTokenRenewal(applicationTokens, sessionPolicy);
+  }
 
   async metadata(now = Date.now()): Promise<ProviderMetadata> {
     if (this.metadataCache && this.metadataCache.expiresAt > now) return this.metadataCache.metadata;
@@ -341,7 +348,7 @@ export class OidcBrowserClient {
     return this.authorizationRequestFor({ invitationId: invitation.tenant_membership_invitation_id, tokenDigest });
   }
 
-  private async exchange(code: string, verifier: string): Promise<{ idToken: string }> {
+  private async exchange(code: string, verifier: string): Promise<{ idToken: string; refreshToken?: string }> {
     const metadata = await this.metadata();
     const request = buildTokenEndpointRequest(this.config, code, verifier);
     let response: Response;
@@ -354,15 +361,15 @@ export class OidcBrowserClient {
       });
     } catch { throw providerFailure(); }
     if (!response.ok) throw providerFailure();
-    const token = await response.json() as { id_token?: unknown };
+    const token = await response.json() as { id_token?: unknown; refresh_token?: unknown };
     if (typeof token.id_token !== "string") throw authFailure();
-    return { idToken: token.id_token };
+    return { idToken: token.id_token, ...(typeof token.refresh_token === "string" ? { refreshToken: token.refresh_token } : {}) };
   }
 
-  private async validateIdentityProof(idToken: string, nonce: string): Promise<ExternalClaims> {
+  private async validateIdentityProof(idToken: string, nonce: string, proofKind: "authentication" | "refresh" = "authentication"): Promise<ExternalClaims> {
     await this.metadata();
     if (!this.keySet) throw providerFailure();
-    return verifyOidcIdentityProof(this.config, idToken, nonce, this.keySet);
+    return verifyOidcIdentityProof(this.config, idToken, nonce, this.keySet, proofKind);
   }
 
   async complete(code: string, state: string, flowId: string, correlationId: string): Promise<string> {
@@ -371,13 +378,13 @@ export class OidcBrowserClient {
     const claims = await this.validateIdentityProof(external.idToken, flow.nonce);
     let issued: Awaited<ReturnType<ApplicationTokenService["issue"]>> | undefined;
     try {
-      return await this.database.transaction().execute(async (transaction) => {
+      const result = await this.database.transaction().execute(async (transaction) => {
         const identity = flow.invitation
           ? await acceptMembershipInvitation(transaction, this.identities, claims, flow.invitation, correlationId)
           : this.config.identityResolution === "existing_only"
             ? await this.identities.resolveExisting(transaction, claims)
             : await this.identities.resolveOrCreate(transaction, claims);
-        issued = await this.applicationTokens.issue(identity.userIdentityId, newUuidV7());
+        issued = await this.applicationTokens.issue(identity.userIdentityId, newUuidV7(), new Date(), undefined, Boolean(this.renewal));
         await persistAuditEvent(transaction, {
           auditEventId: newUuidV7(), ownershipClass: "PLATFORM_CONTROL", tenantId: null,
           actor: { userIdentityId: identity.userIdentityId }, correlationId,
@@ -392,10 +399,58 @@ export class OidcBrowserClient {
         });
         return issued.token;
       });
+      if (this.renewal) {
+        if (!external.refreshToken) throw authFailure();
+        let refreshToken = external.refreshToken;
+        const initial = decodeJwt(external.idToken); // Already verified above, including MFA.
+        if (typeof initial.auth_time !== "number" || typeof initial.sid !== "string") throw authFailure();
+        this.renewal.establish(issued!, initial.auth_time * 1000, async () => {
+          const metadata = await this.metadata();
+          const request = buildTokenEndpointRequest(this.config, "", "");
+          request.body.delete("code"); request.body.delete("code_verifier"); request.body.delete("redirect_uri");
+          request.body.set("grant_type", "refresh_token"); request.body.set("refresh_token", refreshToken);
+          let response: Response;
+          try {
+            response = await this.fetcher(metadata.token_endpoint, { method: "POST", headers: request.headers,
+              body: request.body, signal: AbortSignal.timeout(8_000), redirect: "error" });
+          } catch { throw providerFailure(); }
+          if (!response.ok) {
+            if (response.status === 400 || response.status === 401) throw authFailure();
+            throw providerFailure();
+          }
+          const body = await response.json() as { id_token?: unknown; refresh_token?: unknown };
+          if (typeof body.id_token !== "string" || typeof body.refresh_token !== "string") throw authFailure();
+          const renewedClaims = await this.validateIdentityProof(body.id_token, flow.nonce, "refresh");
+          const renewed = decodeJwt(body.id_token);
+          if (renewedClaims.subject !== claims.subject || renewedClaims.issuer !== claims.issuer
+            || renewed.sid !== initial.sid || renewed.auth_time !== initial.auth_time) throw authFailure();
+          refreshToken = body.refresh_token;
+        });
+      }
+      return result;
     } catch (error) {
       if (issued) await this.applicationTokens.revoke(issued.identity).catch(() => undefined);
       throw error;
     }
+  }
+
+  async renew(token: string, correlationId: string): Promise<string> {
+    if (!this.renewal) throw authFailure();
+    return this.renewal.renew(token, async (issued) => {
+      await this.database.transaction().execute(async (transaction) => {
+        const active = await sql`SELECT user_identity_id FROM iam.user_identities
+          WHERE user_identity_id=${issued.identity.principalId}::uuid AND lifecycle_state='active'`.execute(transaction);
+        if (active.rows.length !== 1) throw authFailure();
+        await persistAuditEvent(transaction, {
+          auditEventId: newUuidV7(), ownershipClass: "PLATFORM_CONTROL", tenantId: null,
+          actor: { userIdentityId: issued.identity.principalId }, correlationId,
+          eventCode: "audit.iam.application_token.issue.v1", aggregateType: "UserIdentity", aggregateId: issued.identity.principalId,
+          commandCode: "oidc.session.renew", outcome: "success", classification: "restricted",
+          after: { token_id_fingerprint: tokenFingerprint(issued.identity.tokenId),
+            expires_at: issued.identity.expiresAt.toISOString() }
+        });
+      });
+    });
   }
 
   async logout(token: string, correlationId: string): Promise<void> {
@@ -468,6 +523,12 @@ export function registerOidcBrowserRoutes(app: FastifyInstance, client?: OidcBro
     const token = await selected.complete(request.query.code, request.query.state, flowId, String(reply.getHeader("x-correlation-id")));
     const nonce = base64url(24);
     return secureHtml(reply, nonce).send(callbackHtml(token, selected.frontendOrigin, nonce));
+  });
+
+  app.post("/auth/refresh", async (request, reply) => {
+    if (!managedClient) throw authFailure();
+    const token = await managedClient.renew(bearer(request), String(reply.getHeader("x-correlation-id")));
+    return reply.header("cache-control", "no-store").header("pragma", "no-cache").send({ token });
   });
 
   app.post("/auth/logout", async (request, reply) => {

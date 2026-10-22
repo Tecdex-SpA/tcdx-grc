@@ -28,6 +28,7 @@ type Session = { principalId: string; expiresAt: Date; revoked: boolean };
 export interface ApplicationSessionStore {
   register(tokenId: string, principalId: string, expiresAt: Date): Promise<void>;
   isActive(tokenId: string, principalId: string, now: Date): Promise<boolean>;
+  isUnrevoked(tokenId: string, principalId: string): Promise<boolean>;
   revoke(tokenId: string, principalId: string): Promise<void>;
   revokePrincipal(principalId: string): Promise<void>;
 }
@@ -47,6 +48,11 @@ export class FailClosedMemorySessionStore implements ApplicationSessionStore {
     const session = this.sessions.get(tokenId);
     if (!session || session.revoked || session.principalId !== principalId || session.expiresAt <= now) return false;
     return true;
+  }
+
+  async isUnrevoked(tokenId: string, principalId: string): Promise<boolean> {
+    const session = this.sessions.get(tokenId);
+    return Boolean(session && !session.revoked && session.principalId === principalId);
   }
 
   async revoke(tokenId: string, principalId: string): Promise<void> {
@@ -97,11 +103,12 @@ export class ApplicationTokenService implements IdentityVerifier {
     return new ApplicationTokenService(config, privateKey, publicKey, sessions);
   }
 
-  async issue(principalId: string, tokenId: string, now = new Date()): Promise<{ token: string; identity: VerifiedIdentity }> {
+  async issue(principalId: string, tokenId: string, now = new Date(), notAfter?: Date, renewable = false): Promise<{ token: string; identity: VerifiedIdentity }> {
     if (!validateUuid(principalId) || !validateUuid(tokenId)) throw authenticationFailure();
     const issuedAt = Math.floor(now.getTime() / 1_000);
-    const expiresAt = new Date((issuedAt + this.config.maxLifetimeSeconds) * 1_000);
-    const token = await new SignJWT({ principal_class: "HUMAN_INTERACTIVE" })
+    const expiresAt = new Date(Math.min((issuedAt + this.config.maxLifetimeSeconds) * 1_000, notAfter?.getTime() ?? Infinity));
+    if (expiresAt.getTime() <= now.getTime()) throw authenticationFailure();
+    const token = await new SignJWT({ principal_class: "HUMAN_INTERACTIVE", ...(renewable ? { session_renewable: true } : {}) })
       .setProtectedHeader({ alg: this.config.algorithm, kid: this.config.keyId, typ: "at+jwt" })
       .setIssuer(this.config.issuer)
       .setAudience(this.config.audience)
@@ -206,6 +213,11 @@ export class ApplicationTokenService implements IdentityVerifier {
       if (typeof body.access_token !== "string" || body.token_type?.toString().toLowerCase() !== "bearer") throw authenticationFailure();
       return await this.verifyMachineProof(body.access_token);
     } catch { throw authenticationFailure(); }
+  }
+
+  /** Only a server-held renewal record may use this; never accepts an API bearer. */
+  async isUnrevokedForRenewal(identity: VerifiedIdentity): Promise<boolean> {
+    return this.sessions.isUnrevoked(identity.tokenId, identity.principalId);
   }
 
   async revoke(identity: VerifiedIdentity): Promise<void> {

@@ -1,0 +1,42 @@
+# Preparación operacional local B01–B09/H04
+
+**Resultado integral: PARTIAL_BLOCKED. RECTOR_GATE=BLOCKED.** IAM/registry y los 13 bindings B06 están preparados y probados sobre PostgreSQL 16 aislado. H04 dispone de incorporación/revocación privadas y auditadas, con derechos exclusivamente sintéticos en el clúster desechable. Las cuatro Definitions/reglas están preparadas como datos derivados, pero su materialización es incompatible con un CHECK físico inmutable. No se declara habilitable la Biblioteca completa en QA.
+
+Baseline activa: `TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16`. Fase: POST-STEP6A4 / Biblioteca Normativa intermedia / PRE-STEP6A5. STEP6A3/STEP6A4 conservan PASS; STEP6A5/STEP6A6 no se iniciaron. Dominio público canónico: https://grc.tecdex.net/.
+
+## Continuidad y autorización
+
+Se consumieron primero operational-readiness-assessment, code-composition y code-b04-01-full-resolution del 2026-10-22; se ejecutó el verificador B04 antes de editar: PASS. El expediente del generador se leyó únicamente para preservar su cierre. No se repitió la adopción física ni se contactó QA. Se leyeron Constitución, rector46/22/29/45, enforcement, status vigente y los contratos concretos del slice; los contratos visuales activos se conservaron sin cambiar frontend.
+
+La instrucción PO actual autoriza implementación y pruebas locales, datos sintéticos aislados y runbook; mantiene prohibidos QA, nuevas migraciones, edición de las 35 existentes, generador canónico, activaciones reales, importaciones, despliegues, Git de publicación y fases posteriores. Esta autorización sucede las restricciones locales de las sesiones previas dentro del alcance indicado; no se vuelve a solicitar su aprobación conceptual.
+
+Rama `fix/step6a3-v112-continuity-20261016`, HEAD `4a275264a7522031e62bf09f598c9d56e21d25e0`, índice vacío preservado. INITIAL_STATE conserva 5.116 hashes recibidos y el estado Git inicial. Sólo siete archivos recibidos se modifican: seis de backend para la vía privada existente y un append de status; los preimages y diffs permiten revisar exclusivamente ese delta. El resto del trabajo recibido se preserva por hash.
+
+## Implementación completada
+
+- `security/normative-library-publication.ts` consume los catálogos publicados y verifica sus hashes, el manifiesto adoptado y las 35 migraciones. Prepara inputs operacionales explícitos, sin IDs manuales, valores de tenant ni fechas en código de negocio. El publisher registra los ocho permisos, los pares RolePermission aprobados y el grant B05 limitado. Resuelve roles existentes por código/ownership/tenant; no crea roles, usuarios, memberships, assignments o entitlements.
+- La operación `iam.library.publish` se integra al mismo operador privado y al mismo IamPublicationService. Requiere configuración exacta, hash del input, perfil canónico QA y una prueba M2M fresca resuelta al principal existente. Sin configuración, DENY antes de autenticar o abrir transacción. El arranque no ejecuta publicación. No se añade endpoint público, mecanismo de identidad ni TCDX Managed Identity.
+- Los 13 bindings usan las tablas LifecycleTransitionDefinition/Scope/SideEffect existentes, UUIDv7 generados, FK de Permission y las decisiones B06 sucesoras. Replays exigen igualdad de permiso, scope completo, destino, policies, SoD, efectos, auditoría, concurrencia e idempotencia. Divergencia bloquea; no sobrescribe historia. La ausencia total adopta la primera versión disponible; drafts o versiones conflictivas son NO-GO y no se saltan.
+- Publicación IAM/registry y AuditEvent son atómicos, serializados por locks canónicos con límites de espera/ejecución. Replay exacto no duplica filas ni auditorías. Se conservan las policies de uso: GRC Manager no obtiene aprobación genérica fuera de las cuatro Definitions, Platform Support sólo metadata, tenant no obtiene autoridad Platform.
+- `normative-library/rights-publication.ts` incorpora y revoca hechos H04 mediante la relación física existente. Reutiliza autorización contextual de autoría de Source y actores humanos resueltos, objeto propio, evidencia privada exacta y los siete actos publicados: consultation/extraction/storage/presentation/export/import/publication. No inventa un acto «distribución» ni convierte una etiqueta de licencia en autorización.
+- Cada derecho vincula fuente, ownership, audiencia, hash, edición, pack opcional, acto, entorno, tipo, intervalo y evidencia. El proof se prepara previamente con UUIDv7 y binding hash; el writer no fabrica autoridad jurídica ni sube documentos. Lock de Source evita duplicados/solapamientos ambiguos; audit y fila son una transacción. Revocación monotónica conserva historia. No se inventa un evento outbox: H04 publica eventos AuditEvent, no un nuevo evento de dominio para esta incorporación.
+
+## Bloqueo demostrado: LOCAL-DEFINITIONS-01
+
+`CONFIGURATION_DEFINITIONS.json` aprueba cuatro Definitions `text` v1 con `default_text_value=null`, sin defaults inventados; su ausencia conserva el campo original de ControlVersion o confirmación sin configurar. La migración **31**, `20261009000100_phase6a3_configuration_integrity.sql:74–85`, impone `num_nonnulls(default_*)=1` y para `text` exige `default_text_value IS NOT NULL`.
+
+En el PostgreSQL aislado reconstruido con las 35 migraciones, cada uno de los cuatro INSERT exactos falla con SQLSTATE `23514`, constraint `ck_configuration_definitions__typed_default`. La primera prueba integral descubrió el conflicto y revirtió toda la transacción. Después se separó el trabajo independiente IAM/B06; no se conservó un publisher de Definitions que sólo pudiera fallar ni se introdujo un valor centinela, trigger deshabilitado, tabla paralela o bypass.
+
+DEFINITIONS_PREPARATION.json contiene exactamente los cuatro descriptores, scope y regla normalizada `contract_schema`; los IDs físicos siguen sin asignar. Su preparación no equivale a publicación, vigencia operacional, elegibilidad física B04 o cierre de esta dependencia. Reconciliarla exige un alcance posterior que autorice resolver la incompatibilidad físico/ejecutable. Esta tarea prohíbe las vías que la resolverían modificando el esquema o las migraciones.
+
+**CODE_B04_01=PASS_PRESERVED** conserva su alcance de código, consulta contextual, selector y revalidación ya probados. El bloqueo nuevo corresponde a materialización de Definitions, no a reapertura de aquella resolución. La consulta física devuelve vacío legítimo y create deniega una Definition inexistente. Sus pruebas previas con ejecutor SQL sintético no acreditaban este CHECK físico.
+
+## Evidencia y límites
+
+195 pruebas locales PASS: 144 focalizadas/16 archivos, 13 de autenticación y 38 PostgreSQL físicas. Se incluyen los cuatro rechazos físicos esperados; un test PASS de rechazo no convierte Definitions en PASS operacional. Typechecks y builds globales PASS; build/typecheck backend finales PASS. Generadores canónico y B01–B09/H04 --check, rector integrity/status, secretos y whitespace PASS. El build frontend conserva la advertencia existente de chunk >500 kB; no se relajó ningún umbral.
+
+No se repiten los diez browser aceptados de CODE-B04-01 porque frontend/contratos/formulario no cambiaron. Se verifica su preservación por hash y se ejecutan sus regresiones inmediatas. No hay E2E QA ni prueba con identidades, licencias o datos reales. La evidencia de custodia MinIO es la suite focalizada del adaptador con cliente sintético; las pruebas PostgreSQL usan un verificador de evidencia explícitamente sintético. No se afirma integración física MinIO ni aceptación jurídica. HUMAN_UI_REVIEW de estas nuevas superficies continúa PENDING.
+
+Capas modificadas: backend operacional, pruebas, runner local y documentación/status. DB física/expected-schema/35 migraciones/generador canónico/contratos ejecutables/frontend/infraestructura/contratos de despliegue permanecen intactos. Sólo el clúster PostgreSQL desechable recibió DDL y datos sintéticos; el runner lo detuvo al terminar y conservó sus logs. No se tocó otro servicio.
+
+Resultado reproducible y conteos en RESULT.json/FILE_MANIFEST.json. TRACEABILITY, SECURITY_REPORT, TEST_REPORT y QA_ENABLEMENT_RUNBOOK documentan controles y siguientes operaciones. verify.py verifica hashes, preservación, contexto Git, evidencia y generadores sin abrir conexión de red o base de datos. El procedimiento QA está preparado, **no ejecutado**, y su gate integral permanece NO-GO por LOCAL-DEFINITIONS-01 y las autorizaciones/evidencias operacionales futuras.

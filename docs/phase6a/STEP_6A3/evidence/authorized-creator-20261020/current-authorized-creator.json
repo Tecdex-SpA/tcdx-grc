@@ -1,0 +1,1046 @@
+{
+  "access": {
+    "status": 200,
+    "body": {
+      "available_tenant_contexts": [
+        {
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "tenant_display_name": "TecDex",
+          "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+          "membership_state": "active",
+          "effective_role_codes": [
+            "ACTION_OWNER",
+            "AI_GOVERNANCE_MANAGER",
+            "AUDITOR",
+            "AUDITOR_LEAD",
+            "CISO_SECURITY_MANAGER",
+            "COMPLIANCE_MANAGER",
+            "CONTINUITY_MANAGER",
+            "CONTROL_OWNER",
+            "DATA_ADMIN",
+            "EVIDENCE_OWNER",
+            "EXECUTIVE_BOARD_VIEWER",
+            "GRC_MANAGER",
+            "LEGAL_REVIEWER",
+            "PRIVACY_MANAGER",
+            "PROCESS_OWNER",
+            "QUALITY_MANAGER",
+            "REGULATORY_CONTENT_STEWARD",
+            "REPORT_VIEWER",
+            "RISK_MANAGER",
+            "SUPPLIER_MANAGER",
+            "TENANT_ADMIN",
+            "VIEWER"
+          ]
+        }
+      ],
+      "effective_platform_role_codes": [
+        "PLATFORM_ADMIN"
+      ]
+    }
+  },
+  "authorization": {
+    "status": 200,
+    "body": {
+      "evaluated_at": "2026-10-20T11:25:37.624Z",
+      "platform_permissions": [
+        "configuration.configuration_definition.approve",
+        "configuration.configuration_definition.archive",
+        "configuration.configuration_definition.create",
+        "configuration.configuration_definition.publish",
+        "configuration.configuration_definition.read",
+        "configuration.configuration_definition.review",
+        "configuration.configuration_definition.update",
+        "platform.commercial_catalog.publish",
+        "platform.impersonation_session.impersonate",
+        "platform.lifecycle_transition.administer",
+        "platform.lifecycle_transition.publish",
+        "platform.lifecycle_transition.read",
+        "platform.managed_identity.administer",
+        "platform.managed_identity.create",
+        "platform.managed_identity.read",
+        "platform.managed_identity.update",
+        "platform.membership.read",
+        "platform.membership_invitation.create",
+        "platform.membership_invitation.read",
+        "platform.membership_invitation.update",
+        "platform.regulatory_pack_validation_access.archive",
+        "platform.regulatory_pack_validation_access.create",
+        "platform.regulatory_pack_validation_access.read",
+        "platform.role.administer",
+        "platform.role.assign",
+        "platform.role.read",
+        "platform.subscription.create",
+        "platform.subscription.read",
+        "platform.subscription.update",
+        "platform.subscription_regulatory_pack.archive",
+        "platform.subscription_regulatory_pack.create",
+        "platform.subscription_regulatory_pack.read",
+        "platform.tenant.archive",
+        "platform.tenant.create",
+        "platform.tenant.read",
+        "platform.tenant_account_classification.update",
+        "platform.tenant_user.onboard",
+        "platform.user_identity.read"
+      ],
+      "tenant_permissions": {
+        "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+        "permissions": {
+          "ai.ai_recommendation.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "ai.ai_recommendation.review": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "audit.audit.approve": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "audit.audit.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "audit.audit.transition": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "audit.audit.update": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.applicability.approve": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.applicability.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.applicability.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.applicability.submit": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.framework.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.methodology.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.normative_unit.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.requirement_assessment.approve": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.requirement_assessment.archive": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.requirement_assessment.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.requirement_assessment.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.requirement_assessment.submit": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.requirement_assessment.update": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.requirement.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.soa.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.soa.publish": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "compliance.soa.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "configuration.configuration_override.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "configuration.configuration_override.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "configuration.configuration_override.review": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "configuration.configuration_override.update": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "configuration.effective_configuration.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "controls.assurance_test.approve": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "controls.assurance_test.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "controls.assurance_test.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "controls.assurance_test.review": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "controls.control_assessment.approve": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "controls.control_assessment.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "controls.control_assessment.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "controls.control_assessment.review": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "controls.control_assessment.submit": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "controls.control_assessment.update": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "controls.control.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "controls.control.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "controls.methodology.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "data.lineage.review": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "data.measurement.execute": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "data.rule.execute": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "data.snapshot.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "evidence.document.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "evidence.evidence_request.archive": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "evidence.evidence_request.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "evidence.evidence_request.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "evidence.evidence_request.submit": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "evidence.evidence_request.update": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "evidence.evidence.approve": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "evidence.evidence.archive": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "evidence.evidence.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "evidence.evidence.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "evidence.evidence.reject": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "evidence.evidence.review": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "integration.integration.archive": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "integration.integration.configure": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "integration.integration.update": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "integration.sync_run.execute": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.bia.approve": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.bia.archive": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.bia.review": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.bia.transition": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.bia.verify": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.continuity_plan.approve": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.continuity_plan.archive": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.continuity_plan.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.continuity_plan.review": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.continuity_plan.transition": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.continuity_plan.verify": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.incident.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.incident.transition": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.supplier_assessment.approve": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.supplier_assessment.archive": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.supplier_assessment.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.supplier_assessment.review": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.supplier_assessment.submit": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.supplier_assessment.transition": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.survey.approve": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.survey.archive": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.survey.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.survey.reject": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.survey.review": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.survey.transition": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "operations.survey.update": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "organization.subject.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "organization.subject.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "platform.membership_reference.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "platform.membership.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "platform.membership.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "platform.regulatory_pack_validation_access.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "platform.role.assign": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "platform.role.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "platform.subscription_regulatory_pack.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "platform.user_identity.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.data_subject_request.approve": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.data_subject_request.archive": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.data_subject_request.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.data_subject_request.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.data_subject_request.review": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.data_subject_request.transition": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.data_subject_request.update": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.erasure_execution.execute": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.erasure_execution.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.erasure_execution.review": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.retention_policy_reference.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.retention_policy.approve": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.retention_policy.archive": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.retention_policy.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.retention_policy.legal_hold.release": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.retention_policy.publish": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.retention_policy.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.retention_policy.review": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "privacy.retention_policy.update": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "remediation.action.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "remediation.action.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "remediation.action.verify": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "remediation.issue.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "remediation.issue.read": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "remediation.issue.transition": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "reporting.report_run.execute": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "reporting.report.approve": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "reporting.report.archive": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "reporting.report.publish": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "reporting.report.review": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "risk.acceptance.approve": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "risk.acceptance.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "risk.risk_assessment.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "risk.risk.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "risk.risk.transition": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "risk.treatment.approve": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "risk.treatment.create": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "risk.treatment.transition": [
+            {
+              "scope_kind": "tenant"
+            }
+          ],
+          "risk.treatment.verify": [
+            {
+              "scope_kind": "tenant"
+            }
+          ]
+        },
+        "default_timezone": "America/Santiago"
+      }
+    }
+  },
+  "membership": {
+    "status": 200,
+    "body": {
+      "tenant_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "membership_state": "active",
+      "joined_at": "2026-09-23T19:38:43.779Z",
+      "ended_at": null,
+      "user_identity": {
+        "display_name": "Baruj",
+        "lifecycle_state": "active",
+        "email_normalized": "andres.barouh@tecdex.net",
+        "last_authenticated_at": "2026-10-20T11:24:57.151221+00:00"
+      },
+      "roles": [
+        {
+          "role_id": "01a0cfc7-0ccc-731f-b1ac-56538bda8c44",
+          "valid_to": null,
+          "role_code": "AI_GOVERNANCE_MANAGER",
+          "role_name": "AI Governance Manager",
+          "scope_kind": "tenant",
+          "valid_from": "2026-10-13T19:18:54.523707+00:00",
+          "membership_role_id": "01a136b4-1733-7385-b57a-39a10fca58b3",
+          "etag": "2d07446ae6e4d9a3d7c0bb85f387c783adff9784e5f93fd9212ebaf99da9016f"
+        },
+        {
+          "role_id": "01a0cfc7-0cca-767d-a772-90fdc3eb03c7",
+          "valid_to": "2026-10-08T00:24:58.810503+00:00",
+          "role_code": "ACTION_OWNER",
+          "role_name": "Action Owner",
+          "scope_kind": "assigned_object",
+          "valid_from": "2026-10-08T00:11:36.873349+00:00",
+          "membership_role_id": "01a118d9-ea22-7269-9ff7-4517f1ed61ad",
+          "etag": "7dec490b1a2fcc217c02a2d28a9046de2a67e348e26a20a74aefa0deb2160706"
+        },
+        {
+          "role_id": "01a0cfc7-0cca-767d-a772-90fdc3eb03c7",
+          "valid_to": null,
+          "role_code": "ACTION_OWNER",
+          "role_name": "Action Owner",
+          "scope_kind": "tenant",
+          "valid_from": "2026-10-13T19:18:57.713832+00:00",
+          "membership_role_id": "01a136b4-23a9-73bc-bbec-dba064aea2fa",
+          "etag": "466e9d58c4c0bc4c577ef7a2898dd5246628618ed1300cf05bfaeaea46f1d791"
+        },
+        {
+          "role_id": "01a0cfc7-0cce-7375-af32-dcf57962b069",
+          "valid_to": null,
+          "role_code": "AUDITOR",
+          "role_name": "Auditor",
+          "scope_kind": "tenant",
+          "valid_from": "2026-10-13T19:18:51.920499+00:00",
+          "membership_role_id": "01a136b4-0d08-7356-ad1d-23fc95eb8bd4",
+          "etag": "c3ca475f0c862f1ff26bb3fac8ac8584e8c255744e9fd0601742e2803a53fca9"
+        },
+        {
+          "role_id": "01a0cfc7-0ccf-700f-99a2-7234d7c259d9",
+          "valid_to": null,
+          "role_code": "AUDITOR_LEAD",
+          "role_name": "Auditor Lead",
+          "scope_kind": "tenant",
+          "valid_from": "2026-10-13T19:18:48.950936+00:00",
+          "membership_role_id": "01a136b4-016e-7638-ae21-eae9e057da94",
+          "etag": "b9253997897b7e9b963db6fe8b9446cd6682180a9e11e43cd39954fa12dfd033"
+        },
+        {
+          "role_id": "01a0cfc7-0cd1-732e-b0ca-ee523a645d99",
+          "valid_to": null,
+          "role_code": "CISO_SECURITY_MANAGER",
+          "role_name": "CISO/Security Manager",
+          "scope_kind": "tenant",
+          "valid_from": "2026-10-13T19:18:45.815142+00:00",
+          "membership_role_id": "01a136b3-f52e-7033-b1a0-2f675b00f978",
+          "etag": "32c0e4a7f8c370b548d5264a9bd8561aba8ac87c4ebf2611f9292aa87e8b3069"
+        },
+        {
+          "role_id": "01a0cfc7-0cd2-7691-93e2-6b3461a5feed",
+          "valid_to": null,
+          "role_code": "COMPLIANCE_MANAGER",
+          "role_name": "Compliance Manager",
+          "scope_kind": "tenant",
+          "valid_from": "2026-10-05T12:56:10.710583+00:00",
+          "membership_role_id": "01a10c22-d0d4-739d-8537-ffba9531f7c9",
+          "etag": "49f2b1265e979f25371276b23d7048d6bb616bb90b1b1a75bccb88e941db2e93"
+        },
+        {
+          "role_id": "01a0cfc7-0cd3-7776-b4d5-d4bdd92bfba6",
+          "valid_to": null,
+          "role_code": "CONTINUITY_MANAGER",
+          "role_name": "Continuity Manager",
+          "scope_kind": "tenant",
+          "valid_from": "2026-10-13T19:18:43.033208+00:00",
+          "membership_role_id": "01a136b3-ea50-7073-a9b7-af258fe62b8b",
+          "etag": "ff4fa451e219510fc223827cb450bda44a8153c6ba2565be8efa928fa204d3f6"
+        },
+        {
+          "role_id": "01a0cfc7-0cd4-76c2-b924-ac007351060e",
+          "valid_to": null,
+          "role_code": "CONTROL_OWNER",
+          "role_name": "Control Owner",
+          "scope_kind": "tenant",
+          "valid_from": "2026-09-24T17:57:48.515959+00:00",
+          "membership_role_id": "01a0d491-0364-77ab-ba43-50bf8fadbc0b",
+          "etag": "c53a83306c00696438570fd89732516621c7d9b5b3ed46eedabb50b6fcf84f68"
+        },
+        {
+          "role_id": "01a0cfc7-0cd4-76c2-b924-ac007351060e",
+          "valid_to": "2026-10-08T00:24:58.350705+00:00",
+          "role_code": "CONTROL_OWNER",
+          "role_name": "Control Owner",
+          "scope_kind": "assigned_object",
+          "valid_from": "2026-10-08T00:11:36.38255+00:00",
+          "membership_role_id": "01a118d9-e83a-73e3-b703-60234b719548",
+          "etag": "91ce40dcad8671ff8b629b0982eb00a3430a4d46d8cd011509e18936d85ac6d5"
+        },
+        {
+          "role_id": "01a0cfc7-0cd5-757e-a4ac-2449013f5918",
+          "valid_to": null,
+          "role_code": "DATA_ADMIN",
+          "role_name": "Data Admin",
+          "scope_kind": "tenant",
+          "valid_from": "2026-10-13T19:18:40.088209+00:00",
+          "membership_role_id": "01a136b3-decf-7082-82b0-81c82ea13d5b",
+          "etag": "a2875d150da6649a8455d3873445b38e9b22642472863ce72f7460fdb12a1208"
+        },
+        {
+          "role_id": "01a0cfc7-0cd6-7141-87e9-bc71d5f0542f",
+          "valid_to": null,
+          "role_code": "EVIDENCE_OWNER",
+          "role_name": "Evidence Owner",
+          "scope_kind": "tenant",
+          "valid_from": "2026-09-24T17:57:48.561723+00:00",
+          "membership_role_id": "01a0d491-0391-72a1-be5e-aec30018d3bc",
+          "etag": "083f9f046c7ee388d4eec012b6985df549508cd661e44c6424692dc507f5aa83"
+        },
+        {
+          "role_id": "01a0cfc7-0cd6-7141-87e9-bc71d5f0542f",
+          "valid_to": "2026-10-08T00:24:58.570844+00:00",
+          "role_code": "EVIDENCE_OWNER",
+          "role_name": "Evidence Owner",
+          "scope_kind": "owned_object",
+          "valid_from": "2026-10-08T00:11:36.634236+00:00",
+          "membership_role_id": "01a118d9-e932-73ea-a894-22c4603134d9",
+          "etag": "9774182dd45c9c84dbcd9278b2d9c36a1e6e736ebcd9138efe6f3cecf51390b4"
+        },
+        {
+          "role_id": "01a0cfc7-0cd7-7557-8c20-71ca1e7d2698",
+          "valid_to": null,
+          "role_code": "EXECUTIVE_BOARD_VIEWER",
+          "role_name": "Executive/Board Viewer",
+          "scope_kind": "tenant",
+          "valid_from": "2026-10-13T19:18:37.388811+00:00",
+          "membership_role_id": "01a136b3-d444-76d2-af5a-c5e7dde70366",
+          "etag": "06fc133a7ce1beaa72f9fe714028406f0343bea8e14fedde72d1adfb0f7d2110"
+        },
+        {
+          "role_id": "01a0cfc7-0cd8-75d8-9c78-559d08511c28",
+          "valid_to": null,
+          "role_code": "GRC_MANAGER",
+          "role_name": "GRC Manager",
+          "scope_kind": "tenant",
+          "valid_from": "2026-10-05T12:55:58.072799+00:00",
+          "membership_role_id": "01a10c22-9f7b-706c-b3e3-7765613343d8",
+          "etag": "2b9d366654ec27d919b295b7921862cac720e3c15011b71d055f6751a8621d13"
+        },
+        {
+          "role_id": "01a0cfc7-0cd9-7680-9e54-5f048149d47f",
+          "valid_to": null,
+          "role_code": "LEGAL_REVIEWER",
+          "role_name": "Legal Reviewer",
+          "scope_kind": "tenant",
+          "valid_from": "2026-10-13T19:18:33.587163+00:00",
+          "membership_role_id": "01a136b3-c56a-7063-9a79-1fbe41f076f5",
+          "etag": "8998a6a7ca66650daf004c038604cd918a623bf75efdfeaa34d4f246f980de7f"
+        },
+        {
+          "role_id": "01a0cfc7-0cda-7538-907d-aac116858536",
+          "valid_to": null,
+          "role_code": "PRIVACY_MANAGER",
+          "role_name": "Privacy Manager",
+          "scope_kind": "tenant",
+          "valid_from": "2026-09-28T15:47:53.706636+00:00",
+          "membership_role_id": "01a0e8b3-82f2-721a-94ce-f6481ad28b75",
+          "etag": "33ba4bae1b0ac533c35aae93cd8b19cc909097954c4e9cb910c9abd2e23e96d1"
+        },
+        {
+          "role_id": "01a0cfc7-0cdb-7193-9add-5310dcd7fee0",
+          "valid_to": null,
+          "role_code": "PROCESS_OWNER",
+          "role_name": "Process Owner",
+          "scope_kind": "tenant",
+          "valid_from": "2026-10-13T19:18:30.656081+00:00",
+          "membership_role_id": "01a136b3-b9f7-72d7-9c01-a614e94e9184",
+          "etag": "496cd0a0f05db145f772bc14105e605de0001fab324666389507f3f2a2a527de"
+        },
+        {
+          "role_id": "01a0cfc7-0cdc-7531-984a-9c5f7e3ba900",
+          "valid_to": null,
+          "role_code": "QUALITY_MANAGER",
+          "role_name": "Quality Manager",
+          "scope_kind": "tenant",
+          "valid_from": "2026-10-13T19:18:26.461038+00:00",
+          "membership_role_id": "01a136b3-a995-72ec-963d-6abe3ef1c551",
+          "etag": "bcbf3036ce1f192b2e2b4f9516383f734af5ab4c3c8c7ee05cee99956c844783"
+        },
+        {
+          "role_id": "01a0cfc7-0cdd-7283-bedd-93b6561fac21",
+          "valid_to": null,
+          "role_code": "REGULATORY_CONTENT_STEWARD",
+          "role_name": "Regulatory Content Steward",
+          "scope_kind": "tenant",
+          "valid_from": "2026-10-13T19:18:22.468269+00:00",
+          "membership_role_id": "01a136b3-99fc-75b0-bc7f-d77e0bc493fc",
+          "etag": "78a4b5e3ca4e1839c93a68c63447b14d34a5bb67cfe8bf84fbb3756ceb2d0bff"
+        },
+        {
+          "role_id": "01a0cfc7-0cde-7750-bf48-5011eb10a1c1",
+          "valid_to": null,
+          "role_code": "REPORT_VIEWER",
+          "role_name": "Report Viewer",
+          "scope_kind": "tenant",
+          "valid_from": "2026-10-13T19:18:18.375211+00:00",
+          "membership_role_id": "01a136b3-8a01-71ec-b15a-429347d19b41",
+          "etag": "aa59c413920fa91fb9295f6378d3a040b32d30e06878d74a51a4b6a1e6ff504e"
+        },
+        {
+          "role_id": "01a0cfc7-0cdf-7708-8548-a2b8c07221d8",
+          "valid_to": null,
+          "role_code": "RISK_MANAGER",
+          "role_name": "Risk Manager",
+          "scope_kind": "tenant",
+          "valid_from": "2026-10-05T12:56:03.545318+00:00",
+          "membership_role_id": "01a10c22-b4d9-72fa-bff3-8c3236728647",
+          "etag": "25ed8f52fb3f283a9fbddb405172621cbdf1acaae230426e0b7ac04b3ea79dd9"
+        },
+        {
+          "role_id": "01a0cfc7-0ce0-74f0-93a5-4f14007d090e",
+          "valid_to": null,
+          "role_code": "SUPPLIER_MANAGER",
+          "role_name": "Supplier Manager",
+          "scope_kind": "tenant",
+          "valid_from": "2026-10-13T19:18:11.4718+00:00",
+          "membership_role_id": "01a136b3-6f07-7044-946e-5078980b44bb",
+          "etag": "cc5a523cec81ebd315ab457d1ba9166da42655fe00809ec52b94aa122a2a37c9"
+        },
+        {
+          "role_id": "01a0cfc7-0ce1-72ce-a89e-69a957b73491",
+          "valid_to": null,
+          "role_code": "TENANT_ADMIN",
+          "role_name": "Tenant Admin",
+          "scope_kind": "tenant",
+          "valid_from": "2026-09-23T19:38:43.779221+00:00",
+          "membership_role_id": "01a0cfc7-0e62-7126-aa82-a45884d56143",
+          "etag": "ddb07f26db3fa81df2bb541665b3b27acd2a3b167eab1bab62f7e44d5b024bb1"
+        },
+        {
+          "role_id": "01a0cfc7-0ce2-7022-9af0-26c668c7c385",
+          "valid_to": null,
+          "role_code": "VIEWER",
+          "role_name": "Viewer",
+          "scope_kind": "tenant",
+          "valid_from": "2026-10-13T19:18:06.824958+00:00",
+          "membership_role_id": "01a136b3-5ce6-730b-ae6a-fc29b4031e6c",
+          "etag": "4ff68e82fff28166ee96c3ebdb9f60c7a6741bfa65494bcf3886766d4fb44be4"
+        }
+      ]
+    }
+  },
+  "login_provider": "ZOHO",
+  "authorization_basis": "TENANT_OWNED CONTROL_OWNER/GRC_MANAGER grants, controls.control.create scope tenant; not PLATFORM_ADMIN",
+  "permission_changes_executed": false
+}

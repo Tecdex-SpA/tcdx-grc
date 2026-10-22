@@ -1,0 +1,318 @@
+Browser tab: 1477742241, Title: "Tecdex GRC", URL: "https://grc.tecdex.net/evidencias".
+1 AXWebArea Tecdex GRC, URL: grc.tecdex.net/evidencias
+	2 container root
+		3 container
+			4 image Tecdex
+			5 text GRC
+			6 container Navegación principal
+				7 button Panel principal
+				112 button Normas
+				9 button Cumplimiento
+				10 button Requisitos
+				11 button Controles
+				12 button Evidencias
+				13 button Acciones
+				113 text CONFIGURACIONES
+				114 button Empresas
+				115 button Usuarios
+				116 button Identidades gestionadas
+			18 text Tecdex GRC Gobernanza y cumplimiento
+		19 container
+			20 text Buscar
+			21 search text field (settable) Buscar
+			104 text Empresa
+			105 pop up button (collapsed, settable) Description: Empresa activa, Value: TecDex, Secondary Actions: Expand
+				106 menu
+					107 (selected) TecDex
+			26 text U Usuario autorizado
+			108 container Administrador de la plataforma · Responsable de acción · Rol personalizado · Auditor · Auditor líder · Rol personalizado · Responsable de cumplimiento · Rol personalizado · Responsable de control · Rol personalizado · Responsable de evidencia · Rol personalizado · Responsable GRC · Revisor legal · Responsable de privacidad · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Administrador de la empresa · Consulta
+				117 text Platform ·  TecDex ·  Administrador de la plataforma · Responsable de acción · Rol personalizado · Auditor · Auditor líder · Rol personalizado · Responsable de cumplimiento · Rol personalizado · Responsable de control · Rol personalizado · Responsable de evidencia · Rol personalizado · Responsable GRC · Revisor legal · Responsable de privacidad · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Administrador de la empresa · Consulta
+			29 button Cerrar sesión
+		30 container
+			31 tab group Submódulos
+				110 tab (selectable, settable, boolean) Solicitudes de evidencia, Value: 0
+				111 tab (selected, settable, boolean) Evidencias, Value: 1
+				118 tab (selectable, settable, boolean) Políticas de retención, Value: 0
+				119 tab (selectable, settable, boolean) Aplicabilidad de retención, Value: 0
+			120 text ESPACIO OPERATIVO
+			121 heading Evidencias, Value: 1
+				122 text Evidencias
+			123 text Registros vigentes dentro de tu alcance autorizado.
+			124 button Nuevo registro
+			125 text Estado
+			126 pop up button (collapsed, settable) Description: Filtrar por estado, Value: Todos, Secondary Actions: Expand
+				127 menu
+					128 (selected) Todos
+					129 Borrador
+					130 Enviada
+					131 En revisión
+					132 Aprobada
+					133 Rechazada
+					134 Vencida
+					135 Sustituida
+			136 container Evidencias
+				137 table
+					138 row
+						139 cell
+							140 text REGISTRO
+						141 cell
+							142 text REFERENCIA
+						143 cell
+							144 text ESTADO
+						145 cell
+							146 text VERSIÓN
+						147 cell
+							148 text ACCIONES
+					149 row
+						150 cell
+							151 text QA_EVID_RET_001 · Borrador
+						152 cell
+							153 text QA_EVID_RET_001
+						154 cell
+							155 text Borrador
+						156 cell
+							157 text 1
+						158 cell
+							159 button Ver detalle
+					160 row
+						161 cell
+							162 text QA-F5-20261007-EVIDENCE · Borrador
+						163 cell
+							164 text QA-F5-20261007-EVIDENCE
+						165 cell
+							166 text Borrador
+						167 cell
+							168 text 1
+						169 cell
+							170 button Ver detalle
+			171 container Registrar evidencia
+				172 container
+					173 text ALTA CONTROLADA
+					174 heading Registrar evidencia, Value: 2, ID: create-title
+						175 text Registrar evidencia
+					176 button Cerrar creación
+				177 container
+					178 text Completa los datos de la operación con información de tu empresa.
+					179 container
+						180 text Archivo de evidencia
+						181 button Archivo de evidencia
+					182 container
+						183 text Clasificación del archivo
+						184 pop up button (collapsed, settable) Description: Clasificación del archivo, Value: Selecciona una opción, Secondary Actions: Expand
+							185 menu
+								186 (selected) Selecciona una opción
+								187 Pública
+								188 Interna
+								189 Confidencial
+								190 Restringida
+					191 container
+						192 text Procedencia del archivo
+						193 text field (settable) Procedencia del archivo
+					194 container Información principal
+						195 text Información principal
+						196 container
+							197 text Código de evidencia
+							198 text field (settable) Código de evidencia
+						199 container
+							200 text Obligatorio  · Código de negocio definido por ti; no es un identificador técnico.
+						201 container
+							202 text Tipo de evidencia
+							203 pop up button (collapsed, settable) Description: Tipo de evidencia, Value: Selecciona una opción, Secondary Actions: Expand
+								204 menu
+									205 (selected) Selecciona una opción
+									206 Documento
+									207 Registro
+									208 Imagen
+									209 Informe
+						210 text Obligatorio
+						211 container
+							212 text Origen
+							213 pop up button (collapsed, settable) Description: Origen, Value: Selecciona una opción, Secondary Actions: Expand
+								214 menu
+									215 (selected) Selecciona una opción
+									216 Archivo aportado
+									217 Registro de sistema
+									218 Observación humana
+									219 Registro externo
+						220 text Obligatorio
+					221 container Relaciones y versiones
+						222 text Relaciones y versiones
+						223 text Política de retención
+						224 pop up button (collapsed, settable) Política de retención, Value: Selecciona una opción, Secondary Actions: Expand
+							225 menu
+								226 (selected) Selecciona una opción
+								343 Política de la organización · QA_RET_ORD_001 · v1 · Publicada
+						227 text Selecciona una política operativa aplicable. La configuración ordinaria no requiere una fuente jurídica; las obligaciones formales conservan sus controles.
+						228 text Obligatorio
+						229 text Aplicabilidad de retención
+						230 pop up button (disabled, collapsed, settable) Aplicabilidad de retención, Value: Selecciona una opción, Secondary Actions: Expand
+							231 menu
+								232 (disabled) Selecciona una opción
+						233 text Selecciona primero el objeto de origen.
+						234 text Opcional
+						235 text Selecciona el archivo que deseas cargar.
+						236 text Obligatorio
+						237 container
+							238 text Referencia de procedencia
+							239 text field (settable) Referencia de procedencia
+						240 text Obligatorio
+						241 container Vínculos
+							242 text Vínculos
+							344 container Vínculo de evidencia 1
+								345 container
+									346 text Vínculo de evidencia 1
+								347 container
+									348 text Tipo de objeto
+									349 pop up button (collapsed, settable) Tipo de objeto, Value: Control, Secondary Actions: Expand
+										350 menu
+											351 Selecciona un tipo
+											352 Requisito
+											353 (selected) Control
+											354 Versión del control
+											355 Evaluación de requisito
+											356 Evaluación de control
+											357 Prueba de control
+								388 container
+									389 text Buscar Control
+									390 search text field (settable) Buscar Control
+								391 button Buscar
+								392 text Control
+								393 pop up button (collapsed, settable) Control, Value: Selecciona una opción, Secondary Actions: Expand
+									394 menu
+										395 (selected) Selecciona una opción
+										397 QA_STEP6A3_TRAZABILIDAD_DOCUMENTAL_001 · QA STEP6A3 — Validación de trazabilidad documental · v1 · Activo · ISO 9001:2026
+										398 QA-F5-20261007-CONTROL · QA Phase5 20261007 - Control de requisitos de clientes · v1 · Activo · ISO 9001:2026
+								399 button Cargar más opciones
+								396 text Obligatorio
+								358 container
+									359 text Declaración de evidencia
+									360 text entry area (settable) Declaración de evidencia
+								361 text Opcional
+								362 text Vigente desde
+								363 date field (settable) Vigente desde
+									364 container
+										365 stepper
+										366 stepper
+										367 stepper
+										368 stepper
+										369 stepper
+										370 stepper
+									371 pop up button Mostrar el selector de fecha y hora locales Mostrar el selector de fecha y hora locales
+								372 text Hora local de la empresa: America/Santiago
+								373 text Opcional
+								374 text Vigente hasta
+								375 date field (settable) Vigente hasta
+									376 container
+										377 stepper
+										378 stepper
+										379 stepper
+										380 stepper
+										381 stepper
+										382 stepper
+									383 pop up button Mostrar el selector de fecha y hora locales Mostrar el selector de fecha y hora locales
+								384 text Hora local de la empresa: America/Santiago
+								385 text Opcional
+								386 button Quitar vínculo 1
+							243 button Agregar elemento
+						244 text Obligatorio
+					245 container Responsables
+						246 text Responsables
+						247 container
+							248 text Buscar Responsable de negocio
+							249 search text field (settable) Buscar Responsable de negocio
+						250 button Buscar
+						251 text Responsable de negocio
+						252 pop up button (collapsed, settable) Responsable de negocio, Value: Selecciona una opción, Secondary Actions: Expand
+							253 menu
+								254 (selected) Selecciona una opción
+								387 TecDex · Organización · Activo
+						255 text Opcional
+					256 container Fechas y conservación
+						257 text Fechas y conservación
+						258 text Válida desde
+						259 date field (settable) Válida desde
+							260 container
+								261 stepper
+								262 stepper
+								263 stepper
+								264 stepper
+								265 stepper
+								266 stepper
+							267 pop up button Mostrar el selector de fecha y hora locales Mostrar el selector de fecha y hora locales
+						268 text Hora local de la empresa: America/Santiago
+						269 text Opcional
+						270 text Válida hasta
+						271 date field (settable) Válida hasta
+							272 container
+								273 stepper
+								274 stepper
+								275 stepper
+								276 stepper
+								277 stepper
+								278 stepper
+							279 pop up button Mostrar el selector de fecha y hora locales Mostrar el selector de fecha y hora locales
+						280 text Hora local de la empresa: America/Santiago
+						281 text Opcional
+						282 text Inicio del período
+						283 date field (settable) Inicio del período
+							284 container
+								285 stepper
+								286 stepper
+								287 stepper
+								288 stepper
+								289 stepper
+								290 stepper
+							291 pop up button Mostrar el selector de fecha y hora locales Mostrar el selector de fecha y hora locales
+						292 text Hora local de la empresa: America/Santiago
+						293 text Opcional
+						294 text Fin del período
+						295 date field (settable) Fin del período
+							296 container
+								297 stepper
+								298 stepper
+								299 stepper
+								300 stepper
+								301 stepper
+								302 stepper
+							303 pop up button Mostrar el selector de fecha y hora locales Mostrar el selector de fecha y hora locales
+						304 text Hora local de la empresa: America/Santiago
+						305 text Opcional
+						306 text Vigente desde
+						307 date field (settable) Vigente desde
+							308 container
+								309 stepper
+								310 stepper
+								311 stepper
+								312 stepper
+								313 stepper
+								314 stepper
+							315 pop up button Mostrar el selector de fecha y hora locales Mostrar el selector de fecha y hora locales
+						316 text Hora local de la empresa: America/Santiago
+						317 text Opcional
+						318 text Vigente hasta
+						319 date field (settable) Vigente hasta
+							320 container
+								321 stepper
+								322 stepper
+								323 stepper
+								324 stepper
+								325 stepper
+								326 stepper
+							327 pop up button Mostrar el selector de fecha y hora locales Mostrar el selector de fecha y hora locales
+						328 text Hora local de la empresa: America/Santiago
+						329 text Opcional
+						330 text Vence el
+						331 date field (settable) Vence el
+							332 container
+								333 stepper
+								334 stepper
+								335 stepper
+								336 stepper
+								337 stepper
+								338 stepper
+							339 pop up button Mostrar el selector de fecha y hora locales Mostrar el selector de fecha y hora locales
+						340 text Hora local de la empresa: America/Santiago
+						341 text Opcional
+				342 button Crear registro
+
+The focused UI element is 243 button Agregar elemento

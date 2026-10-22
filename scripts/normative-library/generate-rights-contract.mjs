@@ -1,0 +1,15 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+const root='docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_RIGHTS_20261021/';
+const hash=p=>createHash('sha256').update(readFileSync(p)).digest('hex');
+const receipt=JSON.parse(readFileSync(root+'CONTRACT_PUBLICATION_RECEIPT.json','utf8'));
+if(receipt.status!=='PASS_CONTRACT_EFFECTIVE_LOCAL')throw Error('H04 not published');
+for(const ref of [receipt.publication_manifest,receipt.authorization,receipt.review])if(hash(ref.path)!==ref.sha256)throw Error('H04 reference integrity');
+const manifest=JSON.parse(readFileSync(receipt.publication_manifest.path,'utf8'));
+for(const ref of manifest.files)if(hash(ref.path)!==ref.sha256)throw Error('H04 artifact integrity: '+ref.path);
+const successors=['NORMATIVE_LIBRARY_H04_SQL_GRAMMAR_20261021','NORMATIVE_LIBRARY_CONTROL_VALIDATION_20261021'].map(name=>{const path='docs/executable-contracts/amendments/'+name+'/CONTRACT_PUBLICATION_RECEIPT.json';const receipt=JSON.parse(readFileSync(path,'utf8'));if(receipt.status!=='PASS_CONTRACT_EFFECTIVE_LOCAL'||hash(receipt.publication_manifest.path)!==receipt.publication_manifest.sha256)throw Error('Successor receipt integrity');for(const ref of JSON.parse(readFileSync(receipt.publication_manifest.path,'utf8')).files)if(hash(ref.path)!==ref.sha256)throw Error('Successor artifact integrity');if(receipt.predecessor_receipt&&hash(receipt.predecessor_receipt.path)!==receipt.predecessor_receipt.sha256)throw Error('H04 predecessor receipt integrity');return {path,sha256:hash(path)};});
+const contract=JSON.parse(readFileSync(root+'CONTRACT.json','utf8'));
+const output=JSON.stringify({receipt_sha256:hash(root+'CONTRACT_PUBLICATION_RECEIPT.json'),successors,contract},null,2)+'\n';
+const target='apps/backend/src/normative-library/rights-contract.generated.json';
+if(process.argv.includes('--check')){if(readFileSync(target,'utf8')!==output)throw Error('H04 derived data drift');}else writeFileSync(target,output);
+console.log('H04_PUBLISHED_CONTRACT_DERIVATION=PASS');

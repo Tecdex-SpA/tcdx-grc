@@ -1,0 +1,2785 @@
+{
+  "reference": "QA-LOGICAL-e923e6ecc44845c6920c8fd975f34675",
+  "source": "QA 192.168.2.40:5432/tcdx-grc",
+  "started_utc": "2026-10-21T22:46:46.728574+00:00",
+  "custody": "PO local account andresbarouh; private home directory",
+  "retention": "Retain pending PO recovery/adoption and explicit disposal decision; no automatic deletion",
+  "file_encryption": "NONE_BY_EXPLICIT_PO_DIRECTION",
+  "at_rest_protection": "APFS FileVault ON; unlocked session remains sensitive",
+  "qa_writes": "NONE",
+  "restored_data": "REAL_QA_SENSITIVE",
+  "PITR": "NOT_AVAILABLE; logical snapshot only",
+  "identity": {
+    "host": "192.168.2.40",
+    "port": 5432,
+    "user": "postgres",
+    "cluster": "16/main",
+    "version": "160015",
+    "database": "tcdx-grc",
+    "readonly": "on",
+    "roles_used": [
+      "tcdx_grc_app"
+    ],
+    "size_bytes": 46849047,
+    "captured_utc": "2026-10-21T22:46:47.129323+00:00",
+    "default_readonly": "on"
+  },
+  "snapshot_token_sha256": "463164d96324b92367e0555edbd1a21dade5d4695a588a09d91a37e75b14d6a1",
+  "dump_exit_code": 0,
+  "dump_sha256": "754e1810ca4a0242814a3a02d6e6f9821774b35eb304f300b09a3665616141a5",
+  "dump_size_bytes": 2544085,
+  "dump_seconds": 5.66,
+  "tool_version": "pg_dump (PostgreSQL) 16.14 (Homebrew)",
+  "retry": "Restore only; original dump bytes unchanged",
+  "source_connections_this_retry": "READ_ONLY metadata only, no repeated dump",
+  "isolation": {
+    "network": "none",
+    "ports": [],
+    "binds": [],
+    "volumes": [],
+    "PGDATA": "tmpfs768MiB",
+    "image": "sha256:0ea6700a3b4f0ae6ce746519073558aed4d88a79d8d07622a9a644946c7319c4",
+    "container": "grc-qa-recovery-39c1140216ca",
+    "max_locks_per_transaction": 1024,
+    "source_credentials_present": false
+  },
+  "restore_exit_code": 0,
+  "comparisons": {
+    "ledger": true,
+    "tables": true,
+    "columns": true,
+    "indexes": true,
+    "triggers": true,
+    "functions": true,
+    "extensions": true,
+    "constraints": false,
+    "invalid_indexes": true,
+    "invalid_constraints": true,
+    "all_table_counts": true
+  },
+  "constraint_diagnostic": {
+    "original_ordered_digest_matches": false,
+    "source_metadata_unchanged_from_snapshot": true,
+    "definitions_compared": 2857,
+    "differences": [
+      {
+        "object": "audit.audit_competency_requirements:ck_audit_competency_requirements__team_role",
+        "source": {
+          "name": "ck_audit_competency_requirements__team_role",
+          "relation": "audit.audit_competency_requirements",
+          "validated": true,
+          "definition": "CHECK (team_role::text = ANY (ARRAY['lead_auditor'::character varying, 'auditor'::character varying, 'technical_expert'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_audit_competency_requirements__team_role",
+          "relation": "audit.audit_competency_requirements",
+          "validated": true,
+          "definition": "CHECK (team_role::text = ANY (ARRAY['lead_auditor'::character varying::text, 'auditor'::character varying::text, 'technical_expert'::character varying::text]))"
+        }
+      },
+      {
+        "object": "audit.audit_competency_validations:ck_audit_competency_validations__validation_outcome",
+        "source": {
+          "name": "ck_audit_competency_validations__validation_outcome",
+          "relation": "audit.audit_competency_validations",
+          "validated": true,
+          "definition": "CHECK (validation_outcome::text = ANY (ARRAY['covered'::character varying, 'not_covered'::character varying, 'expired'::character varying, 'evidence_missing'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_audit_competency_validations__validation_outcome",
+          "relation": "audit.audit_competency_validations",
+          "validated": true,
+          "definition": "CHECK (validation_outcome::text = ANY (ARRAY['covered'::character varying::text, 'not_covered'::character varying::text, 'expired'::character varying::text, 'evidence_missing'::character varying::text]))"
+        }
+      },
+      {
+        "object": "audit.audit_samples:ck_audit_samples__result_status",
+        "source": {
+          "name": "ck_audit_samples__result_status",
+          "relation": "audit.audit_samples",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying, 'no_data'::character varying, 'insufficient_data'::character varying, 'insufficient_coverage'::character varying, 'stale_source'::character varying, 'conflicting_sources'::character varying, 'dependency_pending'::character varying, 'invalid_input'::character varying, 'source_error'::character varying, 'calculation_error'::character varying, 'not_applicable'::character varying, 'superseded'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_audit_samples__result_status",
+          "relation": "audit.audit_samples",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying::text, 'no_data'::character varying::text, 'insufficient_data'::character varying::text, 'insufficient_coverage'::character varying::text, 'stale_source'::character varying::text, 'conflicting_sources'::character varying::text, 'dependency_pending'::character varying::text, 'invalid_input'::character varying::text, 'source_error'::character varying::text, 'calculation_error'::character varying::text, 'not_applicable'::character varying::text, 'superseded'::character varying::text]))"
+        }
+      },
+      {
+        "object": "audit.audit_team_assignments:ck_audit_team_assignments__team_role",
+        "source": {
+          "name": "ck_audit_team_assignments__team_role",
+          "relation": "audit.audit_team_assignments",
+          "validated": true,
+          "definition": "CHECK (team_role::text = ANY (ARRAY['lead_auditor'::character varying, 'auditor'::character varying, 'technical_expert'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_audit_team_assignments__team_role",
+          "relation": "audit.audit_team_assignments",
+          "validated": true,
+          "definition": "CHECK (team_role::text = ANY (ARRAY['lead_auditor'::character varying::text, 'auditor'::character varying::text, 'technical_expert'::character varying::text]))"
+        }
+      },
+      {
+        "object": "audit.audit_tests:ck_audit_tests__result_status",
+        "source": {
+          "name": "ck_audit_tests__result_status",
+          "relation": "audit.audit_tests",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying, 'no_data'::character varying, 'insufficient_data'::character varying, 'insufficient_coverage'::character varying, 'stale_source'::character varying, 'conflicting_sources'::character varying, 'dependency_pending'::character varying, 'invalid_input'::character varying, 'source_error'::character varying, 'calculation_error'::character varying, 'not_applicable'::character varying, 'superseded'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_audit_tests__result_status",
+          "relation": "audit.audit_tests",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying::text, 'no_data'::character varying::text, 'insufficient_data'::character varying::text, 'insufficient_coverage'::character varying::text, 'stale_source'::character varying::text, 'conflicting_sources'::character varying::text, 'dependency_pending'::character varying::text, 'invalid_input'::character varying::text, 'source_error'::character varying::text, 'calculation_error'::character varying::text, 'not_applicable'::character varying::text, 'superseded'::character varying::text]))"
+        }
+      },
+      {
+        "object": "audit.auditor_competency_assertions:ck_auditor_competency_assertions__assertion_status",
+        "source": {
+          "name": "ck_auditor_competency_assertions__assertion_status",
+          "relation": "audit.auditor_competency_assertions",
+          "validated": true,
+          "definition": "CHECK (assertion_status::text = ANY (ARRAY['verified'::character varying, 'expired'::character varying, 'revoked'::character varying, 'superseded'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_auditor_competency_assertions__assertion_status",
+          "relation": "audit.auditor_competency_assertions",
+          "validated": true,
+          "definition": "CHECK (assertion_status::text = ANY (ARRAY['verified'::character varying::text, 'expired'::character varying::text, 'revoked'::character varying::text, 'superseded'::character varying::text]))"
+        }
+      },
+      {
+        "object": "config.configuration_definition_scopes:ck_configuration_definition_scopes__ownership_class",
+        "source": {
+          "name": "ck_configuration_definition_scopes__ownership_class",
+          "relation": "config.configuration_definition_scopes",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_configuration_definition_scopes__ownership_class",
+          "relation": "config.configuration_definition_scopes",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "config.configuration_definition_scopes:ck_configuration_definition_scopes__tenant_ownership",
+        "source": {
+          "name": "ck_configuration_definition_scopes__tenant_ownership",
+          "relation": "config.configuration_definition_scopes",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_configuration_definition_scopes__tenant_ownership",
+          "relation": "config.configuration_definition_scopes",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "config.configuration_definitions:ck_configuration_definitions__ownership_class",
+        "source": {
+          "name": "ck_configuration_definitions__ownership_class",
+          "relation": "config.configuration_definitions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_configuration_definitions__ownership_class",
+          "relation": "config.configuration_definitions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "config.configuration_definitions:ck_configuration_definitions__tenant_ownership",
+        "source": {
+          "name": "ck_configuration_definitions__tenant_ownership",
+          "relation": "config.configuration_definitions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_configuration_definitions__tenant_ownership",
+          "relation": "config.configuration_definitions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "config.configuration_overrides:ck_configuration_overrides__ownership_class",
+        "source": {
+          "name": "ck_configuration_overrides__ownership_class",
+          "relation": "config.configuration_overrides",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_configuration_overrides__ownership_class",
+          "relation": "config.configuration_overrides",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "config.configuration_overrides:ck_configuration_overrides__tenant_ownership",
+        "source": {
+          "name": "ck_configuration_overrides__tenant_ownership",
+          "relation": "config.configuration_overrides",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_configuration_overrides__tenant_ownership",
+          "relation": "config.configuration_overrides",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "config.configuration_validation_rules:ck_configuration_validation_rules__ownership_class",
+        "source": {
+          "name": "ck_configuration_validation_rules__ownership_class",
+          "relation": "config.configuration_validation_rules",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_configuration_validation_rules__ownership_class",
+          "relation": "config.configuration_validation_rules",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "config.configuration_validation_rules:ck_configuration_validation_rules__tenant_ownership",
+        "source": {
+          "name": "ck_configuration_validation_rules__tenant_ownership",
+          "relation": "config.configuration_validation_rules",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_configuration_validation_rules__tenant_ownership",
+          "relation": "config.configuration_validation_rules",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "controls.assurance_samples:ck_assurance_samples__result_status",
+        "source": {
+          "name": "ck_assurance_samples__result_status",
+          "relation": "controls.assurance_samples",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying, 'no_data'::character varying, 'insufficient_data'::character varying, 'insufficient_coverage'::character varying, 'stale_source'::character varying, 'conflicting_sources'::character varying, 'dependency_pending'::character varying, 'invalid_input'::character varying, 'source_error'::character varying, 'calculation_error'::character varying, 'not_applicable'::character varying, 'superseded'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_assurance_samples__result_status",
+          "relation": "controls.assurance_samples",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying::text, 'no_data'::character varying::text, 'insufficient_data'::character varying::text, 'insufficient_coverage'::character varying::text, 'stale_source'::character varying::text, 'conflicting_sources'::character varying::text, 'dependency_pending'::character varying::text, 'invalid_input'::character varying::text, 'source_error'::character varying::text, 'calculation_error'::character varying::text, 'not_applicable'::character varying::text, 'superseded'::character varying::text]))"
+        }
+      },
+      {
+        "object": "controls.assurance_tests:ck_assurance_tests__result_status",
+        "source": {
+          "name": "ck_assurance_tests__result_status",
+          "relation": "controls.assurance_tests",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying, 'no_data'::character varying, 'insufficient_data'::character varying, 'insufficient_coverage'::character varying, 'stale_source'::character varying, 'conflicting_sources'::character varying, 'dependency_pending'::character varying, 'invalid_input'::character varying, 'source_error'::character varying, 'calculation_error'::character varying, 'not_applicable'::character varying, 'superseded'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_assurance_tests__result_status",
+          "relation": "controls.assurance_tests",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying::text, 'no_data'::character varying::text, 'insufficient_data'::character varying::text, 'insufficient_coverage'::character varying::text, 'stale_source'::character varying::text, 'conflicting_sources'::character varying::text, 'dependency_pending'::character varying::text, 'invalid_input'::character varying::text, 'source_error'::character varying::text, 'calculation_error'::character varying::text, 'not_applicable'::character varying::text, 'superseded'::character varying::text]))"
+        }
+      },
+      {
+        "object": "controls.control_assessments:ck_control_assessments__result_status",
+        "source": {
+          "name": "ck_control_assessments__result_status",
+          "relation": "controls.control_assessments",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying, 'no_data'::character varying, 'insufficient_data'::character varying, 'insufficient_coverage'::character varying, 'stale_source'::character varying, 'conflicting_sources'::character varying, 'dependency_pending'::character varying, 'invalid_input'::character varying, 'source_error'::character varying, 'calculation_error'::character varying, 'not_applicable'::character varying, 'superseded'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_control_assessments__result_status",
+          "relation": "controls.control_assessments",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying::text, 'no_data'::character varying::text, 'insufficient_data'::character varying::text, 'insufficient_coverage'::character varying::text, 'stale_source'::character varying::text, 'conflicting_sources'::character varying::text, 'dependency_pending'::character varying::text, 'invalid_input'::character varying::text, 'source_error'::character varying::text, 'calculation_error'::character varying::text, 'not_applicable'::character varying::text, 'superseded'::character varying::text]))"
+        }
+      },
+      {
+        "object": "controls.control_effectiveness_methodologies:ck_cem_publication",
+        "source": {
+          "name": "ck_cem_publication",
+          "relation": "controls.control_effectiveness_methodologies",
+          "validated": true,
+          "definition": "CHECK ((lifecycle_state::text = ANY (ARRAY['draft'::character varying, 'published'::character varying]::text[])) AND (lifecycle_state::text = 'published'::text) = (published_at IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_cem_publication",
+          "relation": "controls.control_effectiveness_methodologies",
+          "validated": true,
+          "definition": "CHECK ((lifecycle_state::text = ANY (ARRAY['draft'::character varying::text, 'published'::character varying::text])) AND (lifecycle_state::text = 'published'::text) = (published_at IS NOT NULL))"
+        }
+      },
+      {
+        "object": "controls.control_objectives:ck_control_objectives__ownership_class",
+        "source": {
+          "name": "ck_control_objectives__ownership_class",
+          "relation": "controls.control_objectives",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_control_objectives__ownership_class",
+          "relation": "controls.control_objectives",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "controls.control_objectives:ck_control_objectives__tenant_ownership",
+        "source": {
+          "name": "ck_control_objectives__tenant_ownership",
+          "relation": "controls.control_objectives",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_control_objectives__tenant_ownership",
+          "relation": "controls.control_objectives",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "controls.control_versions:ck_control_versions__ownership_class",
+        "source": {
+          "name": "ck_control_versions__ownership_class",
+          "relation": "controls.control_versions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_control_versions__ownership_class",
+          "relation": "controls.control_versions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "controls.control_versions:ck_control_versions__tenant_ownership",
+        "source": {
+          "name": "ck_control_versions__tenant_ownership",
+          "relation": "controls.control_versions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_control_versions__tenant_ownership",
+          "relation": "controls.control_versions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "controls.controls:ck_controls__ownership_class",
+        "source": {
+          "name": "ck_controls__ownership_class",
+          "relation": "controls.controls",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_controls__ownership_class",
+          "relation": "controls.controls",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "controls.controls:ck_controls__tenant_ownership",
+        "source": {
+          "name": "ck_controls__tenant_ownership",
+          "relation": "controls.controls",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_controls__tenant_ownership",
+          "relation": "controls.controls",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "data.calculation_runs:ck_calculation_runs__calculation_status",
+        "source": {
+          "name": "ck_calculation_runs__calculation_status",
+          "relation": "data.calculation_runs",
+          "validated": true,
+          "definition": "CHECK (calculation_status::text = ANY (ARRAY['pending'::character varying, 'running'::character varying, 'succeeded'::character varying, 'failed'::character varying, 'cancelled'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_calculation_runs__calculation_status",
+          "relation": "data.calculation_runs",
+          "validated": true,
+          "definition": "CHECK (calculation_status::text = ANY (ARRAY['pending'::character varying::text, 'running'::character varying::text, 'succeeded'::character varying::text, 'failed'::character varying::text, 'cancelled'::character varying::text]))"
+        }
+      },
+      {
+        "object": "data.data_quality_assessments:ck_data_quality_assessments__result_status",
+        "source": {
+          "name": "ck_data_quality_assessments__result_status",
+          "relation": "data.data_quality_assessments",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying, 'no_data'::character varying, 'insufficient_data'::character varying, 'insufficient_coverage'::character varying, 'stale_source'::character varying, 'conflicting_sources'::character varying, 'dependency_pending'::character varying, 'invalid_input'::character varying, 'source_error'::character varying, 'calculation_error'::character varying, 'not_applicable'::character varying, 'superseded'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_data_quality_assessments__result_status",
+          "relation": "data.data_quality_assessments",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying::text, 'no_data'::character varying::text, 'insufficient_data'::character varying::text, 'insufficient_coverage'::character varying::text, 'stale_source'::character varying::text, 'conflicting_sources'::character varying::text, 'dependency_pending'::character varying::text, 'invalid_input'::character varying::text, 'source_error'::character varying::text, 'calculation_error'::character varying::text, 'not_applicable'::character varying::text, 'superseded'::character varying::text]))"
+        }
+      },
+      {
+        "object": "data.formula_definition_parameters:ck_formula_definition_parameters__ownership_class",
+        "source": {
+          "name": "ck_formula_definition_parameters__ownership_class",
+          "relation": "data.formula_definition_parameters",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_formula_definition_parameters__ownership_class",
+          "relation": "data.formula_definition_parameters",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "data.formula_definition_parameters:ck_formula_definition_parameters__tenant_ownership",
+        "source": {
+          "name": "ck_formula_definition_parameters__tenant_ownership",
+          "relation": "data.formula_definition_parameters",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_formula_definition_parameters__tenant_ownership",
+          "relation": "data.formula_definition_parameters",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "data.formula_definitions:ck_formula_definitions__ownership_class",
+        "source": {
+          "name": "ck_formula_definitions__ownership_class",
+          "relation": "data.formula_definitions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_formula_definitions__ownership_class",
+          "relation": "data.formula_definitions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "data.formula_definitions:ck_formula_definitions__tenant_ownership",
+        "source": {
+          "name": "ck_formula_definitions__tenant_ownership",
+          "relation": "data.formula_definitions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_formula_definitions__tenant_ownership",
+          "relation": "data.formula_definitions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "data.metric_definition_inputs:ck_metric_definition_inputs__ownership_class",
+        "source": {
+          "name": "ck_metric_definition_inputs__ownership_class",
+          "relation": "data.metric_definition_inputs",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_metric_definition_inputs__ownership_class",
+          "relation": "data.metric_definition_inputs",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "data.metric_definition_inputs:ck_metric_definition_inputs__tenant_ownership",
+        "source": {
+          "name": "ck_metric_definition_inputs__tenant_ownership",
+          "relation": "data.metric_definition_inputs",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_metric_definition_inputs__tenant_ownership",
+          "relation": "data.metric_definition_inputs",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "data.metric_definition_thresholds:ck_metric_definition_thresholds__ownership_class",
+        "source": {
+          "name": "ck_metric_definition_thresholds__ownership_class",
+          "relation": "data.metric_definition_thresholds",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_metric_definition_thresholds__ownership_class",
+          "relation": "data.metric_definition_thresholds",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "data.metric_definition_thresholds:ck_metric_definition_thresholds__tenant_ownership",
+        "source": {
+          "name": "ck_metric_definition_thresholds__tenant_ownership",
+          "relation": "data.metric_definition_thresholds",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_metric_definition_thresholds__tenant_ownership",
+          "relation": "data.metric_definition_thresholds",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "data.metric_definitions:ck_metric_definitions__ownership_class",
+        "source": {
+          "name": "ck_metric_definitions__ownership_class",
+          "relation": "data.metric_definitions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_metric_definitions__ownership_class",
+          "relation": "data.metric_definitions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "data.metric_definitions:ck_metric_definitions__tenant_ownership",
+        "source": {
+          "name": "ck_metric_definitions__tenant_ownership",
+          "relation": "data.metric_definitions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_metric_definitions__tenant_ownership",
+          "relation": "data.metric_definitions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "data.metric_measurements:ck_metric_measurements__result_status",
+        "source": {
+          "name": "ck_metric_measurements__result_status",
+          "relation": "data.metric_measurements",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying, 'no_data'::character varying, 'insufficient_data'::character varying, 'insufficient_coverage'::character varying, 'stale_source'::character varying, 'conflicting_sources'::character varying, 'dependency_pending'::character varying, 'invalid_input'::character varying, 'source_error'::character varying, 'calculation_error'::character varying, 'not_applicable'::character varying, 'superseded'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_metric_measurements__result_status",
+          "relation": "data.metric_measurements",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying::text, 'no_data'::character varying::text, 'insufficient_data'::character varying::text, 'insufficient_coverage'::character varying::text, 'stale_source'::character varying::text, 'conflicting_sources'::character varying::text, 'dependency_pending'::character varying::text, 'invalid_input'::character varying::text, 'source_error'::character varying::text, 'calculation_error'::character varying::text, 'not_applicable'::character varying::text, 'superseded'::character varying::text]))"
+        }
+      },
+      {
+        "object": "data.observation_type_source_types:ck_observation_type_source_types__ownership_class",
+        "source": {
+          "name": "ck_observation_type_source_types__ownership_class",
+          "relation": "data.observation_type_source_types",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_observation_type_source_types__ownership_class",
+          "relation": "data.observation_type_source_types",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "data.observation_type_source_types:ck_observation_type_source_types__tenant_ownership",
+        "source": {
+          "name": "ck_observation_type_source_types__tenant_ownership",
+          "relation": "data.observation_type_source_types",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_observation_type_source_types__tenant_ownership",
+          "relation": "data.observation_type_source_types",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "data.observation_type_subject_types:ck_observation_type_subject_types__ownership_class",
+        "source": {
+          "name": "ck_observation_type_subject_types__ownership_class",
+          "relation": "data.observation_type_subject_types",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_observation_type_subject_types__ownership_class",
+          "relation": "data.observation_type_subject_types",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "data.observation_type_subject_types:ck_observation_type_subject_types__tenant_ownership",
+        "source": {
+          "name": "ck_observation_type_subject_types__tenant_ownership",
+          "relation": "data.observation_type_subject_types",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_observation_type_subject_types__tenant_ownership",
+          "relation": "data.observation_type_subject_types",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "data.observation_types:ck_observation_types__ownership_class",
+        "source": {
+          "name": "ck_observation_types__ownership_class",
+          "relation": "data.observation_types",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_observation_types__ownership_class",
+          "relation": "data.observation_types",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "data.observation_types:ck_observation_types__tenant_ownership",
+        "source": {
+          "name": "ck_observation_types__tenant_ownership",
+          "relation": "data.observation_types",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_observation_types__tenant_ownership",
+          "relation": "data.observation_types",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "data.snapshot_items:ck_snapshot_items__result_status",
+        "source": {
+          "name": "ck_snapshot_items__result_status",
+          "relation": "data.snapshot_items",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying, 'no_data'::character varying, 'insufficient_data'::character varying, 'insufficient_coverage'::character varying, 'stale_source'::character varying, 'conflicting_sources'::character varying, 'dependency_pending'::character varying, 'invalid_input'::character varying, 'source_error'::character varying, 'calculation_error'::character varying, 'not_applicable'::character varying, 'superseded'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_snapshot_items__result_status",
+          "relation": "data.snapshot_items",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying::text, 'no_data'::character varying::text, 'insufficient_data'::character varying::text, 'insufficient_coverage'::character varying::text, 'stale_source'::character varying::text, 'conflicting_sources'::character varying::text, 'dependency_pending'::character varying::text, 'invalid_input'::character varying::text, 'source_error'::character varying::text, 'calculation_error'::character varying::text, 'not_applicable'::character varying::text, 'superseded'::character varying::text]))"
+        }
+      },
+      {
+        "object": "data.source_precedence_policies:ck_source_precedence_policies__ownership_class",
+        "source": {
+          "name": "ck_source_precedence_policies__ownership_class",
+          "relation": "data.source_precedence_policies",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_source_precedence_policies__ownership_class",
+          "relation": "data.source_precedence_policies",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "data.source_precedence_policies:ck_source_precedence_policies__tenant_ownership",
+        "source": {
+          "name": "ck_source_precedence_policies__tenant_ownership",
+          "relation": "data.source_precedence_policies",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_source_precedence_policies__tenant_ownership",
+          "relation": "data.source_precedence_policies",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "data.source_precedence_policy_key_fields:ck_source_precedence_policy_key_fields__ownership_class",
+        "source": {
+          "name": "ck_source_precedence_policy_key_fields__ownership_class",
+          "relation": "data.source_precedence_policy_key_fields",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_source_precedence_policy_key_fields__ownership_class",
+          "relation": "data.source_precedence_policy_key_fields",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "data.source_precedence_policy_key_fields:ck_source_precedence_policy_key_fields__tenant_ownership",
+        "source": {
+          "name": "ck_source_precedence_policy_key_fields__tenant_ownership",
+          "relation": "data.source_precedence_policy_key_fields",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_source_precedence_policy_key_fields__tenant_ownership",
+          "relation": "data.source_precedence_policy_key_fields",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "data.source_precedence_policy_sources:ck_source_precedence_policy_sources__ownership_class",
+        "source": {
+          "name": "ck_source_precedence_policy_sources__ownership_class",
+          "relation": "data.source_precedence_policy_sources",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_source_precedence_policy_sources__ownership_class",
+          "relation": "data.source_precedence_policy_sources",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "data.source_precedence_policy_sources:ck_source_precedence_policy_sources__tenant_ownership",
+        "source": {
+          "name": "ck_source_precedence_policy_sources__tenant_ownership",
+          "relation": "data.source_precedence_policy_sources",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_source_precedence_policy_sources__tenant_ownership",
+          "relation": "data.source_precedence_policy_sources",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "evidence.file_upload_intents:ck_file_upload_intents__classification",
+        "source": {
+          "name": "ck_file_upload_intents__classification",
+          "relation": "evidence.file_upload_intents",
+          "validated": true,
+          "definition": "CHECK (classification::text = ANY (ARRAY['public'::character varying, 'internal'::character varying, 'confidential'::character varying, 'restricted'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_file_upload_intents__classification",
+          "relation": "evidence.file_upload_intents",
+          "validated": true,
+          "definition": "CHECK (classification::text = ANY (ARRAY['public'::character varying::text, 'internal'::character varying::text, 'confidential'::character varying::text, 'restricted'::character varying::text]))"
+        }
+      },
+      {
+        "object": "evidence.file_upload_intents:ck_file_upload_intents__lifecycle",
+        "source": {
+          "name": "ck_file_upload_intents__lifecycle",
+          "relation": "evidence.file_upload_intents",
+          "validated": true,
+          "definition": "CHECK (lifecycle_state::text = ANY (ARRAY['pending_upload'::character varying, 'quarantined'::character varying, 'scanning'::character varying, 'promoted'::character varying, 'rejected'::character varying, 'expired'::character varying, 'cancelled'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_file_upload_intents__lifecycle",
+          "relation": "evidence.file_upload_intents",
+          "validated": true,
+          "definition": "CHECK (lifecycle_state::text = ANY (ARRAY['pending_upload'::character varying::text, 'quarantined'::character varying::text, 'scanning'::character varying::text, 'promoted'::character varying::text, 'rejected'::character varying::text, 'expired'::character varying::text, 'cancelled'::character varying::text]))"
+        }
+      },
+      {
+        "object": "iam.role_permissions:ck_role_permissions__ownership_class",
+        "source": {
+          "name": "ck_role_permissions__ownership_class",
+          "relation": "iam.role_permissions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_role_permissions__ownership_class",
+          "relation": "iam.role_permissions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "iam.role_permissions:ck_role_permissions__tenant_ownership",
+        "source": {
+          "name": "ck_role_permissions__tenant_ownership",
+          "relation": "iam.role_permissions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_role_permissions__tenant_ownership",
+          "relation": "iam.role_permissions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "iam.roles:ck_roles__ownership_class",
+        "source": {
+          "name": "ck_roles__ownership_class",
+          "relation": "iam.roles",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_roles__ownership_class",
+          "relation": "iam.roles",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "iam.roles:ck_roles__tenant_ownership",
+        "source": {
+          "name": "ck_roles__tenant_ownership",
+          "relation": "iam.roles",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_roles__tenant_ownership",
+          "relation": "iam.roles",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "iam.service_principals:ck_service_principals__ownership_class",
+        "source": {
+          "name": "ck_service_principals__ownership_class",
+          "relation": "iam.service_principals",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_service_principals__ownership_class",
+          "relation": "iam.service_principals",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "iam.service_principals:ck_service_principals__tenant_ownership",
+        "source": {
+          "name": "ck_service_principals__tenant_ownership",
+          "relation": "iam.service_principals",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_service_principals__tenant_ownership",
+          "relation": "iam.service_principals",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "iam.tenant_membership_invitations:ck_tenant_membership_invitations__lifecycle",
+        "source": {
+          "name": "ck_tenant_membership_invitations__lifecycle",
+          "relation": "iam.tenant_membership_invitations",
+          "validated": true,
+          "definition": "CHECK (lifecycle_state::text = ANY (ARRAY['pending'::character varying, 'accepted'::character varying, 'expired'::character varying, 'revoked'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_tenant_membership_invitations__lifecycle",
+          "relation": "iam.tenant_membership_invitations",
+          "validated": true,
+          "definition": "CHECK (lifecycle_state::text = ANY (ARRAY['pending'::character varying::text, 'accepted'::character varying::text, 'expired'::character varying::text, 'revoked'::character varying::text]))"
+        }
+      },
+      {
+        "object": "integration.external_schema_mappings:ck_external_schema_mappings__ownership_class",
+        "source": {
+          "name": "ck_external_schema_mappings__ownership_class",
+          "relation": "integration.external_schema_mappings",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_external_schema_mappings__ownership_class",
+          "relation": "integration.external_schema_mappings",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "integration.external_schema_mappings:ck_external_schema_mappings__tenant_ownership",
+        "source": {
+          "name": "ck_external_schema_mappings__tenant_ownership",
+          "relation": "integration.external_schema_mappings",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_external_schema_mappings__tenant_ownership",
+          "relation": "integration.external_schema_mappings",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "integration.sync_runs:ck_sync_runs__calculation_status",
+        "source": {
+          "name": "ck_sync_runs__calculation_status",
+          "relation": "integration.sync_runs",
+          "validated": true,
+          "definition": "CHECK (calculation_status::text = ANY (ARRAY['pending'::character varying, 'running'::character varying, 'succeeded'::character varying, 'failed'::character varying, 'cancelled'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_sync_runs__calculation_status",
+          "relation": "integration.sync_runs",
+          "validated": true,
+          "definition": "CHECK (calculation_status::text = ANY (ARRAY['pending'::character varying::text, 'running'::character varying::text, 'succeeded'::character varying::text, 'failed'::character varying::text, 'cancelled'::character varying::text]))"
+        }
+      },
+      {
+        "object": "knowledge.knowledge_items:ck_knowledge_items__ownership_class",
+        "source": {
+          "name": "ck_knowledge_items__ownership_class",
+          "relation": "knowledge.knowledge_items",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_knowledge_items__ownership_class",
+          "relation": "knowledge.knowledge_items",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "knowledge.knowledge_items:ck_knowledge_items__tenant_ownership",
+        "source": {
+          "name": "ck_knowledge_items__tenant_ownership",
+          "relation": "knowledge.knowledge_items",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_knowledge_items__tenant_ownership",
+          "relation": "knowledge.knowledge_items",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "knowledge.knowledge_sources:ck_knowledge_sources__ownership_class",
+        "source": {
+          "name": "ck_knowledge_sources__ownership_class",
+          "relation": "knowledge.knowledge_sources",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_knowledge_sources__ownership_class",
+          "relation": "knowledge.knowledge_sources",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "knowledge.knowledge_sources:ck_knowledge_sources__tenant_ownership",
+        "source": {
+          "name": "ck_knowledge_sources__tenant_ownership",
+          "relation": "knowledge.knowledge_sources",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_knowledge_sources__tenant_ownership",
+          "relation": "knowledge.knowledge_sources",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "knowledge.knowledge_versions:ck_knowledge_versions__ownership_class",
+        "source": {
+          "name": "ck_knowledge_versions__ownership_class",
+          "relation": "knowledge.knowledge_versions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_knowledge_versions__ownership_class",
+          "relation": "knowledge.knowledge_versions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "knowledge.knowledge_versions:ck_knowledge_versions__tenant_ownership",
+        "source": {
+          "name": "ck_knowledge_versions__tenant_ownership",
+          "relation": "knowledge.knowledge_versions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_knowledge_versions__tenant_ownership",
+          "relation": "knowledge.knowledge_versions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "knowledge.regulatory_change_reviews:ck_regulatory_change_reviews__ownership_class",
+        "source": {
+          "name": "ck_regulatory_change_reviews__ownership_class",
+          "relation": "knowledge.regulatory_change_reviews",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_regulatory_change_reviews__ownership_class",
+          "relation": "knowledge.regulatory_change_reviews",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "knowledge.regulatory_change_reviews:ck_regulatory_change_reviews__tenant_ownership",
+        "source": {
+          "name": "ck_regulatory_change_reviews__tenant_ownership",
+          "relation": "knowledge.regulatory_change_reviews",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_regulatory_change_reviews__tenant_ownership",
+          "relation": "knowledge.regulatory_change_reviews",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "knowledge.regulatory_changes:ck_regulatory_changes__ownership_class",
+        "source": {
+          "name": "ck_regulatory_changes__ownership_class",
+          "relation": "knowledge.regulatory_changes",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_regulatory_changes__ownership_class",
+          "relation": "knowledge.regulatory_changes",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "knowledge.regulatory_changes:ck_regulatory_changes__tenant_ownership",
+        "source": {
+          "name": "ck_regulatory_changes__tenant_ownership",
+          "relation": "knowledge.regulatory_changes",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_regulatory_changes__tenant_ownership",
+          "relation": "knowledge.regulatory_changes",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "ops_audit.audit_events:ck_audit_events__ownership_class",
+        "source": {
+          "name": "ck_audit_events__ownership_class",
+          "relation": "ops_audit.audit_events",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_audit_events__ownership_class",
+          "relation": "ops_audit.audit_events",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "ops_audit.audit_events:ck_audit_events__tenant_ownership",
+        "source": {
+          "name": "ck_audit_events__tenant_ownership",
+          "relation": "ops_audit.audit_events",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_audit_events__tenant_ownership",
+          "relation": "ops_audit.audit_events",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "ops_audit.idempotency_records:ck_idempotency_records__ownership_class",
+        "source": {
+          "name": "ck_idempotency_records__ownership_class",
+          "relation": "ops_audit.idempotency_records",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_idempotency_records__ownership_class",
+          "relation": "ops_audit.idempotency_records",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "ops_audit.idempotency_records:ck_idempotency_records__tenant_ownership",
+        "source": {
+          "name": "ck_idempotency_records__tenant_ownership",
+          "relation": "ops_audit.idempotency_records",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_idempotency_records__tenant_ownership",
+          "relation": "ops_audit.idempotency_records",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "ops_audit.job_executions:ck_job_executions__calculation_status",
+        "source": {
+          "name": "ck_job_executions__calculation_status",
+          "relation": "ops_audit.job_executions",
+          "validated": true,
+          "definition": "CHECK (calculation_status::text = ANY (ARRAY['pending'::character varying, 'running'::character varying, 'succeeded'::character varying, 'failed'::character varying, 'cancelled'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_job_executions__calculation_status",
+          "relation": "ops_audit.job_executions",
+          "validated": true,
+          "definition": "CHECK (calculation_status::text = ANY (ARRAY['pending'::character varying::text, 'running'::character varying::text, 'succeeded'::character varying::text, 'failed'::character varying::text, 'cancelled'::character varying::text]))"
+        }
+      },
+      {
+        "object": "ops_audit.job_executions:ck_job_executions__ownership_class",
+        "source": {
+          "name": "ck_job_executions__ownership_class",
+          "relation": "ops_audit.job_executions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_job_executions__ownership_class",
+          "relation": "ops_audit.job_executions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "ops_audit.job_executions:ck_job_executions__tenant_ownership",
+        "source": {
+          "name": "ck_job_executions__tenant_ownership",
+          "relation": "ops_audit.job_executions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_job_executions__tenant_ownership",
+          "relation": "ops_audit.job_executions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "ops_audit.outbox_events:ck_outbox_events__ownership_class",
+        "source": {
+          "name": "ck_outbox_events__ownership_class",
+          "relation": "ops_audit.outbox_events",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_outbox_events__ownership_class",
+          "relation": "ops_audit.outbox_events",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "ops_audit.outbox_events:ck_outbox_events__tenant_ownership",
+        "source": {
+          "name": "ck_outbox_events__tenant_ownership",
+          "relation": "ops_audit.outbox_events",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_outbox_events__tenant_ownership",
+          "relation": "ops_audit.outbox_events",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "ops_audit.system_health_events:ck_system_health_events__ownership_class",
+        "source": {
+          "name": "ck_system_health_events__ownership_class",
+          "relation": "ops_audit.system_health_events",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_system_health_events__ownership_class",
+          "relation": "ops_audit.system_health_events",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "ops_audit.system_health_events:ck_system_health_events__tenant_ownership",
+        "source": {
+          "name": "ck_system_health_events__tenant_ownership",
+          "relation": "ops_audit.system_health_events",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_system_health_events__tenant_ownership",
+          "relation": "ops_audit.system_health_events",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "platform.feature_flags:ck_feature_flags__ownership_class",
+        "source": {
+          "name": "ck_feature_flags__ownership_class",
+          "relation": "platform.feature_flags",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_feature_flags__ownership_class",
+          "relation": "platform.feature_flags",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "platform.feature_flags:ck_feature_flags__tenant_ownership",
+        "source": {
+          "name": "ck_feature_flags__tenant_ownership",
+          "relation": "platform.feature_flags",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_feature_flags__tenant_ownership",
+          "relation": "platform.feature_flags",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "platform.regulatory_pack_validation_accesses:ck_regulatory_pack_validation_accesses__lifecycle",
+        "source": {
+          "name": "ck_regulatory_pack_validation_accesses__lifecycle",
+          "relation": "platform.regulatory_pack_validation_accesses",
+          "validated": true,
+          "definition": "CHECK (lifecycle_state::text = ANY (ARRAY['active'::character varying, 'revoked'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_regulatory_pack_validation_accesses__lifecycle",
+          "relation": "platform.regulatory_pack_validation_accesses",
+          "validated": true,
+          "definition": "CHECK (lifecycle_state::text = ANY (ARRAY['active'::character varying::text, 'revoked'::character varying::text]))"
+        }
+      },
+      {
+        "object": "platform.subscription_regulatory_packs:ck_subscription_regulatory_packs__lifecycle",
+        "source": {
+          "name": "ck_subscription_regulatory_packs__lifecycle",
+          "relation": "platform.subscription_regulatory_packs",
+          "validated": true,
+          "definition": "CHECK (lifecycle_state::text = ANY (ARRAY['active'::character varying, 'revoked'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_subscription_regulatory_packs__lifecycle",
+          "relation": "platform.subscription_regulatory_packs",
+          "validated": true,
+          "definition": "CHECK (lifecycle_state::text = ANY (ARRAY['active'::character varying::text, 'revoked'::character varying::text]))"
+        }
+      },
+      {
+        "object": "platform.tenants:ck_tenants__data_classification",
+        "source": {
+          "name": "ck_tenants__data_classification",
+          "relation": "platform.tenants",
+          "validated": true,
+          "definition": "CHECK (data_classification::text = ANY (ARRAY['public'::character varying, 'internal'::character varying, 'confidential'::character varying, 'restricted'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_tenants__data_classification",
+          "relation": "platform.tenants",
+          "validated": true,
+          "definition": "CHECK (data_classification::text = ANY (ARRAY['public'::character varying::text, 'internal'::character varying::text, 'confidential'::character varying::text, 'restricted'::character varying::text]))"
+        }
+      },
+      {
+        "object": "privacy.data_categories:ck_data_categories__ownership_class",
+        "source": {
+          "name": "ck_data_categories__ownership_class",
+          "relation": "privacy.data_categories",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_data_categories__ownership_class",
+          "relation": "privacy.data_categories",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "privacy.data_categories:ck_data_categories__tenant_ownership",
+        "source": {
+          "name": "ck_data_categories__tenant_ownership",
+          "relation": "privacy.data_categories",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_data_categories__tenant_ownership",
+          "relation": "privacy.data_categories",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "privacy.data_subject_categories:ck_data_subject_categories__ownership_class",
+        "source": {
+          "name": "ck_data_subject_categories__ownership_class",
+          "relation": "privacy.data_subject_categories",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_data_subject_categories__ownership_class",
+          "relation": "privacy.data_subject_categories",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "privacy.data_subject_categories:ck_data_subject_categories__tenant_ownership",
+        "source": {
+          "name": "ck_data_subject_categories__tenant_ownership",
+          "relation": "privacy.data_subject_categories",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_data_subject_categories__tenant_ownership",
+          "relation": "privacy.data_subject_categories",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "privacy.dpias:ck_dpias__result_status",
+        "source": {
+          "name": "ck_dpias__result_status",
+          "relation": "privacy.dpias",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying, 'no_data'::character varying, 'insufficient_data'::character varying, 'insufficient_coverage'::character varying, 'stale_source'::character varying, 'conflicting_sources'::character varying, 'dependency_pending'::character varying, 'invalid_input'::character varying, 'source_error'::character varying, 'calculation_error'::character varying, 'not_applicable'::character varying, 'superseded'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_dpias__result_status",
+          "relation": "privacy.dpias",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying::text, 'no_data'::character varying::text, 'insufficient_data'::character varying::text, 'insufficient_coverage'::character varying::text, 'stale_source'::character varying::text, 'conflicting_sources'::character varying::text, 'dependency_pending'::character varying::text, 'invalid_input'::character varying::text, 'source_error'::character varying::text, 'calculation_error'::character varying::text, 'not_applicable'::character varying::text, 'superseded'::character varying::text]))"
+        }
+      },
+      {
+        "object": "privacy.legal_bases:ck_legal_bases__ownership_class",
+        "source": {
+          "name": "ck_legal_bases__ownership_class",
+          "relation": "privacy.legal_bases",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_legal_bases__ownership_class",
+          "relation": "privacy.legal_bases",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "privacy.legal_bases:ck_legal_bases__tenant_ownership",
+        "source": {
+          "name": "ck_legal_bases__tenant_ownership",
+          "relation": "privacy.legal_bases",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_legal_bases__tenant_ownership",
+          "relation": "privacy.legal_bases",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "privacy.retention_policies:ck_retention_policies__lifecycle",
+        "source": {
+          "name": "ck_retention_policies__lifecycle",
+          "relation": "privacy.retention_policies",
+          "validated": true,
+          "definition": "CHECK (lifecycle_state::text = ANY (ARRAY['draft'::character varying, 'under_review'::character varying, 'approved'::character varying, 'published'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_retention_policies__lifecycle",
+          "relation": "privacy.retention_policies",
+          "validated": true,
+          "definition": "CHECK (lifecycle_state::text = ANY (ARRAY['draft'::character varying::text, 'under_review'::character varying::text, 'approved'::character varying::text, 'published'::character varying::text]))"
+        }
+      },
+      {
+        "object": "privacy.retention_policies:ck_retention_policies__ownership_class",
+        "source": {
+          "name": "ck_retention_policies__ownership_class",
+          "relation": "privacy.retention_policies",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_retention_policies__ownership_class",
+          "relation": "privacy.retention_policies",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "privacy.retention_policies:ck_retention_policies__policy_kind",
+        "source": {
+          "name": "ck_retention_policies__policy_kind",
+          "relation": "privacy.retention_policies",
+          "validated": true,
+          "definition": "CHECK (policy_kind::text = ANY (ARRAY['legal_hold'::character varying, 'mandatory_regulatory_policy'::character varying, 'contractual_policy'::character varying, 'tenant_policy'::character varying, 'product_baseline'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_retention_policies__policy_kind",
+          "relation": "privacy.retention_policies",
+          "validated": true,
+          "definition": "CHECK (policy_kind::text = ANY (ARRAY['legal_hold'::character varying::text, 'mandatory_regulatory_policy'::character varying::text, 'contractual_policy'::character varying::text, 'tenant_policy'::character varying::text, 'product_baseline'::character varying::text]))"
+        }
+      },
+      {
+        "object": "privacy.retention_policies:ck_retention_policies__publication_effective_from",
+        "source": {
+          "name": "ck_retention_policies__publication_effective_from",
+          "relation": "privacy.retention_policies",
+          "validated": true,
+          "definition": "CHECK (lifecycle_state::text = 'published'::text AND effective_from IS NOT NULL OR (lifecycle_state::text = ANY (ARRAY['draft'::character varying, 'under_review'::character varying, 'approved'::character varying]::text[])) AND effective_from IS NULL)"
+        },
+        "restore": {
+          "name": "ck_retention_policies__publication_effective_from",
+          "relation": "privacy.retention_policies",
+          "validated": true,
+          "definition": "CHECK (lifecycle_state::text = 'published'::text AND effective_from IS NOT NULL OR (lifecycle_state::text = ANY (ARRAY['draft'::character varying::text, 'under_review'::character varying::text, 'approved'::character varying::text])) AND effective_from IS NULL)"
+        }
+      },
+      {
+        "object": "privacy.retention_policies:ck_retention_policies__tenant_ownership",
+        "source": {
+          "name": "ck_retention_policies__tenant_ownership",
+          "relation": "privacy.retention_policies",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_retention_policies__tenant_ownership",
+          "relation": "privacy.retention_policies",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "privacy.retention_policy_applicabilities:retention_policy_applicabilities_classification_check",
+        "source": {
+          "name": "retention_policy_applicabilities_classification_check",
+          "relation": "privacy.retention_policy_applicabilities",
+          "validated": true,
+          "definition": "CHECK (classification::text = ANY (ARRAY['public'::character varying, 'internal'::character varying, 'confidential'::character varying, 'restricted'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "retention_policy_applicabilities_classification_check",
+          "relation": "privacy.retention_policy_applicabilities",
+          "validated": true,
+          "definition": "CHECK (classification::text = ANY (ARRAY['public'::character varying::text, 'internal'::character varying::text, 'confidential'::character varying::text, 'restricted'::character varying::text]))"
+        }
+      },
+      {
+        "object": "privacy.retention_policy_applicabilities:retention_policy_applicabilities_lifecycle_state_check",
+        "source": {
+          "name": "retention_policy_applicabilities_lifecycle_state_check",
+          "relation": "privacy.retention_policy_applicabilities",
+          "validated": true,
+          "definition": "CHECK (lifecycle_state::text = ANY (ARRAY['draft'::character varying, 'under_review'::character varying, 'approved'::character varying, 'published'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "retention_policy_applicabilities_lifecycle_state_check",
+          "relation": "privacy.retention_policy_applicabilities",
+          "validated": true,
+          "definition": "CHECK (lifecycle_state::text = ANY (ARRAY['draft'::character varying::text, 'under_review'::character varying::text, 'approved'::character varying::text, 'published'::character varying::text]))"
+        }
+      },
+      {
+        "object": "regulatory.compliance_methodologies:ck_cm_publication",
+        "source": {
+          "name": "ck_cm_publication",
+          "relation": "regulatory.compliance_methodologies",
+          "validated": true,
+          "definition": "CHECK ((lifecycle_state::text = ANY (ARRAY['draft'::character varying, 'published'::character varying]::text[])) AND (lifecycle_state::text = 'published'::text) = (published_at IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_cm_publication",
+          "relation": "regulatory.compliance_methodologies",
+          "validated": true,
+          "definition": "CHECK ((lifecycle_state::text = ANY (ARRAY['draft'::character varying::text, 'published'::character varying::text])) AND (lifecycle_state::text = 'published'::text) = (published_at IS NOT NULL))"
+        }
+      },
+      {
+        "object": "regulatory.control_crosswalk_mappings:ck_control_crosswalk_mappings__ownership_class",
+        "source": {
+          "name": "ck_control_crosswalk_mappings__ownership_class",
+          "relation": "regulatory.control_crosswalk_mappings",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_control_crosswalk_mappings__ownership_class",
+          "relation": "regulatory.control_crosswalk_mappings",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "regulatory.control_crosswalk_mappings:ck_control_crosswalk_mappings__tenant_ownership",
+        "source": {
+          "name": "ck_control_crosswalk_mappings__tenant_ownership",
+          "relation": "regulatory.control_crosswalk_mappings",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_control_crosswalk_mappings__tenant_ownership",
+          "relation": "regulatory.control_crosswalk_mappings",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "regulatory.control_crosswalk_mappings:ck_control_xwalk_direction",
+        "source": {
+          "name": "ck_control_xwalk_direction",
+          "relation": "regulatory.control_crosswalk_mappings",
+          "validated": true,
+          "definition": "CHECK (direction::text = ANY (ARRAY['source_to_target'::character varying, 'target_to_source'::character varying, 'bidirectional'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_control_xwalk_direction",
+          "relation": "regulatory.control_crosswalk_mappings",
+          "validated": true,
+          "definition": "CHECK (direction::text = ANY (ARRAY['source_to_target'::character varying::text, 'target_to_source'::character varying::text, 'bidirectional'::character varying::text]))"
+        }
+      },
+      {
+        "object": "regulatory.framework_crosswalks:ck_framework_crosswalks__ownership_class",
+        "source": {
+          "name": "ck_framework_crosswalks__ownership_class",
+          "relation": "regulatory.framework_crosswalks",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_framework_crosswalks__ownership_class",
+          "relation": "regulatory.framework_crosswalks",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "regulatory.framework_crosswalks:ck_framework_crosswalks__tenant_ownership",
+        "source": {
+          "name": "ck_framework_crosswalks__tenant_ownership",
+          "relation": "regulatory.framework_crosswalks",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_framework_crosswalks__tenant_ownership",
+          "relation": "regulatory.framework_crosswalks",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "regulatory.framework_versions:ck_framework_versions__ownership_class",
+        "source": {
+          "name": "ck_framework_versions__ownership_class",
+          "relation": "regulatory.framework_versions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_framework_versions__ownership_class",
+          "relation": "regulatory.framework_versions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "regulatory.framework_versions:ck_framework_versions__tenant_ownership",
+        "source": {
+          "name": "ck_framework_versions__tenant_ownership",
+          "relation": "regulatory.framework_versions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_framework_versions__tenant_ownership",
+          "relation": "regulatory.framework_versions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "regulatory.frameworks:ck_frameworks__ownership_class",
+        "source": {
+          "name": "ck_frameworks__ownership_class",
+          "relation": "regulatory.frameworks",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_frameworks__ownership_class",
+          "relation": "regulatory.frameworks",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "regulatory.frameworks:ck_frameworks__tenant_ownership",
+        "source": {
+          "name": "ck_frameworks__tenant_ownership",
+          "relation": "regulatory.frameworks",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_frameworks__tenant_ownership",
+          "relation": "regulatory.frameworks",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "regulatory.normative_unit_control_mappings:ck_normative_unit_control_mappings__ownership_class",
+        "source": {
+          "name": "ck_normative_unit_control_mappings__ownership_class",
+          "relation": "regulatory.normative_unit_control_mappings",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_normative_unit_control_mappings__ownership_class",
+          "relation": "regulatory.normative_unit_control_mappings",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "regulatory.normative_unit_control_mappings:ck_normative_unit_control_mappings__tenant_ownership",
+        "source": {
+          "name": "ck_normative_unit_control_mappings__tenant_ownership",
+          "relation": "regulatory.normative_unit_control_mappings",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_normative_unit_control_mappings__tenant_ownership",
+          "relation": "regulatory.normative_unit_control_mappings",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "regulatory.normative_unit_crosswalk_mappings:ck_normative_unit_crosswalk_mappings__ownership_class",
+        "source": {
+          "name": "ck_normative_unit_crosswalk_mappings__ownership_class",
+          "relation": "regulatory.normative_unit_crosswalk_mappings",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_normative_unit_crosswalk_mappings__ownership_class",
+          "relation": "regulatory.normative_unit_crosswalk_mappings",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "regulatory.normative_unit_crosswalk_mappings:ck_normative_unit_crosswalk_mappings__tenant_ownership",
+        "source": {
+          "name": "ck_normative_unit_crosswalk_mappings__tenant_ownership",
+          "relation": "regulatory.normative_unit_crosswalk_mappings",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_normative_unit_crosswalk_mappings__tenant_ownership",
+          "relation": "regulatory.normative_unit_crosswalk_mappings",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "regulatory.normative_unit_crosswalk_mappings:ck_nu_xwalk_direction",
+        "source": {
+          "name": "ck_nu_xwalk_direction",
+          "relation": "regulatory.normative_unit_crosswalk_mappings",
+          "validated": true,
+          "definition": "CHECK (direction::text = ANY (ARRAY['source_to_target'::character varying, 'target_to_source'::character varying, 'bidirectional'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_nu_xwalk_direction",
+          "relation": "regulatory.normative_unit_crosswalk_mappings",
+          "validated": true,
+          "definition": "CHECK (direction::text = ANY (ARRAY['source_to_target'::character varying::text, 'target_to_source'::character varying::text, 'bidirectional'::character varying::text]))"
+        }
+      },
+      {
+        "object": "regulatory.normative_units:ck_normative_units__ownership_class",
+        "source": {
+          "name": "ck_normative_units__ownership_class",
+          "relation": "regulatory.normative_units",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_normative_units__ownership_class",
+          "relation": "regulatory.normative_units",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "regulatory.normative_units:ck_normative_units__tenant_ownership",
+        "source": {
+          "name": "ck_normative_units__tenant_ownership",
+          "relation": "regulatory.normative_units",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_normative_units__tenant_ownership",
+          "relation": "regulatory.normative_units",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "regulatory.regulatory_pack_validation_provenances:ck_regulatory_pack_validation_provenances__source_role",
+        "source": {
+          "name": "ck_regulatory_pack_validation_provenances__source_role",
+          "relation": "regulatory.regulatory_pack_validation_provenances",
+          "validated": true,
+          "definition": "CHECK (source_role::text = ANY (ARRAY['official_metadata'::character varying, 'provisional_supporting_reference'::character varying, 'supporting_reference'::character varying, 'test_data_source'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_regulatory_pack_validation_provenances__source_role",
+          "relation": "regulatory.regulatory_pack_validation_provenances",
+          "validated": true,
+          "definition": "CHECK (source_role::text = ANY (ARRAY['official_metadata'::character varying::text, 'provisional_supporting_reference'::character varying::text, 'supporting_reference'::character varying::text, 'test_data_source'::character varying::text]))"
+        }
+      },
+      {
+        "object": "regulatory.requirement_applicabilities:ck_requirement_applicabilities__decision_closed",
+        "source": {
+          "name": "ck_requirement_applicabilities__decision_closed",
+          "relation": "regulatory.requirement_applicabilities",
+          "validated": true,
+          "definition": "CHECK (applicability_decision::text = ANY (ARRAY['applicable'::character varying, 'not_applicable'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_requirement_applicabilities__decision_closed",
+          "relation": "regulatory.requirement_applicabilities",
+          "validated": true,
+          "definition": "CHECK (applicability_decision::text = ANY (ARRAY['applicable'::character varying::text, 'not_applicable'::character varying::text]))"
+        }
+      },
+      {
+        "object": "regulatory.requirement_assessments:ck_requirement_assessments__result_status",
+        "source": {
+          "name": "ck_requirement_assessments__result_status",
+          "relation": "regulatory.requirement_assessments",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying, 'no_data'::character varying, 'insufficient_data'::character varying, 'insufficient_coverage'::character varying, 'stale_source'::character varying, 'conflicting_sources'::character varying, 'dependency_pending'::character varying, 'invalid_input'::character varying, 'source_error'::character varying, 'calculation_error'::character varying, 'not_applicable'::character varying, 'superseded'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_requirement_assessments__result_status",
+          "relation": "regulatory.requirement_assessments",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying::text, 'no_data'::character varying::text, 'insufficient_data'::character varying::text, 'insufficient_coverage'::character varying::text, 'stale_source'::character varying::text, 'conflicting_sources'::character varying::text, 'dependency_pending'::character varying::text, 'invalid_input'::character varying::text, 'source_error'::character varying::text, 'calculation_error'::character varying::text, 'not_applicable'::character varying::text, 'superseded'::character varying::text]))"
+        }
+      },
+      {
+        "object": "regulatory.requirement_control_mappings:ck_requirement_control_mappings__ownership_class",
+        "source": {
+          "name": "ck_requirement_control_mappings__ownership_class",
+          "relation": "regulatory.requirement_control_mappings",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_requirement_control_mappings__ownership_class",
+          "relation": "regulatory.requirement_control_mappings",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "regulatory.requirement_control_mappings:ck_requirement_control_mappings__tenant_ownership",
+        "source": {
+          "name": "ck_requirement_control_mappings__tenant_ownership",
+          "relation": "regulatory.requirement_control_mappings",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_requirement_control_mappings__tenant_ownership",
+          "relation": "regulatory.requirement_control_mappings",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "regulatory.requirement_crosswalk_mappings:ck_req_xwalk_direction",
+        "source": {
+          "name": "ck_req_xwalk_direction",
+          "relation": "regulatory.requirement_crosswalk_mappings",
+          "validated": true,
+          "definition": "CHECK (direction::text = ANY (ARRAY['source_to_target'::character varying, 'target_to_source'::character varying, 'bidirectional'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_req_xwalk_direction",
+          "relation": "regulatory.requirement_crosswalk_mappings",
+          "validated": true,
+          "definition": "CHECK (direction::text = ANY (ARRAY['source_to_target'::character varying::text, 'target_to_source'::character varying::text, 'bidirectional'::character varying::text]))"
+        }
+      },
+      {
+        "object": "regulatory.requirement_crosswalk_mappings:ck_requirement_crosswalk_mappings__ownership_class",
+        "source": {
+          "name": "ck_requirement_crosswalk_mappings__ownership_class",
+          "relation": "regulatory.requirement_crosswalk_mappings",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_requirement_crosswalk_mappings__ownership_class",
+          "relation": "regulatory.requirement_crosswalk_mappings",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "regulatory.requirement_crosswalk_mappings:ck_requirement_crosswalk_mappings__tenant_ownership",
+        "source": {
+          "name": "ck_requirement_crosswalk_mappings__tenant_ownership",
+          "relation": "regulatory.requirement_crosswalk_mappings",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_requirement_crosswalk_mappings__tenant_ownership",
+          "relation": "regulatory.requirement_crosswalk_mappings",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "regulatory.requirements:ck_requirements__ownership_class",
+        "source": {
+          "name": "ck_requirements__ownership_class",
+          "relation": "regulatory.requirements",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_requirements__ownership_class",
+          "relation": "regulatory.requirements",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "regulatory.requirements:ck_requirements__tenant_ownership",
+        "source": {
+          "name": "ck_requirements__tenant_ownership",
+          "relation": "regulatory.requirements",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_requirements__tenant_ownership",
+          "relation": "regulatory.requirements",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "reporting.dashboard_definitions:ck_dashboard_definitions__ownership_class",
+        "source": {
+          "name": "ck_dashboard_definitions__ownership_class",
+          "relation": "reporting.dashboard_definitions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_dashboard_definitions__ownership_class",
+          "relation": "reporting.dashboard_definitions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "reporting.dashboard_definitions:ck_dashboard_definitions__tenant_ownership",
+        "source": {
+          "name": "ck_dashboard_definitions__tenant_ownership",
+          "relation": "reporting.dashboard_definitions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_dashboard_definitions__tenant_ownership",
+          "relation": "reporting.dashboard_definitions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "reporting.dashboard_widgets:ck_dashboard_widgets__ownership_class",
+        "source": {
+          "name": "ck_dashboard_widgets__ownership_class",
+          "relation": "reporting.dashboard_widgets",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_dashboard_widgets__ownership_class",
+          "relation": "reporting.dashboard_widgets",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "reporting.dashboard_widgets:ck_dashboard_widgets__tenant_ownership",
+        "source": {
+          "name": "ck_dashboard_widgets__tenant_ownership",
+          "relation": "reporting.dashboard_widgets",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_dashboard_widgets__tenant_ownership",
+          "relation": "reporting.dashboard_widgets",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "reporting.report_definition_parameters:ck_report_definition_parameters__ownership_class",
+        "source": {
+          "name": "ck_report_definition_parameters__ownership_class",
+          "relation": "reporting.report_definition_parameters",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_report_definition_parameters__ownership_class",
+          "relation": "reporting.report_definition_parameters",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "reporting.report_definition_parameters:ck_report_definition_parameters__tenant_ownership",
+        "source": {
+          "name": "ck_report_definition_parameters__tenant_ownership",
+          "relation": "reporting.report_definition_parameters",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_report_definition_parameters__tenant_ownership",
+          "relation": "reporting.report_definition_parameters",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "reporting.report_definitions:ck_report_definitions__ownership_class",
+        "source": {
+          "name": "ck_report_definitions__ownership_class",
+          "relation": "reporting.report_definitions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_report_definitions__ownership_class",
+          "relation": "reporting.report_definitions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "reporting.report_definitions:ck_report_definitions__tenant_ownership",
+        "source": {
+          "name": "ck_report_definitions__tenant_ownership",
+          "relation": "reporting.report_definitions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_report_definitions__tenant_ownership",
+          "relation": "reporting.report_definitions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "reporting.report_runs:ck_report_runs__calculation_status",
+        "source": {
+          "name": "ck_report_runs__calculation_status",
+          "relation": "reporting.report_runs",
+          "validated": true,
+          "definition": "CHECK (calculation_status::text = ANY (ARRAY['pending'::character varying, 'running'::character varying, 'succeeded'::character varying, 'failed'::character varying, 'cancelled'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_report_runs__calculation_status",
+          "relation": "reporting.report_runs",
+          "validated": true,
+          "definition": "CHECK (calculation_status::text = ANY (ARRAY['pending'::character varying::text, 'running'::character varying::text, 'succeeded'::character varying::text, 'failed'::character varying::text, 'cancelled'::character varying::text]))"
+        }
+      },
+      {
+        "object": "reporting.report_runs:ck_report_runs__result_status",
+        "source": {
+          "name": "ck_report_runs__result_status",
+          "relation": "reporting.report_runs",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying, 'no_data'::character varying, 'insufficient_data'::character varying, 'insufficient_coverage'::character varying, 'stale_source'::character varying, 'conflicting_sources'::character varying, 'dependency_pending'::character varying, 'invalid_input'::character varying, 'source_error'::character varying, 'calculation_error'::character varying, 'not_applicable'::character varying, 'superseded'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_report_runs__result_status",
+          "relation": "reporting.report_runs",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying::text, 'no_data'::character varying::text, 'insufficient_data'::character varying::text, 'insufficient_coverage'::character varying::text, 'stale_source'::character varying::text, 'conflicting_sources'::character varying::text, 'dependency_pending'::character varying::text, 'invalid_input'::character varying::text, 'source_error'::character varying::text, 'calculation_error'::character varying::text, 'not_applicable'::character varying::text, 'superseded'::character varying::text]))"
+        }
+      },
+      {
+        "object": "reporting.report_templates:ck_report_templates__ownership_class",
+        "source": {
+          "name": "ck_report_templates__ownership_class",
+          "relation": "reporting.report_templates",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_report_templates__ownership_class",
+          "relation": "reporting.report_templates",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "reporting.report_templates:ck_report_templates__tenant_ownership",
+        "source": {
+          "name": "ck_report_templates__tenant_ownership",
+          "relation": "reporting.report_templates",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_report_templates__tenant_ownership",
+          "relation": "reporting.report_templates",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "resilience.recovery_tests:ck_recovery_tests__result_status",
+        "source": {
+          "name": "ck_recovery_tests__result_status",
+          "relation": "resilience.recovery_tests",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying, 'no_data'::character varying, 'insufficient_data'::character varying, 'insufficient_coverage'::character varying, 'stale_source'::character varying, 'conflicting_sources'::character varying, 'dependency_pending'::character varying, 'invalid_input'::character varying, 'source_error'::character varying, 'calculation_error'::character varying, 'not_applicable'::character varying, 'superseded'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_recovery_tests__result_status",
+          "relation": "resilience.recovery_tests",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying::text, 'no_data'::character varying::text, 'insufficient_data'::character varying::text, 'insufficient_coverage'::character varying::text, 'stale_source'::character varying::text, 'conflicting_sources'::character varying::text, 'dependency_pending'::character varying::text, 'invalid_input'::character varying::text, 'source_error'::character varying::text, 'calculation_error'::character varying::text, 'not_applicable'::character varying::text, 'superseded'::character varying::text]))"
+        }
+      },
+      {
+        "object": "resilience.resilience_exercises:ck_resilience_exercises__result_status",
+        "source": {
+          "name": "ck_resilience_exercises__result_status",
+          "relation": "resilience.resilience_exercises",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying, 'no_data'::character varying, 'insufficient_data'::character varying, 'insufficient_coverage'::character varying, 'stale_source'::character varying, 'conflicting_sources'::character varying, 'dependency_pending'::character varying, 'invalid_input'::character varying, 'source_error'::character varying, 'calculation_error'::character varying, 'not_applicable'::character varying, 'superseded'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_resilience_exercises__result_status",
+          "relation": "resilience.resilience_exercises",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying::text, 'no_data'::character varying::text, 'insufficient_data'::character varying::text, 'insufficient_coverage'::character varying::text, 'stale_source'::character varying::text, 'conflicting_sources'::character varying::text, 'dependency_pending'::character varying::text, 'invalid_input'::character varying::text, 'source_error'::character varying::text, 'calculation_error'::character varying::text, 'not_applicable'::character varying::text, 'superseded'::character varying::text]))"
+        }
+      },
+      {
+        "object": "risk.impact_scale_definitions:ck_impact_scale_definitions__ownership_class",
+        "source": {
+          "name": "ck_impact_scale_definitions__ownership_class",
+          "relation": "risk.impact_scale_definitions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_impact_scale_definitions__ownership_class",
+          "relation": "risk.impact_scale_definitions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "risk.impact_scale_definitions:ck_impact_scale_definitions__tenant_ownership",
+        "source": {
+          "name": "ck_impact_scale_definitions__tenant_ownership",
+          "relation": "risk.impact_scale_definitions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_impact_scale_definitions__tenant_ownership",
+          "relation": "risk.impact_scale_definitions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "risk.impact_scale_dimension_criteria:ck_impact_scale_dimension_criteria__ownership_class",
+        "source": {
+          "name": "ck_impact_scale_dimension_criteria__ownership_class",
+          "relation": "risk.impact_scale_dimension_criteria",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_impact_scale_dimension_criteria__ownership_class",
+          "relation": "risk.impact_scale_dimension_criteria",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "risk.impact_scale_dimension_criteria:ck_impact_scale_dimension_criteria__tenant_ownership",
+        "source": {
+          "name": "ck_impact_scale_dimension_criteria__tenant_ownership",
+          "relation": "risk.impact_scale_dimension_criteria",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_impact_scale_dimension_criteria__tenant_ownership",
+          "relation": "risk.impact_scale_dimension_criteria",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "risk.impact_scale_levels:ck_impact_scale_levels__ownership_class",
+        "source": {
+          "name": "ck_impact_scale_levels__ownership_class",
+          "relation": "risk.impact_scale_levels",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_impact_scale_levels__ownership_class",
+          "relation": "risk.impact_scale_levels",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "risk.impact_scale_levels:ck_impact_scale_levels__tenant_ownership",
+        "source": {
+          "name": "ck_impact_scale_levels__tenant_ownership",
+          "relation": "risk.impact_scale_levels",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_impact_scale_levels__tenant_ownership",
+          "relation": "risk.impact_scale_levels",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "risk.likelihood_scale_definitions:ck_likelihood_scale_definitions__ownership_class",
+        "source": {
+          "name": "ck_likelihood_scale_definitions__ownership_class",
+          "relation": "risk.likelihood_scale_definitions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_likelihood_scale_definitions__ownership_class",
+          "relation": "risk.likelihood_scale_definitions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "risk.likelihood_scale_definitions:ck_likelihood_scale_definitions__tenant_ownership",
+        "source": {
+          "name": "ck_likelihood_scale_definitions__tenant_ownership",
+          "relation": "risk.likelihood_scale_definitions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_likelihood_scale_definitions__tenant_ownership",
+          "relation": "risk.likelihood_scale_definitions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "risk.likelihood_scale_levels:ck_likelihood_scale_levels__ownership_class",
+        "source": {
+          "name": "ck_likelihood_scale_levels__ownership_class",
+          "relation": "risk.likelihood_scale_levels",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_likelihood_scale_levels__ownership_class",
+          "relation": "risk.likelihood_scale_levels",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "risk.likelihood_scale_levels:ck_likelihood_scale_levels__tenant_ownership",
+        "source": {
+          "name": "ck_likelihood_scale_levels__tenant_ownership",
+          "relation": "risk.likelihood_scale_levels",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_likelihood_scale_levels__tenant_ownership",
+          "relation": "risk.likelihood_scale_levels",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "risk.risk_assessments:ck_risk_assessments__result_status",
+        "source": {
+          "name": "ck_risk_assessments__result_status",
+          "relation": "risk.risk_assessments",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying, 'no_data'::character varying, 'insufficient_data'::character varying, 'insufficient_coverage'::character varying, 'stale_source'::character varying, 'conflicting_sources'::character varying, 'dependency_pending'::character varying, 'invalid_input'::character varying, 'source_error'::character varying, 'calculation_error'::character varying, 'not_applicable'::character varying, 'superseded'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_risk_assessments__result_status",
+          "relation": "risk.risk_assessments",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying::text, 'no_data'::character varying::text, 'insufficient_data'::character varying::text, 'insufficient_coverage'::character varying::text, 'stale_source'::character varying::text, 'conflicting_sources'::character varying::text, 'dependency_pending'::character varying::text, 'invalid_input'::character varying::text, 'source_error'::character varying::text, 'calculation_error'::character varying::text, 'not_applicable'::character varying::text, 'superseded'::character varying::text]))"
+        }
+      },
+      {
+        "object": "risk.risk_methodologies:ck_risk_methodologies__ownership_class",
+        "source": {
+          "name": "ck_risk_methodologies__ownership_class",
+          "relation": "risk.risk_methodologies",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_risk_methodologies__ownership_class",
+          "relation": "risk.risk_methodologies",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "risk.risk_methodologies:ck_risk_methodologies__tenant_ownership",
+        "source": {
+          "name": "ck_risk_methodologies__tenant_ownership",
+          "relation": "risk.risk_methodologies",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_risk_methodologies__tenant_ownership",
+          "relation": "risk.risk_methodologies",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "risk.risk_taxonomies:ck_risk_taxonomies__ownership_class",
+        "source": {
+          "name": "ck_risk_taxonomies__ownership_class",
+          "relation": "risk.risk_taxonomies",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_risk_taxonomies__ownership_class",
+          "relation": "risk.risk_taxonomies",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "risk.risk_taxonomies:ck_risk_taxonomies__tenant_ownership",
+        "source": {
+          "name": "ck_risk_taxonomies__tenant_ownership",
+          "relation": "risk.risk_taxonomies",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_risk_taxonomies__tenant_ownership",
+          "relation": "risk.risk_taxonomies",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "rules.automation_policies:ck_automation_policies__ownership_class",
+        "source": {
+          "name": "ck_automation_policies__ownership_class",
+          "relation": "rules.automation_policies",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_automation_policies__ownership_class",
+          "relation": "rules.automation_policies",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "rules.automation_policies:ck_automation_policies__tenant_ownership",
+        "source": {
+          "name": "ck_automation_policies__tenant_ownership",
+          "relation": "rules.automation_policies",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_automation_policies__tenant_ownership",
+          "relation": "rules.automation_policies",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "rules.grc_impact_mappings:ck_grc_impact_mappings__ownership_class",
+        "source": {
+          "name": "ck_grc_impact_mappings__ownership_class",
+          "relation": "rules.grc_impact_mappings",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_grc_impact_mappings__ownership_class",
+          "relation": "rules.grc_impact_mappings",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "rules.grc_impact_mappings:ck_grc_impact_mappings__tenant_ownership",
+        "source": {
+          "name": "ck_grc_impact_mappings__tenant_ownership",
+          "relation": "rules.grc_impact_mappings",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_grc_impact_mappings__tenant_ownership",
+          "relation": "rules.grc_impact_mappings",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "rules.rule_definition_inputs:ck_rule_definition_inputs__ownership_class",
+        "source": {
+          "name": "ck_rule_definition_inputs__ownership_class",
+          "relation": "rules.rule_definition_inputs",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_rule_definition_inputs__ownership_class",
+          "relation": "rules.rule_definition_inputs",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "rules.rule_definition_inputs:ck_rule_definition_inputs__tenant_ownership",
+        "source": {
+          "name": "ck_rule_definition_inputs__tenant_ownership",
+          "relation": "rules.rule_definition_inputs",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_rule_definition_inputs__tenant_ownership",
+          "relation": "rules.rule_definition_inputs",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "rules.rule_definition_thresholds:ck_rule_definition_thresholds__ownership_class",
+        "source": {
+          "name": "ck_rule_definition_thresholds__ownership_class",
+          "relation": "rules.rule_definition_thresholds",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_rule_definition_thresholds__ownership_class",
+          "relation": "rules.rule_definition_thresholds",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "rules.rule_definition_thresholds:ck_rule_definition_thresholds__tenant_ownership",
+        "source": {
+          "name": "ck_rule_definition_thresholds__tenant_ownership",
+          "relation": "rules.rule_definition_thresholds",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_rule_definition_thresholds__tenant_ownership",
+          "relation": "rules.rule_definition_thresholds",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "rules.rule_definitions:ck_rule_definitions__ownership_class",
+        "source": {
+          "name": "ck_rule_definitions__ownership_class",
+          "relation": "rules.rule_definitions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_rule_definitions__ownership_class",
+          "relation": "rules.rule_definitions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "rules.rule_definitions:ck_rule_definitions__tenant_ownership",
+        "source": {
+          "name": "ck_rule_definitions__tenant_ownership",
+          "relation": "rules.rule_definitions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_rule_definitions__tenant_ownership",
+          "relation": "rules.rule_definitions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "rules.rule_evaluations:ck_rule_evaluations__result_status",
+        "source": {
+          "name": "ck_rule_evaluations__result_status",
+          "relation": "rules.rule_evaluations",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying, 'no_data'::character varying, 'insufficient_data'::character varying, 'insufficient_coverage'::character varying, 'stale_source'::character varying, 'conflicting_sources'::character varying, 'dependency_pending'::character varying, 'invalid_input'::character varying, 'source_error'::character varying, 'calculation_error'::character varying, 'not_applicable'::character varying, 'superseded'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_rule_evaluations__result_status",
+          "relation": "rules.rule_evaluations",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying::text, 'no_data'::character varying::text, 'insufficient_data'::character varying::text, 'insufficient_coverage'::character varying::text, 'stale_source'::character varying::text, 'conflicting_sources'::character varying::text, 'dependency_pending'::character varying::text, 'invalid_input'::character varying::text, 'source_error'::character varying::text, 'calculation_error'::character varying::text, 'not_applicable'::character varying::text, 'superseded'::character varying::text]))"
+        }
+      },
+      {
+        "object": "survey.survey_options:ck_survey_options__ownership_class",
+        "source": {
+          "name": "ck_survey_options__ownership_class",
+          "relation": "survey.survey_options",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_survey_options__ownership_class",
+          "relation": "survey.survey_options",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "survey.survey_options:ck_survey_options__tenant_ownership",
+        "source": {
+          "name": "ck_survey_options__tenant_ownership",
+          "relation": "survey.survey_options",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_survey_options__tenant_ownership",
+          "relation": "survey.survey_options",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "survey.survey_question_validation_rules:ck_survey_question_validation_rules__ownership_class",
+        "source": {
+          "name": "ck_survey_question_validation_rules__ownership_class",
+          "relation": "survey.survey_question_validation_rules",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_survey_question_validation_rules__ownership_class",
+          "relation": "survey.survey_question_validation_rules",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "survey.survey_question_validation_rules:ck_survey_question_validation_rules__tenant_ownership",
+        "source": {
+          "name": "ck_survey_question_validation_rules__tenant_ownership",
+          "relation": "survey.survey_question_validation_rules",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_survey_question_validation_rules__tenant_ownership",
+          "relation": "survey.survey_question_validation_rules",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "survey.survey_questions:ck_survey_questions__ownership_class",
+        "source": {
+          "name": "ck_survey_questions__ownership_class",
+          "relation": "survey.survey_questions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_survey_questions__ownership_class",
+          "relation": "survey.survey_questions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "survey.survey_questions:ck_survey_questions__tenant_ownership",
+        "source": {
+          "name": "ck_survey_questions__tenant_ownership",
+          "relation": "survey.survey_questions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_survey_questions__tenant_ownership",
+          "relation": "survey.survey_questions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "survey.survey_versions:ck_survey_versions__ownership_class",
+        "source": {
+          "name": "ck_survey_versions__ownership_class",
+          "relation": "survey.survey_versions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_survey_versions__ownership_class",
+          "relation": "survey.survey_versions",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "survey.survey_versions:ck_survey_versions__tenant_ownership",
+        "source": {
+          "name": "ck_survey_versions__tenant_ownership",
+          "relation": "survey.survey_versions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_survey_versions__tenant_ownership",
+          "relation": "survey.survey_versions",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "survey.surveys:ck_surveys__ownership_class",
+        "source": {
+          "name": "ck_surveys__ownership_class",
+          "relation": "survey.surveys",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying, 'PLATFORM_CONTROL'::character varying, 'TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_surveys__ownership_class",
+          "relation": "survey.surveys",
+          "validated": true,
+          "definition": "CHECK (ownership_class::text = ANY (ARRAY['GLOBAL_REFERENCE'::character varying::text, 'PLATFORM_CONTROL'::character varying::text, 'TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text]))"
+        }
+      },
+      {
+        "object": "survey.surveys:ck_surveys__tenant_ownership",
+        "source": {
+          "name": "ck_surveys__tenant_ownership",
+          "relation": "survey.surveys",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying, 'TENANT_DERIVED'::character varying]::text[])) = (tenant_id IS NOT NULL))"
+        },
+        "restore": {
+          "name": "ck_surveys__tenant_ownership",
+          "relation": "survey.surveys",
+          "validated": true,
+          "definition": "CHECK ((ownership_class::text = ANY (ARRAY['TENANT_OWNED'::character varying::text, 'TENANT_DERIVED'::character varying::text])) = (tenant_id IS NOT NULL))"
+        }
+      },
+      {
+        "object": "third_party.supplier_assessments:ck_supplier_assessments__result_status",
+        "source": {
+          "name": "ck_supplier_assessments__result_status",
+          "relation": "third_party.supplier_assessments",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying, 'no_data'::character varying, 'insufficient_data'::character varying, 'insufficient_coverage'::character varying, 'stale_source'::character varying, 'conflicting_sources'::character varying, 'dependency_pending'::character varying, 'invalid_input'::character varying, 'source_error'::character varying, 'calculation_error'::character varying, 'not_applicable'::character varying, 'superseded'::character varying]::text[]))"
+        },
+        "restore": {
+          "name": "ck_supplier_assessments__result_status",
+          "relation": "third_party.supplier_assessments",
+          "validated": true,
+          "definition": "CHECK (result_status::text = ANY (ARRAY['valid'::character varying::text, 'no_data'::character varying::text, 'insufficient_data'::character varying::text, 'insufficient_coverage'::character varying::text, 'stale_source'::character varying::text, 'conflicting_sources'::character varying::text, 'dependency_pending'::character varying::text, 'invalid_input'::character varying::text, 'source_error'::character varying::text, 'calculation_error'::character varying::text, 'not_applicable'::character varying::text, 'superseded'::character varying::text]))"
+        }
+      }
+    ],
+    "source_sha256": "b05abc1e1658686d777c2a48ca3a219c56fe68387fc9581527ed8e9eb8ee7e55",
+    "restore_sha256": "8c6c29e8bbe11b6e25b6b2e4ebad691aef1d07c447c990ca23f51d176d75477b"
+  },
+  "tables_compared": 243,
+  "ledger_rows": 34,
+  "restore_seconds": 18.567,
+  "all_pass": false,
+  "postgres_version": {
+    "version": "160015",
+    "readonly": "on"
+  },
+  "status": "FAIL_COMPARISON",
+  "recovery_point_utc": "2026-10-21T22:46:47.129323+00:00",
+  "cleanup": {
+    "destroy_exit_code": 0,
+    "container_absent": true,
+    "plaintext_restore_tmpfs_destroyed": true
+  },
+  "finished_utc": "2026-10-21T23:01:14.967151+00:00"
+}

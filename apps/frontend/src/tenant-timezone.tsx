@@ -71,3 +71,72 @@ export function explicitUtcInstant(value: string): string | undefined {
   const instant = new Date(value);
   return Number.isFinite(instant.getTime()) && instant.toISOString().slice(0, 19) === value.slice(0, 19) ? value : undefined;
 }
+
+function tenantWallClock(instant: Date, zone: string): string {
+  const parts = new Intl.DateTimeFormat("en-CA", { timeZone: zone, calendar: "iso8601", numberingSystem: "latn",
+    year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23" }).formatToParts(instant);
+  const p = Object.fromEntries(parts.map(part => [part.type, part.value]));
+  return `${p.year!.padStart(4,"0")}-${p.month}-${p.day}T${p.hour}:${p.minute}:${p.second}`;
+}
+
+/** UTC -> tenant wall clock, retaining subsecond precision for unchanged edits. */
+export function tenantInstantToLocal(value: string, zone: string | null): string | null {
+  const utc = tenantInstantToUtc(value, zone);
+  if (!utc || !zone) return null;
+  return tenantWallClock(new Date(utc), zone) + (/\.\d+(?=Z$)/.exec(utc)?.[0] ?? "");
+}
+
+/** Enumerate IANA offsets around this date, then round-trip every candidate.
+ * Zero results means a DST gap/invalid date; multiple results require a human choice.
+ * No browser timezone or fixed customer offset participates in conversion.
+ */
+export function tenantLocalCandidates(value: string, zone: string | null): string[] {
+  if (!isIanaTimezone(zone)) return [];
+  const m = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2})(?::(\d{2})(\.\d+)?)?$/.exec(value);
+  if (!m) return [];
+  const wall = `${m[1]}:${m[2] ?? "00"}`;
+  const naive = explicitUtcInstant(`${wall}Z`);
+  if (!naive) return [];
+  const at = Date.parse(naive), offsets = new Set<number>();
+  // Both sides of a timezone transition; offsets come from the runtime's IANA rules.
+  for (let hour = -48; hour <= 48; hour++) {
+    const sample = new Date(at + hour * 3_600_000);
+    offsets.add(Date.parse(`${tenantWallClock(sample,zone)}Z`) - sample.getTime());
+  }
+  return [...offsets].flatMap(offset => {
+    const candidate = new Date(at - offset);
+    if (tenantWallClock(candidate,zone) !== wall) return [];
+    const utc = `${candidate.toISOString().slice(0,19)}${m[3] ?? ""}Z`;
+    return tenantInstantToUtc(utc,zone) ? [utc] : [];
+  }).sort();
+}
+
+/** Value is either an exact UTC instant or an unresolved local clock that blocks submit. */
+export function TenantLocalDateTimeField({ label, value, onChange, required=false }: {
+  label: string; value: string; onChange(value:string):void; required?:boolean;
+}) {
+  const zone = useContext(TenantTimezoneContext);
+  const id = React.useId();
+  const local = value.endsWith("Z") ? tenantInstantToLocal(value,zone) ?? "" : value;
+  const candidates = React.useMemo(()=>tenantLocalCandidates(local,zone),[local,zone]);
+  const unresolved = !!local && !candidates.includes(value);
+  return <div className="control-version-selector"><label htmlFor={id}>{label}</label>
+    <input id={id} type="datetime-local" step="any" required={required} disabled={!isIanaTimezone(zone)} value={local}
+      aria-invalid={unresolved||undefined} aria-describedby={`${id}-zone ${id}-state`}
+      onChange={event=>{const next=event.target.value;const choices=tenantLocalCandidates(next,zone);onChange(choices.length===1?choices[0]!:next);}}/>
+    <span id={`${id}-zone`} className="form-guidance">{zone ? `Hora local de la empresa: ${zone}` : uiText.temporal.contextPending}</span>
+    <div id={`${id}-state`}>{unresolved && candidates.length===0 && <p role="alert" className="form-error">Esta fecha u hora no existe en la zona de la empresa. Selecciona otra.</p>}
+      {candidates.length>1 && <label>Ocurrencia de {label}<select aria-label={`Ocurrencia de ${label}`} value={candidates.includes(value)?value:""} onChange={event=>onChange(event.target.value || local)}>
+        <option value="">La hora se repite por cambio de horario. Selecciona una ocurrencia.</option>
+        {candidates.map((utc,index)=><option key={utc} value={utc}>{index===0?"Primera ocurrencia":"Segunda ocurrencia"} · {formatTenantInstant(utc,zone)}</option>)}
+      </select></label>}
+    </div></div>;
+}
+
+/** Compare normalized UTC instants without truncating contractual fractional seconds. */
+export function isUtcEndAfterStart(from: string, to: string): boolean {
+  const [a,af=""] = from.slice(0,-1).split(".");
+  const [b,bf=""] = to.slice(0,-1).split(".");
+  const precision=Math.max(af.length,bf.length);
+  return b!>a! || (b===a && bf.padEnd(precision,"0")>af.padEnd(precision,"0"));
+}

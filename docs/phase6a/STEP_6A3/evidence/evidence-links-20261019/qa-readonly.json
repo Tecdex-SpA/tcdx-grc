@@ -1,0 +1,502 @@
+{
+  "capturedAt": "2026-10-19T16:46:04.643Z",
+  "queryMode": "REPEATABLE READ READ ONLY",
+  "tenant": [
+    {
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "tenant_code": "TECDEX"
+    }
+  ],
+  "targets": {
+    "controls": [
+      {
+        "row": {
+          "name": "QA Phase5 20261007 - Control de requisitos de clientes",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "control_id": "01a118d7-6222-7470-8a85-306e07659f4a",
+          "created_at": "2026-10-08T00:08:50.952677+00:00",
+          "updated_at": "2026-10-08T00:08:50.952677+00:00",
+          "row_version": 1,
+          "control_code": "QA-F5-20261007-CONTROL",
+          "control_origin": "tenant_instantiated",
+          "lifecycle_state": "active",
+          "ownership_class": "TENANT_OWNED",
+          "business_owner_subject_id": "01a0f27e-b912-72d2-a08e-c5fcbd4efe43",
+          "based_on_control_version_id": "01a0ea93-d739-7298-adf1-3a1336487617",
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "updated_by_user_identity_id": null,
+          "created_by_service_principal_id": null,
+          "updated_by_service_principal_id": null
+        }
+      }
+    ],
+    "control_assessments": [
+      {
+        "row": {
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "control_id": "01a118d7-6222-7470-8a85-306e07659f4a",
+          "created_at": "2026-10-08T10:08:37.694222+00:00",
+          "updated_at": "2026-10-08T10:17:48.497+00:00",
+          "assessed_at": "2026-10-08T10:08:38.349+00:00",
+          "row_version": 5,
+          "result_status": "no_data",
+          "lifecycle_state": "approved",
+          "coverage_percent": null,
+          "superseded_by_id": null,
+          "domain_conclusion": "not_tested",
+          "control_version_id": "01a118d7-6222-7470-8a85-35f52db6b5a0",
+          "design_effectiveness": null,
+          "control_assessment_id": "01a11afc-7f48-701e-9c0b-c2bc01ba0a5e",
+          "overall_effectiveness": null,
+          "methodology_version_ref": "01a11900-0000-7001-8000-000000000002",
+          "operating_effectiveness": null,
+          "effective_configuration_id": null,
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "updated_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "created_by_service_principal_id": null,
+          "updated_by_service_principal_id": null
+        }
+      },
+      {
+        "row": {
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "control_id": "01a118d7-6222-7470-8a85-306e07659f4a",
+          "created_at": "2026-10-15T19:55:11.411929+00:00",
+          "updated_at": "2026-10-15T19:56:11.829+00:00",
+          "assessed_at": "2026-10-15T19:56:11.829+00:00",
+          "row_version": 3,
+          "result_status": "insufficient_data",
+          "lifecycle_state": "completed",
+          "coverage_percent": null,
+          "superseded_by_id": null,
+          "domain_conclusion": null,
+          "control_version_id": "01a118d7-6222-7470-8a85-35f52db6b5a0",
+          "design_effectiveness": null,
+          "control_assessment_id": "01a14122-06e4-748d-a3db-5935f64c1901",
+          "overall_effectiveness": null,
+          "methodology_version_ref": "01a11900-0000-7001-8000-000000000002",
+          "operating_effectiveness": null,
+          "effective_configuration_id": null,
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "updated_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "created_by_service_principal_id": null,
+          "updated_by_service_principal_id": null
+        }
+      }
+    ],
+    "assurance_tests": [
+      {
+        "row": {
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "test_code": "QA-F5-20261007-ASSURANCE",
+          "control_id": "01a118d7-6222-7470-8a85-306e07659f4a",
+          "created_at": "2026-10-08T00:09:24.742016+00:00",
+          "planned_at": null,
+          "updated_at": "2026-10-08T00:23:26.505+00:00",
+          "approved_at": "2026-10-08T00:23:26.505+00:00",
+          "executed_at": "2026-10-08T00:11:37.331+00:00",
+          "reviewed_at": "2026-10-08T00:12:13.176+00:00",
+          "row_version": 5,
+          "result_status": "no_data",
+          "lifecycle_state": "approved",
+          "superseded_by_id": null,
+          "assurance_test_id": "01a118d7-e604-7298-bae3-8b9da3eb809d",
+          "domain_conclusion": "not_tested",
+          "control_version_id": "01a118d7-6222-7470-8a85-35f52db6b5a0",
+          "executor_membership_id": "01a0cfc7-0e5d-764f-92d8-a15e25223325",
+          "reviewer_membership_id": "01a118c3-b108-7636-abcf-7cb86725320e",
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "updated_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "created_by_service_principal_id": null,
+          "updated_by_service_principal_id": null
+        }
+      }
+    ],
+    "requirement_assessments": [
+      {
+        "row": {
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "created_at": "2026-10-08T10:08:36.439593+00:00",
+          "updated_at": "2026-10-08T10:16:23.544+00:00",
+          "approved_at": "2026-10-08T10:16:23.544+00:00",
+          "assessed_at": "2026-10-08T10:08:37.197+00:00",
+          "row_version": 4,
+          "result_status": "no_data",
+          "lifecycle_state": "approved",
+          "coverage_percent": null,
+          "superseded_by_id": null,
+          "domain_conclusion": "insufficient_evidence",
+          "methodology_version_ref": "01a11900-0000-7001-8000-000000000001",
+          "requirement_assessment_id": "01a11afc-7a61-743f-9add-fbd93a87ddd7",
+          "effective_configuration_id": null,
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "updated_by_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+          "requirement_applicability_id": "01a118c4-0331-73a7-97cc-c2eadd006b98",
+          "created_by_service_principal_id": null,
+          "updated_by_service_principal_id": null
+        }
+      }
+    ],
+    "requirement_applicabilities": [
+      {
+        "row": {
+          "rationale": "QA Phase5 20261007: validación funcional no autoritativa con revisión independiente",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "created_at": "2026-10-07T23:47:41.474311+00:00",
+          "updated_at": "2026-10-07T23:51:07.305+00:00",
+          "approved_at": "2026-10-07T23:51:07.305+00:00",
+          "row_version": 3,
+          "effective_to": null,
+          "effective_from": "2026-10-07T23:47:10.528+00:00",
+          "requirement_id": "01a0ea93-a4b4-70c2-a621-720d94c90124",
+          "lifecycle_state": "approved",
+          "scope_subject_id": null,
+          "superseded_by_id": null,
+          "applicability_version": 1,
+          "applicability_decision": "applicable",
+          "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+          "updated_by_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+          "approved_by_user_identity_id": "01a11260-ac49-7432-a9fe-a04d546c1355",
+          "requirement_applicability_id": "01a118c4-0331-73a7-97cc-c2eadd006b98",
+          "created_by_service_principal_id": null,
+          "updated_by_service_principal_id": null
+        }
+      }
+    ]
+  },
+  "files": [
+    {
+      "file_object_id": "01a15505-0565-758c-a3fd-1c4142fde098",
+      "scan_status": "passed",
+      "created_at": "2026-10-19T16:35:54.835Z",
+      "created_by_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+      "retention_policy_applicability_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45",
+      "applicability_state": "published",
+      "classification": "internal",
+      "used_by_evidence": false
+    },
+    {
+      "file_object_id": "01a154f6-4dd1-73af-8d20-2b97ce19c222",
+      "scan_status": "passed",
+      "created_at": "2026-10-19T16:19:50.335Z",
+      "created_by_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+      "retention_policy_applicability_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45",
+      "applicability_state": "published",
+      "classification": "internal",
+      "used_by_evidence": false
+    },
+    {
+      "file_object_id": "01a154f3-1a2b-7083-8d05-55e2216a7ac3",
+      "scan_status": "passed",
+      "created_at": "2026-10-19T16:16:20.507Z",
+      "created_by_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+      "retention_policy_applicability_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45",
+      "applicability_state": "published",
+      "classification": "internal",
+      "used_by_evidence": false
+    },
+    {
+      "file_object_id": "01a154ed-7133-7195-999d-2a3626831287",
+      "scan_status": "passed",
+      "created_at": "2026-10-19T16:10:09.573Z",
+      "created_by_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+      "retention_policy_applicability_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45",
+      "applicability_state": "published",
+      "classification": "internal",
+      "used_by_evidence": false
+    },
+    {
+      "file_object_id": "01a154d0-bb8c-7305-94e0-04279e8330b3",
+      "scan_status": "passed",
+      "created_at": "2026-10-19T15:38:48.060Z",
+      "created_by_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+      "retention_policy_applicability_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45",
+      "applicability_state": "published",
+      "classification": "internal",
+      "used_by_evidence": false
+    }
+  ],
+  "audit": [
+    {
+      "occurred_at": "2026-10-08T00:23:25.526Z",
+      "correlation_id": "01a118e4-ba46-7767-8d01-c6636d3770b4",
+      "command_code": "evidenceCreate",
+      "outcome": "success",
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "after_payload": {
+        "valid_to": null,
+        "versions": [
+          {
+            "expires_at": null,
+            "period_end": null,
+            "approved_at": null,
+            "evidence_id": "01a118e4-ba56-76e7-aa44-cc8b23930648",
+            "row_version": 1,
+            "effective_to": null,
+            "period_start": null,
+            "published_at": null,
+            "submitted_at": null,
+            "effective_from": null,
+            "file_object_id": "01a118e4-618b-74c5-b3ae-d4e2fa0ce4eb",
+            "provenance_ref": "QA Phase5 non authoritative",
+            "version_number": 1,
+            "lifecycle_state": "draft",
+            "superseded_by_id": null,
+            "document_version_id": null,
+            "evidence_version_id": "01a118e4-ba56-76e7-aa44-d03594933d9c"
+          }
+        ],
+        "valid_from": null,
+        "evidence_id": "01a118e4-ba56-76e7-aa44-cc8b23930648",
+        "row_version": 1,
+        "source_kind": "file",
+        "evidence_code": "QA-F5-20261007-EVIDENCE",
+        "evidence_type": "document",
+        "lifecycle_state": "draft",
+        "retention_policy_id": "01a118bf-386d-76be-a26d-e7b322136302",
+        "business_owner_subject_id": "01a0f27e-b912-72d2-a08e-c5fcbd4efe43"
+      }
+    }
+  ],
+  "catalog": [
+    {
+      "table_schema": "iam",
+      "table_name": "roles",
+      "column_name": "role_id"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "roles",
+      "column_name": "created_at"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "roles",
+      "column_name": "created_by_user_identity_id"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "roles",
+      "column_name": "created_by_service_principal_id"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "roles",
+      "column_name": "updated_at"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "roles",
+      "column_name": "updated_by_user_identity_id"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "roles",
+      "column_name": "updated_by_service_principal_id"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "roles",
+      "column_name": "row_version"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "roles",
+      "column_name": "ownership_class"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "roles",
+      "column_name": "tenant_id"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "roles",
+      "column_name": "role_code"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "roles",
+      "column_name": "name"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "roles",
+      "column_name": "is_baseline"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "roles",
+      "column_name": "lifecycle_state"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "tenant_memberships",
+      "column_name": "tenant_membership_id"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "tenant_memberships",
+      "column_name": "created_at"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "tenant_memberships",
+      "column_name": "created_by_user_identity_id"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "tenant_memberships",
+      "column_name": "created_by_service_principal_id"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "tenant_memberships",
+      "column_name": "updated_at"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "tenant_memberships",
+      "column_name": "updated_by_user_identity_id"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "tenant_memberships",
+      "column_name": "updated_by_service_principal_id"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "tenant_memberships",
+      "column_name": "row_version"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "tenant_memberships",
+      "column_name": "tenant_id"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "tenant_memberships",
+      "column_name": "user_identity_id"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "tenant_memberships",
+      "column_name": "membership_state"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "tenant_memberships",
+      "column_name": "joined_at"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "tenant_memberships",
+      "column_name": "ended_at"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "user_identities",
+      "column_name": "user_identity_id"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "user_identities",
+      "column_name": "created_at"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "user_identities",
+      "column_name": "created_by_user_identity_id"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "user_identities",
+      "column_name": "created_by_service_principal_id"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "user_identities",
+      "column_name": "updated_at"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "user_identities",
+      "column_name": "updated_by_user_identity_id"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "user_identities",
+      "column_name": "updated_by_service_principal_id"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "user_identities",
+      "column_name": "row_version"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "user_identities",
+      "column_name": "identity_key"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "user_identities",
+      "column_name": "display_name"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "user_identities",
+      "column_name": "email_normalized"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "user_identities",
+      "column_name": "lifecycle_state"
+    },
+    {
+      "table_schema": "iam",
+      "table_name": "user_identities",
+      "column_name": "last_authenticated_at"
+    }
+  ],
+  "actorRoles": [
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "display_name": "user3",
+      "membership_state": "active",
+      "role_code": "EVIDENCE_OWNER",
+      "scope_kind": "tenant"
+    },
+    {
+      "user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "display_name": "user3",
+      "membership_state": "active",
+      "role_code": "PRIVACY_MANAGER",
+      "scope_kind": "tenant"
+    }
+  ],
+  "readerPermissions": [
+    {
+      "permission_code": "compliance.requirement_assessment.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "permission_code": "controls.assurance_test.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "permission_code": "controls.control.read",
+      "scope_kind": "tenant"
+    },
+    {
+      "permission_code": "controls.control_assessment.read",
+      "scope_kind": "tenant"
+    }
+  ]
+}

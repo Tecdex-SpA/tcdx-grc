@@ -1,0 +1,100 @@
+[
+  {
+    "name": "focused",
+    "command": "pnpm exec vitest run apps/backend/src/security/normative-library-publication.test.ts apps/backend/src/security/publication-operator-server.test.ts apps/backend/src/configuration/control-definition-references.test.ts apps/backend/src/configuration/control-adjustment-policy.test.ts apps/backend/src/normative-library apps/backend/src/regulatory/library-law.test.ts apps/frontend/src/normative-library-workspace.test.tsx apps/frontend/src/normative-library-client.test.ts apps/frontend/src/core-grc.test.tsx",
+    "exit_code": 0,
+    "log": "checks/focused.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; PG16 for postgres"
+  },
+  {
+    "name": "postgres",
+    "command": "bash scripts/normative-library/run-operational-postgres-tests.sh",
+    "exit_code": 0,
+    "log": "checks/postgres.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; PG16 for postgres"
+  },
+  {
+    "name": "authentication",
+    "command": "pnpm exec vitest run apps/backend/src/security/authentication.test.ts",
+    "exit_code": 0,
+    "log": "checks/authentication.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; PG16 for postgres"
+  },
+  {
+    "name": "typecheck",
+    "command": "pnpm typecheck",
+    "exit_code": 0,
+    "log": "checks/typecheck.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; PG16 for postgres"
+  },
+  {
+    "name": "build",
+    "command": "pnpm build",
+    "exit_code": 0,
+    "log": "checks/build.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; PG16 for postgres"
+  },
+  {
+    "name": "backend-typecheck",
+    "command": "pnpm --filter @tcdx-grc/backend typecheck",
+    "exit_code": 0,
+    "log": "checks/backend-typecheck.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; PG16 for postgres"
+  },
+  {
+    "name": "backend-build",
+    "command": "pnpm --filter @tcdx-grc/backend build",
+    "exit_code": 0,
+    "log": "checks/backend-build.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; PG16 for postgres"
+  },
+  {
+    "name": "canonical-generator",
+    "command": "pnpm contracts:verify",
+    "exit_code": 0,
+    "log": "checks/canonical-generator.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; PG16 for postgres"
+  },
+  {
+    "name": "library-assets",
+    "command": "node scripts/normative-library/generate-contract-assets.mjs --check",
+    "exit_code": 0,
+    "log": "checks/library-assets.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; PG16 for postgres"
+  },
+  {
+    "name": "rights-assets",
+    "command": "node scripts/normative-library/generate-rights-contract.mjs --check",
+    "exit_code": 0,
+    "log": "checks/rights-assets.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; PG16 for postgres"
+  },
+  {
+    "name": "rector-integrity",
+    "command": "bash scripts/verify-rector-governance.sh",
+    "exit_code": 0,
+    "log": "checks/rector-integrity.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; PG16 for postgres"
+  },
+  {
+    "name": "rector-status",
+    "command": "bash scripts/test-rector-governance-status.sh",
+    "exit_code": 0,
+    "log": "checks/rector-status.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; PG16 for postgres"
+  },
+  {
+    "name": "secrets",
+    "command": "pnpm secrets:scan",
+    "exit_code": 0,
+    "log": "checks/secrets.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; PG16 for postgres"
+  },
+  {
+    "name": "whitespace",
+    "command": "git diff --check",
+    "exit_code": 0,
+    "log": "checks/whitespace.log",
+    "environment": "LOCAL_ONLY; Node22.23.2/pnpm12.4.1; PG16 for postgres"
+  }
+]

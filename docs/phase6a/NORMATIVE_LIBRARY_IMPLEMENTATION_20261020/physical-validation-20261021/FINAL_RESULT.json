@@ -1,0 +1,90 @@
+{
+  "PROJECT": "GRC_TECDEX",
+  "ACTIVE_BASELINE": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "STEP6A3_CLOSURE": "PASS",
+  "STEP6A4_CLOSURE": "PASS",
+  "PREVIOUS_IMPLEMENTATION_HANDOFF": "resumption-20261021/HANDOFF_SUCCESSOR.md",
+  "PREVIOUS_115_CREATED_AND_8_MODIFIED": "PRESERVED_AT_INCOMING_SUCCESSOR_BYTES; PRIOR_7_AUTHORIZED_DELTAS_RETAINED",
+  "PREVIOUS_89_CREATED_AND_16_MODIFIED": "PRESERVED_AT_INCOMING_BYTES",
+  "INCOMING_FILES_PRESERVED": 4359,
+  "EFFECTIVE_H04_PHYSICAL_GATE": "FAIL_2_PACKAGE_CASES_SQLSTATE_42703",
+  "CORRECTOR_CANDIDATE_GATE": "PASS_149_OF_149_ISOLATED_PHYSICAL_CHECKS",
+  "H04_AMENDMENT": "CANDIDATE_NOT_PUBLISHED",
+  "H04_RIGHTS_VERIFICATION": "NOT_ASSERTED_WITHOUT_EVIDENCE",
+  "CANDIDATE_MANIFEST": {
+    "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_PHYSICAL_VALIDATION_20261021/PUBLICATION_MANIFEST_CANDIDATE.json",
+    "sha256": "b1328e9fe106d7587939f933cbb880f5834302f2ab41e4e8cdf9fa55fd1f2225"
+  },
+  "DDL_EXECUTED": [
+    {
+      "path": "docs/physical-data-model/amendments/NORMATIVE_LIBRARY_20261020/03_DDL_SPEC.sql",
+      "sha256": "33d444c2e5394f1a027d3d81230b77335487e768d2a130578a5f119c559f72e7",
+      "statements": 41
+    },
+    {
+      "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_SQL_GRAMMAR_20261021/DDL_SPEC.sql",
+      "sha256": "0841e1c9136400ca88a43ba06e9308fcb4b17eb51df296b2d7bda4d1f87c9a4c",
+      "statements": 4
+    },
+    {
+      "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_PHYSICAL_VALIDATION_20261021/DDL_SPEC.sql",
+      "sha256": "43bd138f9c66d30efb785cafa83bf90dbf1bce45448a8b434f3678225b33f4dd",
+      "statements": 1
+    }
+  ],
+  "BASE_STRUCTURAL_REPLAY": {
+    "files_with_selected_ddl": 23,
+    "selected_statements": 4318,
+    "full_migration_runner": "NOT_EXECUTED",
+    "ledger_rows_written": 0,
+    "source_manifest_hashes_checked": 34,
+    "inventory": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/physical-validation-20261021/attempt-03/BASE_STRUCTURAL_INVENTORY.json"
+  },
+  "B01_B09_IMPLEMENTATION": "WIRED_CODE_ONLY_RUNTIME_BLOCKED_DEPENDENCY; NOT_FUNCTIONALLY_CLOSED",
+  "B10_B11": "DOCUMENTARY_ONLY",
+  "CONTRACT_GATES": "EFFECTIVE_H04_PHYSICAL_FAIL; UNPUBLISHED_CORRECTOR_PHYSICAL_PASS",
+  "RECTOR_GATE": "PASS",
+  "RECTOR_GATE_SCOPE": "AUTHORIZED_ISOLATED_PHYSICAL_VALIDATION_AND_SUCCESSOR_PREPARATION_ONLY",
+  "FOCUSED_PHYSICAL_CHECKS": "149_PASS_FINAL_WITH_CANDIDATE; COUNTS_INCLUDE_23_STRUCTURAL_DDL_BLOCKS",
+  "AFFECTED_BUILDS": "NOT_RUN_NO_PRODUCT_CODE_CHANGED; PREVIOUS_RESULTS_PRESERVED",
+  "PHYSICAL_RUNTIME_QA_GATES": "POSTGRES16_TEMPORARY_SYNTHETIC_TESTED; QA_PRODUCTION_APPLICATION_RUNTIME_NOT_EXECUTED",
+  "RLS_RBAC_APPLICATION_E2E": "NOT_VALIDATED_BY_PHYSICAL_FIXTURES",
+  "MIGRATIONS_QA_PRODUCTION_EXECUTED": "NONE",
+  "MIGRATION_RUNNER_EXECUTED": "NONE",
+  "IMPORTS_EXECUTED": "NONE",
+  "DEPLOYMENTS_EXECUTED": "NONE",
+  "OPERATIONAL_IAM_GRANTS_ACTIVATED": "NONE",
+  "REGISTRY_ACTIVATED": "NONE",
+  "CONTAINERS_CREATED": 3,
+  "CONTAINERS_DESTROYED": 3,
+  "TEMPORARY_ENVIRONMENT": "DESTROYED_VERIFIED_ALL_ATTEMPTS",
+  "STEP6A5": "NOT_STARTED",
+  "STEP6A6": "NOT_STARTED",
+  "BRANCH": "fix/step6a3-v112-continuity-20261016",
+  "HEAD": "4a275264a7522031e62bf09f598c9d56e21d25e0",
+  "INDEX": "EMPTY_PRESERVED",
+  "FILES_CREATED_THIS_RUN": 850,
+  "FILES_MODIFIED_THIS_RUN": 0,
+  "BLOCKERS": [
+    "PV-H04-01 remains in effective published DDL; corrective successor prepared/tested but not published",
+    "Actual rights/legal evidence absent; use-dependent paths DENY",
+    "Adoption/preflight of existing real data, Definition/rules, IAM/registry, runtime/UI mounting, QA/E2E and human acceptance remain outside this physical validation"
+  ],
+  "QUESTIONS_FOR_PO": [
+    {
+      "id": "PV-H04-01_PUBLICATION",
+      "question": "¿Autoriza publicar contractualmente el corrector candidato de una sola función identificado por el manifiesto, sin ejecutar migraciones ni activar IAM/registry o desplegar?",
+      "reason": "Current physical order permits preparing verifiable successors; publication has not been performed or inferred from these test results.",
+      "candidate": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_PHYSICAL_VALIDATION_20261021/PUBLICATION_MANIFEST_CANDIDATE.json"
+    }
+  ],
+  "NEXT_SAFE_ACTION": "Run physical-validation-20261021/verify.py, then review candidate publication decision; do not repeat physical tests without cause",
+  "HANDOFF_PATH": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/physical-validation-20261021/HANDOFF.md",
+  "CHANGED_LAYERS": {
+    "published_contracts": "UNCHANGED",
+    "candidate_executable_contract": "ONE_UNPUBLISHED_H04_FUNCTION_CORRECTOR",
+    "product_backend_frontend": "UNCHANGED",
+    "database": "DISPOSABLE_SYNTHETIC_ONLY; DESTROYED",
+    "persistent_infrastructure": "UNCHANGED"
+  }
+}

@@ -38,7 +38,10 @@ describe("frontend backend-authoritative session boundary", () => {
       expect(new Headers(init?.headers).get("x-tcdx-tenant-id")).toBe(tenantId);
       expect(new Headers(init?.headers).get("authorization")).toBe("Bearer tcdx-token");
       if (url.endsWith("/files:request-upload")) {
-        expect(JSON.parse(String(init?.body))).toMatchObject({ retention_policy_applicability_id: applicabilityId });
+        const body = JSON.parse(String(init?.body));
+        expect(body).toMatchObject({ retention_policy_applicability_id: applicabilityId });
+        expect(body).not.toHaveProperty("scope_subject_id");
+        expect(body).not.toHaveProperty("processing_activity_id");
         return new Response(JSON.stringify({ result: { upload_intent_id: intentId, upload_url: `/api/v1/file-upload-intents/${intentId}/content` } }), { status: 202 });
       }
       if (url.endsWith("/content") && init?.method === "PUT") {

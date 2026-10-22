@@ -7,7 +7,7 @@ import { frontendConfig } from "./config.js";
 import { CoreGrcApp } from "./core-grc.js";
 
 const config = frontendConfig(import.meta.env);
-const session = new BrowserSession();
+const session = new BrowserSession(config.apiOrigin);
 const api = new ApiClient(config.apiOrigin, session, () => session.selectedTenant());
 
 const root = document.getElementById("root");

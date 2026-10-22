@@ -1,0 +1,1438 @@
+{
+  "source": "database/expected-schema.json",
+  "scope": "Local approved-model artifact inspected; no live PostgreSQL access",
+  "tables_inspected": [
+    {
+      "name": "platform.organizations",
+      "profile": "TM",
+      "primaryKey": [
+        "organization_id"
+      ],
+      "columns": [
+        {
+          "name": "organization_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "row_version",
+          "type": "bigint",
+          "nullable": false,
+          "default": "1"
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "organization_code",
+          "type": "varchar(64)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "legal_name",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "display_name",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "country_code",
+          "type": "char(2)",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "checks": [
+        "row_version_positive",
+        "created_actor_one",
+        "updated_actor_one"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "organization_id"
+        ],
+        [
+          "tenant_id",
+          "organization_code"
+        ]
+      ]
+    },
+    {
+      "name": "org.subjects",
+      "profile": "TM",
+      "primaryKey": [
+        "subject_id"
+      ],
+      "columns": [
+        {
+          "name": "subject_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "row_version",
+          "type": "bigint",
+          "nullable": false,
+          "default": "1"
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "subject_type",
+          "type": "varchar(64)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "canonical_key",
+          "type": "varchar(255)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "display_name",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "owner_subject_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "criticality",
+          "type": "varchar(32)",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "effective_from",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "effective_to",
+          "type": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "superseded_by_subject_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "nullable": false,
+          "default": "empty_object"
+        }
+      ],
+      "checks": [
+        "row_version_positive",
+        "created_actor_one",
+        "updated_actor_one",
+        "effective_from_effective_to"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "subject_id"
+        ]
+      ]
+    },
+    {
+      "name": "controls.control_versions",
+      "profile": "MXI",
+      "primaryKey": [
+        "control_version_id"
+      ],
+      "columns": [
+        {
+          "name": "control_version_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "ownership_class",
+          "type": "varchar(24)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "control_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "version_number",
+          "type": "bigint",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "objective",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "control_type",
+          "type": "varchar(16)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "nature",
+          "type": "varchar(16)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "frequency_code",
+          "type": "varchar(64)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "execution_method",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "verification_method",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "minimum_evidence",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "suggested_owner_role_code",
+          "type": "varchar(96)",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "effective_from",
+          "type": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "effective_to",
+          "type": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "published_at",
+          "type": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "superseded_by_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "checks": [
+        "created_actor_one",
+        "ownership_class",
+        "tenant_ownership",
+        "effective_from_effective_to"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "control_version_id"
+        ],
+        [
+          "control_id",
+          "version_number"
+        ]
+      ]
+    },
+    {
+      "name": "config.configuration_definitions",
+      "profile": "MXI",
+      "primaryKey": [
+        "configuration_definition_id"
+      ],
+      "columns": [
+        {
+          "name": "configuration_definition_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "ownership_class",
+          "type": "varchar(24)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "configuration_code",
+          "type": "varchar(128)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "version_number",
+          "type": "bigint",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "value_type",
+          "type": "varchar(16)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "tenant_overridable",
+          "type": "boolean",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "object_overridable",
+          "type": "boolean",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "owner_domain",
+          "type": "varchar(64)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "effective_from",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "effective_to",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "published_at",
+          "type": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "default_boolean_value",
+          "type": "boolean",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "default_integer_value",
+          "type": "bigint",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "default_decimal_value",
+          "type": "numeric(30,10)",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "default_text_value",
+          "type": "text",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "default_timestamp_value",
+          "type": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "default_duration_seconds_value",
+          "type": "bigint",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "default_json_value",
+          "type": "jsonb",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "checks": [
+        "created_actor_one",
+        "ownership_class",
+        "tenant_ownership",
+        "effective_from_effective_to",
+        "default_duration_seconds_value_nonnegative",
+        "typed_default"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "configuration_definition_id"
+        ],
+        [
+          "ownership_class",
+          "tenant_id",
+          "configuration_code",
+          "version_number"
+        ]
+      ]
+    },
+    {
+      "name": "config.configuration_overrides",
+      "profile": "MXI",
+      "primaryKey": [
+        "configuration_override_id"
+      ],
+      "columns": [
+        {
+          "name": "configuration_override_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "ownership_class",
+          "type": "varchar(24)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "configuration_definition_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "override_version",
+          "type": "bigint",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "scope_level",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "methodology_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "regulatory_pack_version_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "scope_subject_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "effective_from",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "effective_to",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "approved_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "boolean_value",
+          "type": "boolean",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "integer_value",
+          "type": "bigint",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "decimal_value",
+          "type": "numeric(30,10)",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "text_value",
+          "type": "text",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "timestamp_value",
+          "type": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "duration_seconds_value",
+          "type": "bigint",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "json_value",
+          "type": "jsonb",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "checks": [
+        "created_actor_one",
+        "ownership_class",
+        "tenant_ownership",
+        "effective_from_effective_to",
+        "duration_seconds_value_nonnegative",
+        "typed_value_count"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "configuration_override_id"
+        ],
+        [
+          "configuration_definition_id",
+          "scope_level",
+          "methodology_id",
+          "regulatory_pack_version_id",
+          "scope_subject_id",
+          "override_version",
+          "effective_from"
+        ]
+      ]
+    },
+    {
+      "name": "knowledge.knowledge_sources",
+      "profile": "MX",
+      "primaryKey": [
+        "knowledge_source_id"
+      ],
+      "columns": [
+        {
+          "name": "knowledge_source_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "row_version",
+          "type": "bigint",
+          "nullable": false,
+          "default": "1"
+        },
+        {
+          "name": "ownership_class",
+          "type": "varchar(24)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "source_code",
+          "type": "varchar(128)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "source_kind",
+          "type": "varchar(64)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "official_uri",
+          "type": "text",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "license_classification",
+          "type": "varchar(64)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "checks": [
+        "row_version_positive",
+        "created_actor_one",
+        "updated_actor_one",
+        "ownership_class",
+        "tenant_ownership"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "knowledge_source_id"
+        ],
+        [
+          "ownership_class",
+          "tenant_id",
+          "source_code"
+        ]
+      ]
+    },
+    {
+      "name": "knowledge.knowledge_items",
+      "profile": "MX",
+      "primaryKey": [
+        "knowledge_item_id"
+      ],
+      "columns": [
+        {
+          "name": "knowledge_item_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "updated_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "row_version",
+          "type": "bigint",
+          "nullable": false,
+          "default": "1"
+        },
+        {
+          "name": "ownership_class",
+          "type": "varchar(24)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "knowledge_code",
+          "type": "varchar(128)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "knowledge_source_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "checks": [
+        "row_version_positive",
+        "created_actor_one",
+        "updated_actor_one",
+        "ownership_class",
+        "tenant_ownership"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "knowledge_item_id"
+        ],
+        [
+          "ownership_class",
+          "tenant_id",
+          "knowledge_code"
+        ]
+      ]
+    },
+    {
+      "name": "knowledge.knowledge_versions",
+      "profile": "MXI",
+      "primaryKey": [
+        "knowledge_version_id"
+      ],
+      "columns": [
+        {
+          "name": "knowledge_version_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "ownership_class",
+          "type": "varchar(24)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "knowledge_item_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "version_number",
+          "type": "bigint",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "content_ref",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "content_hash",
+          "type": "char(64)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "content_language",
+          "type": "varchar(35)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "effective_from",
+          "type": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "effective_to",
+          "type": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "published_at",
+          "type": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "superseded_by_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "checks": [
+        "created_actor_one",
+        "ownership_class",
+        "tenant_ownership",
+        "effective_from_effective_to"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "knowledge_version_id"
+        ],
+        [
+          "version_number"
+        ]
+      ]
+    },
+    {
+      "name": "knowledge.regulatory_changes",
+      "profile": "MXI",
+      "primaryKey": [
+        "regulatory_change_id"
+      ],
+      "columns": [
+        {
+          "name": "regulatory_change_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "ownership_class",
+          "type": "varchar(24)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "regulatory_source_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "change_code",
+          "type": "varchar(128)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "source_framework_version_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "target_framework_version_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "summary",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "detected_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "effective_at",
+          "type": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "lifecycle_state",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "provenance_ref",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "checks": [
+        "created_actor_one",
+        "ownership_class",
+        "tenant_ownership"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "regulatory_change_id"
+        ],
+        [
+          "change_code"
+        ]
+      ]
+    },
+    {
+      "name": "knowledge.regulatory_change_reviews",
+      "profile": "MXI",
+      "primaryKey": [
+        "regulatory_change_review_id"
+      ],
+      "columns": [
+        {
+          "name": "regulatory_change_review_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "ownership_class",
+          "type": "varchar(24)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "regulatory_change_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "reviewer_user_identity_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "decision",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "rationale",
+          "type": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "reviewed_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "checks": [
+        "created_actor_one",
+        "ownership_class",
+        "tenant_ownership"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "regulatory_change_review_id"
+        ]
+      ]
+    },
+    {
+      "name": "ai.ai_provenance_links",
+      "profile": "TI",
+      "primaryKey": [
+        "ai_provenance_link_id"
+      ],
+      "columns": [
+        {
+          "name": "ai_provenance_link_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "created_by_user_identity_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_by_service_principal_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "tenant_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "ai_recommendation_id",
+          "type": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "evidence_version_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "metric_measurement_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "snapshot_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "knowledge_version_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "requirement_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "control_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "risk_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "issue_id",
+          "type": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "source_role",
+          "type": "varchar(32)",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "excerpt_hash",
+          "type": "char(64)",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "checks": [
+        "created_actor_one",
+        "typed_target_1"
+      ],
+      "uniqueConstraints": [
+        [
+          "tenant_id",
+          "ai_provenance_link_id"
+        ]
+      ]
+    }
+  ],
+  "all_tables_with_knowledge_named_columns": [
+    {
+      "table": "knowledge.knowledge_sources",
+      "columns": [
+        "knowledge_source_id"
+      ]
+    },
+    {
+      "table": "knowledge.knowledge_items",
+      "columns": [
+        "knowledge_item_id",
+        "knowledge_code",
+        "knowledge_source_id"
+      ]
+    },
+    {
+      "table": "knowledge.knowledge_versions",
+      "columns": [
+        "knowledge_version_id",
+        "knowledge_item_id"
+      ]
+    },
+    {
+      "table": "ai.ai_provenance_links",
+      "columns": [
+        "knowledge_version_id"
+      ]
+    }
+  ],
+  "knowledge_target_bindings_present": false,
+  "configuration_control_version_target_present": false,
+  "schema_table_count_artifact": 242,
+  "schema_table_count_is_runtime_proof": false
+}

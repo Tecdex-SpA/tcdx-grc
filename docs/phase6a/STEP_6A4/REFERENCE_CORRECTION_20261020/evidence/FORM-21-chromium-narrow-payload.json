@@ -1,0 +1,32 @@
+{
+  "evidence": "LOCAL_SIMULATED_API_NOT_QA_PERSISTENCE",
+  "posts": [
+    {
+      "path": "/api/v1/evidence-requests",
+      "body": {
+        "request_code": "SOL-LOCAL",
+        "requirement_id": "018f47f2-6170-7bd0-9d43-12f644a2b111",
+        "assigned_membership_id": "018f47f2-6170-7bd0-9d43-12f644a2b111"
+      }
+    }
+  ],
+  "reads": [
+    "/api/v1/framework-version-references?purpose=select&page%5Bsize%5D=25",
+    "/api/v1/framework-versions/018f47f2-6170-7bd0-9d43-12f644a2b111/requirements?page%5Bsize%5D=25",
+    "/api/v1/membership-references?purpose=evidence-request-assignment&page%5Bsize%5D=25&requirement_id=018f47f2-6170-7bd0-9d43-12f644a2b111",
+    "/api/v1/framework-versions/018f47f2-6170-7bd0-9d43-12f644a2b112/requirements?page%5Bsize%5D=25",
+    "/api/v1/membership-references?purpose=evidence-request-assignment&page%5Bsize%5D=25&requirement_id=018f47f2-6170-7bd0-9d43-12f644a2b111",
+    "/api/v1/controls?page%5Bsize%5D=25",
+    "/api/v1/membership-references?purpose=evidence-request-assignment&page%5Bsize%5D=25&control_id=018f47f2-6170-7bd0-9d43-12f644a2b111",
+    "/api/v1/requirement-assessments?page%5Bsize%5D=25",
+    "/api/v1/membership-references?purpose=evidence-request-assignment&page%5Bsize%5D=25&requirement_assessment_id=018f47f2-6170-7bd0-9d43-12f644a2b111",
+    "/api/v1/control-assessments?page%5Bsize%5D=25",
+    "/api/v1/membership-references?purpose=evidence-request-assignment&page%5Bsize%5D=25&control_assessment_id=018f47f2-6170-7bd0-9d43-12f644a2b111",
+    "/api/v1/assurance-tests?page%5Bsize%5D=25",
+    "/api/v1/membership-references?purpose=evidence-request-assignment&page%5Bsize%5D=25&assurance_test_id=018f47f2-6170-7bd0-9d43-12f644a2b111",
+    "/api/v1/framework-version-references?purpose=select&page%5Bsize%5D=25",
+    "/api/v1/framework-versions/018f47f2-6170-7bd0-9d43-12f644a2b111/requirements?page%5Bsize%5D=25",
+    "/api/v1/membership-references?purpose=evidence-request-assignment&page%5Bsize%5D=25&requirement_id=018f47f2-6170-7bd0-9d43-12f644a2b111",
+    "/api/v1/evidence-requests"
+  ]
+}

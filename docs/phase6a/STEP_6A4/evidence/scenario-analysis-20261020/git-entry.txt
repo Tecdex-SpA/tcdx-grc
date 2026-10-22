@@ -1,0 +1,105 @@
+ M apps/backend/src/config.ts
+ M apps/backend/src/core-grc/core-grc.test.ts
+ M apps/backend/src/core-grc/initial-retention-source.postgres.test.ts
+ M apps/backend/src/core-grc/service.ts
+ M apps/backend/src/security/application-token.ts
+ M apps/backend/src/security/authentication.test.ts
+ M apps/backend/src/security/oidc-browser.ts
+ M apps/backend/src/security/publication-operator-server.ts
+ M apps/backend/src/server.ts
+ M apps/frontend/src/api-client.test.ts
+ M apps/frontend/src/api-client.ts
+ M apps/frontend/src/browser-auth.test.ts
+ M apps/frontend/src/browser-auth.ts
+ M apps/frontend/src/core-grc.test.tsx
+ M apps/frontend/src/core-grc.tsx
+ M apps/frontend/src/i18n/display-text.ts
+ M apps/frontend/src/main.tsx
+ M apps/frontend/src/reference-read.test.ts
+ M apps/frontend/src/reference-read.ts
+ M apps/frontend/src/reference-selectors.tsx
+ M apps/frontend/src/structured-reference-fields.tsx
+ M apps/frontend/src/styles.css
+ M apps/frontend/src/tenant-timezone.tsx
+ M docs/governance/MASTER_EXECUTION_STATUS.md
+ M docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/RESULT.json
+ M e2e/core-grc-ui.spec.ts
+ M pnpm-lock.yaml
+?? .continuity-preservation/
+?? apps/backend/src/security/browser-token-renewal.test.ts
+?? apps/backend/src/security/browser-token-renewal.ts
+?? apps/frontend/business-forms.test.html
+?? apps/frontend/src/business-form-contracts.generated.json
+?? apps/frontend/src/business-form-fields.tsx
+?? apps/frontend/src/business-form-validators.generated.d.ts
+?? apps/frontend/src/business-form-validators.generated.js
+?? apps/frontend/src/business-forms.test.tsx
+?? apps/frontend/src/business-forms.ts
+?? apps/frontend/src/evidence-link-selector-deploy.test.ts
+?? apps/frontend/src/retention-local-dates.test.tsx
+?? apps/frontend/src/retention-presentation.test.ts
+?? apps/frontend/test/
+?? deploy/qa/session-duration.json
+?? docs/executable-contracts/amendments/STEP_6A3_QA_SESSION_DURATION_20261019/
+?? docs/phase6a/STEP_6A3/AUTHORIZED_CREATOR_AND_QA_SCENARIO_20261020.md
+?? docs/phase6a/STEP_6A3/EVIDENCE_CONTROL_SELECTOR_DEPLOY_20261019.md
+?? docs/phase6a/STEP_6A3/EVIDENCE_DATES_CORRECTION_20261019.md
+?? docs/phase6a/STEP_6A3/EVIDENCE_LINKS_DIAGNOSIS_20261019.md
+?? docs/phase6a/STEP_6A3/EVIDENCE_NOT_FOUND_DIAGNOSIS_20261019.md
+?? docs/phase6a/STEP_6A3/EVIDENCE_PERSISTENCE_DIAGNOSIS_20261019.md
+?? docs/phase6a/STEP_6A3/FINAL_CLOSURE_REPORT_20261020.md
+?? docs/phase6a/STEP_6A3/FORMAL_CLOSURE_EVALUATION_20261020.md
+?? docs/phase6a/STEP_6A3/FUNCTIONAL_SCENARIO_PREPARATION_20261020.md
+?? docs/phase6a/STEP_6A3/RESIDUAL_CLOSEOUT_REPORT_20261020.md
+?? docs/phase6a/STEP_6A3/evidence/authorized-creator-20261020/
+?? docs/phase6a/STEP_6A3/evidence/closure-evaluation-20261020/
+?? docs/phase6a/STEP_6A3/evidence/evidence-control-selector-deploy-20261019/
+?? docs/phase6a/STEP_6A3/evidence/evidence-dates-20261019/
+?? docs/phase6a/STEP_6A3/evidence/evidence-links-20261019/
+?? docs/phase6a/STEP_6A3/evidence/evidence-not-found-20261019/
+?? docs/phase6a/STEP_6A3/evidence/evidence-persistence-20261019/
+?? docs/phase6a/STEP_6A3/evidence/evidence-persistence-deploy-20261019/
+?? docs/phase6a/STEP_6A3/evidence/evidence-selectors-20261019/
+?? docs/phase6a/STEP_6A3/evidence/final-closure-20261020/
+?? docs/phase6a/STEP_6A3/evidence/functional-scenario-20261020/
+?? docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/QA_FINDING_applicability_chromium-desktop.png
+?? docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/QA_FINDING_applicability_chromium-narrow.png
+?? docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/QA_FINDING_precedence_chromium-desktop.png
+?? docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/QA_FINDING_precedence_chromium-narrow.png
+?? docs/phase6a/STEP_6A3/evidence/residual-closeout-20261020/
+?? docs/phase6a/STEP_6A3/evidence/session-duration-20261019/
+?? docs/phase6a/STEP_6A3/evidence/upload-scope-20261019/
+?? docs/phase6a/STEP_6A4/
+?? e2e/step6a4-business-forms.spec.ts
+?? scripts/phase6a3/__pycache__/
+?? scripts/phase6a3/qa-authorized-creator-readonly.cjs
+?? scripts/phase6a3/qa-deploy-evidence-control-selector-frontend.py
+?? scripts/phase6a3/qa-deploy-evidence-dates-frontend.py
+?? scripts/phase6a3/qa-deploy-evidence-persistence-frontend.py
+?? scripts/phase6a3/qa-deploy-session-duration.py
+?? scripts/phase6a3/qa-evidence-links-readonly.cjs
+?? scripts/phase6a3/qa-evidence-not-found-readonly.cjs
+?? scripts/phase6a3/qa-evidence-persistence-readonly.cjs
+?? scripts/phase6a3/qa-evidence-selector-public.config.ts
+?? scripts/phase6a3/qa-evidence-selector-readonly.cjs
+?? scripts/phase6a3/qa-finalize-session-duration.py
+?? scripts/phase6a3/qa-functional-scenario-browser.mjs
+?? scripts/phase6a3/qa-persist-session-policy.py
+?? scripts/phase6a3/qa-promote-evidence-control-selector-frontend.py
+?? scripts/phase6a3/qa-promote-evidence-dates-frontend.py
+?? scripts/phase6a3/qa-promote-evidence-persistence-frontend.py
+?? scripts/phase6a3/qa-promote-evidence-selector-frontend.py
+?? scripts/phase6a3/qa-promote-session-duration.py
+?? scripts/phase6a3/qa-promote-upload-scope.py
+?? scripts/phase6a3/qa-residual-closeout-browser.mjs
+?? scripts/phase6a3/qa-residual-command.py
+?? scripts/phase6a3/qa-session-continuity.mjs
+?? scripts/phase6a3/qa-session-image-parity.py
+?? scripts/phase6a3/qa-session-runtime-receipt.cjs
+?? scripts/phase6a3/qa-session-settings.mjs
+?? scripts/phase6a3/qa-session-settings.py
+?? scripts/phase6a3/qa-step6a3-closure-readonly.cjs
+?? scripts/phase6a3/qa-verify-evidence-control-selector-image.py
+?? scripts/phase6a3/qa-verify-evidence-dates-image.py
+?? scripts/phase6a3/qa-verify-evidence-retry-image.py
+?? scripts/phase6a4/

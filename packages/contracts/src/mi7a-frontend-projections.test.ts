@@ -1,3 +1,4 @@
+import { publishedCoverage } from "./testing/published-coverage.js";
 import { describe, expect, it } from "vitest";
 import { parseDocument } from "yaml";
 import type { AnySchemaObject } from "ajv";
@@ -134,12 +135,12 @@ describe("MI7A schema-first frontend projections (no runtime implementation)", (
   it("retains exact operation/path/method parity, traceability and mutation counts", () => {
     const operations = Object.entries(api.paths).flatMap(([path, methods]) => Object.entries(methods).filter(([method]) => ["get", "post", "put"].includes(method)).map(([method, operation]) => ({ path, method, operation })));
     const rows = matrix.split("\n").filter((row) => /^\| \w+ \| (GET|POST|PUT) `/.test(row));
-    // C-04W adds two reads and seven mutations to the approved contract candidate.
-    expect(operations).toHaveLength(174);
+    // Frozen C-04W annotations plus the hash-bound INITIAL_SOURCE operation successor.
+    expect(operations).toHaveLength(publishedCoverage(matrix).total);
     expect(rows).toHaveLength(operations.length);
     expect(new Set(operations.map(({ operation }) => operation.operationId)).size).toBe(operations.length);
     expect(operations.filter(({ method }) => method === "get")).toHaveLength(62);
-    expect(operations.filter(({ method }) => method !== "get")).toHaveLength(112);
+    expect(operations.filter(({ method }) => method !== "get")).toHaveLength(publishedCoverage(matrix).mutations);
     expect(api.paths["/platform/plan-versions"]!.get!.operationId).toBe("planVersionSelectableList");
     for (const { method, path, operation } of operations) {
       expect(rows.filter((row) => row.startsWith(`| ${operation.operationId} | ${method.toUpperCase()} \`${path}\``))).toHaveLength(1);
@@ -253,10 +254,10 @@ describe("MI7A schema-first frontend projections (no runtime implementation)", (
     expect(permissionCatalog).not.toContain("currentPrincipalAuthorizationRead");
     expect(permissionCatalog).not.toContain("authenticationProviderList");
     const migrations = JSON.parse(migrationSource) as { migrations: Array<{ id: string }> };
-    expect(migrations.migrations).toHaveLength(34);
+    expect(migrations.migrations).toHaveLength(36);
     expect(migrations.migrations[27]?.id).toBe("20261006000200");
     const physical = JSON.parse(schemaSource) as { tableCount: number; tables: Array<{ name: string }> };
-    expect(physical.tableCount).toBe(242);
+    expect(physical.tableCount).toBe(244);
     const own = api.paths["/auth/me/authorization"]!.get!;
     const tables = [...String(own["x-tcdx-physical-entities"]).matchAll(/`([^`]+)`/g)].map((match) => match[1]);
     for (const name of tables) expect(physical.tables.some((table) => table.name === name), name).toBe(true);

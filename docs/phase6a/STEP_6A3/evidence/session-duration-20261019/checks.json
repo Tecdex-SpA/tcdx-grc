@@ -1,0 +1,29 @@
+{
+  "rector_integrity": {
+    "command": "bash scripts/verify-rector-governance.sh",
+    "result": "PASS",
+    "note": "Direct execution lacked executable permission; run with bash succeeded. No governance reopened."
+  },
+  "focused_tests": {
+    "initial_run": "5 files, 36 tests PASS: authentication, OIDC routes, browser renewal, browser session, config",
+    "additional_regression": "Browser session 7 tests PASS, includes one added assertion preserving nonrenewable-provider behavior",
+    "distinct_tests": 37
+  },
+  "typecheck": {
+    "backend": "PASS after adding fail-closed nonrenewal implementation to the existing operator verifier",
+    "frontend": "PASS after correcting exact-optional-property typing"
+  },
+  "build": {
+    "backend": "PASS local and linux/amd64 image",
+    "frontend": "PASS local and linux/amd64 image"
+  },
+  "script_validation": "node --check and Python compilation PASS",
+  "whitespace": "git diff --check PASS",
+  "runtime_30_minutes": "IN_PROGRESS",
+  "production_changed": false,
+  "refresh_validation_regression": {
+    "result": "13 authentication tests PASS after adding assertions for refresh nonce omission, wrong nonce rejection, mandatory nonce on initial callback, and mandatory MFA on refresh",
+    "backend_typecheck": "PASS",
+    "backend_amd64_rebuild": "PASS"
+  }
+}

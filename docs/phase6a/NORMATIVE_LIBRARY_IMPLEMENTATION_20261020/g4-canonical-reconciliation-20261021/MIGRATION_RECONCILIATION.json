@@ -1,0 +1,59 @@
+{
+  "gate": "PASS_CANONICAL_ISOLATED_ONLY",
+  "canonical_manifest": "database/migrations/manifest.json",
+  "canonical_runner": "scripts/foundations/migrate.ts",
+  "canonical_verifier": "scripts/foundations/verify-schema.ts",
+  "old_rows_exact": true,
+  "predecessor_count": 34,
+  "successor_count": 35,
+  "candidate": {
+    "path": "database/migrations/20261021221204_normative_library_b01_b09_h04_pv01.sql",
+    "sha256": "9279159e88c60fff03f998e33008fb0d675f53e4423df638c9e54f709a773798",
+    "id": "20261021221204"
+  },
+  "candidate_byte_identical_to_previous": true,
+  "effective_source_chain": [
+    {
+      "path": "docs/physical-data-model/amendments/NORMATIVE_LIBRARY_20261020/03_DDL_SPEC.sql",
+      "sha256": "33d444c2e5394f1a027d3d81230b77335487e768d2a130578a5f119c559f72e7",
+      "offset": 159,
+      "length": 14230
+    },
+    {
+      "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_SQL_GRAMMAR_20261021/DDL_SPEC.sql",
+      "sha256": "0841e1c9136400ca88a43ba06e9308fcb4b17eb51df296b2d7bda4d1f87c9a4c",
+      "offset": 14390,
+      "length": 5528
+    },
+    {
+      "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_PHYSICAL_VALIDATION_20261021/DDL_SPEC.sql",
+      "sha256": "43bd138f9c66d30efb785cafa83bf90dbf1bce45448a8b434f3678225b33f4dd",
+      "offset": 19919,
+      "length": 2569
+    }
+  ],
+  "rebuild_and_failure_rollback_evidence": {
+    "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/g4-canonical-reconciliation-20261021/SYNTHETIC_STABILIZED.json",
+    "sha256": "ae7dec990ec8a0bbaaa016576c3a2224d5b7125979223174b0f63e3be7da9390"
+  },
+  "QA_ledger_state_at_snapshot": 34,
+  "QA_ledger_writes": "NONE",
+  "QA_DDL_DML": "NONE",
+  "source_and_target_separation": "Real QA recovery and synthetic migration rebuild used separate network-none containers; no migration was applied to restored real data",
+  "recovery_reference": "QA-LOGICAL-e923e6ecc44845c6920c8fd975f34675",
+  "recovery_limits": [
+    "Logical snapshot only; no PITR or recovery of the other four databases",
+    "No cluster/global role secrets copied; only referenced application role recreated NOLOGIN for isolated restore, database ACL/owners retained",
+    "Filesystem protection relies on FileVault and local account custody; artifact is NOT independently encrypted or portable as encrypted media",
+    "QA application, external object storage, secrets, jobs and E2E recovery are outside this database-only drill",
+    "Backup point must be reconsidered if QA changes before a future adoption; no future recovery point is inferred"
+  ],
+  "adoption_preconditions": [
+    "New PO operational order for this exact migration",
+    "New safe window, identity/sessions/locks gate",
+    "Final read-only schema/data/ledger fingerprints against the recorded state",
+    "Reassess recovery point freshness if QA changed",
+    "GO/NO-GO recorded before canonical runner apply; no TEST_MODE in QA"
+  ],
+  "post_commit_reversal": "No automatic destructive down migration. Recovery or forward-fix requires scope/compatibility review and separate PO operational authorization."
+}

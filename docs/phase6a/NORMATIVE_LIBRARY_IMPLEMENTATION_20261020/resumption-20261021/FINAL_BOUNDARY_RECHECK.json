@@ -1,0 +1,48 @@
+[
+  {
+    "check": "final-boundary-focused",
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "apps/backend/src/normative-library",
+      "apps/backend/src/configuration",
+      "apps/frontend/src/normative-library-client.test.ts",
+      "--exclude",
+      "**/*.postgres.test.ts",
+      "--maxWorkers=2"
+    ],
+    "duration_seconds": 2.512,
+    "status": "PASS",
+    "exit_code": 0,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/final-boundary-focused.log",
+    "sha256": "e276df837305fd63889b777cd58d7d62917e6e8b03055befb91913cceb3f5b2a"
+  },
+  {
+    "check": "final-boundary-backend-build",
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "-p",
+      "apps/backend/tsconfig.json"
+    ],
+    "duration_seconds": 0.999,
+    "status": "PASS",
+    "exit_code": 0,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/final-boundary-backend-build.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "check": "final-boundary-whitespace",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "duration_seconds": 0.084,
+    "status": "PASS",
+    "exit_code": 0,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/final-boundary-whitespace.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

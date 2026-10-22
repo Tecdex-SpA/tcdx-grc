@@ -1,0 +1,310 @@
+{
+  "recorded_at_utc": "2026-10-16T16:04:42.348897+00:00",
+  "baseline": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "branch": "fix/step6a3-v112-continuity-20261016",
+  "base_commit": "32ede0646b5489a0068dcfd41c13157ffbada057",
+  "STEP_6A3": "PARTIAL_BLOCKED",
+  "RECTOR_GATE": "BLOCKED_FOR_GLOBAL_CLOSURE",
+  "implementation": "PASS_LOCAL",
+  "checks": [
+    {
+      "check": "unit",
+      "exit_code": 0
+    },
+    {
+      "check": "backend-build",
+      "exit_code": 0
+    },
+    {
+      "check": "frontend-typecheck",
+      "exit_code": 0
+    },
+    {
+      "check": "frontend-build",
+      "exit_code": 0
+    },
+    {
+      "check": "contracts",
+      "exit_code": 0
+    },
+    {
+      "check": "secrets",
+      "exit_code": 0
+    },
+    {
+      "check": "whitespace",
+      "exit_code": 0
+    }
+  ],
+  "tests": {
+    "unit": {
+      "passed": 37,
+      "failed": 0,
+      "skipped": 0,
+      "report": "unit.json",
+      "sha256": "4e25a1745bd2930e9d4b9bd3594fbfd6fa92496efe8cc3659a0dc801958bf4a7"
+    },
+    "postgres": {
+      "passed": 17,
+      "failed": 0,
+      "skipped": 0,
+      "report": "postgres.json",
+      "sha256": "e52951455a395be4b96767692ef4c02771c7fafc3aa4e8f9d4f93e6676c04703"
+    },
+    "playwright": {
+      "passed": 6,
+      "failed": 0,
+      "viewports": [
+        "1536x1024",
+        "390x844"
+      ],
+      "evidence_kind": "LOCAL_MOCKED_PRESENTATION; not real QA",
+      "cases": [
+        "ordinary eligible selection without source",
+        "missing operational applicability",
+        "formal independent source bind"
+      ],
+      "observation": "Playwright command exit 0; 6 passed (10.4s)"
+    }
+  },
+  "qa_new_delta": "PASS_QA_DEPLOYED; FUNCTIONAL_ACCEPTANCE_PENDING",
+  "HUMAN_UI_REVIEW": "PENDING_FOR_NEW_DELTA",
+  "legal_source": "NOT_A_UNIVERSAL_ORDINARY_OPERATION_BLOCKER; formal dependent workflows retain guards; H01-H10 not promoted",
+  "layers_changed": [
+    "backend",
+    "frontend_text",
+    "executable_semantic_amendment",
+    "tests",
+    "execution_status"
+  ],
+  "layers_unchanged": [
+    "physical_schema",
+    "database_migrations",
+    "IAM_RBAC",
+    "infrastructure",
+    "deployment_contracts"
+  ],
+  "preservation": {
+    "branch": "preserve/local-step6a3-20261016",
+    "commit": "f83b97a16dd0b9f681524f957f8a688257f68c7f",
+    "files_verified": 468,
+    "original_branch": "fix/qa-functional-commercial-onboarding-20261013",
+    "agent_transfer_archive": ".continuity-preservation/step6a3-20261016/agent-changes.tar.gz",
+    "external_worktree": "RETAINED_UNUSED; six exclusive agent files archived and transferred by SHA256"
+  },
+  "next_stage": {
+    "id": "STEP_6A4",
+    "gate": "UX_BUSINESS_FORMS",
+    "state": "NOT_STARTED",
+    "dependency": "STEP_6A3_PASS",
+    "contract": "docs/phase6a/STEP_6A2/10_PHASE6A_ACCEPTANCE_GATES.md"
+  },
+  "evidence": [
+    {
+      "path": "docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/LOCAL_SIMULATED_BIND_chromium-desktop.png",
+      "sha256": "27d10033fc5efa710e343c8f6fd54f8560c31aa2c566eaec50fdbc0da3ce84af"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/LOCAL_SIMULATED_BIND_chromium-narrow.png",
+      "sha256": "e2469c5152d3223dd17114a6c4cd37bd45cf5a3be065f53c5f3404d996cda172"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/missing-applicability-chromium-desktop.png",
+      "sha256": "330fec4cdebe45e54db01c86aed063bdcf132b8ae3137d547c506c20585b5f8f"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/missing-applicability-chromium-narrow.png",
+      "sha256": "e366b7363b1bbbe95991abd1c0a91e55178fcacc71a4f5c5ea877367cf158de9"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/ordinary-retention-chromium-desktop.png",
+      "sha256": "650ea76998d98d2372b76e63da17d4c645571fbafd3cd696705f2456e6e867f4"
+    },
+    {
+      "path": "docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/ordinary-retention-chromium-narrow.png",
+      "sha256": "217526fa594afc2bee25f66caf568d78a212941933f757030344ee065a5c9f2c"
+    }
+  ],
+  "traceability": {
+    "rector": "24 ordinary operation DR001; 43/45/49 DR003",
+    "contract": "docs/executable-contracts/amendments/STEP_6A3_ORDINARY_RETENTION_v1.12/DELTA.md",
+    "backend": "apps/backend/src/core-grc/service.ts#retentionApplicabilityTransition",
+    "persistence_test": "apps/backend/src/core-grc/initial-retention-source.postgres.test.ts",
+    "ui": [
+      "apps/frontend/src/core-grc.tsx",
+      "apps/frontend/src/i18n/es.ts"
+    ],
+    "e2e": "e2e/core-grc-ui.spec.ts"
+  },
+  "images": {
+    "backend": {
+      "tag": "tcdx-grc-backend:ordinary-retention-v112-20261016",
+      "id": "sha256:a1f961a946aceb844fb27355a193782fafbd923f62b3cc761f37398ef329e076",
+      "architecture": "amd64",
+      "os": "linux",
+      "source_sha256": "a6c7fa94da6927f64742d332174883be8a9df315d18acdd84a07355d3651a686",
+      "source_tar": ".continuity-preservation/step6a3-20261016/build/backend-source.tar",
+      "verification": "docker inspect final labels matched source tar; build PASS_LOCAL_NOT_DEPLOYED"
+    },
+    "frontend": {
+      "tag": "tcdx-grc-frontend:ordinary-retention-v112-20261016",
+      "id": "sha256:139315238e16d78aaf7d3d27b76e802713c43da299084240ac48c94463a40a9c",
+      "architecture": "amd64",
+      "os": "linux",
+      "source_sha256": "80b92e9032fbce1aca1f4ed11e29781c2d7e6e098ea641c58c97a41402964b54",
+      "source_tar": ".continuity-preservation/step6a3-20261016/build/frontend-source.tar",
+      "verification": "docker inspect final labels matched source tar; build PASS_LOCAL_NOT_DEPLOYED"
+    }
+  },
+  "changed_files": [
+    {
+      "path": "apps/backend/src/core-grc/initial-retention-source.postgres.test.ts",
+      "sha256": "57ed01ae97dc5b1164737584ec089eb756812ef26e4d4d29c98e02bab6217eef"
+    },
+    {
+      "path": "apps/backend/src/core-grc/service.ts",
+      "sha256": "881a69f9e173ab0e08edd68a5799e83c970f16dfd953fd45571458826a5b67f2"
+    },
+    {
+      "path": "apps/frontend/src/core-grc.tsx",
+      "sha256": "b077b5c187621499031b7b41220649e15548dbcd90ac378673a47f943ff69e6a"
+    },
+    {
+      "path": "apps/frontend/src/i18n/es.ts",
+      "sha256": "26b0194b1b99e99cab66833c855d4d5ece34636d6e0f79b263a708c479ad6bfc"
+    },
+    {
+      "path": "docs/governance/MASTER_EXECUTION_STATUS.md",
+      "sha256": "c84354d4720b000f1995fba0cd00137d8caa4391d9c832cc759531adc2a4d076"
+    },
+    {
+      "path": "e2e/core-grc-ui.spec.ts",
+      "sha256": "6604ca31d042ec882bccfaa4e1a70598b815f527a64e33f4da27d0968cf53f19"
+    }
+  ],
+  "contract_sha256": "3de1a04df409cd84bb774a343a07d1f6912c7d7f65dea2bc18392aaf6d9f2ca1",
+  "final_checks": {
+    "current_step6a3_ledger": "PASS_PRESERVED_HISTORICAL_CHECKPOINT",
+    "secret_findings": 0,
+    "whitespace": "PASS",
+    "rector_integrity_log": ".continuity-preservation/step6a3-20261016/rector.log"
+  },
+  "qa_deployment_authorization": {
+    "source": "PO instruction in this conversation, 2026-10-16",
+    "scope": "commit/push/PR integration/main and deploy both existing AMD64 ordinary-retention-v112-20261016 images to QA",
+    "functional_acceptance": "PENDING_USER_CONFIRMATION",
+    "STEP_6A3": "PARTIAL_BLOCKED",
+    "STEP_6A4": "NOT_STARTED"
+  },
+  "deployment": {
+    "observed_at_utc": "2026-10-16T16:20:29.976417+00:00",
+    "release_id": "step6a3-initial-source-ordinary-retention-v112-20261016",
+    "gate_sha256": "9ef4283c247c3be2303e200136293115095cb919bac17f56ddd72bfc2f594525",
+    "backend": {
+      "image_id": "sha256:a1f961a946aceb844fb27355a193782fafbd923f62b3cc761f37398ef329e076",
+      "container_id": "2ee650b1360785066e5309f90c0d842cd86f1b50cddd4ae03865e7c6675014a7",
+      "health": "healthy",
+      "rollback": "tcdx-grc-backend-rollback-step6a3-initial-source-ordinary-retention-v112-20261016",
+      "readiness": {
+        "state": "up",
+        "database": "up"
+      }
+    },
+    "frontend": {
+      "image_id": "sha256:139315238e16d78aaf7d3d27b76e802713c43da299084240ac48c94463a40a9c",
+      "container_id": "2c51b32f142e5b52ae0cbb3dd331a8011dc665c41949f2a602826e73f020fa02",
+      "health": "healthy",
+      "rollback": "tcdx-grc-frontend-rollback-step6a3-initial-source-ordinary-retention-v112-20261016"
+    },
+    "public_url": "https://grc.tecdex.net/",
+    "public_access": "NOT_CONFIRMED; curl cannot connect to DNS target 181.212.166.187:443 from local runner or frontend VM; external web fetch also inaccessible",
+    "integration": "BRANCH_PUSHED; MAIN_NOT_MERGED; rector46 section10 requires PR and user explicitly excludes PR; no protection bypass",
+    "tests_rerun": false,
+    "database_schema_iam_infrastructure_modified": false,
+    "frontend_promoter": "Existing repository version copied over stale 33-migration promoter; previous script retained; no source changes",
+    "STEP_6A3": "PARTIAL_BLOCKED",
+    "STEP_6A4": "NOT_STARTED",
+    "functional_acceptance": "PENDING_USER"
+  },
+  "qa_findings_correction": {
+    "recorded_at_utc": "2026-10-16T16:38:02.203172+00:00",
+    "authorization": "PO STEP6A3 Corrección de hallazgos QA in current conversation",
+    "status": "PASS_LOCAL_PREPARED_NOT_DEPLOYED",
+    "RECTOR_GATE": "PASS_FOR_BOUNDED_CORRECTION; STEP6A3_CLOSURE_BLOCKED_PENDING_USER",
+    "findings": {
+      "precedence_rank": "Readonly and derived from approved policy_kind relation; legal_hold=500, mandatory_regulatory_policy=400, contractual_policy=300, tenant_policy=200, product_baseline=100. Existing backend invariant unchanged.",
+      "navigation": "Existing Evidencias/Aplicabilidad tab; Platform company detail links to /evidencias?tab=aplicabilidad-retencion only for matching active tenant and effective retention-read permission. Deep link survives authorization refresh/reload; no duplicated module."
+    },
+    "tests": {
+      "new_playwright_cases": 5,
+      "viewports": 2,
+      "unique_passed": 10,
+      "failed_remaining": 0,
+      "prior_60_reexecuted": false,
+      "coverage": [
+        "all five canonical precedence pairs and type changes; hold omits duration",
+        "Platform/Tenant authorized navigation and reload",
+        "Platform-only DENY without tenant reads",
+        "foreign company cannot reuse tenant permission",
+        "unauthorized deep link does not reveal retention tab"
+      ],
+      "note": "Initial failures corrected; reran only affected scenarios. API fixtures prove presentation/payload, not human authenticated QA."
+    },
+    "frontend_typecheck": "PASS",
+    "git_diff_check": "PASS",
+    "active_rector_integrity": "PASS_51_DOCUMENTS",
+    "HUMAN_UI_REVIEW": "PENDING",
+    "STEP_6A3": "PARTIAL_BLOCKED",
+    "STEP_6A4": "NOT_STARTED",
+    "architectural_layers_changed": [
+      "frontend",
+      "focused_e2e",
+      "existing_execution_evidence"
+    ],
+    "layers_unchanged": [
+      "PostgreSQL_schema",
+      "IAM_RBAC",
+      "backend",
+      "API_contracts",
+      "infrastructure",
+      "deployment_contracts"
+    ],
+    "files": [
+      {
+        "path": "apps/frontend/src/core-grc.tsx",
+        "sha256": "0274687e9e7cc1ea638ffff542fb458b103f0b419ee37154eb51c0f330d694b5"
+      },
+      {
+        "path": "e2e/core-grc-ui.spec.ts",
+        "sha256": "c5fafe6b6e589c0ec4255de73fda9e1a20b321dd73b8f670d3800e24ad6afba9"
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/QA_FINDING_precedence_chromium-desktop.png",
+        "sha256": "9baf33c93fdb32d8b640728faded0cf169c6af190ca055095f2c5eabc1a52fef"
+      },
+      {
+        "path": "docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/QA_FINDING_precedence_chromium-narrow.png",
+        "sha256": "57904f02a867059522b86397cf47cbad89bf7985e3307a341fc38ee837811a29"
+      },
+      {
+        "path": "docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/QA_FINDING_applicability_chromium-desktop.png",
+        "sha256": "5afa6f17c44c92aa335f660c958180dfeea1e544c4cda4e6834b6d55937d8562"
+      },
+      {
+        "path": "docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/QA_FINDING_applicability_chromium-narrow.png",
+        "sha256": "e13b358175bf689d0daaa042c7924941017aac98b1a0ef2ad4b7d4faa4be6c2e"
+      }
+    ],
+    "frontend_candidate": {
+      "tag": "tcdx-grc-frontend:retention-qa-findings-v112-20261016",
+      "source_sha256": "dd82aa3d9c53993e290b481e9c26dcd66755ee84231b9afa0eaa432964086834",
+      "status": "PASS_LOCAL_AMD64_NOT_DEPLOYED",
+      "image_id": "sha256:6f2802e4c433dc5789c4d2925ce8cb7f5724d2c17941c499d781d20ddbb9b640",
+      "architecture": "amd64",
+      "os": "linux"
+    },
+    "exact_ui_route": "Empresa activa autorizada -> Evidencias -> Aplicabilidad de retención -> Nuevo registro; shortcut Configuraciones/Empresas/Ver detalle/Abrir aplicabilidad de retención for same authorized active tenant"
+  }
+}

@@ -1,0 +1,10 @@
+// Synthetic fixture, isolated browser harness only. Never mounted by main.tsx.
+import React from 'react';
+import {createRoot} from 'react-dom/client';
+import {MatrixTable,KnowledgeContentView} from '../src/normative-library.js';
+import type {MatrixPage} from '@tcdx-grc/contracts/normative-library';
+import '../src/styles.css';
+const id=(n:number)=>'018f47f2-6170-7000-8000-'+n.toString(16).padStart(12,'0');
+const page:MatrixPage={matrix_type:'issues_actions',as_of:'2026-10-20T12:00:00Z',read_at:'2026-10-20T12:00:00Z',rows:[{ref:{issue_id:id(1)},label:'Hallazgo de prueba aislada',code:'TEST-1',framework_version_id:null,revision_hash:'a'.repeat(64)}],columns:[{ref:{action_id:id(2)},label:'Acción de prueba aislada',code:'TEST-2',framework_version_id:null,revision_hash:'b'.repeat(64)}],cells:[{row_ref:{issue_id:id(1)},column_ref:{action_id:id(2)},relation_ref:{action_id:id(2)},relationship_type:'supports',direction:null,rationale:'Fundamento sintético de test',provenance_ref:'fixture:isolated',effective_from:null,effective_to:null,stored_result:null,source_lifecycle_state:'pending'}],next_row_cursor:null,next_column_cursor:null,next_cell_cursor:null,authorization_notice:'Sólo información autorizada; no se exponen conteos de objetos fuera de alcance.',snapshot_fingerprint:'c'.repeat(64),temporal_semantics:'current_state_with_as_of_population'};
+const section={text:'Contenido sintético exclusivo de test. No es texto normativo ni dato QA.',citations:[]};
+createRoot(document.getElementById('root')!).render(<main className="workspace"><h1>Biblioteca — prueba aislada</h1><MatrixTable page={page}/><KnowledgeContentView projection={{knowledge_version_id:id(3),knowledge_item_id:id(4),version_number:'1',content_hash:'a'.repeat(64),content_language:'es',lifecycle_state:'published',effective_from:page.as_of,effective_to:null,published_at:page.as_of,superseded_by_id:null,links:[],content:{comprender:section,implementar:section,demostrar:section},content_access:'body_available',content_restriction:null,publication_authority:'editorial'}}/></main>);

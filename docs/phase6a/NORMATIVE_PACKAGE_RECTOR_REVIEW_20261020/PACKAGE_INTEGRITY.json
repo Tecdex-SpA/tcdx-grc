@@ -1,0 +1,42 @@
+{
+  "zips": [
+    {
+      "path": "docs/normative-sources/incoming/GRC_Tecdex_Paquete_Normativo_Revision_Producto_2026-10-20.zip",
+      "bytes": 2228555,
+      "sha256": "4b7d7374fc0a09be9697ff9784f093c2b737edbaabe82460c3aa7c64659f9aee",
+      "files": 103,
+      "crc": "PASS",
+      "duplicate_entry_names": false
+    },
+    {
+      "path": "docs/normative-sources/incoming/GRC_Tecdex_Paquete_Normativo_Unificado_Preparacion_Post6A4_v2_2026-10-08.zip",
+      "bytes": 2218515,
+      "sha256": "76f31d9effc174e0d9133615c1e979a13f9b1f1c1b1ef291197ea2c4f129d68c",
+      "files": 97,
+      "crc": "PASS",
+      "duplicate_entry_names": false
+    }
+  ],
+  "delta": {
+    "shared_paths": 97,
+    "identical_shared_bytes": 97,
+    "changed_shared_paths": [],
+    "new_paths": [
+      "REVISION_PRODUCTO_2026-10-20/01_DECISIONES_Y_ARQUITECTURA.md",
+      "REVISION_PRODUCTO_2026-10-20/02_CORRESPONDENCIAS_Y_MATRICES.md",
+      "REVISION_PRODUCTO_2026-10-20/03_ISO9001_2026.md",
+      "REVISION_PRODUCTO_2026-10-20/04_FUENTES_EXTRAS_Y_VIGENCIA.md",
+      "REVISION_PRODUCTO_2026-10-20/05_REGISTRO_211_CANDIDATOS.json",
+      "REVISION_PRODUCTO_2026-10-20/06_MAPEO_INTERMARCOS.json"
+    ],
+    "removed_paths": [],
+    "review_additions_covered_by_legacy_manifest": false,
+    "note": "New review files have hashes in the new per-member inventory; original unified SHA manifest remains historical and does not cover six review additions."
+  },
+  "internal_manifest_status_counts": {
+    "PASS": 362,
+    "RELOCATED_HASH_PASS": 10,
+    "EXCLUDED_DOCUMENTED_NOT_AVAILABLE": 8
+  },
+  "historical_manifest_exclusions": "Per ZIP: five identical originals relocated, four secondary PDF intentionally excluded; cannot verify excluded bytes absent from ZIP. None discarded by this review."
+}

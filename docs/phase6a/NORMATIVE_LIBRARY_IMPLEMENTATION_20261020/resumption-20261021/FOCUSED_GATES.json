@@ -1,0 +1,127 @@
+[
+  {
+    "check": "focused",
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "apps/backend/src/normative-library",
+      "apps/backend/src/configuration",
+      "apps/frontend/src/normative-library-client.test.ts",
+      "--exclude",
+      "**/*.postgres.test.ts",
+      "--maxWorkers=2"
+    ],
+    "duration_seconds": 2.668,
+    "status": "PASS",
+    "exit_code": 0,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/focused.log",
+    "sha256": "57c295baaf95993b0b3669c603403a502ad5d6e485f0ddfd504f77aa23494735"
+  },
+  {
+    "check": "backend-build-lint",
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "-p",
+      "apps/backend/tsconfig.json"
+    ],
+    "duration_seconds": 1.093,
+    "status": "PASS",
+    "exit_code": 0,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/backend-build-lint.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "check": "frontend-typecheck-lint",
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "-p",
+      "apps/frontend/tsconfig.json",
+      "--noEmit"
+    ],
+    "duration_seconds": 0.433,
+    "status": "PASS",
+    "exit_code": 0,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/frontend-typecheck-lint.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "check": "contracts-build",
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "-p",
+      "packages/contracts/tsconfig.json"
+    ],
+    "duration_seconds": 0.425,
+    "status": "PASS",
+    "exit_code": 0,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/contracts-build.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "check": "h04-derived-integrity",
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "scripts/normative-library/generate-rights-contract.mjs",
+      "--check"
+    ],
+    "duration_seconds": 0.112,
+    "status": "PASS",
+    "exit_code": 0,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/h04-derived-integrity.log",
+    "sha256": "3e6984c39fcd6e91c249739ae3666285fee41b43ecc87a48dd7e405eabd308ff"
+  },
+  {
+    "check": "library-derived-integrity",
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "scripts/normative-library/generate-contract-assets.mjs",
+      "--check"
+    ],
+    "duration_seconds": 0.371,
+    "status": "PASS",
+    "exit_code": 0,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/library-derived-integrity.log",
+    "sha256": "85d0370528ec26f42ae003e5fb7ede2269a5f9d0dfb48d75f331289ccc6a2ea0"
+  },
+  {
+    "check": "rector-integrity",
+    "command": [
+      "bash",
+      "scripts/verify-rector-governance.sh"
+    ],
+    "duration_seconds": 0.453,
+    "status": "PASS",
+    "exit_code": 0,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/rector-integrity.log",
+    "sha256": "1804d6f3163b6323585d0d832274aaba9364ee4465435fb83636839d0ba76bbe"
+  },
+  {
+    "check": "rector-status",
+    "command": [
+      "bash",
+      "scripts/test-rector-governance-status.sh"
+    ],
+    "duration_seconds": 1.711,
+    "status": "PASS",
+    "exit_code": 0,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/rector-status.log",
+    "sha256": "4a950b39b20f2de1440a2b45b243b63df607fa3ede7f7e32e9f7e9da71864597"
+  },
+  {
+    "check": "diff-whitespace",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "duration_seconds": 0.063,
+    "status": "PASS",
+    "exit_code": 0,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/diff-whitespace.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

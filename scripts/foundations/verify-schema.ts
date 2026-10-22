@@ -1,10 +1,21 @@
 import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { resolve } from "node:path";
 import { createClient, readJson, repositoryRoot } from "./db.ts";
+import { normalizedConstraintDefinition } from "./schema-definition.ts";
 
 type ExpectedColumn = { name: string; type: string; nullable: boolean; default: string | null };
 type ExpectedTable = { name: string; profile: string; primaryKey: string[]; columns: ExpectedColumn[]; checks: string[]; uniqueConstraints: string[][] };
-type Inventory = { tableCount: number; tables: ExpectedTable[]; commercialAmendmentDecision?: string };
+type DefinitionRow = { name: string; relation?: string; definition: string; validated?: boolean; valid?: boolean; ready?: boolean; enabled?: string };
+type NormativeAmendment = {
+  publicationReceipt: { path: string; sha256: string };
+  migration: { path: string; sha256: string };
+  sources: Array<{ path: string; sha256: string; offset: number; length: number }>;
+  physicalAssertions: { relations: string[]; constraints: DefinitionRow[]; indexes: DefinitionRow[]; functions: DefinitionRow[]; triggers: DefinitionRow[] };
+  tenantForeignKeyEnforcement: Array<{ child: string; parent: string; childColumns: string[]; parentColumns: string[]; requiredTriggers: string[]; requiredFunctions: string[] }>;
+};
+type Inventory = { tableCount: number; tables: ExpectedTable[]; commercialAmendmentDecision?: string; normativeLibraryAmendment?: NormativeAmendment;
+  configurationDefaultAmendment?: {contract:{path:string;sha256:string};receipt:{path:string;sha256:string};migration:{path:string;sha256:string};constraint:DefinitionRow} };
 
 const commercialCandidate = process.env.TCDX_COMMERCIAL_EXPECTED_SCHEMA_CANDIDATE === "true";
 const c04wCandidate = process.env.TCDX_C04W_EXPECTED_SCHEMA_CANDIDATE === "true";
@@ -20,7 +31,7 @@ const expected = readJson<Inventory>(c04wCandidate
   : commercialCandidate
     ? "docs/physical-data-model/amendments/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/pending-publication/EXPECTED_SCHEMA_COMMERCIAL_CANDIDATE.json"
     : "database/expected-schema.json");
-const controlledSchemas = [...new Set(expected.tables.map((table) => table.name.split(".")[0]))];
+const controlledSchemas = [...new Set(expected.tables.map((table) => table.name.split(".")[0]!))];
 
 function normalizedType(value: string): string {
   return value
@@ -42,7 +53,7 @@ function normalizedDefault(value: string | null): string | null {
 
 function expectedNames(pattern: RegExp, relativePath: string): Set<string> {
   const sql = readFileSync(resolve(repositoryRoot, relativePath), "utf8");
-  return new Set([...sql.matchAll(pattern)].map((match) => match[1]));
+  return new Set([...sql.matchAll(pattern)].map((match) => match[1]!));
 }
 
 const expectedConstraints = new Set([
@@ -85,7 +96,9 @@ if (expected.commercialAmendmentDecision === "DR-STEP6A3-COMMERCIAL-PHYSICAL-EXE
   for (const name of expectedNames(/(?:ADD CONSTRAINT|CONSTRAINT) ([a-z0-9_]+)\s+(?:CHECK|UNIQUE|FOREIGN KEY|PRIMARY KEY|EXCLUDE)/g, commercialSql)) expectedConstraints.add(name);
   for (const name of expectedNames(/CREATE (?:UNIQUE )?INDEX ([a-z0-9_]+)/g, commercialSql)) expectedIndexes.add(name);
 }
-if (c04wCandidate || expected.tableCount === 242) {
+// C04W remains required after later amendments add tables. A table count is not
+// a contract identity and must not silently remove the historical checks.
+if (c04wCandidate || expected.tables.some((table) => table.name === "privacy.retention_policy_applicabilities")) {
   const c04wSql = c04wCandidate
     ? "database/migrations/candidates/STEP_6A3_C04W_v1.10/20261015000100_c04w_applicability_hold_r2.sql"
     : "database/migrations/20261015000100_c04w_applicability_hold_r2.sql";
@@ -93,6 +106,43 @@ if (c04wCandidate || expected.tableCount === 242) {
   for (const name of expectedNames(/CREATE (?:UNIQUE )?INDEX ([a-z0-9_]+)/g, c04wSql)) expectedIndexes.add(name);
 }
 expectedIndexes.delete("ix_audits__lead_membership_id");
+
+const normative = expected.normativeLibraryAmendment;
+if (normative) {
+  const digest = (raw: Buffer) => createHash("sha256").update(raw).digest("hex");
+  const readChecked = (ref: { path: string; sha256: string }) => {
+    const raw = readFileSync(resolve(repositoryRoot, ref.path));
+    if (digest(raw) !== ref.sha256) throw new Error(`Published normative source checksum mismatch: ${ref.path}`);
+    return raw;
+  };
+  const receipt = JSON.parse(readChecked(normative.publicationReceipt).toString("utf8"));
+  if (receipt.PV_H04_01 !== "CONTRACT_PUBLISHED_VERIFIED" || receipt.status !== "PASS_CONTRACT_EFFECTIVE_LOCAL")
+    throw new Error("Effective PV-H04-01 publication receipt required");
+  const migration = readChecked(normative.migration);
+  const manifest = readJson<{ migrations: Array<{ filename: string; sha256: string }> }>("database/migrations/manifest.json");
+  if (!manifest.migrations.some((row) => `database/migrations/${row.filename}` === normative.migration.path && row.sha256 === normative.migration.sha256))
+    throw new Error("Normative projection must bind the canonical migration manifest");
+  if (JSON.stringify(normative.sources.map(({ path, sha256 }) => ({ path, sha256 }))) !== JSON.stringify(receipt.effective_ddl_sequence))
+    throw new Error("Normative source order differs from effective publication");
+  for (const source of normative.sources) {
+    const bytes = readChecked(source);
+    if (!migration.subarray(source.offset, source.offset + source.length).equals(bytes))
+      throw new Error(`Migration source block differs from publication: ${source.path}`);
+  }
+  if (!normative.physicalAssertions) throw new Error("Normative physical projection required");
+  // The renderer is derived metadata. The final published source body is the
+  // authority, including the superseding PV-H04-01 definition.
+  const bodies = new Map<string, string>();
+  for (const match of migration.toString("utf8").matchAll(/CREATE (?:OR REPLACE )?FUNCTION ([a-z_]+\.[a-z_]+)\(\) RETURNS trigger LANGUAGE plpgsql AS \$\$([\s\S]*?)\$\$;/g)) bodies.set(match[1]!, match[2]!);
+  if (bodies.size !== normative.physicalAssertions.functions.length) throw new Error("Incomplete normative function projection");
+  for (const row of normative.physicalAssertions.functions) {
+    if (row.definition.match(/AS \$function\$([\s\S]*?)\$function\$/)?.[1] !== bodies.get(row.name))
+      throw new Error(`Function projection differs from published source: ${row.name}`);
+  }
+  expectedConstraints.delete("uq_knowledge_versions__version_number");
+  for (const row of normative.physicalAssertions.constraints) expectedConstraints.add(row.name);
+  for (const row of normative.physicalAssertions.indexes) expectedIndexes.add(row.name);
+}
 
 const client = createClient();
 await client.connect();
@@ -198,6 +248,60 @@ try {
   const actualIndexes = new Set(indexes.rows.map((row) => row.indexname));
   for (const name of expectedIndexes) if (!actualIndexes.has(name)) mismatches.push(`missing-index:${name}`);
 
+  const defaultAmendment=expected.configurationDefaultAmendment;
+  if(defaultAmendment){
+    const readExact=(ref:{path:string;sha256:string})=>{const b=readFileSync(resolve(repositoryRoot,ref.path));if(createHash('sha256').update(b).digest('hex')!==ref.sha256)throw Error('Optional default authority drift');return b;};
+    const c=JSON.parse(readExact(defaultAmendment.contract).toString());
+    readExact(defaultAmendment.receipt);
+    if(!readExact(defaultAmendment.migration).equals(readExact(c.ddl)))throw Error('Optional default migration/source drift');
+    const projection=JSON.parse(readExact(c.pg16_constraint).toString());
+    if(JSON.stringify(projection)!==JSON.stringify(defaultAmendment.constraint))throw Error('Optional default projection drift');
+    const found=(await client.query<DefinitionRow>(`SELECT 'config.configuration_definitions' AS relation,conname AS name,pg_get_constraintdef(oid) AS definition,convalidated AS validated
+      FROM pg_constraint WHERE conrelid='config.configuration_definitions'::regclass AND conname='ck_configuration_definitions__typed_default'`)).rows;
+    if(found.length!==1||Object.entries(projection).some(([k,v])=>k==='definition'
+      ? normalizedConstraintDefinition(found[0]!.definition)!==normalizedConstraintDefinition(v as string)
+      : found[0]![k as keyof DefinitionRow]!==v))mismatches.push('constraint-definition:config.configuration_definitions:typed_default');
+  }
+  if (normative) {
+    const spec = normative.physicalAssertions;
+    const definitions = async (sql: string, values: unknown[]) => (await client.query<DefinitionRow>(sql, values)).rows;
+    const compare = (kind: string, wanted: DefinitionRow[], actual: DefinitionRow[], closedScope: boolean) => {
+      const key = (row: DefinitionRow) => `${row.relation ?? ""}:${row.name}`;
+      const found = new Map(actual.map((row) => [key(row), row]));
+      if (found.size !== actual.length) mismatches.push(`duplicate-${kind}-identity`);
+      for (const row of wanted) {
+        const got = found.get(key(row));
+        if (!got || Object.entries(row).some(([field, value]) => kind === "constraint" && field === "definition"
+          ? normalizedConstraintDefinition(got.definition) !== normalizedConstraintDefinition(value as string)
+          : got[field as keyof DefinitionRow] !== value))
+          mismatches.push(`${kind}-definition:${key(row)}`);
+      }
+      if (closedScope) {
+        const keys = new Set(wanted.map(key));
+        for (const row of actual) if (!keys.has(key(row))) mismatches.push(`unexpected-${kind}:${key(row)}`);
+      }
+    };
+    compare("constraint", spec.constraints, await definitions(`
+      SELECT n.nspname||'.'||c.relname AS relation,k.conname AS name,
+             pg_get_constraintdef(k.oid,true) AS definition,k.convalidated AS validated
+        FROM pg_constraint k JOIN pg_class c ON c.oid=k.conrelid JOIN pg_namespace n ON n.oid=c.relnamespace
+       WHERE n.nspname||'.'||c.relname=ANY($1::text[])`, [spec.relations]), true);
+    compare("index", spec.indexes, await definitions(`
+      SELECT n.nspname||'.'||c.relname AS relation,i.relname AS name,pg_get_indexdef(i.oid) AS definition,
+             x.indisvalid AS valid,x.indisready AS ready
+        FROM pg_index x JOIN pg_class c ON c.oid=x.indrelid JOIN pg_namespace n ON n.oid=c.relnamespace
+        JOIN pg_class i ON i.oid=x.indexrelid WHERE n.nspname||'.'||c.relname=ANY($1::text[])`, [spec.relations]), true);
+    compare("function", spec.functions, await definitions(`
+      SELECT n.nspname||'.'||p.proname AS name,pg_get_functiondef(p.oid) AS definition
+        FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace
+       WHERE n.nspname||'.'||p.proname=ANY($1::text[]) AND p.prokind='f'`, [spec.functions.map((row) => row.name)]), true);
+    compare("trigger", spec.triggers, await definitions(`
+      SELECT n.nspname||'.'||c.relname AS relation,t.tgname AS name,
+             pg_get_triggerdef(t.oid,true) AS definition,t.tgenabled AS enabled
+        FROM pg_trigger t JOIN pg_class c ON c.oid=t.tgrelid JOIN pg_namespace n ON n.oid=c.relnamespace
+       WHERE NOT t.tgisinternal AND t.tgname=ANY($1::text[])`, [spec.triggers.map((row) => row.name)]), true);
+  }
+
   const cascade = await client.query<{ count: string }>("SELECT count(*)::text AS count FROM pg_catalog.pg_constraint con JOIN pg_catalog.pg_class c ON c.oid=con.conrelid JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE con.contype='f' AND con.confdeltype='c' AND n.nspname=ANY($1::text[])", [controlledSchemas]);
   if (Number(cascade.rows[0]?.count) !== 0) mismatches.push("forbidden-on-delete-cascade");
 
@@ -232,7 +336,14 @@ try {
     const child = expectedByName.get(fk.child_table);
     const parent = expectedByName.get(fk.parent_table);
     if (!child?.columns.some((column) => column.name === "tenant_id") || !parent || !["TM", "TI", "TV"].includes(parent.profile)) continue;
-    if (fk.child_columns[0] !== "tenant_id" || fk.parent_columns[0] !== "tenant_id")
+    // Published B02 uses an exact target FK together with deferred ownership,
+    // immutable source and parent guards. Those definitions/enabled states are
+    // independently checked above; no unbound single-column FK is exempted.
+    const guarded = normative?.tenantForeignKeyEnforcement.some((rule) => rule.child === fk.child_table && rule.parent === fk.parent_table
+      && JSON.stringify(rule.childColumns) === JSON.stringify(fk.child_columns) && JSON.stringify(rule.parentColumns) === JSON.stringify(fk.parent_columns)
+      && rule.requiredTriggers.every((name) => normative.physicalAssertions.triggers.some((row) => row.name === name && row.enabled === "O"))
+      && rule.requiredFunctions.every((name) => normative.physicalAssertions.functions.some((row) => row.name === name)));
+    if (!guarded && (fk.child_columns[0] !== "tenant_id" || fk.parent_columns[0] !== "tenant_id"))
       mismatches.push(`non-composite-tenant-fk:${fk.child_table}:${fk.parent_table}:${fk.child_columns.join(",")}`);
   }
 
@@ -259,6 +370,7 @@ try {
     tableOwners: owners.rows.map((row) => row.owner_name),
     forbiddenDeleteCascades: Number(cascade.rows[0]?.count ?? 0),
     schemaMismatches: mismatches.length,
+    normativeLibraryDefinitionChecks: normative ? Object.fromEntries(["constraints", "indexes", "functions", "triggers"].map((kind) => [kind, normative.physicalAssertions[kind as "constraints"].length])) : null,
     mismatches
   };
   process.stdout.write(`${JSON.stringify(summary, null, 2)}\n`);

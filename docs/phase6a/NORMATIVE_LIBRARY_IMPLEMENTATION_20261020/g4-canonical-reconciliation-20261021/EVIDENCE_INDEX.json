@@ -1,0 +1,68 @@
+{
+  "generated_utc": "2026-10-21T23:13:13.902427+00:00",
+  "final_evidence": [
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/g4-canonical-reconciliation-20261021/SYNTHETIC_STABILIZED.json",
+      "sha256": "ae7dec990ec8a0bbaaa016576c3a2224d5b7125979223174b0f63e3be7da9390",
+      "exit_code": 0,
+      "status": "PASS_ISOLATED_CANONICAL_CHAIN_ONLY",
+      "duration_seconds": 2.574,
+      "scope": "See referenced artifact; PASS never denotes QA adoption"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/g4-canonical-reconciliation-20261021/TYPECHECK_FINAL.json",
+      "sha256": "d0363dd96ab108d26d03273e865c657437cc14ec85e86b2b50b3645fd8036070",
+      "exit_code": 0,
+      "status": null,
+      "duration_seconds": 0.2368,
+      "scope": "See referenced artifact; PASS never denotes QA adoption"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/g4-canonical-reconciliation-20261021/NORMALIZER_TESTS.json",
+      "sha256": "2ebd511a270bc7a67256b345ffefa68fdb55ee5258866341c816110596c3335b",
+      "exit_code": 0,
+      "status": null,
+      "duration_seconds": 0.0991,
+      "scope": "See referenced artifact; PASS never denotes QA adoption"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/g4-canonical-reconciliation-20261021/RECTOR_GATE.json",
+      "sha256": "73edb5714cab96f62e4e82a18dbf5f0040b6d6bfd9422cac618617f0e27cb204",
+      "exit_code": 0,
+      "status": null,
+      "duration_seconds": 0.3907,
+      "scope": "See referenced artifact; PASS never denotes QA adoption"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/g4-canonical-reconciliation-20261021/CONSTRAINT_EQUIVALENCE.json",
+      "sha256": "38c6d8c60549b456f7ad2a082d58a45079151250c86bd9f80c534b2b11eecbab",
+      "exit_code": null,
+      "status": "PASS_NARROW_ARRAY_CAST_EQUIVALENCE",
+      "duration_seconds": null,
+      "scope": "See referenced artifact; PASS never denotes QA adoption"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/g4-canonical-reconciliation-20261021/FINAL_RECOVERY_RECEIPT.json",
+      "sha256": "c7d78f4b9960128f4ea15fef116aa0c3647bc89223198b97e320bdd7a4dce286",
+      "exit_code": null,
+      "status": "PASS_LOGICAL_SNAPSHOT_RECOVERY_ONLY",
+      "duration_seconds": null,
+      "scope": "See referenced artifact; PASS never denotes QA adoption"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/g4-canonical-reconciliation-20261021/AUTHORIZED_CANONICAL_DELTAS.json",
+      "sha256": "e83a5ae874e6eb31861da18af4ecef1662c35481ee53d1e58b487b49ea0a634f",
+      "exit_code": null,
+      "status": null,
+      "duration_seconds": null,
+      "scope": "See referenced artifact; PASS never denotes QA adoption"
+    }
+  ],
+  "reused_149_physical_checks": "Immutable prior evidence; not repeated",
+  "existing_backup_metadata": "Previous authentication failure reused without blind retry",
+  "storage_guard": "Read-only fdesetup status + diskutil confirmed FileVault/APFS; private modes checked before final recovery receipt",
+  "failed_attempts": "Preserved BACKUP_RESTORE_RESULT, ATTEMPT_02, FINAL, RECONCILED, SYNTHETIC_FINAL, TYPECHECK_ATTEMPT01/02; resolved causes described in REPORT",
+  "source_SQL": "backup_restore.py / restore_reconcile.py contain exact sanitized metadata queries; CONN has no secret; pg_dump uses libpq credential reference only",
+  "temporary_environments": "Every backup/rebuild container was destroyed; cleanup receipts and final docker ps label checks empty",
+  "QA_write_operations": "NONE"
+}

@@ -1,0 +1,152 @@
+Browser tab: 1477742241, Title: "Tecdex GRC", URL: "https://grc.tecdex.net/evidencias".
+1 AXWebArea Tecdex GRC, URL: grc.tecdex.net/evidencias
+	2 container root
+		3 container
+			4 image Tecdex
+			5 text GRC
+			6 container Navegación principal
+				7 button Panel principal
+				32 button Normas
+				9 button Cumplimiento
+				10 button Requisitos
+				11 button Controles
+				12 button Evidencias
+				13 button Acciones
+				33 text CONFIGURACIONES
+				34 button Empresas
+				35 button Usuarios
+				36 button Identidades gestionadas
+			18 text Tecdex GRC Gobernanza y cumplimiento
+		19 container
+			20 text Buscar
+			21 search text field (settable) Buscar
+			47 text Empresa
+			48 pop up button (collapsed, settable) Description: Empresa activa, Value: TecDex, Secondary Actions: Expand
+				49 menu
+					50 (selected) TecDex
+			26 text U Usuario autorizado
+			51 container Administrador de la plataforma · Responsable de acción · Rol personalizado · Auditor · Auditor líder · Rol personalizado · Responsable de cumplimiento · Rol personalizado · Responsable de control · Rol personalizado · Responsable de evidencia · Rol personalizado · Responsable GRC · Revisor legal · Responsable de privacidad · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Administrador de la empresa · Consulta
+				52 text Platform ·  TecDex ·  Administrador de la plataforma · Responsable de acción · Rol personalizado · Auditor · Auditor líder · Rol personalizado · Responsable de cumplimiento · Rol personalizado · Responsable de control · Rol personalizado · Responsable de evidencia · Rol personalizado · Responsable GRC · Revisor legal · Responsable de privacidad · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Rol personalizado · Administrador de la empresa · Consulta
+			29 button Cerrar sesión
+		30 container
+			31 tab group Submódulos
+				43 tab (selectable, settable, boolean) Solicitudes de evidencia, Value: 0
+				44 tab (selectable, settable, boolean) Evidencias, Value: 0
+				45 tab (selected, settable, boolean) Políticas de retención, Value: 1
+				46 tab (selectable, settable, boolean) Aplicabilidad de retención, Value: 0
+			53 text ESPACIO OPERATIVO
+			54 heading Políticas de retención, Value: 1
+				55 text Políticas de retención
+			56 text Registros vigentes dentro de tu alcance autorizado.
+			57 button Nuevo registro
+			58 text Estado
+			59 pop up button (collapsed, settable) Description: Filtrar por estado, Value: Todos, Secondary Actions: Expand
+				60 menu
+					61 (selected) Todos
+					62 Borrador
+					63 En revisión
+					64 Aprobada
+					65 Publicada
+			66 container Políticas de retención
+				67 table
+					68 row
+						69 cell
+							70 text CÓDIGO
+						71 cell
+							72 text REFERENCIA
+						73 cell
+							74 text ESTADO
+						75 cell
+							76 text VERSIÓN
+						77 cell
+							78 text ACCIONES
+					79 row
+						80 cell
+							81 text QA_RET_ORD_001
+						82 cell
+							83 text Política de la organización · QA_RET_ORD_001 · v1
+						84 cell
+							85 text Publicada
+						86 cell
+							87 text 1
+						88 cell
+							89 button Ver detalle
+					90 row
+						91 cell
+							92 text QA-F5-20261007-RETENTION
+						93 cell
+							94 text Política de la organización · QA-F5-20261007-RETENTION · v1
+						95 cell
+							96 text Publicada
+						97 cell
+							98 text 1
+						99 cell
+							100 button Ver detalle
+			101 container Definir política de retención
+				102 container
+					103 text ALTA CONTROLADA
+					104 heading Definir política de retención, Value: 2, ID: create-title
+						105 text Definir política de retención
+					106 button Cerrar creación
+				107 container
+					108 text Completa los datos de la operación con información de tu empresa.
+					109 container Información principal
+						110 text Información principal
+						111 container
+							112 text Código de política
+							113 text field (settable) Código de política
+						114 container
+							115 text Obligatorio  · Código de negocio definido por ti; no es un identificador técnico.
+						116 container
+							117 text Número de versión
+							118 stepper (settable) Número de versión
+						119 text Obligatorio
+						120 container
+							121 text Tipo de política
+							122 pop up button (collapsed, settable) Description: Tipo de política, Value: Política de la organización, Secondary Actions: Expand
+								123 menu
+									124 Selecciona una opción
+									125 Suspensión del borrado por obligación legal
+									126 Política normativa obligatoria
+									127 Política contractual
+									128 (selected) Política de la organización
+									129 Política base del producto
+						130 text Obligatorio
+						131 container
+							132 text Evento de inicio de retención
+							133 pop up button (collapsed, settable) Description: Evento de inicio de retención, Value: Selecciona una opción, Secondary Actions: Expand
+								134 menu
+									135 (selected) Selecciona una opción
+									136 Vencimiento o cierre
+						137 text Obligatorio
+						138 container
+							139 text Orden de precedencia
+							140 text field Description: Orden de precedencia, Value: 200
+							141 text Se determina por el tipo de política seleccionado.
+						142 text Obligatorio
+						143 container
+							144 text Obligatoria
+							145 pop up button (collapsed, settable) Description: Obligatoria, Value: Selecciona Sí o No, Secondary Actions: Expand
+								146 menu
+									147 (selected) Selecciona Sí o No
+									148 Sí
+									149 No
+						150 text Obligatorio
+					151 container Fechas y conservación
+						152 text Fechas y conservación
+						153 container
+							154 text Duración de retención
+							155 stepper (settable) Duración de retención
+						156 container
+							157 text Unidad de duración
+							158 pop up button (collapsed, settable) Unidad de duración, Value: Segundos, Secondary Actions: Expand
+								159 menu
+									160 (selected) Segundos
+									161 Minutos
+									162 Horas
+									163 Días (24 horas)
+						164 text Duración exacta, sin equivalencias de meses o años. No establece por sí sola una obligación legal.
+						165 text Obligatorio
+				166 button Crear registro
+
+The focused UI element is 106 button Cerrar creación

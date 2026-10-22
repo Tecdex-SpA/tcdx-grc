@@ -2,8 +2,8 @@ import { connect } from "node:net";
 import { newUuidV7 } from "../uuid.js";
 
 const [socketPath, operation] = process.argv.slice(2);
-if (!socketPath || !["iam.provision", "iam.publish", "iam.revoke", "iam.c04w.publish", "iam.initial_source.publish"].includes(operation ?? "") || process.argv.length !== 4) {
-  process.stderr.write("USAGE: iam-publication-operator-cli SOCKET iam.provision|iam.publish|iam.revoke|iam.c04w.publish\n");
+if (!socketPath || !["iam.provision", "iam.publish", "iam.revoke", "iam.c04w.publish", "iam.initial_source.publish", "iam.library.publish"].includes(operation ?? "") || process.argv.length !== 4) {
+  process.stderr.write("USAGE: iam-publication-operator-cli SOCKET iam.provision|iam.publish|iam.revoke|iam.c04w.publish|iam.initial_source.publish|iam.library.publish\n");
   process.exitCode = 1;
 } else {
   const socket = connect(socketPath);

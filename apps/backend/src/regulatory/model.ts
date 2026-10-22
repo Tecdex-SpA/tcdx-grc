@@ -3,7 +3,8 @@ export const REGULATORY_PACK_CODES = [
   "ISO_9001_2026",
   "ISO_IEC_27001_2022",
   "ISO_IEC_42001_2023",
-  "CL_LEY_21719"
+  "CL_LEY_21719",
+  "CL_LEY_21663"
 ] as const;
 
 export type RegulatoryPackCode = typeof REGULATORY_PACK_CODES[number];
@@ -15,7 +16,7 @@ export type PackCandidateState =
   | "BLOCKED_HUMAN_REVIEW"
   | "BLOCKED_CONTRACT_DECISION";
 
-export type SourceOrigin = "licensed_file" | "official_source";
+export type SourceOrigin = "licensed_file" | "official_source" | "received_preliminary_file";
 export type RegulatoryAuthorityClass = "AUTHORIZED_NORMATIVE_SOURCE" | "NON_AUTHORITATIVE_TEST_PACK";
 export type RegulatorySourceRole =
   | "authorized_normative_source"

@@ -1,0 +1,9 @@
+# Gates ejecutados y límites
+
+FINAL_CODE_GATES.json:69 archivos/765 pruebas PASS, excluyendo PostgreSQL;154 focalizadas PASS, build/lint backend y derivación H04 PASS. FINAL_UI_GATES.json:9 pruebas SSR/transporte PASS y typecheck/lint/build frontend PASS sobre el último rótulo. Contracts build y rectores/status PASS en FOCUSED_GATES.json; no cambio rector posterior. Scripts lint del repositorio son TypeScript, no se inventa ejecución ESLint. La advertencia Vite de chunk grande se conserva; no equivale a un gate performance resuelto.
+
+Primera batería ampliada:747PASS/seis FAIL en tres pruebas antiguas de core, conservados en affected-unit-contract.log/FINAL_AFFECTED_GATES.json. PREEXISTING_CORE_TEST_FINDINGS.json prueba sus bytes previos y que la retención productiva no cambió. Se reconcilian51+delta INITIAL_SOURCE verificado contra snapshot/recibo, HTTP200 y strong If-Match de bind, y fixtures explícitos del lock/estado publicado de retención existentes. No se cambian contratos para pasar tests ni se desactiva el guard. Recheck38 PASS y baterías posteriores PASS.
+
+Pruebas de rutas Fastify inject, orquestación y storage usan dobles aislados; no prueban PostgreSQL, MinIO real, transacciones físicas o tenants QA. Los dos casos Playwright sólo usan127.0.0.1:4178, transporte API interceptado y fixtures sintéticos; desktop/narrow, teclado/no-overflow, borrado por cambio de tenant. Inicio sandbox EPERM; reejecución con permiso de puerto local PASS. Nunca E2E de producto ni aprobación humana.
+
+H04_SQL_GRAMMAR.json acredita SQL/PLpgSQL offline con alcance exacto y corrección sucesora. No se ejecutó SQL contra DB, ni migraciones/imports/grants/deploy. La existencia física/IAM efectiva en QA no se inspeccionó ni se presume. No se reejecutan gates históricos de SQL/runtime o aceptación humana. El verificador de continuidad prueba bytes/referencias, no capacidad operativa.

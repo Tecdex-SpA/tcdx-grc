@@ -1,0 +1,4 @@
+BEGIN;
+UPDATE knowledge.knowledge_versions SET lifecycle_state='published',published_at=now(),effective_from='2026-01-01' WHERE knowledge_version_id='00000000-0000-7000-8000-000000000030';INSERT INTO knowledge.knowledge_versions(knowledge_version_id,knowledge_item_id,ownership_class,tenant_id,version_number,content_ref,content_hash,content_language,lifecycle_state,published_at,effective_from) VALUES ('00000000-0000-7000-8000-000000000034','00000000-0000-7000-8000-000000000020','GLOBAL_REFERENCE',NULL,2,'synthetic://fixture/34','aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa','es','published','2026-02-01','2026-02-01');UPDATE knowledge.knowledge_versions SET superseded_by_id='00000000-0000-7000-8000-000000000034' WHERE knowledge_version_id='00000000-0000-7000-8000-000000000030';
+SET CONSTRAINTS ALL IMMEDIATE;
+ROLLBACK;

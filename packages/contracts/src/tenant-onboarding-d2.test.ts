@@ -47,7 +47,7 @@ describe("D2 consumes frozen D1-R contracts; publication is a separate gate", ()
   });
   it("registers the next available local DATA-ONLY candidate and preserves historical bytes", async () => {
     const rows = JSON.parse(manifest).migrations;
-    expect(rows).toHaveLength(34);
+    expect(rows).toHaveLength(36);
     const sha256 = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(migration))), (byte) => byte.toString(16).padStart(2, "0")).join("");
     expect(rows[27]).toMatchObject({ id: "20261006000200", sha256, transactional: true });
     expect(rows[26]).toMatchObject({ id: "20261006000100", sha256: "2a3c0d14748a9494d6ef60572802782eab2cdf3f4e60bef6026d73c48c1b6399" });

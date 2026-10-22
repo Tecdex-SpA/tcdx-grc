@@ -1,0 +1,51 @@
+{
+  "status": "BLOCKED_PRE_DDL_PENDING_OPERATIONAL_AND_CANONICAL_INTEGRATION_GATES",
+  "runner": "scripts/foundations/migrate.ts apply; no alternate QA runner/test-mode override",
+  "current_manifest": {
+    "path": "database/migrations/manifest.json",
+    "sha256": "df18d813bd0f4d763dd02ef9617fa21e9474e3f7fc155e9b97e8f47eee11002f"
+  },
+  "current_applied_count": 34,
+  "current_ledger_checksums": "PASS_34_OF_34",
+  "historical_files_edited": 0,
+  "candidate_migration": {
+    "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-physical-adoption-20261021/candidate-migration/20261021221204_normative_library_b01_b09_h04_pv01.sql",
+    "sha256": "9279159e88c60fff03f998e33008fb0d675f53e4423df638c9e54f709a773798",
+    "sources": [
+      {
+        "path": "docs/physical-data-model/amendments/NORMATIVE_LIBRARY_20261020/03_DDL_SPEC.sql",
+        "sha256": "33d444c2e5394f1a027d3d81230b77335487e768d2a130578a5f119c559f72e7",
+        "offset": 159,
+        "length": 14230
+      },
+      {
+        "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_SQL_GRAMMAR_20261021/DDL_SPEC.sql",
+        "sha256": "0841e1c9136400ca88a43ba06e9308fcb4b17eb51df296b2d7bda4d1f87c9a4c",
+        "offset": 14390,
+        "length": 5528
+      },
+      {
+        "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_PHYSICAL_VALIDATION_20261021/DDL_SPEC.sql",
+        "sha256": "43bd138f9c66d30efb785cafa83bf90dbf1bce45448a8b434f3678225b33f4dd",
+        "offset": 19919,
+        "length": 2569
+      }
+    ]
+  },
+  "candidate_manifest": {
+    "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-physical-adoption-20261021/candidate-migration/manifest.proposed.json",
+    "sha256": "70ecaa0f4bbf168a1f5e4c3cefbd734036217dc7b09ac3d4a11b65f9cbc66152"
+  },
+  "source_bytes_identity": "Exact three published source blocks; no semantic SQL changes",
+  "not_registered": true,
+  "reproducibility": "Same 46 published statements physically tested before; new complete canonical-runner rebuild/reapply/rollback not yet executed",
+  "required_canonical_integration": [
+    "Append one migration file and manifest entry only after review; never edit34 applied migrations",
+    "Reconcile derived database/expected-schema.json and canonical verify-schema.ts with already-published two-table/four-column/UQ/function delta before QA adoption; current verifier would reject it",
+    "Prove rebuild, rollback, checksum/reapply and exact derived schema under actual canonical runner in disposable environment"
+  ],
+  "integration_reason": "Current verifier reads242-table inventory, retains global KnowledgeVersion UQ expectation and enumerates historical migrations explicitly; source-of-truth drift would result from DDL-only application",
+  "recovery": "Current QA archive_mode off and zero archived WAL; no current validated backup reference available; transactional rollback alone not proof of postcommit recovery",
+  "business_DML": "NONE",
+  "technical_ledger_DML": "Only official runner INSERT in same successful transaction if execution ever authorized by PASS gates; not performed"
+}

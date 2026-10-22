@@ -1,0 +1,40 @@
+{
+  "decision": "GO",
+  "gates": {
+    "local_integrity": true,
+    "QA_identity_TLS": true,
+    "history_exact": true,
+    "schema_exact_predecessor_or_already_applied": true,
+    "activity_health": true,
+    "all_244_fingerprints_bounded": true,
+    "fresh_recoverable_backup": true,
+    "only36_pending": true
+  },
+  "checked_utc": "2026-10-22T15:13:43.573670+00:00",
+  "expires_utc": "2026-10-22T15:23:43.573670+00:00",
+  "migration": {
+    "id": "20261022141304",
+    "filename": "20261022141304_configuration_optional_default.sql",
+    "sha256": "4fc817fa8ba6b8149dce1d484a301b511b24f8d4329038fd1e72265c9cd0bfc3",
+    "transactional": true,
+    "preconditions": [
+      "exact_35_predecessor_checksums",
+      "approved_LOCAL_DEFINITIONS_01_forward_only_correction",
+      "separate_environment_execution_authorization"
+    ],
+    "postconditions": [
+      "244_domain_tables_unchanged",
+      "optional_absence_or_one_correctly_typed_default",
+      "all_existing_business_rows_unchanged",
+      "ledger_36_atomic_with_DDL"
+    ]
+  },
+  "backup_reference": "QA01-LOGICAL-0680ff6898e747d8ba2d56b9a171e1ca",
+  "recovery": "Runner transaction rollback on failure. After commit: preserve evidence and stop; no unreviewed down/ledger edit. Verified private logical snapshot recovery is available, with its recorded point/limits.",
+  "execution_script_sha256": {
+    "operator.py": "236dc6d7b817a2ecb425ea3a0ea0f15b8486ecf5fcd8da40e9ee6ade7a2f5f06",
+    "inspect.mts": "9ff35673dc215e05c5ef5a6abc543ba20ab56c4a0a1c4d8364b6d030332c85a2",
+    "backup.mts": "cd75ce70a3e66022c3005a33b38b20fb8dc663aac0ce3c47a19ee9b57b3cc5b6",
+    "assess.py": "a51b925a95de64fcf4c3477e3c1a58baf7400eb535d5a98b1b0378ed4a1c852f"
+  }
+}

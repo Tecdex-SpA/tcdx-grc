@@ -1,0 +1,29 @@
+--- a/database/expected-schema.json
++++ b/database/expected-schema.json
+@@ -28637,5 +28637,26 @@
+         ]
+       }
+     ]
++  },
++  "configurationDefaultAmendment": {
++    "contract": {
++      "path": "docs/physical-data-model/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/CONTRACT.json",
++      "sha256": "5321c850b959adb1219c59ef52450457938b25dfe01240e9638ea65597550ed6"
++    },
++    "receipt": {
++      "path": "docs/physical-data-model/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/CONTRACT_PUBLICATION_RECEIPT.json",
++      "sha256": "cfceb764253354ae77c18bb8618c5310b7952441739ba348dabcaed96545ef05"
++    },
++    "migration": {
++      "path": "database/migrations/20261022141304_configuration_optional_default.sql",
++      "sha256": "4fc817fa8ba6b8149dce1d484a301b511b24f8d4329038fd1e72265c9cd0bfc3"
++    },
++    "constraint": {
++      "relation": "config.configuration_definitions",
++      "name": "ck_configuration_definitions__typed_default",
++      "definition": "CHECK ((((value_type)::text = ANY ((ARRAY['boolean'::character varying, 'integer'::character varying, 'decimal'::character varying, 'text'::character varying, 'timestamp'::character varying, 'duration'::character varying, 'json'::character varying])::text[])) AND ((num_nonnulls(default_boolean_value, default_integer_value, default_decimal_value, default_text_value, default_timestamp_value, default_duration_seconds_value, default_json_value) = 0) OR ((num_nonnulls(default_boolean_value, default_integer_value, default_decimal_value, default_text_value, default_timestamp_value, default_duration_seconds_value, default_json_value) = 1) AND\nCASE value_type\n    WHEN 'boolean'::text THEN (default_boolean_value IS NOT NULL)\n    WHEN 'integer'::text THEN (default_integer_value IS NOT NULL)\n    WHEN 'decimal'::text THEN (default_decimal_value IS NOT NULL)\n    WHEN 'text'::text THEN (default_text_value IS NOT NULL)\n    WHEN 'timestamp'::text THEN (default_timestamp_value IS NOT NULL)\n    WHEN 'duration'::text THEN (default_duration_seconds_value IS NOT NULL)\n    WHEN 'json'::text THEN (default_json_value IS NOT NULL)\n    ELSE false\nEND))))",
++      "validated": true
++    },
++    "status": "PREPARED_LOCAL_NOT_QA_APPLIED"
+   }
+ }

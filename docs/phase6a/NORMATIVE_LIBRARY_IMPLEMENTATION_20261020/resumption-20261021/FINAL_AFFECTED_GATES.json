@@ -1,0 +1,41 @@
+[
+  {
+    "check": "affected-unit-contract",
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "packages/contracts/src",
+      "apps/frontend/src",
+      "apps/backend/src/core-grc",
+      "apps/backend/src/normative-library",
+      "apps/backend/src/configuration",
+      "apps/backend/src/regulatory",
+      "apps/backend/src/app.test.ts",
+      "--exclude",
+      "**/*.postgres.test.ts",
+      "--maxWorkers=2"
+    ],
+    "duration_seconds": 8.549,
+    "status": "FAIL",
+    "exit_code": 1,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/affected-unit-contract.log",
+    "sha256": "876f888b9454d87f78282af591b119f094ee49f4167845801283b731ece12c08"
+  },
+  {
+    "check": "frontend-build",
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "apps/frontend/node_modules/vite/bin/vite.js",
+      "build",
+      "apps/frontend",
+      "--config",
+      "apps/frontend/vite.config.ts"
+    ],
+    "duration_seconds": 0.304,
+    "status": "PASS",
+    "exit_code": 0,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/frontend-build.log",
+    "sha256": "e457beafb35158fee3d3ab6e22ad42948fca9301c2993bb80c23ee4df94a95c9"
+  }
+]

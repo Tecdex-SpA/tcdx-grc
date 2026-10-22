@@ -1,0 +1,18 @@
+{
+  "command": [
+    "node22.23.2",
+    "--experimental-strip-types",
+    "scripts/foundations/migrate.ts",
+    "status"
+  ],
+  "at_utc": "2026-10-21T23:21:49.601059+00:00",
+  "duration_seconds": 0.7125,
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "node:internal/modules/run_main:123\n    triggerUncaughtException(\n    ^\n\nError: self-signed certificate\n    at TLSSocket.onConnectSecure (node:internal/tls/wrap:1787:34)\n    at TLSSocket.emit (node:events:519:28)\n    at TLSSocket._finishInit (node:internal/tls/wrap:1176:8)\n    at ssl.onhandshakedone (node:internal/tls/wrap:962:12) {\n  code: 'DEPTH_ZERO_SELF_SIGNED_CERT'\n}\n\nNode.js v22.23.2\n",
+  "database": "QA192.168.2.40:5432/tcdx-grc",
+  "TLS": "require CA verification + existing system CA store",
+  "session_options": "-c statement_timeout=60000 -c lock_timeout=2000 -c idle_in_transaction_session_timeout=30000 -c application_name=grc_qa_authorized_adoption -c default_transaction_read_only=on",
+  "test_mode": "DISABLED",
+  "isolated_rebuild": "DISABLED"
+}

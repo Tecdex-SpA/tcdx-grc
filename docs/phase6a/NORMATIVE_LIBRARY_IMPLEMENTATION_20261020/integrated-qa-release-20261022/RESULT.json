@@ -1,0 +1,512 @@
+{
+  "PROJECT": "GRC_TECDEX",
+  "EXECUTION": "INTEGRATED_QA_RELEASE_20261022",
+  "ACTIVE_BASELINE": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "CURRENT_PHASE": "POST_STEP6A4_PRE_STEP6A5",
+  "GIT_CONSOLIDATION": "PASS_APPROVED_SCOPE_COMMITTED",
+  "COMMITS_CREATED": 10,
+  "RELEASE_SOURCE_COMMIT": "683da92fc7f3f2a92bd1bfd9b12d4d2dbe53660c",
+  "REMOTE_INTEGRATION": "PUBLISHED_EXISTING_BRANCH_DRAFT_PR_23_MAIN_NOT_MERGED",
+  "BRANCH": "fix/step6a3-v112-continuity-20261016",
+  "WORKTREE_STATUS": "CLEAN_AT_SEAL_PRIVATE_CUSTODY_IGNORED",
+  "BACKEND_BUILD": "PASS_LINUX_AMD64",
+  "FRONTEND_BUILD": "PASS_LINUX_AMD64",
+  "BACKEND_IMAGE_DIGEST": "sha256:c83db1816720e52f615768a044e5d0e16b215a4404ab280cb8ab9461b8503152",
+  "FRONTEND_IMAGE_DIGEST": "sha256:23bdcd90072905064e554a8a188b3455a93f052d2b8cf219bc631cd4192b56d6",
+  "DIGEST_KIND": "Docker content-addressed image ID, verified after save/load; not a registry RepoDigest",
+  "BACKEND_QA_DEPLOYMENT": "PASS_HEALTHY",
+  "FRONTEND_QA_DEPLOYMENT": "PASS_HEALTHY",
+  "PRIVATE_OPERATORS": "PASS_4_UPDATED_READY",
+  "IAM_LIBRARY_PUBLISH": "PASS_FRESH_M2M_AND_IDEMPOTENT_REPLAY",
+  "QA01_INTEGRITY": "PRESERVED_MIGRATION36_ONCE_AND_HISTORICAL_EVIDENCE_UNMODIFIED",
+  "POSTGRESQL_QA": "PASS_16.15_VERIFY_FULL",
+  "MIGRATIONS": "PASS_36_EXACT_UNCHANGED_NO_REAPPLICATION",
+  "SCHEMA_INTEGRITY": "PASS_244_TABLES_3630_COLUMNS_ZERO_CATALOG_DRIFT",
+  "IAM_REGISTRY": "PASS_8_PERMISSIONS_39_GLOBAL_TEMPLATE_GRANTS_30_AUTHORIZED_TENANT_GRANTS",
+  "B06_BINDINGS_13": "PASS_PUBLISHED_EXACT",
+  "DEFINITIONS_4": "PASS_PUBLISHED_NULL_DEFAULTS",
+  "H04": "PASS_DEPLOYED_9_SYNTHETIC_ALLOW_DENY_CHECKS_PRIVATE_PROOF_VERSION_REMOVED_NO_PERSISTENT_RIGHTS",
+  "RBAC_SOD": "CONTROLS_PASS_POSITIVE_DUAL_ACTOR_QA_WRITE_E2E_PENDING",
+  "DEFAULT_DENY": "PASS_RUNTIME_401_403_404_AND_H04_NEGATIVES",
+  "TENANT_ISOLATION": "PASS_RUNTIME_FOREIGN_TENANT_404_NO_FOREIGN_MUTATION",
+  "API_TESTS": "PASS_AUTHENTICATED_READS_DEFINITIONS_MATRIX_AND_DENIALS",
+  "FRONTEND_TESTS": "PASS_REAL_PLATFORM_LIBRARY_MATRIX_TABLE_AND_PERMISSION_STATES",
+  "E2E_TESTS": "PARTIAL_REAL_QA_READ_UI_API_PASS_POSITIVE_DUAL_ACTOR_WRITE_REVIEW_NOT_EXECUTED",
+  "REGRESSION_TESTS": "PASS_1070_UNIT_50_ISOLATED_POSTGRES_10_B04_BROWSER",
+  "CANONICAL_DOMAIN": "https://grc.tecdex.net/",
+  "CANONICAL_DOMAIN_STATUS": "PASS_HTTPS_200_PUBLIC_HTML_MATCHES_DEPLOYED_IMAGE",
+  "ISO_COMMERCIAL_IMPORTS": "NONE",
+  "ISO_COMMERCIAL_SOURCES_ACTIVATED": "NONE",
+  "NORMATIVE_IMPORTS": "NONE",
+  "PRODUCTION_CHANGES": "NONE",
+  "QA_DDL": "NONE",
+  "NEW_USERS": "NONE",
+  "NEW_ROLES": "NONE",
+  "STEP6A5": "NOT_STARTED",
+  "STEP6A6": "NOT_STARTED",
+  "RECTOR_GATE": "PASS",
+  "INTEGRATED_QA_RELEASE_GATE": "PARTIAL",
+  "REMAINING_BLOCKERS": "Positive end-to-end QA write/review/approval remains unverified: authorized tenant has zero active GRC_MANAGER identities independent of the PO. Do not self-review, invent an actor or grant roles to manufacture PASS. Protected main remains unmerged through draft PR23.",
+  "NEXT_FUNCTIONAL_DELIVERY": "Close this release's real positive dual-actor write/review E2E after PO designates an existing independent identity and its canonical authorized tenant role assignment; keep STEP6A5/6A6 unopened.",
+  "HUMAN_UI_REVIEW": "NOT_SELF_APPROVED",
+  "authorized_tenants": [
+    {
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "name": "TecDex",
+      "authorization": "Explicit PO reply in this release conversation"
+    }
+  ],
+  "independent_reviewers": 0,
+  "audit": {
+    "global": 64,
+    "tenant": 30,
+    "global_manifest_sha256": "459c0b3bb90ca30736c13a798ff8f14be658c0f5d67b05f5ea96eb679bdf94ac",
+    "tenant_manifest_sha256": "b56d239ec6fbe3f65ee73ec71f389c9b33ead767100bbf9257a04500fc95cd7d",
+    "service_principal_id": "01a13c3b-dbdd-763f-bcbb-f16ff41d99ba",
+    "replays": {
+      "created": 0,
+      "audited": 0
+    },
+    "global_audits_retained_without_rewrite": true
+  },
+  "components": {
+    "backend": {
+      "container_id": "dfd571a645ffe98b213e4ad164e6f00f07cba6d12e11a7cd7374c96b7c845597",
+      "image_id": "sha256:c83db1816720e52f615768a044e5d0e16b215a4404ab280cb8ab9461b8503152",
+      "running": true,
+      "health": "healthy",
+      "source_commit": "683da92fc7f3f2a92bd1bfd9b12d4d2dbe53660c"
+    },
+    "frontend": {
+      "container_id": "7af4472ae4ebfb288396de998715ecbc1daab07857e0825773a4f13bf762a8d5",
+      "image_id": "sha256:23bdcd90072905064e554a8a188b3455a93f052d2b8cf219bc631cd4192b56d6",
+      "running": true,
+      "health": "healthy",
+      "source_commit": "97a00013f48b1b630ddb34c41754472ced3c1395"
+    }
+  },
+  "backup": {
+    "reference": "INTEGRATED-QA-45c8f11cf2604f1298230fa3cbcf8ea5",
+    "dump_sha256": "33ef786fe9d916c0325f9c6ffc461b0e268351bdab6bfa5189bf3529e5baac23",
+    "dump_size_bytes": 2584973,
+    "tables_restored_verified": 245,
+    "status": "PASS_VERIFIED_RECOVERABLE"
+  },
+  "source_archive_sha256": {
+    "backend": "ec4181ea62ed2b098a67f4e80766018b826ceadab738896027d45cc71bd5006c",
+    "frontend": "8760b5ef1445c8d94f1c9ccc6ce373899156a10b5dd8e9aa68cbcb89cf07f037"
+  },
+  "definitions": [
+    {
+      "configuration_definition_id": "01a164a4-c790-700e-ba6f-fa0541cdebd9",
+      "configuration_code": "control_operational_activity",
+      "version_number": "1",
+      "value_type": "text",
+      "lifecycle_state": "published",
+      "effective_from": "2026-10-22 17:13:37.474+00",
+      "effective_to": "2027-10-22 17:13:37.474+00",
+      "defaults": 0
+    },
+    {
+      "configuration_definition_id": "01a164a4-c7b6-73a6-8dc0-31a7de868871",
+      "configuration_code": "control_operational_confirmation",
+      "version_number": "1",
+      "value_type": "text",
+      "lifecycle_state": "published",
+      "effective_from": "2026-10-22 17:13:37.474+00",
+      "effective_to": "2027-10-22 17:13:37.474+00",
+      "defaults": 0
+    },
+    {
+      "configuration_definition_id": "01a164a4-c7ab-77e0-b427-03114b10e74c",
+      "configuration_code": "control_operational_frequency",
+      "version_number": "1",
+      "value_type": "text",
+      "lifecycle_state": "published",
+      "effective_from": "2026-10-22 17:13:37.474+00",
+      "effective_to": "2027-10-22 17:13:37.474+00",
+      "defaults": 0
+    },
+    {
+      "configuration_definition_id": "01a164a4-c7a1-77df-b679-cbc103c3e225",
+      "configuration_code": "control_recommended_evidence",
+      "version_number": "1",
+      "value_type": "text",
+      "lifecycle_state": "published",
+      "effective_from": "2026-10-22 17:13:37.474+00",
+      "effective_to": "2027-10-22 17:13:37.474+00",
+      "defaults": 0
+    }
+  ],
+  "bindings": [
+    {
+      "id": "01a164a4-c71c-7117-8854-d48fca02be6c",
+      "entity": "KnowledgeVersion",
+      "command": "knowledgeVersionUpdate",
+      "from": "draft",
+      "to": "draft",
+      "audit_event_id": "01a164a4-c724-77b7-9f7a-7354bc58908b"
+    },
+    {
+      "id": "01a164a4-c728-76fe-9e31-e70b57f03d4f",
+      "entity": "KnowledgeVersion",
+      "command": "knowledgeVersionReview.reviewed",
+      "from": "draft",
+      "to": "reviewed",
+      "audit_event_id": "01a164a4-c72d-753b-91a5-5fc47865393f"
+    },
+    {
+      "id": "01a164a4-c731-70b3-8dd8-dd76443ec25a",
+      "entity": "KnowledgeVersion",
+      "command": "knowledgeVersionReview.rejected",
+      "from": "draft",
+      "to": "rejected",
+      "audit_event_id": "01a164a4-c737-7549-8643-3e37c400037c"
+    },
+    {
+      "id": "01a164a4-c73a-7042-960a-6e5a761bb642",
+      "entity": "KnowledgeVersion",
+      "command": "knowledgeVersionPublish",
+      "from": "reviewed",
+      "to": "published",
+      "audit_event_id": "01a164a4-c73f-7174-a172-96aab05d50a5"
+    },
+    {
+      "id": "01a164a4-c743-75ff-b182-a0ff15d93e59",
+      "entity": "KnowledgeVersion",
+      "command": "platformKnowledgeVersionUpdate",
+      "from": "draft",
+      "to": "draft",
+      "audit_event_id": "01a164a4-c747-710a-9bc4-a3a64a58ee97"
+    },
+    {
+      "id": "01a164a4-c74b-72dd-bd50-9162f1f7ab17",
+      "entity": "KnowledgeVersion",
+      "command": "platformKnowledgeVersionReview.reviewed",
+      "from": "draft",
+      "to": "reviewed",
+      "audit_event_id": "01a164a4-c750-750d-9147-c9cb7ba640c7"
+    },
+    {
+      "id": "01a164a4-c755-7756-b3df-ed7fda39e8f2",
+      "entity": "KnowledgeVersion",
+      "command": "platformKnowledgeVersionReview.rejected",
+      "from": "draft",
+      "to": "rejected",
+      "audit_event_id": "01a164a4-c75a-75c9-b02d-ee1f47b1ec85"
+    },
+    {
+      "id": "01a164a4-c75d-70c7-81df-80708826d635",
+      "entity": "KnowledgeVersion",
+      "command": "platformKnowledgeVersionPublish",
+      "from": "reviewed",
+      "to": "published",
+      "audit_event_id": "01a164a4-c762-73cf-b339-156837db08a2"
+    },
+    {
+      "id": "01a164a4-c765-7126-86a0-3bb902bdc19d",
+      "entity": "ConfigurationOverride",
+      "command": "configurationOverrideUpdate",
+      "from": "draft",
+      "to": "draft",
+      "audit_event_id": "01a164a4-c769-766c-b81e-388466f19861"
+    },
+    {
+      "id": "01a164a4-c76d-7783-8909-56860e2e2d60",
+      "entity": "ConfigurationOverride",
+      "command": "configurationOverrideReview.reviewed",
+      "from": "draft",
+      "to": "reviewed",
+      "audit_event_id": "01a164a4-c774-777b-ab5d-d5f666875adc"
+    },
+    {
+      "id": "01a164a4-c778-7512-9685-50a5cdb4d689",
+      "entity": "ConfigurationOverride",
+      "command": "configurationOverrideReview.rejected",
+      "from": "draft",
+      "to": "rejected",
+      "audit_event_id": "01a164a4-c77d-7736-8066-62c2cce3394a"
+    },
+    {
+      "id": "01a164a4-c780-70ba-81cf-00944261db4d",
+      "entity": "ConfigurationOverride",
+      "command": "configurationOverrideDecide.approved",
+      "from": "reviewed",
+      "to": "approved",
+      "audit_event_id": "01a164a4-c784-7213-8eba-41682ed42cbf"
+    },
+    {
+      "id": "01a164a4-c788-7208-b0dc-f031bd9332cd",
+      "entity": "ConfigurationOverride",
+      "command": "configurationOverrideDecide.rejected",
+      "from": "reviewed",
+      "to": "rejected",
+      "audit_event_id": "01a164a4-c78d-7422-85aa-cf9061b22982"
+    }
+  ],
+  "permissions": [
+    {
+      "id": "01a164a4-c5e5-71b1-a36c-401184d9363a",
+      "code": "knowledge.knowledge_item.read",
+      "audit_event_id": "01a164a4-c5ed-7121-a677-bfd4abae90fe"
+    },
+    {
+      "id": "01a164a4-c5f2-730c-8394-deb5658a4962",
+      "code": "knowledge.knowledge_item.create",
+      "audit_event_id": "01a164a4-c5f5-7105-bce0-50ab279ee9e1"
+    },
+    {
+      "id": "01a164a4-c5f7-72aa-8640-da14fce4d4b9",
+      "code": "knowledge.knowledge_item.update",
+      "audit_event_id": "01a164a4-c5fa-708b-979d-31372a19627d"
+    },
+    {
+      "id": "01a164a4-c5fd-7298-9736-797aae98c961",
+      "code": "knowledge.knowledge_item.review",
+      "audit_event_id": "01a164a4-c5ff-72fe-b03e-53f18d9e508b"
+    },
+    {
+      "id": "01a164a4-c602-7451-8eca-a907356d7cfe",
+      "code": "knowledge.knowledge_item.publish",
+      "audit_event_id": "01a164a4-c604-73f3-a3fb-80882fa3cdc5"
+    },
+    {
+      "id": "01a164a4-c607-754b-8336-67c04e700579",
+      "code": "knowledge.knowledge_source.read",
+      "audit_event_id": "01a164a4-c60a-768e-b030-980a41322828"
+    },
+    {
+      "id": "01a164a4-c60d-71b2-bf3f-fb061c5f7d17",
+      "code": "knowledge.knowledge_source.create",
+      "audit_event_id": "01a164a4-c60f-75e2-ae5d-b92609804874"
+    },
+    {
+      "id": "01a164a4-c611-73bb-80fd-21365ade2208",
+      "code": "reporting.matrix.read",
+      "audit_event_id": "01a164a4-c614-763e-81e9-404680946c91"
+    }
+  ],
+  "physical_postcheck": {
+    "fingerprints": 244,
+    "unchanged_tables": 234,
+    "approved_changed_tables": 8,
+    "login_and_audit_tables": 2,
+    "unauthorized_table_changes": 0,
+    "permission_rows_added": 8,
+    "role_permission_rows_added": 69,
+    "new_definitions": 4,
+    "new_scopes": 4,
+    "new_rules": 4,
+    "new_bindings": 13,
+    "new_binding_scopes": 13,
+    "new_side_effects": 13,
+    "knowledge_sources": 0,
+    "persisted_source_rights_added": 0
+  },
+  "validation_limits": {
+    "general_postgres_suites_skipped": 27,
+    "general_postgres_tests_skipped": 227,
+    "isolated_postgres_tests_passed": 50,
+    "b04_browser_tests_passed": 10,
+    "b04_browser_backend": "Real Fastify handlers with synthetic SQL fixture; not live QA write E2E",
+    "h04_runtime": "Deployed backend, real encrypted versioned Minio proof, in-memory synthetic RightsRecord; no persisted rights/audit/source row claimed",
+    "real_b04": "Authorized Definition-reference GET returns four items on two existing controls; no QA create/review/decision claimed",
+    "real_matrix": "issues_actions rendered as table with existing row/column/relation; controls_evidence and issues_actions API200",
+    "session_probes": "A raw stored-token probe after expiry returned401; only fresh successful sessions/read captures count as validation. Replacement backend invalidates prior sessions; no credential or cookie export."
+  },
+  "git": {
+    "initial_head": "4a275264a7522031e62bf09f598c9d56e21d25e0",
+    "functional_commits": [
+      "683da92fc7f3f2a92bd1bfd9b12d4d2dbe53660c fix(release): preserve exact global publication audits during authorized tenant activation",
+      "16fa24d9d4e1441e76bc6f1d8bcba91a2d202847 fix(iam): project effective library permissions into authenticated frontend authorization",
+      "24b6045e5f583b3b7d8baf907d65cfe2162b44a1 chore(release): orchestrate canonical QA promotion and authenticated library activation",
+      "cd9ae3101d11bb5f1c281634c7c38a621f2a499f fix(qa): verify backend PostgreSQL TLS and update canonical private operators with rollback",
+      "97a00013f48b1b630ddb34c41754472ced3c1395 chore(release): bind QA preflight, private recovery and image builds to source revision",
+      "23d923757fa5f8212b525f799749a476fdce7f85 chore(qa): consolidate approved QA continuity and integrated delivery operations",
+      "74bd8288fcefd670bd60d3393a458703de9c2985 feat(frontend): consolidate approved business forms and normative library workspaces",
+      "3b0263f352238da9817f123694b7097c2872dc9a feat(backend): integrate normative library, control adjustments and canonical QA publication",
+      "f437996e12d44a5e384c8b81f8220cf879582db9 feat(contracts): consolidate approved normative library authority and migrations 35-36"
+    ],
+    "closure_commit_locator": "git log -1 --format=%H -- docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/integrated-qa-release-20261022/RESULT.json",
+    "approved_files_created": 2027,
+    "approved_files_modified": 65,
+    "deleted_files": 0,
+    "private_backups_and_caches_versioned": false,
+    "pr": "https://github.com/Tecdex-SpA/tcdx-grc/pull/23",
+    "main_merged": false,
+    "rector_ci_at_source_683da92": "SUCCESS https://github.com/Tecdex-SpA/tcdx-grc/actions/runs/39831414502/job/120008235349"
+  },
+  "layers": {
+    "database_schema": "UNCHANGED",
+    "migration_sources": "Existing approved35/36 consolidated; applied1-36 immutable",
+    "executable_contracts": "Previously approved local successors consolidated; no new semantics",
+    "backend": "BUILT_DEPLOYED",
+    "frontend": "BUILT_DEPLOYED",
+    "private_operators": "UPDATED_4",
+    "infrastructure_topology": "UNCHANGED",
+    "deployment_scripts": "Canonical promoters corrected for TLS, source binding, repeat promotion and rollback",
+    "immutable_baseline": "UNCHANGED"
+  },
+  "evidence": [
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/BACKUP.json",
+      "sha256": "f8445daac5b3a783750f0312e50745c842d77e645a4427fd3a1a3d0d516df007"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/PRE_RETRY.json",
+      "sha256": "e89e024be5ff44ab060180a965e0c923acda21de51065b0e60f373ae9dd067fd"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/POST_TENANT.json",
+      "sha256": "8053d623b98690f1e05e0fa1758fa1b981c2fc984097793bcdc23c464777774f"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/physical-comparison-tenant.json",
+      "sha256": "71a4b757e5f8e291c62dd00a9528440b4ddeec55a97ed09e018ebc4675d97ee2"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/SOD_AVAILABILITY.json",
+      "sha256": "d9060b46fde8981630fc3ac661edebf5a3a82612d7632ac2d9a698becab3f521"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/library-activate.json",
+      "sha256": "f72c26b11135a208f7e8f0f441cce66ab4249173fc154fd5bd80b0302fc0915a"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/library-replay.json",
+      "sha256": "4efed8c97a840d2d389224435b97068802465b649e53097c7ec5d1e1472ae0d9"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/library-activate-v4.json",
+      "sha256": "863daeecd4c91b7b802c78eef147c9f31e0df52091b232c9992bb4e1b4edbc31"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/library-replay-v4.json",
+      "sha256": "9ccb62fe0613f9b99df9b9a35402515fb2357b8fd998b1812ffdd418f25f95f2"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/stage.json",
+      "sha256": "2a80e12cc4d3230442be5939c7cc594fff2c6a8e141f818617ff70cce06fc54a"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/stage-tenant.json",
+      "sha256": "99d14343fabf4bdc7924cffc1e26666c9a843dea30cc7c8a81571ded04414a82"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/image-backend-v4.json",
+      "sha256": "b70ca4176fea5a09c61f48b732628a89d19f529c0d3a127d189aef5d81e11d15"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/image-frontend.json",
+      "sha256": "b2928fa40f002c3c1a0e27fb95399951c45f4bcda9049b74cbfff0ce5a63d67a"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/promote-backend-v4.json",
+      "sha256": "8e3fb9e27c9c8e1bdc0d53ae1503759491d5ef1076916f1cc83c2ba68068803d"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/promote-frontend.json",
+      "sha256": "608d558404d5dda01274d2fde2442115734bac77121be3eaa576308ae349ace3"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/runtime-status-v4.json",
+      "sha256": "7beacc8a81af70c5a6b14b666f6b50c7c17953828287341cf040fa795f60925d"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/h04-synthetic-v3.json",
+      "sha256": "02a4b8578a6a8426537144216612636041ade18ac7d18c4df513f5af766705d4"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/backend-runtime-v3.json",
+      "sha256": "9d820155b8058c5def428614d4239e470c5bf53f12eebbed22a054146910e0e3"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/final-integrated-regression.json",
+      "sha256": "9a1c43fe8823612fe614d77a502213f2a75d1aeb1f7931a43bff9820f1d18655"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/tenant-delta-postgres.json",
+      "sha256": "2375f852f83f74291ae958c4cc3e21977c0ed8c5da447f19238256b594d218f0"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/tenant-typecheck.json",
+      "sha256": "9832a6ba276b3fe4a948579c23e66b965d837f276f025657ac55487c824def9b"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/browser-b04.json",
+      "sha256": "6b3bb6ea3222b8a13c364248b0381f593bec387c8db4cef11c61c0b96e6915b0"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/final-secrets.json",
+      "sha256": "3e3f959d5c05b42e4c260c99f4d5cf97c6e7f8e71a9ea0b35bb737aa0aebe92a"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/rector-release.json",
+      "sha256": "ceff8632df1b47edba1ffd83aa3869532dc89a562c6c358e62df9b44885cc308"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/platform-final/status.json",
+      "sha256": "0b4115e194ed3138fc38e4609726f0a98129e4374adcc97c987688284c50f01b"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/platform-final/response-auto-platform-library.json",
+      "sha256": "e765fbc50a9ce51bbdd4148cd96b5f62c8963654a542d2e5bd5adc053e87f594"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/platform-final/response-matrix-real-table.json",
+      "sha256": "bbacadb44712c98b80f58b0761c8d3a6523b9229c21727004d09abac42047073"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/platform-final/screen-matrix-real-table.png",
+      "sha256": "4f381b6a60dfddb47a1845923f1441ef08f82b5c3f7517a21c45dc73f6727407"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/platform-final/response-tenant-matrix-api-valid.json",
+      "sha256": "fead593d945051e006e8494c270f33f16ddf35ed09fd86987a2b8492f2d0b238"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/platform-final/response-b04-live-references.json",
+      "sha256": "a6fe238474c362ee2b0359fecb2561db38cd77c195584793f90cc7df9358d215"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/platform-final/response-cross-tenant-denial.json",
+      "sha256": "70c4755460e971cc8ab558f0eeaca8a59807ccc81a93395917b8ecd88dd5861c"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/live-browser/status.json",
+      "sha256": "d1d29b122d0ab89fd7f6986475d306a3dc0500f03bdb85021c037992ce04a55a"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/operator-tcdx-grc-step6a3-c04w-lifecycle-operator-v4.json",
+      "sha256": "ecff300f3c7e808b5e28b5d4c4656a56a8658763ede165c1a3775f4345c8d63d"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/operator-tcdx-grc-step6a3-c04w-publication-operator-v4.json",
+      "sha256": "4c29cf0deab77a7ce38e55670be065e8e81c8ee68fd5299d940d0f582cf7baf5"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/operator-tcdx-grc-step6a3-initial-source-operator-v4.json",
+      "sha256": "dd74a23c14855ff364503b5107de70384ac734d2420290f275cbf35138ad9ad2"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/operator-tcdx-grc-step6a3-publication-operator-v4.json",
+      "sha256": "7f7d8e686d855bbbcc56caeccd19b6b745a5c51692d11e54cf67a8bcc2616b4d"
+    },
+    {
+      "path": ".release-custody/integrated-qa-release-20261022/B04_REFERENCES.json",
+      "sha256": "669ac00e47aa540aab3b68abbdd81bbd1f25358ed4a8fbf8836596d9d197dd3a"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa01-migration36-adoption-20261022/MIGRATION_RECEIPT.json",
+      "sha256": "3318a103e55ccaafcff23cfb7aa68d50ebe888c57cbfff097d502e798e304d25"
+    },
+    {
+      "path": "database/migrations/manifest.json",
+      "sha256": "f2d9d425b445c1565383de374aadf363d02029f592d8dcde9f57c079cda7d5b1"
+    },
+    {
+      "path": "scripts/normative-library/qa-release-h04-synthetic.mjs",
+      "sha256": "d8559e3ba1533e64fcfdc9f688128e5e9dc7c52ca13b67a38b4877e0c7fb897d"
+    }
+  ]
+}

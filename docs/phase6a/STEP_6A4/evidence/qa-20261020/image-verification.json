@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "image_id": "sha256:bc8f21f7edaa0779cfafbfee01afe324d81e7e39bf45d4e51302bc6b7303fdd6",
+  "bundle": "index-I3a0WyWz.js",
+  "bundle_sha256": "4692b2d67c7892ef91c1cbce222be509d1334fc161c90a35fa07addf03ab8ff9",
+  "bundle_bytes": 694856,
+  "architecture": "linux/amd64",
+  "incorrect_domain_present": false,
+  "secret_scan": {
+    "patterns": "private keys; AWS access key identifiers; GitHub PAT; embedded JWT",
+    "source_matches": [],
+    "bundle_matches": 0,
+    "limit": "Pattern scan, not proof of universal absence"
+  },
+  "component_evidence_reused": "sealed local61 unit/contract/component +92 browser component simulated API cases; not QA real E2E"
+}

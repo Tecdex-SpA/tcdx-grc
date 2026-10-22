@@ -1,0 +1,43 @@
+FORM_ID,OPERATION_ID,MODULE,TITLE,SCHEMA,PATH,METHOD,PERMISSION,FINAL_RESULT,QA,HUMAN_ACCEPTANCE
+FORM-01,applicabilityCreate,cumplimiento,Evaluar aplicabilidad,ApplicabilityCreateRequest,/requirement-applicabilities,post,compliance.applicability.create,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-02,applicabilitySubmit,cumplimiento,Enviar aplicabilidad,ApplicabilitySubmitRequest,/requirement-applicabilities/{id}:submit,post,compliance.applicability.submit,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-03,applicabilityApprove,cumplimiento,Aprobar aplicabilidad,ApplicabilityApproveRequest,/requirement-applicabilities/{id}:approve,post,compliance.applicability.approve,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-04,requirementAssessmentCreate,requisitos,Crear evaluación de requisito,RequirementAssessmentCreateRequest,/requirement-assessments,post,compliance.requirement_assessment.create,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-05,requirementAssessmentStart,requisitos,Iniciar evaluación de requisito,RequirementAssessmentStartRequest,/requirement-assessments/{id}:start,post,compliance.requirement_assessment.update,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-06,requirementAssessmentSubmit,requisitos,Registrar resultado de evaluación,RequirementAssessmentSubmitRequest,/requirement-assessments/{id}:submit,post,compliance.requirement_assessment.submit,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-07,requirementAssessmentApprove,requisitos,Aprobar evaluación de requisito,RequirementAssessmentApproveRequest,/requirement-assessments/{id}:approve,post,compliance.requirement_assessment.approve,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-08,soaCreate,soa,Preparar declaración de aplicabilidad,SoaCreateRequest,/statements-of-applicability,post,compliance.soa.create,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-09,soaPublish,soa,Publicar declaración de aplicabilidad,SoaPublishRequest,/statements-of-applicability/{id}:publish,post,compliance.soa.publish,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-10,controlInstantiate,controles,Instanciar control para el tenant,ControlInstantiateRequest,/controls:instantiate,post,controls.control.create,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-11,controlAssessmentCreate,evaluaciones-control,Crear evaluación de control,ControlAssessmentCreateRequest,/control-assessments,post,controls.control_assessment.create,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-12,controlAssessmentStart,evaluaciones-control,Iniciar evaluación de control,ControlAssessmentStartRequest,/control-assessments/{id}:start,post,controls.control_assessment.update,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-13,controlAssessmentSubmit,evaluaciones-control,Completar evaluación de control,ControlAssessmentSubmitRequest,/control-assessments/{id}:complete,post,controls.control_assessment.submit,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-14,controlAssessmentReview,evaluaciones-control,Revisar evaluación de control,ControlAssessmentReviewRequest,/control-assessments/{id}:review,post,controls.control_assessment.review,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-15,controlAssessmentApprove,evaluaciones-control,Aprobar evaluación de control,ControlAssessmentApproveRequest,/control-assessments/{id}:approve,post,controls.control_assessment.approve,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-16,assuranceTestCreate,pruebas,Planificar prueba de control,AssuranceTestCreateRequest,/assurance-tests,post,controls.assurance_test.create,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-17,assuranceTestStart,pruebas,Iniciar prueba,AssuranceTestStartRequest,/assurance-tests/{id}:start,post,controls.assurance_test.execute,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-18,assuranceTestExecute,pruebas,Registrar resultado y muestras,AssuranceTestExecuteRequest,/assurance-tests/{id}:execute,post,controls.assurance_test.execute,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-19,assuranceTestReview,pruebas,Revisar prueba,AssuranceTestReviewRequest,/assurance-tests/{id}:review,post,controls.assurance_test.review,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-20,assuranceTestApprove,pruebas,Aprobar prueba,AssuranceTestApproveRequest,/assurance-tests/{id}:approve,post,controls.assurance_test.approve,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-21,evidenceRequestCreate,solicitudes-evidencia,Solicitar evidencia,EvidenceRequestCreateRequest,/evidence-requests,post,evidence.evidence_request.create,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-22,evidenceRequestFulfill,solicitudes-evidencia,Cumplir solicitud de evidencia,EvidenceRequestFulfillRequest,/evidence-requests/{id}:fulfill,post,evidence.evidence_request.submit,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-23,evidenceCreate,evidencias,Registrar evidencia,EvidenceCreateRequest,/evidence,post,evidence.evidence.create,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-24,evidenceSubmit,evidencias,Enviar evidencia a revisión,EvidenceSubmitRequest,/evidence-versions/{id}:submit,post,evidence.evidence.submit,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-25,evidenceReviewStart,evidencias,Iniciar revisión de evidencia,EvidenceReviewStartRequest,/evidence-versions/{id}:start-review,post,evidence.evidence.review,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-26,evidenceApprove,evidencias,Aprobar evidencia,EvidenceApproveRequest,/evidence-versions/{id}:approve,post,evidence.evidence.approve,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-27,evidenceReject,evidencias,Rechazar evidencia,EvidenceRejectRequest,/evidence-versions/{id}:reject,post,evidence.evidence.reject,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-28,retentionPolicyCreate,retencion,Definir política de retención,RetentionPolicyCreateRequest,/retention-policies,post,privacy.retention_policy.create,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-29,retentionPolicyUpdate,retencion,Editar borrador de retención,RetentionPolicyUpdateRequest,/retention-policies/{id}:update,post,privacy.retention_policy.update,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-30,retentionPolicyReview,retencion,Enviar política a revisión,RetentionPolicyTransitionRequest,/retention-policies/{id}:review,post,privacy.retention_policy.review,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-31,retentionPolicyApprove,retencion,Aprobar política de retención,RetentionPolicyTransitionRequest,/retention-policies/{id}:approve,post,privacy.retention_policy.approve,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-32,retentionPolicyPublish,retencion,Publicar política de retención,RetentionPolicyTransitionRequest,/retention-policies/{id}:publish,post,privacy.retention_policy.publish,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-33,issueCreate,issues,Registrar hallazgo,IssueCreateRequest,/issues,post,remediation.issue.create,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-34,issueTriage,issues,Clasificar hallazgo,IssueTriageRequest,/issues/{id}:triage,post,remediation.issue.transition,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-35,issueStartRemediation,issues,Iniciar remediación,IssueStartRemediationRequest,/issues/{id}:start-remediation,post,remediation.issue.transition,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-36,issueRequestVerification,issues,Solicitar verificación de hallazgo,IssueRequestVerificationRequest,/issues/{id}:request-verification,post,remediation.issue.transition,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-37,issueVerifyClose,issues,Verificar y cerrar hallazgo,IssueVerifyCloseRequest,/issues/{id}:verify-close,post,remediation.issue.transition,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-38,actionCreate,acciones,Crear acción de remediación,ActionCreateRequest,/issues/{issue_id}/actions,post,remediation.action.create,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-39,actionStart,acciones,Iniciar acción,ActionStartRequest,/actions/{id}:start,post,remediation.action.transition,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-40,actionSubmitForReview,acciones,Enviar acción a revisión,ActionSubmitForReviewRequest,/actions/{id}:submit-for-review,post,remediation.action.transition,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-41,actionComplete,acciones,Completar acción con evidencia,ActionCompleteRequest,/actions/{id}:complete,post,remediation.action.transition,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING
+FORM-42,actionVerify,acciones,Verificar acción,ActionVerifyRequest,/actions/{id}:verify,post,remediation.action.verify,PASS_LOCAL_COMPONENT_CONTRACT,NOT_RUN,PENDING

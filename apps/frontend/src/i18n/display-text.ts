@@ -1,27 +1,45 @@
 import { STATUS_LABELS } from "./status-labels.js";
 
 const FIELD_LABELS: Readonly<Record<string, string>> = {
-  requirement_applicability_id: "ID de aplicabilidad",
-  requirement_assessment_id: "ID de evaluación",
-  statement_of_applicability_id: "ID de declaración",
-  control_id: "ID de control",
-  control_assessment_id: "ID de evaluación de control",
-  assurance_test_id: "ID de prueba",
-  evidence_request_id: "ID de solicitud",
-  evidence_id: "ID de evidencia",
-  evidence_version_id: "ID de versión de evidencia",
-  issue_id: "ID de hallazgo",
-  action_id: "ID de acción",
-  requirement_id: "ID de requisito",
-  scope_subject_id: "ID del alcance",
-  framework_version_id: "ID de versión del marco",
-  control_version_id: "ID de versión del control",
-  based_on_control_version_id: "ID del control base",
+  tenant_id: "Empresa",
+  ownership_class: "Ámbito del registro",
+  created_at: "Fecha de creación",
+  updated_at: "Última actualización",
+  created_by_user_identity_id: "Autoría registrada",
+  updated_by_user_identity_id: "Última modificación registrada",
+  created_by_service_principal_id: "Procedencia automatizada",
+  updated_by_service_principal_id: "Modificación automatizada",
+  regulatory_source_id: "Procedencia normativa",
+  claim: "Declaración de evidencia",
+  reviewer_membership_id: "Revisor",
+  executor_membership_id: "Ejecutor",
+  requested_by_membership_id: "Solicitado por",
+  soa_version: "Versión de la declaración",
+  applicability_version: "Versión de aplicabilidad",
+  tenant_control_version_id: "Versión del control de la organización",
+  tenant_control_id: "Control de la organización",
+  reference_control_version_id: "Versión del control de referencia",
+  requirement_applicability_id: "Aplicabilidad",
+  requirement_assessment_id: "Evaluación de requisito",
+  statement_of_applicability_id: "Declaración de aplicabilidad",
+  control_id: "Control",
+  control_assessment_id: "Evaluación de control",
+  assurance_test_id: "Prueba de control",
+  evidence_request_id: "Solicitud de evidencia",
+  evidence_id: "Evidencia",
+  evidence_version_id: "Versión de evidencia",
+  issue_id: "Hallazgo",
+  action_id: "Acción",
+  requirement_id: "Requisito",
+  scope_subject_id: "Alcance",
+  framework_version_id: "Versión del marco normativo",
+  control_version_id: "Versión del control",
+  based_on_control_version_id: "Versión del control base",
   methodology_version_ref: "Referencia metodológica",
-  effective_configuration_id: "ID de configuración efectiva",
-  business_owner_subject_id: "ID del responsable de negocio",
-  assigned_membership_id: "ID de responsable asignado",
-  retention_policy_id: "ID de política de retención",
+  effective_configuration_id: "Configuración efectiva",
+  business_owner_subject_id: "Responsable de negocio",
+  assigned_membership_id: "Responsable asignado",
+  retention_policy_id: "Política de retención",
   retention_policy_applicability_id: "Aplicabilidad de la política de retención",
   supersedes_applicability_id: "Aplicabilidad sustituida",
   source_evidence_version_id: "Versión de evidencia de la fuente",
@@ -42,7 +60,7 @@ const FIELD_LABELS: Readonly<Record<string, string>> = {
   retention_seconds: "Duración de retención (segundos)",
   processing_activity_id: "Actividad de tratamiento",
   legal_basis_id: "Contexto legal",
-  file_object_id: "ID de archivo",
+  file_object_id: "Archivo",
   applicability_decision: "Decisión de aplicabilidad",
   implementation_state: "Estado de implementación",
   justification: "Justificación",
@@ -217,8 +235,9 @@ export function roleLabel(value: string | undefined): string {
 }
 
 export function fieldPlaceholder(field: string): string {
-  if (field.endsWith("_id") || field.endsWith("_ref")) return "Ingresa el identificador autorizado";
-  if (["items", "links", "samples"].includes(field)) return "Ingresa el objeto JSON según el contrato";
+  if(field==="provenance_ref")return "Describe la fuente o referencia de procedencia";
+  if (field.endsWith("_id") || field.endsWith("_ref")) return "Selecciona una referencia autorizada";
+  if (["items", "links", "samples"].includes(field)) return "Agrega elementos mediante los campos del formulario";
   if (field.includes("date") || field.endsWith("_at") || field.endsWith("_from") || field.endsWith("_to")) return "AAAA-MM-DD";
   return `Ingresa ${fieldLabel(field).toLowerCase()}`;
 }

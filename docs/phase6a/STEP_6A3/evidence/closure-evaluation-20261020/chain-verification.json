@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "checks": {
+    "one_evidence": true,
+    "one_version": true,
+    "version_belongs_to_evidence": true,
+    "file_associated": true,
+    "file_scan_pass": true,
+    "pdf_mime": true,
+    "version_app_matches_file": true,
+    "policy_chain": true,
+    "published_retention": true,
+    "ordinary_without_legal_source": true,
+    "expected_QA_control": true,
+    "link_to_exact_version": true,
+    "all_chain_same_tenant": true,
+    "tenant_owned_control": true,
+    "creation_audit": true,
+    "finalize_audit": true,
+    "retention_approval_distinct_actor": true,
+    "pdf_sha_matches_inspected_fixture": true
+  },
+  "scope": "Exact accepted evidence chain, no cross-tenant intrusion/negative probes and no content re-download performed.",
+  "documentVersion": "Not required: contractual EvidenceVersion uses direct finalized FileObject; document_version_id NULL is valid.",
+  "fixture_only": true
+}

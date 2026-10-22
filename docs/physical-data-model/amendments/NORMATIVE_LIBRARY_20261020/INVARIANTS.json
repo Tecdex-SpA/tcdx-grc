@@ -1,0 +1,72 @@
+[
+  {
+    "id": "K-OWNER",
+    "predicate": "KnowledgeVersion, Item and Source ownership/tenant agree; parent keys immutable once version referenced",
+    "enforcement": "TX/IR",
+    "binding": "knowledge create/update/publish and metadata changes",
+    "physical_runtime_test": "NOT_RUN_NO_MIGRATION_AUTHORITY"
+  },
+  {
+    "id": "K-PUBLISHED",
+    "predicate": "No UPDATE/DELETE of published Knowledge core or links. Only controlled one-time superseded_by_id to a new published same-item version, increasing number and later effective_from; never self/cycle; no content/hash/interval/author edits",
+    "enforcement": "TX/IR",
+    "binding": "publish command; parent lock plus deferred validation",
+    "physical_runtime_test": "NOT_RUN_NO_MIGRATION_AUTHORITY"
+  },
+  {
+    "id": "K-IMMUTABLE-REF",
+    "predicate": "content_ref resolves immutable canonical body+citations+typed-link manifest; hash verifies exact bytes; missing/hash mismatch fails closed",
+    "enforcement": "TX/POL",
+    "binding": "content adapter",
+    "physical_runtime_test": "NOT_RUN_NO_MIGRATION_AUTHORITY"
+  },
+  {
+    "id": "CFG-SUCCESSION",
+    "predicate": "Previous approved override has same tenant/definition/control; increasing version and effective_from within predecessor interval, new effective_to not beyond superior authorization; one approved successor; cycles/forks forbidden",
+    "enforcement": "TX/IR",
+    "binding": "definition+tenant+control serialization; row locks; unique approved predecessor",
+    "physical_runtime_test": "NOT_RUN_NO_MIGRATION_AUTHORITY"
+  },
+  {
+    "id": "CFG-IMMUTABLE",
+    "predicate": "Approved/rejected overrides are append-only; only draft update and declared review/decision transitions; no modification of approved intervals or values",
+    "enforcement": "TX/IR",
+    "binding": "mutation guard and registry",
+    "physical_runtime_test": "NOT_RUN_NO_MIGRATION_AUTHORITY"
+  },
+  {
+    "id": "CFG-REVIEW",
+    "predicate": "Reviewer and approver differ from author; review binds exact pre-review ETag/hash/target; reviewer may approve same reviewed version, no mandatory third actor; edits only in draft",
+    "enforcement": "POL/TX",
+    "binding": "authorization and locked material AuditEvent",
+    "physical_runtime_test": "NOT_RUN_NO_MIGRATION_AUTHORITY"
+  },
+  {
+    "id": "CFG-RESOLVE",
+    "predicate": "Only published Definition and approved eligible overrides; explicit successor cuts predecessor at successor effective_from; unresolved equal-specificity overlaps return configuration_conflict; existing resolver remains sole authority",
+    "enforcement": "TX",
+    "binding": "resolveConfiguration and input_hash/layers",
+    "physical_runtime_test": "NOT_RUN_NO_MIGRATION_AUTHORITY"
+  },
+  {
+    "id": "AP-CONTEXT",
+    "predicate": "A nonnull context FK is same-tenant published KnowledgeVersion with contexto_empresarial link to compatible Subject; draft-only setter and existing row_version CAS; no historical backfill",
+    "enforcement": "TX/IR",
+    "binding": "applicabilityCreate/submit/approve and parent guard",
+    "physical_runtime_test": "NOT_RUN_NO_MIGRATION_AUTHORITY"
+  },
+  {
+    "id": "EC-LINEAGE",
+    "predicate": "Immutable EC control destination and selected layers all match Definition/tenant/control/asOf/input hash; GET never resolves or materializes absent data",
+    "enforcement": "TX/IR",
+    "binding": "canonical resolver/materialization command",
+    "physical_runtime_test": "NOT_RUN_NO_MIGRATION_AUTHORITY"
+  },
+  {
+    "id": "SOURCE-RETENTION",
+    "predicate": "Content, audit and versions honor rector23 retention/classification/holds; no delete/purge command introduced",
+    "enforcement": "POL",
+    "binding": "storage/retention policy",
+    "physical_runtime_test": "NOT_RUN_NO_MIGRATION_AUTHORITY"
+  }
+]

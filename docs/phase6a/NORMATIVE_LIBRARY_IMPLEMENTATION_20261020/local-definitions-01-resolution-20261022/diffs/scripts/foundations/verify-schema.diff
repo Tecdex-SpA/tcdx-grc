@@ -1,0 +1,33 @@
+--- a/scripts/foundations/verify-schema.ts
++++ b/scripts/foundations/verify-schema.ts
+@@ -14,7 +14,8 @@
+   physicalAssertions: { relations: string[]; constraints: DefinitionRow[]; indexes: DefinitionRow[]; functions: DefinitionRow[]; triggers: DefinitionRow[] };
+   tenantForeignKeyEnforcement: Array<{ child: string; parent: string; childColumns: string[]; parentColumns: string[]; requiredTriggers: string[]; requiredFunctions: string[] }>;
+ };
+-type Inventory = { tableCount: number; tables: ExpectedTable[]; commercialAmendmentDecision?: string; normativeLibraryAmendment?: NormativeAmendment };
++type Inventory = { tableCount: number; tables: ExpectedTable[]; commercialAmendmentDecision?: string; normativeLibraryAmendment?: NormativeAmendment;
++  configurationDefaultAmendment?: {contract:{path:string;sha256:string};receipt:{path:string;sha256:string};migration:{path:string;sha256:string};constraint:DefinitionRow} };
+ 
+ const commercialCandidate = process.env.TCDX_COMMERCIAL_EXPECTED_SCHEMA_CANDIDATE === "true";
+ const c04wCandidate = process.env.TCDX_C04W_EXPECTED_SCHEMA_CANDIDATE === "true";
+@@ -247,6 +248,20 @@
+   const actualIndexes = new Set(indexes.rows.map((row) => row.indexname));
+   for (const name of expectedIndexes) if (!actualIndexes.has(name)) mismatches.push(`missing-index:${name}`);
+ 
++  const defaultAmendment=expected.configurationDefaultAmendment;
++  if(defaultAmendment){
++    const readExact=(ref:{path:string;sha256:string})=>{const b=readFileSync(resolve(repositoryRoot,ref.path));if(createHash('sha256').update(b).digest('hex')!==ref.sha256)throw Error('Optional default authority drift');return b;};
++    const c=JSON.parse(readExact(defaultAmendment.contract).toString());
++    readExact(defaultAmendment.receipt);
++    if(!readExact(defaultAmendment.migration).equals(readExact(c.ddl)))throw Error('Optional default migration/source drift');
++    const projection=JSON.parse(readExact(c.pg16_constraint).toString());
++    if(JSON.stringify(projection)!==JSON.stringify(defaultAmendment.constraint))throw Error('Optional default projection drift');
++    const found=(await client.query<DefinitionRow>(`SELECT 'config.configuration_definitions' AS relation,conname AS name,pg_get_constraintdef(oid) AS definition,convalidated AS validated
++      FROM pg_constraint WHERE conrelid='config.configuration_definitions'::regclass AND conname='ck_configuration_definitions__typed_default'`)).rows;
++    if(found.length!==1||Object.entries(projection).some(([k,v])=>k==='definition'
++      ? normalizedConstraintDefinition(found[0]!.definition)!==normalizedConstraintDefinition(v as string)
++      : found[0]![k as keyof DefinitionRow]!==v))mismatches.push('constraint-definition:config.configuration_definitions:typed_default');
++  }
+   if (normative) {
+     const spec = normative.physicalAssertions;
+     const definitions = async (sql: string, values: unknown[]) => (await client.query<DefinitionRow>(sql, values)).rows;

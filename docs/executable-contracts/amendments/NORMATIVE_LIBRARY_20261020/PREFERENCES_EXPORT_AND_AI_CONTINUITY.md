@@ -1,0 +1,11 @@
+# Preferencias, fronteras de fase y continuidad B10/B11
+
+B09 conserva selección/filtros efímeros en UI. No se publica persistencia de presets porque no es necesaria para consultar las matrices aprobadas. Si se autoriza posteriormente, consumirá ConfigurationDefinition/Override con esquema cerrado de presentación y binding publicado; no IDs de negocio, scopes, permisos o decisiones normativas en JSON libre. No hay tabla matrix_results, endpoint simulado o cálculo alternativo.
+
+Exportación persistida/formateada usa ReportDefinition/Run/Artifact/Snapshot y permisos en su fase, sin adelantar Report Studio. Riesgos×Controles se integra cuando sus capacidades canónicas estén habilitadas; las otras seis matrices no requieren transacciones Risk. La dependencia no elimina la capacidad aprobada del objetivo.
+
+B10: destino declarado por el PO **ia-engine.tcdx.int / 192.168.2.44**. Se registra la precisión FQDN respecto al hostname ia-engine del expediente anterior; éste permanece histórico e intacto. ia2.tcdx.int es la referencia anterior pendiente de conciliación técnica. No se afirma alias, IP coincidente, servicio común o equivalencia contractual. Antes de conectividad: verificar host/servicio/API/proveedor/purpose/seguridad y tramitar ADR/contratos conforme a rector46. No se ejecuta DNS, ping, SSH, red, secretos, VM, RAG, embeddings, agentes o integración runtime. No bloquea los contratos normativos independientes.
+
+Preparación IA: cuerpos estructurados, targets, citas, versión, procedencia, contexto tenant, derechos por acto, revisión/correcciones y audit. No se crean AIJob/Recommendation/ProvenanceLink ficticios para vincular contenido; se reservan para actividad IA real futura. A2 permanece techo por defecto. Aceptación de recomendación y comando de dominio son actos autorizados distintos.
+
+B11 conserva métodos y estados publicados. Confianza de extracción, confirmación operativa, suficiencia, aplicabilidad, conformidad, evidencia y resultado metodológico son planos distintos. No hay nuevas métricas, métodos, porcentajes o semáforos; matrixRead devuelve resultados existentes y la UI no pinta cumplimiento por una mera relación. Historia y ediciones no se recalculan por importar o modificar texto editorial. No hay delta metodológico necesario en B01–B09.

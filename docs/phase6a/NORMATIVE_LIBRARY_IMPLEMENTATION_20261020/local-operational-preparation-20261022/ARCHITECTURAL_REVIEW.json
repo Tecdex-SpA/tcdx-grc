@@ -1,0 +1,34 @@
+{
+  "method": "Targeted canonical authority and received-byte review, not a broad rediscovery or a live QA drift probe",
+  "local_delta": "PASS_NO_PARALLEL_AUTHORITY",
+  "integral_gate": "BLOCKED_LOCAL_DEFINITIONS_01",
+  "canonical_stores": [
+    "iam.permissions",
+    "iam.role_permissions",
+    "ops_audit.lifecycle_transition_definitions",
+    "ops_audit.lifecycle_transition_scopes",
+    "ops_audit.lifecycle_transition_side_effects",
+    "config.configuration_definitions",
+    "config.configuration_definition_scopes",
+    "config.configuration_validation_rules",
+    "knowledge.knowledge_source_usage_rights",
+    "ops_audit.audit_events"
+  ],
+  "new_tables": [],
+  "schema_edits": [],
+  "parallel_registry": false,
+  "identity_changes": false,
+  "frontend_changes": false,
+  "canonical_generator_changes": false,
+  "migration_changes": false,
+  "definitions_writer": "NOT_ADDED_BECAUSE_PHYSICAL_CONFLICT",
+  "qa_drift_check": "NOT_RUN_QA_FORBIDDEN",
+  "evidence": [
+    "INITIAL_STATE.json",
+    "FILE_MANIFEST.json",
+    "TRACEABILITY.md",
+    "BLOCKERS.json",
+    "checks/canonical-generator.log",
+    "checks/postgres.log"
+  ]
+}

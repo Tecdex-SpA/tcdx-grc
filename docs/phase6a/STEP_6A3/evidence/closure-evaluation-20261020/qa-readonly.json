@@ -1,0 +1,640 @@
+{
+  "capturedAt": "2026-10-20T11:43:51.683Z",
+  "queryMode": "REPEATABLE READ READ ONLY",
+  "tenant": [
+    {
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "tenant_code": "TECDEX"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "01a1591b-9ffe-74b2-89f8-975ccf4d2f61",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "evidence_code": "QA_EVID_RET_001",
+      "evidence_type": "document",
+      "lifecycle_state": "draft",
+      "business_owner_subject_id": "01a0f27e-b912-72d2-a08e-c5fcbd4efe43",
+      "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+      "source_kind": "uploaded",
+      "valid_from": "2026-10-20T11:30:00.000Z",
+      "valid_to": null,
+      "created_at": "2026-10-20T11:39:05.058Z",
+      "created_by_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "row_version": "1"
+    }
+  ],
+  "versions": [
+    {
+      "row": {
+        "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+        "created_at": "2026-10-20T11:39:05.058783+00:00",
+        "expires_at": null,
+        "period_end": null,
+        "updated_at": "2026-10-20T11:39:05.058783+00:00",
+        "approved_at": null,
+        "evidence_id": "01a1591b-9ffe-74b2-89f8-975ccf4d2f61",
+        "row_version": 1,
+        "effective_to": null,
+        "period_start": null,
+        "published_at": null,
+        "submitted_at": null,
+        "effective_from": null,
+        "file_object_id": "01a1591b-9f28-70c9-8930-bfd839ab8b41",
+        "provenance_ref": "Documento sintético GRC Tecdex para validación funcional STEP6A3",
+        "version_number": 1,
+        "lifecycle_state": "draft",
+        "superseded_by_id": null,
+        "document_version_id": null,
+        "evidence_version_id": "01a1591b-9ffe-74b2-89f8-9aa35ddadafa",
+        "created_by_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+        "updated_by_user_identity_id": null,
+        "created_by_service_principal_id": null,
+        "updated_by_service_principal_id": null,
+        "retention_policy_applicability_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45"
+      }
+    }
+  ],
+  "documentVersions": [],
+  "files": [
+    {
+      "file_object_id": "01a1591b-9f28-70c9-8930-bfd839ab8b41",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "original_filename": "GRC_Tecdex_Evidencia_QA_STEP6A3.pdf",
+      "declared_mime": "application/pdf",
+      "detected_mime": "application/pdf",
+      "size_bytes": "71932",
+      "sha256": "289566a43531bdadcf7b26870525035d1020c0aacc936d0c2465dc41a9b98a1c",
+      "classification": "internal",
+      "scan_status": "passed",
+      "scan_completed_at": "2026-10-20T11:39:04.967Z",
+      "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+      "retention_policy_applicability_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45",
+      "source_provenance": "Interna",
+      "created_by_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "created_at": "2026-10-20T11:39:04.847Z"
+    }
+  ],
+  "links": [
+    {
+      "row": {
+        "claim": null,
+        "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+        "control_id": "01a15910-4a71-71ea-ad1d-bd772cf3358f",
+        "created_at": "2026-10-20T11:39:05.058783+00:00",
+        "effective_to": null,
+        "effective_from": null,
+        "requirement_id": null,
+        "evidence_link_id": "01a1591b-a009-7509-81cc-5256db379831",
+        "assurance_test_id": null,
+        "control_version_id": null,
+        "evidence_version_id": "01a1591b-9ffe-74b2-89f8-9aa35ddadafa",
+        "control_assessment_id": null,
+        "requirement_assessment_id": null,
+        "created_by_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+        "created_by_service_principal_id": null
+      }
+    }
+  ],
+  "controls": [
+    {
+      "control_id": "01a15910-4a71-71ea-ad1d-bd772cf3358f",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "ownership_class": "TENANT_OWNED",
+      "control_code": "QA_STEP6A3_TRAZABILIDAD_DOCUMENTAL_001",
+      "name": "QA STEP6A3 — Validación de trazabilidad documental",
+      "lifecycle_state": "active"
+    }
+  ],
+  "policies": [
+    {
+      "row": {
+        "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+        "created_at": "2026-10-16T22:21:56.898059+00:00",
+        "policy_code": "QA_RET_ORD_001",
+        "policy_kind": "tenant_policy",
+        "row_version": 4,
+        "effective_to": null,
+        "is_mandatory": false,
+        "effective_from": "2026-10-16T22:44:06.837723+00:00",
+        "version_number": 1,
+        "lifecycle_state": "published",
+        "ownership_class": "TENANT_OWNED",
+        "precedence_rank": 200,
+        "retention_seconds": 31536000,
+        "trigger_event_code": "expiry_or_closure",
+        "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+        "regulatory_source_id": null,
+        "created_by_user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+        "created_by_service_principal_id": null
+      }
+    }
+  ],
+  "applicabilities": [
+    {
+      "row": {
+        "purpose": "evidence_document",
+        "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+        "created_at": "2026-10-16T22:59:57.985083+00:00",
+        "row_version": 4,
+        "effective_to": null,
+        "published_at": "2026-10-16T23:03:35.619675+00:00",
+        "classification": "internal",
+        "effective_from": "2026-10-16T22:59:00+00:00",
+        "legal_basis_id": null,
+        "version_number": 1,
+        "lifecycle_state": "published",
+        "scope_subject_id": null,
+        "source_clause_ref": null,
+        "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+        "processing_activity_id": null,
+        "source_evidence_version_id": null,
+        "created_by_user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+        "supersedes_applicability_id": null,
+        "created_by_service_principal_id": null,
+        "retention_policy_applicability_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45"
+      }
+    }
+  ],
+  "subjects": [
+    {
+      "subject_id": "01a0f27e-b912-72d2-a08e-c5fcbd4efe43",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "display_name": "TecDex",
+      "lifecycle_state": "active"
+    }
+  ],
+  "audit": [
+    {
+      "occurred_at": "2026-10-16T22:21:56.898Z",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "correlation_id": "01a146ce-bf10-717a-aec3-304618b2184b",
+      "event_code": "audit.privacy.retention_policy.create.v1",
+      "command_code": "retentionPolicyCreate",
+      "outcome": "success",
+      "aggregate_type": "RetentionPolicy",
+      "aggregate_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+      "actor_user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "after_payload": {
+        "policy_code": "QA_RET_ORD_001",
+        "policy_kind": "tenant_policy",
+        "row_version": 1,
+        "effective_to": null,
+        "is_mandatory": false,
+        "effective_from": null,
+        "version_number": 1,
+        "lifecycle_state": "draft",
+        "ownership_class": "TENANT_OWNED",
+        "precedence_rank": 200,
+        "retention_seconds": "31536000",
+        "trigger_event_code": "expiry_or_closure",
+        "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+        "regulatory_source_id": null
+      }
+    },
+    {
+      "occurred_at": "2026-10-16T22:22:20.557Z",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "correlation_id": "01a146cf-1b87-7537-8f18-7ee8e42d7bc7",
+      "event_code": "audit.privacy.retention_policy.submit_for_review.v1",
+      "command_code": "retentionPolicySubmitForReview",
+      "outcome": "success",
+      "aggregate_type": "RetentionPolicy",
+      "aggregate_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+      "actor_user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "after_payload": {
+        "policy_code": "QA_RET_ORD_001",
+        "policy_kind": "tenant_policy",
+        "row_version": 2,
+        "effective_to": null,
+        "is_mandatory": false,
+        "effective_from": null,
+        "version_number": 1,
+        "lifecycle_state": "under_review",
+        "ownership_class": "TENANT_OWNED",
+        "precedence_rank": 200,
+        "retention_seconds": "31536000",
+        "trigger_event_code": "expiry_or_closure",
+        "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+        "regulatory_source_id": null
+      }
+    },
+    {
+      "occurred_at": "2026-10-16T22:23:09.055Z",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "correlation_id": "01a146cf-d8f8-74de-9633-ace1d320d319",
+      "event_code": "audit.privacy.retention_policy.approve.v1",
+      "command_code": "retentionPolicyApprove",
+      "outcome": "success",
+      "aggregate_type": "RetentionPolicy",
+      "aggregate_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+      "actor_user_identity_id": "01a146b8-8e3c-74b1-867a-c83cb26cd835",
+      "after_payload": {
+        "policy_code": "QA_RET_ORD_001",
+        "policy_kind": "tenant_policy",
+        "row_version": 3,
+        "effective_to": null,
+        "is_mandatory": false,
+        "effective_from": null,
+        "version_number": 1,
+        "lifecycle_state": "approved",
+        "ownership_class": "TENANT_OWNED",
+        "precedence_rank": 200,
+        "retention_seconds": "31536000",
+        "trigger_event_code": "expiry_or_closure",
+        "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+        "regulatory_source_id": null
+      }
+    },
+    {
+      "occurred_at": "2026-10-16T22:44:06.837Z",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "correlation_id": "01a146e3-0a34-745b-ac0f-ffe9895f4f9f",
+      "event_code": "audit.privacy.retention_policy.publish.v1",
+      "command_code": "retentionPolicyPublish",
+      "outcome": "success",
+      "aggregate_type": "RetentionPolicy",
+      "aggregate_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+      "actor_user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "after_payload": {
+        "policy_code": "QA_RET_ORD_001",
+        "policy_kind": "tenant_policy",
+        "row_version": 4,
+        "effective_to": null,
+        "is_mandatory": false,
+        "effective_from": "2026-10-16T22:44:06.837Z",
+        "version_number": 1,
+        "lifecycle_state": "published",
+        "ownership_class": "TENANT_OWNED",
+        "precedence_rank": 200,
+        "retention_seconds": "31536000",
+        "trigger_event_code": "expiry_or_closure",
+        "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+        "regulatory_source_id": null
+      }
+    },
+    {
+      "occurred_at": "2026-10-16T22:59:57.985Z",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "correlation_id": "01a146f1-8d9c-70be-8635-9e292cfff38d",
+      "event_code": "audit.privacy.retention_policy_applicability.create.v1",
+      "command_code": "retentionApplicabilityCreate",
+      "outcome": "success",
+      "aggregate_type": "RetentionPolicyApplicability",
+      "aggregate_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45",
+      "actor_user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "after_payload": {
+        "purpose": "evidence_document",
+        "policy_kind": "tenant_policy",
+        "row_version": 1,
+        "effective_to": null,
+        "published_at": null,
+        "classification": "internal",
+        "effective_from": "2026-10-16T22:59:00.000Z",
+        "legal_basis_id": null,
+        "version_number": 1,
+        "hold_release_id": null,
+        "lifecycle_state": "draft",
+        "scope_subject_id": null,
+        "source_clause_ref": null,
+        "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+        "custodian_display_name": "user1",
+        "processing_activity_id": null,
+        "initial_source_candidates": [],
+        "source_evidence_version_id": null,
+        "initial_source_bind_allowed": false,
+        "supersedes_applicability_id": null,
+        "retention_policy_applicability_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45"
+      }
+    },
+    {
+      "occurred_at": "2026-10-16T23:00:17.754Z",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "correlation_id": "01a146f1-dae0-7334-9d34-de61049e14ba",
+      "event_code": "audit.privacy.retention_policy_applicability.submit_for_review.v1",
+      "command_code": "retentionApplicabilitySubmitForReview",
+      "outcome": "success",
+      "aggregate_type": "RetentionPolicyApplicability",
+      "aggregate_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45",
+      "actor_user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "after_payload": {
+        "purpose": "evidence_document",
+        "policy_kind": "tenant_policy",
+        "row_version": 2,
+        "effective_to": null,
+        "published_at": null,
+        "classification": "internal",
+        "effective_from": "2026-10-16T22:59:00.000Z",
+        "legal_basis_id": null,
+        "version_number": 1,
+        "hold_release_id": null,
+        "lifecycle_state": "under_review",
+        "scope_subject_id": null,
+        "source_clause_ref": null,
+        "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+        "custodian_display_name": "user1",
+        "processing_activity_id": null,
+        "initial_source_candidates": [],
+        "source_evidence_version_id": null,
+        "initial_source_bind_allowed": false,
+        "supersedes_applicability_id": null,
+        "retention_policy_applicability_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45"
+      }
+    },
+    {
+      "occurred_at": "2026-10-16T23:02:25.640Z",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "correlation_id": "01a146f3-ce6f-76c4-bde8-07e04756c8d1",
+      "event_code": "audit.privacy.retention_policy_applicability.approve.v1",
+      "command_code": "retentionApplicabilityApprove",
+      "outcome": "success",
+      "aggregate_type": "RetentionPolicyApplicability",
+      "aggregate_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45",
+      "actor_user_identity_id": "01a146b8-8e3c-74b1-867a-c83cb26cd835",
+      "after_payload": {
+        "purpose": "evidence_document",
+        "policy_kind": "tenant_policy",
+        "row_version": 3,
+        "effective_to": null,
+        "published_at": null,
+        "classification": "internal",
+        "effective_from": "2026-10-16T22:59:00.000Z",
+        "legal_basis_id": null,
+        "version_number": 1,
+        "hold_release_id": null,
+        "lifecycle_state": "approved",
+        "scope_subject_id": null,
+        "source_clause_ref": null,
+        "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+        "custodian_display_name": "user1",
+        "processing_activity_id": null,
+        "initial_source_candidates": [],
+        "source_evidence_version_id": null,
+        "initial_source_bind_allowed": false,
+        "supersedes_applicability_id": null,
+        "retention_policy_applicability_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45"
+      }
+    },
+    {
+      "occurred_at": "2026-10-16T23:03:35.619Z",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "correlation_id": "01a146f4-dfca-7619-8668-60f191c69f67",
+      "event_code": "audit.privacy.retention_policy_applicability.publish.v1",
+      "command_code": "retentionApplicabilityPublish",
+      "outcome": "success",
+      "aggregate_type": "RetentionPolicyApplicability",
+      "aggregate_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45",
+      "actor_user_identity_id": "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+      "after_payload": {
+        "purpose": "evidence_document",
+        "policy_kind": "tenant_policy",
+        "row_version": 4,
+        "effective_to": null,
+        "published_at": "2026-10-16T23:03:35.619Z",
+        "classification": "internal",
+        "effective_from": "2026-10-16T22:59:00.000Z",
+        "legal_basis_id": null,
+        "version_number": 1,
+        "hold_release_id": null,
+        "lifecycle_state": "published",
+        "scope_subject_id": null,
+        "source_clause_ref": null,
+        "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+        "custodian_display_name": "user1",
+        "processing_activity_id": null,
+        "initial_source_candidates": [],
+        "source_evidence_version_id": null,
+        "initial_source_bind_allowed": false,
+        "supersedes_applicability_id": null,
+        "retention_policy_applicability_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45"
+      }
+    },
+    {
+      "occurred_at": "2026-10-20T11:26:42.236Z",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "correlation_id": "01a15910-4a26-775d-824f-31c443517299",
+      "event_code": "audit.controls.control.instantiate.v1",
+      "command_code": "controlInstantiate",
+      "outcome": "success",
+      "aggregate_type": "Control",
+      "aggregate_id": "01a15910-4a71-71ea-ad1d-bd772cf3358f",
+      "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "after_payload": {
+        "name": "QA STEP6A3 — Validación de trazabilidad documental",
+        "scopes": [],
+        "versions": [
+          {
+            "nature": "hybrid",
+            "objective": "Validar exclusivamente en QA TECDEX el flujo contractual de carga, finalización, vinculación tipada, creación, persistencia y recuperación de evidencia documental en PASO 9.2B. No acredita cumplimiento normativo ni eficacia de controles reales.",
+            "control_id": "01a15910-4a71-71ea-ad1d-bd772cf3358f",
+            "control_type": "preventive",
+            "effective_to": null,
+            "published_at": null,
+            "effective_from": null,
+            "frequency_code": "event_driven",
+            "version_number": 1,
+            "lifecycle_state": "active",
+            "execution_method": "Usar el documento sintético GRC_Tecdex_Evidencia_QA_STEP6A3.pdf como fixture y plan de prueba; user3 ejecuta la creación de evidencia, con vínculo a este control QA y conservación del FileObject finalizado. Registrar el resultado real sin anticipar PASS.",
+            "minimum_evidence": "Documento sintético de prueba identificado como QA, con procedencia auténtica, más resultado real de la ejecución y referencias de evidencia/archivo. El PDF sin completar es sólo fixture/plan, no prueba de eficacia ni aceptación final.",
+            "superseded_by_id": null,
+            "control_version_id": "01a15910-4a71-71ea-ad1d-c1b7e37d9a50",
+            "verification_method": "Comprobar respuesta de creación, ID persistido, consulta y recuperación tras recarga, mismo tenant y FileObject, y trazabilidad de auditoría conforme a las operaciones oficiales.",
+            "suggested_owner_role_code": null
+          }
+        ],
+        "control_id": "01a15910-4a71-71ea-ad1d-bd772cf3358f",
+        "objectives": [],
+        "row_version": 1,
+        "control_code": "QA_STEP6A3_TRAZABILIDAD_DOCUMENTAL_001",
+        "control_origin": "tenant_instantiated",
+        "lifecycle_state": "active",
+        "ownership_class": "TENANT_OWNED",
+        "contract_provenance": {
+          "root": {
+            "entity_id": "01a15910-4a71-71ea-ad1d-bd772cf3358f",
+            "entity_type": "Control",
+            "entity_version": {
+              "kind": "row_version",
+              "value": "1"
+            }
+          },
+          "occurrences": [
+            {
+              "code": "event_driven",
+              "entity_id": "01a15910-4a71-71ea-ad1d-c1b7e37d9a50",
+              "family_id": "CV-03",
+              "input_path": "frequency_code",
+              "entity_type": "ControlVersion",
+              "entity_version": {
+                "kind": "version_number",
+                "value": "1"
+              }
+            }
+          ],
+          "manifest_sha256": "81e559c96f687c319d415bb57b97187f17f91d884b35594b4ce0db7b68862b83",
+          "profile_version": 1,
+          "contract_version": "STEP6A3_VOCABULARIES_v1"
+        },
+        "crosswalk_relations": [],
+        "normative_relations": [
+          {
+            "edition": "2026",
+            "locator": "7.2",
+            "target_id": "01a0ea93-a44a-7332-83c2-e6c836678a9e",
+            "mapping_id": "01a0ea93-e822-74b3-9d3f-54e387d2d014",
+            "access_mode": "non_authoritative_validation",
+            "target_code": "ISO_9001_2026-R-019",
+            "target_kind": "requirement",
+            "mapping_type": "supports",
+            "mapping_state": "draft",
+            "framework_code": "ISO_9001_2026",
+            "framework_name": "ISO 9001:2026",
+            "provenance_ref": "PROV:TCDX:BASELINE_CONTROLS:v1",
+            "framework_version_id": "01a0ea93-867a-7432-a041-2179e0a543f8",
+            "coverage_contribution": null
+          }
+        ],
+        "applicability_relations": [],
+        "business_owner_subject_id": "01a0f27e-b912-72d2-a08e-c5fcbd4efe43",
+        "based_on_control_version_id": "01a0ea93-d236-7544-8b75-b3d5d16b0007"
+      }
+    },
+    {
+      "occurred_at": "2026-10-20T11:39:04.847Z",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "correlation_id": "01a1591b-9f12-7071-920b-0a497173cc26",
+      "event_code": "audit.evidence.file.finalize.v1",
+      "command_code": "uploadFinalize",
+      "outcome": "success",
+      "aggregate_type": "FileObject",
+      "aggregate_id": "01a1591b-9f28-70c9-8930-bfd839ab8b41",
+      "actor_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "after_payload": {
+        "sha256": "289566a43531bdadcf7b26870525035d1020c0aacc936d0c2465dc41a9b98a1c",
+        "size_bytes": "71932",
+        "row_version": 1,
+        "scan_status": "passed",
+        "effective_to": null,
+        "declared_mime": "application/pdf",
+        "detected_mime": "application/pdf",
+        "classification": "internal",
+        "effective_from": null,
+        "file_object_id": "01a1591b-9f28-70c9-8930-bfd839ab8b41",
+        "storage_version": "9e61a687-ee55-4f0d-bc46-9a817d5fa9ac",
+        "original_filename": "GRC_Tecdex_Evidencia_QA_STEP6A3.pdf",
+        "scan_completed_at": "2026-10-20T11:39:04.967Z",
+        "source_provenance": "Interna",
+        "contract_provenance": {
+          "root": {
+            "entity_id": "01a1591b-9f28-70c9-8930-bfd839ab8b41",
+            "entity_type": "FileObject",
+            "entity_version": {
+              "kind": "row_version",
+              "value": "1"
+            }
+          },
+          "occurrences": [
+            {
+              "code": "internal",
+              "entity_id": "01a1591b-9f28-70c9-8930-bfd839ab8b41",
+              "family_id": "CV-01",
+              "input_path": "classification",
+              "entity_type": "FileObject",
+              "entity_version": {
+                "kind": "row_version",
+                "value": "1"
+              }
+            }
+          ],
+          "manifest_sha256": "81e559c96f687c319d415bb57b97187f17f91d884b35594b4ce0db7b68862b83",
+          "profile_version": 1,
+          "contract_version": "STEP6A3_VOCABULARIES_v1"
+        },
+        "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+        "retention_policy_applicability_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45"
+      }
+    },
+    {
+      "occurred_at": "2026-10-20T11:39:05.058Z",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "correlation_id": "01a1591b-9fe5-7734-bd12-6696cff81f99",
+      "event_code": "audit.evidence.evidence.create.v1",
+      "command_code": "evidenceCreate",
+      "outcome": "success",
+      "aggregate_type": "Evidence",
+      "aggregate_id": "01a1591b-9ffe-74b2-89f8-975ccf4d2f61",
+      "actor_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+      "after_payload": {
+        "valid_to": null,
+        "versions": [
+          {
+            "expires_at": null,
+            "period_end": null,
+            "approved_at": null,
+            "evidence_id": "01a1591b-9ffe-74b2-89f8-975ccf4d2f61",
+            "row_version": 1,
+            "effective_to": null,
+            "period_start": null,
+            "published_at": null,
+            "submitted_at": null,
+            "effective_from": null,
+            "file_object_id": "01a1591b-9f28-70c9-8930-bfd839ab8b41",
+            "provenance_ref": "Documento sintético GRC Tecdex para validación funcional STEP6A3",
+            "version_number": 1,
+            "lifecycle_state": "draft",
+            "superseded_by_id": null,
+            "document_version_id": null,
+            "evidence_version_id": "01a1591b-9ffe-74b2-89f8-9aa35ddadafa",
+            "retention_policy_applicability_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45"
+          }
+        ],
+        "valid_from": "2026-10-20T11:30:00.000Z",
+        "evidence_id": "01a1591b-9ffe-74b2-89f8-975ccf4d2f61",
+        "row_version": 1,
+        "source_kind": "uploaded",
+        "evidence_code": "QA_EVID_RET_001",
+        "evidence_type": "document",
+        "lifecycle_state": "draft",
+        "contract_provenance": {
+          "root": {
+            "entity_id": "01a1591b-9ffe-74b2-89f8-975ccf4d2f61",
+            "entity_type": "Evidence",
+            "entity_version": {
+              "kind": "row_version",
+              "value": "1"
+            }
+          },
+          "occurrences": [
+            {
+              "code": "document",
+              "entity_id": "01a1591b-9ffe-74b2-89f8-975ccf4d2f61",
+              "family_id": "CV-02",
+              "input_path": "evidence_type",
+              "entity_type": "Evidence",
+              "entity_version": {
+                "kind": "row_version",
+                "value": "1"
+              }
+            },
+            {
+              "code": "uploaded",
+              "entity_id": "01a1591b-9ffe-74b2-89f8-975ccf4d2f61",
+              "family_id": "CV-12",
+              "input_path": "source_kind",
+              "entity_type": "Evidence",
+              "entity_version": {
+                "kind": "row_version",
+                "value": "1"
+              }
+            }
+          ],
+          "manifest_sha256": "81e559c96f687c319d415bb57b97187f17f91d884b35594b4ce0db7b68862b83",
+          "profile_version": 1,
+          "contract_version": "STEP6A3_VOCABULARIES_v1"
+        },
+        "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+        "business_owner_subject_id": "01a0f27e-b912-72d2-a08e-c5fcbd4efe43"
+      }
+    }
+  ]
+}

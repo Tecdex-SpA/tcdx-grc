@@ -1,0 +1,14 @@
+{
+  "environment": "qa",
+  "browserSession": {
+    "idleSeconds": 1800,
+    "maxSeconds": 36000
+  },
+  "accessTokenSeconds": 300,
+  "provider": "https://iam.grc.tecdex.net/realms/tcdx-managed-identity",
+  "requiredAmr": [
+    "pwd",
+    "otp"
+  ],
+  "source": "Read from loadConfig inside the newly deployed QA backend container"
+}

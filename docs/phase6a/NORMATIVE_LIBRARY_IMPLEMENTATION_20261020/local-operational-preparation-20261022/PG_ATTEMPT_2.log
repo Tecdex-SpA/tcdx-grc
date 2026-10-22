@@ -1,0 +1,70 @@
+waiting for server to start.... done
+server started
+20260916000100 applied
+20260916000200 applied
+20260916000300 applied
+20260916000400 applied
+20260916000500 applied
+20260916000600 applied
+20260916000700 applied
+20260916000800 applied
+20260916000900 applied
+20260916001000 applied
+20260921000100 applied
+20260921000200 applied
+20260923000100 applied
+20260923000200 applied
+20260924000100 applied
+20260924000200 applied
+20260924000300 applied
+20260925000100 applied
+20260928000100 applied
+20260928000200 applied
+20260928000300 applied
+20260928000400 applied
+20260929000100 applied
+20260929000200 applied
+20260929000300 applied
+20261001000100 applied
+20261006000100 applied
+20261006000200 applied
+20261007000100 applied
+20261007000200 applied
+20261009000100 applied
+20261009000200 applied
+20261013000100 applied
+20261015000100 applied
+20261021221204 applied
+
+ RUN  v5.0.1 /Users/andresbarouh/repos/tcdx-grc
+
+ ❯ apps/backend/src/security/normative-library-publication.postgres.test.ts (35 tests | 1 failed) 2637ms
+   ❯ B01–B09 operational preparation on task-owned PG16 (35)
+     × preserves contextual B04 discovery as legitimately empty under the physical Definitions blocker 30ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  apps/backend/src/security/normative-library-publication.postgres.test.ts > B01–B09 operational preparation on task-owned PG16 > preserves contextual B04 discovery as legitimately empty under the physical Definitions blocker
+AssertionError: expected Error: Validation failed { …(4) } to match object { statusCode: 409 }
+(3 matching properties omitted from actual)
+
+- Expected
++ Received
+
+- {
+-   "statusCode": 409,
++ FoundationError {
++   "statusCode": 400,
+  }
+
+ ❯ apps/backend/src/security/normative-library-publication.postgres.test.ts:104:89
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 34 passed (35)
+   Start at  10:35:46
+   Duration  4.15s (tests 66%, transform 20%, import 14%)
+

@@ -1,0 +1,38 @@
+{
+  "status": "PASS_NO_MUTATIONS",
+  "QA01_catalog_and_ledger": "IDENTICAL",
+  "domain_fingerprints": "244_IDENTICAL_5097_ROWS",
+  "operational_pre_post": "IDENTICAL",
+  "canonical_schema": {
+    "database": "tcdx-grc",
+    "postgresMajor": 16,
+    "expectedPhysicalTables": 244,
+    "actualPhysicalTables": 244,
+    "expectedColumns": 3630,
+    "expectedConstraints": 2644,
+    "expectedRequiredIndexes": 1557,
+    "tenantScopedTables": 217,
+    "primaryKeys": 245,
+    "uniqueConstraints": 434,
+    "checkConstraints": 821,
+    "foreignKeys": 1388,
+    "compositeTenantForeignKeys": 510,
+    "tableOwners": [
+      "postgres"
+    ],
+    "forbiddenDeleteCascades": 0,
+    "schemaMismatches": 0,
+    "normativeLibraryDefinitionChecks": {
+      "constraints": 98,
+      "indexes": 56,
+      "functions": 8,
+      "triggers": 12
+    },
+    "mismatches": []
+  },
+  "schema_changes": "NONE",
+  "QA_DML": "NONE",
+  "test_residue": "NONE",
+  "new_audits": 0,
+  "activation_gate": "BLOCKED"
+}

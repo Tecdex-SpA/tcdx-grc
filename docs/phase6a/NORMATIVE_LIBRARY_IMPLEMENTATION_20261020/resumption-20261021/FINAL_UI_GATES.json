@@ -1,0 +1,49 @@
+[
+  {
+    "check": "final-ui-transport",
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "apps/frontend/src/normative-library.test.tsx",
+      "apps/frontend/src/normative-library-client.test.ts",
+      "--maxWorkers=2"
+    ],
+    "duration_seconds": 0.759,
+    "status": "PASS",
+    "exit_code": 0,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/final-ui-transport.log",
+    "sha256": "4ca736895e7a73aacdc71e60dafa4ac86b33e3f5048ddef04eee4f1da48aae2f"
+  },
+  {
+    "check": "final-ui-typecheck-lint",
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "-p",
+      "apps/frontend/tsconfig.json",
+      "--noEmit"
+    ],
+    "duration_seconds": 0.381,
+    "status": "PASS",
+    "exit_code": 0,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/final-ui-typecheck-lint.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "check": "final-ui-build",
+    "command": [
+      "/Users/andresbarouh/.npm/_npx/5dad66f2cb301fc2/node_modules/node/bin/node",
+      "apps/frontend/node_modules/vite/bin/vite.js",
+      "build",
+      "apps/frontend",
+      "--config",
+      "apps/frontend/vite.config.ts"
+    ],
+    "duration_seconds": 0.214,
+    "status": "PASS",
+    "exit_code": 0,
+    "log": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/resumption-20261021/final-ui-build.log",
+    "sha256": "be060b8988b1c294e6e4dc998388847445a3620e4bbdd0e6832d8bcfbc5d2eaa"
+  }
+]

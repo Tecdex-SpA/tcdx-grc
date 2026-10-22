@@ -1,0 +1,430 @@
+{
+  "status": "BLOCKED_NOT_EXECUTED",
+  "reason": "Canonical publisher requires fresh M2M authentication; credential and private operator socket are absent in this local session. Only PostgreSQL QA connection is authorized; no backend deployment or remote secret transfer performed.",
+  "writes": 0,
+  "new_audit_ids": [],
+  "state_before_after": "IDENTICAL",
+  "expected_count": 13,
+  "actual_before": 0,
+  "actual_after": 0,
+  "bindings": [
+    {
+      "contract": {
+        "operation_id": "knowledgeVersionUpdate",
+        "entity_type": "KnowledgeVersion",
+        "from_state": "draft",
+        "to_state": "draft",
+        "command_code": "knowledgeVersionUpdate",
+        "permission_code": "knowledge.knowledge_item.update",
+        "allowed_scopes": [
+          "tenant"
+        ],
+        "precondition_policy_ref": "KNOWLEDGE_TENANT_AUTHOR",
+        "sod_policy_ref": "KNOWLEDGE_TENANT_AUTHOR",
+        "side_effect_event_codes": [
+          "knowledge.knowledge_version.updated.v1"
+        ],
+        "audit_event_code": "audit.knowledge.knowledge_version.update.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      "physical_id": null,
+      "runtime_version": null,
+      "state_before": "ABSENT",
+      "state_after": "ABSENT"
+    },
+    {
+      "contract": {
+        "operation_id": "knowledgeVersionReview",
+        "entity_type": "KnowledgeVersion",
+        "from_state": "draft",
+        "to_state": "reviewed",
+        "command_code": "knowledgeVersionReview.reviewed",
+        "permission_code": "knowledge.knowledge_item.review",
+        "allowed_scopes": [
+          "tenant"
+        ],
+        "precondition_policy_ref": "KNOWLEDGE_TENANT_REVIEW",
+        "sod_policy_ref": "KNOWLEDGE_TENANT_REVIEW",
+        "side_effect_event_codes": [
+          "knowledge.knowledge_version.reviewed.v1"
+        ],
+        "audit_event_code": "audit.knowledge.knowledge_version.review.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      "physical_id": null,
+      "runtime_version": null,
+      "state_before": "ABSENT",
+      "state_after": "ABSENT"
+    },
+    {
+      "contract": {
+        "operation_id": "knowledgeVersionReview",
+        "entity_type": "KnowledgeVersion",
+        "from_state": "draft",
+        "to_state": "rejected",
+        "command_code": "knowledgeVersionReview.rejected",
+        "permission_code": "knowledge.knowledge_item.review",
+        "allowed_scopes": [
+          "tenant"
+        ],
+        "precondition_policy_ref": "KNOWLEDGE_TENANT_REVIEW",
+        "sod_policy_ref": "KNOWLEDGE_TENANT_REVIEW",
+        "side_effect_event_codes": [
+          "knowledge.knowledge_version.reviewed.v1"
+        ],
+        "audit_event_code": "audit.knowledge.knowledge_version.review.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      "physical_id": null,
+      "runtime_version": null,
+      "state_before": "ABSENT",
+      "state_after": "ABSENT"
+    },
+    {
+      "contract": {
+        "operation_id": "knowledgeVersionPublish",
+        "entity_type": "KnowledgeVersion",
+        "from_state": "reviewed",
+        "to_state": "published",
+        "command_code": "knowledgeVersionPublish",
+        "permission_code": "knowledge.knowledge_item.publish",
+        "allowed_scopes": [
+          "tenant"
+        ],
+        "precondition_policy_ref": "KNOWLEDGE_TENANT_PUBLISH",
+        "sod_policy_ref": "KNOWLEDGE_TENANT_PUBLISH",
+        "side_effect_event_codes": [
+          "knowledge.knowledge_version.published.v1"
+        ],
+        "audit_event_code": "audit.knowledge.knowledge_version.publish.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      "physical_id": null,
+      "runtime_version": null,
+      "state_before": "ABSENT",
+      "state_after": "ABSENT"
+    },
+    {
+      "contract": {
+        "operation_id": "platformKnowledgeVersionUpdate",
+        "entity_type": "KnowledgeVersion",
+        "from_state": "draft",
+        "to_state": "draft",
+        "command_code": "platformKnowledgeVersionUpdate",
+        "permission_code": "knowledge.knowledge_item.update",
+        "allowed_scopes": [
+          "platform"
+        ],
+        "precondition_policy_ref": "KNOWLEDGE_GLOBAL_AUTHOR",
+        "sod_policy_ref": "KNOWLEDGE_GLOBAL_AUTHOR",
+        "side_effect_event_codes": [
+          "knowledge.knowledge_version.updated.v1"
+        ],
+        "audit_event_code": "audit.knowledge.knowledge_version.update.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      "physical_id": null,
+      "runtime_version": null,
+      "state_before": "ABSENT",
+      "state_after": "ABSENT"
+    },
+    {
+      "contract": {
+        "operation_id": "platformKnowledgeVersionReview",
+        "entity_type": "KnowledgeVersion",
+        "from_state": "draft",
+        "to_state": "reviewed",
+        "command_code": "platformKnowledgeVersionReview.reviewed",
+        "permission_code": "knowledge.knowledge_item.review",
+        "allowed_scopes": [
+          "platform"
+        ],
+        "precondition_policy_ref": "KNOWLEDGE_GLOBAL_REVIEW",
+        "sod_policy_ref": "KNOWLEDGE_GLOBAL_REVIEW",
+        "side_effect_event_codes": [
+          "knowledge.knowledge_version.reviewed.v1"
+        ],
+        "audit_event_code": "audit.knowledge.knowledge_version.review.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      "physical_id": null,
+      "runtime_version": null,
+      "state_before": "ABSENT",
+      "state_after": "ABSENT"
+    },
+    {
+      "contract": {
+        "operation_id": "platformKnowledgeVersionReview",
+        "entity_type": "KnowledgeVersion",
+        "from_state": "draft",
+        "to_state": "rejected",
+        "command_code": "platformKnowledgeVersionReview.rejected",
+        "permission_code": "knowledge.knowledge_item.review",
+        "allowed_scopes": [
+          "platform"
+        ],
+        "precondition_policy_ref": "KNOWLEDGE_GLOBAL_REVIEW",
+        "sod_policy_ref": "KNOWLEDGE_GLOBAL_REVIEW",
+        "side_effect_event_codes": [
+          "knowledge.knowledge_version.reviewed.v1"
+        ],
+        "audit_event_code": "audit.knowledge.knowledge_version.review.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      "physical_id": null,
+      "runtime_version": null,
+      "state_before": "ABSENT",
+      "state_after": "ABSENT"
+    },
+    {
+      "contract": {
+        "operation_id": "platformKnowledgeVersionPublish",
+        "entity_type": "KnowledgeVersion",
+        "from_state": "reviewed",
+        "to_state": "published",
+        "command_code": "platformKnowledgeVersionPublish",
+        "permission_code": "knowledge.knowledge_item.publish",
+        "allowed_scopes": [
+          "platform"
+        ],
+        "precondition_policy_ref": "KNOWLEDGE_GLOBAL_PUBLISH",
+        "sod_policy_ref": "KNOWLEDGE_GLOBAL_PUBLISH",
+        "side_effect_event_codes": [
+          "knowledge.knowledge_version.published.v1"
+        ],
+        "audit_event_code": "audit.knowledge.knowledge_version.publish.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      "physical_id": null,
+      "runtime_version": null,
+      "state_before": "ABSENT",
+      "state_after": "ABSENT"
+    },
+    {
+      "contract": {
+        "operation_id": "configurationOverrideUpdate",
+        "entity_type": "ConfigurationOverride",
+        "from_state": "draft",
+        "to_state": "draft",
+        "command_code": "configurationOverrideUpdate",
+        "permission_code": "configuration.configuration_override.update",
+        "allowed_scopes": [
+          "tenant"
+        ],
+        "precondition_policy_ref": "CONTROL_OVERRIDE_AUTHOR",
+        "sod_policy_ref": "CONTROL_OVERRIDE_AUTHOR",
+        "side_effect_event_codes": [
+          "configuration.configuration_override.updated.v1"
+        ],
+        "audit_event_code": "audit.configuration.configuration_override.update.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      "physical_id": null,
+      "runtime_version": null,
+      "state_before": "ABSENT",
+      "state_after": "ABSENT"
+    },
+    {
+      "contract": {
+        "operation_id": "configurationOverrideReview",
+        "entity_type": "ConfigurationOverride",
+        "from_state": "draft",
+        "to_state": "reviewed",
+        "command_code": "configurationOverrideReview.reviewed",
+        "permission_code": "configuration.configuration_override.review",
+        "allowed_scopes": [
+          "tenant"
+        ],
+        "precondition_policy_ref": "CONTROL_OVERRIDE_REVIEWER",
+        "sod_policy_ref": "CONTROL_OVERRIDE_REVIEWER",
+        "side_effect_event_codes": [
+          "configuration.configuration_override.reviewed.v1"
+        ],
+        "audit_event_code": "audit.configuration.configuration_override.review.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      "physical_id": null,
+      "runtime_version": null,
+      "state_before": "ABSENT",
+      "state_after": "ABSENT"
+    },
+    {
+      "contract": {
+        "operation_id": "configurationOverrideReview",
+        "entity_type": "ConfigurationOverride",
+        "from_state": "draft",
+        "to_state": "rejected",
+        "command_code": "configurationOverrideReview.rejected",
+        "permission_code": "configuration.configuration_override.review",
+        "allowed_scopes": [
+          "tenant"
+        ],
+        "precondition_policy_ref": "CONTROL_OVERRIDE_REVIEWER",
+        "sod_policy_ref": "CONTROL_OVERRIDE_REVIEWER",
+        "side_effect_event_codes": [
+          "configuration.configuration_override.reviewed.v1"
+        ],
+        "audit_event_code": "audit.configuration.configuration_override.review.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      "physical_id": null,
+      "runtime_version": null,
+      "state_before": "ABSENT",
+      "state_after": "ABSENT"
+    },
+    {
+      "contract": {
+        "operation_id": "configurationOverrideDecide",
+        "entity_type": "ConfigurationOverride",
+        "from_state": "reviewed",
+        "to_state": "approved",
+        "command_code": "configurationOverrideDecide.approved",
+        "permission_code": "configuration.configuration_override.approve",
+        "allowed_scopes": [
+          "tenant"
+        ],
+        "precondition_policy_ref": "CONTROL_OVERRIDE_DECIDER",
+        "sod_policy_ref": "CONTROL_OVERRIDE_DECIDER",
+        "side_effect_event_codes": [
+          "configuration.configuration_override.decided.v1"
+        ],
+        "audit_event_code": "audit.configuration.configuration_override.decide.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      "physical_id": null,
+      "runtime_version": null,
+      "state_before": "ABSENT",
+      "state_after": "ABSENT"
+    },
+    {
+      "contract": {
+        "operation_id": "configurationOverrideDecide",
+        "entity_type": "ConfigurationOverride",
+        "from_state": "reviewed",
+        "to_state": "rejected",
+        "command_code": "configurationOverrideDecide.rejected",
+        "permission_code": "configuration.configuration_override.approve",
+        "allowed_scopes": [
+          "tenant"
+        ],
+        "precondition_policy_ref": "CONTROL_OVERRIDE_DECIDER",
+        "sod_policy_ref": "CONTROL_OVERRIDE_DECIDER",
+        "side_effect_event_codes": [
+          "configuration.configuration_override.decided.v1"
+        ],
+        "audit_event_code": "audit.configuration.configuration_override.decide.v1",
+        "idempotency_semantics": "IDEMPOTENCY_KEY_REQUIRED",
+        "concurrency_semantics": "STRONG_AGGREGATE_HASH_AND_MATERIAL_AUDIT_SET_UNDER_LOCK",
+        "system_actor_allowed": false,
+        "registry_version": "RESOLVE_NEXT_UNPUBLISHED_VERSION_AT_AUTHORIZED_RUNTIME_PUBLICATION",
+        "runtime_inserted": false,
+        "contract_binding_version": 1,
+        "runtime_registry_version": "UNASSIGNED_NOT_ACTIVATED",
+        "notification_policy": "NONE",
+        "recalculation_policy": "NONE"
+      },
+      "physical_id": null,
+      "runtime_version": null,
+      "state_before": "ABSENT",
+      "state_after": "ABSENT"
+    }
+  ],
+  "duplicates": 0,
+  "negative_functional_tests": "NOT_RUN_ACTIVATION_BLOCKED"
+}

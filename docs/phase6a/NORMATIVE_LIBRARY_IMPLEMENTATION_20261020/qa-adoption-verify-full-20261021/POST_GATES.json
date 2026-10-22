@@ -1,0 +1,167 @@
+{
+  "status": "PASS_PHYSICAL_ADOPTION_SCOPE_ONLY",
+  "QA_PHYSICAL_ADOPTION": "APPLIED_VERIFIED",
+  "ARCHITECTURAL_CONSISTENCY_GATE": "PASS",
+  "MIGRATION_INTEGRITY_GATE": "PASS",
+  "DATABASE_DRIFT_GATE": "PASS",
+  "POST_ADOPTION_INTEGRITY_GATE": "PASS",
+  "checks": [
+    {
+      "name": "exact_two_new_relations",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "exact_38_added_columns_no_old_column_changes",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "exact_constraints_including_deferred_trigger_catalog_entries",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "new_constraints_validated",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "exact_indexes_and_unique_replacement",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "all_new_indexes_valid_ready",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "exact_8_effective_functions",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "exact_12_triggers",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "new_triggers_enabled",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "34_historical_ledger_records_preserved",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "only_authorized_35_ledger_record",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "all_242_historical_business_tables_unchanged",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "new_support_tables_empty_no_import",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "four_new_fields_remain_null_no_backfill",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "canonical_schema_verifier_PASS",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "no_delete_cascade_introduced",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "canonical_runner_only_35_applied",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "completed_within_authorized_window",
+      "status": "PASS",
+      "detail": null
+    }
+  ],
+  "schema_delta_counts": {
+    "relations": {
+      "added": 2,
+      "removed": 0,
+      "changed": 0
+    },
+    "columns": {
+      "added": 38,
+      "removed": 0,
+      "changed": 0
+    },
+    "constraints": {
+      "added": 42,
+      "removed": 1,
+      "changed": 0
+    },
+    "indexes": {
+      "added": 15,
+      "removed": 1,
+      "changed": 0
+    },
+    "functions": {
+      "added": 8,
+      "removed": 0,
+      "changed": 0
+    },
+    "triggers": {
+      "added": 12,
+      "removed": 0,
+      "changed": 0
+    }
+  },
+  "canonical_schema_summary": {
+    "database": "tcdx-grc",
+    "postgresMajor": 16,
+    "expectedPhysicalTables": 244,
+    "actualPhysicalTables": 244,
+    "expectedColumns": 3630,
+    "expectedConstraints": 2644,
+    "expectedRequiredIndexes": 1557,
+    "tenantScopedTables": 217,
+    "primaryKeys": 245,
+    "uniqueConstraints": 434,
+    "checkConstraints": 821,
+    "foreignKeys": 1388,
+    "compositeTenantForeignKeys": 510,
+    "tableOwners": [
+      "postgres"
+    ],
+    "forbiddenDeleteCascades": 0,
+    "schemaMismatches": 0,
+    "normativeLibraryDefinitionChecks": {
+      "constraints": 98,
+      "indexes": 56,
+      "functions": 8,
+      "triggers": 12
+    },
+    "mismatches": []
+  },
+  "historical_data_fingerprints": "242_OF_242_MATCH",
+  "QA_business_DML": "NONE",
+  "QA_technical_ledger_writes": "ONE_AUTHORIZED_MIGRATION_RECORD",
+  "runtime_RBAC_SoD_E2E": "NOT_EXECUTED_NOT_ENABLED",
+  "new_function_behavior": "Exact published definitions verified; prior isolated149 behavior tests reused, no synthetic QA writes",
+  "window_started_utc": "2026-10-21T23:41:38.793496+00:00",
+  "window_expires_utc": "2026-10-22T00:11:38.793496+00:00",
+  "window_closed_utc": "2026-10-21T23:43:29.506226+00:00"
+}

@@ -26,7 +26,7 @@ export const uiText = {
       NO_ELIGIBLE_RECORDS: "No hay registros que puedan utilizarse en esta operación.",
       NO_PERMISSION: "No tienes acceso a estas opciones en la empresa seleccionada.",
       AMBIGUOUS_REFERENCE: "Las referencias disponibles no permiten una selección inequívoca. La selección está pendiente.",
-      LEGAL_BINDING_PENDING: "La política está pendiente de aplicabilidad jurídica. No se ha aplicado ni se declara cumplimiento.",
+      LEGAL_BINDING_PENDING: "No hay una aplicabilidad operativa elegible para este contexto. Revisa la configuración de retención.",
       MISSING_CONFIGURATION: "No hay una configuración efectiva disponible para este contexto.",
       CATALOG_NOT_PUBLISHED: "No hay una versión publicada o habilitada disponible para este contexto.",
       TEMPORARY_READ_FAILURE: "No pudimos cargar las opciones. Intenta nuevamente.",

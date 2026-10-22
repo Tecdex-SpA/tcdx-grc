@@ -1,0 +1,34 @@
+{
+  "BUILD_STATUS": "PASS",
+  "command": [
+    "docker",
+    "build",
+    "--platform",
+    "linux/amd64",
+    "--file",
+    "apps/frontend/Dockerfile",
+    "--tag",
+    "tcdx-grc-frontend:step6a4-ux-business-forms-20261020",
+    "--iidfile",
+    "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/STEP_6A4/evidence/qa-20261020/image-id.txt",
+    "--label",
+    "net.tecdex.grc.slice=STEP6A4",
+    "--label",
+    "net.tecdex.grc.source-manifest-sha256=e47df6eaa298ed6bd40812d4f437c8d8fddacac2640b85dbe1ebf7c73c6a97b4",
+    "--label",
+    "org.opencontainers.image.revision=4a275264a7522031e62bf09f598c9d56e21d25e0",
+    "."
+  ],
+  "exit_code": 0,
+  "started_at_utc": "2026-10-20T13:41:13.344642+00:00",
+  "ended_at_utc": "2026-10-20T13:41:20.273262+00:00",
+  "source_manifest_sha256": "e47df6eaa298ed6bd40812d4f437c8d8fddacac2640b85dbe1ebf7c73c6a97b4",
+  "tag": "tcdx-grc-frontend:step6a4-ux-business-forms-20261020",
+  "git_revision_is_head_only": "Dirty working tree content identified by source manifest",
+  "image_id": "sha256:bc8f21f7edaa0779cfafbfee01afe324d81e7e39bf45d4e51302bc6b7303fdd6",
+  "repo_digests": [
+    "tcdx-grc-frontend@sha256:bc8f21f7edaa0779cfafbfee01afe324d81e7e39bf45d4e51302bc6b7303fdd6"
+  ],
+  "architecture": "amd64",
+  "os": "linux"
+}

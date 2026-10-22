@@ -1,0 +1,32 @@
+{
+  "container_id": "b45b91778f04474dc1ec743e608940b984bf9246006af81800dcf737cb0e6268",
+  "image_id": "sha256:0ea6700a3b4f0ae6ce746519073558aed4d88a79d8d07622a9a644946c7319c4",
+  "image": "postgres:16.15-bookworm",
+  "network": "none",
+  "ports": {},
+  "mounts": [],
+  "binds": null,
+  "tmpfs": {
+    "/var/lib/postgresql/data": "rw,noexec,nosuid,size=512m"
+  },
+  "volumes_from": null,
+  "environment": [
+    "POSTGRES_HOST_AUTH_METHOD=trust",
+    "POSTGRES_USER=synthetic_validator",
+    "POSTGRES_DB=synthetic_contract_validation",
+    "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/postgresql/16/bin",
+    "GOSU_VERSION=1.19",
+    "LANG=en_US.utf8",
+    "PG_MAJOR=16",
+    "PG_VERSION=16.15-1.pgdg12+2",
+    "PGDATA=/var/lib/postgresql/data"
+  ],
+  "postgres_command": [
+    "-c",
+    "listen_addresses=",
+    "-c",
+    "max_connections=20"
+  ],
+  "credential_source": "NONE; local trust socket in network-none container only",
+  "qa_production_connections_credentials_volumes": "NONE"
+}

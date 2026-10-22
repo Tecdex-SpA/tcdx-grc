@@ -10,6 +10,34 @@ function fixture() {
 }
 const page = (items: Record<string, unknown>[], next: string | null = null) => ({ items, page: { has_more: !!next, next_cursor: next } });
 describe("canonical reference read adapters", () => {
+  it("STEP6A3 evidence control target excludes global controls without changing general catalog reads", async () => {
+    const {api,request}=fixture();
+    request.mockResolvedValue(page([
+      {control_id:"global",tenant_id:null,ownership_class:"PLATFORM_CONTROL",name:"Protección de evidencias",lifecycle_state:"draft"},
+      {control_id:"tenant",tenant_id:tenant,ownership_class:"TENANT_OWNED",name:"Control propio",lifecycle_state:"active"}
+    ],"next-page"));
+    const scoped=await readReferences(api,"control",{tenantOwnedControl:true});
+    expect(scoped.options.map(x=>x.value)).toEqual(["tenant"]);
+    expect(scoped.nextCursor).toBe("next-page");
+    expect((await readReferences(api,"control",{})).options.map(x=>x.value)).toEqual(["global","tenant"]);
+    request.mockResolvedValue(page([{control_id:"global",ownership_class:"PLATFORM_CONTROL",name:"Global",lifecycle_state:"draft"}],"more"));
+    const empty=await readReferences(api,"control",{tenantOwnedControl:true,cursor:"next-page"});
+    expect(empty.options).toEqual([]);expect(empty.nextCursor).toBe("more");
+  });
+  it("keeps only published, effective applicability for the chosen policy and file classification", async () => {
+    const { api, request } = fixture();
+    const base = { tenant_id: tenant, retention_policy_id: tenant, purpose: "evidence_document", lifecycle_state: "published", effective_from: "2020-01-01T00:00:00Z", effective_to: "2100-01-01T00:00:00Z", version_number: 1 };
+    request.mockResolvedValue(page([
+      { ...base, retention_policy_applicability_id: "eligible", classification: "internal", scope_subject_id: null },
+      { ...base, retention_policy_applicability_id: "other-class", classification: "confidential" },
+      { ...base, retention_policy_applicability_id: "expired", classification: "internal", effective_to: "2020-01-02T00:00:00Z" },
+      { ...base, retention_policy_applicability_id: "scoped", classification: "internal", scope_subject_id: "owner" }
+    ]));
+    const result = await readReferences(api, "retentionPolicyApplicability", { parentId: tenant, publishedOnly: true, classification: "internal" });
+    expect(request.mock.calls[0]![0]).toContain(`filter%5Bretention_policy_id%5D=${tenant}`);
+    expect(request.mock.calls[0]![0]).toContain("filter%5Blifecycle_state%5D=published");
+    expect(result.options.map(option => option.value)).toEqual(["eligible"]);
+  });
   it("searches and pages Subject using only published parameters", async () => {
     const { api, request } = fixture(); request.mockResolvedValue(page([{ subject_id: tenant, display_name: "Responsable" }], "opaque"));
     const result = await readReferences(api, "subject", { query: "responsable", subjectType: "person", cursor: "prev" });

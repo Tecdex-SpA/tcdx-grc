@@ -1,0 +1,31 @@
+{
+  "reference": "QA-LOGICAL-6b92deb545d642b7b054692cd3cf7ec3",
+  "source": "QA 192.168.2.40:5432/tcdx-grc",
+  "started_utc": "2026-10-21T22:46:30.503311+00:00",
+  "custody": "PO local account andresbarouh; private home directory",
+  "retention": "Retain pending PO recovery/adoption and explicit disposal decision; no automatic deletion",
+  "file_encryption": "NONE_BY_EXPLICIT_PO_DIRECTION",
+  "at_rest_protection": "APFS FileVault ON; unlocked session remains sensitive",
+  "qa_writes": "NONE",
+  "restored_data": "REAL_QA_SENSITIVE",
+  "PITR": "NOT_AVAILABLE; logical snapshot only",
+  "identity": {
+    "host": "192.168.2.40",
+    "port": 5432,
+    "user": "postgres",
+    "cluster": "16/main",
+    "version": "160015",
+    "database": "tcdx-grc",
+    "readonly": "on",
+    "roles_used": [
+      "tcdx_grc_app"
+    ],
+    "size_bytes": 46849047,
+    "captured_utc": "2026-10-21T22:46:31.382923+00:00",
+    "default_readonly": "on"
+  },
+  "snapshot_token_sha256": "250ab23f9ad63e3e2f19b3453c695530afb91a4c4482a8662130b30aef53f97a",
+  "status": "FAIL",
+  "error": "Source session failed; private diagnostics retained",
+  "finished_utc": "2026-10-21T22:46:31.202065+00:00"
+}

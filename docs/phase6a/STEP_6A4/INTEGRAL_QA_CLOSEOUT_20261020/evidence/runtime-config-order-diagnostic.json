@@ -1,0 +1,24 @@
+{
+  "unexpected_config_differences": [
+    "Config.Env"
+  ],
+  "current_networks": {
+    "qa_default": [
+      "frontend",
+      "tcdx-grc-frontend"
+    ]
+  },
+  "rollback_networks": {
+    "qa_default": [
+      "frontend",
+      "tcdx-grc-frontend"
+    ]
+  },
+  "allowed_changes": [
+    "image",
+    "source labels",
+    "generated hostname/container id",
+    "runtime start/health"
+  ],
+  "status": "BLOCKED"
+}

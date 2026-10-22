@@ -1,0 +1,614 @@
+{
+  "scope": "LOCAL_DEFINITIONS_01_FULL_RESOLUTION",
+  "files_created": 91,
+  "files_modified": 10,
+  "received_files_count": 5170,
+  "files": [
+    {
+      "path": "apps/backend/src/configuration/optional-default-upgrade.postgres.test.ts",
+      "action": "created",
+      "sha256": "19514353461f3a33c4429d0b8c612541751b064473a5b85d65bb628b3a6758b6",
+      "justification": "Task-owned PG16 upgrade compatibility, integrity, exact drift rejection and no-op reapply validation."
+    },
+    {
+      "path": "apps/backend/src/security/normative-library-publication.postgres.test.ts",
+      "action": "modified",
+      "sha256": "49c49459301ad9712765b4e8c43e9624d184eabab0aa1de9aac83ff3f75406e4",
+      "justification": "Positive physical materialization/B04 workflow, versioning/atomicity and all prior IAM/B06/H04 negatives.",
+      "before_sha256": "aacf4095264818bded34d6b78f49b266a3141024fcd6e106f185aeee84cf9347"
+    },
+    {
+      "path": "apps/backend/src/security/normative-library-publication.ts",
+      "action": "modified",
+      "sha256": "2e3ca3c3cd3c614d84ecad91721d5ceaa8685bf1bac413900459d5ca5ed2910e",
+      "justification": "Verify the exact successor manifest and atomically materialize four approved global Definitions/scopes/rules/audit via existing private publisher.",
+      "before_sha256": "db07dd0d252f88689e3c758224b5dfd30651fb2c54bf7118b93ce5f74c90201e"
+    },
+    {
+      "path": "database/expected-schema.json",
+      "action": "modified",
+      "sha256": "8f997f777aa752ec608cf676f257365d9ea4dd5d410d2acae58d077302fdbe34",
+      "justification": "Generated exact CHECK metadata amendment;244tables/3630columns and prior metadata unchanged.",
+      "before_sha256": "c2fc38768ee6c7b3760346ec862304204e4f94abd18a2d8150745bbaf6953207"
+    },
+    {
+      "path": "database/migrations/20261022141304_configuration_optional_default.sql",
+      "action": "created",
+      "sha256": "4fc817fa8ba6b8149dce1d484a301b511b24f8d4329038fd1e72265c9cd0bfc3",
+      "justification": "Canonical generated forward-only migration36; no business DML, changes only one general CHECK."
+    },
+    {
+      "path": "database/migrations/manifest.json",
+      "action": "modified",
+      "sha256": "f2d9d425b445c1565383de374aadf363d02029f592d8dcde9f57c079cda7d5b1",
+      "justification": "Generated canonical append36; existing35 entries unchanged.",
+      "before_sha256": "70ecaa0f4bbf168a1f5e4c3cefbd734036217dc7b09ac3d4a11b65f9cbc66152"
+    },
+    {
+      "path": "docs/executable-contracts/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/CONTRACT.json",
+      "action": "created",
+      "sha256": "fcee41313476cc81b5f5ae3841472fbf1c03d99d151ac49172835790418551c1",
+      "justification": "Authorized executable successor preserving B04/IAM/B06/H04 semantics and describing canonical materialization."
+    },
+    {
+      "path": "docs/governance/MASTER_EXECUTION_STATUS.md",
+      "action": "modified",
+      "sha256": "1a391959d79dfdf18b28160e29d1707c36aef72078c5ad326bf8e886935f5d5b",
+      "justification": "Append local resolution and remaining QA boundary; preserve historical bytes.",
+      "before_sha256": "2b12628a1105caf627ce2a2fe3f29d09cacc06c6d224052290680d7560da773a"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/BROWSER_ATTEMPT_1.log",
+      "action": "created",
+      "sha256": "66f2d5114d8cb231239deb2cb1159a0b387bda6407dbac3045a604a84883d8c3",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/CHECKS.json",
+      "action": "created",
+      "sha256": "5525a6bde1386d1ac2a39139671a096e0c77f49d9a8871559bd80506020c675d",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/CONTRACT_PHYSICAL_RECONCILIATION.md",
+      "action": "created",
+      "sha256": "ebc2a68875ae53f8dd01dd78a0819fe34400b24b1c4cfc9313f1d9f93b2933c5",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/HANDOFF.md",
+      "action": "created",
+      "sha256": "beb06b39659c6820a307a7882b794210e73177754b45d86a4f1b3919b375cb84",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/INITIAL_STATE.json",
+      "action": "created",
+      "sha256": "2cf99f681a0ea02945bda2467b40dd6b71431ee775b6f100db817e84f2adfd1f",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/LOCAL_CLUSTER_STATUS.json",
+      "action": "created",
+      "sha256": "b29c6b67fd3317eb74fc11feeefa4eeeae4d7f776e5a07f92f98afe244d91529",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/MIGRATION_ID_ALLOCATION.json",
+      "action": "created",
+      "sha256": "15c4106e108c24a48881eeee4b6ccb8005106a5f35103cd199a03308e9173f44",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/MIGRATION_REPORT.md",
+      "action": "created",
+      "sha256": "8fc8a2f24bc06431f818f9e324148fb2405d25a83c4057553b6621d0723f66db",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/PG_ATTEMPT_1.log",
+      "action": "created",
+      "sha256": "6a3eb242627a008bc280cadaca2aaed7ab14abaddfaa8d5e181d088451e26d9a",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/PG_VALIDATION_INITIAL_SUCCESS.log",
+      "action": "created",
+      "sha256": "e2cfe8234b8551fdfdcc61588df332be50c2f1e8e56bf7b83208fad7a7d74ef9",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/POSTGRESQL_VALIDATION.md",
+      "action": "created",
+      "sha256": "3275bfb3e466cbec330cc05c3da6df9389579d336f04d17f11e463a8f68f0927",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/REGRESSION_REPORT.md",
+      "action": "created",
+      "sha256": "4f81a7b299722f83bb5659f3397bc2d77d756be43756c0697f621775376787fe",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/REPORT.md",
+      "action": "created",
+      "sha256": "0fae05a27588483e403a08841a6afe76f91a2ee35c6422cd6cd704d20628be9f",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/RESULT.json",
+      "action": "created",
+      "sha256": "092c4bc08762e3db293d0bcacaaa51c280070692203963d61bb2f9420c2a6c7a",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/TRACEABILITY.json",
+      "action": "created",
+      "sha256": "dabae6ebbd6fedd208a9dbb8148bc9eae79de0f422f80961e21b79fc5e0df16d",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-attempt-1.json",
+      "action": "created",
+      "sha256": "6319d87afbaba23fe7dac3fc9ed874206a1037d7c841a4f023630e105dcea2a2",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-attempt-1/.last-run.json",
+      "action": "created",
+      "sha256": "ef6a284a98efc8df14f679a8232763b804062ad818dddf7a45f40ea39fc00334",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-attempt-1/b04-contextual-resolution--059f4-d-backend-checks-new-target-desktop/error-context.md",
+      "action": "created",
+      "sha256": "af266e4c2e916e7c25d51e9e2d4f136ce14f3b32fe6d6814a1548aad3b959cdf",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-attempt-1/b04-contextual-resolution--059f4-d-backend-checks-new-target-desktop/trace.zip",
+      "action": "created",
+      "sha256": "a3c2c93a086f9c148151fa3f118de5aacd7682745db121db0c930256a28fa644",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-attempt-1/b04-contextual-resolution--059f4-d-backend-checks-new-target-narrow/error-context.md",
+      "action": "created",
+      "sha256": "ab74b20d683e2b87fc5ba82a246fdb09a562e5840dbc3cda1fd2463e5f1e45a2",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-attempt-1/b04-contextual-resolution--059f4-d-backend-checks-new-target-narrow/trace.zip",
+      "action": "created",
+      "sha256": "07961a8a74ff9c28e3f782d2d861e89ffd40560ae2fb4d7109d527ae4784fd7d",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-attempt-1/b04-contextual-resolution--52931-or-override-read-permission-desktop/error-context.md",
+      "action": "created",
+      "sha256": "71d8941e36d604b634de7854147e3e98a639aadaa24c67337ae78a7faf90a519",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-attempt-1/b04-contextual-resolution--52931-or-override-read-permission-desktop/trace.zip",
+      "action": "created",
+      "sha256": "f08e5d66d020b6f38e40c61f68fa041ce2b57c13e6435e72c19f25773a88b3e7",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-attempt-1/b04-contextual-resolution--52931-or-override-read-permission-narrow/error-context.md",
+      "action": "created",
+      "sha256": "4c5c80e6c2705b9fd89ca39fa617cc3d0f2cbc4344745d021e95ce5cd85a861f",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-attempt-1/b04-contextual-resolution--52931-or-override-read-permission-narrow/trace.zip",
+      "action": "created",
+      "sha256": "4afeed9ebba706a136e8f0f6b4d042114b5004d17fe1875ba355e105846234d4",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-attempt-1/b04-contextual-resolution--a74f7--explicit-and-cannot-submit-desktop/error-context.md",
+      "action": "created",
+      "sha256": "b51e08cdb430815d4070bf308899da411a31ac87b629780f881114bf439ac61a",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-attempt-1/b04-contextual-resolution--a74f7--explicit-and-cannot-submit-desktop/trace.zip",
+      "action": "created",
+      "sha256": "b9b5246626e3021c110323a47985118b930142b7678a2a89e3fdc378f1d3eae6",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-attempt-1/b04-contextual-resolution--a74f7--explicit-and-cannot-submit-narrow/error-context.md",
+      "action": "created",
+      "sha256": "ec17be254d0fbd7edd656c44ddda3352f07ecba66830c0ed52dc6d4ae82de20e",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-attempt-1/b04-contextual-resolution--a74f7--explicit-and-cannot-submit-narrow/trace.zip",
+      "action": "created",
+      "sha256": "04d6ec086803374af9566c4dac331c422d46320e128bad40f3e72b085c151b00",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-attempt-1/b04-contextual-resolution--ebdb4-n-invalidated-automatically-desktop/error-context.md",
+      "action": "created",
+      "sha256": "02263bfe0a6e7276b2f34a0b4998df99400d11042df79b75aaac40dc826b0f11",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-attempt-1/b04-contextual-resolution--ebdb4-n-invalidated-automatically-desktop/trace.zip",
+      "action": "created",
+      "sha256": "acc545f1af0bd6b6bd11aadb8c7ef1628b1cd8a8f3d5d41883be511624295016",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-attempt-1/b04-contextual-resolution--ebdb4-n-invalidated-automatically-narrow/error-context.md",
+      "action": "created",
+      "sha256": "677d9c4a8c735e75bb25c6d9583238af09ac7279399d3c6b4b966f83f9531226",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-attempt-1/b04-contextual-resolution--ebdb4-n-invalidated-automatically-narrow/trace.zip",
+      "action": "created",
+      "sha256": "0b4846a99d8e6b145e1e4bd5e1aca79a9504f5d77c70e5ee190718de4d135a61",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-attempt-1/b04-contextual-resolution--f4fdf-hrough-the-same-B04-command-desktop/error-context.md",
+      "action": "created",
+      "sha256": "e313f67336ee9ca342a364660b744049ddc9a2cc48aa7414905fd79d26943369",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-attempt-1/b04-contextual-resolution--f4fdf-hrough-the-same-B04-command-desktop/trace.zip",
+      "action": "created",
+      "sha256": "97feaf377bb28ab8b85da44c8c08e9b0da994d44857a5e2d618bbe5fc7e5dd45",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-attempt-1/b04-contextual-resolution--f4fdf-hrough-the-same-B04-command-narrow/error-context.md",
+      "action": "created",
+      "sha256": "97241923fa061cea154661d050edd0d03466bce921fbcd80f5f8dcef8b556855",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-attempt-1/b04-contextual-resolution--f4fdf-hrough-the-same-B04-command-narrow/trace.zip",
+      "action": "created",
+      "sha256": "1f5011d590b8e7db2223aa4c1d1c1cc7d4a7534dc938523424e3771aaec2c727",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser-results.json",
+      "action": "created",
+      "sha256": "752fd9c790f246af71526aa75f9d0267af694f6097b4ee34b8de25a6c624129e",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser/.last-run.json",
+      "action": "created",
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser/b04-contextual-resolution--52931-or-override-read-permission-desktop/b04-create-form.png",
+      "action": "created",
+      "sha256": "64235c4e9e82118f7161ad53c708c340bf9371b21301af3c65844f3eb012ad84",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/browser/b04-contextual-resolution--52931-or-override-read-permission-narrow/b04-create-form.png",
+      "action": "created",
+      "sha256": "a001ec80b80f420fa84bfd04b1e22372656e2125b118deef7e0d01fadc36d95c",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/checks/backend-final-build.log",
+      "action": "created",
+      "sha256": "29c5ee0f6b0b20dbb259b99d01276198c3d28190090706394608d4deda6d2c0b",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/checks/backend-final-typecheck.log",
+      "action": "created",
+      "sha256": "38ac890c60e7f38d59ddfb410325cdfb5fca83c9411765c5481754e01c021630",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/checks/browser.log",
+      "action": "created",
+      "sha256": "6583f127f31fd1a8512b25defc582ab8ce4c570ed21e984d61db98b5a83d72c7",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/checks/build.log",
+      "action": "created",
+      "sha256": "9ac47f80a6aec9def52a67cd8aad17445292dc8492f3ea31ba5aea6d73e3f7f7",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/checks/canonical-1.log",
+      "action": "created",
+      "sha256": "6796c87d5dadfa2302d52b6cd538c8b36324a4d04f57989ef1c07e36ed5f9549",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/checks/canonical-2.log",
+      "action": "created",
+      "sha256": "6796c87d5dadfa2302d52b6cd538c8b36324a4d04f57989ef1c07e36ed5f9549",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/checks/focused.log",
+      "action": "created",
+      "sha256": "dbb4f25d796a485d59e255034b2be7c3c8947fc4735f778c949ccf6c83d3df2f",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/checks/h04-assets.log",
+      "action": "created",
+      "sha256": "3e6984c39fcd6e91c249739ae3666285fee41b43ecc87a48dd7e405eabd308ff",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/checks/library-assets.log",
+      "action": "created",
+      "sha256": "eb277455bd2bf87f994bce201aee174217d682d5bc82881c7a4f7e406ec4de94",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/checks/postgres.log",
+      "action": "created",
+      "sha256": "275bd221ba3445725025c96ab2353ec72589bff13bc98fa64026241b418083f6",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/checks/rector-status.log",
+      "action": "created",
+      "sha256": "4a950b39b20f2de1440a2b45b243b63df607fa3ede7f7e32e9f7e9da71864597",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/checks/rector.log",
+      "action": "created",
+      "sha256": "1804d6f3163b6323585d0d832274aaba9364ee4465435fb83636839d0ba76bbe",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/checks/secrets.log",
+      "action": "created",
+      "sha256": "a75019bbb34e91d8173a767beaee5c58c4f7262c7f6a8bcb72731af6351a5c76",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/checks/typecheck.log",
+      "action": "created",
+      "sha256": "75392e5f0a2222f90dad20884dcfbd52c94389949636e3bc34de6a7ed2d64246",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/checks/whitespace.log",
+      "action": "created",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/diffs/apps/backend/src/security/normative-library-publication.diff",
+      "action": "created",
+      "sha256": "67849235a2254afb042b9bf553a8f3619a0b07f244dc3a64628b5c396838475c",
+      "justification": "Exclusive delta against the exact received preimage."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/diffs/apps/backend/src/security/normative-library-publication.postgres.test.diff",
+      "action": "created",
+      "sha256": "42625a6bf9d6b0f898f57040867e19cfa46adf54a3ae6902fdb7d8daec169ec9",
+      "justification": "Exclusive delta against the exact received preimage."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/diffs/database/expected-schema.diff",
+      "action": "created",
+      "sha256": "b8c0d0905a6241af9ede36ce28c1868917a12c31fd52d638d0089ed5a6035f2b",
+      "justification": "Exclusive delta against the exact received preimage."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/diffs/database/migrations/manifest.diff",
+      "action": "created",
+      "sha256": "34f76b4ebb462e217eb851b0ad823ed645361627a21cafd41fa7d1a262ad1486",
+      "justification": "Exclusive delta against the exact received preimage."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/diffs/docs/governance/MASTER_EXECUTION_STATUS.diff",
+      "action": "created",
+      "sha256": "fedcb4484728f3d8b2d597d353604cba74bf88bc3e7a4550e16e4e997b61c96e",
+      "justification": "Exclusive delta against the exact received preimage."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/diffs/packages/contracts/src/normative-library.generated.diff",
+      "action": "created",
+      "sha256": "a4075a8ae8f75750461c00aa380c8ed2932b92ebe8c7210ff4e9ded5df968fe0",
+      "justification": "Exclusive delta against the exact received preimage."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/diffs/scripts/foundations/generate-contract-assets.diff",
+      "action": "created",
+      "sha256": "a59e7fe83823e3fc0aa26c8305df810097f9ba6b58d2f9f36fce207ed3e4676f",
+      "justification": "Exclusive delta against the exact received preimage."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/diffs/scripts/foundations/verify-schema.diff",
+      "action": "created",
+      "sha256": "aea763aeb1d4ab81279b136613802c70dc76eda6f9c56c255cc5c72ddaeef7be",
+      "justification": "Exclusive delta against the exact received preimage."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/diffs/scripts/normative-library/generate-contract-assets.diff",
+      "action": "created",
+      "sha256": "65d45e0b8008aa3185cd29b79009a39a99dacedd1a1d2225faa26833e05d706c",
+      "justification": "Exclusive delta against the exact received preimage."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/diffs/scripts/normative-library/run-operational-postgres-tests.diff",
+      "action": "created",
+      "sha256": "d000b1142390a66eb9e7702eef031798ba1854c9a5c1b8c533dc40e7cbac0326",
+      "justification": "Exclusive delta against the exact received preimage."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/migration36.json",
+      "action": "created",
+      "sha256": "650e5803339423993aa9a23ded277003ae94d8cce07141ac2ef54e9bc2b130cc",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/preimages/apps/backend/src/security/normative-library-publication.postgres.test.ts",
+      "action": "created",
+      "sha256": "aacf4095264818bded34d6b78f49b266a3141024fcd6e106f185aeee84cf9347",
+      "justification": "Exact received preimage (status as reversible JSON string), verified against initial SHA256."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/preimages/apps/backend/src/security/normative-library-publication.ts",
+      "action": "created",
+      "sha256": "db07dd0d252f88689e3c758224b5dfd30651fb2c54bf7118b93ce5f74c90201e",
+      "justification": "Exact received preimage (status as reversible JSON string), verified against initial SHA256."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/preimages/database/expected-schema.json",
+      "action": "created",
+      "sha256": "c2fc38768ee6c7b3760346ec862304204e4f94abd18a2d8150745bbaf6953207",
+      "justification": "Exact received preimage (status as reversible JSON string), verified against initial SHA256."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/preimages/database/migrations/manifest.json",
+      "action": "created",
+      "sha256": "70ecaa0f4bbf168a1f5e4c3cefbd734036217dc7b09ac3d4a11b65f9cbc66152",
+      "justification": "Exact received preimage (status as reversible JSON string), verified against initial SHA256."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/preimages/docs/governance/MASTER_EXECUTION_STATUS.md.json",
+      "action": "created",
+      "sha256": "c6dc4b72be58963b39ef4c4d4764027da7fa5e3af4d3080368dca7bec3a75d26",
+      "justification": "Exact received preimage (status as reversible JSON string), verified against initial SHA256."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/preimages/packages/contracts/src/normative-library.generated.json",
+      "action": "created",
+      "sha256": "575ef35fecffdae055c122b6680f7eb02d6d62128c9032bb2cc3c0162091b100",
+      "justification": "Exact received preimage (status as reversible JSON string), verified against initial SHA256."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/preimages/scripts/foundations/generate-contract-assets.mjs",
+      "action": "created",
+      "sha256": "f91d67ca5a5e64169a0964a81439137c22f842888e323dd48e671098c5856209",
+      "justification": "Exact received preimage (status as reversible JSON string), verified against initial SHA256."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/preimages/scripts/foundations/verify-schema.ts",
+      "action": "created",
+      "sha256": "d42dc350676cd130d4c3ac45dbe870e928de42a6f8e3fa5dab7b34b7c6b598de",
+      "justification": "Exact received preimage (status as reversible JSON string), verified against initial SHA256."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/preimages/scripts/normative-library/generate-contract-assets.mjs",
+      "action": "created",
+      "sha256": "1bff973ba498d0a6c4a8c716885b0306e70763a60bc9f4be5c2aadeff909cf07",
+      "justification": "Exact received preimage (status as reversible JSON string), verified against initial SHA256."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/preimages/scripts/normative-library/run-operational-postgres-tests.sh",
+      "action": "created",
+      "sha256": "527494ab98959b7a0e4bd40f0033666e96544f5d73273ebb0223ae666b734355",
+      "justification": "Exact received preimage (status as reversible JSON string), verified against initial SHA256."
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/verify.py",
+      "action": "created",
+      "sha256": "f2bbcc65522a4a5121fd1ee6a64d3dc9e5c07a2336f45177625b710fe2189444",
+      "justification": "Required dossier, actual successful/failed local evidence, traceability, recovery and offline verification; includes ignored logs/browser artifacts."
+    },
+    {
+      "path": "docs/physical-data-model/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/AUTHORIZATION.json",
+      "action": "created",
+      "sha256": "fbea834463aa70903b66b4f655f096bc54d73638f66d1a17e81a4e6483444100",
+      "justification": "Authorized general optional-default corrective contract, immutable source DDL, exact PG16 derivations and local publication receipt; no QA authority."
+    },
+    {
+      "path": "docs/physical-data-model/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/CONTRACT.json",
+      "action": "created",
+      "sha256": "5321c850b959adb1219c59ef52450457938b25dfe01240e9638ea65597550ed6",
+      "justification": "Authorized general optional-default corrective contract, immutable source DDL, exact PG16 derivations and local publication receipt; no QA authority."
+    },
+    {
+      "path": "docs/physical-data-model/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/CONTRACT_PUBLICATION_RECEIPT.json",
+      "action": "created",
+      "sha256": "cfceb764253354ae77c18bb8618c5310b7952441739ba348dabcaed96545ef05",
+      "justification": "Authorized general optional-default corrective contract, immutable source DDL, exact PG16 derivations and local publication receipt; no QA authority."
+    },
+    {
+      "path": "docs/physical-data-model/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/DDL_SPEC.sql",
+      "action": "created",
+      "sha256": "4fc817fa8ba6b8149dce1d484a301b511b24f8d4329038fd1e72265c9cd0bfc3",
+      "justification": "Authorized general optional-default corrective contract, immutable source DDL, exact PG16 derivations and local publication receipt; no QA authority."
+    },
+    {
+      "path": "docs/physical-data-model/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/PG16_CONSTRAINT.json",
+      "action": "created",
+      "sha256": "5d5d774bac7c5508f54c6d3b6d7b83142d830b43904737be388ceb8bf0c01816",
+      "justification": "Authorized general optional-default corrective contract, immutable source DDL, exact PG16 derivations and local publication receipt; no QA authority."
+    },
+    {
+      "path": "docs/physical-data-model/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/PG16_PREDECESSOR.json",
+      "action": "created",
+      "sha256": "21279c2547813911cac256b2ed55a9e69cc1692220f300f436ad8c12c4992b1c",
+      "justification": "Authorized general optional-default corrective contract, immutable source DDL, exact PG16 derivations and local publication receipt; no QA authority."
+    },
+    {
+      "path": "docs/physical-data-model/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/PUBLICATION_MANIFEST.json",
+      "action": "created",
+      "sha256": "f68f577d847339fd53ee5912f01811ab4c746d099b30284b3c294ed7f4dc8599",
+      "justification": "Authorized general optional-default corrective contract, immutable source DDL, exact PG16 derivations and local publication receipt; no QA authority."
+    },
+    {
+      "path": "packages/contracts/src/normative-library.generated.json",
+      "action": "modified",
+      "sha256": "bd32cf3382af8a478a11ac64ae705e51b3c340e63fb450e3fec821af4aaa6b67",
+      "justification": "Generated successor physical metadata only; public API schemas/operations/permissions unchanged.",
+      "before_sha256": "575ef35fecffdae055c122b6680f7eb02d6d62128c9032bb2cc3c0162091b100"
+    },
+    {
+      "path": "scripts/foundations/generate-contract-assets.mjs",
+      "action": "modified",
+      "sha256": "71c720658c912233591afdc90f9929aca2c6c7c24fbd3156bf7ae4580f161506",
+      "justification": "Extend the sole canonical generator with hash-bound forward-only correction36; preserve exact derivation of prefix35.",
+      "before_sha256": "f91d67ca5a5e64169a0964a81439137c22f842888e323dd48e671098c5856209"
+    },
+    {
+      "path": "scripts/foundations/verify-schema.ts",
+      "action": "modified",
+      "sha256": "3adc94847024cbf92bb3020b4d252963c03d988c984d7fd40e4ded504e9f2188",
+      "justification": "Verify exact validated PG16 typed-default CHECK and its contract/DDL/migration hashes; retain previous assertions.",
+      "before_sha256": "d42dc350676cd130d4c3ac45dbe870e928de42a6f8e3fa5dab7b34b7c6b598de"
+    },
+    {
+      "path": "scripts/normative-library/generate-contract-assets.mjs",
+      "action": "modified",
+      "sha256": "fe9efe39fcc912e88e54e63791067bc20d1a796cb84a4c96237ebf92b3d6e75c",
+      "justification": "Consume local corrective successor as derived metadata; APIs/policies/permissions/descriptors unchanged.",
+      "before_sha256": "1bff973ba498d0a6c4a8c716885b0306e70763a60bc9f4be5c2aadeff909cf07"
+    },
+    {
+      "path": "scripts/normative-library/playwright-definitions-resolution.config.ts",
+      "action": "created",
+      "sha256": "5256847afd5ba28dea6b98434fcac5b7468c327ce0d868fdf7e0c295637dab59",
+      "justification": "Reuse unchanged B04 browser tests with outputs isolated to the new dossier; no historical evidence writes."
+    },
+    {
+      "path": "scripts/normative-library/run-operational-postgres-tests.sh",
+      "action": "modified",
+      "sha256": "f63656561a3ab656a409d2bed003aa3ae0003af2646bc136288845312ca2de5d",
+      "justification": "Build contracts before consumption; isolated canonical1-35 prefix→upgrade36→schema→functional tests with cleanup.",
+      "before_sha256": "527494ab98959b7a0e4bd40f0033666e96544f5d73273ebb0223ae666b734355"
+    }
+  ],
+  "inventory_method": "All nonignored received repo files plus all new dossier artifacts including Git-ignored logs/screenshots/traces; ignored build dist outputs are not authored files.",
+  "self_integrity": "FILE_MANIFEST.json is hashed by SHA256SUMS.txt; SHA256SUMS.txt excludes itself to avoid a cycle. Both count as created."
+}

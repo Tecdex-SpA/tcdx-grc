@@ -1,0 +1,76 @@
+{
+  "reference": "QA-LOGICAL-e923e6ecc44845c6920c8fd975f34675",
+  "source": "QA 192.168.2.40:5432/tcdx-grc",
+  "started_utc": "2026-10-21T22:46:46.728574+00:00",
+  "custody": "PO local account andresbarouh; private home directory",
+  "retention": "Retain pending PO recovery/adoption and explicit disposal decision; no automatic deletion",
+  "file_encryption": "NONE_BY_EXPLICIT_PO_DIRECTION",
+  "at_rest_protection": "APFS FileVault ON; unlocked session remains sensitive",
+  "qa_writes": "NONE",
+  "restored_data": "REAL_QA_SENSITIVE",
+  "PITR": "NOT_AVAILABLE; logical snapshot only",
+  "identity": {
+    "host": "192.168.2.40",
+    "port": 5432,
+    "user": "postgres",
+    "cluster": "16/main",
+    "version": "160015",
+    "database": "tcdx-grc",
+    "readonly": "on",
+    "roles_used": [
+      "tcdx_grc_app"
+    ],
+    "size_bytes": 46849047,
+    "captured_utc": "2026-10-21T22:46:47.129323+00:00",
+    "default_readonly": "on"
+  },
+  "snapshot_token_sha256": "463164d96324b92367e0555edbd1a21dade5d4695a588a09d91a37e75b14d6a1",
+  "dump_exit_code": 0,
+  "dump_sha256": "754e1810ca4a0242814a3a02d6e6f9821774b35eb304f300b09a3665616141a5",
+  "dump_size_bytes": 2544085,
+  "dump_seconds": 5.66,
+  "tool_version": "pg_dump (PostgreSQL) 16.14 (Homebrew)",
+  "retry": "Restore only; original dump bytes unchanged",
+  "source_connections_this_retry": 0,
+  "isolation": {
+    "network": "none",
+    "ports": [],
+    "binds": [],
+    "volumes": [],
+    "PGDATA": "tmpfs768MiB",
+    "image": "sha256:0ea6700a3b4f0ae6ce746519073558aed4d88a79d8d07622a9a644946c7319c4",
+    "container": "grc-qa-recovery-63aae1b2550e",
+    "max_locks_per_transaction": 1024,
+    "source_credentials_present": false
+  },
+  "restore_exit_code": 0,
+  "comparisons": {
+    "ledger": true,
+    "tables": true,
+    "columns": true,
+    "indexes": true,
+    "triggers": true,
+    "functions": true,
+    "extensions": true,
+    "constraints": false,
+    "invalid_indexes": true,
+    "invalid_constraints": true,
+    "all_table_counts": true
+  },
+  "tables_compared": 243,
+  "ledger_rows": 34,
+  "restore_seconds": 20.471,
+  "all_pass": false,
+  "postgres_version": {
+    "version": "160015",
+    "readonly": "on"
+  },
+  "status": "FAIL_COMPARISON",
+  "recovery_point_utc": "2026-10-21T22:46:47.129323+00:00",
+  "cleanup": {
+    "destroy_exit_code": 0,
+    "container_absent": true,
+    "plaintext_restore_tmpfs_destroyed": true
+  },
+  "finished_utc": "2026-10-21T22:48:20.077193+00:00"
+}

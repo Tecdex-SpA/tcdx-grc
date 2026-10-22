@@ -1,0 +1,35 @@
+{
+  "master_regent": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "scope": "STEP6A3 evidence file upload scope_subject_id correction",
+  "rector_gate_for_bounded_correction": "PASS",
+  "step6a3_gate": "PARTIAL_BLOCKED",
+  "step6a4_gate": "NOT_STARTED",
+  "root_cause": "The evidence form used the applicability's nullable scope_subject_id instead of the selected business_owner_subject_id. For a tenant-wide applicability it serialized scope_subject_id:null, which the upload request contract rejects as an optional UUIDv7 field.",
+  "correction": "The frontend sends the selected business owner subject ID as upload scope and omits absent optional IDs. The backend verifies that a supplied upload scope subject is active, effective and belongs to the actor tenant before retention validation.",
+  "focused_checks": {
+    "frontend_typecheck": "PASS",
+    "backend_typecheck": "PASS",
+    "frontend_api_client_vitest": "6 PASS; absent optional scope omitted",
+    "playwright_selected_owner_upload_scope": "1 PASS; same tenant subject ID in upload request",
+    "local_postgresql16_rollback": "1 PASS; selected tenant subject accepted and foreign tenant subject rejected with 404",
+    "promotion_script_syntax": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "qa_deployment": {
+    "backend": {
+      "image_id": "sha256:5aa1d38d07d925cde674343d74b03ccc62c3b8cb1e0a1d6242461c761ab05adb",
+      "container_id": "f700861c7731e36fc63ea16a4a30e2da64b216c043b8d8f17e7968c44ebdcede",
+      "health": "healthy; zero restarts"
+    },
+    "frontend": {
+      "image_id": "sha256:3d01a49076ee70fd12a6d3dc68f4a6ac1c4e480fa6123dd12da8e75a3dc3eb30",
+      "container_id": "cf4c096662864825a98db0818449cc32f0133a2ba3b4bd1faa965420be32ecde",
+      "health": "healthy; zero restarts"
+    },
+    "architecture": "linux/amd64",
+    "rollback_containers": "previous backend and frontend retained separately",
+    "public_https": "HTTP/2 200; valid grc.tecdex.net TLS certificate",
+    "postgresql": "QA unchanged"
+  },
+  "functional_acceptance": "PENDING: user3 must repeat only PASO 9.2B with the authorized QA PDF; no permanent evidence was created by this correction."
+}

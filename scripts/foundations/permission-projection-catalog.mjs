@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { createHash } from "node:crypto";
 
 const root = resolve(import.meta.dirname, "../..");
 const source = resolve(root, "docs/executable-contracts/05_PERMISSION_CATALOG.md");
@@ -38,7 +39,18 @@ for (const binding of [...commercial.bindings, ...commercial.read_bindings]) {
   if (!scopes.every(scope => scope === "platform")) throw new Error("Commercial projection scope drift");
   rows.set(code, { capabilities: rows.get("platform.subscription.create").capabilities, scopes });
 }
-const content = `// Generated from executable Permission catalog 05 and approved MI6A/P2A/D1-R publication contracts. Do not edit.\n`
+// A projection consumes effective successor permissions; it never creates grants.
+const library = JSON.parse(readFileSync(resolve(root, "packages/contracts/src/normative-library.generated.json"), "utf8"));
+for (const [path, expected] of Object.entries(library.sources)) {
+  if (createHash("sha256").update(readFileSync(resolve(root, path))).digest("hex") !== expected) throw new Error("Library authority hash drift");
+}
+for (const permission of library.permissions.catalogue_delta) {
+  if (rows.has(permission.code) || !/^[A-Z_]+$/.test(permission.capability)) throw new Error("Library projection conflict");
+  const scopes = scopeKinds.filter(scope => permission.contract_grants.some(grant => grant.scope === scope));
+  if (!scopes.length) throw new Error("Library projection scope missing");
+  rows.set(permission.code, { capabilities: [permission.capability], scopes });
+}
+const content = `// Generated from executable Permission catalog 05 and approved MI6A/P2A/D1-R/Library publication contracts. Do not edit.\n`
   + `export const permissionProjectionCatalog: Readonly<Record<string, { capabilities: readonly string[]; scopes: readonly string[] }>> = `
   + `${JSON.stringify(Object.fromEntries([...rows].sort(([a], [b]) => a.localeCompare(b))), null, 2)};\n`;
 if (process.argv.includes("--check")) {

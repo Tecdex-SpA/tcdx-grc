@@ -3,7 +3,7 @@ import { readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve, relative } from "node:path";
 
 const root = resolve(import.meta.dirname, "../..");
-const excluded = new Set([".git", "node_modules", "dist", "coverage", "playwright-report", "test-results"]);
+const excluded = new Set([".git", "node_modules", "dist", "coverage", "playwright-report", "test-results", ".release-custody", ".continuity-preservation", "__pycache__"]);
 const findings = [];
 const patterns = [
   ["private-key", /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/],
@@ -45,6 +45,11 @@ const fingerprint = (value) => createHash("sha256").update(value).digest("hex");
 // A checksummed staging copy inherits only the already reviewed line fingerprints
 // of its canonical target. Any changed copy byte or secret value is scanned normally.
 const stagedAliases = new Map();
+// Exact QA01 preimage of the already-reviewed master status. Both the entire
+// immutable file and the inherited individual false-positive line are pinned.
+const qa01StatusPreimage = "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa01-migration36-adoption-20261022/MASTER_STATUS_PREIMAGE.md";
+if (fingerprint(readFileSync(resolve(root, qa01StatusPreimage))) === "1a391959d79dfdf18b28160e29d1707c36aef72078c5ad326bf8e886935f5d5b")
+  stagedAliases.set(qa01StatusPreimage, "docs/governance/MASTER_EXECUTION_STATUS.md");
 const stagingDirectory = "docs/phase6a/STEP_6A3/ACTIVATION_PACKAGE_20261014";
 const staging = JSON.parse(readFileSync(resolve(root, stagingDirectory, "ACTIVATION_STAGING_MANIFEST.json"), "utf8"));
 for (const artifact of staging.staged_files) {

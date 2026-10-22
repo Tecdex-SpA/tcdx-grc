@@ -1,0 +1,236 @@
+{
+  "exit_code": 0,
+  "duration_seconds": 2.574,
+  "isolation": {
+    "database_container": "grc-canonical-synthetic-981fa3a199d1",
+    "postgres_image": "sha256:0ea6700a3b4f0ae6ce746519073558aed4d88a79d8d07622a9a644946c7319c4",
+    "node_image": "48e4b67d85f8",
+    "node_version": "22.23.2",
+    "network": "none shared namespace, loopback only",
+    "ports": [],
+    "PGDATA": "tmpfs",
+    "node_repo_mount": "READ_ONLY",
+    "QA_credentials": "NONE"
+  },
+  "result": {
+    "tests": [
+      {
+        "name": "canonical_34_history_rebuild",
+        "status": "PASS",
+        "detail": {
+          "exit": 0
+        }
+      },
+      {
+        "name": "migration_35_failure_is_rolled_back",
+        "status": "PASS",
+        "detail": {
+          "exit": 1
+        }
+      },
+      {
+        "name": "DDL_and_ledger_atomic_rollback",
+        "status": "PASS",
+        "detail": {
+          "ledger": 34,
+          "tables": 243,
+          "links": null,
+          "rights": null,
+          "context_columns": 0
+        }
+      },
+      {
+        "name": "canonical_35_apply",
+        "status": "PASS",
+        "detail": {
+          "exit": 0
+        }
+      },
+      {
+        "name": "canonical_35_noop_reapply",
+        "status": "PASS",
+        "detail": {
+          "exit": 0
+        }
+      },
+      {
+        "name": "canonical_35_status",
+        "status": "PASS",
+        "detail": {
+          "exit": 0
+        }
+      },
+      {
+        "name": "35_ledger_and_244_domain_tables",
+        "status": "PASS",
+        "detail": {
+          "ledger": 35,
+          "tables": 245
+        }
+      },
+      {
+        "name": "8_effective_functions_12_triggers",
+        "status": "PASS",
+        "detail": {
+          "functions": 8,
+          "triggers": 12
+        }
+      },
+      {
+        "name": "canonical_schema_verify",
+        "status": "PASS",
+        "detail": {
+          "exit": 0
+        }
+      },
+      {
+        "name": "canonical_migration_guards",
+        "status": "PASS",
+        "detail": {
+          "exit": 0
+        }
+      },
+      {
+        "name": "unexpected_function_overload_rejected",
+        "status": "PASS",
+        "detail": {
+          "exit": 1
+        }
+      },
+      {
+        "name": "historical_C04W_check_still_required",
+        "status": "PASS",
+        "detail": {
+          "exit": 1
+        }
+      },
+      {
+        "name": "function_body_drift_rejected",
+        "status": "PASS",
+        "detail": {
+          "exit": 1
+        }
+      },
+      {
+        "name": "disabled_trigger_rejected",
+        "status": "PASS",
+        "detail": {
+          "exit": 1
+        }
+      },
+      {
+        "name": "missing_index_rejected",
+        "status": "PASS",
+        "detail": {
+          "exit": 1
+        }
+      },
+      {
+        "name": "weakened_XOR_check_rejected",
+        "status": "PASS",
+        "detail": {
+          "exit": 1
+        }
+      },
+      {
+        "name": "final_canonical_schema_verify",
+        "status": "PASS",
+        "detail": {
+          "exit": 0
+        }
+      }
+    ],
+    "logs": [
+      {
+        "name": "canonical_34_history_rebuild",
+        "exit": 0,
+        "ms": 642,
+        "output": "20260916000100 applied\n20260916000200 applied\n20260916000300 applied\n20260916000400 applied\n20260916000500 applied\n20260916000600 applied\n20260916000700 applied\n20260916000800 applied\n20260916000900 applied\n20260916001000 applied\n20260921000100 applied\n20260921000200 applied\n20260923000100 applied\n20260923000200 applied\n20260924000100 applied\n20260924000200 applied\n20260924000300 applied\n20260925000100 applied\n20260928000100 applied\n20260928000200 applied\n20260928000300 applied\n20260928000400 applied\n20260929000100 applied\n20260929000200 applied\n20260929000300 applied\n20261001000100 applied\n20261006000100 applied\n20261006000200 applied\n20261007000100 applied\n20261007000200 applied\n20261009000100 applied\n20261009000200 applied\n20261013000100 applied\n20261015000100 applied\n\n"
+      },
+      {
+        "name": "migration_35_failure_is_rolled_back",
+        "exit": 1,
+        "ms": 75,
+        "output": "20260916000100 already applied; checksum verified\n20260916000200 already applied; checksum verified\n20260916000300 already applied; checksum verified\n20260916000400 already applied; checksum verified\n20260916000500 already applied; checksum verified\n20260916000600 already applied; checksum verified\n20260916000700 already applied; checksum verified\n20260916000800 already applied; checksum verified\n20260916000900 already applied; checksum verified\n20260916001000 already applied; checksum verified\n20260921000100 already applied; checksum verified\n20260921000200 already applied; checksum verified\n20260923000100 already applied; checksum verified\n20260923000200 already applied; checksum verified\n20260924000100 already applied; checksum verified\n20260924000200 already applied; checksum verified\n20260924000300 already applied; checksum verified\n20260925000100 already applied; checksum verified\n20260928000100 already applied; checksum verified\n20260928000200 already applied; checksum verified\n20260928000300 already applied; checksum verified\n20260928000400 already applied; checksum verified\n20260929000100 already applied; checksum verified\n20260929000200 already applied; checksum verified\n20260929000300 already applied; checksum verified\n20261001000100 already applied; checksum verified\n20261006000100 already applied; checksum verified\n20261006000200 already applied; checksum verified\n20261007000100 already applied; checksum verified\n20261007000200 already applied; checksum verified\n20261009000100 already applied; checksum verified\n20261009000200 already applied; checksum verified\n20261013000100 already applied; checksum verified\n20261015000100 already applied; checksum verified\n\n/work/node_modules/.pnpm/pg@8.23.0/node_modules/pg/lib/client.js:694\n          Error.captureStackTrace(err)\n                ^\n\nerror: division by zero\n    at /work/node_modules/.pnpm/pg@8.23.0/node_modules/pg/lib/client.js:694:17\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async apply (file:///work/scripts/foundations/migrate.ts:113:9)\n    at async file:///work/scripts/foundations/migrate.ts:146:1 {\n  length: 65,\n  severity: 'ERROR',\n  code: '22012',\n  detail: undefined,\n  hint: undefined,\n  position: undefined,\n  internalPosition: undefined,\n  internalQuery: undefined,\n  where: undefined,\n  schema: undefined,\n  table: undefined,\n  column: undefined,\n  dataType: undefined,\n  constraint: undefined,\n  file: 'int.c',\n  line: '870',\n  routine: 'int4div'\n}\n\nNode.js v22.23.2\n"
+      },
+      {
+        "name": "canonical_35_apply",
+        "exit": 0,
+        "ms": 83,
+        "output": "20260916000100 already applied; checksum verified\n20260916000200 already applied; checksum verified\n20260916000300 already applied; checksum verified\n20260916000400 already applied; checksum verified\n20260916000500 already applied; checksum verified\n20260916000600 already applied; checksum verified\n20260916000700 already applied; checksum verified\n20260916000800 already applied; checksum verified\n20260916000900 already applied; checksum verified\n20260916001000 already applied; checksum verified\n20260921000100 already applied; checksum verified\n20260921000200 already applied; checksum verified\n20260923000100 already applied; checksum verified\n20260923000200 already applied; checksum verified\n20260924000100 already applied; checksum verified\n20260924000200 already applied; checksum verified\n20260924000300 already applied; checksum verified\n20260925000100 already applied; checksum verified\n20260928000100 already applied; checksum verified\n20260928000200 already applied; checksum verified\n20260928000300 already applied; checksum verified\n20260928000400 already applied; checksum verified\n20260929000100 already applied; checksum verified\n20260929000200 already applied; checksum verified\n20260929000300 already applied; checksum verified\n20261001000100 already applied; checksum verified\n20261006000100 already applied; checksum verified\n20261006000200 already applied; checksum verified\n20261007000100 already applied; checksum verified\n20261007000200 already applied; checksum verified\n20261009000100 already applied; checksum verified\n20261009000200 already applied; checksum verified\n20261013000100 already applied; checksum verified\n20261015000100 already applied; checksum verified\n20261021221204 applied\n\n"
+      },
+      {
+        "name": "canonical_35_noop_reapply",
+        "exit": 0,
+        "ms": 74,
+        "output": "20260916000100 already applied; checksum verified\n20260916000200 already applied; checksum verified\n20260916000300 already applied; checksum verified\n20260916000400 already applied; checksum verified\n20260916000500 already applied; checksum verified\n20260916000600 already applied; checksum verified\n20260916000700 already applied; checksum verified\n20260916000800 already applied; checksum verified\n20260916000900 already applied; checksum verified\n20260916001000 already applied; checksum verified\n20260921000100 already applied; checksum verified\n20260921000200 already applied; checksum verified\n20260923000100 already applied; checksum verified\n20260923000200 already applied; checksum verified\n20260924000100 already applied; checksum verified\n20260924000200 already applied; checksum verified\n20260924000300 already applied; checksum verified\n20260925000100 already applied; checksum verified\n20260928000100 already applied; checksum verified\n20260928000200 already applied; checksum verified\n20260928000300 already applied; checksum verified\n20260928000400 already applied; checksum verified\n20260929000100 already applied; checksum verified\n20260929000200 already applied; checksum verified\n20260929000300 already applied; checksum verified\n20261001000100 already applied; checksum verified\n20261006000100 already applied; checksum verified\n20261006000200 already applied; checksum verified\n20261007000100 already applied; checksum verified\n20261007000200 already applied; checksum verified\n20261009000100 already applied; checksum verified\n20261009000200 already applied; checksum verified\n20261013000100 already applied; checksum verified\n20261015000100 already applied; checksum verified\n20261021221204 already applied; checksum verified\n\n"
+      },
+      {
+        "name": "canonical_35_status",
+        "exit": 0,
+        "ms": 71,
+        "output": "20260916000100 applied 20260916000100_bootstrap_schemas_and_ledger.sql\n20260916000200 applied 20260916000200_platform_iam_organization.sql\n20260916000300 applied 20260916000300_normative_control_evidence.sql\n20260916000400 applied 20260916000400_risk_operations_privacy.sql\n20260916000500 applied 20260916000500_data_integration_reporting_ai.sql\n20260916000600 applied 20260916000600_constraints_and_uniqueness.sql\n20260916000700 applied 20260916000700_foreign_keys.sql\n20260916000800 applied 20260916000800_required_indexes.sql\n20260916000900 applied 20260916000900_canonical_seeds.sql\n20260916001000 applied 20260916001000_pre_f4_integrated_audit_model.sql\n20260921000100 applied 20260921000100_pre_f5c_executable_physical_reconciliation.sql\n20260921000200 applied 20260921000200_phase5_core_grc_runtime_permissions.sql\n20260923000100 applied 20260923000100_pre_f5e_platform_authority.sql\n20260923000200 applied 20260923000200_phase5_final_closure.sql\n20260924000100 applied 20260924000100_phase5_subscription_create_catalog.sql\n20260924000200 applied 20260924000200_phase5_retention_policy_lifecycle.sql\n20260924000300 applied 20260924000300_phase5_membership_invitation.sql\n20260925000100 applied 20260925000100_phase5_membership_invitation_platform_authority_reconciliation.sql\n20260928000100 applied 20260928000100_phase5_administrative_read_permissions.sql\n20260928000200 applied 20260928000200_phase5_membership_role_revoke_platform_grant.sql\n20260928000300 applied 20260928000300_phase5_control_assessment_start_tenant_scope.sql\n20260928000400 applied 20260928000400_phase5_regulatory_catalog_contract_alignment.sql\n20260929000100 applied 20260929000100_phase5_subscription_regulatory_pack_authority.sql\n20260929000200 applied 20260929000200_phase5_plus_permissions_applicability.sql\n20260929000300 applied 20260929000300_phase5_plus_subject_validation_access.sql\n20261001000100 applied 20261001000100_managed_identity_permissions_publication.sql\n20261006000100 applied 20261006000100_platform_role_administration_permission_publication.sql\n20261006000200 applied 20261006000200_user_identity_discovery_permission_publication.sql\n20261007000100 applied 20261007000100_platform_tenant_user_onboarding_permission_publication.sql\n20261007000200 applied 20261007000200_phase5_methodology_binding.sql\n20261009000100 applied 20261009000100_phase6a3_configuration_integrity.sql\n20261009000200 applied 20261009000200_phase6a3_reference_read_permissions.sql\n20261013000100 applied 20261013000100_commercial_contract_reconciliation.sql\n20261015000100 applied 20261015000100_c04w_applicability_hold_r2.sql\n20261021221204 applied 20261021221204_normative_library_b01_b09_h04_pv01.sql\n\n"
+      },
+      {
+        "name": "canonical_schema_verify",
+        "exit": 0,
+        "ms": 135,
+        "output": "{\n  \"database\": \"tcdx-grc\",\n  \"postgresMajor\": 16,\n  \"expectedPhysicalTables\": 244,\n  \"actualPhysicalTables\": 244,\n  \"expectedColumns\": 3630,\n  \"expectedConstraints\": 2644,\n  \"expectedRequiredIndexes\": 1557,\n  \"tenantScopedTables\": 217,\n  \"primaryKeys\": 245,\n  \"uniqueConstraints\": 434,\n  \"checkConstraints\": 821,\n  \"foreignKeys\": 1388,\n  \"compositeTenantForeignKeys\": 510,\n  \"tableOwners\": [\n    \"postgres\"\n  ],\n  \"forbiddenDeleteCascades\": 0,\n  \"schemaMismatches\": 0,\n  \"normativeLibraryDefinitionChecks\": {\n    \"constraints\": 98,\n    \"indexes\": 56,\n    \"functions\": 8,\n    \"triggers\": 12\n  },\n  \"mismatches\": []\n}\n\n"
+      },
+      {
+        "name": "canonical_migration_guards",
+        "exit": 0,
+        "ms": 286,
+        "output": "{\n  \"migrationChecksumGuard\": \"PASS\",\n  \"migrationConcurrencyGuard\": \"PASS\",\n  \"unknownLedgerGuard\": \"PASS\",\n  \"sourceMigrationChecksumsIntact\": true,\n  \"copiedTamperTarget\": \"20260916000100_bootstrap_schemas_and_ledger.sql\",\n  \"failures\": []\n}\n\n"
+      },
+      {
+        "name": "unexpected_function_overload_rejected",
+        "exit": 1,
+        "ms": 135,
+        "output": "{\n  \"database\": \"tcdx-grc\",\n  \"postgresMajor\": 16,\n  \"expectedPhysicalTables\": 244,\n  \"actualPhysicalTables\": 244,\n  \"expectedColumns\": 3630,\n  \"expectedConstraints\": 2644,\n  \"expectedRequiredIndexes\": 1557,\n  \"tenantScopedTables\": 217,\n  \"primaryKeys\": 245,\n  \"uniqueConstraints\": 434,\n  \"checkConstraints\": 821,\n  \"foreignKeys\": 1388,\n  \"compositeTenantForeignKeys\": 510,\n  \"tableOwners\": [\n    \"postgres\"\n  ],\n  \"forbiddenDeleteCascades\": 0,\n  \"schemaMismatches\": 1,\n  \"normativeLibraryDefinitionChecks\": {\n    \"constraints\": 98,\n    \"indexes\": 56,\n    \"functions\": 8,\n    \"triggers\": 12\n  },\n  \"mismatches\": [\n    \"duplicate-function-identity\"\n  ]\n}\n\n"
+      },
+      {
+        "name": "historical_C04W_check_still_required",
+        "exit": 1,
+        "ms": 133,
+        "output": "{\n  \"database\": \"tcdx-grc\",\n  \"postgresMajor\": 16,\n  \"expectedPhysicalTables\": 244,\n  \"actualPhysicalTables\": 244,\n  \"expectedColumns\": 3630,\n  \"expectedConstraints\": 2644,\n  \"expectedRequiredIndexes\": 1557,\n  \"tenantScopedTables\": 217,\n  \"primaryKeys\": 245,\n  \"uniqueConstraints\": 434,\n  \"checkConstraints\": 820,\n  \"foreignKeys\": 1388,\n  \"compositeTenantForeignKeys\": 510,\n  \"tableOwners\": [\n    \"postgres\"\n  ],\n  \"forbiddenDeleteCascades\": 0,\n  \"schemaMismatches\": 1,\n  \"normativeLibraryDefinitionChecks\": {\n    \"constraints\": 98,\n    \"indexes\": 56,\n    \"functions\": 8,\n    \"triggers\": 12\n  },\n  \"mismatches\": [\n    \"missing-constraint:ck_retention_policies__kind_duration_c04w\"\n  ]\n}\n\n"
+      },
+      {
+        "name": "function_body_drift_rejected",
+        "exit": 1,
+        "ms": 136,
+        "output": "{\n  \"database\": \"tcdx-grc\",\n  \"postgresMajor\": 16,\n  \"expectedPhysicalTables\": 244,\n  \"actualPhysicalTables\": 244,\n  \"expectedColumns\": 3630,\n  \"expectedConstraints\": 2644,\n  \"expectedRequiredIndexes\": 1557,\n  \"tenantScopedTables\": 217,\n  \"primaryKeys\": 245,\n  \"uniqueConstraints\": 434,\n  \"checkConstraints\": 821,\n  \"foreignKeys\": 1388,\n  \"compositeTenantForeignKeys\": 510,\n  \"tableOwners\": [\n    \"postgres\"\n  ],\n  \"forbiddenDeleteCascades\": 0,\n  \"schemaMismatches\": 1,\n  \"normativeLibraryDefinitionChecks\": {\n    \"constraints\": 98,\n    \"indexes\": 56,\n    \"functions\": 8,\n    \"triggers\": 12\n  },\n  \"mismatches\": [\n    \"function-definition::knowledge.enforce_source_usage_rights\"\n  ]\n}\n\n"
+      },
+      {
+        "name": "disabled_trigger_rejected",
+        "exit": 1,
+        "ms": 131,
+        "output": "{\n  \"database\": \"tcdx-grc\",\n  \"postgresMajor\": 16,\n  \"expectedPhysicalTables\": 244,\n  \"actualPhysicalTables\": 244,\n  \"expectedColumns\": 3630,\n  \"expectedConstraints\": 2644,\n  \"expectedRequiredIndexes\": 1557,\n  \"tenantScopedTables\": 217,\n  \"primaryKeys\": 245,\n  \"uniqueConstraints\": 434,\n  \"checkConstraints\": 821,\n  \"foreignKeys\": 1388,\n  \"compositeTenantForeignKeys\": 510,\n  \"tableOwners\": [\n    \"postgres\"\n  ],\n  \"forbiddenDeleteCascades\": 0,\n  \"schemaMismatches\": 1,\n  \"normativeLibraryDefinitionChecks\": {\n    \"constraints\": 98,\n    \"indexes\": 56,\n    \"functions\": 8,\n    \"triggers\": 12\n  },\n  \"mismatches\": [\n    \"trigger-definition:knowledge.knowledge_version_context_links:ck_knowledge_context__immutable\"\n  ]\n}\n\n"
+      },
+      {
+        "name": "missing_index_rejected",
+        "exit": 1,
+        "ms": 137,
+        "output": "{\n  \"database\": \"tcdx-grc\",\n  \"postgresMajor\": 16,\n  \"expectedPhysicalTables\": 244,\n  \"actualPhysicalTables\": 244,\n  \"expectedColumns\": 3630,\n  \"expectedConstraints\": 2644,\n  \"expectedRequiredIndexes\": 1557,\n  \"tenantScopedTables\": 217,\n  \"primaryKeys\": 245,\n  \"uniqueConstraints\": 434,\n  \"checkConstraints\": 821,\n  \"foreignKeys\": 1388,\n  \"compositeTenantForeignKeys\": 510,\n  \"tableOwners\": [\n    \"postgres\"\n  ],\n  \"forbiddenDeleteCascades\": 0,\n  \"schemaMismatches\": 2,\n  \"normativeLibraryDefinitionChecks\": {\n    \"constraints\": 98,\n    \"indexes\": 56,\n    \"functions\": 8,\n    \"triggers\": 12\n  },\n  \"mismatches\": [\n    \"missing-index:ix_knowledge_context__unit\",\n    \"index-definition:knowledge.knowledge_version_context_links:ix_knowledge_context__unit\"\n  ]\n}\n\n"
+      },
+      {
+        "name": "weakened_XOR_check_rejected",
+        "exit": 1,
+        "ms": 140,
+        "output": "{\n  \"database\": \"tcdx-grc\",\n  \"postgresMajor\": 16,\n  \"expectedPhysicalTables\": 244,\n  \"actualPhysicalTables\": 244,\n  \"expectedColumns\": 3630,\n  \"expectedConstraints\": 2644,\n  \"expectedRequiredIndexes\": 1557,\n  \"tenantScopedTables\": 217,\n  \"primaryKeys\": 245,\n  \"uniqueConstraints\": 434,\n  \"checkConstraints\": 821,\n  \"foreignKeys\": 1388,\n  \"compositeTenantForeignKeys\": 510,\n  \"tableOwners\": [\n    \"postgres\"\n  ],\n  \"forbiddenDeleteCascades\": 0,\n  \"schemaMismatches\": 1,\n  \"normativeLibraryDefinitionChecks\": {\n    \"constraints\": 98,\n    \"indexes\": 56,\n    \"functions\": 8,\n    \"triggers\": 12\n  },\n  \"mismatches\": [\n    \"constraint-definition:knowledge.knowledge_version_context_links:ck_knowledge_context__target_xor\"\n  ]\n}\n\n"
+      },
+      {
+        "name": "final_canonical_schema_verify",
+        "exit": 0,
+        "ms": 150,
+        "output": "{\n  \"database\": \"tcdx-grc\",\n  \"postgresMajor\": 16,\n  \"expectedPhysicalTables\": 244,\n  \"actualPhysicalTables\": 244,\n  \"expectedColumns\": 3630,\n  \"expectedConstraints\": 2644,\n  \"expectedRequiredIndexes\": 1557,\n  \"tenantScopedTables\": 217,\n  \"primaryKeys\": 245,\n  \"uniqueConstraints\": 434,\n  \"checkConstraints\": 821,\n  \"foreignKeys\": 1388,\n  \"compositeTenantForeignKeys\": 510,\n  \"tableOwners\": [\n    \"postgres\"\n  ],\n  \"forbiddenDeleteCascades\": 0,\n  \"schemaMismatches\": 0,\n  \"normativeLibraryDefinitionChecks\": {\n    \"constraints\": 98,\n    \"indexes\": 56,\n    \"functions\": 8,\n    \"triggers\": 12\n  },\n  \"mismatches\": []\n}\n\n"
+      }
+    ],
+    "status": "PASS_ISOLATED_CANONICAL_CHAIN_ONLY"
+  },
+  "error": null,
+  "cleanup": {
+    "destroy_exit_code": 0,
+    "absent": true
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "reference": "QA01-LOGICAL-0680ff6898e747d8ba2d56b9a171e1ca",
+  "protected_location": "/Users/andresbarouh/.tcdx-grc-qa-recovery/QA01-LOGICAL-0680ff6898e747d8ba2d56b9a171e1ca/tcdx-grc.pgdump",
+  "started_utc": "2026-10-22T15:11:21.768Z",
+  "source": "QA db-tecdex/192.168.2.40:5432/tcdx-grc",
+  "source_writes": "NONE",
+  "custody": "andresbarouh; directory0700/archive0600; FileVault ON",
+  "file_encryption": "FileVault at rest; no independent file encryption, prior PO custody decision preserved",
+  "PITR": "NOT_PROVIDED_LOGICAL_SNAPSHOT_ONLY",
+  "retention": "Retain pending explicit PO disposal decision",
+  "image": "sha256:0ea6700a3b4f0ae6ce746519073558aed4d88a79d8d07622a9a644946c7319c4",
+  "identity": {
+    "db": "tcdx-grc",
+    "host": "192.168.2.40",
+    "port": 5432,
+    "username": "postgres",
+    "version": "160015",
+    "cluster": "16/main",
+    "readonly": "on",
+    "default_readonly": "on",
+    "system_identifier": "7640968386355389904",
+    "recovery": false,
+    "tls_authorized": true,
+    "peer_fingerprint": "FB:68:09:DA:13:9E:E3:E5:2C:2F:1F:EA:D7:5B:11:92:7B:04:B8:96:7A:2B:5D:B8:46:9C:B6:70:E3:BB:A3:E6",
+    "protocol": "TLSv1.3",
+    "servername": "db-tecdex",
+    "sslmode": "verify-full"
+  },
+  "snapshot_utc": "2026-10-22T15:11:22.724Z",
+  "snapshot_token_sha256": "dcd8378043bcd9aa4ff61feb01d370ce1b5a408064f93613979dcbd77a66b2b4",
+  "referenced_roles": [
+    "tcdx_grc_app"
+  ],
+  "dump_exit_code": 0,
+  "dump_sha256": "20b82102bf622f707b217187149ef87bf9e73c99d8dd883b7d8eb23e6c5d7e34",
+  "dump_size_bytes": 2584440,
+  "dump_version": "pg_dump (PostgreSQL) 16.14 (Homebrew)",
+  "archive_toc_sha256": "a81e18e4043cc688eed494defb3727a61876b8112f15c86c2370835a7f8a0d98",
+  "archive_list_exit_code": 0,
+  "isolation": {
+    "container": "grc-qa01-restore-652f6166-d1f",
+    "image": "sha256:0ea6700a3b4f0ae6ce746519073558aed4d88a79d8d07622a9a644946c7319c4",
+    "network": "none",
+    "ports": [],
+    "binds": [],
+    "volumes": [],
+    "PGDATA": "tmpfs768MiB"
+  },
+  "restore_exit_code": 1,
+  "status": "FAIL",
+  "failed_stage": "isolated_restore",
+  "cleanup": {
+    "exit_code": 0,
+    "container_absent": true,
+    "sensitive_restore_tmpfs_destroyed": true
+  },
+  "finished_utc": "2026-10-22T15:11:38.614Z"
+}

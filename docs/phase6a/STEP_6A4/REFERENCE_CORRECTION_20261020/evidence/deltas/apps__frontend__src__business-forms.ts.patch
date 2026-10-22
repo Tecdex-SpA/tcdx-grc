@@ -1,0 +1,46 @@
+--- entry/apps/frontend/src/business-forms.ts
++++ current/apps/frontend/src/business-forms.ts
+@@ -7,8 +7,17 @@
+ export const businessForms = assets.forms;
+ export type BusinessForm = typeof businessForms[number];
+ export type FormErrors = Record<string, string>;
+-export type Schema = { type?: string; format?: string; $ref?: string; required?: string[]; properties?: Record<string, Schema>; minLength?: number; maxLength?: number; minimum?: number; maximum?: number; enum?: (string | number)[] };
++export type Schema = { type?: string; format?: string; $ref?: string; required?: string[]; oneOf?: Schema[]; properties?: Record<string, Schema>; minLength?: number; maxLength?: number; minimum?: number; maximum?: number; enum?: (string | number)[] };
+ const schemas = assets.schemas as Record<string, Schema>;
++/** UI projection of the two published, mutually exclusive typed-reference groups. */
++export function originFields(schema: string): string[] {
++  return ['EvidenceRequestCreateRequest','IssueCreateRequest'].includes(schema)
++    ? (schemas[schema]?.oneOf ?? []).flatMap(branch => branch.required ?? []) : [];
++}
++export function changeOrigin(schema: string, values: Record<string,string>): Record<string,string> {
++  const cleared = new Set([...originFields(schema), ...(schema==='EvidenceRequestCreateRequest'?['assigned_membership_id']:[])]);
++  return Object.fromEntries(Object.entries(values).filter(([field])=>!cleared.has(field)));
++}
+ export function formForPath(path: string): BusinessForm | undefined { return businessForms.find(form => form.path === path); }
+ export function formSchema(form: BusinessForm): Schema { return schemas[form.schema]!; }
+ export function propertySchema(schema: string, field: string): Schema {
+@@ -17,6 +26,7 @@
+ }
+ export function requiredField(schema: string, field: string, values: Record<string, unknown> = {}): boolean {
+   return !!schemas[schema]?.required?.includes(field) ||
++    (originFields(schema).length > 0 && (field==='_reference' || originFields(schema).includes(field))) ||
+     (schema==='EvidenceLinkCreateInput' && ['requirement_id','control_id','control_version_id','requirement_assessment_id','control_assessment_id','assurance_test_id'].includes(field) && Object.hasOwn(values,field)) ||
+     (schema==='SoaItemCreateInput' && ['tenant_control_id','tenant_control_version_id'].includes(field) && !!(values.tenant_control_id||values.tenant_control_version_id)) ||
+     (schema === 'ApplicabilityCreateRequest' && field === 'rationale' && values.applicability_decision === 'not_applicable') ||
+@@ -51,6 +61,10 @@
+     const missing = error.keyword === 'required' ? String(error.params.missingProperty) : '';
+     const key = missing && error.instancePath ? `${field}.${missing}` : missing || field;
+     errors[key] = error.keyword === 'required' ? 'Completa este campo obligatorio.' : error.keyword === 'oneOf' ? 'Selecciona exactamente un objeto de referencia.' : error.keyword === 'maxLength' ? `Usa como máximo ${String(error.params.limit)} caracteres.` : error.keyword === 'minimum' || error.keyword === 'maximum' ? `Revisa el límite permitido: ${String(error.params.limit)}.` : 'Revisa el valor y el formato de este campo.';
++    if(error.keyword==='oneOf' && !error.instancePath && originFields(schema).length){
++      delete errors[key];
++      errors._reference = `Selecciona un tipo de origen y un único registro de ese tipo. Opciones: ${originFields(schema).map(fieldLabel).join(', ')}.`;
++    }
+   }
+   const inspect = (row: Record<string, unknown>, prefix = '') => {
+     const err = (field: string, message: string) => { errors[prefix + field] = message; };
+@@ -83,4 +97,4 @@
+   }
+   return 'No pudimos completar la operación. Conservamos tus entradas para que puedas revisarlas.';
+ }
+-export function errorFieldLabel(path: string): string { return path.split('.').map(part => /^\d+$/.test(part) ? `fila ${Number(part)+1}` : fieldLabel(part)).join(' · '); }
++export function errorFieldLabel(path: string): string { return path.split('.').map(part => part==='_reference'?'Objeto de origen':/^\d+$/.test(part) ? `fila ${Number(part)+1}` : fieldLabel(part)).join(' · '); }

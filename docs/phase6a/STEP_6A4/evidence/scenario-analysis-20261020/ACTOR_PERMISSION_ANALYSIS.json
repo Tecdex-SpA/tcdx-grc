@@ -1,0 +1,622 @@
+{
+  "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+  "active_identities": 6,
+  "permission_count": 36,
+  "operations": [
+    {
+      "FORM_ID": "FORM-01",
+      "PERMISSION": "compliance.applicability.create",
+      "ALLOWED_SCOPES": "tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "SCOPE_MATCH_COUNT": 3,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-02",
+      "PERMISSION": "compliance.applicability.submit",
+      "ALLOWED_SCOPES": "tenant/owned",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "SCOPE_MATCH_COUNT": 3,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-03",
+      "PERMISSION": "compliance.applicability.approve",
+      "ALLOWED_SCOPES": "tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "SCOPE_MATCH_COUNT": 1,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-04",
+      "PERMISSION": "compliance.requirement_assessment.create",
+      "ALLOWED_SCOPES": "tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "SCOPE_MATCH_COUNT": 3,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-05",
+      "PERMISSION": "compliance.requirement_assessment.update",
+      "ALLOWED_SCOPES": "assigned/tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "SCOPE_MATCH_COUNT": 3,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-06",
+      "PERMISSION": "compliance.requirement_assessment.submit",
+      "ALLOWED_SCOPES": "assigned/tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "SCOPE_MATCH_COUNT": 3,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-07",
+      "PERMISSION": "compliance.requirement_assessment.approve",
+      "ALLOWED_SCOPES": "tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "SCOPE_MATCH_COUNT": 1,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-08",
+      "PERMISSION": "compliance.soa.create",
+      "ALLOWED_SCOPES": "tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "SCOPE_MATCH_COUNT": 1,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-09",
+      "PERMISSION": "compliance.soa.publish",
+      "ALLOWED_SCOPES": "tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "SCOPE_MATCH_COUNT": 1,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-10",
+      "PERMISSION": "controls.control.create",
+      "ALLOWED_SCOPES": "tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a0e832-ccb7-7574-8316-0781503d47de"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a0e832-ccb7-7574-8316-0781503d47de"
+      ],
+      "SCOPE_MATCH_COUNT": 2,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-11",
+      "PERMISSION": "controls.control_assessment.create",
+      "ALLOWED_SCOPES": "tenant/owned",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a0e832-ccb7-7574-8316-0781503d47de"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a0e832-ccb7-7574-8316-0781503d47de"
+      ],
+      "SCOPE_MATCH_COUNT": 2,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-12",
+      "PERMISSION": "controls.control_assessment.update",
+      "ALLOWED_SCOPES": "tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a0e832-ccb7-7574-8316-0781503d47de"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a0e832-ccb7-7574-8316-0781503d47de"
+      ],
+      "SCOPE_MATCH_COUNT": 2,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-13",
+      "PERMISSION": "controls.control_assessment.submit",
+      "ALLOWED_SCOPES": "owned_object, tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a0e832-ccb7-7574-8316-0781503d47de"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a0e832-ccb7-7574-8316-0781503d47de"
+      ],
+      "SCOPE_MATCH_COUNT": 2,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-14",
+      "PERMISSION": "controls.control_assessment.review",
+      "ALLOWED_SCOPES": "tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "SCOPE_MATCH_COUNT": 1,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-15",
+      "PERMISSION": "controls.control_assessment.approve",
+      "ALLOWED_SCOPES": "tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "SCOPE_MATCH_COUNT": 1,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-16",
+      "PERMISSION": "controls.assurance_test.create",
+      "ALLOWED_SCOPES": "tenant, audit_engagement",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "SCOPE_MATCH_COUNT": 1,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-17",
+      "PERMISSION": "controls.assurance_test.execute",
+      "ALLOWED_SCOPES": "assigned_object, audit_engagement",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a0e832-ccb7-7574-8316-0781503d47de"
+      ],
+      "CANDIDATES_SCOPE": [],
+      "SCOPE_MATCH_COUNT": 0,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-18",
+      "PERMISSION": "controls.assurance_test.execute",
+      "ALLOWED_SCOPES": "assigned",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a0e832-ccb7-7574-8316-0781503d47de"
+      ],
+      "CANDIDATES_SCOPE": [],
+      "SCOPE_MATCH_COUNT": 0,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-19",
+      "PERMISSION": "controls.assurance_test.review",
+      "ALLOWED_SCOPES": "tenant, audit_engagement",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "SCOPE_MATCH_COUNT": 1,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-20",
+      "PERMISSION": "controls.assurance_test.approve",
+      "ALLOWED_SCOPES": "tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "SCOPE_MATCH_COUNT": 1,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-21",
+      "PERMISSION": "evidence.evidence_request.create",
+      "ALLOWED_SCOPES": "tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a0e832-ccb7-7574-8316-0781503d47de"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a0e832-ccb7-7574-8316-0781503d47de"
+      ],
+      "SCOPE_MATCH_COUNT": 2,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-22",
+      "PERMISSION": "evidence.evidence_request.submit",
+      "ALLOWED_SCOPES": "assigned/tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a0e832-ccb7-7574-8316-0781503d47de",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a0e832-ccb7-7574-8316-0781503d47de",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "SCOPE_MATCH_COUNT": 3,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-23",
+      "PERMISSION": "evidence.evidence.create",
+      "ALLOWED_SCOPES": "tenant, assigned_object, owned_object",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a0e832-ccb7-7574-8316-0781503d47de",
+        "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a0e832-ccb7-7574-8316-0781503d47de",
+        "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "SCOPE_MATCH_COUNT": 4,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-24",
+      "PERMISSION": "evidence.evidence.submit",
+      "ALLOWED_SCOPES": "owned/assigned/tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a0e832-ccb7-7574-8316-0781503d47de",
+        "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a0e832-ccb7-7574-8316-0781503d47de",
+        "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "SCOPE_MATCH_COUNT": 4,
+      "CONTEXTUAL_EXCEPTION": "S\u00f3lo tenant para evidence.submit; ordinary published applicability no satisface excepci\u00f3n own pending initial source. Falta owned/assigned para contexto ordinario."
+    },
+    {
+      "FORM_ID": "FORM-25",
+      "PERMISSION": "evidence.evidence.review",
+      "ALLOWED_SCOPES": "assigned/tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "SCOPE_MATCH_COUNT": 1,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-26",
+      "PERMISSION": "evidence.evidence.approve",
+      "ALLOWED_SCOPES": "tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "SCOPE_MATCH_COUNT": 1,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-27",
+      "PERMISSION": "evidence.evidence.reject",
+      "ALLOWED_SCOPES": "tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "SCOPE_MATCH_COUNT": 1,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-28",
+      "PERMISSION": "privacy.retention_policy.create",
+      "ALLOWED_SCOPES": "tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+        "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+        "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "SCOPE_MATCH_COUNT": 4,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-29",
+      "PERMISSION": "privacy.retention_policy.update",
+      "ALLOWED_SCOPES": "tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+        "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+        "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "SCOPE_MATCH_COUNT": 4,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-30",
+      "PERMISSION": "privacy.retention_policy.review",
+      "ALLOWED_SCOPES": "tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a0e832-ccb7-7574-8316-0781503d47de",
+        "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+        "01a146b8-8e3c-74b1-867a-c83cb26cd835",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a0e832-ccb7-7574-8316-0781503d47de",
+        "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+        "01a146b8-8e3c-74b1-867a-c83cb26cd835",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "SCOPE_MATCH_COUNT": 5,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-31",
+      "PERMISSION": "privacy.retention_policy.approve",
+      "ALLOWED_SCOPES": "tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a0e832-ccb7-7574-8316-0781503d47de",
+        "01a146b8-8e3c-74b1-867a-c83cb26cd835"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a0e832-ccb7-7574-8316-0781503d47de",
+        "01a146b8-8e3c-74b1-867a-c83cb26cd835"
+      ],
+      "SCOPE_MATCH_COUNT": 3,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-32",
+      "PERMISSION": "privacy.retention_policy.publish",
+      "ALLOWED_SCOPES": "tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+        "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "01a117cf-4da2-7075-a9b4-c05b8df90d1d",
+        "01a146b6-0006-7575-ae85-6d68ebd76fa9",
+        "01a1470d-bc20-744d-b35d-6121b96631ce"
+      ],
+      "SCOPE_MATCH_COUNT": 4,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-33",
+      "PERMISSION": "remediation.issue.create",
+      "ALLOWED_SCOPES": "tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "SCOPE_MATCH_COUNT": 1,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-34",
+      "PERMISSION": "remediation.issue.transition",
+      "ALLOWED_SCOPES": "tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "SCOPE_MATCH_COUNT": 1,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-35",
+      "PERMISSION": "remediation.issue.transition",
+      "ALLOWED_SCOPES": "tenant, assigned_object, owned_object",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "SCOPE_MATCH_COUNT": 1,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-36",
+      "PERMISSION": "remediation.issue.transition",
+      "ALLOWED_SCOPES": "tenant, assigned_object, owned_object",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "SCOPE_MATCH_COUNT": 1,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-37",
+      "PERMISSION": "remediation.issue.transition",
+      "ALLOWED_SCOPES": "tenant, assigned_object, owned_object",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "SCOPE_MATCH_COUNT": 1,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-38",
+      "PERMISSION": "remediation.action.create",
+      "ALLOWED_SCOPES": "tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "SCOPE_MATCH_COUNT": 1,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-39",
+      "PERMISSION": "remediation.action.transition",
+      "ALLOWED_SCOPES": "assigned/owned",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "CANDIDATES_SCOPE": [],
+      "SCOPE_MATCH_COUNT": 0,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-40",
+      "PERMISSION": "remediation.action.transition",
+      "ALLOWED_SCOPES": "assigned_object, owned_object",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "CANDIDATES_SCOPE": [],
+      "SCOPE_MATCH_COUNT": 0,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-41",
+      "PERMISSION": "remediation.action.transition",
+      "ALLOWED_SCOPES": "assigned/owned",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "CANDIDATES_SCOPE": [],
+      "SCOPE_MATCH_COUNT": 0,
+      "CONTEXTUAL_EXCEPTION": null
+    },
+    {
+      "FORM_ID": "FORM-42",
+      "PERMISSION": "remediation.action.verify",
+      "ALLOWED_SCOPES": "tenant",
+      "CANDIDATES_PERMISSION": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "CANDIDATES_SCOPE": [
+        "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      ],
+      "SCOPE_MATCH_COUNT": 1,
+      "CONTEXTUAL_EXCEPTION": null
+    }
+  ],
+  "limits": "No new session impersonation; no command authorization PASS from SQL. Prior_actor/creator relationships and scopes evaluated as diagnostics only."
+}

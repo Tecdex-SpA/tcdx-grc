@@ -1,0 +1,85 @@
+NORMATIVE_LIBRARY_ASSETS=PASS schemas=25 operations=31
+$ tsc -p tsconfig.json
+waiting for server to start.... done
+server started
+20260916000100 applied
+20260916000200 applied
+20260916000300 applied
+20260916000400 applied
+20260916000500 applied
+20260916000600 applied
+20260916000700 applied
+20260916000800 applied
+20260916000900 applied
+20260916001000 applied
+20260921000100 applied
+20260921000200 applied
+20260923000100 applied
+20260923000200 applied
+20260924000100 applied
+20260924000200 applied
+20260924000300 applied
+20260925000100 applied
+20260928000100 applied
+20260928000200 applied
+20260928000300 applied
+20260928000400 applied
+20260929000100 applied
+20260929000200 applied
+20260929000300 applied
+20261001000100 applied
+20261006000100 applied
+20261006000200 applied
+20261007000100 applied
+20261007000200 applied
+20261009000100 applied
+20261009000200 applied
+20261013000100 applied
+20261015000100 applied
+20261021221204 applied
+
+ RUN  v5.0.1 /Users/andresbarouh/repos/tcdx-grc
+
+
+ Test Files  1 passed (1)
+      Tests  10 passed (10)
+   Start at  11:31:37
+   Duration  1.07s (tests 88%, import 11%, transform 2%)
+
+{
+  "database": "tcdx-grc",
+  "postgresMajor": 16,
+  "expectedPhysicalTables": 244,
+  "actualPhysicalTables": 244,
+  "expectedColumns": 3630,
+  "expectedConstraints": 2644,
+  "expectedRequiredIndexes": 1557,
+  "tenantScopedTables": 217,
+  "primaryKeys": 245,
+  "uniqueConstraints": 434,
+  "checkConstraints": 821,
+  "foreignKeys": 1388,
+  "compositeTenantForeignKeys": 510,
+  "tableOwners": [
+    "andresbarouh"
+  ],
+  "forbiddenDeleteCascades": 0,
+  "schemaMismatches": 0,
+  "normativeLibraryDefinitionChecks": {
+    "constraints": 98,
+    "indexes": 56,
+    "functions": 8,
+    "triggers": 12
+  },
+  "mismatches": []
+}
+
+ RUN  v5.0.1 /Users/andresbarouh/repos/tcdx-grc
+
+
+ Test Files  1 passed (1)
+      Tests  38 passed (38)
+   Start at  11:31:39
+   Duration  5.43s (tests 83%, transform 10%, import 6%)
+
+ISOLATED_CLUSTER=/private/tmp/tcdx-library-operational.lOcJOf

@@ -1,0 +1,10 @@
+--- a/apps/backend/src/security/publication-operator-server.ts
++++ b/apps/backend/src/security/publication-operator-server.ts
+@@ -47,6 +47,7 @@
+     iamOperation: (operation, correlationId) => operation === "iam.provision" ? iam.provision(correlationId)
+       : operation === "iam.revoke" ? iam.revoke(correlationId)
+       : operation === "iam.initial_source.publish" ? iam.publishInitialSource(correlationId)
++      : operation === "iam.library.publish" ? iam.publishNormativeLibrary(correlationId)
+       : operation === "iam.c04w.publish" ? iam.publishC04w(correlationId) : iam.publish(correlationId),
+     identityVerifier: existingQaHumanSessionVerifier(jwt, origin)
+   });

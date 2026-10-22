@@ -1,0 +1,370 @@
+{
+  "data/regulatory/catalogs/tcdx-unified-compliance-control-catalog/v1.1/evidence_expectations.csv": {
+    "rows": 81,
+    "columns": [
+      "control_code",
+      "control_version_number",
+      "evidence_expectation",
+      "minimum_evidence",
+      "reuse_policy",
+      "provenance_ref",
+      "business_key"
+    ]
+  },
+  "data/regulatory/catalogs/tcdx-unified-compliance-control-catalog/v1.1/normative_unit_control_mappings.csv": {
+    "rows": 131,
+    "columns": [
+      "framework_code",
+      "framework_version_number",
+      "normative_unit_code",
+      "control_code",
+      "control_version_number",
+      "mapping_purpose",
+      "status",
+      "review_status",
+      "provenance_ref",
+      "business_key"
+    ]
+  },
+  "data/regulatory/catalogs/tcdx-unified-compliance-control-catalog/v1.1/tcdx_baseline_control_versions.csv": {
+    "rows": 81,
+    "columns": [
+      "control_code",
+      "version_number",
+      "objective",
+      "control_type",
+      "nature",
+      "frequency_code",
+      "execution_method",
+      "verification_method",
+      "minimum_evidence",
+      "suggested_owner_role_code",
+      "control_origin",
+      "ownership_class",
+      "tenant_id",
+      "source_lifecycle_state",
+      "target_lifecycle_instruction",
+      "business_key",
+      "provenance_ref",
+      "license_classification",
+      "publication_eligibility"
+    ]
+  },
+  "data/regulatory/catalogs/tcdx-unified-compliance-control-catalog/v1.1/coverage_manifest.csv": {
+    "rows": 5,
+    "columns": [
+      "framework_code",
+      "framework_version_number",
+      "normative_units_import_ready",
+      "requirements_import_ready",
+      "reference_controls_import_ready",
+      "structural_dataset_coverage_percent",
+      "official_reviewed_coverage_percent",
+      "publication_gate",
+      "note"
+    ]
+  },
+  "data/regulatory/catalogs/tcdx-unified-compliance-control-catalog/v1.1/source_registry.csv": {
+    "rows": 9,
+    "columns": [
+      "source_id",
+      "framework_code",
+      "authority",
+      "source_type",
+      "url",
+      "license_classification",
+      "allowed_use",
+      "prohibited_use",
+      "source_role",
+      "lifecycle_state",
+      "provenance_ref"
+    ]
+  },
+  "data/regulatory/catalogs/tcdx-unified-compliance-control-catalog/v1.1/regulatory_packs.csv": {
+    "rows": 5,
+    "columns": [
+      "pack_code",
+      "name",
+      "source_type",
+      "jurisdiction",
+      "ownership_class",
+      "tenant_id",
+      "external_status",
+      "official_use_eligible",
+      "license_classification",
+      "source_url",
+      "business_key",
+      "provenance_ref"
+    ]
+  },
+  "data/regulatory/catalogs/tcdx-unified-compliance-control-catalog/v1.1/normative_units.csv": {
+    "rows": 260,
+    "columns": [
+      "framework_code",
+      "framework_version_number",
+      "normative_unit_code",
+      "parent_normative_unit_code",
+      "unit_type",
+      "original_unit_type",
+      "title",
+      "display_order",
+      "source_locator",
+      "content_language",
+      "licensed_content",
+      "licensed_content_ref",
+      "content_hash",
+      "effective_from",
+      "effective_to",
+      "license_classification",
+      "ownership_class",
+      "tenant_id",
+      "provenance_ref",
+      "source_status",
+      "review_status",
+      "business_key",
+      "publication_eligibility"
+    ]
+  },
+  "data/regulatory/catalogs/tcdx-unified-compliance-control-catalog/v1.1/quarantined_relations.csv": {
+    "rows": 1213,
+    "columns": [
+      "source_dataset",
+      "record_id",
+      "reason_code",
+      "source_key",
+      "target_key",
+      "recommended_resolution"
+    ]
+  },
+  "data/regulatory/catalogs/tcdx-unified-compliance-control-catalog/v1.1/framework_crosswalks.csv": {
+    "rows": 6,
+    "columns": [
+      "crosswalk_code",
+      "source_framework_code",
+      "source_framework_version_number",
+      "target_framework_code",
+      "target_framework_version_number",
+      "direction",
+      "status",
+      "review_status",
+      "provenance_ref",
+      "business_key"
+    ]
+  },
+  "data/regulatory/catalogs/tcdx-unified-compliance-control-catalog/v1.1/requirements.csv": {
+    "rows": 118,
+    "columns": [
+      "requirement_code",
+      "framework_code",
+      "framework_version_number",
+      "normative_unit_code",
+      "requirement_kind",
+      "statement_locator",
+      "summary_tcdx",
+      "licensed_statement",
+      "licensed_content_ref",
+      "content_language",
+      "content_hash",
+      "is_mandatory",
+      "applicability_guidance",
+      "evidence_expectations",
+      "tags",
+      "confidence",
+      "review_status",
+      "source_status",
+      "license_classification",
+      "ownership_class",
+      "tenant_id",
+      "effective_from",
+      "effective_to",
+      "provenance_ref",
+      "business_key",
+      "publication_eligibility"
+    ]
+  },
+  "data/regulatory/catalogs/tcdx-unified-compliance-control-catalog/v1.1/requirement_control_mappings.csv": {
+    "rows": 333,
+    "columns": [
+      "mapping_code",
+      "requirement_code",
+      "control_code",
+      "control_version_number",
+      "mapping_type",
+      "coverage_contribution",
+      "coverage_class",
+      "rationale",
+      "confidence",
+      "review_status",
+      "ownership_class",
+      "tenant_id",
+      "effective_from",
+      "effective_to",
+      "provenance_ref",
+      "business_key"
+    ]
+  },
+  "data/regulatory/catalogs/tcdx-unified-compliance-control-catalog/v1.1/regulatory_reference_controls.csv": {
+    "rows": 131,
+    "columns": [
+      "control_code",
+      "name",
+      "control_origin",
+      "ownership_class",
+      "tenant_id",
+      "source_framework_code",
+      "source_normative_unit_code",
+      "source_locator",
+      "legacy_v1_requirement_code",
+      "business_key",
+      "provenance_ref",
+      "license_classification",
+      "publication_eligibility"
+    ]
+  },
+  "data/regulatory/catalogs/tcdx-unified-compliance-control-catalog/v1.1/frameworks.csv": {
+    "rows": 5,
+    "columns": [
+      "framework_code",
+      "name",
+      "framework_kind",
+      "ownership_class",
+      "tenant_id",
+      "version_number",
+      "edition",
+      "external_status",
+      "source_url",
+      "license_classification",
+      "business_key",
+      "framework_version_business_key",
+      "provenance_ref",
+      "official_note"
+    ]
+  },
+  "data/regulatory/catalogs/tcdx-unified-compliance-control-catalog/v1.1/regulatory_pack_versions.csv": {
+    "rows": 5,
+    "columns": [
+      "pack_code",
+      "version_number",
+      "edition",
+      "external_edition",
+      "publication_date",
+      "effective_from",
+      "effective_to",
+      "external_status",
+      "license_classification",
+      "internal_publication_eligibility",
+      "source_url",
+      "amendment",
+      "amendment_status",
+      "business_key",
+      "provenance_ref"
+    ]
+  },
+  "data/regulatory/catalogs/tcdx-unified-compliance-control-catalog/v1.1/regulatory_reference_control_versions.csv": {
+    "rows": 131,
+    "columns": [
+      "control_code",
+      "version_number",
+      "objective",
+      "control_type",
+      "nature",
+      "frequency_code",
+      "execution_method",
+      "verification_method",
+      "minimum_evidence",
+      "suggested_owner_role_code",
+      "control_origin",
+      "ownership_class",
+      "tenant_id",
+      "based_on_control_version_business_key",
+      "effective_from",
+      "effective_to",
+      "business_key",
+      "provenance_ref",
+      "license_classification",
+      "publication_eligibility"
+    ]
+  },
+  "data/regulatory/catalogs/tcdx-unified-compliance-control-catalog/v1.1/control_crosswalk_mappings.csv": {
+    "rows": 278,
+    "columns": [
+      "crosswalk_code",
+      "mapping_code",
+      "source_control_code",
+      "source_control_version_number",
+      "target_control_code",
+      "target_control_version_number",
+      "relationship_type",
+      "direction",
+      "rationale",
+      "confidence",
+      "status",
+      "review_status",
+      "provenance_ref",
+      "business_key"
+    ]
+  },
+  "data/regulatory/catalogs/tcdx-unified-compliance-control-catalog/v1.1/tcdx_baseline_controls.csv": {
+    "rows": 81,
+    "columns": [
+      "control_code",
+      "name",
+      "domain",
+      "control_origin",
+      "ownership_class",
+      "tenant_id",
+      "business_key",
+      "provenance_ref",
+      "license_classification",
+      "publication_eligibility"
+    ]
+  },
+  "data/regulatory/catalogs/tcdx-unified-compliance-control-catalog/v1.1/requirement_crosswalk_mappings.csv": {
+    "rows": 188,
+    "columns": [
+      "crosswalk_code",
+      "mapping_code",
+      "source_requirement_code",
+      "target_requirement_code",
+      "relationship_type",
+      "direction",
+      "rationale",
+      "confidence",
+      "status",
+      "review_status",
+      "provenance_ref",
+      "business_key"
+    ]
+  },
+  "data/regulatory/catalogs/tcdx-unified-compliance-control-catalog/v1.1/normative_unit_crosswalk_mappings.csv": {
+    "rows": 28,
+    "columns": [
+      "crosswalk_code",
+      "mapping_code",
+      "source_normative_unit_code",
+      "target_normative_unit_code",
+      "relationship_type",
+      "direction",
+      "rationale",
+      "confidence",
+      "status",
+      "review_status",
+      "provenance_ref",
+      "business_key"
+    ]
+  },
+  "data/regulatory/catalogs/tcdx-unified-compliance-control-catalog/v1.1/provenance_registry.csv": {
+    "rows": 15,
+    "columns": [
+      "provenance_ref",
+      "source_id",
+      "framework_code",
+      "source_role",
+      "url",
+      "retrieved_or_verified_on",
+      "license_classification",
+      "content_policy",
+      "review_requirement"
+    ]
+  }
+}

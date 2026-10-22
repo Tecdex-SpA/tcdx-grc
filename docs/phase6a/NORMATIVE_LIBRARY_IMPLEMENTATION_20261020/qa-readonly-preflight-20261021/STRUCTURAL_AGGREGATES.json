@@ -1,0 +1,44 @@
+{
+  "label": "STRUCTURAL_AGGREGATES",
+  "command": "psql fixed canonical QA endpoint; pgpass via libpq; no credential values logged",
+  "sql_sha256": "002e5ef0db318f05f8962682fe04a341b2c7f37473efb3aa0a7d245bd754f0ea",
+  "duration_seconds": 0.2043,
+  "exit_code": 0,
+  "at_utc": "2026-10-21T21:13:05.743158+00:00",
+  "show_transaction_read_only": "on",
+  "results": [
+    {
+      "user": "postgres",
+      "version": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, 64-bit",
+      "category": "identity",
+      "database": "tcdx-grc",
+      "in_recovery": false,
+      "server_port": 5432,
+      "cluster_name": "16/main",
+      "lock_timeout": "1s",
+      "role_superuser": true,
+      "server_address": "192.168.2.40",
+      "statement_timeout": "5s",
+      "server_version_num": "160015",
+      "transaction_read_only": "on",
+      "default_transaction_read_only": "on"
+    },
+    {
+      "rows": [
+        {
+          "matching_definitions": 0
+        }
+      ],
+      "category": "definition_presence"
+    },
+    {
+      "rows": [
+        {
+          "matching_rows": 0
+        }
+      ],
+      "category": "registry_presence"
+    }
+  ],
+  "error": null
+}

@@ -1,0 +1,15 @@
+--- entry/apps/frontend/src/business-form-fields.tsx
++++ current/apps/frontend/src/business-form-fields.tsx
+@@ -49,10 +49,10 @@
+   if(/(_id|_ref)$/.test(field)||['items','links'].includes(field))return 'references';
+   return 'main';
+ }
+-export function BusinessFields({schema,fields,values,errors,render}:{schema:string;fields:readonly string[];values:Record<string,unknown>;errors:FormErrors;render(field:string):React.ReactNode}) {
++export function BusinessFields({schema,fields,values,errors,render,referenceOrigin}:{schema:string;fields:readonly string[];values:Record<string,unknown>;errors:FormErrors;render(field:string):React.ReactNode;referenceOrigin?:React.ReactNode}) {
+   return <>{(Object.keys(groupLabels) as (keyof typeof groupLabels)[]).map(group=>{
+     const members=fields.filter(field=>fieldGroup(field)===group);
+-    return members.length?<fieldset className="business-form-group" key={group}><legend>{groupLabels[group]}</legend>{members.map(field=><ContractField key={field} schema={schema} field={field} values={values} errors={errors}>{render(field)}</ContractField>)}</fieldset>:null;
++    return members.length || (group==='references'&&referenceOrigin)?<fieldset className="business-form-group" key={group}><legend>{groupLabels[group]}</legend>{group==='references'&&referenceOrigin}{members.map(field=><ContractField key={field} schema={schema} field={field} values={values} errors={errors}>{render(field)}</ContractField>)}</fieldset>:null;
+   })}</>;
+ }
+ export function BusinessScalarField({schema,field,value,onChange}:{schema:string;field:string;value:string;onChange(value:string):void}) {

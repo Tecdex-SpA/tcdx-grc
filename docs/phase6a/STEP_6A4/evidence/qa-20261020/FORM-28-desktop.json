@@ -1,0 +1,116 @@
+{
+  "dialogs": [
+    {
+      "bounds": {
+        "height": 1000,
+        "width": 560
+      },
+      "label": "create-title",
+      "modal": "true"
+    }
+  ],
+  "fields": [
+    {
+      "disabled": false,
+      "label": "Código de política",
+      "max": null,
+      "min": null,
+      "required": true,
+      "tag": "INPUT",
+      "type": "text"
+    },
+    {
+      "disabled": false,
+      "label": "Número de versión",
+      "max": null,
+      "min": "1",
+      "required": true,
+      "tag": "INPUT",
+      "type": "number"
+    },
+    {
+      "disabled": false,
+      "label": "Tipo de política",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción",
+        "Suspensión del borrado por obligación legal",
+        "Política normativa obligatoria",
+        "Política contractual",
+        "Política de la organización",
+        "Política base del producto"
+      ],
+      "required": true,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Evento de inicio de retención",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción",
+        "Vencimiento o cierre"
+      ],
+      "required": true,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Orden de precedencia",
+      "max": null,
+      "min": null,
+      "required": true,
+      "tag": "INPUT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Obligatoria",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona Sí o No",
+        "Sí",
+        "No"
+      ],
+      "required": true,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Duración de retención",
+      "max": null,
+      "min": "0",
+      "required": true,
+      "tag": "INPUT",
+      "type": "number"
+    },
+    {
+      "disabled": false,
+      "label": "Unidad de duraciónSegundosMinutosHorasDías (24 horas)",
+      "max": null,
+      "min": null,
+      "options": [
+        "Segundos",
+        "Minutos",
+        "Horas",
+        "Días (24 horas)"
+      ],
+      "required": false,
+      "tag": "SELECT",
+      "type": null
+    }
+  ],
+  "focus": "Cerrar creación",
+  "horizontalOverflow": false,
+  "url": "https://grc.tecdex.net/evidencias",
+  "viewport": {
+    "height": 1000,
+    "width": 1440
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "label": "BOUNDED_CARDINALITIES",
+  "command": "psql fixed canonical QA endpoint; pgpass via libpq; no credential values logged",
+  "sql_sha256": "292ec5b1409047ff48f41e9dff9b61ec299e46bfb235f2b876a04a02ddaa74f8",
+  "duration_seconds": 0.431,
+  "exit_code": 0,
+  "at_utc": "2026-10-21T21:19:03.032086+00:00",
+  "show_transaction_read_only": "on",
+  "results": [
+    {
+      "user": "postgres",
+      "version": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, 64-bit",
+      "category": "identity",
+      "database": "tcdx-grc",
+      "in_recovery": false,
+      "server_port": 5432,
+      "cluster_name": "16/main",
+      "lock_timeout": "1s",
+      "role_superuser": true,
+      "server_address": "192.168.2.40",
+      "statement_timeout": "5s",
+      "server_version_num": "160015",
+      "transaction_read_only": "on",
+      "default_transaction_read_only": "on"
+    },
+    {
+      "rows": [
+        {
+          "observed_up_to_10001": 0
+        }
+      ],
+      "category": "bounded_cardinality_knowledge.knowledge_sources"
+    },
+    {
+      "rows": [
+        {
+          "observed_up_to_10001": 0
+        }
+      ],
+      "category": "bounded_cardinality_knowledge.knowledge_items"
+    },
+    {
+      "rows": [
+        {
+          "observed_up_to_10001": 0
+        }
+      ],
+      "category": "bounded_cardinality_knowledge.knowledge_versions"
+    },
+    {
+      "rows": [
+        {
+          "observed_up_to_10001": 1
+        }
+      ],
+      "category": "bounded_cardinality_config.configuration_definitions"
+    },
+    {
+      "rows": [
+        {
+          "observed_up_to_10001": 1
+        }
+      ],
+      "category": "bounded_cardinality_config.configuration_overrides"
+    },
+    {
+      "rows": [
+        {
+          "observed_up_to_10001": 0
+        }
+      ],
+      "category": "bounded_cardinality_config.effective_configurations"
+    },
+    {
+      "rows": [
+        {
+          "observed_up_to_10001": 1
+        }
+      ],
+      "category": "bounded_cardinality_regulatory.requirement_applicabilities"
+    },
+    {
+      "rows": [
+        {
+          "observed_up_to_10001": 1
+        }
+      ],
+      "category": "bounded_cardinality_org.subjects"
+    },
+    {
+      "rows": [
+        {
+          "observed_up_to_10001": 215
+        }
+      ],
+      "category": "bounded_cardinality_controls.control_versions"
+    },
+    {
+      "rows": [
+        {
+          "observed_up_to_10001": 118
+        }
+      ],
+      "category": "bounded_cardinality_regulatory.requirements"
+    },
+    {
+      "rows": [
+        {
+          "observed_up_to_10001": 260
+        }
+      ],
+      "category": "bounded_cardinality_regulatory.normative_units"
+    },
+    {
+      "rows": [
+        {
+          "observed_up_to_10001": 5
+        }
+      ],
+      "category": "bounded_cardinality_regulatory.regulatory_pack_versions"
+    },
+    {
+      "rows": [
+        {
+          "observed_up_to_10001": 179
+        }
+      ],
+      "category": "bounded_cardinality_iam.permissions"
+    },
+    {
+      "rows": [
+        {
+          "observed_up_to_10001": 149
+        }
+      ],
+      "category": "bounded_cardinality_ops_audit.lifecycle_transition_definitions"
+    }
+  ],
+  "error": null
+}

@@ -1,0 +1,118 @@
+{
+  "dialogs": [
+    {
+      "bounds": {
+        "height": 1000,
+        "width": 560
+      },
+      "label": "create-title",
+      "modal": "true"
+    }
+  ],
+  "fields": [
+    {
+      "disabled": false,
+      "label": "Decisión de aplicabilidad",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción",
+        "Aplicable",
+        "No aplicable"
+      ],
+      "required": true,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Fundamento",
+      "max": null,
+      "min": null,
+      "required": false,
+      "tag": "INPUT",
+      "type": "text"
+    },
+    {
+      "disabled": false,
+      "label": "Marco normativo",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción",
+        "ISO_9001_2026 · ISO 9001:2026 · 2026 · v1 · Borrador"
+      ],
+      "required": false,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Buscar Requisito",
+      "max": null,
+      "min": null,
+      "required": false,
+      "tag": "INPUT",
+      "type": "search"
+    },
+    {
+      "disabled": true,
+      "label": "Requisito",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción"
+      ],
+      "required": true,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Buscar Alcance",
+      "max": null,
+      "min": null,
+      "required": false,
+      "tag": "INPUT",
+      "type": "search"
+    },
+    {
+      "disabled": false,
+      "label": "Alcance",
+      "max": null,
+      "min": null,
+      "options": [
+        "Selecciona una opción",
+        "TecDex · Organización · Activo"
+      ],
+      "required": false,
+      "tag": "SELECT",
+      "type": null
+    },
+    {
+      "disabled": false,
+      "label": "Vigente desde",
+      "max": null,
+      "min": null,
+      "required": true,
+      "tag": "INPUT",
+      "type": "datetime-local"
+    },
+    {
+      "disabled": false,
+      "label": "Vigente hasta",
+      "max": null,
+      "min": null,
+      "required": false,
+      "tag": "INPUT",
+      "type": "datetime-local"
+    }
+  ],
+  "focus": "Cerrar creación",
+  "horizontalOverflow": false,
+  "url": "https://grc.tecdex.net/cumplimiento",
+  "viewport": {
+    "height": 1000,
+    "width": 1440
+  }
+}

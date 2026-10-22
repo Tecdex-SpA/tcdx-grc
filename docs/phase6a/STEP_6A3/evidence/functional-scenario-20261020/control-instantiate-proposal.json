@@ -1,0 +1,18 @@
+{
+  "status": "DRAFT_NOT_EXECUTED_REQUIRES_AUTHORIZED_SESSION",
+  "operation": "POST /api/v1/controls:instantiate",
+  "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+  "body": {
+    "based_on_control_version_id": "01a0ea93-d236-7544-8b75-b3d5d16b0007",
+    "control_code": "QA_STEP6A3_TRAZABILIDAD_DOCUMENTAL_001",
+    "name": "QA STEP6A3 — Validación de trazabilidad documental",
+    "business_owner_subject_id": "01a0f27e-b912-72d2-a08e-c5fcbd4efe43",
+    "objective": "Validar exclusivamente en QA TECDEX el flujo contractual de carga, finalización, vinculación tipada, creación, persistencia y recuperación de evidencia documental en PASO 9.2B. No acredita cumplimiento normativo ni eficacia de controles reales.",
+    "control_type": "preventive",
+    "nature": "hybrid",
+    "frequency_code": "event_driven",
+    "execution_method": "Usar el documento sintético GRC_Tecdex_Evidencia_QA_STEP6A3.pdf como fixture y plan de prueba; user3 ejecuta la creación de evidencia, con vínculo a este control QA y conservación del FileObject finalizado. Registrar el resultado real sin anticipar PASS.",
+    "verification_method": "Comprobar respuesta de creación, ID persistido, consulta y recuperación tras recarga, mismo tenant y FileObject, y trazabilidad de auditoría conforme a las operaciones oficiales.",
+    "minimum_evidence": "Documento sintético de prueba identificado como QA, con procedencia auténtica, más resultado real de la ejecución y referencias de evidencia/archivo. El PDF sin completar es sólo fixture/plan, no prueba de eficacia ni aceptación final."
+  }
+}

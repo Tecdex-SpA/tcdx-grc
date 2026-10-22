@@ -1,0 +1,249 @@
+{
+  "started_utc": "2026-10-22T15:54:24.540Z",
+  "scope": "QA02R_IDENTITY_ROLES_ONLY",
+  "identity": {
+    "db": "tcdx-grc",
+    "host": "192.168.2.40",
+    "port": 5432,
+    "username": "postgres",
+    "version": "160015",
+    "cluster": "16/main",
+    "readonly": "on",
+    "default_readonly": "on",
+    "system_identifier": "7640968386355389904",
+    "recovery": false,
+    "tls_authorized": true,
+    "peer_fingerprint": "FB:68:09:DA:13:9E:E3:E5:2C:2F:1F:EA:D7:5B:11:92:7B:04:B8:96:7A:2B:5D:B8:46:9C:B6:70:E3:BB:A3:E6",
+    "protocol": "TLSv1.3",
+    "servername": "db-tecdex",
+    "sslmode": "verify-full"
+  },
+  "tenants": [
+    {
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "tenant_code": "TECDEX",
+      "lifecycle_state": "active",
+      "role_rows": 22,
+      "memberships": 7,
+      "active_memberships": 7,
+      "membership_role_rows": 40
+    },
+    {
+      "tenant_id": "01a1137a-1351-76b8-ac8a-0bb109ca8e22",
+      "tenant_code": "ACME-1",
+      "lifecycle_state": "active",
+      "role_rows": 0,
+      "memberships": 0,
+      "active_memberships": 0,
+      "membership_role_rows": 0
+    },
+    {
+      "tenant_id": "01a11820-ae9f-7485-93e5-942eaec71121",
+      "tenant_code": "ACME 2",
+      "lifecycle_state": "active",
+      "role_rows": 22,
+      "memberships": 1,
+      "active_memberships": 1,
+      "membership_role_rows": 1
+    }
+  ],
+  "seven_roles": [
+    {
+      "role_id": "01a0a783-6000-76e6-b33d-87d7cd71624d",
+      "role_code": "ACTION_OWNER",
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_id": null,
+      "is_baseline": true,
+      "lifecycle_state": "published"
+    },
+    {
+      "role_id": "01a0cfc7-0cca-767d-a772-90fdc3eb03c7",
+      "role_code": "ACTION_OWNER",
+      "ownership_class": "TENANT_OWNED",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "is_baseline": true,
+      "lifecycle_state": "published"
+    },
+    {
+      "role_id": "01a11820-aecc-7393-9ff6-8ad0796f5ecd",
+      "role_code": "ACTION_OWNER",
+      "ownership_class": "TENANT_OWNED",
+      "tenant_id": "01a11820-ae9f-7485-93e5-942eaec71121",
+      "is_baseline": true,
+      "lifecycle_state": "published"
+    },
+    {
+      "role_id": "01a0a783-6000-7cfb-9e45-aeddf3103f12",
+      "role_code": "COMPLIANCE_MANAGER",
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_id": null,
+      "is_baseline": true,
+      "lifecycle_state": "published"
+    },
+    {
+      "role_id": "01a0cfc7-0cd2-7691-93e2-6b3461a5feed",
+      "role_code": "COMPLIANCE_MANAGER",
+      "ownership_class": "TENANT_OWNED",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "is_baseline": true,
+      "lifecycle_state": "published"
+    },
+    {
+      "role_id": "01a11820-aeda-7700-87c5-0e532a7d07d8",
+      "role_code": "COMPLIANCE_MANAGER",
+      "ownership_class": "TENANT_OWNED",
+      "tenant_id": "01a11820-ae9f-7485-93e5-942eaec71121",
+      "is_baseline": true,
+      "lifecycle_state": "published"
+    },
+    {
+      "role_id": "01a0a783-6000-70cf-afd4-4a351f65081b",
+      "role_code": "CONTROL_OWNER",
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_id": null,
+      "is_baseline": true,
+      "lifecycle_state": "published"
+    },
+    {
+      "role_id": "01a0cfc7-0cd4-76c2-b924-ac007351060e",
+      "role_code": "CONTROL_OWNER",
+      "ownership_class": "TENANT_OWNED",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "is_baseline": true,
+      "lifecycle_state": "published"
+    },
+    {
+      "role_id": "01a11820-aedc-742c-9d93-eb84cd144cab",
+      "role_code": "CONTROL_OWNER",
+      "ownership_class": "TENANT_OWNED",
+      "tenant_id": "01a11820-ae9f-7485-93e5-942eaec71121",
+      "is_baseline": true,
+      "lifecycle_state": "published"
+    },
+    {
+      "role_id": "01a0a783-6000-7f86-a641-20d7cfe468ca",
+      "role_code": "EVIDENCE_OWNER",
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_id": null,
+      "is_baseline": true,
+      "lifecycle_state": "published"
+    },
+    {
+      "role_id": "01a0cfc7-0cd6-7141-87e9-bc71d5f0542f",
+      "role_code": "EVIDENCE_OWNER",
+      "ownership_class": "TENANT_OWNED",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "is_baseline": true,
+      "lifecycle_state": "published"
+    },
+    {
+      "role_id": "01a11820-aede-70c2-9544-ec7c0a68c190",
+      "role_code": "EVIDENCE_OWNER",
+      "ownership_class": "TENANT_OWNED",
+      "tenant_id": "01a11820-ae9f-7485-93e5-942eaec71121",
+      "is_baseline": true,
+      "lifecycle_state": "published"
+    },
+    {
+      "role_id": "01a0a783-6000-741a-84b1-1e1041772050",
+      "role_code": "GRC_MANAGER",
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_id": null,
+      "is_baseline": true,
+      "lifecycle_state": "published"
+    },
+    {
+      "role_id": "01a0cfc7-0cd8-75d8-9c78-559d08511c28",
+      "role_code": "GRC_MANAGER",
+      "ownership_class": "TENANT_OWNED",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "is_baseline": true,
+      "lifecycle_state": "published"
+    },
+    {
+      "role_id": "01a11820-aee0-723e-9fd4-e3fa8dc2e63a",
+      "role_code": "GRC_MANAGER",
+      "ownership_class": "TENANT_OWNED",
+      "tenant_id": "01a11820-ae9f-7485-93e5-942eaec71121",
+      "is_baseline": true,
+      "lifecycle_state": "published"
+    },
+    {
+      "role_id": "01a0a783-6000-7a04-aa2e-69e3c85fb544",
+      "role_code": "TENANT_ADMIN",
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_id": null,
+      "is_baseline": true,
+      "lifecycle_state": "published"
+    },
+    {
+      "role_id": "01a0cfc7-0ce1-72ce-a89e-69a957b73491",
+      "role_code": "TENANT_ADMIN",
+      "ownership_class": "TENANT_OWNED",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "is_baseline": true,
+      "lifecycle_state": "published"
+    },
+    {
+      "role_id": "01a11820-aee9-74e6-a214-7c70d71377d6",
+      "role_code": "TENANT_ADMIN",
+      "ownership_class": "TENANT_OWNED",
+      "tenant_id": "01a11820-ae9f-7485-93e5-942eaec71121",
+      "is_baseline": true,
+      "lifecycle_state": "published"
+    },
+    {
+      "role_id": "01a0a783-6000-7b70-8cef-ad0edbe7f2fa",
+      "role_code": "VIEWER",
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_id": null,
+      "is_baseline": true,
+      "lifecycle_state": "published"
+    },
+    {
+      "role_id": "01a0cfc7-0ce2-7022-9af0-26c668c7c385",
+      "role_code": "VIEWER",
+      "ownership_class": "TENANT_OWNED",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "is_baseline": true,
+      "lifecycle_state": "published"
+    },
+    {
+      "role_id": "01a11820-aeea-7779-bf24-348a5a887146",
+      "role_code": "VIEWER",
+      "ownership_class": "TENANT_OWNED",
+      "tenant_id": "01a11820-ae9f-7485-93e5-942eaec71121",
+      "is_baseline": true,
+      "lifecycle_state": "published"
+    }
+  ],
+  "platform_administrators": [
+    {
+      "active_existing_platform_admins": 2
+    }
+  ],
+  "publisher": [
+    {
+      "service_principal_id": "01a13c3b-dbdd-763f-bcbb-f16ff41d99ba",
+      "principal_code": "grc-qa-iam-publisher",
+      "principal_kind": "MACHINE_TO_MACHINE",
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_id": null,
+      "lifecycle_state": "active",
+      "credential_ref": "/run/secrets/iam_publisher_client_secret"
+    }
+  ],
+  "publisher_provision": [
+    {
+      "audit_event_id": "01a13c3b-dbe4-7603-8bd4-a397bcf6d716",
+      "command_code": "servicePrincipalProvisionQa",
+      "event_code": "audit.iam.service_principal.provision.v1",
+      "outcome": "success",
+      "profile_sha256": "6c4bc99b0d25fb75cf67ad8dd8818f1dff1c430c031b1c642b11d0a408ca00f7",
+      "decision_sha256": "aa509b568c2ccee57f2caf96578dd51a6ffc1187698debbf233cdc9c40b9f72a",
+      "client_id": "grc-qa-iam-publisher"
+    }
+  ],
+  "status": "PASS_READ_ONLY",
+  "finished_utc": "2026-10-22T15:54:25.164Z"
+}

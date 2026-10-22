@@ -1,0 +1,33 @@
+--- before/apps/frontend/src/reference-read.ts
++++ after/apps/frontend/src/reference-read.ts
+@@ -6,7 +6,7 @@
+ type Row = Record<string, unknown>;
+ export type ReferenceOption = { value: string; label: string; row: Row };
+ export type ReferencePage = { options: ReferenceOption[]; nextCursor: string | null };
+-export type ReferenceContext = { parentId?: string | undefined; query?: string | undefined; cursor?: string | undefined; subjectType?: string | undefined; initialSource?: boolean | undefined; publishedOnly?: boolean | undefined; classification?: string | undefined; ownerSubjectId?: string | undefined; timezone?: string | null | undefined };
++export type ReferenceContext = { tenantOwnedControl?: boolean | undefined; parentId?: string | undefined; query?: string | undefined; cursor?: string | undefined; subjectType?: string | undefined; initialSource?: boolean | undefined; publishedOnly?: boolean | undefined; classification?: string | undefined; ownerSubjectId?: string | undefined; timezone?: string | null | undefined };
+ export const referenceReads = {
+   requirement: { operation: "requirementList", path: "/framework-versions/{framework_version_id}/requirements", id: "requirement_id", permission: "compliance.requirement.read", search: true, pathParent: true },
+   retentionPolicy: { operation: "retentionPolicyList", path: "/retention-policies", id: "retention_policy_id", permission: "privacy.retention_policy.read" },
+@@ -91,8 +91,9 @@
+     }
+     return { value: row[def.id] as string, label: `${businessLabel(row, context.timezone)}${entity === "retentionPolicyApplicability" && context.initialSource && row.lifecycle_state === "draft" ? " · Fuente pendiente, sin acreditar" : ""}`, row };
+   }).filter(option => {
++    const row: Row = option.row;
++    if (entity === "control" && context.tenantOwnedControl) return row.ownership_class === "TENANT_OWNED";
+     if (entity !== "retentionPolicyApplicability" || !context.publishedOnly) return true;
+-    const row: Row = option.row;
+     const now = Date.now();
+     const from = typeof row.effective_from === "string" ? Date.parse(row.effective_from) : NaN;
+     const to = typeof row.effective_to === "string" ? Date.parse(row.effective_to) : Infinity;
+--- before/apps/frontend/src/structured-reference-fields.tsx
++++ after/apps/frontend/src/structured-reference-fields.tsx
+@@ -31,7 +31,7 @@
+  const change=(index:number,field:string,next:unknown)=>{const copy=records.map(row=>({...row}));if(next==="" && !linkTargets.includes(field))delete copy[index]![field];else copy[index]![field]=next;onChange(JSON.stringify(copy));};
+  const fields=kind==="items"?soaFields:kind==="samples"?sampleFields:[];
+  const prefix=kind==="items"?"SoaItemCreateInput":kind==="samples"?"AssuranceSampleExecuteInput":"EvidenceLinkCreateInput";
+- return <fieldset><legend>{fieldLabel(kind)}</legend>{records.map((record,index)=><fieldset key={index}><legend>{kind==="items"?"Control aplicable":kind==="samples"?"Muestra":"Vínculo de evidencia"} {index+1}</legend>{kind==="links"?<><label>Tipo de objeto<select value={linkTargets.find(key=>Object.hasOwn(record,key))??""} onChange={event=>{const copy=records.map(row=>({...row}));for(const field of linkTargets)delete copy[index]![field];if(event.target.value)copy[index]![event.target.value]="";onChange(JSON.stringify(copy));}}><option value="">Selecciona un tipo</option>{linkTargets.map(field=><option key={field} value={field}>{fieldLabel(field)}</option>)}</select></label>{linkTargets.filter(key=>Object.hasOwn(record,key)).map(field=>field==="requirement_id"?<RequirementReferenceField key={field} api={api} value={String(record[field]??"")} onChange={v=>change(index,field,v)}/>:<TypedReferenceField key={field} api={api} field={field} form={record as Record<string,string>} value={String(record[field]??"")} onChange={v=>change(index,field,v)}/>)}<label>Declaración de evidencia<textarea value={String(record.claim??"")} onChange={e=>change(index,"claim",e.target.value)}/></label></>:fields.map(field=> {
++ return <fieldset><legend>{fieldLabel(kind)}</legend>{records.map((record,index)=><fieldset key={index}><legend>{kind==="items"?"Control aplicable":kind==="samples"?"Muestra":"Vínculo de evidencia"} {index+1}</legend>{kind==="links"?<><label>Tipo de objeto<select value={linkTargets.find(key=>Object.hasOwn(record,key))??""} onChange={event=>{const copy=records.map(row=>({...row}));for(const field of linkTargets)delete copy[index]![field];if(event.target.value)copy[index]![event.target.value]="";onChange(JSON.stringify(copy));}}><option value="">Selecciona un tipo</option>{linkTargets.map(field=><option key={field} value={field}>{fieldLabel(field)}</option>)}</select></label>{linkTargets.filter(key=>Object.hasOwn(record,key)).map(field=>field==="control_id"?<EntityReferenceSelect key={field} api={api} entity="control" label={fieldLabel(field)} context={{tenantOwnedControl:true}} value={String(record[field]??"")} onChange={v=>change(index,field,v)}/>:field==="requirement_id"?<RequirementReferenceField key={field} api={api} value={String(record[field]??"")} onChange={v=>change(index,field,v)}/>:<TypedReferenceField key={field} api={api} field={field} form={record as Record<string,string>} value={String(record[field]??"")} onChange={v=>change(index,field,v)}/>)}<label>Declaración de evidencia<textarea value={String(record.claim??"")} onChange={e=>change(index,"claim",e.target.value)}/></label></>:fields.map(field=> {
+  const key=`${prefix}.${field}`;
+  if(Object.hasOwn(FORM_VOCABULARIES,key))return <ContractVocabularySelect key={field} schemaField={key as FormVocabularyKey} label={fieldLabel(field)} value={String(record[field]??"")} onChange={v=>change(index,field,v)}/>;
+  if(field==="tenant_control_version_id")return <ControlVersionSelect key={field} api={api} ownership="tenant" value={String(record[field]??"")} onParentControlChange={id=>{const copy=records.map(row=>({...row}));if(id)copy[index]!.tenant_control_id=id;else delete copy[index]!.tenant_control_id;delete copy[index]!.tenant_control_version_id;onChange(JSON.stringify(copy));}} onChange={v=>change(index,field,v)}/>;

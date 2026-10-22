@@ -1,0 +1,4 @@
+BEGIN;
+INSERT INTO knowledge.knowledge_version_context_links(knowledge_version_context_link_id,created_by_user_identity_id,ownership_class,tenant_id,knowledge_version_id,context_role,source_locator,provenance_ref,normative_unit_id) VALUES ('00000000-0000-7000-8000-000000000100','00000000-0000-7000-8000-000000000003','GLOBAL_REFERENCE',NULL,'00000000-0000-7000-8000-000000000033','comprender','synthetic:1','synthetic:fixture','00000000-0000-7000-8000-000000000060');UPDATE knowledge.knowledge_versions SET lifecycle_state='published',published_at=now(),effective_from='2026-01-01' WHERE knowledge_version_id='00000000-0000-7000-8000-000000000030';UPDATE knowledge.knowledge_version_context_links SET knowledge_version_id='00000000-0000-7000-8000-000000000030';
+SET CONSTRAINTS ALL IMMEDIATE;
+ROLLBACK;

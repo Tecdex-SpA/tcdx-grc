@@ -1,3 +1,4 @@
+import { publishedCoverage } from "./testing/published-coverage.js";
 import { describe, expect, it } from "vitest";
 import matrix from "../../../docs/executable-contracts/03_API_RESOURCE_OPERATION_MATRIX.md?raw";
 import openApi from "../../../docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml?raw";
@@ -121,14 +122,14 @@ describe("PRE-F5 approved read-contract materialization", () => {
   });
 
   it("keeps cross-catalog operation counts and operation IDs unique", () => {
-    expect(openApiOperations.size).toBe(Number(matrix.match(/`CONTRACTUAL_OPERATIONS=(\d+)`/)?.[1]));
+    expect(openApiOperations.size).toBe(publishedCoverage(matrix).total);
     expect(matrixOperations.size).toBe(openApiOperations.size);
-    expect([...openApiOperations.values()].filter(({ method }) => method === "post")).toHaveLength(111);
+    expect([...openApiOperations.values()].filter(({ method }) => method === "post")).toHaveLength(publishedCoverage(matrix).posts);
     expect([...openApiOperations.values()].filter(({ method }) => method === "put")).toHaveLength(1);
-    expect([...openApiOperations.values()].filter(({ method }) => method === "get")).toHaveLength(Number(matrix.match(/`PUBLIC_READ_OPERATIONS=(\d+)`/)?.[1]));
-    expect([...matrixOperations.values()].filter(({ method }) => method === "post")).toHaveLength(111);
+    expect([...openApiOperations.values()].filter(({ method }) => method === "get")).toHaveLength(publishedCoverage(matrix).reads);
+    expect([...matrixOperations.values()].filter(({ method }) => method === "post")).toHaveLength(publishedCoverage(matrix).posts);
     expect([...matrixOperations.values()].filter(({ method }) => method === "put")).toHaveLength(1);
-    expect([...matrixOperations.values()].filter(({ method }) => method === "get")).toHaveLength(Number(matrix.match(/`PUBLIC_READ_OPERATIONS=(\d+)`/)?.[1]));
+    expect([...matrixOperations.values()].filter(({ method }) => method === "get")).toHaveLength(publishedCoverage(matrix).reads);
   });
 
   it("publishes exactly ten dedicated read permissions without reusing write authority", () => {

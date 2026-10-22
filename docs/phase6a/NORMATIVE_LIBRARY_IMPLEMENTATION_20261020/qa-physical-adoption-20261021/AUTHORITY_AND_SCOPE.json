@@ -1,0 +1,26 @@
+{
+  "authorization": "Current PO conditional physical adoption; G1-G4 must all PASS before DDL; current follow-up G4 restricts backup work to reads only",
+  "G1_followup": "30-minute window starting only after all preceding gates PASS; check concurrent activity and never interrupt third-party sessions",
+  "G4_followup": "No verified backup supplied; inspect existing backup mechanisms read-only; no copy/config/restore/infra inferred; maintain BLOCKED if recoverability cannot be proven",
+  "window_status": "AUTHORIZED_NOT_STARTED",
+  "zip": {
+    "active_authority": "Versioned v1.12 ACTIVE_ACTIVATION and rector manifest; historical ZIP does not supersede",
+    "historical_zip": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.4_2026-09-15.zip",
+    "sha256": "3b33e4d80ae1dcdbe83ffecfd38eb697e033f88bd3e3ca959bccdd93d12e5849",
+    "read_entry": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.4_2026-09-15/46_REGENTE_MAESTRO_DEL_DESARROLLO.md",
+    "role": "HISTORICAL_ONLY"
+  },
+  "QA": "192.168.2.40:5432/tcdx-grc PG16.15 cluster16/main",
+  "account": "postgres owner/superuser is the only locally available credential; current work strictly READ ONLY; no new roles or privileges",
+  "prohibited": [
+    "Business DML",
+    "IAM/registry/Definition activation",
+    "Imports",
+    "Runtime wiring",
+    "Deployments",
+    "Production changes",
+    "New contract publication",
+    "Git mutations",
+    "Backup/restore creation without subsequent specific authorization"
+  ]
+}

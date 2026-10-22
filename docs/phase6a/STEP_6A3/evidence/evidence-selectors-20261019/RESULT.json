@@ -1,0 +1,43 @@
+{
+  "master_regent": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "scope": "STEP6A3 evidence creation selectors in QA",
+  "rector_gate_for_bounded_correction": "PASS",
+  "step6a3_gate": "PARTIAL_BLOCKED",
+  "step6a4_gate": "NOT_STARTED",
+  "human_ui_review": "PENDING",
+  "qa_readonly_findings": {
+    "tenant": "TECDEX",
+    "business_owner": "TecDex / organization / active / effective",
+    "policy": "QA_RET_ORD_001 / version 1 / published / tenant_policy / effective",
+    "applicability": "version 1 / internal / evidence_document / published / effective / no subject or activity scope",
+    "evidence_owner_grants": [
+      "evidence.document.create",
+      "evidence.evidence.create",
+      "privacy.retention_policy_reference.read"
+    ],
+    "missing_selector_grants": [
+      "organization.subject.read",
+      "privacy.retention_policy.read"
+    ],
+    "existing_role_with_both_read_grants": "PRIVACY_MANAGER"
+  },
+  "frontend_correction": "Applicability options are constrained to published evidence_document rows matching the selected policy, classification, effective interval and compatible subject scope. Policy and classification changes clear a stale applicability selection. Permission denial is shown separately from an empty eligible catalog.",
+  "focused_validation": {
+    "frontend_typecheck": "PASS",
+    "reference_read_vitest": "22 PASS",
+    "playwright_evidence_selector_desktop_and_narrow": "4 PASS",
+    "qa_readonly_sql": "PASS; transaction rolled back",
+    "git_diff_check": "PASS"
+  },
+  "qa_deployment": {
+    "component": "frontend only",
+    "platform": "linux/amd64",
+    "image_id": "sha256:7715d60de1c0f42f69d166c5d88c671c9f8356361b61847927bd602884523eaf",
+    "container_id": "bc50dbd5ecc509f337553cdd3bbfe8be2a7a65368fcc15a39f3dfa0767b4a596",
+    "health": "healthy; zero restarts",
+    "public_grc_https": "HTTP/2 200; TLS certificate valid for grc.tecdex.net",
+    "backend": "unchanged; healthy",
+    "postgresql": "unchanged"
+  },
+  "operational_limit": "No authenticated user3 session or permanent QA evidence creation was executed. With EVIDENCE_OWNER alone, the two selector endpoints deny their required reads. An authorized assignment/use of the existing PRIVACY_MANAGER role in addition to EVIDENCE_OWNER is required before user3 can repeat PASO 9.2B. No role or identity was changed."
+}

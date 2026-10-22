@@ -1,0 +1,44 @@
+{
+  "project": "GRC_TECDEX",
+  "scope": "CANONICAL_GENERATOR_RECONCILIATION_ONLY",
+  "date": "2026-10-22",
+  "baseline": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "branch": "fix/step6a3-v112-continuity-20261016",
+  "head": "4a275264a7522031e62bf09f598c9d56e21d25e0",
+  "root_cause": "The sole foundation generator stopped at the C04W successor and fed 34 migrations/242 tables into writeOrCheck after G4 had adopted the published 35th migration and 244-table projection.",
+  "approved_bytes": {
+    "manifest_sha256": "70ecaa0f4bbf168a1f5e4c3cefbd734036217dc7b09ac3d4a11b65f9cbc66152",
+    "expected_schema_sha256": "c2fc38768ee6c7b3760346ec862304204e4f94abd18a2d8150745bbaf6953207",
+    "migration_35_sha256": "9279159e88c60fff03f998e33008fb0d675f53e4423df638c9e54f709a773798",
+    "migrations_1_34_aggregate_sha256": "12a234fe50ba389a8523cac90445990319ab533d6c017c0085689732600424b5"
+  },
+  "checks": [
+    {"name": "generator_check_1", "result": "PASS", "detail": "244 tables; 35 migrations; exit 0"},
+    {"name": "generator_check_2", "result": "PASS", "detail": "identical stdout; all migration/manifest/schema hashes unchanged; exit 0"},
+    {"name": "contracts_verify", "result": "PASS", "duration_seconds": 0.554},
+    {"name": "rector_status_generation_gate", "result": "PASS", "duration_seconds": 1.047, "detail": "RECTOR_STATUS_TEST=PASS"},
+    {"name": "rector_baseline_integrity", "result": "PASS", "duration_seconds": 0.294, "detail": "RECTOR_GATE=PASS; baseline v1.12 protected documents OK"},
+    {"name": "normative_contract_assets", "result": "PASS", "duration_seconds": 0.318, "detail": "24 schemas; 30 operations"},
+    {"name": "git_diff_check", "result": "PASS"},
+    {"name": "historical_qa_adoption_verifier", "result": "EXPECTED_SCOPE_REJECTION", "detail": "Its immutable snapshot rejected only scripts/foundations/generate-contract-assets.mjs, the file explicitly authorized in this successor. The verifier was not edited or weakened."}
+  ],
+  "gates": {
+    "CANONICAL_GENERATOR": "PASS",
+    "MANIFEST_REPRODUCIBILITY": "PASS",
+    "EXPECTED_SCHEMA_CONSISTENCY": "PASS",
+    "ARCHITECTURAL_CONSISTENCY_GATE": "PASS",
+    "RECTOR_GENERATION_GATE": "PASS",
+    "DATABASE_DRIFT_GATE": "NOT_EXECUTED"
+  },
+  "operations": {
+    "qa_connections": 0,
+    "qa_schema_changes": 0,
+    "qa_business_dml": 0,
+    "iam_registry_activations": 0,
+    "imports": 0,
+    "deployments": 0,
+    "production_changes": 0,
+    "git_stage_commit_push_merge": 0
+  }
+}
+

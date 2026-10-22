@@ -92,3 +92,11 @@ Every Codex delivery must state:
 - traceability evidence for the implemented slice.
 
 A task is not complete if mandatory checks fail or implementation diverges from the rector hierarchy.
+
+## Integrated functional deliveries — PO authorization 2026-10-22
+
+An authorized functional delivery is one integrated unit: recover continuity, classify approved changes, integrate in Git, test, build reproducible artifacts, deploy the authorized QA components, activate approved data, validate the actual runtime and record the release. Ordinary technical corrections inside that scope do not require repeated approvals. Explicit exclusions and unresolved material product decisions still apply.
+
+Before editing, check shared-worktree Git activity and actual file collisions; preserve unrelated work and private custody. Use the existing branch/PR/protection and deployment mechanisms. Commit approved source in coherent units, excluding secrets, backups and transient artifacts. Identify source commits, image digests, runtime receipts and outstanding work so any authorized Codex account can continue from the repository.
+
+Use one consolidated release dossier with RELEASE.md, VALIDATION.md, RESULT.json and HANDOFF.md. Reference required technical receipts instead of creating separate ceremonial dossiers. Never alter the immutable baseline or functional/data contracts merely to change the delivery method. Global QA authorization covers ordinary build, promotion, private-operator configuration and approved activation steps without another conversation per component; it never authorizes production or later phases implicitly.

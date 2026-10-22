@@ -1,0 +1,37 @@
+{
+  "decision": "PO current LOCAL-DEFINITIONS-01 full local resolution / CASE_A",
+  "physical_contract": {
+    "path": "docs/physical-data-model/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/CONTRACT.json",
+    "sha256": "5321c850b959adb1219c59ef52450457938b25dfe01240e9638ea65597550ed6"
+  },
+  "migration": {
+    "id": "20261022141304",
+    "filename": "20261022141304_configuration_optional_default.sql",
+    "sha256": "4fc817fa8ba6b8149dce1d484a301b511b24f8d4329038fd1e72265c9cd0bfc3",
+    "transactional": true,
+    "preconditions": [
+      "exact_35_predecessor_checksums",
+      "approved_LOCAL_DEFINITIONS_01_forward_only_correction",
+      "separate_environment_execution_authorization"
+    ],
+    "postconditions": [
+      "244_domain_tables_unchanged",
+      "optional_absence_or_one_correctly_typed_default",
+      "all_existing_business_rows_unchanged",
+      "ledger_36_atomic_with_DDL"
+    ]
+  },
+  "canonical_entity": "ConfigurationDefinition (existing)",
+  "constraint": "ck_configuration_definitions__typed_default",
+  "executable_successor": "docs/executable-contracts/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/CONTRACT.json",
+  "definitions_original": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/CONFIGURATION_DEFINITIONS.json",
+  "materializer": "apps/backend/src/security/normative-library-publication.ts",
+  "backend": "existing B04 query/create/update/review/decide",
+  "frontend": "existing ControlAdjustmentCreate selector; unchanged source",
+  "physical_tests": [
+    "apps/backend/src/configuration/optional-default-upgrade.postgres.test.ts",
+    "apps/backend/src/security/normative-library-publication.postgres.test.ts"
+  ],
+  "browser": "e2e/b04-contextual-resolution.spec.ts via new output-only config",
+  "status": "PASS_LOCAL_ONLY"
+}

@@ -2,6 +2,7 @@
 // transaction. They are not tenant QA legal documents or human approvals.
 import { describe, it, expect, vi } from "vitest";
 import { Readable } from "node:stream";
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import type { Transaction } from "kysely";
 import { sql, createDatabase, type FoundationDatabase } from "../database.js";
@@ -18,7 +19,7 @@ import {loadInitialSourcePublication,publishInitialSourceLifecycle} from "../sec
 import * as records from "../persistence/foundation-records.js";
 const enabled=process.env.TCDX_INITIAL_SOURCE_POSTGRES==='true';
 const rolledBack=new Error('INITIAL_SOURCE_LOCAL_ROLLBACK');
-const cases=['full source workflow and independent authors','CAS and idempotent replay','bind negatives and no publication without source','three retention revalidations and author checks','tenant permission and capability isolation','pending source cannot be ordinary evidence','audit failure rolls back source binding','source scan interval clause and independent review','source custody does not broaden document reads','tenant-only legacy DENY becomes authorized source submit under exact v2'] as const;
+const cases=['full source workflow and independent authors','CAS and idempotent replay','bind negatives and no publication without source','three retention revalidations and author checks','tenant permission and capability isolation','pending source cannot be ordinary evidence','audit failure rolls back source binding','source scan interval clause and independent review','source custody does not broaden document reads','tenant-only legacy DENY becomes authorized source submit under exact v2','ordinary tenant policy publication and upload without accreditation','ordinary product baseline publication and upload without accreditation','mandatory tenant policy still needs a formal source','contractual policy still needs a formal source','legal hold still needs a formal source','pending initial source cannot be published as ordinary','ordinary upload accepts selected tenant subject and rejects foreign subject'] as const;
 
 describe.skipIf(!enabled)('INITIAL_SOURCE PG16 isolated rollback only',()=>{
 it('serializes competing source and publication transactions on the same tenant',async()=>{
@@ -37,7 +38,14 @@ it('serializes competing source and publication transactions on the same tenant'
 for(const scenario of cases) it(scenario,async()=>{
  if(process.env.DATABASE_HOST!=='127.0.0.1'||process.env.DATABASE_PORT!=='55437'||process.env.TCDX_INITIAL_SOURCE_PG_IDENTIFIER!=='7696888505868808231') throw new Error('ATTESTED_LOCAL_PG16_REQUIRED');
  const db=createDatabase(loadConfig(process.env));
- const publication=await loadInitialSourcePublication(process.cwd(),"c36209d048fcebb88cb77072b0cbaeab7189bcedac9bc77be8a41dd2857d69d9");
+ // Use the sealed published binding as a rollback fixture, not the operational
+ // v1.11 loader: v1.12 activation does not authorize republishing its registry.
+ const sealed=readFileSync('docs/executable-contracts/amendments/STEP_6A3_INITIAL_SOURCE_SUBMIT_SCOPE_v1.11/PUBLICATION_MANIFEST.json');
+ const manifestSha256=createHash('sha256').update(sealed).digest('hex');
+ expect(manifestSha256).toBe('c36209d048fcebb88cb77072b0cbaeab7189bcedac9bc77be8a41dd2857d69d9');
+ const manifest=JSON.parse(sealed.toString());
+ const fixture=(suffix:string)=>{const entry=manifest.approved_files.find((e:{path:string})=>e.path.endsWith(suffix));const bytes=readFileSync(entry.path);expect(createHash('sha256').update(bytes).digest('hex')).toBe(entry.sha256);return JSON.parse(bytes.toString());};
+ const publication:Awaited<ReturnType<typeof loadInitialSourcePublication>>={binding:fixture('/LIFECYCLE_BINDING.json'),predecessor:fixture('/QA_PREDECESSOR.json').definitions[0],manifestSha256,decision:manifest.decision,reviewSha256:manifest.review_manifest.sha256,migrations:JSON.parse(readFileSync('database/migrations/manifest.json','utf8')).migrations};
  const ids={tenant:newUuidV7(),foreign:newUuidV7(),custodian:newUuidV7(),owner:newUuidV7(),custMember:newUuidV7(),ownerMember:newUuidV7(),role:newUuidV7()};
  try {
   const identity=await sql<{id:string;major:number}>`SELECT system_identifier::text AS id,current_setting('server_version_num')::int/10000 AS major FROM pg_control_system()`.execute(db);
@@ -62,17 +70,62 @@ for(const scenario of cases) it(scenario,async()=>{
     try { const value=await executeMutation(tx,override??actor(who),mutations.get(op)!,{body,...(targetId?{targetId}:{}),idempotencyKey:key,correlationId:newUuidV7(),fileStorage:storage});await sql`RELEASE SAVEPOINT operation_case`.execute(tx);return value; }
     catch(e){await sql`ROLLBACK TO SAVEPOINT operation_case`.execute(tx);await sql`RELEASE SAVEPOINT operation_case`.execute(tx);throw e;}
    };
-   const policy=(await run('retentionPolicyCreate','custodian',{policy_code:ids.tenant,version_number:1,policy_kind:'tenant_policy',retention_seconds:604800,trigger_event_code:'expiry_or_closure',precedence_rank:200,is_mandatory:false})).response.retention_policy_id as string;
+   const fixtureInstant=(await sql<{now:string}>`SELECT to_char(transaction_timestamp(),'YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS now`.execute(tx)).rows[0]!.now;
+   const ordinary = scenario===cases[10] || scenario===cases[11] || scenario===cases[16];
+   const kind = scenario===cases[11] ? 'product_baseline' : scenario===cases[13] ? 'contractual_policy' : scenario===cases[14] ? 'legal_hold' : 'tenant_policy';
+   const policy=(await run('retentionPolicyCreate','custodian',{policy_code:ids.tenant,version_number:1,policy_kind:kind,...(kind==='legal_hold'?{}:{retention_seconds:604800}),trigger_event_code:'expiry_or_closure',precedence_rank:kind==='product_baseline'?100:kind==='contractual_policy'?300:kind==='legal_hold'?500:200,is_mandatory:scenario===cases[12]})).response.retention_policy_id as string;
    await run('retentionPolicyReview','custodian',{expected_version:1},policy);
    await run('retentionPolicyApprove','owner',{expected_version:2},policy);
    await run('retentionPolicyPublish','custodian',{expected_version:3},policy);
-   const app=(await run('retentionApplicabilityCreate','custodian',{retention_policy_id:policy,version_number:1,classification:'confidential'})).response.retention_policy_applicability_id as string;
+   const app=(await run('retentionApplicabilityCreate','custodian',{retention_policy_id:policy,version_number:1,classification:'confidential',...(ordinary || scenario===cases[12] || scenario===cases[13] || scenario===cases[14] || scenario===cases[15]?{effective_from:fixtureInstant}:{} )})).response.retention_policy_applicability_id as string;
    const bindings=JSON.parse(readFileSync(new URL('../../../../docs/executable-contracts/candidates/STEP_6A3_C04W_CFGD_v1.10/LIFECYCLE_BINDINGS.json',import.meta.url),'utf8')).bindings;
    for(const b of bindings){const edge=newUuidV7();await sql`INSERT INTO ops_audit.lifecycle_transition_definitions
     (lifecycle_transition_definition_id,entity_type,version_number,from_state,command_code,to_state,precondition_policy_ref,permission_id,sod_policy_ref,audit_event_code,notification_policy_ref,recalculation_policy_ref,idempotency_semantics,concurrency_semantics,system_actor_allowed,lifecycle_state,published_at)
     SELECT ${edge}::uuid,${b.entity_type},(SELECT COALESCE(max(version_number),0)+1 FROM ops_audit.lifecycle_transition_definitions WHERE entity_type=${b.entity_type} AND from_state=${b.from_state} AND command_code=${b.command_code}),${b.from_state},${b.command_code},${b.to_state},${b.precondition_policy_ref},permission_id,${b.sod_policy_ref},${b.audit_event_code},${b.notification_policy},${b.recalculation_policy},${b.idempotency_semantics},${b.concurrency_semantics},${b.system_actor_allowed},'published',transaction_timestamp() FROM iam.permissions WHERE permission_code=${b.permission_code} AND lifecycle_state='published'`.execute(tx);
     for(const scope of b.allowed_scopes) await sql`INSERT INTO ops_audit.lifecycle_transition_scopes(lifecycle_transition_scope_id,lifecycle_transition_definition_id,scope_kind) VALUES(${newUuidV7()}::uuid,${edge}::uuid,${scope})`.execute(tx);}
+   if (scenario===cases[15]) {
+    await run('uploadIntentCreate','owner',{original_filename:'LOCAL-PENDING-SOURCE.pdf',declared_mime:'application/pdf',size_bytes:12,classification:'confidential',retention_policy_id:policy,retention_policy_applicability_id:app,source_provenance:'ISOLATED PENDING SOURCE TEST'});
+    await expect(run('retentionApplicabilitySubmitForReview','custodian',{expected_version:1},app)).rejects.toMatchObject({statusCode:422});
+    throw rolledBack;
+   }
+   if (ordinary) {
+    const failure=vi.spyOn(records,'persistAuditEvent').mockRejectedValueOnce(new Error('ORDINARY_AUDIT_FAILURE'));
+    await expect(run('retentionApplicabilitySubmitForReview','custodian',{expected_version:1},app)).rejects.toThrow('ORDINARY_AUDIT_FAILURE');
+    failure.mockRestore();
+    const ctx={tenantId:ids.tenant,applicabilityId:app,retentionPolicyId:policy,classification:'confidential',scopeSubjectId:null,processingActivityId:null};
+    const key=newUuidV7();
+    await run('retentionApplicabilitySubmitForReview','custodian',{expected_version:1},app,key);
+    expect((await run('retentionApplicabilitySubmitForReview','custodian',{expected_version:1},app,key)).replayed).toBe(true);
+    await expect(run('retentionApplicabilityApprove','custodian',{expected_version:2},app)).rejects.toMatchObject({statusCode:403});
+    const base=actor('owner');
+    for(const denied of [{...base,tenantId:ids.foreign},{...base,permissions:new Set<string>()},{...base,capabilityGroups:new Set<string>()}]) {
+     await expect(run('retentionApplicabilityApprove','owner',{expected_version:2},app,newUuidV7(),denied)).rejects.toBeInstanceOf(FoundationError);
+    }
+    await expect(run('retentionApplicabilityApprove','owner',{expected_version:1},app)).rejects.toMatchObject({statusCode:409});
+    await run('retentionApplicabilityApprove','owner',{expected_version:2},app);
+    await run('retentionApplicabilityPublish','custodian',{expected_version:3},app);
+    const persisted=await sql<{lifecycle_state:string;source_evidence_version_id:null;source_clause_ref:null;row_version:string}>`SELECT lifecycle_state,source_evidence_version_id,source_clause_ref,row_version::text FROM privacy.retention_policy_applicabilities WHERE tenant_id=${ids.tenant}::uuid AND retention_policy_applicability_id=${app}::uuid`.execute(tx);
+    expect(persisted.rows[0]).toEqual({lifecycle_state:'published',source_evidence_version_id:null,source_clause_ref:null,row_version:'4'});
+    const audits=await sql<{n:number}>`SELECT count(*)::int AS n FROM ops_audit.audit_events WHERE tenant_id=${ids.tenant}::uuid AND aggregate_id=${app}::uuid`.execute(tx);
+    expect(audits.rows[0]?.n).toBe(4);
+    expect(await assertUploadRetention(tx,actor('owner'),ctx,'evidence.evidence.create')).toBe(false);
+    await expect(assertUploadRetention(tx,actor('owner'),{...ctx,classification:'public'},'evidence.evidence.create')).rejects.toBeInstanceOf(FoundationError);
+    const uploadBody={original_filename:'LOCAL-ORDINARY-TECHNICAL.pdf',declared_mime:'application/pdf',size_bytes:12,classification:'confidential',retention_policy_id:policy,retention_policy_applicability_id:app,source_provenance:'ISOLATED ORDINARY OPERATION TEST'};
+    let selectedSubject: string | undefined;
+    if(scenario===cases[16]) {
+     selectedSubject=newUuidV7();const foreignSubject=newUuidV7();
+     await sql`INSERT INTO org.subjects(subject_id,tenant_id,subject_type,canonical_key,display_name,lifecycle_state,effective_from,created_by_user_identity_id,updated_by_user_identity_id)
+       VALUES(${selectedSubject}::uuid,${ids.tenant}::uuid,'organization',${`scope:${selectedSubject}`},'LOCAL SELECTED SUBJECT','active',transaction_timestamp(),${ids.custodian}::uuid,${ids.custodian}::uuid),
+             (${foreignSubject}::uuid,${ids.foreign}::uuid,'organization',${`scope:${foreignSubject}`},'FOREIGN SUBJECT','active',transaction_timestamp(),${ids.custodian}::uuid,${ids.custodian}::uuid)`.execute(tx);
+     await expect(run('uploadIntentCreate','owner',{...uploadBody,scope_subject_id:foreignSubject})).rejects.toMatchObject({code:'TCDX.RESOURCE.NOT_FOUND',statusCode:404});
+    }
+    const uploaded=(await run('uploadIntentCreate','owner',{...uploadBody,...(selectedSubject?{scope_subject_id:selectedSubject}:{})})).response.upload_intent_id as string;
+    const finalized=await run('uploadFinalize','owner',{expected_version:1},uploaded);
+    expect(finalized.response.retention_policy_applicability_id).toBe(app);
+    throw rolledBack;
+   }
    await expect(run('retentionApplicabilitySubmitForReview','custodian',{expected_version:1},app)).rejects.toMatchObject({statusCode:422});
+   if (scenario===cases[12] || scenario===cases[13] || scenario===cases[14]) throw rolledBack;
    const uploadBody={original_filename:'LOCAL-NOT-A-LEGAL-DOCUMENT.pdf',declared_mime:'application/pdf',size_bytes:12,classification:'confidential',retention_policy_id:policy,retention_policy_applicability_id:app,source_provenance:'ISOLATED TECHNICAL FIXTURE ONLY'};
    const intent=(await run('uploadIntentCreate','owner',uploadBody)).response.upload_intent_id as string;
    if(scenario===cases[3]){

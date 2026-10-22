@@ -1,0 +1,1116 @@
+{
+  "status": "PASS_READ_ONLY_METADATA",
+  "utc": "2026-10-22T15:51:46.559165+00:00",
+  "host": "grc-bk",
+  "administrative_user": "tecdex",
+  "uid": 1000,
+  "host_secret_custody": {
+    "path": "/home/tecdex/.secrets/tcdx-grc-qa/iam-publisher-client-secret",
+    "exists": true,
+    "uid": 1000,
+    "gid": 1000,
+    "mode": "0o600",
+    "regular_file": true,
+    "directory": false,
+    "symlink": false
+  },
+  "containers": [
+    {
+      "name": "tcdx-grc-backend",
+      "present": true,
+      "id": "0800ad076084814749a3f5636ed4c9598a667b583503127b5c99ef18284ffd87",
+      "image": "sha256:f4ed625346fc4712f27945d5248aa1b93e3b324772ef5e06c8d37e1102f57129",
+      "state": {
+        "status": "running",
+        "running": true,
+        "started_at": "2026-10-21T06:36:51.815944811Z",
+        "health": "healthy"
+      },
+      "container_user": "node",
+      "command": [
+        "node",
+        "apps/backend/dist/server.js"
+      ],
+      "environment_names": [
+        "APP_JWT_ALGORITHM",
+        "APP_JWT_AUDIENCE",
+        "APP_JWT_CLOCK_TOLERANCE_SECONDS",
+        "APP_JWT_ISSUER",
+        "APP_JWT_KEY_ID",
+        "APP_JWT_MAX_LIFETIME_SECONDS",
+        "APP_JWT_PRIVATE_KEY_FILE",
+        "APP_JWT_PUBLIC_KEY_FILE",
+        "APP_SESSION_IDLE_SECONDS",
+        "APP_SESSION_MAX_SECONDS",
+        "CLAMAV_HOST",
+        "CLAMAV_PORT",
+        "CLAMAV_TIMEOUT_MS",
+        "DATABASE_HOST",
+        "DATABASE_NAME",
+        "DATABASE_PASSWORD",
+        "DATABASE_PORT",
+        "DATABASE_SSL_MODE",
+        "DATABASE_USER",
+        "FRONTEND_ORIGIN",
+        "MANAGED_IDENTITY_ADMIN_BASE_URL",
+        "MANAGED_IDENTITY_ADMIN_CLIENT_ID",
+        "MANAGED_IDENTITY_ADMIN_CLIENT_SECRET_FILE",
+        "MANAGED_IDENTITY_OIDC_CLIENT_ID",
+        "MANAGED_IDENTITY_OIDC_CLIENT_SECRET_FILE",
+        "MANAGED_IDENTITY_OIDC_ISSUER",
+        "MANAGED_IDENTITY_OIDC_REDIRECT_URI",
+        "NODE_ENV",
+        "NODE_EXTRA_CA_CERTS",
+        "NODE_VERSION",
+        "OBJECT_STORAGE_ACCESS_KEY_FILE",
+        "OBJECT_STORAGE_ACCESS_KEY_HOST_FILE",
+        "OBJECT_STORAGE_ALLOW_INSECURE_HTTP",
+        "OBJECT_STORAGE_BUCKET",
+        "OBJECT_STORAGE_ENCRYPTION_KEY_REF",
+        "OBJECT_STORAGE_ENDPOINT",
+        "OBJECT_STORAGE_KMS_KEY_HOST_FILE",
+        "OBJECT_STORAGE_MAX_UPLOAD_BYTES",
+        "OBJECT_STORAGE_REGION",
+        "OBJECT_STORAGE_SECRET_KEY_FILE",
+        "OBJECT_STORAGE_SECRET_KEY_HOST_FILE",
+        "OBJECT_STORAGE_SIGNED_URL_TTL_SECONDS",
+        "OIDC_ALLOWED_ALGORITHMS",
+        "OIDC_CLIENT_ID",
+        "OIDC_CLIENT_SECRET",
+        "OIDC_ISSUER",
+        "OIDC_REDIRECT_URI",
+        "OIDC_SCOPES",
+        "OIDC_TOKEN_ENDPOINT_AUTH_METHOD",
+        "PATH",
+        "PNPM_HOME",
+        "PORT",
+        "TCDX_IAM_BINDINGS_FILE",
+        "TCDX_IAM_BINDINGS_SHA256",
+        "TCDX_IAM_DECISION_FILE",
+        "TCDX_IAM_DECISION_SHA256",
+        "TCDX_IAM_M2M_PROFILE_FILE",
+        "TCDX_IAM_M2M_PROFILE_SHA256",
+        "TCDX_IAM_RBAC_R3_FILE",
+        "TCDX_IAM_RBAC_R3_SHA256",
+        "YARN_VERSION"
+      ],
+      "safe_configuration": {
+        "DATABASE_HOST": "db-tecdex",
+        "NODE_ENV": "qa",
+        "DATABASE_NAME": "tcdx-grc",
+        "TCDX_IAM_M2M_PROFILE_FILE": "/run/config/step6a3-iam/step6a3-m2m-qa-profile.json",
+        "TCDX_IAM_M2M_PROFILE_SHA256": "6c4bc99b0d25fb75cf67ad8dd8818f1dff1c430c031b1c642b11d0a408ca00f7",
+        "TCDX_IAM_BINDINGS_FILE": "/run/config/step6a3-iam/08_COMMAND_PERMISSION_LIFECYCLE_AUDIT_BINDINGS.json",
+        "TCDX_IAM_BINDINGS_SHA256": "93d647004b9eae9121ab626bdc9057b9cf7494dd285e50a4d804081a7cfed224",
+        "TCDX_IAM_DECISION_FILE": "/run/config/step6a3-iam/IAM_M2M_QA_DECISION_RECEIPT_20261014.json",
+        "TCDX_IAM_DECISION_SHA256": "aa509b568c2ccee57f2caf96578dd51a6ffc1187698debbf233cdc9c40b9f72a",
+        "TCDX_IAM_RBAC_R3_FILE": "/run/config/step6a3-iam/20261009000400_phase6a3_rbac_resolution.sql",
+        "TCDX_IAM_RBAC_R3_SHA256": "1cf25933649ccbe5d0feaa13262fdab9439caad86f53f592a31b2612f7d97863"
+      },
+      "reviewed_mounts": [
+        {
+          "type": "bind",
+          "source": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014",
+          "destination": "/run/config/step6a3-iam",
+          "read_write": false,
+          "host_metadata": {
+            "path": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014",
+            "exists": true,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "0o700",
+            "regular_file": false,
+            "directory": true,
+            "symlink": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "/home/tecdex/.secrets/tcdx-grc-qa/iam-publisher-client-secret",
+          "destination": "/run/secrets/iam_publisher_client_secret",
+          "read_write": false,
+          "host_metadata": {
+            "path": "/home/tecdex/.secrets/tcdx-grc-qa/iam-publisher-client-secret",
+            "exists": true,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "0o600",
+            "regular_file": true,
+            "directory": false,
+            "symlink": false
+          }
+        }
+      ],
+      "runtime_probe": {
+        "uid": 1000,
+        "files": [
+          {
+            "path": "/app/apps/backend/dist/security/commercial-catalog-operator.js",
+            "present": true,
+            "sha256": "892d0116918c07f14d4f5baefcc7ea7d0b876ae195650cbd6860dcd5cfd5029a",
+            "library_operation": false,
+            "library_method": false,
+            "library_config": false
+          },
+          {
+            "path": "/app/apps/backend/dist/security/publication-operator-server.js",
+            "present": true,
+            "sha256": "b540aecc5f04c277a832e3ce689eed907b291802d4582b90af64618a83b34f01",
+            "library_operation": false,
+            "library_method": false,
+            "library_config": false
+          },
+          {
+            "path": "/app/apps/backend/dist/security/iam-publication.js",
+            "present": true,
+            "sha256": "503775c0f4907182cd88091aee26fd16f17ee965556b64a3ac0205b563e773f5",
+            "library_operation": false,
+            "library_method": false,
+            "library_config": false
+          },
+          {
+            "path": "/app/apps/backend/dist/security/iam-publication-runtime.js",
+            "present": true,
+            "sha256": "a54b32b121ccb5fa187bf8a76187a87831a793265c28fc792e074b767db3ca5e",
+            "library_operation": false,
+            "library_method": false,
+            "library_config": false
+          },
+          {
+            "path": "/app/apps/backend/dist/security/normative-library-publication.js",
+            "present": false,
+            "error": "ENOENT"
+          }
+        ],
+        "refs": [
+          {
+            "path": "/run/secrets/iam_publisher_client_secret",
+            "present": true,
+            "socket": false,
+            "file": true,
+            "symlink": false,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "600",
+            "owner_matches": true
+          }
+        ],
+        "connection_probe": "NOT_CONFIGURED"
+      }
+    },
+    {
+      "name": "tcdx-grc-step6a3-publication-operator",
+      "present": true,
+      "id": "96ae08c131f8fe6f1f85db607165bd2179a31891edde4f6fbaad09318b42403b",
+      "image": "sha256:6d65e17d19fc5462f661df5cfa4d9cdc6329c8a1e6f36b7584ab1720cdd83cdd",
+      "state": {
+        "status": "running",
+        "running": true,
+        "started_at": "2026-10-14T21:05:11.673268866Z",
+        "health": null
+      },
+      "container_user": "node",
+      "command": [
+        "node",
+        "apps/backend/dist/security/publication-operator-server.js"
+      ],
+      "environment_names": [
+        "APP_JWT_ALGORITHM",
+        "APP_JWT_AUDIENCE",
+        "APP_JWT_CLOCK_TOLERANCE_SECONDS",
+        "APP_JWT_ISSUER",
+        "APP_JWT_KEY_ID",
+        "APP_JWT_MAX_LIFETIME_SECONDS",
+        "APP_JWT_PRIVATE_KEY_FILE",
+        "APP_JWT_PUBLIC_KEY_FILE",
+        "CLAMAV_HOST",
+        "CLAMAV_PORT",
+        "CLAMAV_TIMEOUT_MS",
+        "DATABASE_HOST",
+        "DATABASE_NAME",
+        "DATABASE_PASSWORD",
+        "DATABASE_PORT",
+        "DATABASE_SSL_MODE",
+        "DATABASE_USER",
+        "FRONTEND_ORIGIN",
+        "MANAGED_IDENTITY_ADMIN_BASE_URL",
+        "MANAGED_IDENTITY_ADMIN_CLIENT_ID",
+        "MANAGED_IDENTITY_ADMIN_CLIENT_SECRET_FILE",
+        "MANAGED_IDENTITY_OIDC_CLIENT_ID",
+        "MANAGED_IDENTITY_OIDC_CLIENT_SECRET_FILE",
+        "MANAGED_IDENTITY_OIDC_ISSUER",
+        "MANAGED_IDENTITY_OIDC_REDIRECT_URI",
+        "NODE_ENV",
+        "NODE_EXTRA_CA_CERTS",
+        "NODE_VERSION",
+        "OBJECT_STORAGE_ACCESS_KEY_FILE",
+        "OBJECT_STORAGE_ACCESS_KEY_HOST_FILE",
+        "OBJECT_STORAGE_ALLOW_INSECURE_HTTP",
+        "OBJECT_STORAGE_BUCKET",
+        "OBJECT_STORAGE_ENCRYPTION_KEY_REF",
+        "OBJECT_STORAGE_ENDPOINT",
+        "OBJECT_STORAGE_KMS_KEY_HOST_FILE",
+        "OBJECT_STORAGE_MAX_UPLOAD_BYTES",
+        "OBJECT_STORAGE_REGION",
+        "OBJECT_STORAGE_SECRET_KEY_FILE",
+        "OBJECT_STORAGE_SECRET_KEY_HOST_FILE",
+        "OBJECT_STORAGE_SIGNED_URL_TTL_SECONDS",
+        "OIDC_ALLOWED_ALGORITHMS",
+        "OIDC_CLIENT_ID",
+        "OIDC_CLIENT_SECRET",
+        "OIDC_ISSUER",
+        "OIDC_REDIRECT_URI",
+        "OIDC_SCOPES",
+        "OIDC_TOKEN_ENDPOINT_AUTH_METHOD",
+        "PATH",
+        "PNPM_HOME",
+        "PORT",
+        "TCDX_COMMERCIAL_APPROVED_MANIFEST_SHA256",
+        "TCDX_COMMERCIAL_CATALOG_OPERATOR_SOCKET",
+        "TCDX_IAM_BINDINGS_FILE",
+        "TCDX_IAM_BINDINGS_SHA256",
+        "TCDX_IAM_DECISION_FILE",
+        "TCDX_IAM_DECISION_SHA256",
+        "TCDX_IAM_M2M_PROFILE_FILE",
+        "TCDX_IAM_M2M_PROFILE_SHA256",
+        "TCDX_IAM_RBAC_R3_FILE",
+        "TCDX_IAM_RBAC_R3_SHA256",
+        "TCDX_QA_EXISTING_SESSION_ORIGIN",
+        "YARN_VERSION"
+      ],
+      "safe_configuration": {
+        "DATABASE_HOST": "db-tecdex",
+        "NODE_ENV": "qa",
+        "DATABASE_NAME": "tcdx-grc",
+        "TCDX_IAM_M2M_PROFILE_FILE": "/run/config/step6a3-iam/step6a3-m2m-qa-profile.json",
+        "TCDX_IAM_M2M_PROFILE_SHA256": "6c4bc99b0d25fb75cf67ad8dd8818f1dff1c430c031b1c642b11d0a408ca00f7",
+        "TCDX_IAM_BINDINGS_FILE": "/run/config/step6a3-iam/08_COMMAND_PERMISSION_LIFECYCLE_AUDIT_BINDINGS.json",
+        "TCDX_IAM_BINDINGS_SHA256": "93d647004b9eae9121ab626bdc9057b9cf7494dd285e50a4d804081a7cfed224",
+        "TCDX_IAM_DECISION_FILE": "/run/config/step6a3-iam/IAM_M2M_QA_DECISION_RECEIPT_20261014.json",
+        "TCDX_IAM_DECISION_SHA256": "aa509b568c2ccee57f2caf96578dd51a6ffc1187698debbf233cdc9c40b9f72a",
+        "TCDX_IAM_RBAC_R3_FILE": "/run/config/step6a3-iam/20261009000400_phase6a3_rbac_resolution.sql",
+        "TCDX_IAM_RBAC_R3_SHA256": "1cf25933649ccbe5d0feaa13262fdab9439caad86f53f592a31b2612f7d97863",
+        "TCDX_COMMERCIAL_APPROVED_MANIFEST_SHA256": "3e12e21ebc0ad31ea2e7f7ab96cc15a022252b2389fbe4d33ecf72208fc9a479",
+        "TCDX_COMMERCIAL_CATALOG_OPERATOR_SOCKET": "/run/tcdx-operator/catalog.sock",
+        "TCDX_QA_EXISTING_SESSION_ORIGIN": "http://127.0.0.1:4000"
+      },
+      "reviewed_mounts": [
+        {
+          "type": "bind",
+          "source": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014",
+          "destination": "/run/config/step6a3-iam",
+          "read_write": false,
+          "host_metadata": {
+            "path": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014",
+            "exists": true,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "0o700",
+            "regular_file": false,
+            "directory": true,
+            "symlink": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "/home/tecdex/.secrets/tcdx-grc-qa/iam-publisher-client-secret",
+          "destination": "/run/secrets/iam_publisher_client_secret",
+          "read_write": false,
+          "host_metadata": {
+            "path": "/home/tecdex/.secrets/tcdx-grc-qa/iam-publisher-client-secret",
+            "exists": true,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "0o600",
+            "regular_file": true,
+            "directory": false,
+            "symlink": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014/operator",
+          "destination": "/run/tcdx-operator",
+          "read_write": true,
+          "host_metadata": {
+            "path": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014/operator",
+            "exists": true,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "0o700",
+            "regular_file": false,
+            "directory": true,
+            "symlink": false
+          },
+          "socket_metadata": {
+            "path": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014/operator/catalog.sock",
+            "exists": true,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "0o600",
+            "regular_file": false,
+            "directory": false,
+            "symlink": false
+          }
+        }
+      ],
+      "runtime_probe": {
+        "uid": 1000,
+        "files": [
+          {
+            "path": "/app/apps/backend/dist/security/commercial-catalog-operator.js",
+            "present": true,
+            "sha256": "2b13cd530e373bdf5ad643f8735680bc3e7b5bcf5f4411bbe704556fd5f39048",
+            "library_operation": false,
+            "library_method": false,
+            "library_config": false
+          },
+          {
+            "path": "/app/apps/backend/dist/security/publication-operator-server.js",
+            "present": true,
+            "sha256": "1dcb10782d345a2ae924f8d30788d753b6405c6cb1f1880c83941ad8b65cbdf3",
+            "library_operation": false,
+            "library_method": false,
+            "library_config": false
+          },
+          {
+            "path": "/app/apps/backend/dist/security/iam-publication.js",
+            "present": true,
+            "sha256": "474ad61d6ddf28cb97c375d8f3bd2820973af0c069140545063c3164714cbde0",
+            "library_operation": false,
+            "library_method": false,
+            "library_config": false
+          },
+          {
+            "path": "/app/apps/backend/dist/security/iam-publication-runtime.js",
+            "present": true,
+            "sha256": "6ad0fc7533560dd618af64908257210447910366e944ad6cf02e71918b4bb720",
+            "library_operation": false,
+            "library_method": false,
+            "library_config": false
+          },
+          {
+            "path": "/app/apps/backend/dist/security/normative-library-publication.js",
+            "present": false,
+            "error": "ENOENT"
+          }
+        ],
+        "refs": [
+          {
+            "path": "/run/secrets/iam_publisher_client_secret",
+            "present": true,
+            "socket": false,
+            "file": true,
+            "symlink": false,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "600",
+            "owner_matches": true
+          },
+          {
+            "path": "/run/tcdx-operator/catalog.sock",
+            "present": true,
+            "socket": true,
+            "file": false,
+            "symlink": false,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "600",
+            "owner_matches": true
+          }
+        ],
+        "connection_probe": "CONNECTED_NO_BYTES",
+        "bytes_sent": 0,
+        "activation_requests": 0
+      }
+    },
+    {
+      "name": "tcdx-grc-step6a3-c04w-publication-operator",
+      "present": true,
+      "id": "38123300c1bf53f6c035fe9f367da47baa670729d53d59098e7e670b02df5657",
+      "image": "sha256:af3a818693659e5e1f9a0e00800271aa621a941d81b969fc020e86b3a21f1516",
+      "state": {
+        "status": "running",
+        "running": true,
+        "started_at": "2026-10-15T15:10:22.838415304Z",
+        "health": null
+      },
+      "container_user": "node",
+      "command": [
+        "node",
+        "apps/backend/dist/security/publication-operator-server.js"
+      ],
+      "environment_names": [
+        "APP_JWT_ALGORITHM",
+        "APP_JWT_AUDIENCE",
+        "APP_JWT_CLOCK_TOLERANCE_SECONDS",
+        "APP_JWT_ISSUER",
+        "APP_JWT_KEY_ID",
+        "APP_JWT_MAX_LIFETIME_SECONDS",
+        "APP_JWT_PRIVATE_KEY_FILE",
+        "APP_JWT_PUBLIC_KEY_FILE",
+        "CLAMAV_HOST",
+        "CLAMAV_PORT",
+        "CLAMAV_TIMEOUT_MS",
+        "DATABASE_HOST",
+        "DATABASE_NAME",
+        "DATABASE_PASSWORD",
+        "DATABASE_PORT",
+        "DATABASE_SSL_MODE",
+        "DATABASE_USER",
+        "FRONTEND_ORIGIN",
+        "MANAGED_IDENTITY_ADMIN_BASE_URL",
+        "MANAGED_IDENTITY_ADMIN_CLIENT_ID",
+        "MANAGED_IDENTITY_ADMIN_CLIENT_SECRET_FILE",
+        "MANAGED_IDENTITY_OIDC_CLIENT_ID",
+        "MANAGED_IDENTITY_OIDC_CLIENT_SECRET_FILE",
+        "MANAGED_IDENTITY_OIDC_ISSUER",
+        "MANAGED_IDENTITY_OIDC_REDIRECT_URI",
+        "NODE_ENV",
+        "NODE_EXTRA_CA_CERTS",
+        "NODE_VERSION",
+        "OBJECT_STORAGE_ACCESS_KEY_FILE",
+        "OBJECT_STORAGE_ACCESS_KEY_HOST_FILE",
+        "OBJECT_STORAGE_ALLOW_INSECURE_HTTP",
+        "OBJECT_STORAGE_BUCKET",
+        "OBJECT_STORAGE_ENCRYPTION_KEY_REF",
+        "OBJECT_STORAGE_ENDPOINT",
+        "OBJECT_STORAGE_KMS_KEY_HOST_FILE",
+        "OBJECT_STORAGE_MAX_UPLOAD_BYTES",
+        "OBJECT_STORAGE_REGION",
+        "OBJECT_STORAGE_SECRET_KEY_FILE",
+        "OBJECT_STORAGE_SECRET_KEY_HOST_FILE",
+        "OBJECT_STORAGE_SIGNED_URL_TTL_SECONDS",
+        "OIDC_ALLOWED_ALGORITHMS",
+        "OIDC_CLIENT_ID",
+        "OIDC_CLIENT_SECRET",
+        "OIDC_ISSUER",
+        "OIDC_REDIRECT_URI",
+        "OIDC_SCOPES",
+        "OIDC_TOKEN_ENDPOINT_AUTH_METHOD",
+        "PATH",
+        "PNPM_HOME",
+        "PORT",
+        "TCDX_COMMERCIAL_APPROVED_MANIFEST_SHA256",
+        "TCDX_COMMERCIAL_CATALOG_OPERATOR_SOCKET",
+        "TCDX_IAM_BINDINGS_FILE",
+        "TCDX_IAM_BINDINGS_SHA256",
+        "TCDX_IAM_DECISION_FILE",
+        "TCDX_IAM_DECISION_SHA256",
+        "TCDX_IAM_M2M_PROFILE_FILE",
+        "TCDX_IAM_M2M_PROFILE_SHA256",
+        "TCDX_IAM_RBAC_R3_FILE",
+        "TCDX_IAM_RBAC_R3_SHA256",
+        "TCDX_QA_EXISTING_SESSION_ORIGIN",
+        "YARN_VERSION"
+      ],
+      "safe_configuration": {
+        "DATABASE_HOST": "db-tecdex",
+        "NODE_ENV": "qa",
+        "DATABASE_NAME": "tcdx-grc",
+        "TCDX_IAM_M2M_PROFILE_FILE": "/run/config/step6a3-iam/step6a3-m2m-qa-profile.json",
+        "TCDX_IAM_M2M_PROFILE_SHA256": "6c4bc99b0d25fb75cf67ad8dd8818f1dff1c430c031b1c642b11d0a408ca00f7",
+        "TCDX_IAM_BINDINGS_FILE": "/run/config/step6a3-iam/08_COMMAND_PERMISSION_LIFECYCLE_AUDIT_BINDINGS.json",
+        "TCDX_IAM_BINDINGS_SHA256": "93d647004b9eae9121ab626bdc9057b9cf7494dd285e50a4d804081a7cfed224",
+        "TCDX_IAM_DECISION_FILE": "/run/config/step6a3-iam/IAM_M2M_QA_DECISION_RECEIPT_20261014.json",
+        "TCDX_IAM_DECISION_SHA256": "aa509b568c2ccee57f2caf96578dd51a6ffc1187698debbf233cdc9c40b9f72a",
+        "TCDX_IAM_RBAC_R3_FILE": "/run/config/step6a3-iam/20261009000400_phase6a3_rbac_resolution.sql",
+        "TCDX_IAM_RBAC_R3_SHA256": "1cf25933649ccbe5d0feaa13262fdab9439caad86f53f592a31b2612f7d97863",
+        "TCDX_COMMERCIAL_APPROVED_MANIFEST_SHA256": "3e12e21ebc0ad31ea2e7f7ab96cc15a022252b2389fbe4d33ecf72208fc9a479",
+        "TCDX_COMMERCIAL_CATALOG_OPERATOR_SOCKET": "/run/tcdx-operator/catalog.sock",
+        "TCDX_QA_EXISTING_SESSION_ORIGIN": "http://127.0.0.1:4000"
+      },
+      "reviewed_mounts": [
+        {
+          "type": "bind",
+          "source": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014",
+          "destination": "/run/config/step6a3-iam",
+          "read_write": false,
+          "host_metadata": {
+            "path": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014",
+            "exists": true,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "0o700",
+            "regular_file": false,
+            "directory": true,
+            "symlink": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014/operator-c04w",
+          "destination": "/run/tcdx-operator",
+          "read_write": true,
+          "host_metadata": {
+            "path": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014/operator-c04w",
+            "exists": true,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "0o700",
+            "regular_file": false,
+            "directory": true,
+            "symlink": false
+          },
+          "socket_metadata": {
+            "path": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014/operator-c04w/catalog.sock",
+            "exists": true,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "0o600",
+            "regular_file": false,
+            "directory": false,
+            "symlink": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "/home/tecdex/.secrets/tcdx-grc-qa/iam-publisher-client-secret",
+          "destination": "/run/secrets/iam_publisher_client_secret",
+          "read_write": false,
+          "host_metadata": {
+            "path": "/home/tecdex/.secrets/tcdx-grc-qa/iam-publisher-client-secret",
+            "exists": true,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "0o600",
+            "regular_file": true,
+            "directory": false,
+            "symlink": false
+          }
+        }
+      ],
+      "runtime_probe": {
+        "uid": 1000,
+        "files": [
+          {
+            "path": "/app/apps/backend/dist/security/commercial-catalog-operator.js",
+            "present": true,
+            "sha256": "2b13cd530e373bdf5ad643f8735680bc3e7b5bcf5f4411bbe704556fd5f39048",
+            "library_operation": false,
+            "library_method": false,
+            "library_config": false
+          },
+          {
+            "path": "/app/apps/backend/dist/security/publication-operator-server.js",
+            "present": true,
+            "sha256": "1dcb10782d345a2ae924f8d30788d753b6405c6cb1f1880c83941ad8b65cbdf3",
+            "library_operation": false,
+            "library_method": false,
+            "library_config": false
+          },
+          {
+            "path": "/app/apps/backend/dist/security/iam-publication.js",
+            "present": true,
+            "sha256": "d19dc6877789f6c297568a21d1fbb505e3aec9f77d1b0d9a5e02936f0e8e9a5c",
+            "library_operation": false,
+            "library_method": false,
+            "library_config": false
+          },
+          {
+            "path": "/app/apps/backend/dist/security/iam-publication-runtime.js",
+            "present": true,
+            "sha256": "6ad0fc7533560dd618af64908257210447910366e944ad6cf02e71918b4bb720",
+            "library_operation": false,
+            "library_method": false,
+            "library_config": false
+          },
+          {
+            "path": "/app/apps/backend/dist/security/normative-library-publication.js",
+            "present": false,
+            "error": "ENOENT"
+          }
+        ],
+        "refs": [
+          {
+            "path": "/run/secrets/iam_publisher_client_secret",
+            "present": true,
+            "socket": false,
+            "file": true,
+            "symlink": false,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "600",
+            "owner_matches": true
+          },
+          {
+            "path": "/run/tcdx-operator/catalog.sock",
+            "present": true,
+            "socket": true,
+            "file": false,
+            "symlink": false,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "600",
+            "owner_matches": true
+          }
+        ],
+        "connection_probe": "CONNECTED_NO_BYTES",
+        "bytes_sent": 0,
+        "activation_requests": 0
+      }
+    },
+    {
+      "name": "tcdx-grc-step6a3-c04w-lifecycle-operator",
+      "present": true,
+      "id": "0be7c1eab631875889d6f5e253c0c62043a3eeda3d1ea43985960ddfefaa125a",
+      "image": "sha256:474e525a3e6b2bcc067dda7a77039b36f2832ca37d138b1424a700644560fc6d",
+      "state": {
+        "status": "running",
+        "running": true,
+        "started_at": "2026-10-15T19:46:17.403145284Z",
+        "health": null
+      },
+      "container_user": "node",
+      "command": [
+        "node",
+        "apps/backend/dist/security/publication-operator-server.js"
+      ],
+      "environment_names": [
+        "APP_JWT_ALGORITHM",
+        "APP_JWT_AUDIENCE",
+        "APP_JWT_CLOCK_TOLERANCE_SECONDS",
+        "APP_JWT_ISSUER",
+        "APP_JWT_KEY_ID",
+        "APP_JWT_MAX_LIFETIME_SECONDS",
+        "APP_JWT_PRIVATE_KEY_FILE",
+        "APP_JWT_PUBLIC_KEY_FILE",
+        "CLAMAV_HOST",
+        "CLAMAV_PORT",
+        "CLAMAV_TIMEOUT_MS",
+        "DATABASE_HOST",
+        "DATABASE_NAME",
+        "DATABASE_PASSWORD",
+        "DATABASE_PORT",
+        "DATABASE_SSL_MODE",
+        "DATABASE_USER",
+        "FRONTEND_ORIGIN",
+        "MANAGED_IDENTITY_ADMIN_BASE_URL",
+        "MANAGED_IDENTITY_ADMIN_CLIENT_ID",
+        "MANAGED_IDENTITY_ADMIN_CLIENT_SECRET_FILE",
+        "MANAGED_IDENTITY_OIDC_CLIENT_ID",
+        "MANAGED_IDENTITY_OIDC_CLIENT_SECRET_FILE",
+        "MANAGED_IDENTITY_OIDC_ISSUER",
+        "MANAGED_IDENTITY_OIDC_REDIRECT_URI",
+        "NODE_ENV",
+        "NODE_EXTRA_CA_CERTS",
+        "NODE_VERSION",
+        "OBJECT_STORAGE_ACCESS_KEY_FILE",
+        "OBJECT_STORAGE_ACCESS_KEY_HOST_FILE",
+        "OBJECT_STORAGE_ALLOW_INSECURE_HTTP",
+        "OBJECT_STORAGE_BUCKET",
+        "OBJECT_STORAGE_ENCRYPTION_KEY_REF",
+        "OBJECT_STORAGE_ENDPOINT",
+        "OBJECT_STORAGE_KMS_KEY_HOST_FILE",
+        "OBJECT_STORAGE_MAX_UPLOAD_BYTES",
+        "OBJECT_STORAGE_REGION",
+        "OBJECT_STORAGE_SECRET_KEY_FILE",
+        "OBJECT_STORAGE_SECRET_KEY_HOST_FILE",
+        "OBJECT_STORAGE_SIGNED_URL_TTL_SECONDS",
+        "OIDC_ALLOWED_ALGORITHMS",
+        "OIDC_CLIENT_ID",
+        "OIDC_CLIENT_SECRET",
+        "OIDC_ISSUER",
+        "OIDC_REDIRECT_URI",
+        "OIDC_SCOPES",
+        "OIDC_TOKEN_ENDPOINT_AUTH_METHOD",
+        "PATH",
+        "PNPM_HOME",
+        "PORT",
+        "TCDX_C04W_PUBLICATION_MANIFEST_SHA256",
+        "TCDX_C04W_PUBLICATION_ROOT",
+        "TCDX_COMMERCIAL_APPROVED_MANIFEST_SHA256",
+        "TCDX_COMMERCIAL_CATALOG_OPERATOR_SOCKET",
+        "TCDX_IAM_BINDINGS_FILE",
+        "TCDX_IAM_BINDINGS_SHA256",
+        "TCDX_IAM_DECISION_FILE",
+        "TCDX_IAM_DECISION_SHA256",
+        "TCDX_IAM_M2M_PROFILE_FILE",
+        "TCDX_IAM_M2M_PROFILE_SHA256",
+        "TCDX_IAM_RBAC_R3_FILE",
+        "TCDX_IAM_RBAC_R3_SHA256",
+        "TCDX_QA_EXISTING_SESSION_ORIGIN",
+        "YARN_VERSION"
+      ],
+      "safe_configuration": {
+        "DATABASE_HOST": "db-tecdex",
+        "NODE_ENV": "qa",
+        "DATABASE_NAME": "tcdx-grc",
+        "TCDX_IAM_M2M_PROFILE_FILE": "/run/config/step6a3-iam/step6a3-m2m-qa-profile.json",
+        "TCDX_IAM_M2M_PROFILE_SHA256": "6c4bc99b0d25fb75cf67ad8dd8818f1dff1c430c031b1c642b11d0a408ca00f7",
+        "TCDX_IAM_BINDINGS_FILE": "/run/config/step6a3-iam/08_COMMAND_PERMISSION_LIFECYCLE_AUDIT_BINDINGS.json",
+        "TCDX_IAM_BINDINGS_SHA256": "93d647004b9eae9121ab626bdc9057b9cf7494dd285e50a4d804081a7cfed224",
+        "TCDX_IAM_DECISION_FILE": "/run/config/step6a3-iam/IAM_M2M_QA_DECISION_RECEIPT_20261014.json",
+        "TCDX_IAM_DECISION_SHA256": "aa509b568c2ccee57f2caf96578dd51a6ffc1187698debbf233cdc9c40b9f72a",
+        "TCDX_IAM_RBAC_R3_FILE": "/run/config/step6a3-iam/20261009000400_phase6a3_rbac_resolution.sql",
+        "TCDX_IAM_RBAC_R3_SHA256": "1cf25933649ccbe5d0feaa13262fdab9439caad86f53f592a31b2612f7d97863",
+        "TCDX_COMMERCIAL_APPROVED_MANIFEST_SHA256": "3e12e21ebc0ad31ea2e7f7ab96cc15a022252b2389fbe4d33ecf72208fc9a479",
+        "TCDX_COMMERCIAL_CATALOG_OPERATOR_SOCKET": "/run/tcdx-operator/catalog.sock",
+        "TCDX_QA_EXISTING_SESSION_ORIGIN": "http://127.0.0.1:4000",
+        "TCDX_C04W_PUBLICATION_ROOT": "/run/config/step6a3-iam/c04w"
+      },
+      "reviewed_mounts": [
+        {
+          "type": "bind",
+          "source": "/home/tecdex/.secrets/tcdx-grc-qa/iam-publisher-client-secret",
+          "destination": "/run/secrets/iam_publisher_client_secret",
+          "read_write": false,
+          "host_metadata": {
+            "path": "/home/tecdex/.secrets/tcdx-grc-qa/iam-publisher-client-secret",
+            "exists": true,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "0o600",
+            "regular_file": true,
+            "directory": false,
+            "symlink": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "/home/tecdex/.config/tcdx-grc/step6a3-c04w-final-20261015",
+          "destination": "/run/config/step6a3-iam",
+          "read_write": false,
+          "host_metadata": {
+            "path": "/home/tecdex/.config/tcdx-grc/step6a3-c04w-final-20261015",
+            "exists": true,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "0o700",
+            "regular_file": false,
+            "directory": true,
+            "symlink": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "/home/tecdex/.config/tcdx-grc/step6a3-c04w-final-20261015/operator-lifecycle",
+          "destination": "/run/tcdx-operator",
+          "read_write": true,
+          "host_metadata": {
+            "path": "/home/tecdex/.config/tcdx-grc/step6a3-c04w-final-20261015/operator-lifecycle",
+            "exists": true,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "0o700",
+            "regular_file": false,
+            "directory": true,
+            "symlink": false
+          },
+          "socket_metadata": {
+            "path": "/home/tecdex/.config/tcdx-grc/step6a3-c04w-final-20261015/operator-lifecycle/catalog.sock",
+            "exists": true,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "0o600",
+            "regular_file": false,
+            "directory": false,
+            "symlink": false
+          }
+        }
+      ],
+      "runtime_probe": {
+        "uid": 1000,
+        "files": [
+          {
+            "path": "/app/apps/backend/dist/security/commercial-catalog-operator.js",
+            "present": true,
+            "sha256": "22387b4a8293f12fef6165c9d04a6918fd89d38924a5c4a78de70c62a295e6fd",
+            "library_operation": false,
+            "library_method": false,
+            "library_config": false
+          },
+          {
+            "path": "/app/apps/backend/dist/security/publication-operator-server.js",
+            "present": true,
+            "sha256": "39a79bf54582ca0769637d1be359d02da7767508fd30a25c70bef701411c46a1",
+            "library_operation": false,
+            "library_method": false,
+            "library_config": false
+          },
+          {
+            "path": "/app/apps/backend/dist/security/iam-publication.js",
+            "present": true,
+            "sha256": "5ea09517a7cfbc14b022fcf982a83aedc74a523f955b42f7fa25e8ecb19abd9f",
+            "library_operation": false,
+            "library_method": false,
+            "library_config": false
+          },
+          {
+            "path": "/app/apps/backend/dist/security/iam-publication-runtime.js",
+            "present": true,
+            "sha256": "bf1f0ac843e9e92602668017578a95cf16e90a9bed2b8bf4cb04bf132ea66844",
+            "library_operation": false,
+            "library_method": false,
+            "library_config": false
+          },
+          {
+            "path": "/app/apps/backend/dist/security/normative-library-publication.js",
+            "present": false,
+            "error": "ENOENT"
+          }
+        ],
+        "refs": [
+          {
+            "path": "/run/secrets/iam_publisher_client_secret",
+            "present": true,
+            "socket": false,
+            "file": true,
+            "symlink": false,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "600",
+            "owner_matches": true
+          },
+          {
+            "path": "/run/tcdx-operator/catalog.sock",
+            "present": true,
+            "socket": true,
+            "file": false,
+            "symlink": false,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "600",
+            "owner_matches": true
+          }
+        ],
+        "connection_probe": "CONNECTED_NO_BYTES",
+        "bytes_sent": 0,
+        "activation_requests": 0
+      }
+    },
+    {
+      "name": "tcdx-grc-step6a3-initial-source-operator",
+      "present": true,
+      "id": "eb2d1d27da91b366f0e1792428953da49c7f525e61e1391e8af8f6d9ed29aedc",
+      "image": "sha256:bda003a95edc7758b8a8694dbec698d1a5b1456663c063b6dd5da12e4fcc2ea2",
+      "state": {
+        "status": "running",
+        "running": true,
+        "started_at": "2026-10-15T22:51:50.610914165Z",
+        "health": null
+      },
+      "container_user": "node",
+      "command": [
+        "node",
+        "apps/backend/dist/security/publication-operator-server.js"
+      ],
+      "environment_names": [
+        "APP_JWT_ALGORITHM",
+        "APP_JWT_AUDIENCE",
+        "APP_JWT_CLOCK_TOLERANCE_SECONDS",
+        "APP_JWT_ISSUER",
+        "APP_JWT_KEY_ID",
+        "APP_JWT_MAX_LIFETIME_SECONDS",
+        "APP_JWT_PRIVATE_KEY_FILE",
+        "APP_JWT_PUBLIC_KEY_FILE",
+        "CLAMAV_HOST",
+        "CLAMAV_PORT",
+        "CLAMAV_TIMEOUT_MS",
+        "DATABASE_HOST",
+        "DATABASE_NAME",
+        "DATABASE_PASSWORD",
+        "DATABASE_PORT",
+        "DATABASE_SSL_MODE",
+        "DATABASE_USER",
+        "FRONTEND_ORIGIN",
+        "MANAGED_IDENTITY_ADMIN_BASE_URL",
+        "MANAGED_IDENTITY_ADMIN_CLIENT_ID",
+        "MANAGED_IDENTITY_ADMIN_CLIENT_SECRET_FILE",
+        "MANAGED_IDENTITY_OIDC_CLIENT_ID",
+        "MANAGED_IDENTITY_OIDC_CLIENT_SECRET_FILE",
+        "MANAGED_IDENTITY_OIDC_ISSUER",
+        "MANAGED_IDENTITY_OIDC_REDIRECT_URI",
+        "NODE_ENV",
+        "NODE_EXTRA_CA_CERTS",
+        "NODE_VERSION",
+        "OBJECT_STORAGE_ACCESS_KEY_FILE",
+        "OBJECT_STORAGE_ACCESS_KEY_HOST_FILE",
+        "OBJECT_STORAGE_ALLOW_INSECURE_HTTP",
+        "OBJECT_STORAGE_BUCKET",
+        "OBJECT_STORAGE_ENCRYPTION_KEY_REF",
+        "OBJECT_STORAGE_ENDPOINT",
+        "OBJECT_STORAGE_KMS_KEY_HOST_FILE",
+        "OBJECT_STORAGE_MAX_UPLOAD_BYTES",
+        "OBJECT_STORAGE_REGION",
+        "OBJECT_STORAGE_SECRET_KEY_FILE",
+        "OBJECT_STORAGE_SECRET_KEY_HOST_FILE",
+        "OBJECT_STORAGE_SIGNED_URL_TTL_SECONDS",
+        "OIDC_ALLOWED_ALGORITHMS",
+        "OIDC_CLIENT_ID",
+        "OIDC_CLIENT_SECRET",
+        "OIDC_ISSUER",
+        "OIDC_REDIRECT_URI",
+        "OIDC_SCOPES",
+        "OIDC_TOKEN_ENDPOINT_AUTH_METHOD",
+        "PATH",
+        "PNPM_HOME",
+        "PORT",
+        "TCDX_COMMERCIAL_APPROVED_MANIFEST_SHA256",
+        "TCDX_COMMERCIAL_CATALOG_OPERATOR_SOCKET",
+        "TCDX_IAM_BINDINGS_FILE",
+        "TCDX_IAM_BINDINGS_SHA256",
+        "TCDX_IAM_DECISION_FILE",
+        "TCDX_IAM_DECISION_SHA256",
+        "TCDX_IAM_M2M_PROFILE_FILE",
+        "TCDX_IAM_M2M_PROFILE_SHA256",
+        "TCDX_IAM_RBAC_R3_FILE",
+        "TCDX_IAM_RBAC_R3_SHA256",
+        "TCDX_INITIAL_SOURCE_PUBLICATION_MANIFEST_SHA256",
+        "TCDX_INITIAL_SOURCE_PUBLICATION_ROOT",
+        "TCDX_QA_EXISTING_SESSION_ORIGIN",
+        "YARN_VERSION"
+      ],
+      "safe_configuration": {
+        "DATABASE_HOST": "db-tecdex",
+        "NODE_ENV": "qa",
+        "DATABASE_NAME": "tcdx-grc",
+        "TCDX_IAM_M2M_PROFILE_FILE": "/run/config/step6a3-iam/step6a3-m2m-qa-profile.json",
+        "TCDX_IAM_M2M_PROFILE_SHA256": "6c4bc99b0d25fb75cf67ad8dd8818f1dff1c430c031b1c642b11d0a408ca00f7",
+        "TCDX_IAM_BINDINGS_FILE": "/run/config/step6a3-iam/08_COMMAND_PERMISSION_LIFECYCLE_AUDIT_BINDINGS.json",
+        "TCDX_IAM_BINDINGS_SHA256": "93d647004b9eae9121ab626bdc9057b9cf7494dd285e50a4d804081a7cfed224",
+        "TCDX_IAM_DECISION_FILE": "/run/config/step6a3-iam/IAM_M2M_QA_DECISION_RECEIPT_20261014.json",
+        "TCDX_IAM_DECISION_SHA256": "aa509b568c2ccee57f2caf96578dd51a6ffc1187698debbf233cdc9c40b9f72a",
+        "TCDX_IAM_RBAC_R3_FILE": "/run/config/step6a3-iam/20261009000400_phase6a3_rbac_resolution.sql",
+        "TCDX_IAM_RBAC_R3_SHA256": "1cf25933649ccbe5d0feaa13262fdab9439caad86f53f592a31b2612f7d97863",
+        "TCDX_COMMERCIAL_APPROVED_MANIFEST_SHA256": "3e12e21ebc0ad31ea2e7f7ab96cc15a022252b2389fbe4d33ecf72208fc9a479",
+        "TCDX_COMMERCIAL_CATALOG_OPERATOR_SOCKET": "/run/tcdx-operator/catalog.sock",
+        "TCDX_QA_EXISTING_SESSION_ORIGIN": "http://127.0.0.1:4000",
+        "TCDX_INITIAL_SOURCE_PUBLICATION_ROOT": "/run/config/step6a3-iam/initial-source"
+      },
+      "reviewed_mounts": [
+        {
+          "type": "bind",
+          "source": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014",
+          "destination": "/run/config/step6a3-iam",
+          "read_write": false,
+          "host_metadata": {
+            "path": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014",
+            "exists": true,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "0o700",
+            "regular_file": false,
+            "directory": true,
+            "symlink": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "/home/tecdex/.secrets/tcdx-grc-qa/iam-publisher-client-secret",
+          "destination": "/run/secrets/iam_publisher_client_secret",
+          "read_write": false,
+          "host_metadata": {
+            "path": "/home/tecdex/.secrets/tcdx-grc-qa/iam-publisher-client-secret",
+            "exists": true,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "0o600",
+            "regular_file": true,
+            "directory": false,
+            "symlink": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014/operator-initial-source",
+          "destination": "/run/tcdx-operator",
+          "read_write": true,
+          "host_metadata": {
+            "path": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014/operator-initial-source",
+            "exists": true,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "0o700",
+            "regular_file": false,
+            "directory": true,
+            "symlink": false
+          },
+          "socket_metadata": {
+            "path": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014/operator-initial-source/catalog.sock",
+            "exists": true,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "0o600",
+            "regular_file": false,
+            "directory": false,
+            "symlink": false
+          }
+        }
+      ],
+      "runtime_probe": {
+        "uid": 1000,
+        "files": [
+          {
+            "path": "/app/apps/backend/dist/security/commercial-catalog-operator.js",
+            "present": true,
+            "sha256": "892d0116918c07f14d4f5baefcc7ea7d0b876ae195650cbd6860dcd5cfd5029a",
+            "library_operation": false,
+            "library_method": false,
+            "library_config": false
+          },
+          {
+            "path": "/app/apps/backend/dist/security/publication-operator-server.js",
+            "present": true,
+            "sha256": "0a96e590f8375df9ae7fd7450bec267e165930e7cc759260eba27a577e53744c",
+            "library_operation": false,
+            "library_method": false,
+            "library_config": false
+          },
+          {
+            "path": "/app/apps/backend/dist/security/iam-publication.js",
+            "present": true,
+            "sha256": "503775c0f4907182cd88091aee26fd16f17ee965556b64a3ac0205b563e773f5",
+            "library_operation": false,
+            "library_method": false,
+            "library_config": false
+          },
+          {
+            "path": "/app/apps/backend/dist/security/iam-publication-runtime.js",
+            "present": true,
+            "sha256": "a54b32b121ccb5fa187bf8a76187a87831a793265c28fc792e074b767db3ca5e",
+            "library_operation": false,
+            "library_method": false,
+            "library_config": false
+          },
+          {
+            "path": "/app/apps/backend/dist/security/normative-library-publication.js",
+            "present": false,
+            "error": "ENOENT"
+          }
+        ],
+        "refs": [
+          {
+            "path": "/run/secrets/iam_publisher_client_secret",
+            "present": true,
+            "socket": false,
+            "file": true,
+            "symlink": false,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "600",
+            "owner_matches": true
+          },
+          {
+            "path": "/run/tcdx-operator/catalog.sock",
+            "present": true,
+            "socket": true,
+            "file": false,
+            "symlink": false,
+            "uid": 1000,
+            "gid": 1000,
+            "mode": "600",
+            "owner_matches": true
+          }
+        ],
+        "connection_probe": "CONNECTED_NO_BYTES",
+        "bytes_sent": 0,
+        "activation_requests": 0
+      }
+    }
+  ],
+  "secrets_read": false,
+  "tokens_requested": 0,
+  "activation_requests": 0,
+  "processes_started_or_stopped": 0
+}

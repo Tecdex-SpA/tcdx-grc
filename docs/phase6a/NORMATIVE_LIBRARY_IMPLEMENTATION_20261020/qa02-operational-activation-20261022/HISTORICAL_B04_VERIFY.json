@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-b04-01-full-resolution-20261022/verify.py"
+  ],
+  "started_utc": "2026-10-22T15:28:42.165707+00:00",
+  "finished_utc": "2026-10-22T15:28:42.329676+00:00",
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-b04-01-full-resolution-20261022/verify.py\", line 49, in <module>\n    if __name__=='__main__':print(json.dumps(main(),indent=2))\n                                             ~~~~^^\n  File \"/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/code-b04-01-full-resolution-20261022/verify.py\", line 15, in main\n    if path not in allowed:assert sha(ROOT/path)==digest,path\n                                  ^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: apps/backend/src/security/commercial-catalog-operator.ts\n",
+  "database": false,
+  "read_only": false
+}

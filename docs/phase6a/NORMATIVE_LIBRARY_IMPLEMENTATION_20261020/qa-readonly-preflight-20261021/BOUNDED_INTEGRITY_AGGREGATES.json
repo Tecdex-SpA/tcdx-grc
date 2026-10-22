@@ -1,0 +1,149 @@
+{
+  "label": "BOUNDED_INTEGRITY_AGGREGATES",
+  "command": "psql fixed canonical QA endpoint; pgpass via libpq; no credential values logged",
+  "sql_sha256": "78c014a8469431239390f24d447cef7cc3cbe2592d0289f57a9e6dbecfeb2c5f",
+  "duration_seconds": 0.5469,
+  "exit_code": 0,
+  "at_utc": "2026-10-21T21:19:03.581955+00:00",
+  "show_transaction_read_only": "on",
+  "results": [
+    {
+      "user": "postgres",
+      "version": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, 64-bit",
+      "category": "identity",
+      "database": "tcdx-grc",
+      "in_recovery": false,
+      "server_port": 5432,
+      "cluster_name": "16/main",
+      "lock_timeout": "1s",
+      "role_superuser": true,
+      "server_address": "192.168.2.40",
+      "statement_timeout": "5s",
+      "server_version_num": "160015",
+      "transaction_read_only": "on",
+      "default_transaction_read_only": "on"
+    },
+    {
+      "rows": [
+        {
+          "duplicate_groups": 0
+        }
+      ],
+      "category": "knowledge_versions_duplicate_item_version"
+    },
+    {
+      "rows": [
+        {
+          "orphan_rows": 0
+        }
+      ],
+      "category": "knowledge_versions_orphan_item"
+    },
+    {
+      "rows": [
+        {
+          "orphan_rows": 0
+        }
+      ],
+      "category": "knowledge_items_orphan_source"
+    },
+    {
+      "rows": [
+        {
+          "mismatched_rows": 0
+        }
+      ],
+      "category": "knowledge_versions_owner_mismatch"
+    },
+    {
+      "rows": [
+        {
+          "mismatched_rows": 0
+        }
+      ],
+      "category": "knowledge_items_owner_mismatch"
+    },
+    {
+      "rows": [
+        {
+          "invalid_rows": 0
+        }
+      ],
+      "category": "knowledge_versions_tenant_nullability"
+    },
+    {
+      "rows": [
+        {
+          "mismatched_rows": 0
+        }
+      ],
+      "category": "applicability_subject_cross_tenant"
+    },
+    {
+      "rows": [
+        {
+          "mismatched_rows": 0
+        }
+      ],
+      "category": "applicability_requirement_cross_tenant"
+    },
+    {
+      "rows": [
+        {
+          "duplicate_groups": 0
+        }
+      ],
+      "category": "effective_existing_key_duplicates"
+    },
+    {
+      "rows": [
+        {
+          "rows": 0
+        }
+      ],
+      "category": "existing_control_scope_rows"
+    },
+    {
+      "rows": [
+        {
+          "orphan_rows": 0
+        }
+      ],
+      "category": "effective_definition_orphans"
+    },
+    {
+      "rows": [
+        {
+          "mismatched_rows": 0
+        }
+      ],
+      "category": "effective_definition_cross_tenant"
+    },
+    {
+      "rows": [
+        {
+          "matching_permissions": 0
+        }
+      ],
+      "category": "new_eight_permissions_presence"
+    },
+    {
+      "rows": [
+        {
+          "tables_excluding_system": 243
+        }
+      ],
+      "category": "schema_totals"
+    },
+    {
+      "rows": [
+        {
+          "ledger_rows": 34,
+          "latest_migration": "20261015000100"
+        }
+      ],
+      "category": "migration_metadata"
+    }
+  ],
+  "error": null
+}

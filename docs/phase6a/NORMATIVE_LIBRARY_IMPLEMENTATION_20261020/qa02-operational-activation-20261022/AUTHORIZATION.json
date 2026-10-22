@@ -1,0 +1,16 @@
+{
+  "source": "Explicit Product Owner user instruction in this session: GRC TECDEX — QA-02, Habilitación operacional controlada B01–B09/H04, AUTORIZACIÓN PO — EJECUCIÓN DESDE OTRA CUENTA CODEX",
+  "project": "GRC_TECDEX",
+  "scope": "QA02_B01_B09_H04_OPERATIONAL_ACTIVATION",
+  "baseline": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "repository": "Tecdex-SpA/tcdx-grc",
+  "local_path": "/Users/andresbarouh/repos/tcdx-grc",
+  "canonical_domain": "https://grc.tecdex.net/",
+  "date_context": "2026-10-22",
+  "authorized": ["controlled IAM/registry activation through canonical publishers", "13 exact B06 bindings", "four exact Definitions and rules", "H04 functional mechanisms without commercial ISO source activation", "physical and functional QA verification", "audit and evidence dossier", "reversible synthetic QA tests without residual data"],
+  "QA_connection": {"database": "tcdx-grc", "host": "db-tecdex", "hostaddr": "192.168.2.40", "version": "16.15", "sslmode": "verify-full", "credentials": "existing authorized custody only"},
+  "forbidden": ["QA schema changes", "new migrations", "reapply migration36", "product code fixes for activation problems", "backend/frontend deployments", "production connections or changes", "real commercial ISO content imports or source activations", "unauthorized grants or tenant changes", "infrastructure changes", "AWS MCP", "commit/push/merge/reset/clean/stash", "QA03", "STEP6A5", "STEP6A6"],
+  "PO_source_policy": "Product Owner TecDex decides operational enablement per source; no ISO purchase or mandatory external legal validation gate for technical capability activation; operational approval does not grant third-party intellectual property rights",
+  "new_approval_required_for_actions_already_authorized": false,
+  "human_signature_or_approval_of_future_bytes_attributed": false
+}

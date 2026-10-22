@@ -1,0 +1,34 @@
+{
+  "decision": "NO_GO",
+  "at_utc": "2026-10-21T22:21:42.655743+00:00",
+  "G1": {
+    "status": "PASS_WINDOW_AND_IDENTITY_AUTHORIZED",
+    "execution_window_minutes": 30,
+    "window_start": "Only after ALL pre-gates PASS; not started",
+    "activity_snapshot": "1 idle other session,0 open transactions,0 locks; must refresh immediately before any eventual execution"
+  },
+  "G2": {
+    "status": "BLOCKED",
+    "completed": "112-object mapping;242-table transitive FK catalog;0 invalid constraints/indexes; no unexpected scoped metadata drift",
+    "remaining": "Canonical derived schema/verifier reconciliation and affected module proof before physical adoption"
+  },
+  "G3": {
+    "status": "BLOCKED",
+    "completed": "34/34 ledger/local checksums; exact46-statement candidate offline checked",
+    "remaining": "Candidate not integrated into active canonical manifest; derived verifier not reconciled; no full runner rebuild/reapply/rollback proof"
+  },
+  "G4": {
+    "status": "BLOCKED",
+    "reasons": [
+      "Current recoverable backup/restore reference not verified",
+      "Read-only SSH inventory denied by authentication",
+      "archive_mode off/0 archived WAL does not demonstrate PITR",
+      "Existing full-cluster backup method would also copy4 other databases without QA-only perimeter approval"
+    ],
+    "procedure": "RECOVERY_PROCEDURE_PROPOSED.md; no backup/restore executed"
+  },
+  "QA_DDL_EXECUTED": "NONE",
+  "TECHNICAL_LEDGER_WRITES": "NONE",
+  "GATES_POST_DDL": "NOT_RUN",
+  "window_ratification_needed": false
+}

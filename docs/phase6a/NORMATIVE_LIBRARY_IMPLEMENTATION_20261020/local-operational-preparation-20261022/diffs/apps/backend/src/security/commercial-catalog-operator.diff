@@ -1,0 +1,23 @@
+--- a/apps/backend/src/security/commercial-catalog-operator.ts
++++ b/apps/backend/src/security/commercial-catalog-operator.ts
+@@ -36,7 +36,7 @@
+   approvedManifestSha256: string;
+   database: Kysely<FoundationDatabase>;
+   identityVerifier: IdentityVerifier;
+-  iamOperation?: (operation: "iam.provision" | "iam.publish" | "iam.revoke" | "iam.c04w.publish" | "iam.initial_source.publish", correlationId: string) => Promise<unknown>;
++  iamOperation?: (operation: "iam.provision" | "iam.publish" | "iam.revoke" | "iam.c04w.publish" | "iam.initial_source.publish" | "iam.library.publish", correlationId: string) => Promise<unknown>;
+ }): Promise<() => Promise<void>> {
+   if (!isAbsolute(input.socketPath) || input.socketPath.length > 100) throw new Error("INVALID_OPERATOR_SOCKET_PATH");
+   if (!/^[0-9a-f]{64}$/.test(input.approvedManifestSha256)) throw new Error("INVALID_APPROVED_MANIFEST_HASH");
+@@ -75,9 +75,9 @@
+           if (decoded && typeof decoded === "object" && !Array.isArray(decoded) && "operation" in decoded) {
+             const command = decoded as Record<string, unknown>;
+             if (!input.iamOperation || Object.keys(command).sort().join(",") !== "correlation_id,operation"
+-              || !["iam.provision", "iam.publish", "iam.revoke", "iam.c04w.publish", "iam.initial_source.publish"].includes(String(command.operation)) || typeof command.correlation_id !== "string")
++              || !["iam.provision", "iam.publish", "iam.revoke", "iam.c04w.publish", "iam.initial_source.publish", "iam.library.publish"].includes(String(command.operation)) || typeof command.correlation_id !== "string")
+               throw new Error("INVALID_IAM_OPERATION");
+-            socket.end(JSON.stringify(await input.iamOperation(command.operation as "iam.provision" | "iam.publish" | "iam.revoke" | "iam.c04w.publish" | "iam.initial_source.publish", command.correlation_id)));
++            socket.end(JSON.stringify(await input.iamOperation(command.operation as "iam.provision" | "iam.publish" | "iam.revoke" | "iam.c04w.publish" | "iam.initial_source.publish" | "iam.library.publish", command.correlation_id)));
+             return;
+           }
+           const command = request(decoded);

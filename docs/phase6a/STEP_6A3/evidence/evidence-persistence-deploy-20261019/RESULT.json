@@ -1,0 +1,58 @@
+{
+  "master_regent": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "rector_gate": "PASS_FOR_FRONTEND_QA_DEPLOYMENT",
+  "step6a3": "PARTIAL_BLOCKED_PENDING_FUNCTIONAL_ACCEPTANCE",
+  "step6a4": "NOT_STARTED",
+  "deployment": {
+    "status": "PASS",
+    "frontend": {
+      "container_id": "e5e9a06889c6ce2790eaa255a010a6e3079232bd34dfd68c410baee6f3d2cc79",
+      "image_id": "sha256:521cde57396b77649435eac78c9f96bf18e08c1ef639366fa958275f47c35c34",
+      "running": true,
+      "health": "healthy",
+      "restart_count": 0
+    },
+    "canonical_origin": "https://grc.tecdex.net/",
+    "https_status": 200,
+    "tls_certificate_validation": "PASS",
+    "public_bundle": "/assets/index-DD_KnZUO.js",
+    "public_bundle_sha256": "760b32606b723c1cc5a1b5aa629248c23f328b2833a2f15aa6e61ec9b8a81c26",
+    "file_object_reuse": "Preserves a finalized FileObject within the same open form; does not recover one from a closed/reloaded form.",
+    "qa_evidence_created": false,
+    "qa_files_transferred": false
+  },
+  "verification": {
+    "exact_image_browser_regression": "PASS_1_CHROMIUM_DESKTOP_MOCKED_API",
+    "image_source_sha256": "7fc9b7885aa38c3f6babae919de30acd26c3d747361cb68b7b16fce5a3b82fde",
+    "image_public_bundle_sha256_match": "PASS",
+    "rector_integrity": "PASS",
+    "frontend_build": "PASS_LINUX_AMD64",
+    "whitespace": "PASS"
+  },
+  "scope": "Only the existing frontend correction: preserve finalized FileObject and retention selection on rejection; show creation error with field/correlation.",
+  "unchanged": [
+    "backend",
+    "IAM",
+    "RBAC",
+    "PostgreSQL",
+    "storage architecture",
+    "canonical/executable contracts",
+    "infrastructure topology",
+    "production"
+  ],
+  "functional_acceptance": "PENDING_MANUAL_USER3; no QA evidence or file transfer performed",
+  "specific_existing_file_object": {
+    "id": "01a154d0-bb8c-7305-94e0-04279e8330b3",
+    "same_open_form_retry": "SUPPORTED_IF_FILE_OBJECT_IS_STILL_IN_FORM_STATE",
+    "after_close_or_reload": "NOT_AUTOMATICALLY_RECOVERABLE; no FileObject selection/recovery feature added"
+  },
+  "unresolved_rector_conflicts": [],
+  "files_changed": [
+    "scripts/phase6a3/qa-promote-evidence-persistence-frontend.py",
+    "scripts/phase6a3/qa-verify-evidence-retry-image.py",
+    "scripts/phase6a3/qa-deploy-evidence-persistence-frontend.py",
+    "docs/governance/MASTER_EXECUTION_STATUS.md",
+    "docs/phase6a/STEP_6A3/evidence/evidence-persistence-deploy-20261019"
+  ],
+  "traceability": "PO deployment request -> rector24/25/46 -> existing EvidenceCreateRequest -> previously validated CreateDrawer correction -> exact image browser test -> QA container identity -> canonical HTTPS bundle hash parity"
+}

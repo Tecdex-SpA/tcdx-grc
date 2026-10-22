@@ -1,4 +1,4 @@
-// Generated from executable Permission catalog 05 and approved MI6A/P2A/D1-R publication contracts. Do not edit.
+// Generated from executable Permission catalog 05 and approved MI6A/P2A/D1-R/Library publication contracts. Do not edit.
 export const permissionProjectionCatalog: Readonly<Record<string, { capabilities: readonly string[]; scopes: readonly string[] }>> = {
   "ai.ai_recommendation.create": {
     "capabilities": [
@@ -691,6 +691,69 @@ export const permissionProjectionCatalog: Readonly<Record<string, { capabilities
       "INTEGRATION_HUB"
     ],
     "scopes": [
+      "tenant"
+    ]
+  },
+  "knowledge.knowledge_item.create": {
+    "capabilities": [
+      "CORE_PLATFORM"
+    ],
+    "scopes": [
+      "platform",
+      "tenant"
+    ]
+  },
+  "knowledge.knowledge_item.publish": {
+    "capabilities": [
+      "CORE_PLATFORM"
+    ],
+    "scopes": [
+      "platform",
+      "tenant"
+    ]
+  },
+  "knowledge.knowledge_item.read": {
+    "capabilities": [
+      "CORE_PLATFORM"
+    ],
+    "scopes": [
+      "platform",
+      "tenant"
+    ]
+  },
+  "knowledge.knowledge_item.review": {
+    "capabilities": [
+      "CORE_PLATFORM"
+    ],
+    "scopes": [
+      "platform",
+      "tenant"
+    ]
+  },
+  "knowledge.knowledge_item.update": {
+    "capabilities": [
+      "CORE_PLATFORM"
+    ],
+    "scopes": [
+      "platform",
+      "tenant"
+    ]
+  },
+  "knowledge.knowledge_source.create": {
+    "capabilities": [
+      "CORE_PLATFORM"
+    ],
+    "scopes": [
+      "platform",
+      "tenant"
+    ]
+  },
+  "knowledge.knowledge_source.read": {
+    "capabilities": [
+      "CORE_PLATFORM"
+    ],
+    "scopes": [
+      "platform",
       "tenant"
     ]
   },
@@ -1455,6 +1518,14 @@ export const permissionProjectionCatalog: Readonly<Record<string, { capabilities
       "tenant",
       "assigned_object",
       "owned_object"
+    ]
+  },
+  "reporting.matrix.read": {
+    "capabilities": [
+      "CORE_PLATFORM"
+    ],
+    "scopes": [
+      "tenant"
     ]
   },
   "reporting.report_run.execute": {

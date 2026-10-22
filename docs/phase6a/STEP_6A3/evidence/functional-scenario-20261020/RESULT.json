@@ -1,0 +1,56 @@
+{
+  "RECTOR_GATE": "PASS_FOR_READONLY_AND_PROPOSAL",
+  "MASTER_REGENT": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "SCENARIO_READY": "BLOCKED_MISSING_CREATE_PERMISSION",
+  "STEP6A3": "PARTIAL_BLOCKED",
+  "STEP6A4": "NOT_STARTED",
+  "pdf": {
+    "file_object_id": "01a1551c-fdf8-72e0-aa91-85a45bd805c9",
+    "official_download_status": 200,
+    "sha256": "289566a43531bdadcf7b26870525035d1020c0aacc936d0c2465dc41a9b98a1c",
+    "bytes": 71932,
+    "purpose": "Documento sintético de validación de carga, creación, persistencia y trazabilidad STEP6A3; no acredita cumplimiento real ni eficacia.",
+    "matching_target": "Control QA específico de validación de trazabilidad documental; vínculo limitado a fixture/plan de prueba, sin afirmar ejecución PASS.",
+    "extraction": "ReportLab PDF text operators decoded with embedded ToUnicode CMaps; no alteration to source PDF."
+  },
+  "existing_compatible_tenant_control": null,
+  "proposal": {
+    "status": "DRAFT_NOT_EXECUTED_REQUIRES_AUTHORIZED_SESSION",
+    "operation": "POST /api/v1/controls:instantiate",
+    "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+    "body": {
+      "based_on_control_version_id": "01a0ea93-d236-7544-8b75-b3d5d16b0007",
+      "control_code": "QA_STEP6A3_TRAZABILIDAD_DOCUMENTAL_001",
+      "name": "QA STEP6A3 — Validación de trazabilidad documental",
+      "business_owner_subject_id": "01a0f27e-b912-72d2-a08e-c5fcbd4efe43",
+      "objective": "Validar exclusivamente en QA TECDEX el flujo contractual de carga, finalización, vinculación tipada, creación, persistencia y recuperación de evidencia documental en PASO 9.2B. No acredita cumplimiento normativo ni eficacia de controles reales.",
+      "control_type": "preventive",
+      "nature": "hybrid",
+      "frequency_code": "event_driven",
+      "execution_method": "Usar el documento sintético GRC_Tecdex_Evidencia_QA_STEP6A3.pdf como fixture y plan de prueba; user3 ejecuta la creación de evidencia, con vínculo a este control QA y conservación del FileObject finalizado. Registrar el resultado real sin anticipar PASS.",
+      "verification_method": "Comprobar respuesta de creación, ID persistido, consulta y recuperación tras recarga, mismo tenant y FileObject, y trazabilidad de auditoría conforme a las operaciones oficiales.",
+      "minimum_evidence": "Documento sintético de prueba identificado como QA, con procedencia auténtica, más resultado real de la ejecución y referencias de evidencia/archivo. El PDF sin completar es sólo fixture/plan, no prueba de eficacia ni aceptación final."
+    }
+  },
+  "official_authorization": {
+    "user1": {
+      "role": "PRIVACY_MANAGER",
+      "control_create": false
+    },
+    "user2": {
+      "role": "LEGAL_REVIEWER",
+      "control_create": false,
+      "control_read": false
+    }
+  },
+  "blocking_condition": "No authenticated session with controls.control.create scope tenant in TECDEX; no IAM/RBAC modifications authorized.",
+  "created_object_id": null,
+  "api_post_count": 0,
+  "qa_objects_created": 0,
+  "qa_uploads": 0,
+  "evidence_final_created": false,
+  "deployments": 0,
+  "product_changes": false,
+  "schema_contract_security_changes": false,
+  "next_requirement": "Existing authorized Control Owner/GRC Manager session; then official instantiate, GET and selector verification before manual user3 evidence creation."
+}

@@ -1,0 +1,50 @@
+{
+  "scope": "NO_GO; read-only inspection and public TLS observation only",
+  "evidence": [
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-execution-20261021/ENTRY.json",
+      "sha256": "dd2e2e80876677bdd67ad7a5669a4b6e4dc322a9f6ff7425dd0d732a7fbea39f"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-execution-20261021/RECTOR_PRE.json",
+      "sha256": "42c610676d18328555b6ab191b898d8110c6f3382d3f74c41014387460912181"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-execution-20261021/BACKUP_AVAILABLE.json",
+      "sha256": "4e5a58e80bcc10bdf78b5abbbc924634b8a2c67873811648d5202e18c61f1c29"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-execution-20261021/PRE.json",
+      "sha256": "4a2b65afa82e7da7e9730dd382067e47c85df4e7e66bf60172f02092b32630be"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-execution-20261021/PRE.sql",
+      "sha256": "ef0f0cbb6bf810dd7a68cb38f7f63ca42b833868af2ab0bb6edded7aa0c6f22f"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-execution-20261021/NO_GO_01.json",
+      "sha256": "b9c3484c847b25f1d7de1481bdbe0d36a654debd2fb96700b30c88315b8efd1e"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-execution-20261021/CANONICAL_STATUS.json",
+      "sha256": "4883e2b076581cc97641d175b1c198a549154780852618688a8f213dafbc4aa6"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-execution-20261021/TLS_PUBLIC_INSPECTION.json",
+      "sha256": "84cb1f1e3d2e852b06aff37283f8ccf7baf2a682643191d994a1ee4c4ae7d01b"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-execution-20261021/TLS_PUBLIC_CERT_OBSERVED_UNTRUSTED.pem",
+      "sha256": "0a99469321c1117cdf3154a7e5c5e50dd42f719af7b8b1a647fa0bb55179519b"
+    },
+    {
+      "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-adoption-execution-20261021/TLS_NAME_ASSESSMENT.json",
+      "sha256": "538f314441461d04aa39265faff4965c99512b6b914974cb3e27284242fdbf9e"
+    }
+  ],
+  "public_certificate": "Observed untrusted public evidence only, never installed as trust material",
+  "window": "NOT_STARTED",
+  "QA_DDL_DML_LEDGER_WRITES": "NONE",
+  "tests_reused": "Prior149 physical tests,17 canonical isolated gates and three normalizer tests reused without reexecution",
+  "current_gates": "Rector integrity,5328 preservation,35 source hashes,34 applied checksums, preflight catalog equality PASS; canonical TLS blocked"
+}

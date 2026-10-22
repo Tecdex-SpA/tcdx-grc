@@ -1,0 +1,732 @@
+{
+  "status": 200,
+  "body": {
+    "evaluated_at": "2026-10-20T11:25:37.624Z",
+    "platform_permissions": [
+      "configuration.configuration_definition.approve",
+      "configuration.configuration_definition.archive",
+      "configuration.configuration_definition.create",
+      "configuration.configuration_definition.publish",
+      "configuration.configuration_definition.read",
+      "configuration.configuration_definition.review",
+      "configuration.configuration_definition.update",
+      "platform.commercial_catalog.publish",
+      "platform.impersonation_session.impersonate",
+      "platform.lifecycle_transition.administer",
+      "platform.lifecycle_transition.publish",
+      "platform.lifecycle_transition.read",
+      "platform.managed_identity.administer",
+      "platform.managed_identity.create",
+      "platform.managed_identity.read",
+      "platform.managed_identity.update",
+      "platform.membership.read",
+      "platform.membership_invitation.create",
+      "platform.membership_invitation.read",
+      "platform.membership_invitation.update",
+      "platform.regulatory_pack_validation_access.archive",
+      "platform.regulatory_pack_validation_access.create",
+      "platform.regulatory_pack_validation_access.read",
+      "platform.role.administer",
+      "platform.role.assign",
+      "platform.role.read",
+      "platform.subscription.create",
+      "platform.subscription.read",
+      "platform.subscription.update",
+      "platform.subscription_regulatory_pack.archive",
+      "platform.subscription_regulatory_pack.create",
+      "platform.subscription_regulatory_pack.read",
+      "platform.tenant.archive",
+      "platform.tenant.create",
+      "platform.tenant.read",
+      "platform.tenant_account_classification.update",
+      "platform.tenant_user.onboard",
+      "platform.user_identity.read"
+    ],
+    "tenant_permissions": {
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "permissions": {
+        "ai.ai_recommendation.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "ai.ai_recommendation.review": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "audit.audit.approve": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "audit.audit.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "audit.audit.transition": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "audit.audit.update": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "compliance.applicability.approve": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "compliance.applicability.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "compliance.applicability.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "compliance.applicability.submit": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "compliance.framework.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "compliance.methodology.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "compliance.normative_unit.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "compliance.requirement_assessment.approve": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "compliance.requirement_assessment.archive": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "compliance.requirement_assessment.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "compliance.requirement_assessment.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "compliance.requirement_assessment.submit": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "compliance.requirement_assessment.update": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "compliance.requirement.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "compliance.soa.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "compliance.soa.publish": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "compliance.soa.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "configuration.configuration_override.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "configuration.configuration_override.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "configuration.configuration_override.review": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "configuration.configuration_override.update": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "configuration.effective_configuration.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "controls.assurance_test.approve": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "controls.assurance_test.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "controls.assurance_test.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "controls.assurance_test.review": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "controls.control_assessment.approve": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "controls.control_assessment.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "controls.control_assessment.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "controls.control_assessment.review": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "controls.control_assessment.submit": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "controls.control_assessment.update": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "controls.control.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "controls.control.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "controls.methodology.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "data.lineage.review": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "data.measurement.execute": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "data.rule.execute": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "data.snapshot.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "evidence.document.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "evidence.evidence_request.archive": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "evidence.evidence_request.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "evidence.evidence_request.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "evidence.evidence_request.submit": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "evidence.evidence_request.update": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "evidence.evidence.approve": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "evidence.evidence.archive": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "evidence.evidence.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "evidence.evidence.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "evidence.evidence.reject": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "evidence.evidence.review": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "integration.integration.archive": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "integration.integration.configure": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "integration.integration.update": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "integration.sync_run.execute": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.bia.approve": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.bia.archive": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.bia.review": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.bia.transition": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.bia.verify": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.continuity_plan.approve": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.continuity_plan.archive": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.continuity_plan.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.continuity_plan.review": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.continuity_plan.transition": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.continuity_plan.verify": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.incident.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.incident.transition": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.supplier_assessment.approve": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.supplier_assessment.archive": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.supplier_assessment.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.supplier_assessment.review": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.supplier_assessment.submit": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.supplier_assessment.transition": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.survey.approve": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.survey.archive": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.survey.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.survey.reject": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.survey.review": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.survey.transition": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "operations.survey.update": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "organization.subject.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "organization.subject.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "platform.membership_reference.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "platform.membership.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "platform.membership.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "platform.regulatory_pack_validation_access.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "platform.role.assign": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "platform.role.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "platform.subscription_regulatory_pack.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "platform.user_identity.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "privacy.data_subject_request.approve": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "privacy.data_subject_request.archive": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "privacy.data_subject_request.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "privacy.data_subject_request.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "privacy.data_subject_request.review": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "privacy.data_subject_request.transition": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "privacy.data_subject_request.update": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "privacy.erasure_execution.execute": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "privacy.erasure_execution.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "privacy.erasure_execution.review": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "privacy.retention_policy_reference.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "privacy.retention_policy.approve": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "privacy.retention_policy.archive": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "privacy.retention_policy.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "privacy.retention_policy.legal_hold.release": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "privacy.retention_policy.publish": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "privacy.retention_policy.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "privacy.retention_policy.review": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "privacy.retention_policy.update": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "remediation.action.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "remediation.action.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "remediation.action.verify": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "remediation.issue.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "remediation.issue.read": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "remediation.issue.transition": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "reporting.report_run.execute": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "reporting.report.approve": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "reporting.report.archive": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "reporting.report.publish": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "reporting.report.review": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "risk.acceptance.approve": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "risk.acceptance.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "risk.risk_assessment.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "risk.risk.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "risk.risk.transition": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "risk.treatment.approve": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "risk.treatment.create": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "risk.treatment.transition": [
+          {
+            "scope_kind": "tenant"
+          }
+        ],
+        "risk.treatment.verify": [
+          {
+            "scope_kind": "tenant"
+          }
+        ]
+      },
+      "default_timezone": "America/Santiago"
+    }
+  }
+}

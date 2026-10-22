@@ -1,0 +1,11 @@
+{
+  "label": "CATALOG_INSPECTION",
+  "command": "psql fixed canonical QA endpoint; pgpass via libpq; no credential values logged",
+  "sql_sha256": "f6871f16c62a6ebc7a457925317e99091c8d07e3bb562f300f5a95f4f4bc44e7",
+  "duration_seconds": 0.0277,
+  "exit_code": 2,
+  "at_utc": "2026-10-21T21:12:33.794233+00:00",
+  "show_transaction_read_only": null,
+  "results": [],
+  "error": "psql: error: connection to server at \"192.168.2.40\", port 5432 failed: Operation not permitted\n\tIs the server running on that host and accepting TCP/IP connections?"
+}

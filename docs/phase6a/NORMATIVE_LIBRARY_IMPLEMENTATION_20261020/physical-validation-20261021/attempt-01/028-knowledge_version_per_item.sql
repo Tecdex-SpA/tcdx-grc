@@ -1,0 +1,4 @@
+BEGIN;
+INSERT INTO knowledge.knowledge_versions(knowledge_version_id,knowledge_item_id,ownership_class,tenant_id,version_number,content_ref,content_hash,content_language,lifecycle_state) VALUES ('00000000-0000-7000-8000-000000000034','00000000-0000-7000-8000-000000000020','GLOBAL_REFERENCE',NULL,2,'synthetic://fixture/34','aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa','es','draft');INSERT INTO knowledge.knowledge_versions(knowledge_version_id,knowledge_item_id,ownership_class,tenant_id,version_number,content_ref,content_hash,content_language,lifecycle_state) VALUES ('00000000-0000-7000-8000-000000000035','00000000-0000-7000-8000-000000000023','GLOBAL_REFERENCE',NULL,2,'synthetic://fixture/35','aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa','es','draft');
+SET CONSTRAINTS ALL IMMEDIATE;
+ROLLBACK;

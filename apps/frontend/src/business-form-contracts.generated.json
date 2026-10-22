@@ -1,0 +1,2007 @@
+{
+  "source": "docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml",
+  "sha256": "32b02f7d817f70e41507c2d464e2bcf647034e0c152877eb2ffdd148a4a02620",
+  "forms": [
+    {
+      "id": "FORM-01",
+      "module": "cumplimiento",
+      "operation": "applicabilityCreate",
+      "schema": "ApplicabilityCreateRequest",
+      "title": "Evaluar aplicabilidad",
+      "resultState": null,
+      "path": "/requirement-applicabilities",
+      "method": "post",
+      "permission": "compliance.applicability.create",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0001;F-0002;F-0003;F-0004;F-0005;F-0006"
+    },
+    {
+      "id": "FORM-02",
+      "module": "cumplimiento",
+      "operation": "applicabilitySubmit",
+      "schema": "ApplicabilitySubmitRequest",
+      "title": "Enviar aplicabilidad",
+      "resultState": "submitted",
+      "path": "/requirement-applicabilities/{id}:submit",
+      "method": "post",
+      "permission": "compliance.applicability.submit",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0007"
+    },
+    {
+      "id": "FORM-03",
+      "module": "cumplimiento",
+      "operation": "applicabilityApprove",
+      "schema": "ApplicabilityApproveRequest",
+      "title": "Aprobar aplicabilidad",
+      "resultState": "approved",
+      "path": "/requirement-applicabilities/{id}:approve",
+      "method": "post",
+      "permission": "compliance.applicability.approve",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "NONE: cero inputs visibles"
+    },
+    {
+      "id": "FORM-04",
+      "module": "requisitos",
+      "operation": "requirementAssessmentCreate",
+      "schema": "RequirementAssessmentCreateRequest",
+      "title": "Crear evaluación de requisito",
+      "resultState": null,
+      "path": "/requirement-assessments",
+      "method": "post",
+      "permission": "compliance.requirement_assessment.create",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0024;F-0025;F-0026"
+    },
+    {
+      "id": "FORM-05",
+      "module": "requisitos",
+      "operation": "requirementAssessmentStart",
+      "schema": "RequirementAssessmentStartRequest",
+      "title": "Iniciar evaluación de requisito",
+      "resultState": "in_progress",
+      "path": "/requirement-assessments/{id}:start",
+      "method": "post",
+      "permission": "compliance.requirement_assessment.update",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "NONE: cero inputs visibles"
+    },
+    {
+      "id": "FORM-06",
+      "module": "requisitos",
+      "operation": "requirementAssessmentSubmit",
+      "schema": "RequirementAssessmentSubmitRequest",
+      "title": "Registrar resultado de evaluación",
+      "resultState": "assessed",
+      "path": "/requirement-assessments/{id}:submit",
+      "method": "post",
+      "permission": "compliance.requirement_assessment.submit",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0027;F-0028;F-0029"
+    },
+    {
+      "id": "FORM-07",
+      "module": "requisitos",
+      "operation": "requirementAssessmentApprove",
+      "schema": "RequirementAssessmentApproveRequest",
+      "title": "Aprobar evaluación de requisito",
+      "resultState": "approved",
+      "path": "/requirement-assessments/{id}:approve",
+      "method": "post",
+      "permission": "compliance.requirement_assessment.approve",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "NONE: cero inputs visibles"
+    },
+    {
+      "id": "FORM-08",
+      "module": "soa",
+      "operation": "soaCreate",
+      "schema": "SoaCreateRequest",
+      "title": "Preparar declaración de aplicabilidad",
+      "resultState": null,
+      "path": "/statements-of-applicability",
+      "method": "post",
+      "permission": "compliance.soa.create",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0047;F-0048;F-0049;F-0050;F-0340;F-0341;F-0342;F-0343;F-0344;F-0345"
+    },
+    {
+      "id": "FORM-09",
+      "module": "soa",
+      "operation": "soaPublish",
+      "schema": "SoaPublishRequest",
+      "title": "Publicar declaración de aplicabilidad",
+      "resultState": "published",
+      "path": "/statements-of-applicability/{id}:publish",
+      "method": "post",
+      "permission": "compliance.soa.publish",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0051"
+    },
+    {
+      "id": "FORM-10",
+      "module": "controles",
+      "operation": "controlInstantiate",
+      "schema": "ControlInstantiateRequest",
+      "title": "Instanciar control para el tenant",
+      "resultState": null,
+      "path": "/controls:instantiate",
+      "method": "post",
+      "permission": "controls.control.create",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0068;F-0069;F-0070;F-0071;F-0072;F-0073;F-0074;F-0075;F-0076;F-0077;F-0078;F-0079;F-0080;F-0081"
+    },
+    {
+      "id": "FORM-11",
+      "module": "evaluaciones-control",
+      "operation": "controlAssessmentCreate",
+      "schema": "ControlAssessmentCreateRequest",
+      "title": "Crear evaluación de control",
+      "resultState": null,
+      "path": "/control-assessments",
+      "method": "post",
+      "permission": "controls.control_assessment.create",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0124;F-0125;F-0126;F-0127"
+    },
+    {
+      "id": "FORM-12",
+      "module": "evaluaciones-control",
+      "operation": "controlAssessmentStart",
+      "schema": "ControlAssessmentStartRequest",
+      "title": "Iniciar evaluación de control",
+      "resultState": "in_progress",
+      "path": "/control-assessments/{id}:start",
+      "method": "post",
+      "permission": "controls.control_assessment.update",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "NONE: cero inputs visibles"
+    },
+    {
+      "id": "FORM-13",
+      "module": "evaluaciones-control",
+      "operation": "controlAssessmentSubmit",
+      "schema": "ControlAssessmentSubmitRequest",
+      "title": "Completar evaluación de control",
+      "resultState": "completed",
+      "path": "/control-assessments/{id}:complete",
+      "method": "post",
+      "permission": "controls.control_assessment.submit",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0128;F-0129;F-0130;F-0131;F-0132"
+    },
+    {
+      "id": "FORM-14",
+      "module": "evaluaciones-control",
+      "operation": "controlAssessmentReview",
+      "schema": "ControlAssessmentReviewRequest",
+      "title": "Revisar evaluación de control",
+      "resultState": "reviewed",
+      "path": "/control-assessments/{id}:review",
+      "method": "post",
+      "permission": "controls.control_assessment.review",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "NONE: cero inputs visibles"
+    },
+    {
+      "id": "FORM-15",
+      "module": "evaluaciones-control",
+      "operation": "controlAssessmentApprove",
+      "schema": "ControlAssessmentApproveRequest",
+      "title": "Aprobar evaluación de control",
+      "resultState": "approved",
+      "path": "/control-assessments/{id}:approve",
+      "method": "post",
+      "permission": "controls.control_assessment.approve",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "NONE: cero inputs visibles"
+    },
+    {
+      "id": "FORM-16",
+      "module": "pruebas",
+      "operation": "assuranceTestCreate",
+      "schema": "AssuranceTestCreateRequest",
+      "title": "Planificar prueba de control",
+      "resultState": null,
+      "path": "/assurance-tests",
+      "method": "post",
+      "permission": "controls.assurance_test.create",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0153;F-0154;F-0155;F-0156"
+    },
+    {
+      "id": "FORM-17",
+      "module": "pruebas",
+      "operation": "assuranceTestStart",
+      "schema": "AssuranceTestStartRequest",
+      "title": "Iniciar prueba",
+      "resultState": "in_progress",
+      "path": "/assurance-tests/{id}:start",
+      "method": "post",
+      "permission": "controls.assurance_test.execute",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "NONE: cero inputs visibles"
+    },
+    {
+      "id": "FORM-18",
+      "module": "pruebas",
+      "operation": "assuranceTestExecute",
+      "schema": "AssuranceTestExecuteRequest",
+      "title": "Registrar resultado y muestras",
+      "resultState": "completed",
+      "path": "/assurance-tests/{id}:execute",
+      "method": "post",
+      "permission": "controls.assurance_test.execute",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0157;F-0158;F-0159;F-0355;F-0356;F-0357;F-0358;F-0359;F-0360;F-0361"
+    },
+    {
+      "id": "FORM-19",
+      "module": "pruebas",
+      "operation": "assuranceTestReview",
+      "schema": "AssuranceTestReviewRequest",
+      "title": "Revisar prueba",
+      "resultState": "reviewed",
+      "path": "/assurance-tests/{id}:review",
+      "method": "post",
+      "permission": "controls.assurance_test.review",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "NONE: cero inputs visibles"
+    },
+    {
+      "id": "FORM-20",
+      "module": "pruebas",
+      "operation": "assuranceTestApprove",
+      "schema": "AssuranceTestApproveRequest",
+      "title": "Aprobar prueba",
+      "resultState": "approved",
+      "path": "/assurance-tests/{id}:approve",
+      "method": "post",
+      "permission": "controls.assurance_test.approve",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "NONE: cero inputs visibles"
+    },
+    {
+      "id": "FORM-21",
+      "module": "solicitudes-evidencia",
+      "operation": "evidenceRequestCreate",
+      "schema": "EvidenceRequestCreateRequest",
+      "title": "Solicitar evidencia",
+      "resultState": null,
+      "path": "/evidence-requests",
+      "method": "post",
+      "permission": "evidence.evidence_request.create",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0180;F-0181;F-0182;F-0183;F-0184;F-0185;F-0186;F-0187"
+    },
+    {
+      "id": "FORM-22",
+      "module": "solicitudes-evidencia",
+      "operation": "evidenceRequestFulfill",
+      "schema": "EvidenceRequestFulfillRequest",
+      "title": "Cumplir solicitud de evidencia",
+      "resultState": "fulfilled",
+      "path": "/evidence-requests/{id}:fulfill",
+      "method": "post",
+      "permission": "evidence.evidence_request.submit",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0188"
+    },
+    {
+      "id": "FORM-23",
+      "module": "evidencias",
+      "operation": "evidenceCreate",
+      "schema": "EvidenceCreateRequest",
+      "title": "Registrar evidencia",
+      "resultState": null,
+      "path": "/evidence",
+      "method": "post",
+      "permission": "evidence.evidence.create",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0207;F-0208;F-0209;F-0210;F-0211;F-0212;F-0213;F-0214;F-0215;F-0216;F-0217;F-0218;F-0219;F-0220;F-0221;F-0346;F-0347;F-0348;F-0349;F-0350;F-0351;F-0352;F-0353;F-0354;F-0222;F-0223;F-0224"
+    },
+    {
+      "id": "FORM-24",
+      "module": "evidencias",
+      "operation": "evidenceSubmit",
+      "schema": "EvidenceSubmitRequest",
+      "title": "Enviar evidencia a revisión",
+      "resultState": "submitted",
+      "path": "/evidence-versions/{id}:submit",
+      "method": "post",
+      "permission": "evidence.evidence.submit",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "NONE: cero inputs visibles"
+    },
+    {
+      "id": "FORM-25",
+      "module": "evidencias",
+      "operation": "evidenceReviewStart",
+      "schema": "EvidenceReviewStartRequest",
+      "title": "Iniciar revisión de evidencia",
+      "resultState": "under_review",
+      "path": "/evidence-versions/{id}:start-review",
+      "method": "post",
+      "permission": "evidence.evidence.review",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "NONE: cero inputs visibles"
+    },
+    {
+      "id": "FORM-26",
+      "module": "evidencias",
+      "operation": "evidenceApprove",
+      "schema": "EvidenceApproveRequest",
+      "title": "Aprobar evidencia",
+      "resultState": "approved",
+      "path": "/evidence-versions/{id}:approve",
+      "method": "post",
+      "permission": "evidence.evidence.approve",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0225;F-0226;F-0227"
+    },
+    {
+      "id": "FORM-27",
+      "module": "evidencias",
+      "operation": "evidenceReject",
+      "schema": "EvidenceRejectRequest",
+      "title": "Rechazar evidencia",
+      "resultState": "rejected",
+      "path": "/evidence-versions/{id}:reject",
+      "method": "post",
+      "permission": "evidence.evidence.reject",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0228;F-0229;F-0230"
+    },
+    {
+      "id": "FORM-28",
+      "module": "retencion",
+      "operation": "retentionPolicyCreate",
+      "schema": "RetentionPolicyCreateRequest",
+      "title": "Definir política de retención",
+      "resultState": null,
+      "path": "/retention-policies",
+      "method": "post",
+      "permission": "privacy.retention_policy.create",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0246;F-0247;F-0248;F-0249;F-0250;F-0251;F-0252"
+    },
+    {
+      "id": "FORM-29",
+      "module": "retencion",
+      "operation": "retentionPolicyUpdate",
+      "schema": "RetentionPolicyUpdateRequest",
+      "title": "Editar borrador de retención",
+      "resultState": "draft",
+      "path": "/retention-policies/{id}:update",
+      "method": "post",
+      "permission": "privacy.retention_policy.update",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0253;F-0254"
+    },
+    {
+      "id": "FORM-30",
+      "module": "retencion",
+      "operation": "retentionPolicyReview",
+      "schema": "RetentionPolicyTransitionRequest",
+      "title": "Enviar política a revisión",
+      "resultState": "under_review",
+      "path": "/retention-policies/{id}:review",
+      "method": "post",
+      "permission": "privacy.retention_policy.review",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "NONE: cero inputs visibles"
+    },
+    {
+      "id": "FORM-31",
+      "module": "retencion",
+      "operation": "retentionPolicyApprove",
+      "schema": "RetentionPolicyTransitionRequest",
+      "title": "Aprobar política de retención",
+      "resultState": "approved",
+      "path": "/retention-policies/{id}:approve",
+      "method": "post",
+      "permission": "privacy.retention_policy.approve",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "NONE: cero inputs visibles"
+    },
+    {
+      "id": "FORM-32",
+      "module": "retencion",
+      "operation": "retentionPolicyPublish",
+      "schema": "RetentionPolicyTransitionRequest",
+      "title": "Publicar política de retención",
+      "resultState": "published",
+      "path": "/retention-policies/{id}:publish",
+      "method": "post",
+      "permission": "privacy.retention_policy.publish",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "NONE: cero inputs visibles"
+    },
+    {
+      "id": "FORM-33",
+      "module": "issues",
+      "operation": "issueCreate",
+      "schema": "IssueCreateRequest",
+      "title": "Registrar hallazgo",
+      "resultState": null,
+      "path": "/issues",
+      "method": "post",
+      "permission": "remediation.issue.create",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0274;F-0275;F-0276;F-0277;F-0278;F-0279;F-0280;F-0281;F-0282;F-0283;F-0284;F-0285"
+    },
+    {
+      "id": "FORM-34",
+      "module": "issues",
+      "operation": "issueTriage",
+      "schema": "IssueTriageRequest",
+      "title": "Clasificar hallazgo",
+      "resultState": "triaged",
+      "path": "/issues/{id}:triage",
+      "method": "post",
+      "permission": "remediation.issue.transition",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0286;F-0287;F-0288;F-0289"
+    },
+    {
+      "id": "FORM-35",
+      "module": "issues",
+      "operation": "issueStartRemediation",
+      "schema": "IssueStartRemediationRequest",
+      "title": "Iniciar remediación",
+      "resultState": "remediation_in_progress",
+      "path": "/issues/{id}:start-remediation",
+      "method": "post",
+      "permission": "remediation.issue.transition",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "NONE: cero inputs visibles"
+    },
+    {
+      "id": "FORM-36",
+      "module": "issues",
+      "operation": "issueRequestVerification",
+      "schema": "IssueRequestVerificationRequest",
+      "title": "Solicitar verificación de hallazgo",
+      "resultState": "pending_verification",
+      "path": "/issues/{id}:request-verification",
+      "method": "post",
+      "permission": "remediation.issue.transition",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "NONE: cero inputs visibles"
+    },
+    {
+      "id": "FORM-37",
+      "module": "issues",
+      "operation": "issueVerifyClose",
+      "schema": "IssueVerifyCloseRequest",
+      "title": "Verificar y cerrar hallazgo",
+      "resultState": "verified_closed",
+      "path": "/issues/{id}:verify-close",
+      "method": "post",
+      "permission": "remediation.issue.transition",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0290;F-0291"
+    },
+    {
+      "id": "FORM-38",
+      "module": "acciones",
+      "operation": "actionCreate",
+      "schema": "ActionCreateRequest",
+      "title": "Crear acción de remediación",
+      "resultState": null,
+      "path": "/issues/{issue_id}/actions",
+      "method": "post",
+      "permission": "remediation.action.create",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0310;F-0311;F-0312;F-0313;F-0314;F-0315;F-0316"
+    },
+    {
+      "id": "FORM-39",
+      "module": "acciones",
+      "operation": "actionStart",
+      "schema": "ActionStartRequest",
+      "title": "Iniciar acción",
+      "resultState": "in_progress",
+      "path": "/actions/{id}:start",
+      "method": "post",
+      "permission": "remediation.action.transition",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "NONE: cero inputs visibles"
+    },
+    {
+      "id": "FORM-40",
+      "module": "acciones",
+      "operation": "actionSubmitForReview",
+      "schema": "ActionSubmitForReviewRequest",
+      "title": "Enviar acción a revisión",
+      "resultState": "in_review",
+      "path": "/actions/{id}:submit-for-review",
+      "method": "post",
+      "permission": "remediation.action.transition",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "NONE: cero inputs visibles"
+    },
+    {
+      "id": "FORM-41",
+      "module": "acciones",
+      "operation": "actionComplete",
+      "schema": "ActionCompleteRequest",
+      "title": "Completar acción con evidencia",
+      "resultState": "completed",
+      "path": "/actions/{id}:complete",
+      "method": "post",
+      "permission": "remediation.action.transition",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0317;F-0318"
+    },
+    {
+      "id": "FORM-42",
+      "module": "acciones",
+      "operation": "actionVerify",
+      "schema": "ActionVerifyRequest",
+      "title": "Verificar acción",
+      "resultState": "verified",
+      "path": "/actions/{id}:verify",
+      "method": "post",
+      "permission": "remediation.action.verify",
+      "source": "docs/phase6a/STEP_6A2/07_BUSINESS_FORM_DESIGN_MATRIX.csv",
+      "fields": "F-0319;F-0320;F-0321"
+    }
+  ],
+  "schemas": {
+    "ApplicabilityCreateRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requirement_id",
+        "applicability_decision",
+        "effective_from"
+      ],
+      "if": {
+        "properties": {
+          "applicability_decision": {
+            "const": "not_applicable"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "rationale"
+        ],
+        "properties": {
+          "rationale": {
+            "type": "string",
+            "pattern": ".*\\S.*"
+          }
+        }
+      },
+      "properties": {
+        "requirement_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "scope_subject_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "applicability_decision": {
+          "type": "string",
+          "enum": [
+            "applicable",
+            "not_applicable"
+          ]
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "effective_from": {
+          "$ref": "#/components/schemas/UtcTimestamp"
+        },
+        "effective_to": {
+          "$ref": "#/components/schemas/UtcTimestamp"
+        }
+      },
+      "description": "Requirement must be accessible; scope Subject, when present, is active, effective and belongs to the selected tenant. Rationale is required and nonblank for not_applicable; applicable permits omission. Version, tenant and initial lifecycle are server-controlled."
+    },
+    "UuidV7": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Opaque platform-generated UUIDv7; consumers must not derive semantics from it."
+    },
+    "UtcTimestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC 3339 timestamp with UTC offset Z at the API boundary."
+    },
+    "ApplicabilitySubmitRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version",
+        "rationale"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "ApplicabilityApproveRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        }
+      },
+      "description": "Approval actor and timestamp come only from the authorized server context; SoD remains mandatory."
+    },
+    "RequirementAssessmentCreateRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requirement_applicability_id",
+        "methodology_version_ref"
+      ],
+      "properties": {
+        "requirement_applicability_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "methodology_version_ref": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "effective_configuration_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        }
+      },
+      "description": "Applicability and optional EffectiveConfiguration must be same-tenant and compatible; methodology_version_ref resolves a published effective ComplianceMethodology. Initial lifecycle/result state is server-controlled."
+    },
+    "RequirementAssessmentStartRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        }
+      }
+    },
+    "RequirementAssessmentSubmitRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version",
+        "result_status"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        },
+        "result_status": {
+          "$ref": "#/components/schemas/ResultStatus"
+        },
+        "domain_conclusion": {
+          "type": "string",
+          "enum": [
+            "not_assessed",
+            "compliant",
+            "partially_compliant",
+            "non_compliant",
+            "not_applicable",
+            "insufficient_evidence"
+          ]
+        },
+        "coverage_percent": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "description": "result_status and domain_conclusion are distinct; assessed_at is server-generated."
+    },
+    "ResultStatus": {
+      "type": "string",
+      "enum": [
+        "valid",
+        "no_data",
+        "insufficient_data",
+        "insufficient_coverage",
+        "stale_source",
+        "conflicting_sources",
+        "dependency_pending",
+        "invalid_input",
+        "source_error",
+        "calculation_error",
+        "not_applicable",
+        "superseded"
+      ]
+    },
+    "RequirementAssessmentApproveRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        }
+      },
+      "description": "SoD and the assessed-to-approved precondition are enforced from authoritative state."
+    },
+    "SoaCreateRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "framework_version_id",
+        "title",
+        "items"
+      ],
+      "properties": {
+        "framework_version_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_from": {
+          "$ref": "#/components/schemas/UtcTimestamp"
+        },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/components/schemas/SoaItemCreateInput"
+          }
+        }
+      },
+      "description": "Tenant, soa_version, initial draft state, row_version and technical identities are server-controlled."
+    },
+    "SoaItemCreateInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reference_control_version_id",
+        "applicability_decision",
+        "justification",
+        "implementation_state"
+      ],
+      "properties": {
+        "reference_control_version_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "applicability_decision": {
+          "$ref": "#/components/schemas/SoAApplicabilityDecision"
+        },
+        "justification": {
+          "type": "string",
+          "minLength": 1
+        },
+        "implementation_state": {
+          "$ref": "#/components/schemas/SoAImplementationState"
+        },
+        "tenant_control_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "tenant_control_version_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        }
+      },
+      "description": "Reference and optional tenant Control identities must be accessible and mutually compatible in the selected tenant."
+    },
+    "SoAApplicabilityDecision": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "enum": [
+        "applicable",
+        "not_applicable"
+      ],
+      "x-tcdx-vocabulary-family": "CV-04",
+      "x-tcdx-vocabulary-version": "STEP6A3_VOCABULARIES_v1"
+    },
+    "SoAImplementationState": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "enum": [
+        "not_implemented",
+        "partially_implemented",
+        "implemented",
+        "not_applicable"
+      ],
+      "x-tcdx-vocabulary-family": "CV-05",
+      "x-tcdx-vocabulary-version": "STEP6A3_VOCABULARIES_v1"
+    },
+    "SoaPublishRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version",
+        "reason"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "ControlInstantiateRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "based_on_control_version_id",
+        "control_code",
+        "name",
+        "business_owner_subject_id",
+        "objective",
+        "control_type",
+        "nature",
+        "frequency_code",
+        "execution_method",
+        "verification_method",
+        "minimum_evidence"
+      ],
+      "properties": {
+        "based_on_control_version_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "control_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "business_owner_subject_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "objective": {
+          "type": "string",
+          "minLength": 1
+        },
+        "control_type": {
+          "type": "string",
+          "enum": [
+            "preventive",
+            "detective",
+            "corrective",
+            "directive"
+          ]
+        },
+        "nature": {
+          "type": "string",
+          "enum": [
+            "manual",
+            "automated",
+            "hybrid"
+          ]
+        },
+        "frequency_code": {
+          "$ref": "#/components/schemas/ControlFrequency"
+        },
+        "execution_method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verification_method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "minimum_evidence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "suggested_owner_role_code": {
+          "$ref": "#/components/schemas/SuggestedBusinessOwnerRole"
+        },
+        "effective_from": {
+          "$ref": "#/components/schemas/UtcTimestamp"
+        },
+        "effective_to": {
+          "$ref": "#/components/schemas/UtcTimestamp"
+        }
+      },
+      "description": "Creates only a TENANT_OWNED tenant_instantiated Control and version 1 from an accessible global/platform ControlVersion."
+    },
+    "ControlFrequency": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "enum": [
+        "continuous",
+        "daily",
+        "weekly",
+        "monthly",
+        "quarterly",
+        "semiannual",
+        "annual",
+        "event_driven"
+      ],
+      "x-tcdx-vocabulary-family": "CV-03",
+      "x-tcdx-vocabulary-version": "STEP6A3_VOCABULARIES_v1"
+    },
+    "SuggestedBusinessOwnerRole": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 96,
+      "enum": [
+        "COMPLIANCE_MANAGER",
+        "CONTROL_OWNER",
+        "PROCESS_OWNER",
+        "QUALITY_MANAGER",
+        "CISO_SECURITY_MANAGER"
+      ],
+      "x-tcdx-vocabulary-family": "CV-14",
+      "x-tcdx-vocabulary-version": "STEP6A3_VOCABULARIES_v1"
+    },
+    "ControlAssessmentCreateRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "control_id",
+        "control_version_id",
+        "methodology_version_ref"
+      ],
+      "properties": {
+        "control_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "control_version_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "methodology_version_ref": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "effective_configuration_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        }
+      },
+      "description": "Control, version and optional EffectiveConfiguration must be compatible and belong to the selected tenant where applicable."
+    },
+    "ControlAssessmentStartRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        }
+      }
+    },
+    "ControlAssessmentSubmitRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version",
+        "result_status"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        },
+        "result_status": {
+          "$ref": "#/components/schemas/ResultStatus"
+        },
+        "domain_conclusion": {
+          "type": "string",
+          "enum": [
+            "effective",
+            "partially_effective",
+            "ineffective",
+            "not_tested",
+            "insufficient_evidence"
+          ]
+        },
+        "design_effectiveness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "operating_effectiveness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "coverage_percent": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "description": "Overall effectiveness is derived by the compatible methodology and is not client authority; assessed_at is server-generated."
+    },
+    "ControlAssessmentReviewRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        }
+      }
+    },
+    "ControlAssessmentApproveRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        }
+      },
+      "description": "SoD and reviewed-to-approved state are enforced from authoritative state."
+    },
+    "AssuranceTestCreateRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "control_id",
+        "control_version_id",
+        "test_code"
+      ],
+      "properties": {
+        "control_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "control_version_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "test_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "planned_at": {
+          "$ref": "#/components/schemas/UtcTimestamp"
+        }
+      },
+      "description": "Creates only planned state; tenant, row_version, actors and lifecycle timestamps are server-controlled."
+    },
+    "AssuranceTestStartRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        }
+      }
+    },
+    "AssuranceTestExecuteRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version",
+        "result_status"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        },
+        "result_status": {
+          "$ref": "#/components/schemas/ResultStatus"
+        },
+        "domain_conclusion": {
+          "type": "string",
+          "enum": [
+            "effective",
+            "partially_effective",
+            "ineffective",
+            "not_tested",
+            "insufficient_evidence"
+          ]
+        },
+        "samples": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/AssuranceSampleExecuteInput"
+          }
+        }
+      },
+      "description": "Executor identity and executed_at are server-derived; samples, when supplied, must be same-tenant and internally consistent."
+    },
+    "AssuranceSampleExecuteInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sample_code",
+        "sample_count",
+        "selection_method",
+        "result_status"
+      ],
+      "properties": {
+        "sample_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "population_count": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 0
+        },
+        "sample_count": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 0
+        },
+        "selection_method": {
+          "$ref": "#/components/schemas/AssuranceSelectionMethod"
+        },
+        "sample_period_start": {
+          "$ref": "#/components/schemas/UtcTimestamp"
+        },
+        "sample_period_end": {
+          "$ref": "#/components/schemas/UtcTimestamp"
+        },
+        "result_status": {
+          "$ref": "#/components/schemas/ResultStatus"
+        }
+      }
+    },
+    "AssuranceSelectionMethod": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "enum": [
+        "census",
+        "random",
+        "stratified_random",
+        "systematic",
+        "judgmental"
+      ],
+      "x-tcdx-vocabulary-family": "CV-10",
+      "x-tcdx-vocabulary-version": "STEP6A3_VOCABULARIES_v1"
+    },
+    "AssuranceTestReviewRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        }
+      }
+    },
+    "AssuranceTestApproveRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        }
+      },
+      "description": "SoD and reviewed-to-approved state are enforced from authoritative state."
+    },
+    "EvidenceRequestCreateRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_code"
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "requirement_id"
+          ]
+        },
+        {
+          "required": [
+            "control_id"
+          ]
+        },
+        {
+          "required": [
+            "requirement_assessment_id"
+          ]
+        },
+        {
+          "required": [
+            "control_assessment_id"
+          ]
+        },
+        {
+          "required": [
+            "assurance_test_id"
+          ]
+        }
+      ],
+      "properties": {
+        "request_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "requirement_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "control_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "requirement_assessment_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "control_assessment_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "assurance_test_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "assigned_membership_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "due_at": {
+          "$ref": "#/components/schemas/UtcTimestamp"
+        }
+      },
+      "description": "Exactly one approved typed target must be present; target existence, visibility, type and tenant compatibility are validated before persistence."
+    },
+    "EvidenceRequestFulfillRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version",
+        "evidence_version_id"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        },
+        "evidence_version_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        }
+      }
+    },
+    "EvidenceCreateRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_code",
+        "evidence_type",
+        "retention_policy_id",
+        "source_kind",
+        "file_object_id",
+        "provenance_ref",
+        "links"
+      ],
+      "properties": {
+        "evidence_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "evidence_type": {
+          "$ref": "#/components/schemas/EvidenceType"
+        },
+        "business_owner_subject_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "valid_from": {
+          "$ref": "#/components/schemas/UtcTimestamp"
+        },
+        "valid_to": {
+          "$ref": "#/components/schemas/UtcTimestamp"
+        },
+        "retention_policy_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "source_kind": {
+          "$ref": "#/components/schemas/EvidenceSourceKind"
+        },
+        "file_object_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "period_start": {
+          "$ref": "#/components/schemas/UtcTimestamp"
+        },
+        "period_end": {
+          "$ref": "#/components/schemas/UtcTimestamp"
+        },
+        "effective_from": {
+          "$ref": "#/components/schemas/UtcTimestamp"
+        },
+        "effective_to": {
+          "$ref": "#/components/schemas/UtcTimestamp"
+        },
+        "expires_at": {
+          "$ref": "#/components/schemas/UtcTimestamp"
+        },
+        "provenance_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "links": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "#/components/schemas/EvidenceLinkCreateInput"
+          }
+        }
+      },
+      "description": "FileObject must be finalized, usable and scan-PASS; all objects and policies must be tenant-compatible. Evidence, first draft version and links are created atomically."
+    },
+    "EvidenceType": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "enum": [
+        "document",
+        "record",
+        "image",
+        "report"
+      ],
+      "x-tcdx-vocabulary-family": "CV-02",
+      "x-tcdx-vocabulary-version": "STEP6A3_VOCABULARIES_v1"
+    },
+    "EvidenceSourceKind": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "enum": [
+        "uploaded",
+        "system_record",
+        "human_observation",
+        "external_record"
+      ],
+      "x-tcdx-vocabulary-family": "CV-12",
+      "x-tcdx-vocabulary-version": "STEP6A3_VOCABULARIES_v1"
+    },
+    "EvidenceLinkCreateInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "required": [
+            "requirement_id"
+          ]
+        },
+        {
+          "required": [
+            "control_id"
+          ]
+        },
+        {
+          "required": [
+            "control_version_id"
+          ]
+        },
+        {
+          "required": [
+            "requirement_assessment_id"
+          ]
+        },
+        {
+          "required": [
+            "control_assessment_id"
+          ]
+        },
+        {
+          "required": [
+            "assurance_test_id"
+          ]
+        }
+      ],
+      "properties": {
+        "requirement_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "control_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "control_version_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "requirement_assessment_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "control_assessment_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "assurance_test_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "claim": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_from": {
+          "$ref": "#/components/schemas/UtcTimestamp"
+        },
+        "effective_to": {
+          "$ref": "#/components/schemas/UtcTimestamp"
+        }
+      },
+      "description": "Exactly one typed target is accepted; a ControlVersion-only link never proves tenant implementation."
+    },
+    "EvidenceSubmitRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        }
+      }
+    },
+    "EvidenceReviewStartRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        }
+      }
+    },
+    "EvidenceApproveRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version",
+        "rationale"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        },
+        "sufficiency": {
+          "$ref": "#/components/schemas/EvidenceSufficiency"
+        },
+        "relevance": {
+          "$ref": "#/components/schemas/EvidenceRelevance"
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "description": "Decision=approved, reviewer identity and reviewed_at are server-derived; submitter/reviewer SoD is enforced."
+    },
+    "EvidenceSufficiency": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "enum": [
+        "sufficient",
+        "partially_sufficient",
+        "insufficient"
+      ],
+      "x-tcdx-vocabulary-family": "CV-13",
+      "x-tcdx-vocabulary-version": "STEP6A3_VOCABULARIES_v1"
+    },
+    "EvidenceRelevance": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "enum": [
+        "relevant",
+        "partially_relevant",
+        "not_relevant"
+      ],
+      "x-tcdx-vocabulary-family": "CV-09",
+      "x-tcdx-vocabulary-version": "STEP6A3_VOCABULARIES_v1"
+    },
+    "EvidenceRejectRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version",
+        "rationale"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        },
+        "sufficiency": {
+          "$ref": "#/components/schemas/EvidenceSufficiency"
+        },
+        "relevance": {
+          "$ref": "#/components/schemas/EvidenceRelevance"
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "description": "Decision=rejected, reviewer identity and reviewed_at are server-derived; rejection reason is mandatory."
+    },
+    "RetentionPolicyCreateRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_code",
+        "version_number",
+        "policy_kind",
+        "trigger_event_code",
+        "precedence_rank",
+        "is_mandatory"
+      ],
+      "properties": {
+        "policy_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "version_number": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        },
+        "policy_kind": {
+          "type": "string",
+          "enum": [
+            "legal_hold",
+            "mandatory_regulatory_policy",
+            "contractual_policy",
+            "tenant_policy",
+            "product_baseline"
+          ]
+        },
+        "retention_seconds": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 0
+        },
+        "trigger_event_code": {
+          "type": "string",
+          "enum": [
+            "expiry_or_closure"
+          ]
+        },
+        "precedence_rank": {
+          "type": "integer",
+          "enum": [
+            500,
+            400,
+            300,
+            200,
+            100
+          ]
+        },
+        "is_mandatory": {
+          "type": "boolean"
+        }
+      },
+      "description": "For legal_hold retention_seconds is absent and persisted NULL; for every other kind it is a required nonnegative integer. Precedence must match policy_kind exactly (500/400/300/200/100). effective_from, effective_to, lifecycle, row_version, regulatory source and disposition are not caller-controlled."
+    },
+    "RetentionPolicyUpdateRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "is_mandatory"
+      ],
+      "properties": {
+        "retention_seconds": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 0
+        },
+        "is_mandatory": {
+          "type": "boolean"
+        }
+      },
+      "description": "Draft-only update; legal_hold omits retention_seconds and all other kinds require it. Strong If-Match supplies row_version. Policy identity, kind, trigger, precedence and lifecycle remain server-controlled."
+    },
+    "RetentionPolicyTransitionRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "maxProperties": 0,
+      "description": "Empty command body. The sole API concurrency precondition is the strong If-Match header."
+    },
+    "IssueCreateRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "issue_code",
+        "issue_kind",
+        "title",
+        "description",
+        "severity",
+        "priority",
+        "origin_role"
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "requirement_assessment_id"
+          ]
+        },
+        {
+          "required": [
+            "control_assessment_id"
+          ]
+        },
+        {
+          "required": [
+            "assurance_test_id"
+          ]
+        }
+      ],
+      "properties": {
+        "issue_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "issue_kind": {
+          "type": "string",
+          "enum": [
+            "finding",
+            "non_conformity",
+            "gap",
+            "exception",
+            "audit_observation"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "severity": {
+          "$ref": "#/components/schemas/IssueSeverity"
+        },
+        "priority": {
+          "$ref": "#/components/schemas/IssuePriority"
+        },
+        "business_owner_subject_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "due_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "requirement_assessment_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "control_assessment_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "assurance_test_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "origin_role": {
+          "$ref": "#/components/schemas/IssueOriginRole"
+        }
+      },
+      "description": "Exactly one Core GRC typed origin is accepted in Phase 5; risk, incident, supplier and audit origins remain outside this slice."
+    },
+    "IssueSeverity": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "enum": [
+        "critical",
+        "major",
+        "moderate",
+        "minor"
+      ],
+      "x-tcdx-vocabulary-family": "CV-11",
+      "x-tcdx-vocabulary-version": "STEP6A3_VOCABULARIES_v1"
+    },
+    "IssuePriority": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "enum": [
+        "urgent",
+        "high",
+        "normal",
+        "low"
+      ],
+      "x-tcdx-vocabulary-family": "CV-08",
+      "x-tcdx-vocabulary-version": "STEP6A3_VOCABULARIES_v1"
+    },
+    "IssueOriginRole": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "enum": [
+        "trigger"
+      ],
+      "x-tcdx-vocabulary-family": "CV-07",
+      "x-tcdx-vocabulary-version": "STEP6A3_VOCABULARIES_v1"
+    },
+    "IssueTriageRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version",
+        "severity",
+        "priority"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        },
+        "severity": {
+          "$ref": "#/components/schemas/IssueSeverity"
+        },
+        "priority": {
+          "$ref": "#/components/schemas/IssuePriority"
+        },
+        "business_owner_subject_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "due_date": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "description": "Severity and priority remain distinct from the open-to-triaged lifecycle transition."
+    },
+    "IssueStartRemediationRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        }
+      }
+    },
+    "IssueRequestVerificationRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        }
+      }
+    },
+    "IssueVerifyCloseRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version",
+        "verification_decision",
+        "rationale"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        },
+        "verification_decision": {
+          "type": "string",
+          "enum": [
+            "accepted"
+          ]
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "description": "Verifier identity and closed_at are server-derived; required SoD is enforced before closing the Issue."
+    },
+    "ActionCreateRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action_code",
+        "title",
+        "description",
+        "priority"
+      ],
+      "properties": {
+        "action_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "priority": {
+          "$ref": "#/components/schemas/ActionPriority"
+        },
+        "assigned_membership_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "due_date": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "description": "Parent Issue is the path identity and must belong to the selected tenant; initial state is pending."
+    },
+    "ActionPriority": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "enum": [
+        "urgent",
+        "high",
+        "normal",
+        "low"
+      ],
+      "x-tcdx-vocabulary-family": "CV-08",
+      "x-tcdx-vocabulary-version": "STEP6A3_VOCABULARIES_v1"
+    },
+    "ActionStartRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        }
+      }
+    },
+    "ActionSubmitForReviewRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        }
+      },
+      "description": "Executes only action.submit_review from in_progress to in_review."
+    },
+    "ActionCompleteRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version",
+        "evidence_version_id",
+        "link_role"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        },
+        "evidence_version_id": {
+          "$ref": "#/components/schemas/UuidV7"
+        },
+        "link_role": {
+          "$ref": "#/components/schemas/ActionEvidenceLinkRole"
+        }
+      },
+      "description": "Closure EvidenceVersion must be eligible and same-tenant; completion is allowed only from in_review and never verifies the Action."
+    },
+    "ActionEvidenceLinkRole": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "enum": [
+        "closure"
+      ],
+      "x-tcdx-vocabulary-family": "CV-06",
+      "x-tcdx-vocabulary-version": "STEP6A3_VOCABULARIES_v1"
+    },
+    "ActionVerifyRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_version",
+        "verification_decision",
+        "rationale"
+      ],
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 1
+        },
+        "verification_decision": {
+          "type": "string",
+          "enum": [
+            "accepted"
+          ]
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retest_reference": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "description": "Verifier identity and verified_at are server-derived; the verifier/completer SoD policy is enforced."
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/verify.py"
+  ],
+  "started_utc": "2026-10-22T15:28:41.111410+00:00",
+  "finished_utc": "2026-10-22T15:28:41.196137+00:00",
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/Users/andresbarouh/repos/tcdx-grc/docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/local-definitions-01-resolution-20261022/verify.py\", line 25, in <module>\n    assert f.resolve().is_relative_to(R) and f.is_file() and sha(f) == expected, path\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: docs/governance/MASTER_EXECUTION_STATUS.md\n",
+  "database": false,
+  "read_only": false
+}

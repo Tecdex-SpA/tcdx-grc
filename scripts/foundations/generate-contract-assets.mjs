@@ -1519,8 +1519,193 @@ if (c04wSchema.tableCount !== 242 || c04wSchema.tables.length !== 242 ||
     JSON.stringify(c04wSchema.tables.slice(0, commercialSchema.tables.length).map(t => t.name)) !==
     JSON.stringify(commercialSchema.tables.map(t => t.name)))
   throw new Error("C-04W physical schema candidate does not extend the commercial schema");
-writeOrCheck(resolve(root, "database/migrations/manifest.json"), `${JSON.stringify(c04wManifest, null, 2)}\n`);
-writeOrCheck(resolve(root, "database/expected-schema.json"), c04wSchemaBytes);
+
+// The normative-library successor consumes the exact published/adopted chain.
+// Its PostgreSQL-rendered definitions are derived evidence; the DDL sequence
+// remains the authority and is verified byte-for-byte below.
+const normativeDirectory = "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020";
+const normativeReceiptPath = "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_PV01_PUBLICATION_20261021/CONTRACT_PUBLICATION_RECEIPT.json";
+const normativeReceiptBytes = readFileSync(resolve(root, normativeReceiptPath));
+const normativeReceipt = JSON.parse(normativeReceiptBytes);
+if (sha256(normativeReceiptBytes) !== "a8c6fc08180b64faedae257f2751c4dacc9747eab7b8b83e3d09f5a03c18d472" ||
+    normativeReceipt.PV_H04_01 !== "CONTRACT_PUBLISHED_VERIFIED" ||
+    normativeReceipt.status !== "PASS_CONTRACT_EFFECTIVE_LOCAL")
+  throw new Error("Effective PV-H04-01 publication receipt drift");
+
+const normativeAdoptionReceiptPath = `${normativeDirectory}/qa-adoption-verify-full-20261021/ADOPTION_RECEIPT.json`;
+const normativeAdoptionReceiptBytes = readFileSync(resolve(root, normativeAdoptionReceiptPath));
+const normativeAdoptionReceipt = JSON.parse(normativeAdoptionReceiptBytes);
+if (sha256(normativeAdoptionReceiptBytes) !== "692a68842fa8a807adb1a7a8937e16e3f7432967716cfd53e73ccd871d5e9450" ||
+    normativeAdoptionReceipt.status !== "APPLIED_VERIFIED_PHYSICAL_SCOPE_ONLY" ||
+    normativeAdoptionReceipt.migration_id !== "20261021221204")
+  throw new Error("Normative-library QA adoption receipt drift");
+
+const normativeManifestSourcePath = `${normativeDirectory}/qa-physical-adoption-20261021/candidate-migration/manifest.proposed.json`;
+const normativeManifestBytes = readFileSync(resolve(root, normativeManifestSourcePath), "utf8");
+const normativeManifest = JSON.parse(normativeManifestBytes);
+if (sha256(normativeManifestBytes) !== normativeAdoptionReceipt.canonical_manifest.sha256 ||
+    JSON.stringify(normativeManifest.migrations.slice(0, -1)) !== JSON.stringify(c04wManifest.migrations) ||
+    normativeManifest.migrations.length !== c04wManifest.migrations.length + 1)
+  throw new Error("Normative-library migration manifest history drift");
+const normativeEntry = normativeManifest.migrations.at(-1);
+const normativeMigrationPath = resolve(migrationDir, normativeEntry.filename);
+const normativeMigrationBytes = readFileSync(normativeMigrationPath);
+if (normativeEntry.id !== normativeAdoptionReceipt.migration_id ||
+    normativeEntry.sha256 !== normativeAdoptionReceipt.migration.sha256 ||
+    sha256(normativeMigrationBytes) !== normativeEntry.sha256)
+  throw new Error("Normative-library migration bytes drift");
+
+const normativeReconciliationPath = `${normativeDirectory}/g4-canonical-reconciliation-20261021/MIGRATION_RECONCILIATION.json`;
+const normativeReconciliation = JSON.parse(readFileSync(resolve(root, normativeReconciliationPath), "utf8"));
+if (normativeReconciliation.gate !== "PASS_CANONICAL_ISOLATED_ONLY" ||
+    normativeReconciliation.predecessor_count !== c04wManifest.migrations.length ||
+    normativeReconciliation.successor_count !== normativeManifest.migrations.length ||
+    normativeReconciliation.candidate.sha256 !== normativeEntry.sha256)
+  throw new Error("Normative-library migration reconciliation drift");
+if (JSON.stringify(normativeReconciliation.effective_source_chain.map(({ path, sha256: digest }) => ({ path, sha256: digest }))) !==
+    JSON.stringify(normativeReceipt.effective_ddl_sequence))
+  throw new Error("Normative-library effective DDL source order drift");
+for (const source of normativeReconciliation.effective_source_chain) {
+  const sourceBytes = readFileSync(resolve(root, source.path));
+  if (sha256(sourceBytes) !== source.sha256 ||
+      !normativeMigrationBytes.subarray(source.offset, source.offset + source.length).equals(sourceBytes))
+    throw new Error(`Normative-library migration source drift: ${source.path}`);
+}
+
+function splitSqlTableElements(body) {
+  const values = [];
+  let current = "";
+  let depth = 0;
+  let quoted = false;
+  for (let index = 0; index < body.length; index += 1) {
+    const char = body[index];
+    current += char;
+    if (char === "'" && body[index + 1] === "'") {
+      current += body[index + 1];
+      index += 1;
+    } else if (char === "'") quoted = !quoted;
+    else if (!quoted && char === "(") depth += 1;
+    else if (!quoted && char === ")") depth -= 1;
+    else if (!quoted && char === "," && depth === 0) {
+      values.push(current.slice(0, -1).trim());
+      current = "";
+    }
+  }
+  if (current.trim()) values.push(current.trim());
+  return values;
+}
+
+function projectPublishedTable(sql, expectedName, profile) {
+  const match = sql.match(new RegExp(`CREATE TABLE ${expectedName.replaceAll(".", "\\.")} \\(([\\s\\S]*?)\\n\\);`));
+  if (!match) throw new Error(`Published table definition missing: ${expectedName}`);
+  const columns = [];
+  const checks = [];
+  const primaryKey = [];
+  for (const element of splitSqlTableElements(match[1])) {
+    const namedCheck = element.match(/^CONSTRAINT\s+([a-z0-9_]+)\s+CHECK\b/);
+    if (namedCheck) {
+      checks.push(namedCheck[1]);
+      continue;
+    }
+    const column = element.match(/^([a-z0-9_]+)\s+([a-z]+(?:\([0-9,]+\))?)([\s\S]*)$/);
+    if (!column) throw new Error(`Unsupported published table element: ${element}`);
+    const [, name, type, remainder] = column;
+    if (/\bPRIMARY KEY\b/.test(remainder)) primaryKey.push(name);
+    const defaultValue = remainder.match(/\bDEFAULT\s+([^\s,]+)/)?.[1] ?? null;
+    columns.push({ name, type, nullable: !/\b(?:NOT NULL|PRIMARY KEY)\b/.test(remainder), default: defaultValue });
+  }
+  return { name: expectedName, profile, primaryKey, columns, checks, uniqueConstraints: [] };
+}
+
+const normativeSchemaContractPath = "docs/physical-data-model/amendments/NORMATIVE_LIBRARY_20261020/EXPECTED_SCHEMA_CONTRACT.json";
+const normativeSchema = JSON.parse(readFileSync(resolve(root, normativeSchemaContractPath), "utf8"));
+const rightsDdlPath = normativeReceipt.effective_ddl_sequence[1].path;
+const rightsDdl = readFileSync(resolve(root, rightsDdlPath), "utf8");
+normativeSchema.tables.push(projectPublishedTable(rightsDdl, "knowledge.knowledge_source_usage_rights", "MXI"));
+normativeSchema.tableCount = normativeSchema.tables.length;
+if (normativeSchema.tableCount !== 244) throw new Error("Normative-library schema must contain 244 canonical tables");
+
+const projectionPath = `${normativeDirectory}/g4-canonical-reconciliation-20261021/SYNTHETIC_PROJECT.json`;
+const projectionBytes = readFileSync(resolve(root, projectionPath));
+if (sha256(projectionBytes) !== "213fe27296b4d52dd4d2908f27aa39676450921146fefade8076cf09caccf5f8")
+  throw new Error("Normative-library PostgreSQL 16 projection evidence drift");
+const projectionEvidence = JSON.parse(projectionBytes);
+if (projectionEvidence.exit_code !== 0 || !projectionEvidence.cleanup?.absent ||
+    projectionEvidence.result?.tests?.some(({ status }) => status !== "PASS"))
+  throw new Error("Normative-library PostgreSQL 16 projection evidence is not PASS");
+const physicalProjection = projectionEvidence.result.projection;
+if (physicalProjection.functions.length !== 8 || physicalProjection.triggers.length !== 12 ||
+    physicalProjection.constraints.length !== 98 || physicalProjection.indexes.length !== 56)
+  throw new Error("Normative-library PostgreSQL 16 projection coverage drift");
+const projectedRelations = [...new Set([
+  ...physicalProjection.constraints,
+  ...physicalProjection.indexes
+].map(({ relation }) => relation).filter(Boolean))].sort();
+
+normativeSchema.normativeLibraryAmendment = {
+  scope: "B01_B09_H04_PV_H04_01",
+  status: "CANONICAL_PROJECTION_NOT_QA_ADOPTED",
+  new_tables: 2,
+  new_columns: 4,
+  operational_grants: 0,
+  publicationReceipt: { path: normativeReceiptPath, sha256: sha256(normativeReceiptBytes) },
+  migration: { path: `database/migrations/${normativeEntry.filename}`, sha256: normativeEntry.sha256 },
+  sources: normativeReconciliation.effective_source_chain,
+  physicalAssertions: { ...physicalProjection, relations: projectedRelations },
+  derivation: "PG16 catalog rendering of the exact published byte-identical migration; canonical derived inventory only, not a new authority. Function bodies verified against the final source definition.",
+  tenantForeignKeyEnforcement: [{
+    child: "knowledge.knowledge_version_context_links",
+    parent: "org.subjects",
+    childColumns: ["subject_id"],
+    parentColumns: ["subject_id"],
+    authority: "docs/physical-data-model/amendments/NORMATIVE_LIBRARY_20261020/01_LOGICAL_PHYSICAL_CONTRACT.md",
+    mechanism: "EXACT_FK_PLUS_DEFERRED_OWNERSHIP_AND_IMMUTABLE_PARENT_GUARDS",
+    requiredTriggers: ["ck_knowledge_context__compatibility", "ck_context_target__subject", "ck_context_source__owner", "ck_knowledge_context__immutable"],
+    requiredFunctions: ["knowledge.check_context_link", "knowledge.guard_context_target_owner", "knowledge.guard_context_link"]
+  }]
+};
+const normativeSchemaBytes = `${JSON.stringify(normativeSchema, null, 2)}\n`;
+if (sha256(normativeSchemaBytes) !== "c2fc38768ee6c7b3760346ec862304204e4f94abd18a2d8150745bbaf6953207")
+  throw new Error(`Normative-library expected-schema derivation drift: ${sha256(normativeSchemaBytes)}`);
+// Forward-only LOCAL-DEFINITIONS-01 successor. Published predecessor bytes stay immutable.
+const optionalDefaultRoot = 'docs/physical-data-model/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/';
+const optionalReceiptBytes = readFileSync(resolve(root, optionalDefaultRoot + 'CONTRACT_PUBLICATION_RECEIPT.json'));
+const optionalReceipt = JSON.parse(optionalReceiptBytes);
+const readOptionalExact = ref => {
+  if (!ref.path.startsWith('docs/') || ref.path.includes('..')) throw new Error('Invalid optional-default source path');
+  const bytes = readFileSync(resolve(root, ref.path));
+  if (sha256(bytes) !== ref.sha256) throw new Error(`Optional-default authority drift: ${ref.path}`);
+  return bytes;
+};
+if (sha256(optionalReceiptBytes) !== 'cfceb764253354ae77c18bb8618c5310b7952441739ba348dabcaed96545ef05' || optionalReceipt.status !== 'PASS_CONTRACT_EFFECTIVE_LOCAL' || optionalReceipt.real_activation !== 'NONE')
+  throw new Error('Optional-default local corrective authority missing');
+readOptionalExact(optionalReceipt.authorization);
+const optionalPublication = JSON.parse(readOptionalExact(optionalReceipt.publication_manifest));
+for (const ref of optionalPublication.files) readOptionalExact(ref);
+const optionalContract = JSON.parse(readFileSync(resolve(root, optionalDefaultRoot + 'CONTRACT.json')));
+for (const ref of optionalContract.sources) readOptionalExact(ref);
+if (optionalContract.predecessor_manifest.sha256 !== sha256(normativeManifestBytes) ||
+    optionalContract.semantic_decision !== 'A_NULL_IS_ABSENCE_OF_PLATFORM_DEFAULT') throw new Error('Optional-default predecessor/semantics drift');
+const optionalEntry = optionalContract.migration;
+if (!/^\d{14}$/.test(optionalEntry.id) || optionalEntry.id <= normativeEntry.id ||
+    optionalEntry.filename !== optionalEntry.id + '_configuration_optional_default.sql' || !optionalEntry.transactional ||
+    JSON.stringify(optionalPublication.migration) !== JSON.stringify(optionalEntry)) throw new Error('Invalid corrective migration sequence');
+const optionalDdl = readOptionalExact(optionalContract.ddl);
+if (sha256(optionalDdl) !== optionalEntry.sha256) throw new Error('Corrective migration/source mismatch');
+writeOrCheck(resolve(migrationDir, optionalEntry.filename), optionalDdl.toString('utf8'));
+const optionalConstraint = JSON.parse(readOptionalExact(optionalContract.pg16_constraint));
+if (optionalConstraint.relation !== 'config.configuration_definitions' || optionalConstraint.name !== 'ck_configuration_definitions__typed_default' || !optionalConstraint.validated)
+  throw new Error('Incomplete corrective PG16 constraint projection');
+normativeSchema.configurationDefaultAmendment = {
+  contract: {path: optionalDefaultRoot + 'CONTRACT.json', sha256: sha256(readFileSync(resolve(root, optionalDefaultRoot + 'CONTRACT.json')))},
+  receipt: {path: optionalDefaultRoot + 'CONTRACT_PUBLICATION_RECEIPT.json', sha256: sha256(optionalReceiptBytes)},
+  migration: {path: 'database/migrations/' + optionalEntry.filename, sha256: optionalEntry.sha256},
+  constraint: optionalConstraint,
+  status: 'PREPARED_LOCAL_NOT_QA_APPLIED'
+};
+const currentManifest = {...normativeManifest, migrations: [...normativeManifest.migrations, optionalEntry]};
+writeOrCheck(resolve(root, "database/migrations/manifest.json"), `${JSON.stringify(currentManifest, null, 2)}\n`);
+writeOrCheck(resolve(root, "database/expected-schema.json"), `${JSON.stringify(normativeSchema, null, 2)}\n`);
 const canonicalSeedSql = historicalMigrations.find(([filename]) => filename === "20260916000900_canonical_seeds.sql")[1];
 writeOrCheck(resolve(root, "database/seed-manifest.json"), `${JSON.stringify({
   manifestVersion: 2,
@@ -1672,4 +1857,4 @@ if (existsSync(initialSourcePublication)) {
 
 const commercialApi = JSON.parse(readFileSync(resolve(root, "docs/executable-contracts/amendments/STEP_6A3_COMMERCIAL_v1.9/02_OPENAPI_COMMERCIAL_MERGED.json"), "utf8"));
 const commercialOperations = Object.values(commercialApi.paths).flatMap(path => Object.values(path).filter(value => value && typeof value === "object" && value.operationId)).length;
-console.log(JSON.stringify({ mode: checkOnly ? "check" : "write", physicalTables: c04wSchema.tableCount, publishedPermissions: 175, permissionsAfterCatalogRelease: 163, lifecycleEdges: 103, rawLifecycleDefinitionRows: 140, migrations: c04wManifest.migrations.length, operations: commercialOperations, baseOperations: operationIds.length, readOperations: readCount }, null, 2));
+console.log(JSON.stringify({ mode: checkOnly ? "check" : "write", physicalTables: normativeSchema.tableCount, publishedPermissions: 175, permissionsAfterCatalogRelease: 163, lifecycleEdges: 103, rawLifecycleDefinitionRows: 140, migrations: currentManifest.migrations.length, operations: commercialOperations, baseOperations: operationIds.length, readOperations: readCount }, null, 2));

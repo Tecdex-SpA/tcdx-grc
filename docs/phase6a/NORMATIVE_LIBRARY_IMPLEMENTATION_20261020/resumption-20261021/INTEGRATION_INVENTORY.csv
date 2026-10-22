@@ -1,0 +1,10 @@
+binding,status,source_relative_to_backend_or_frontend_src,tests,dependency_or_scope
+B01,VERIFIED,regulatory/model.ts;validator.ts,library-law.test.ts,Scope/import validation only; no import
+B02,WIRED_CODE_ONLY,normative-library/knowledge-policy.ts;composition.ts;routes.ts;rights.ts,rights.test.ts;composition.test.ts,Physical links/H04 support + real rights + IAM
+B03,WIRED_CODE_ONLY,normative-library/knowledge-service.ts;knowledge-read.ts,library.test.ts;composition.test.ts,Same exact tenant/source/Subject and rights
+B04,WIRED_CODE_ONLY,configuration/control-adjustment-policy.ts;control-adjustments.ts;composition.ts,control-adjustment-policy.test.ts;library.test.ts,Definitions/scopes/rules and physical target; GET never materializes
+B05,WIRED_CODE_ONLY,configuration/control-adjustment-service.ts;normative-library/authorization.ts,control-adjustment-policy.test.ts;library.test.ts,Effective grants/SoD real runtime
+B06,WIRED_CODE_ONLY,normative-library/mutations.ts;lifecycle.ts;routes.ts,registry-adoption.test.ts;mutations.test.ts;composition.test.ts,Actual registry version/scopes/effects not activated
+B07,WIRED_CODE_ONLY,core-grc/service.ts;routes.ts;normative-library/applicability-persistence.ts;postgres.ts,applicability-hooks.test.ts;library.test.ts,Context column and real canonical transaction validation
+B08,WIRED_CODE_ONLY,normative-library/matrix-service.ts;matrices.ts;routes.ts;frontend/normative-library.tsx,library.test.ts;composition.test.ts,No runtime mount/QA or Risks phase
+B09,WIRED_CODE_ONLY,frontend/normative-library-client.ts;normative-library-hooks.tsx,normative-library-client.test.ts;browser isolated,Ephemeral only; no shell activation/export/persistence

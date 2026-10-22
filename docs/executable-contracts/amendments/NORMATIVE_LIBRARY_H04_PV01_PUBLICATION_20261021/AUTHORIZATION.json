@@ -1,0 +1,21 @@
+{
+  "authority": "PRODUCT_OWNER_EXPLICIT_CURRENT_CONVERSATION",
+  "operation": "Publicación contractual del corrector PV-H04-01",
+  "baseline_id": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "authorized_candidate_manifest": {
+    "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_H04_PHYSICAL_VALIDATION_20261021/PUBLICATION_MANIFEST_CANDIDATE.json",
+    "sha256": "b1328e9fe106d7587939f933cbb880f5834302f2ab41e4e8cdf9fa55fd1f2225"
+  },
+  "scope": "Publish exact physically validated function corrector as immutable successor; preserve prior contracts/evidence",
+  "expected_result": "PV_H04_01=CONTRACT_PUBLISHED_VERIFIED",
+  "prohibited": [
+    "QA/production migrations",
+    "normative imports",
+    "IAM/registry activation",
+    "deployments",
+    "infrastructure changes",
+    "commit/push/merge",
+    "STEP6A5/STEP6A6"
+  ],
+  "human_signature_of_derived_bytes": false
+}

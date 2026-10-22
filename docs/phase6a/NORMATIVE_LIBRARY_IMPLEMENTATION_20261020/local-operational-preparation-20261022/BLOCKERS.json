@@ -1,0 +1,41 @@
+{
+  "scope_result": "PARTIAL_BLOCKED",
+  "blockers": [
+    {
+      "id": "LOCAL-DEFINITIONS-01",
+      "affected": [
+        "4 Definitions/rules physical materialization",
+        "B04 physical functional readiness",
+        "B01_B09 integral operational enablement"
+      ],
+      "contract": {
+        "path": "docs/executable-contracts/amendments/NORMATIVE_LIBRARY_20261020/CONFIGURATION_DEFINITIONS.json",
+        "sha256": "3779d8eacd48bf7df28804e70c7fdc62d9c5b43719a94f4a3e57e7a6a1aa01cc",
+        "default_text_value": null
+      },
+      "physical_authority": {
+        "migration_number": 31,
+        "path": "database/migrations/20261009000100_phase6a3_configuration_integrity.sql",
+        "sha256": "b717f0c91f88a4079f791fd68cc08ff5202ef7f0dda6c7cf85ea37cb23441722",
+        "lines": "74-85",
+        "constraint": "ck_configuration_definitions__typed_default",
+        "requires": "Exactly one non-NULL typed default; text requires default_text_value IS NOT NULL"
+      },
+      "evidence": [
+        "PG_ATTEMPT_1.log",
+        "checks/postgres.log",
+        "apps/backend/src/security/normative-library-publication.postgres.test.ts"
+      ],
+      "observed_sqlstate": "23514",
+      "affected_codes": [
+        "control_operational_activity",
+        "control_recommended_evidence",
+        "control_operational_frequency",
+        "control_operational_confirmation"
+      ],
+      "in_scope_resolution": "NONE_WITHOUT_VIOLATING_NO_SCHEMA_CHANGES_AND_NO_INVENTED_DEFAULTS",
+      "action": "Preserve 35 migrations and approved NULL semantics; reconcile physical/executable conflict in a subsequent authorized scope",
+      "code_b04_01": "PASS_PRESERVED_NOT_REOPENED"
+    }
+  ]
+}

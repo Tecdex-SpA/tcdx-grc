@@ -1,0 +1,78 @@
+{
+  "scope": "Frontend only, local, no QA writes or deployment",
+  "checks": [
+    {
+      "name": "unit",
+      "command": "pnpm exec vitest run apps/frontend/src/business-origin-fields.test.tsx apps/frontend/src/business-forms.test.tsx apps/frontend/src/core-grc.test.tsx apps/frontend/src/reference-selectors.test.tsx",
+      "exit_code": 0,
+      "result": "97 PASS / 4 files",
+      "receipt": "unit.txt"
+    },
+    {
+      "name": "typecheck",
+      "command": "pnpm --filter @tcdx-grc/frontend typecheck",
+      "exit_code": 0,
+      "result": "PASS",
+      "receipt": "typecheck.txt"
+    },
+    {
+      "name": "lint",
+      "command": "pnpm --filter @tcdx-grc/frontend lint",
+      "exit_code": 0,
+      "result": "PASS",
+      "receipt": "lint.txt"
+    },
+    {
+      "name": "build",
+      "command": "pnpm --filter @tcdx-grc/frontend build",
+      "exit_code": 0,
+      "result": "PASS; existing chunk size warning",
+      "receipt": "build.txt"
+    },
+    {
+      "name": "contract-assets",
+      "command": "node scripts/foundations/generate-contract-assets.mjs --check",
+      "exit_code": 0,
+      "result": "PASS",
+      "receipt": "contract-assets.txt"
+    },
+    {
+      "name": "form-assets",
+      "command": "node scripts/phase6a4/generate-form-assets.mjs --check",
+      "exit_code": 0,
+      "result": "PASS",
+      "receipt": "form-assets.txt"
+    },
+    {
+      "name": "rector-pre",
+      "command": "bash scripts/verify-rector-governance.sh",
+      "exit_code": 0,
+      "result": "PASS",
+      "receipt": "rector-pre.txt"
+    },
+    {
+      "name": "rector-final",
+      "command": "bash scripts/verify-rector-governance.sh",
+      "exit_code": 0,
+      "result": "PASS",
+      "receipt": "rector-final.txt"
+    },
+    {
+      "name": "whitespace",
+      "command": "git diff --check",
+      "exit_code": 0,
+      "result": "PASS",
+      "receipt": "whitespace.txt"
+    }
+  ],
+  "browser": {
+    "result": "8 PASS BEFORE subsequent PO instruction; no further browser runs",
+    "receipt": "browser-retry.txt",
+    "api": "LOCAL_SIMULATED_NOT_QA",
+    "human_acceptance": "PENDING"
+  },
+  "known_initial_attempts": {
+    "unit": "Four fixture assertions failed for unpublished severity/role values, corrected fixture only. Retained initial-unit-fixture-failure.txt",
+    "browser": "Initial sandbox EPERM retained in browser.txt; authorized retry completed before subsequent PO instruction"
+  }
+}

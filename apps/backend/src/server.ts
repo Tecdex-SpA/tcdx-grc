@@ -1,3 +1,4 @@
+import { composeNormativeLibraryForBootstrap } from "./normative-library/bootstrap.js";
 import { buildApp } from "./app.js";
 import { loadConfig } from "./config.js";
 import { createDatabase, databaseReady } from "./database.js";
@@ -34,7 +35,8 @@ const managedIdentityBrowser = config.managedIdentityOidc.configured && applicat
       config.managedIdentityOidc as OidcConfig,
       config.frontendOrigin,
       database,
-      applicationTokens
+      applicationTokens,
+      undefined, undefined, undefined, config.browserSession
     )
   : undefined;
 const managedIdentityService = config.managedIdentityAdmin.configured && applicationTokens
@@ -46,10 +48,14 @@ const managedIdentityService = config.managedIdentityAdmin.configured && applica
 const fileStorage = config.objectStorage.configured
   ? new MinioFileStoragePort(config.objectStorage as Required<Omit<typeof config.objectStorage, "configured">>)
   : new UnavailableFileStoragePort();
+const normativeLibrary = await composeNormativeLibraryForBootstrap({
+  database, fileStorage, environment: config.nodeEnv, cursor: applicationTokens
+});
 const app = buildApp(() => databaseReady(database), {
   database,
   identityVerifier,
   fileStorage,
+  normativeLibrary,
   ...(applicationTokens ? { referenceCursor: applicationTokens } : {}),
   runtimeEnvironment: config.nodeEnv
 }, oidcBrowser, config.frontendOrigin, managedIdentityBrowser, managedIdentityService,
@@ -60,10 +66,11 @@ const stopCatalogOperator = process.env.TCDX_COMMERCIAL_CATALOG_OPERATOR_SOCKET 
       approvedManifestSha256: process.env.TCDX_COMMERCIAL_APPROVED_MANIFEST_SHA256!,
       database,
       identityVerifier: applicationTokens,
-      ...(iamPublication ? { iamOperation: (operation: "iam.provision" | "iam.publish" | "iam.revoke" | "iam.c04w.publish" | "iam.initial_source.publish", correlationId: string) =>
+      ...(iamPublication ? { iamOperation: (operation: "iam.provision" | "iam.publish" | "iam.revoke" | "iam.c04w.publish" | "iam.initial_source.publish" | "iam.library.publish", correlationId: string) =>
         operation === "iam.provision" ? iamPublication.provision(correlationId)
           : operation === "iam.revoke" ? iamPublication.revoke(correlationId)
           : operation === "iam.initial_source.publish" ? iamPublication.publishInitialSource(correlationId)
+          : operation === "iam.library.publish" ? iamPublication.publishNormativeLibrary(correlationId)
           : operation === "iam.c04w.publish" ? iamPublication.publishC04w(correlationId) : iamPublication.publish(correlationId) } : {})
     })
   : undefined;

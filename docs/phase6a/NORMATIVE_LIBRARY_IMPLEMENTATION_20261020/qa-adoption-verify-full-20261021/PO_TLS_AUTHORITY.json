@@ -1,0 +1,22 @@
+{
+  "source": "Current PO instruction in this conversation; administrative attestation supplied by PO, not invented by agent",
+  "independent_checks_asserted_by_PO": [
+    "hostname -I on db-v4 confirms192.168.2.40",
+    "PostgreSQL public certificate path /etc/ssl/certs/ssl-cert-snakeoil.pem",
+    "CN=db-tecdex; SAN=DNS:db-tecdex",
+    "DER SHA256 exact fingerprint matches prior observation"
+  ],
+  "approved_certificate_sha256": "FB:68:09:DA:13:9E:E3:E5:2C:2F:1F:EA:D7:5B:11:92:7B:04:B8:96:7A:2B:5D:B8:46:9C:B6:70:E3:BB:A3:E6",
+  "approved_connection": {
+    "host": "db-tecdex",
+    "hostaddr": "192.168.2.40",
+    "port": 5432,
+    "sslmode": "verify-full",
+    "sslrootcert": "QA_ADMINISTRATIVE_PUBLIC_CERT.pem"
+  },
+  "migration_authorized": "20261021221204",
+  "window_minutes": 30,
+  "no_DNS_server_config_certificate_or_global_trust_changes": true,
+  "initial_public_copy_authentication": "Exact certificate content authenticated by independently supplied PO fingerprint; no trust inferred from discovery",
+  "administrative_copy": "Retrieved public file only over the verified/authenticated administrative PostgreSQL session and rechecked against approved fingerprint"
+}

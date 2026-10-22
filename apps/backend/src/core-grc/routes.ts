@@ -1,3 +1,4 @@
+import {registerNormativeLibraryRoutes} from '../normative-library/routes.js';
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { validate as validateUuid } from "uuid";
 import { parseReferenceQuery, readReferencePage, type ReferenceKind } from "./reference-reads.js";
@@ -140,6 +141,7 @@ export const coreGrcCommandRoutes: Array<[string, string, "target" | "parent" | 
 ];
 
 export function registerCoreGrcRoutes(app: FastifyInstance, dependencies: CoreGrcDependencies): void {
+  if(dependencies.normativeLibrary)registerNormativeLibraryRoutes(app,dependencies.identityVerifier,dependencies.normativeLibrary);
   for (const [kind, path] of [["framework", "framework-version-references"], ["membership", "membership-references"], ["retention", "retention-policy-references"]] as const) {
     app.get(`/api/v1/${path}`, async (request, reply) => {
       reply.header("cache-control", "no-store").header("vary", "Authorization, X-TCDX-Tenant-Id");
@@ -155,7 +157,7 @@ export function registerCoreGrcRoutes(app: FastifyInstance, dependencies: CoreGr
     const id = validId(request.params.id);
     if (Object.keys(request.query).length) throw new FoundationError("TCDX.VALIDATION.FAILED", "Unsupported query", 400);
     const actor = await resolveTenantActor(dependencies.database, identity, request.headers["x-tcdx-tenant-id"]);
-    const result = await readEffectiveConfiguration(dependencies.database, actor, id);
+    const result = await (dependencies.normativeLibrary?.effectiveConfiguration ?? readEffectiveConfiguration)(dependencies.database, actor, id);
     return { operation_id: "effectiveConfigurationGet", status: "completed", correlation_id: correlation(reply), result };
   });
   for (const domain of ["compliance", "controls"] as const) {
@@ -601,7 +603,8 @@ export function registerCoreGrcRoutes(app: FastifyInstance, dependencies: CoreGr
   });
 
   for (const [key, listPath, detailPath] of coreGrcReadRoutes) {
-    const definition = resources[key];
+    const baseDefinition=resources[key];
+    const definition=key==='applicability'&&dependencies.normativeLibrary?{...baseDefinition,projection:[...baseDefinition.projection,'context_knowledge_version_id']}:baseDefinition;
     app.get(listPath, async (request) => {
       const actor = await resolveCoreActor(dependencies.database, dependencies.identityVerifier, request);
       requireAccess(actor, definition.permission, definition.capability, definition.scopes);
@@ -654,6 +657,7 @@ export function registerCoreGrcRoutes(app: FastifyInstance, dependencies: CoreGr
       const targetId = targetKind === "target" ? validId(request.params.id) : undefined;
       const parentId = targetKind === "parent" ? validId(request.params.issue_id) : undefined;
       const result = await dependencies.database.transaction().execute((transaction) => executeMutation(transaction, actor, definition, {
+        ...(dependencies.normativeLibrary?{applicabilityHooks:dependencies.normativeLibrary.applicabilityHooks}:{}),
         body: retentionIfMatch(operationId, request), idempotencyKey: typeof key === "string" ? key : "", correlationId: correlation(reply), fileStorage: dependencies.fileStorage,
         ...(targetId ? { targetId } : {}), ...(parentId ? { parentId } : {})
       }));

@@ -636,6 +636,40 @@
         "physical_tables=242",
         "historical_rows_preserved"
       ]
+    },
+    {
+      "id": "20261021221204",
+      "filename": "20261021221204_normative_library_b01_b09_h04_pv01.sql",
+      "sha256": "9279159e88c60fff03f998e33008fb0d675f53e4423df638c9e54f709a773798",
+      "transactional": true,
+      "preconditions": [
+        "G1_G4_PASS",
+        "exact_34_predecessor_checksums",
+        "verified_recovery_reference",
+        "fresh_QA_fingerprint_and_data_checks"
+      ],
+      "postconditions": [
+        "exact_B01_B09_H04_PV01_schema_delta",
+        "no_business_DML_or_IAM_registry_activation",
+        "ledger_35_atomic_with_DDL"
+      ]
+    },
+    {
+      "id": "20261022141304",
+      "filename": "20261022141304_configuration_optional_default.sql",
+      "sha256": "4fc817fa8ba6b8149dce1d484a301b511b24f8d4329038fd1e72265c9cd0bfc3",
+      "transactional": true,
+      "preconditions": [
+        "exact_35_predecessor_checksums",
+        "approved_LOCAL_DEFINITIONS_01_forward_only_correction",
+        "separate_environment_execution_authorization"
+      ],
+      "postconditions": [
+        "244_domain_tables_unchanged",
+        "optional_absence_or_one_correctly_typed_default",
+        "all_existing_business_rows_unchanged",
+        "ledger_36_atomic_with_DDL"
+      ]
     }
   ]
 }

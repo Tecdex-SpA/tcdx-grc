@@ -1,0 +1,17 @@
+{
+  "id": "20261022141304",
+  "filename": "20261022141304_configuration_optional_default.sql",
+  "sha256": "4fc817fa8ba6b8149dce1d484a301b511b24f8d4329038fd1e72265c9cd0bfc3",
+  "transactional": true,
+  "preconditions": [
+    "exact_35_predecessor_checksums",
+    "approved_LOCAL_DEFINITIONS_01_forward_only_correction",
+    "separate_environment_execution_authorization"
+  ],
+  "postconditions": [
+    "244_domain_tables_unchanged",
+    "optional_absence_or_one_correctly_typed_default",
+    "all_existing_business_rows_unchanged",
+    "ledger_36_atomic_with_DDL"
+  ]
+}

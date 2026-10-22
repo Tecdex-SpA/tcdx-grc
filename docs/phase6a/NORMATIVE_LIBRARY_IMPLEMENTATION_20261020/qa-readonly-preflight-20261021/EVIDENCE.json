@@ -1,0 +1,123 @@
+{
+  "scope": "QA PostgreSQL metadata and bounded aggregate SELECT only; no app/runtime access",
+  "authorization": "Current PO read-only preflight order plus explicit account exception received before connection",
+  "postgres_exception": {
+    "explicit_PO_authorization": "utiliza postgres por ahora, es solo lectura",
+    "actual_role_superuser": true,
+    "account_is_intrinsically_readonly": false,
+    "enforcement": "Startup default_transaction_read_only=on, explicit REPEATABLE READ READ ONLY, SHOW and identity/settings guard per batch; never disabled",
+    "new_role_or_grant_created": false
+  },
+  "target": {
+    "canonical_source": "deploy/qa/.env.example lines1,4-7; scripts/foundations/db.ts lines25-28",
+    "declared_environment": "qa",
+    "observed_identity": {
+      "user": "postgres",
+      "version": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, 64-bit",
+      "category": "identity",
+      "database": "tcdx-grc",
+      "in_recovery": false,
+      "server_port": 5432,
+      "cluster_name": "16/main",
+      "lock_timeout": "1s",
+      "role_superuser": true,
+      "server_address": "192.168.2.40",
+      "statement_timeout": "5s",
+      "server_version_num": "160015",
+      "transaction_read_only": "on",
+      "default_transaction_read_only": "on"
+    },
+    "identity_guard": "Exact server address/port/database/user, PG16, not replica, both read-only settings on, timeouts fixed",
+    "secret_values_recorded": false
+  },
+  "gates": {
+    "AUTHORITY_BASELINE": "PASS",
+    "PV_H04_01_PUBLICATION": "PASS",
+    "QA_TARGET": "PASS",
+    "READONLY_SESSION": "PASS",
+    "QUERY_SCOPE": "PASS",
+    "PRESERVATION": "PASS"
+  },
+  "batches": [
+    {
+      "label": "CATALOG_INSPECTION_ATTEMPT_02",
+      "exit_code": 0,
+      "duration_seconds": 1.5385,
+      "timestamp": "2026-10-21T21:13:05.530832+00:00",
+      "sql_sha256": "f6871f16c62a6ebc7a457925317e99091c8d07e3bb562f300f5a95f4f4bc44e7",
+      "result_file": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-readonly-preflight-20261021/CATALOG_INSPECTION_ATTEMPT_02.json"
+    },
+    {
+      "label": "STRUCTURAL_AGGREGATES",
+      "exit_code": 0,
+      "duration_seconds": 0.2043,
+      "timestamp": "2026-10-21T21:13:05.743158+00:00",
+      "sql_sha256": "002e5ef0db318f05f8962682fe04a341b2c7f37473efb3aa0a7d245bd754f0ea",
+      "result_file": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-readonly-preflight-20261021/STRUCTURAL_AGGREGATES.json"
+    },
+    {
+      "label": "BOUNDED_CARDINALITIES",
+      "exit_code": 0,
+      "duration_seconds": 0.431,
+      "timestamp": "2026-10-21T21:19:03.032086+00:00",
+      "sql_sha256": "292ec5b1409047ff48f41e9dff9b61ec299e46bfb235f2b876a04a02ddaa74f8",
+      "result_file": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-readonly-preflight-20261021/BOUNDED_CARDINALITIES.json"
+    },
+    {
+      "label": "BOUNDED_INTEGRITY_AGGREGATES",
+      "exit_code": 0,
+      "duration_seconds": 0.5469,
+      "timestamp": "2026-10-21T21:19:03.581955+00:00",
+      "sql_sha256": "78c014a8469431239390f24d447cef7cc3cbe2592d0289f57a9e6dbecfeb2c5f",
+      "result_file": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-readonly-preflight-20261021/BOUNDED_INTEGRITY_AGGREGATES.json"
+    },
+    {
+      "label": "FK_ROOT_METADATA",
+      "exit_code": 0,
+      "duration_seconds": 0.3423,
+      "timestamp": "2026-10-21T21:20:11.179085+00:00",
+      "sql_sha256": "4dd648c7100445f76ea3547c610c29c2e83e4d5b10fd71f112ec54080f55aa54",
+      "result_file": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-readonly-preflight-20261021/FK_ROOT_METADATA.json"
+    }
+  ],
+  "initial_network_error": {
+    "file": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-readonly-preflight-20261021/CATALOG_INSPECTION.json",
+    "status": "RESOLVED_BY_TOOL_NETWORK_APPROVAL; no SQL executed by denied connection"
+  },
+  "initial_estimate_skips": {
+    "file": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-readonly-preflight-20261021/NOT_VERIFIED.json",
+    "status": "RESOLVED_BY_BOUNDED_CARDINALITIES_AND_SAFE_AGGREGATES; no estimates treated as exact counts"
+  },
+  "scope_gate": {
+    "path": "docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-readonly-preflight-20261021/QUERY_SCOPE_GATE.json",
+    "sha256": "d1641d0397fbd7527799ddd49782fc260f9a2c4194650bbb3a06bfa54de0478b"
+  },
+  "schema_comparison": {
+    "summary": {
+      "MATCH": 376,
+      "MISSING": 111,
+      "CONFLICT": 1
+    },
+    "unexpected_conflicts": 0,
+    "planned_conflict": "Global version_number UNIQUE exists; approved B02 replaces it by Item+version UNIQUE",
+    "actual_H04_function": "ABSENT",
+    "RLS": "Observed disabled; no RLS proof claimed"
+  },
+  "current_data_scope": "Bounded counts of 14 named relations; all under10001 rows; 12 relevant existing-data integrity predicates return zero; no future imported content or legal evidence validated",
+  "out_of_scope": [
+    "Future imported data",
+    "Actual legal rights evidence",
+    "Operational RBAC/SoD/E2E",
+    "Execution-time locks/duration/rollback",
+    "Future adoption race after this snapshot"
+  ],
+  "zip_authority": {
+    "available_historical_zip": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.4_2026-09-15.zip",
+    "sha256": "3b33e4d80ae1dcdbe83ffecfd38eb697e033f88bd3e3ca959bccdd93d12e5849",
+    "inspection": "Read ZIP46/README headers; historical predecessor only; no extraction or overwrite",
+    "v112_zip": "NOT_LOCATED_IN_SCOPED_LOCATIONS",
+    "active_authority": "v1.12 versioned immutable baseline verified through ACTIVE_ACTIVATION and rector gate; no rollback to historical ZIP"
+  },
+  "DDL_DML_MIGRATIONS_IMPORTS_DEPLOYMENTS_IAM_REGISTRY_WRITES": "NONE",
+  "prior_physical_149_checks": "Reused published immutable evidence; not executed again"
+}

@@ -1,0 +1,18 @@
+{
+  "mode": "status",
+  "command": [
+    "node22.23.2",
+    "--experimental-strip-types",
+    "scripts/foundations/migrate.ts",
+    "status"
+  ],
+  "finished_utc": "2026-10-21T23:37:50.423023+00:00",
+  "exit_code": 0,
+  "duration_seconds": 0.731,
+  "stdout": "20260916000100 applied 20260916000100_bootstrap_schemas_and_ledger.sql\n20260916000200 applied 20260916000200_platform_iam_organization.sql\n20260916000300 applied 20260916000300_normative_control_evidence.sql\n20260916000400 applied 20260916000400_risk_operations_privacy.sql\n20260916000500 applied 20260916000500_data_integration_reporting_ai.sql\n20260916000600 applied 20260916000600_constraints_and_uniqueness.sql\n20260916000700 applied 20260916000700_foreign_keys.sql\n20260916000800 applied 20260916000800_required_indexes.sql\n20260916000900 applied 20260916000900_canonical_seeds.sql\n20260916001000 applied 20260916001000_pre_f4_integrated_audit_model.sql\n20260921000100 applied 20260921000100_pre_f5c_executable_physical_reconciliation.sql\n20260921000200 applied 20260921000200_phase5_core_grc_runtime_permissions.sql\n20260923000100 applied 20260923000100_pre_f5e_platform_authority.sql\n20260923000200 applied 20260923000200_phase5_final_closure.sql\n20260924000100 applied 20260924000100_phase5_subscription_create_catalog.sql\n20260924000200 applied 20260924000200_phase5_retention_policy_lifecycle.sql\n20260924000300 applied 20260924000300_phase5_membership_invitation.sql\n20260925000100 applied 20260925000100_phase5_membership_invitation_platform_authority_reconciliation.sql\n20260928000100 applied 20260928000100_phase5_administrative_read_permissions.sql\n20260928000200 applied 20260928000200_phase5_membership_role_revoke_platform_grant.sql\n20260928000300 applied 20260928000300_phase5_control_assessment_start_tenant_scope.sql\n20260928000400 applied 20260928000400_phase5_regulatory_catalog_contract_alignment.sql\n20260929000100 applied 20260929000100_phase5_subscription_regulatory_pack_authority.sql\n20260929000200 applied 20260929000200_phase5_plus_permissions_applicability.sql\n20260929000300 applied 20260929000300_phase5_plus_subject_validation_access.sql\n20261001000100 applied 20261001000100_managed_identity_permissions_publication.sql\n20261006000100 applied 20261006000100_platform_role_administration_permission_publication.sql\n20261006000200 applied 20261006000200_user_identity_discovery_permission_publication.sql\n20261007000100 applied 20261007000100_platform_tenant_user_onboarding_permission_publication.sql\n20261007000200 applied 20261007000200_phase5_methodology_binding.sql\n20261009000100 applied 20261009000100_phase6a3_configuration_integrity.sql\n20261009000200 applied 20261009000200_phase6a3_reference_read_permissions.sql\n20261013000100 applied 20261013000100_commercial_contract_reconciliation.sql\n20261015000100 applied 20261015000100_c04w_applicability_hold_r2.sql\n20261021221204 pending 20261021221204_normative_library_b01_b09_h04_pv01.sql\n",
+  "stderr": "(node:4763) DeprecationWarning: pgpass support is deprecated and will be removed in pg@9.0. You can provide an async function as the password property to the Client/Pool constructor that returns a password instead. Within this function you can call the pgpass module in your own code.\n(Use `node --trace-deprecation ...` to show where the warning was created)\n",
+  "TLS": "verify-full; host=db-tecdex; hostaddr=192.168.2.40; only PO-approved certificate",
+  "test_mode": "DISABLED",
+  "isolated_rebuild": "DISABLED",
+  "session_options": "-c statement_timeout=60000 -c lock_timeout=2000 -c idle_in_transaction_session_timeout=30000 -c application_name=grc_qa_approved_verify_full -c default_transaction_read_only=on"
+}

@@ -67,3 +67,9 @@ The `main` branch must then be protected by a GitHub Ruleset/branch protection r
 ## Required completion report
 
 Every development task must report gate state, baseline state, changed files, validation performed, unresolved conflicts and affected architectural layers.
+
+## Integrated QA delivery — effective PO instruction 2026-10-22
+
+`INTEGRATED_QA_RELEASE_20261022` authorizes consolidation, tests, reproducible complete backend/frontend images, QA promotion, private-operator update/configuration, approved B01–B09/H04 activation and actual validation as one delivery on the existing integration branch. Preserve branch protection, exact migration bytes, canonical publishers, identity, RBAC/SoD, tenant isolation, audit and source rights. Do not require repeated approvals for ordinary corrective steps inside this release. Production and STEP6A5/STEP6A6 remain excluded.
+
+Continuity is Git plus source revision, image digests, runtime/database state and concise consolidated evidence, independent of a Codex account. Classify the shared worktree before staging, exclude private custody/caches/backups, preserve unrelated/concurrent edits and publish only the approved scope. Four consolidated files under `docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/integrated-qa-release-20261022/` record this release; existing technical receipts may be referenced. The master baseline and functional/data architecture are unchanged by this operational-method instruction.

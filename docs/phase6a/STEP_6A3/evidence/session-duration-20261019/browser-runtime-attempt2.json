@@ -1,0 +1,47 @@
+{
+  "startedAt": "2026-10-19T14:35:43.558Z",
+  "state": "FAILED",
+  "refreshResponses": [
+    {
+      "at": "2026-10-19T14:40:05.526Z",
+      "status": 401
+    }
+  ],
+  "samples": [
+    {
+      "at": "2026-10-19T14:36:07.673Z",
+      "elapsedSeconds": 3,
+      "authenticated": true,
+      "status": 200
+    },
+    {
+      "at": "2026-10-19T14:37:06.665Z",
+      "elapsedSeconds": 62,
+      "authenticated": true,
+      "status": 200
+    },
+    {
+      "at": "2026-10-19T14:38:06.663Z",
+      "elapsedSeconds": 122,
+      "authenticated": true,
+      "status": 200
+    },
+    {
+      "at": "2026-10-19T14:39:06.669Z",
+      "elapsedSeconds": 182,
+      "authenticated": true,
+      "status": 200
+    },
+    {
+      "at": "2026-10-19T14:40:06.883Z",
+      "elapsedSeconds": 242,
+      "authenticated": false
+    }
+  ],
+  "login": {
+    "at": "2026-10-19T14:36:05.045Z",
+    "renewable": true,
+    "lifetimeSeconds": 300
+  },
+  "reason": "SESSION_CONTINUITY_FAILED"
+}

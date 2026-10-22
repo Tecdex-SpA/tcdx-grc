@@ -1,0 +1,11 @@
+{
+  "scope": "Consume general optional typed default amendment; no API/schema/permission/SoD delta",
+  "physical_contract": {
+    "path": "docs/physical-data-model/amendments/CONFIGURATION_OPTIONAL_DEFAULT_20261022/CONTRACT.json",
+    "sha256": "5321c850b959adb1219c59ef52450457938b25dfe01240e9638ea65597550ed6"
+  },
+  "definitions": "Preserve the four published v1 NULL defaults and exact contract_schema rules; materialize with existing authenticated IAM publisher transaction, generated UUIDv7, global ownership, explicit validity, canonical scope/rule FKs and audit. Replay requires exact matches; never overwrite versions or defaults.",
+  "resolution": "Original ControlVersion fields remain canonical base layers; absent confirmation remains unconfigured; approved overrides use the same resolver. No default sentinel.",
+  "runtime_activation": "NONE",
+  "QA_execution": "NOT_AUTHORIZED"
+}

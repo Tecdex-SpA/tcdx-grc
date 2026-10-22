@@ -1,0 +1,208 @@
+{
+  "status": "PASS_NONSENSITIVE_CONFIG",
+  "utc": "2026-10-22T15:54:47.204994+00:00",
+  "containers": [
+    {
+      "name": "tcdx-grc-step6a3-publication-operator",
+      "checks": [
+        {
+          "variable": "TCDX_IAM_M2M_PROFILE",
+          "host_path": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014/step6a3-m2m-qa-profile.json",
+          "runtime_path": "/run/config/step6a3-iam/step6a3-m2m-qa-profile.json",
+          "sha256": "6c4bc99b0d25fb75cf67ad8dd8818f1dff1c430c031b1c642b11d0a408ca00f7",
+          "expected_sha256": "6c4bc99b0d25fb75cf67ad8dd8818f1dff1c430c031b1c642b11d0a408ca00f7",
+          "matches": true
+        },
+        {
+          "variable": "TCDX_IAM_BINDINGS",
+          "host_path": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014/08_COMMAND_PERMISSION_LIFECYCLE_AUDIT_BINDINGS.json",
+          "runtime_path": "/run/config/step6a3-iam/08_COMMAND_PERMISSION_LIFECYCLE_AUDIT_BINDINGS.json",
+          "sha256": "93d647004b9eae9121ab626bdc9057b9cf7494dd285e50a4d804081a7cfed224",
+          "expected_sha256": "93d647004b9eae9121ab626bdc9057b9cf7494dd285e50a4d804081a7cfed224",
+          "matches": true
+        },
+        {
+          "variable": "TCDX_IAM_DECISION",
+          "host_path": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014/IAM_M2M_QA_DECISION_RECEIPT_20261014.json",
+          "runtime_path": "/run/config/step6a3-iam/IAM_M2M_QA_DECISION_RECEIPT_20261014.json",
+          "sha256": "aa509b568c2ccee57f2caf96578dd51a6ffc1187698debbf233cdc9c40b9f72a",
+          "expected_sha256": "aa509b568c2ccee57f2caf96578dd51a6ffc1187698debbf233cdc9c40b9f72a",
+          "matches": true
+        },
+        {
+          "variable": "TCDX_IAM_RBAC_R3",
+          "host_path": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014/20261009000400_phase6a3_rbac_resolution.sql",
+          "runtime_path": "/run/config/step6a3-iam/20261009000400_phase6a3_rbac_resolution.sql",
+          "sha256": "1cf25933649ccbe5d0feaa13262fdab9439caad86f53f592a31b2612f7d97863",
+          "expected_sha256": "1cf25933649ccbe5d0feaa13262fdab9439caad86f53f592a31b2612f7d97863",
+          "matches": true
+        }
+      ],
+      "profile": {
+        "environment": "qa",
+        "principal_code": "grc-qa-iam-publisher",
+        "client_id": "grc-qa-iam-publisher",
+        "issuer": "https://iam.grc.tecdex.net/realms/tcdx-managed-identity",
+        "audience": "tcdx-grc-api",
+        "credential_ref": "/run/secrets/iam_publisher_client_secret",
+        "max_lifetime_seconds": 300,
+        "clock_tolerance_seconds": 5,
+        "algorithms": [
+          "RS256"
+        ]
+      }
+    },
+    {
+      "name": "tcdx-grc-step6a3-c04w-publication-operator",
+      "checks": [
+        {
+          "variable": "TCDX_IAM_M2M_PROFILE",
+          "host_path": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014/step6a3-m2m-qa-profile.json",
+          "runtime_path": "/run/config/step6a3-iam/step6a3-m2m-qa-profile.json",
+          "sha256": "6c4bc99b0d25fb75cf67ad8dd8818f1dff1c430c031b1c642b11d0a408ca00f7",
+          "expected_sha256": "6c4bc99b0d25fb75cf67ad8dd8818f1dff1c430c031b1c642b11d0a408ca00f7",
+          "matches": true
+        },
+        {
+          "variable": "TCDX_IAM_BINDINGS",
+          "host_path": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014/08_COMMAND_PERMISSION_LIFECYCLE_AUDIT_BINDINGS.json",
+          "runtime_path": "/run/config/step6a3-iam/08_COMMAND_PERMISSION_LIFECYCLE_AUDIT_BINDINGS.json",
+          "sha256": "93d647004b9eae9121ab626bdc9057b9cf7494dd285e50a4d804081a7cfed224",
+          "expected_sha256": "93d647004b9eae9121ab626bdc9057b9cf7494dd285e50a4d804081a7cfed224",
+          "matches": true
+        },
+        {
+          "variable": "TCDX_IAM_DECISION",
+          "host_path": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014/IAM_M2M_QA_DECISION_RECEIPT_20261014.json",
+          "runtime_path": "/run/config/step6a3-iam/IAM_M2M_QA_DECISION_RECEIPT_20261014.json",
+          "sha256": "aa509b568c2ccee57f2caf96578dd51a6ffc1187698debbf233cdc9c40b9f72a",
+          "expected_sha256": "aa509b568c2ccee57f2caf96578dd51a6ffc1187698debbf233cdc9c40b9f72a",
+          "matches": true
+        },
+        {
+          "variable": "TCDX_IAM_RBAC_R3",
+          "host_path": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014/20261009000400_phase6a3_rbac_resolution.sql",
+          "runtime_path": "/run/config/step6a3-iam/20261009000400_phase6a3_rbac_resolution.sql",
+          "sha256": "1cf25933649ccbe5d0feaa13262fdab9439caad86f53f592a31b2612f7d97863",
+          "expected_sha256": "1cf25933649ccbe5d0feaa13262fdab9439caad86f53f592a31b2612f7d97863",
+          "matches": true
+        }
+      ],
+      "profile": {
+        "environment": "qa",
+        "principal_code": "grc-qa-iam-publisher",
+        "client_id": "grc-qa-iam-publisher",
+        "issuer": "https://iam.grc.tecdex.net/realms/tcdx-managed-identity",
+        "audience": "tcdx-grc-api",
+        "credential_ref": "/run/secrets/iam_publisher_client_secret",
+        "max_lifetime_seconds": 300,
+        "clock_tolerance_seconds": 5,
+        "algorithms": [
+          "RS256"
+        ]
+      }
+    },
+    {
+      "name": "tcdx-grc-step6a3-c04w-lifecycle-operator",
+      "checks": [
+        {
+          "variable": "TCDX_IAM_M2M_PROFILE",
+          "host_path": "/home/tecdex/.config/tcdx-grc/step6a3-c04w-final-20261015/step6a3-m2m-qa-profile.json",
+          "runtime_path": "/run/config/step6a3-iam/step6a3-m2m-qa-profile.json",
+          "sha256": "6c4bc99b0d25fb75cf67ad8dd8818f1dff1c430c031b1c642b11d0a408ca00f7",
+          "expected_sha256": "6c4bc99b0d25fb75cf67ad8dd8818f1dff1c430c031b1c642b11d0a408ca00f7",
+          "matches": true
+        },
+        {
+          "variable": "TCDX_IAM_BINDINGS",
+          "host_path": "/home/tecdex/.config/tcdx-grc/step6a3-c04w-final-20261015/08_COMMAND_PERMISSION_LIFECYCLE_AUDIT_BINDINGS.json",
+          "runtime_path": "/run/config/step6a3-iam/08_COMMAND_PERMISSION_LIFECYCLE_AUDIT_BINDINGS.json",
+          "sha256": "93d647004b9eae9121ab626bdc9057b9cf7494dd285e50a4d804081a7cfed224",
+          "expected_sha256": "93d647004b9eae9121ab626bdc9057b9cf7494dd285e50a4d804081a7cfed224",
+          "matches": true
+        },
+        {
+          "variable": "TCDX_IAM_DECISION",
+          "host_path": "/home/tecdex/.config/tcdx-grc/step6a3-c04w-final-20261015/IAM_M2M_QA_DECISION_RECEIPT_20261014.json",
+          "runtime_path": "/run/config/step6a3-iam/IAM_M2M_QA_DECISION_RECEIPT_20261014.json",
+          "sha256": "aa509b568c2ccee57f2caf96578dd51a6ffc1187698debbf233cdc9c40b9f72a",
+          "expected_sha256": "aa509b568c2ccee57f2caf96578dd51a6ffc1187698debbf233cdc9c40b9f72a",
+          "matches": true
+        },
+        {
+          "variable": "TCDX_IAM_RBAC_R3",
+          "host_path": "/home/tecdex/.config/tcdx-grc/step6a3-c04w-final-20261015/20261009000400_phase6a3_rbac_resolution.sql",
+          "runtime_path": "/run/config/step6a3-iam/20261009000400_phase6a3_rbac_resolution.sql",
+          "sha256": "1cf25933649ccbe5d0feaa13262fdab9439caad86f53f592a31b2612f7d97863",
+          "expected_sha256": "1cf25933649ccbe5d0feaa13262fdab9439caad86f53f592a31b2612f7d97863",
+          "matches": true
+        }
+      ],
+      "profile": {
+        "environment": "qa",
+        "principal_code": "grc-qa-iam-publisher",
+        "client_id": "grc-qa-iam-publisher",
+        "issuer": "https://iam.grc.tecdex.net/realms/tcdx-managed-identity",
+        "audience": "tcdx-grc-api",
+        "credential_ref": "/run/secrets/iam_publisher_client_secret",
+        "max_lifetime_seconds": 300,
+        "clock_tolerance_seconds": 5,
+        "algorithms": [
+          "RS256"
+        ]
+      }
+    },
+    {
+      "name": "tcdx-grc-step6a3-initial-source-operator",
+      "checks": [
+        {
+          "variable": "TCDX_IAM_M2M_PROFILE",
+          "host_path": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014/step6a3-m2m-qa-profile.json",
+          "runtime_path": "/run/config/step6a3-iam/step6a3-m2m-qa-profile.json",
+          "sha256": "6c4bc99b0d25fb75cf67ad8dd8818f1dff1c430c031b1c642b11d0a408ca00f7",
+          "expected_sha256": "6c4bc99b0d25fb75cf67ad8dd8818f1dff1c430c031b1c642b11d0a408ca00f7",
+          "matches": true
+        },
+        {
+          "variable": "TCDX_IAM_BINDINGS",
+          "host_path": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014/08_COMMAND_PERMISSION_LIFECYCLE_AUDIT_BINDINGS.json",
+          "runtime_path": "/run/config/step6a3-iam/08_COMMAND_PERMISSION_LIFECYCLE_AUDIT_BINDINGS.json",
+          "sha256": "93d647004b9eae9121ab626bdc9057b9cf7494dd285e50a4d804081a7cfed224",
+          "expected_sha256": "93d647004b9eae9121ab626bdc9057b9cf7494dd285e50a4d804081a7cfed224",
+          "matches": true
+        },
+        {
+          "variable": "TCDX_IAM_DECISION",
+          "host_path": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014/IAM_M2M_QA_DECISION_RECEIPT_20261014.json",
+          "runtime_path": "/run/config/step6a3-iam/IAM_M2M_QA_DECISION_RECEIPT_20261014.json",
+          "sha256": "aa509b568c2ccee57f2caf96578dd51a6ffc1187698debbf233cdc9c40b9f72a",
+          "expected_sha256": "aa509b568c2ccee57f2caf96578dd51a6ffc1187698debbf233cdc9c40b9f72a",
+          "matches": true
+        },
+        {
+          "variable": "TCDX_IAM_RBAC_R3",
+          "host_path": "/home/tecdex/.config/tcdx-grc/step6a3-iam-m2m-20261014/20261009000400_phase6a3_rbac_resolution.sql",
+          "runtime_path": "/run/config/step6a3-iam/20261009000400_phase6a3_rbac_resolution.sql",
+          "sha256": "1cf25933649ccbe5d0feaa13262fdab9439caad86f53f592a31b2612f7d97863",
+          "expected_sha256": "1cf25933649ccbe5d0feaa13262fdab9439caad86f53f592a31b2612f7d97863",
+          "matches": true
+        }
+      ],
+      "profile": {
+        "environment": "qa",
+        "principal_code": "grc-qa-iam-publisher",
+        "client_id": "grc-qa-iam-publisher",
+        "issuer": "https://iam.grc.tecdex.net/realms/tcdx-managed-identity",
+        "audience": "tcdx-grc-api",
+        "credential_ref": "/run/secrets/iam_publisher_client_secret",
+        "max_lifetime_seconds": 300,
+        "clock_tolerance_seconds": 5,
+        "algorithms": [
+          "RS256"
+        ]
+      }
+    }
+  ],
+  "credential_contents_read": false,
+  "tokens_requested": 0
+}

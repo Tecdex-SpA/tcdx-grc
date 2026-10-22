@@ -1,0 +1,291 @@
+{
+  "catalogue_delta": [
+    {
+      "code": "knowledge.knowledge_item.read",
+      "capability": "CORE_PLATFORM",
+      "resource": "knowledge_item",
+      "action": "read",
+      "contract_grants": [
+        {
+          "role": "PLATFORM_ADMIN",
+          "scope": "platform",
+          "policy": "KNOWLEDGE_GLOBAL_READ"
+        },
+        {
+          "role": "PLATFORM_SUPPORT",
+          "scope": "platform",
+          "policy": "KNOWLEDGE_SUPPORT_METADATA"
+        },
+        {
+          "role": "TENANT_ADMIN",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "GRC_MANAGER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "COMPLIANCE_MANAGER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "CONTROL_OWNER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "EVIDENCE_OWNER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "ACTION_OWNER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "VIEWER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        }
+      ],
+      "runtime_activated": false,
+      "global_tenant_split": true
+    },
+    {
+      "code": "knowledge.knowledge_item.create",
+      "capability": "CORE_PLATFORM",
+      "resource": "knowledge_item",
+      "action": "create",
+      "contract_grants": [
+        {
+          "role": "PLATFORM_ADMIN",
+          "scope": "platform",
+          "policy": "KNOWLEDGE_GLOBAL_AUTHOR"
+        },
+        {
+          "role": "TENANT_ADMIN",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_AUTHOR"
+        },
+        {
+          "role": "GRC_MANAGER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_AUTHOR"
+        }
+      ],
+      "runtime_activated": false,
+      "global_tenant_split": true
+    },
+    {
+      "code": "knowledge.knowledge_item.update",
+      "capability": "CORE_PLATFORM",
+      "resource": "knowledge_item",
+      "action": "update",
+      "contract_grants": [
+        {
+          "role": "PLATFORM_ADMIN",
+          "scope": "platform",
+          "policy": "KNOWLEDGE_GLOBAL_AUTHOR"
+        },
+        {
+          "role": "TENANT_ADMIN",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_AUTHOR"
+        },
+        {
+          "role": "GRC_MANAGER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_AUTHOR"
+        }
+      ],
+      "runtime_activated": false,
+      "global_tenant_split": true
+    },
+    {
+      "code": "knowledge.knowledge_item.review",
+      "capability": "CORE_PLATFORM",
+      "resource": "knowledge_item",
+      "action": "review",
+      "contract_grants": [
+        {
+          "role": "PLATFORM_ADMIN",
+          "scope": "platform",
+          "policy": "KNOWLEDGE_GLOBAL_REVIEW"
+        },
+        {
+          "role": "GRC_MANAGER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_REVIEW"
+        }
+      ],
+      "runtime_activated": false,
+      "global_tenant_split": true
+    },
+    {
+      "code": "knowledge.knowledge_item.publish",
+      "capability": "CORE_PLATFORM",
+      "resource": "knowledge_item",
+      "action": "publish",
+      "contract_grants": [
+        {
+          "role": "PLATFORM_ADMIN",
+          "scope": "platform",
+          "policy": "KNOWLEDGE_GLOBAL_PUBLISH"
+        },
+        {
+          "role": "GRC_MANAGER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_PUBLISH"
+        }
+      ],
+      "runtime_activated": false,
+      "global_tenant_split": true
+    },
+    {
+      "code": "knowledge.knowledge_source.read",
+      "capability": "CORE_PLATFORM",
+      "resource": "knowledge_source",
+      "action": "read",
+      "contract_grants": [
+        {
+          "role": "PLATFORM_ADMIN",
+          "scope": "platform",
+          "policy": "KNOWLEDGE_GLOBAL_READ"
+        },
+        {
+          "role": "PLATFORM_SUPPORT",
+          "scope": "platform",
+          "policy": "KNOWLEDGE_SUPPORT_METADATA"
+        },
+        {
+          "role": "TENANT_ADMIN",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "GRC_MANAGER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "COMPLIANCE_MANAGER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "CONTROL_OWNER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "EVIDENCE_OWNER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "ACTION_OWNER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        },
+        {
+          "role": "VIEWER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_READ"
+        }
+      ],
+      "runtime_activated": false,
+      "global_tenant_split": true
+    },
+    {
+      "code": "knowledge.knowledge_source.create",
+      "capability": "CORE_PLATFORM",
+      "resource": "knowledge_source",
+      "action": "create",
+      "contract_grants": [
+        {
+          "role": "PLATFORM_ADMIN",
+          "scope": "platform",
+          "policy": "KNOWLEDGE_GLOBAL_AUTHOR"
+        },
+        {
+          "role": "TENANT_ADMIN",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_AUTHOR"
+        },
+        {
+          "role": "GRC_MANAGER",
+          "scope": "tenant",
+          "policy": "KNOWLEDGE_TENANT_AUTHOR"
+        }
+      ],
+      "runtime_activated": false,
+      "global_tenant_split": true
+    },
+    {
+      "code": "reporting.matrix.read",
+      "capability": "CORE_PLATFORM",
+      "resource": "matrix",
+      "action": "read",
+      "contract_grants": [
+        {
+          "role": "TENANT_ADMIN",
+          "scope": "tenant",
+          "policy": "MATRIX_SOURCE_INTERSECTION"
+        },
+        {
+          "role": "GRC_MANAGER",
+          "scope": "tenant",
+          "policy": "MATRIX_SOURCE_INTERSECTION"
+        },
+        {
+          "role": "COMPLIANCE_MANAGER",
+          "scope": "tenant",
+          "policy": "MATRIX_SOURCE_INTERSECTION"
+        },
+        {
+          "role": "CONTROL_OWNER",
+          "scope": "tenant",
+          "policy": "MATRIX_SOURCE_INTERSECTION"
+        },
+        {
+          "role": "EVIDENCE_OWNER",
+          "scope": "tenant",
+          "policy": "MATRIX_SOURCE_INTERSECTION"
+        },
+        {
+          "role": "ACTION_OWNER",
+          "scope": "tenant",
+          "policy": "MATRIX_SOURCE_INTERSECTION"
+        },
+        {
+          "role": "VIEWER",
+          "scope": "tenant",
+          "policy": "MATRIX_SOURCE_INTERSECTION"
+        }
+      ],
+      "runtime_activated": false,
+      "no_reporting_advanced_entitlement": true
+    }
+  ],
+  "existing_permission_limited_grant": {
+    "code": "configuration.configuration_override.approve",
+    "capability": "CORE_PLATFORM",
+    "current_base_grant": "NONE",
+    "contract_role": "GRC_MANAGER",
+    "scope": "tenant",
+    "policy": "CONTROL_OVERRIDE_DECIDER",
+    "only_configuration_codes": [
+      "control_operational_activity",
+      "control_recommended_evidence",
+      "control_operational_frequency",
+      "control_operational_confirmation"
+    ],
+    "runtime_activation": "NOT_AUTHORIZED_NOT_EXECUTED"
+  },
+  "existing_configuration_grants": "Preserved exactly; new control_version use must pass its ObjectPolicy. No broad grant or Platform/Support tenant mutation.",
+  "source_resource_necessity": "knowledge_source read/create over canonical KnowledgeSource is necessary to register genuine provenance before Item creation; no arbitrary source CRUD, extra entity or implicit source fabrication. Registry resource addition is explicit in RECTOR_DELTA."
+}

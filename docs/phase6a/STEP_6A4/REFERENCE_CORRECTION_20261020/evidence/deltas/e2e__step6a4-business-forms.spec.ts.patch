@@ -1,0 +1,10 @@
+--- entry/e2e/step6a4-business-forms.spec.ts
++++ current/e2e/step6a4-business-forms.spec.ts
+@@ -45,6 +45,7 @@
+ function locationPath(row:any){if(!row)return '';const own=Object.keys(row).find(k=>k.endsWith('_id'));const paths:Record<string,string>={requirement_applicability_id:'/requirement-applicabilities',requirement_assessment_id:'/requirement-assessments',statement_of_applicability_id:'/statements-of-applicability',control_id:'/controls',control_assessment_id:'/control-assessments',assurance_test_id:'/assurance-tests',evidence_request_id:'/evidence-requests',evidence_id:'/evidence',retention_policy_id:'/retention-policies',issue_id:'/issues',action_id:'/actions'};return `${paths[own??'']}/${id}`;}
+ async function choose(select:Locator,value?:string){await expect(select).toBeEnabled();await expect.poll(()=>select.locator('option').count()).toBeGreaterThan(1);await select.selectOption(value??await select.locator('option').nth(1).getAttribute('value')??'');}
+ async function fillField(page:Page,schema:string,field:string){
++ if(['EvidenceRequestCreateRequest','IssueCreateRequest'].includes(schema)&&schemas[schema].oneOf?.some((branch:any)=>branch.required.includes(field)))await page.getByLabel('Tipo de origen',{exact:true}).selectOption(field);
+  const box=page.locator(`[data-field="${field}"]`).first(),r=rule(schema,field);await expect(box).toBeVisible();
+  if(field==='items'){
+   await box.getByRole('button',{name:'Agregar elemento'}).click();

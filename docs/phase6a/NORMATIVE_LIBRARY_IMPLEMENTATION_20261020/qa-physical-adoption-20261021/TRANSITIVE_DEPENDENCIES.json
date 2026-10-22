@@ -1,0 +1,3758 @@
+{
+  "scope": "Complete undirected FK closure of affected/target roots over captured QA catalog; not an exhaustive data/semantic proof",
+  "roots": [
+    "config.configuration_overrides",
+    "config.effective_configurations",
+    "controls.control_versions",
+    "iam.user_identities",
+    "knowledge.knowledge_items",
+    "knowledge.knowledge_sources",
+    "knowledge.knowledge_versions",
+    "ops_audit.audit_events",
+    "org.subjects",
+    "platform.tenants",
+    "regulatory.normative_units",
+    "regulatory.regulatory_pack_versions",
+    "regulatory.requirement_applicabilities",
+    "regulatory.requirements"
+  ],
+  "transitive_tables": 242,
+  "tables": [
+    {
+      "table": "ai.ai_jobs",
+      "direct": false,
+      "neighbors": [
+        "ai.ai_recommendations",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "ai.ai_provenance_links",
+      "direct": false,
+      "neighbors": [
+        "ai.ai_recommendations",
+        "controls.controls",
+        "data.metric_measurements",
+        "data.snapshots",
+        "evidence.evidence_versions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "knowledge.knowledge_versions",
+        "platform.tenants",
+        "regulatory.requirements",
+        "remediation.issues",
+        "risk.risks"
+      ]
+    },
+    {
+      "table": "ai.ai_recommendations",
+      "direct": false,
+      "neighbors": [
+        "ai.ai_jobs",
+        "ai.ai_provenance_links",
+        "data.data_lineage",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "audit.audit_agenda_item_scopes",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_agenda_items",
+        "audit.audit_scopes",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "audit.audit_agenda_item_team_assignments",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_agenda_items",
+        "audit.audit_team_assignments",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "audit.audit_agenda_item_tests",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_agenda_items",
+        "audit.audit_tests",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "audit.audit_agenda_items",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_agenda_item_scopes",
+        "audit.audit_agenda_item_team_assignments",
+        "audit.audit_agenda_item_tests",
+        "audit.audits",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "audit.audit_competencies",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_competency_requirements",
+        "audit.auditor_competency_assertions",
+        "iam.service_principals",
+        "iam.user_identities"
+      ]
+    },
+    {
+      "table": "audit.audit_competency_requirements",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_competencies",
+        "audit.audit_competency_validations",
+        "audit.audits",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "regulatory.framework_versions"
+      ]
+    },
+    {
+      "table": "audit.audit_competency_validations",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_competency_requirements",
+        "audit.audit_team_assignments",
+        "audit.auditor_competency_assertions",
+        "iam.service_principals",
+        "iam.tenant_memberships",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "audit.audit_criteria",
+      "direct": false,
+      "neighbors": [
+        "audit.audits",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "regulatory.framework_versions",
+        "regulatory.requirements"
+      ]
+    },
+    {
+      "table": "audit.audit_objectives",
+      "direct": false,
+      "neighbors": [
+        "audit.audits",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "audit.audit_programs",
+      "direct": false,
+      "neighbors": [
+        "audit.audits",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "audit.audit_samples",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_tests",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "audit.audit_scopes",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_agenda_item_scopes",
+        "audit.audits",
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants",
+        "regulatory.framework_versions"
+      ]
+    },
+    {
+      "table": "audit.audit_team_assignments",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_agenda_item_team_assignments",
+        "audit.audit_competency_validations",
+        "audit.audits",
+        "iam.service_principals",
+        "iam.tenant_memberships",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "audit.audit_test_control_links",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_tests",
+        "controls.control_assessments",
+        "controls.controls",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "audit.audit_test_evidence_links",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_tests",
+        "evidence.evidence_versions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "audit.audit_test_requirement_assessment_links",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_test_requirement_links",
+        "audit.audit_tests",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "regulatory.requirement_assessments"
+      ]
+    },
+    {
+      "table": "audit.audit_test_requirement_links",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_test_requirement_assessment_links",
+        "audit.audit_tests",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "regulatory.requirement_crosswalk_mappings",
+        "regulatory.requirements"
+      ]
+    },
+    {
+      "table": "audit.audit_tests",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_agenda_item_tests",
+        "audit.audit_samples",
+        "audit.audit_test_control_links",
+        "audit.audit_test_evidence_links",
+        "audit.audit_test_requirement_assessment_links",
+        "audit.audit_test_requirement_links",
+        "audit.audit_workpapers",
+        "data.observations",
+        "data.snapshot_items",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "remediation.issue_origins"
+      ]
+    },
+    {
+      "table": "audit.audit_universe_items",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "audit.audit_workpapers",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_tests",
+        "audit.audits",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "audit.auditor_competency_assertions",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_competencies",
+        "audit.audit_competency_validations",
+        "audit.auditor_competency_assertions",
+        "evidence.evidence_versions",
+        "iam.service_principals",
+        "iam.tenant_memberships",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "audit.audits",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_agenda_items",
+        "audit.audit_competency_requirements",
+        "audit.audit_criteria",
+        "audit.audit_objectives",
+        "audit.audit_programs",
+        "audit.audit_scopes",
+        "audit.audit_team_assignments",
+        "audit.audit_workpapers",
+        "iam.membership_roles",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "config.configuration_definition_scopes",
+      "direct": false,
+      "neighbors": [
+        "config.configuration_definitions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "config.configuration_definitions",
+      "direct": false,
+      "neighbors": [
+        "config.configuration_definition_scopes",
+        "config.configuration_overrides",
+        "config.configuration_validation_rules",
+        "config.effective_configuration_layers",
+        "config.effective_configurations",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "config.configuration_overrides",
+      "direct": true,
+      "neighbors": [
+        "config.configuration_definitions",
+        "config.effective_configuration_layers",
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants",
+        "regulatory.regulatory_pack_versions"
+      ]
+    },
+    {
+      "table": "config.configuration_validation_rules",
+      "direct": false,
+      "neighbors": [
+        "config.configuration_definitions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "config.effective_configuration_layers",
+      "direct": false,
+      "neighbors": [
+        "config.configuration_definitions",
+        "config.configuration_overrides",
+        "config.effective_configurations",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "config.effective_configurations",
+      "direct": true,
+      "neighbors": [
+        "config.configuration_definitions",
+        "config.effective_configuration_layers",
+        "controls.control_assessments",
+        "data.calculation_inputs",
+        "data.calculation_runs",
+        "data.metric_measurements",
+        "data.snapshots",
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants",
+        "regulatory.requirement_assessments",
+        "risk.risk_assessments",
+        "rules.rule_evaluations"
+      ]
+    },
+    {
+      "table": "controls.assurance_samples",
+      "direct": false,
+      "neighbors": [
+        "controls.assurance_tests",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "controls.assurance_tests",
+      "direct": false,
+      "neighbors": [
+        "controls.assurance_samples",
+        "controls.assurance_tests",
+        "controls.control_versions",
+        "controls.controls",
+        "data.snapshot_items",
+        "evidence.evidence_links",
+        "evidence.evidence_requests",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "remediation.issue_origins"
+      ]
+    },
+    {
+      "table": "controls.control_assessments",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_test_control_links",
+        "config.effective_configurations",
+        "controls.control_assessments",
+        "controls.control_effectiveness_methodologies",
+        "controls.control_versions",
+        "controls.controls",
+        "data.snapshot_items",
+        "evidence.evidence_links",
+        "evidence.evidence_requests",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "remediation.issue_origins"
+      ]
+    },
+    {
+      "table": "controls.control_effectiveness_methodologies",
+      "direct": false,
+      "neighbors": [
+        "controls.control_assessments",
+        "data.formula_definitions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "controls.control_exceptions",
+      "direct": false,
+      "neighbors": [
+        "controls.controls",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "risk.risk_acceptances"
+      ]
+    },
+    {
+      "table": "controls.control_objectives",
+      "direct": false,
+      "neighbors": [
+        "controls.control_versions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "controls.control_scopes",
+      "direct": false,
+      "neighbors": [
+        "controls.controls",
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "controls.control_versions",
+      "direct": true,
+      "neighbors": [
+        "controls.assurance_tests",
+        "controls.control_assessments",
+        "controls.control_objectives",
+        "controls.control_versions",
+        "controls.controls",
+        "evidence.evidence_links",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "regulatory.control_crosswalk_mappings",
+        "regulatory.normative_unit_control_mappings",
+        "regulatory.requirement_control_mappings",
+        "regulatory.statement_of_applicability_items"
+      ]
+    },
+    {
+      "table": "controls.controls",
+      "direct": false,
+      "neighbors": [
+        "ai.ai_provenance_links",
+        "audit.audit_test_control_links",
+        "controls.assurance_tests",
+        "controls.control_assessments",
+        "controls.control_exceptions",
+        "controls.control_scopes",
+        "controls.control_versions",
+        "evidence.evidence_links",
+        "evidence.evidence_requests",
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants",
+        "regulatory.statement_of_applicability_items",
+        "risk.risk_control_mappings",
+        "rules.grc_impact_mappings"
+      ]
+    },
+    {
+      "table": "data.calculation_inputs",
+      "direct": false,
+      "neighbors": [
+        "config.effective_configurations",
+        "data.calculation_runs",
+        "data.data_lineage",
+        "data.data_quality_assessments",
+        "data.metric_measurements",
+        "data.observations",
+        "data.snapshots",
+        "data.source_resolutions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "data.calculation_runs",
+      "direct": false,
+      "neighbors": [
+        "config.effective_configurations",
+        "data.calculation_inputs",
+        "data.formula_definitions",
+        "data.metric_definitions",
+        "data.metric_measurements",
+        "data.observations",
+        "data.snapshots",
+        "iam.service_principals",
+        "iam.user_identities",
+        "ops_audit.job_executions",
+        "platform.tenants",
+        "risk.risk_assessments",
+        "rules.rule_evaluations"
+      ]
+    },
+    {
+      "table": "data.data_lineage",
+      "direct": false,
+      "neighbors": [
+        "ai.ai_recommendations",
+        "data.calculation_inputs",
+        "data.metric_measurements",
+        "data.observations",
+        "data.snapshot_items",
+        "data.source_resolutions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.raw_records",
+        "platform.tenants",
+        "rules.grc_impacts",
+        "rules.rule_evaluations"
+      ]
+    },
+    {
+      "table": "data.data_quality_assessments",
+      "direct": false,
+      "neighbors": [
+        "data.calculation_inputs",
+        "data.metric_measurements",
+        "data.observations",
+        "data.snapshot_items",
+        "data.snapshots",
+        "data.source_resolutions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "data.formula_definition_parameters",
+      "direct": false,
+      "neighbors": [
+        "data.formula_definitions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "data.formula_definitions",
+      "direct": false,
+      "neighbors": [
+        "controls.control_effectiveness_methodologies",
+        "data.calculation_runs",
+        "data.formula_definition_parameters",
+        "data.metric_definitions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "regulatory.compliance_methodologies",
+        "risk.risk_methodologies"
+      ]
+    },
+    {
+      "table": "data.metric_definition_inputs",
+      "direct": false,
+      "neighbors": [
+        "data.metric_definitions",
+        "data.observation_types",
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.dependencies",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "data.metric_definition_thresholds",
+      "direct": false,
+      "neighbors": [
+        "data.metric_definitions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "data.metric_definitions",
+      "direct": false,
+      "neighbors": [
+        "data.calculation_runs",
+        "data.formula_definitions",
+        "data.metric_definition_inputs",
+        "data.metric_definition_thresholds",
+        "data.metric_measurements",
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.external_schema_mappings",
+        "platform.tenants",
+        "reporting.dashboard_widgets",
+        "risk.kris",
+        "rules.rule_definition_inputs"
+      ]
+    },
+    {
+      "table": "data.metric_measurements",
+      "direct": false,
+      "neighbors": [
+        "ai.ai_provenance_links",
+        "config.effective_configurations",
+        "data.calculation_inputs",
+        "data.calculation_runs",
+        "data.data_lineage",
+        "data.data_quality_assessments",
+        "data.metric_definitions",
+        "data.metric_measurements",
+        "data.snapshot_items",
+        "data.source_resolutions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants",
+        "rules.rule_evaluation_inputs"
+      ]
+    },
+    {
+      "table": "data.observation_type_source_types",
+      "direct": false,
+      "neighbors": [
+        "data.observation_types",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "data.observation_type_subject_types",
+      "direct": false,
+      "neighbors": [
+        "data.observation_types",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "data.observation_types",
+      "direct": false,
+      "neighbors": [
+        "data.metric_definition_inputs",
+        "data.observation_type_source_types",
+        "data.observation_type_subject_types",
+        "data.observations",
+        "data.source_precedence_policies",
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.external_schema_mappings",
+        "platform.tenants",
+        "rules.rule_definition_inputs"
+      ]
+    },
+    {
+      "table": "data.observations",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_tests",
+        "data.calculation_inputs",
+        "data.calculation_runs",
+        "data.data_lineage",
+        "data.data_quality_assessments",
+        "data.observation_types",
+        "data.observations",
+        "data.source_resolution_observations",
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.integrations",
+        "integration.raw_records",
+        "ops_audit.system_health_events",
+        "org.subjects",
+        "platform.tenants",
+        "rules.rule_evaluation_inputs",
+        "survey.survey_responses"
+      ]
+    },
+    {
+      "table": "data.snapshot_items",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_tests",
+        "controls.assurance_tests",
+        "controls.control_assessments",
+        "data.data_lineage",
+        "data.data_quality_assessments",
+        "data.metric_measurements",
+        "data.snapshots",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "privacy.dpias",
+        "regulatory.requirement_assessments",
+        "remediation.actions",
+        "remediation.issues",
+        "resilience.recovery_tests",
+        "risk.risk_assessments",
+        "rules.rule_evaluations",
+        "third_party.supplier_assessments"
+      ]
+    },
+    {
+      "table": "data.snapshots",
+      "direct": false,
+      "neighbors": [
+        "ai.ai_provenance_links",
+        "config.effective_configurations",
+        "data.calculation_inputs",
+        "data.calculation_runs",
+        "data.data_quality_assessments",
+        "data.snapshot_items",
+        "data.snapshots",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "reporting.report_run_snapshots"
+      ]
+    },
+    {
+      "table": "data.source_precedence_policies",
+      "direct": false,
+      "neighbors": [
+        "data.observation_types",
+        "data.source_precedence_policy_key_fields",
+        "data.source_precedence_policy_sources",
+        "data.source_resolutions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.external_schema_mappings",
+        "org.subjects",
+        "platform.tenants",
+        "regulatory.requirement_control_mappings",
+        "rules.grc_impact_mappings"
+      ]
+    },
+    {
+      "table": "data.source_precedence_policy_key_fields",
+      "direct": false,
+      "neighbors": [
+        "data.source_precedence_policies",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "data.source_precedence_policy_sources",
+      "direct": false,
+      "neighbors": [
+        "data.source_precedence_policies",
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.connector_definitions",
+        "integration.integrations",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "data.source_resolution_observations",
+      "direct": false,
+      "neighbors": [
+        "data.observations",
+        "data.source_resolutions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "data.source_resolutions",
+      "direct": false,
+      "neighbors": [
+        "data.calculation_inputs",
+        "data.data_lineage",
+        "data.data_quality_assessments",
+        "data.metric_measurements",
+        "data.source_precedence_policies",
+        "data.source_resolution_observations",
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants",
+        "rules.rule_evaluation_inputs"
+      ]
+    },
+    {
+      "table": "evidence.document_versions",
+      "direct": false,
+      "neighbors": [
+        "evidence.document_versions",
+        "evidence.documents",
+        "evidence.evidence_versions",
+        "evidence.file_objects",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "resilience.continuity_plan_versions"
+      ]
+    },
+    {
+      "table": "evidence.documents",
+      "direct": false,
+      "neighbors": [
+        "evidence.document_versions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants",
+        "privacy.retention_policies",
+        "third_party.supplier_contracts"
+      ]
+    },
+    {
+      "table": "evidence.evidence_links",
+      "direct": false,
+      "neighbors": [
+        "controls.assurance_tests",
+        "controls.control_assessments",
+        "controls.control_versions",
+        "controls.controls",
+        "evidence.evidence_versions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "regulatory.requirement_assessments",
+        "regulatory.requirements"
+      ]
+    },
+    {
+      "table": "evidence.evidence_request_fulfillments",
+      "direct": false,
+      "neighbors": [
+        "evidence.evidence_requests",
+        "evidence.evidence_versions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "evidence.evidence_requests",
+      "direct": false,
+      "neighbors": [
+        "controls.assurance_tests",
+        "controls.control_assessments",
+        "controls.controls",
+        "evidence.evidence_request_fulfillments",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "regulatory.requirement_assessments",
+        "regulatory.requirements"
+      ]
+    },
+    {
+      "table": "evidence.evidence_reviews",
+      "direct": false,
+      "neighbors": [
+        "evidence.evidence_versions",
+        "evidence.evidences",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "evidence.evidence_versions",
+      "direct": false,
+      "neighbors": [
+        "ai.ai_provenance_links",
+        "audit.audit_test_evidence_links",
+        "audit.auditor_competency_assertions",
+        "evidence.document_versions",
+        "evidence.evidence_links",
+        "evidence.evidence_request_fulfillments",
+        "evidence.evidence_reviews",
+        "evidence.evidence_versions",
+        "evidence.evidences",
+        "evidence.file_objects",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "privacy.retention_policy_applicabilities",
+        "privacy.retention_policy_hold_releases",
+        "remediation.action_evidence_links"
+      ]
+    },
+    {
+      "table": "evidence.evidences",
+      "direct": false,
+      "neighbors": [
+        "evidence.evidence_reviews",
+        "evidence.evidence_versions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants",
+        "privacy.retention_policies"
+      ]
+    },
+    {
+      "table": "evidence.file_objects",
+      "direct": false,
+      "neighbors": [
+        "evidence.document_versions",
+        "evidence.evidence_versions",
+        "evidence.file_upload_intents",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "privacy.retention_policies",
+        "privacy.retention_policy_applicabilities",
+        "reporting.report_artifacts",
+        "reporting.report_templates"
+      ]
+    },
+    {
+      "table": "evidence.file_upload_intents",
+      "direct": false,
+      "neighbors": [
+        "evidence.file_objects",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "privacy.retention_policies",
+        "privacy.retention_policy_applicabilities"
+      ]
+    },
+    {
+      "table": "iam.impersonation_sessions",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "iam.membership_roles",
+      "direct": false,
+      "neighbors": [
+        "audit.audits",
+        "iam.roles",
+        "iam.service_principals",
+        "iam.tenant_memberships",
+        "iam.user_identities",
+        "org.organizational_units",
+        "org.processes",
+        "org.services",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "iam.permissions",
+      "direct": false,
+      "neighbors": [
+        "iam.role_permissions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.external_schema_mappings",
+        "ops_audit.lifecycle_transition_definitions"
+      ]
+    },
+    {
+      "table": "iam.platform_role_assignments",
+      "direct": false,
+      "neighbors": [
+        "iam.roles",
+        "iam.service_principals",
+        "iam.user_identities"
+      ]
+    },
+    {
+      "table": "iam.role_permissions",
+      "direct": false,
+      "neighbors": [
+        "iam.permissions",
+        "iam.roles",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "iam.roles",
+      "direct": false,
+      "neighbors": [
+        "iam.membership_roles",
+        "iam.platform_role_assignments",
+        "iam.role_permissions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "iam.service_principals",
+      "direct": false,
+      "neighbors": [
+        "ai.ai_jobs",
+        "ai.ai_provenance_links",
+        "ai.ai_recommendations",
+        "audit.audit_agenda_item_scopes",
+        "audit.audit_agenda_item_team_assignments",
+        "audit.audit_agenda_item_tests",
+        "audit.audit_agenda_items",
+        "audit.audit_competencies",
+        "audit.audit_competency_requirements",
+        "audit.audit_competency_validations",
+        "audit.audit_criteria",
+        "audit.audit_objectives",
+        "audit.audit_programs",
+        "audit.audit_samples",
+        "audit.audit_scopes",
+        "audit.audit_team_assignments",
+        "audit.audit_test_control_links",
+        "audit.audit_test_evidence_links",
+        "audit.audit_test_requirement_assessment_links",
+        "audit.audit_test_requirement_links",
+        "audit.audit_tests",
+        "audit.audit_universe_items",
+        "audit.audit_workpapers",
+        "audit.auditor_competency_assertions",
+        "audit.audits",
+        "config.configuration_definition_scopes",
+        "config.configuration_definitions",
+        "config.configuration_overrides",
+        "config.configuration_validation_rules",
+        "config.effective_configuration_layers",
+        "config.effective_configurations",
+        "controls.assurance_samples",
+        "controls.assurance_tests",
+        "controls.control_assessments",
+        "controls.control_effectiveness_methodologies",
+        "controls.control_exceptions",
+        "controls.control_objectives",
+        "controls.control_scopes",
+        "controls.control_versions",
+        "controls.controls",
+        "data.calculation_inputs",
+        "data.calculation_runs",
+        "data.data_lineage",
+        "data.data_quality_assessments",
+        "data.formula_definition_parameters",
+        "data.formula_definitions",
+        "data.metric_definition_inputs",
+        "data.metric_definition_thresholds",
+        "data.metric_definitions",
+        "data.metric_measurements",
+        "data.observation_type_source_types",
+        "data.observation_type_subject_types",
+        "data.observation_types",
+        "data.observations",
+        "data.snapshot_items",
+        "data.snapshots",
+        "data.source_precedence_policies",
+        "data.source_precedence_policy_key_fields",
+        "data.source_precedence_policy_sources",
+        "data.source_resolution_observations",
+        "data.source_resolutions",
+        "evidence.document_versions",
+        "evidence.documents",
+        "evidence.evidence_links",
+        "evidence.evidence_request_fulfillments",
+        "evidence.evidence_requests",
+        "evidence.evidence_reviews",
+        "evidence.evidence_versions",
+        "evidence.evidences",
+        "evidence.file_objects",
+        "evidence.file_upload_intents",
+        "iam.impersonation_sessions",
+        "iam.membership_roles",
+        "iam.permissions",
+        "iam.platform_role_assignments",
+        "iam.role_permissions",
+        "iam.roles",
+        "iam.service_principals",
+        "iam.tenant_membership_invitations",
+        "iam.tenant_memberships",
+        "iam.user_identities",
+        "integration.checkpoints",
+        "integration.connector_definitions",
+        "integration.connector_version_auth_scopes",
+        "integration.connector_version_objects",
+        "integration.connector_versions",
+        "integration.dead_letter_records",
+        "integration.external_identity_bindings",
+        "integration.external_schema_mappings",
+        "integration.integration_credential_refs",
+        "integration.integrations",
+        "integration.raw_records",
+        "integration.sync_runs",
+        "integration.sync_schedules",
+        "knowledge.knowledge_items",
+        "knowledge.knowledge_sources",
+        "knowledge.knowledge_versions",
+        "knowledge.regulatory_change_reviews",
+        "knowledge.regulatory_changes",
+        "notification.notification_deliveries",
+        "notification.notification_preferences",
+        "notification.notifications",
+        "operations.incident_subject_links",
+        "operations.incidents",
+        "operations.root_cause_records",
+        "ops_audit.audit_events",
+        "ops_audit.idempotency_records",
+        "ops_audit.job_executions",
+        "ops_audit.lifecycle_transition_definitions",
+        "ops_audit.lifecycle_transition_scopes",
+        "ops_audit.lifecycle_transition_side_effects",
+        "ops_audit.outbox_events",
+        "ops_audit.system_health_events",
+        "org.applications",
+        "org.assets",
+        "org.data_assets",
+        "org.dependencies",
+        "org.locations",
+        "org.organizational_unit_process_links",
+        "org.organizational_units",
+        "org.processes",
+        "org.resources",
+        "org.service_asset_links",
+        "org.services",
+        "org.subjects",
+        "org.systems",
+        "platform.capabilities",
+        "platform.commercial_families",
+        "platform.entitlements",
+        "platform.feature_flags",
+        "platform.organizations",
+        "platform.plan_version_commercial_family_links",
+        "platform.plan_versions",
+        "platform.plans",
+        "platform.regulatory_pack_commercial_family_links",
+        "platform.subscription_regulatory_packs",
+        "platform.subscriptions",
+        "platform.tenants",
+        "platform.usage_limits",
+        "privacy.data_categories",
+        "privacy.data_recipients",
+        "privacy.data_subject_categories",
+        "privacy.data_subject_requests",
+        "privacy.dpias",
+        "privacy.erasure_execution_items",
+        "privacy.erasure_execution_records",
+        "privacy.international_transfers",
+        "privacy.legal_bases",
+        "privacy.privacy_breaches",
+        "privacy.privacy_processing_activities",
+        "privacy.processing_activity_data_categories",
+        "privacy.processing_activity_legal_bases",
+        "privacy.processing_activity_recipients",
+        "privacy.processing_activity_subject_categories",
+        "privacy.processing_activity_subjects",
+        "privacy.processing_activity_suppliers",
+        "privacy.retention_policies",
+        "privacy.retention_policy_applicabilities",
+        "regulatory.compliance_methodologies",
+        "regulatory.control_crosswalk_mappings",
+        "regulatory.framework_crosswalks",
+        "regulatory.framework_versions",
+        "regulatory.frameworks",
+        "regulatory.normative_unit_control_mappings",
+        "regulatory.normative_unit_crosswalk_mappings",
+        "regulatory.normative_units",
+        "regulatory.regulatory_coverage_manifests",
+        "regulatory.regulatory_import_manifests",
+        "regulatory.regulatory_pack_framework_versions",
+        "regulatory.regulatory_pack_versions",
+        "regulatory.regulatory_packs",
+        "regulatory.regulatory_sources",
+        "regulatory.requirement_applicabilities",
+        "regulatory.requirement_assessments",
+        "regulatory.requirement_control_mappings",
+        "regulatory.requirement_crosswalk_mappings",
+        "regulatory.requirements",
+        "regulatory.statement_of_applicability_items",
+        "regulatory.statements_of_applicability",
+        "remediation.action_evidence_links",
+        "remediation.action_verifications",
+        "remediation.actions",
+        "remediation.issue_origins",
+        "remediation.issues",
+        "reporting.dashboard_definitions",
+        "reporting.dashboard_widgets",
+        "reporting.report_artifacts",
+        "reporting.report_definition_parameters",
+        "reporting.report_definitions",
+        "reporting.report_run_snapshots",
+        "reporting.report_runs",
+        "reporting.report_templates",
+        "resilience.bia_versions",
+        "resilience.bias",
+        "resilience.continuity_plan_versions",
+        "resilience.continuity_plans",
+        "resilience.recovery_tests",
+        "resilience.resilience_exercises",
+        "risk.impact_scale_definitions",
+        "risk.impact_scale_dimension_criteria",
+        "risk.impact_scale_levels",
+        "risk.kris",
+        "risk.likelihood_scale_definitions",
+        "risk.likelihood_scale_levels",
+        "risk.loss_event_incident_links",
+        "risk.loss_event_risk_links",
+        "risk.loss_events",
+        "risk.loss_recoveries",
+        "risk.risk_acceptances",
+        "risk.risk_appetite_policies",
+        "risk.risk_assessments",
+        "risk.risk_control_mappings",
+        "risk.risk_kri_mappings",
+        "risk.risk_methodologies",
+        "risk.risk_scopes",
+        "risk.risk_taxonomies",
+        "risk.risk_tolerance_policies",
+        "risk.risk_treatments",
+        "risk.risks",
+        "rules.automation_policies",
+        "rules.grc_impact_mappings",
+        "rules.grc_impacts",
+        "rules.rule_definition_inputs",
+        "rules.rule_definition_thresholds",
+        "rules.rule_definitions",
+        "rules.rule_evaluation_inputs",
+        "rules.rule_evaluations",
+        "survey.survey_answers",
+        "survey.survey_campaigns",
+        "survey.survey_options",
+        "survey.survey_question_validation_rules",
+        "survey.survey_questions",
+        "survey.survey_responses",
+        "survey.survey_versions",
+        "survey.surveys",
+        "third_party.supplier_assessments",
+        "third_party.supplier_contracts",
+        "third_party.supplier_services",
+        "third_party.suppliers"
+      ]
+    },
+    {
+      "table": "iam.tenant_membership_invitations",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.tenant_memberships",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "iam.tenant_memberships",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_competency_validations",
+        "audit.audit_team_assignments",
+        "audit.auditor_competency_assertions",
+        "iam.membership_roles",
+        "iam.service_principals",
+        "iam.tenant_membership_invitations",
+        "iam.user_identities",
+        "notification.notification_preferences",
+        "platform.tenants",
+        "privacy.retention_policy_hold_releases"
+      ]
+    },
+    {
+      "table": "iam.user_identities",
+      "direct": true,
+      "neighbors": [
+        "ai.ai_jobs",
+        "ai.ai_provenance_links",
+        "ai.ai_recommendations",
+        "audit.audit_agenda_item_scopes",
+        "audit.audit_agenda_item_team_assignments",
+        "audit.audit_agenda_item_tests",
+        "audit.audit_agenda_items",
+        "audit.audit_competencies",
+        "audit.audit_competency_requirements",
+        "audit.audit_competency_validations",
+        "audit.audit_criteria",
+        "audit.audit_objectives",
+        "audit.audit_programs",
+        "audit.audit_samples",
+        "audit.audit_scopes",
+        "audit.audit_team_assignments",
+        "audit.audit_test_control_links",
+        "audit.audit_test_evidence_links",
+        "audit.audit_test_requirement_assessment_links",
+        "audit.audit_test_requirement_links",
+        "audit.audit_tests",
+        "audit.audit_universe_items",
+        "audit.audit_workpapers",
+        "audit.auditor_competency_assertions",
+        "audit.audits",
+        "config.configuration_definition_scopes",
+        "config.configuration_definitions",
+        "config.configuration_overrides",
+        "config.configuration_validation_rules",
+        "config.effective_configuration_layers",
+        "config.effective_configurations",
+        "controls.assurance_samples",
+        "controls.assurance_tests",
+        "controls.control_assessments",
+        "controls.control_effectiveness_methodologies",
+        "controls.control_exceptions",
+        "controls.control_objectives",
+        "controls.control_scopes",
+        "controls.control_versions",
+        "controls.controls",
+        "data.calculation_inputs",
+        "data.calculation_runs",
+        "data.data_lineage",
+        "data.data_quality_assessments",
+        "data.formula_definition_parameters",
+        "data.formula_definitions",
+        "data.metric_definition_inputs",
+        "data.metric_definition_thresholds",
+        "data.metric_definitions",
+        "data.metric_measurements",
+        "data.observation_type_source_types",
+        "data.observation_type_subject_types",
+        "data.observation_types",
+        "data.observations",
+        "data.snapshot_items",
+        "data.snapshots",
+        "data.source_precedence_policies",
+        "data.source_precedence_policy_key_fields",
+        "data.source_precedence_policy_sources",
+        "data.source_resolution_observations",
+        "data.source_resolutions",
+        "evidence.document_versions",
+        "evidence.documents",
+        "evidence.evidence_links",
+        "evidence.evidence_request_fulfillments",
+        "evidence.evidence_requests",
+        "evidence.evidence_reviews",
+        "evidence.evidence_versions",
+        "evidence.evidences",
+        "evidence.file_objects",
+        "evidence.file_upload_intents",
+        "iam.impersonation_sessions",
+        "iam.membership_roles",
+        "iam.permissions",
+        "iam.platform_role_assignments",
+        "iam.role_permissions",
+        "iam.roles",
+        "iam.service_principals",
+        "iam.tenant_membership_invitations",
+        "iam.tenant_memberships",
+        "iam.user_identities",
+        "integration.checkpoints",
+        "integration.connector_definitions",
+        "integration.connector_version_auth_scopes",
+        "integration.connector_version_objects",
+        "integration.connector_versions",
+        "integration.dead_letter_records",
+        "integration.external_identity_bindings",
+        "integration.external_schema_mappings",
+        "integration.integration_credential_refs",
+        "integration.integrations",
+        "integration.raw_records",
+        "integration.sync_runs",
+        "integration.sync_schedules",
+        "knowledge.knowledge_items",
+        "knowledge.knowledge_sources",
+        "knowledge.knowledge_versions",
+        "knowledge.regulatory_change_reviews",
+        "knowledge.regulatory_changes",
+        "notification.notification_deliveries",
+        "notification.notification_preferences",
+        "notification.notifications",
+        "operations.incident_subject_links",
+        "operations.incidents",
+        "operations.root_cause_records",
+        "ops_audit.audit_events",
+        "ops_audit.idempotency_records",
+        "ops_audit.job_executions",
+        "ops_audit.lifecycle_transition_definitions",
+        "ops_audit.lifecycle_transition_scopes",
+        "ops_audit.lifecycle_transition_side_effects",
+        "ops_audit.outbox_events",
+        "ops_audit.system_health_events",
+        "org.applications",
+        "org.assets",
+        "org.data_assets",
+        "org.dependencies",
+        "org.locations",
+        "org.organizational_unit_process_links",
+        "org.organizational_units",
+        "org.processes",
+        "org.resources",
+        "org.service_asset_links",
+        "org.services",
+        "org.subjects",
+        "org.systems",
+        "platform.capabilities",
+        "platform.commercial_families",
+        "platform.entitlements",
+        "platform.feature_flags",
+        "platform.organizations",
+        "platform.plan_version_commercial_family_links",
+        "platform.plan_versions",
+        "platform.plans",
+        "platform.regulatory_pack_commercial_family_links",
+        "platform.regulatory_pack_validation_accesses",
+        "platform.subscription_regulatory_packs",
+        "platform.subscriptions",
+        "platform.tenants",
+        "platform.usage_limits",
+        "privacy.data_categories",
+        "privacy.data_recipients",
+        "privacy.data_subject_categories",
+        "privacy.data_subject_requests",
+        "privacy.dpias",
+        "privacy.erasure_execution_items",
+        "privacy.erasure_execution_records",
+        "privacy.international_transfers",
+        "privacy.legal_bases",
+        "privacy.privacy_breaches",
+        "privacy.privacy_processing_activities",
+        "privacy.processing_activity_data_categories",
+        "privacy.processing_activity_legal_bases",
+        "privacy.processing_activity_recipients",
+        "privacy.processing_activity_subject_categories",
+        "privacy.processing_activity_subjects",
+        "privacy.processing_activity_suppliers",
+        "privacy.retention_policies",
+        "privacy.retention_policy_applicabilities",
+        "regulatory.compliance_methodologies",
+        "regulatory.control_crosswalk_mappings",
+        "regulatory.framework_crosswalks",
+        "regulatory.framework_versions",
+        "regulatory.frameworks",
+        "regulatory.normative_unit_control_mappings",
+        "regulatory.normative_unit_crosswalk_mappings",
+        "regulatory.normative_units",
+        "regulatory.regulatory_coverage_manifests",
+        "regulatory.regulatory_import_manifests",
+        "regulatory.regulatory_pack_framework_versions",
+        "regulatory.regulatory_pack_validation_provenances",
+        "regulatory.regulatory_pack_versions",
+        "regulatory.regulatory_packs",
+        "regulatory.regulatory_sources",
+        "regulatory.requirement_applicabilities",
+        "regulatory.requirement_assessments",
+        "regulatory.requirement_control_mappings",
+        "regulatory.requirement_crosswalk_mappings",
+        "regulatory.requirements",
+        "regulatory.statement_of_applicability_items",
+        "regulatory.statements_of_applicability",
+        "remediation.action_evidence_links",
+        "remediation.action_verifications",
+        "remediation.actions",
+        "remediation.issue_origins",
+        "remediation.issues",
+        "reporting.dashboard_definitions",
+        "reporting.dashboard_widgets",
+        "reporting.report_artifacts",
+        "reporting.report_definition_parameters",
+        "reporting.report_definitions",
+        "reporting.report_run_snapshots",
+        "reporting.report_runs",
+        "reporting.report_templates",
+        "resilience.bia_versions",
+        "resilience.bias",
+        "resilience.continuity_plan_versions",
+        "resilience.continuity_plans",
+        "resilience.recovery_tests",
+        "resilience.resilience_exercises",
+        "risk.impact_scale_definitions",
+        "risk.impact_scale_dimension_criteria",
+        "risk.impact_scale_levels",
+        "risk.kris",
+        "risk.likelihood_scale_definitions",
+        "risk.likelihood_scale_levels",
+        "risk.loss_event_incident_links",
+        "risk.loss_event_risk_links",
+        "risk.loss_events",
+        "risk.loss_recoveries",
+        "risk.risk_acceptances",
+        "risk.risk_appetite_policies",
+        "risk.risk_assessments",
+        "risk.risk_control_mappings",
+        "risk.risk_kri_mappings",
+        "risk.risk_methodologies",
+        "risk.risk_scopes",
+        "risk.risk_taxonomies",
+        "risk.risk_tolerance_policies",
+        "risk.risk_treatments",
+        "risk.risks",
+        "rules.automation_policies",
+        "rules.grc_impact_mappings",
+        "rules.grc_impacts",
+        "rules.rule_definition_inputs",
+        "rules.rule_definition_thresholds",
+        "rules.rule_definitions",
+        "rules.rule_evaluation_inputs",
+        "rules.rule_evaluations",
+        "survey.survey_answers",
+        "survey.survey_campaigns",
+        "survey.survey_options",
+        "survey.survey_question_validation_rules",
+        "survey.survey_questions",
+        "survey.survey_responses",
+        "survey.survey_versions",
+        "survey.surveys",
+        "third_party.supplier_assessments",
+        "third_party.supplier_contracts",
+        "third_party.supplier_services",
+        "third_party.suppliers"
+      ]
+    },
+    {
+      "table": "integration.checkpoints",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.checkpoints",
+        "integration.integrations",
+        "integration.sync_runs",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "integration.connector_definitions",
+      "direct": false,
+      "neighbors": [
+        "data.source_precedence_policy_sources",
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.connector_versions"
+      ]
+    },
+    {
+      "table": "integration.connector_version_auth_scopes",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.connector_versions"
+      ]
+    },
+    {
+      "table": "integration.connector_version_objects",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.connector_versions"
+      ]
+    },
+    {
+      "table": "integration.connector_versions",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.connector_definitions",
+        "integration.connector_version_auth_scopes",
+        "integration.connector_version_objects",
+        "integration.connector_versions",
+        "integration.external_schema_mappings",
+        "integration.integrations"
+      ]
+    },
+    {
+      "table": "integration.dead_letter_records",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.raw_records",
+        "integration.sync_runs",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "integration.external_identity_bindings",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.integrations",
+        "org.subjects",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "integration.external_schema_mappings",
+      "direct": false,
+      "neighbors": [
+        "data.metric_definitions",
+        "data.observation_types",
+        "data.source_precedence_policies",
+        "iam.permissions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.connector_versions",
+        "platform.tenants",
+        "rules.automation_policies",
+        "rules.rule_definitions"
+      ]
+    },
+    {
+      "table": "integration.integration_credential_refs",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.integrations",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "integration.integrations",
+      "direct": false,
+      "neighbors": [
+        "data.observations",
+        "data.source_precedence_policy_sources",
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.checkpoints",
+        "integration.connector_versions",
+        "integration.external_identity_bindings",
+        "integration.integration_credential_refs",
+        "integration.raw_records",
+        "integration.sync_runs",
+        "integration.sync_schedules",
+        "org.resources",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "integration.raw_records",
+      "direct": false,
+      "neighbors": [
+        "data.data_lineage",
+        "data.observations",
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.dead_letter_records",
+        "integration.integrations",
+        "integration.sync_runs",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "integration.sync_runs",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.checkpoints",
+        "integration.dead_letter_records",
+        "integration.integrations",
+        "integration.raw_records",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "integration.sync_schedules",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.integrations",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "knowledge.knowledge_items",
+      "direct": true,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "knowledge.knowledge_sources",
+        "knowledge.knowledge_versions",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "knowledge.knowledge_sources",
+      "direct": true,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "knowledge.knowledge_items",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "knowledge.knowledge_versions",
+      "direct": true,
+      "neighbors": [
+        "ai.ai_provenance_links",
+        "iam.service_principals",
+        "iam.user_identities",
+        "knowledge.knowledge_items",
+        "knowledge.knowledge_versions",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "knowledge.regulatory_change_reviews",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "knowledge.regulatory_changes",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "knowledge.regulatory_changes",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "knowledge.regulatory_change_reviews",
+        "platform.tenants",
+        "regulatory.framework_versions",
+        "regulatory.regulatory_sources"
+      ]
+    },
+    {
+      "table": "notification.notification_deliveries",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "notification.notifications",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "notification.notification_preferences",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.tenant_memberships",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "notification.notifications",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "notification.notification_deliveries",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "operations.incident_subject_links",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "operations.incidents",
+        "org.subjects",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "operations.incidents",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "operations.incident_subject_links",
+        "operations.root_cause_records",
+        "platform.tenants",
+        "privacy.privacy_breaches",
+        "remediation.issue_origins",
+        "risk.loss_event_incident_links"
+      ]
+    },
+    {
+      "table": "operations.root_cause_records",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "operations.incidents",
+        "operations.root_cause_records",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "ops_audit.audit_events",
+      "direct": true,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "privacy.erasure_execution_records",
+        "privacy.retention_policy_hold_releases"
+      ]
+    },
+    {
+      "table": "ops_audit.idempotency_records",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "ops_audit.job_executions",
+      "direct": false,
+      "neighbors": [
+        "data.calculation_runs",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "privacy.erasure_execution_records"
+      ]
+    },
+    {
+      "table": "ops_audit.lifecycle_transition_definitions",
+      "direct": false,
+      "neighbors": [
+        "iam.permissions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "ops_audit.lifecycle_transition_scopes",
+        "ops_audit.lifecycle_transition_side_effects"
+      ]
+    },
+    {
+      "table": "ops_audit.lifecycle_transition_scopes",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "ops_audit.lifecycle_transition_definitions"
+      ]
+    },
+    {
+      "table": "ops_audit.lifecycle_transition_side_effects",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "ops_audit.lifecycle_transition_definitions"
+      ]
+    },
+    {
+      "table": "ops_audit.outbox_events",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "ops_audit.system_health_events",
+      "direct": false,
+      "neighbors": [
+        "data.observations",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "org.applications",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "org.assets",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.service_asset_links",
+        "org.subjects",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "org.data_assets",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "org.dependencies",
+      "direct": false,
+      "neighbors": [
+        "data.metric_definition_inputs",
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "org.locations",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "org.organizational_unit_process_links",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.organizational_units",
+        "org.processes",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "org.organizational_units",
+      "direct": false,
+      "neighbors": [
+        "iam.membership_roles",
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.organizational_unit_process_links",
+        "org.organizational_units",
+        "platform.organizations",
+        "platform.tenants",
+        "risk.risk_appetite_policies",
+        "risk.risk_tolerance_policies"
+      ]
+    },
+    {
+      "table": "org.processes",
+      "direct": false,
+      "neighbors": [
+        "iam.membership_roles",
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.organizational_unit_process_links",
+        "org.services",
+        "org.subjects",
+        "platform.tenants",
+        "resilience.bias",
+        "risk.risk_appetite_policies",
+        "risk.risk_tolerance_policies"
+      ]
+    },
+    {
+      "table": "org.resources",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.integrations",
+        "org.subjects",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "org.service_asset_links",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.assets",
+        "org.services",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "org.services",
+      "direct": false,
+      "neighbors": [
+        "iam.membership_roles",
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.processes",
+        "org.service_asset_links",
+        "org.subjects",
+        "platform.tenants",
+        "resilience.bias",
+        "risk.risk_appetite_policies",
+        "risk.risk_tolerance_policies",
+        "third_party.supplier_services"
+      ]
+    },
+    {
+      "table": "org.subjects",
+      "direct": true,
+      "neighbors": [
+        "audit.audit_scopes",
+        "audit.audit_universe_items",
+        "config.configuration_overrides",
+        "config.effective_configurations",
+        "controls.control_scopes",
+        "controls.controls",
+        "data.data_quality_assessments",
+        "data.metric_measurements",
+        "data.observations",
+        "data.source_precedence_policies",
+        "data.source_resolutions",
+        "evidence.documents",
+        "evidence.evidences",
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.external_identity_bindings",
+        "operations.incident_subject_links",
+        "org.applications",
+        "org.assets",
+        "org.data_assets",
+        "org.dependencies",
+        "org.processes",
+        "org.resources",
+        "org.services",
+        "org.subjects",
+        "org.systems",
+        "platform.tenants",
+        "privacy.privacy_processing_activities",
+        "privacy.processing_activity_subjects",
+        "privacy.retention_policy_applicabilities",
+        "regulatory.requirement_applicabilities",
+        "remediation.issues",
+        "resilience.bias",
+        "resilience.continuity_plans",
+        "risk.loss_events",
+        "risk.risk_appetite_policies",
+        "risk.risk_scopes",
+        "risk.risk_tolerance_policies",
+        "risk.risks",
+        "rules.rule_evaluations",
+        "survey.survey_campaigns",
+        "survey.survey_responses",
+        "third_party.suppliers"
+      ]
+    },
+    {
+      "table": "org.systems",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "platform.capabilities",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.entitlements",
+        "reporting.dashboard_definitions",
+        "reporting.report_definitions"
+      ]
+    },
+    {
+      "table": "platform.commercial_families",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.plan_version_commercial_family_links",
+        "platform.regulatory_pack_commercial_family_links",
+        "platform.usage_limits"
+      ]
+    },
+    {
+      "table": "platform.entitlements",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.capabilities",
+        "platform.plan_versions"
+      ]
+    },
+    {
+      "table": "platform.feature_flags",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "platform.organizations",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.organizational_units",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "platform.plan_version_commercial_family_links",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.commercial_families",
+        "platform.plan_versions",
+        "platform.usage_limits"
+      ]
+    },
+    {
+      "table": "platform.plan_versions",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.entitlements",
+        "platform.plan_version_commercial_family_links",
+        "platform.plan_versions",
+        "platform.plans",
+        "platform.subscriptions",
+        "platform.usage_limits"
+      ]
+    },
+    {
+      "table": "platform.plans",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.plan_versions"
+      ]
+    },
+    {
+      "table": "platform.regulatory_pack_commercial_family_links",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.commercial_families",
+        "regulatory.regulatory_packs"
+      ]
+    },
+    {
+      "table": "platform.regulatory_pack_validation_accesses",
+      "direct": false,
+      "neighbors": [
+        "iam.user_identities",
+        "platform.tenants",
+        "regulatory.regulatory_pack_validation_provenances",
+        "regulatory.regulatory_pack_versions"
+      ]
+    },
+    {
+      "table": "platform.subscription_regulatory_packs",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.subscription_regulatory_packs",
+        "platform.subscriptions",
+        "platform.tenants",
+        "regulatory.regulatory_pack_versions"
+      ]
+    },
+    {
+      "table": "platform.subscriptions",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.plan_versions",
+        "platform.subscription_regulatory_packs",
+        "platform.subscriptions",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "platform.tenants",
+      "direct": true,
+      "neighbors": [
+        "ai.ai_jobs",
+        "ai.ai_provenance_links",
+        "ai.ai_recommendations",
+        "audit.audit_agenda_item_scopes",
+        "audit.audit_agenda_item_team_assignments",
+        "audit.audit_agenda_item_tests",
+        "audit.audit_agenda_items",
+        "audit.audit_competency_requirements",
+        "audit.audit_competency_validations",
+        "audit.audit_criteria",
+        "audit.audit_objectives",
+        "audit.audit_programs",
+        "audit.audit_samples",
+        "audit.audit_scopes",
+        "audit.audit_team_assignments",
+        "audit.audit_test_control_links",
+        "audit.audit_test_evidence_links",
+        "audit.audit_test_requirement_assessment_links",
+        "audit.audit_test_requirement_links",
+        "audit.audit_tests",
+        "audit.audit_universe_items",
+        "audit.audit_workpapers",
+        "audit.auditor_competency_assertions",
+        "audit.audits",
+        "config.configuration_definition_scopes",
+        "config.configuration_definitions",
+        "config.configuration_overrides",
+        "config.configuration_validation_rules",
+        "config.effective_configuration_layers",
+        "config.effective_configurations",
+        "controls.assurance_samples",
+        "controls.assurance_tests",
+        "controls.control_assessments",
+        "controls.control_effectiveness_methodologies",
+        "controls.control_exceptions",
+        "controls.control_objectives",
+        "controls.control_scopes",
+        "controls.control_versions",
+        "controls.controls",
+        "data.calculation_inputs",
+        "data.calculation_runs",
+        "data.data_lineage",
+        "data.data_quality_assessments",
+        "data.formula_definition_parameters",
+        "data.formula_definitions",
+        "data.metric_definition_inputs",
+        "data.metric_definition_thresholds",
+        "data.metric_definitions",
+        "data.metric_measurements",
+        "data.observation_type_source_types",
+        "data.observation_type_subject_types",
+        "data.observation_types",
+        "data.observations",
+        "data.snapshot_items",
+        "data.snapshots",
+        "data.source_precedence_policies",
+        "data.source_precedence_policy_key_fields",
+        "data.source_precedence_policy_sources",
+        "data.source_resolution_observations",
+        "data.source_resolutions",
+        "evidence.document_versions",
+        "evidence.documents",
+        "evidence.evidence_links",
+        "evidence.evidence_request_fulfillments",
+        "evidence.evidence_requests",
+        "evidence.evidence_reviews",
+        "evidence.evidence_versions",
+        "evidence.evidences",
+        "evidence.file_objects",
+        "evidence.file_upload_intents",
+        "iam.impersonation_sessions",
+        "iam.membership_roles",
+        "iam.role_permissions",
+        "iam.roles",
+        "iam.service_principals",
+        "iam.tenant_membership_invitations",
+        "iam.tenant_memberships",
+        "iam.user_identities",
+        "integration.checkpoints",
+        "integration.dead_letter_records",
+        "integration.external_identity_bindings",
+        "integration.external_schema_mappings",
+        "integration.integration_credential_refs",
+        "integration.integrations",
+        "integration.raw_records",
+        "integration.sync_runs",
+        "integration.sync_schedules",
+        "knowledge.knowledge_items",
+        "knowledge.knowledge_sources",
+        "knowledge.knowledge_versions",
+        "knowledge.regulatory_change_reviews",
+        "knowledge.regulatory_changes",
+        "notification.notification_deliveries",
+        "notification.notification_preferences",
+        "notification.notifications",
+        "operations.incident_subject_links",
+        "operations.incidents",
+        "operations.root_cause_records",
+        "ops_audit.audit_events",
+        "ops_audit.idempotency_records",
+        "ops_audit.job_executions",
+        "ops_audit.outbox_events",
+        "ops_audit.system_health_events",
+        "org.applications",
+        "org.assets",
+        "org.data_assets",
+        "org.dependencies",
+        "org.locations",
+        "org.organizational_unit_process_links",
+        "org.organizational_units",
+        "org.processes",
+        "org.resources",
+        "org.service_asset_links",
+        "org.services",
+        "org.subjects",
+        "org.systems",
+        "platform.feature_flags",
+        "platform.organizations",
+        "platform.regulatory_pack_validation_accesses",
+        "platform.subscription_regulatory_packs",
+        "platform.subscriptions",
+        "privacy.data_categories",
+        "privacy.data_recipients",
+        "privacy.data_subject_categories",
+        "privacy.data_subject_requests",
+        "privacy.dpias",
+        "privacy.erasure_execution_items",
+        "privacy.erasure_execution_records",
+        "privacy.international_transfers",
+        "privacy.legal_bases",
+        "privacy.privacy_breaches",
+        "privacy.privacy_processing_activities",
+        "privacy.processing_activity_data_categories",
+        "privacy.processing_activity_legal_bases",
+        "privacy.processing_activity_recipients",
+        "privacy.processing_activity_subject_categories",
+        "privacy.processing_activity_subjects",
+        "privacy.processing_activity_suppliers",
+        "privacy.retention_policies",
+        "privacy.retention_policy_applicabilities",
+        "privacy.retention_policy_hold_releases",
+        "regulatory.compliance_methodologies",
+        "regulatory.control_crosswalk_mappings",
+        "regulatory.framework_crosswalks",
+        "regulatory.framework_versions",
+        "regulatory.frameworks",
+        "regulatory.normative_unit_control_mappings",
+        "regulatory.normative_unit_crosswalk_mappings",
+        "regulatory.normative_units",
+        "regulatory.requirement_applicabilities",
+        "regulatory.requirement_assessments",
+        "regulatory.requirement_control_mappings",
+        "regulatory.requirement_crosswalk_mappings",
+        "regulatory.requirements",
+        "regulatory.statement_of_applicability_items",
+        "regulatory.statements_of_applicability",
+        "remediation.action_evidence_links",
+        "remediation.action_verifications",
+        "remediation.actions",
+        "remediation.issue_origins",
+        "remediation.issues",
+        "reporting.dashboard_definitions",
+        "reporting.dashboard_widgets",
+        "reporting.report_artifacts",
+        "reporting.report_definition_parameters",
+        "reporting.report_definitions",
+        "reporting.report_run_snapshots",
+        "reporting.report_runs",
+        "reporting.report_templates",
+        "resilience.bia_versions",
+        "resilience.bias",
+        "resilience.continuity_plan_versions",
+        "resilience.continuity_plans",
+        "resilience.recovery_tests",
+        "resilience.resilience_exercises",
+        "risk.impact_scale_definitions",
+        "risk.impact_scale_dimension_criteria",
+        "risk.impact_scale_levels",
+        "risk.kris",
+        "risk.likelihood_scale_definitions",
+        "risk.likelihood_scale_levels",
+        "risk.loss_event_incident_links",
+        "risk.loss_event_risk_links",
+        "risk.loss_events",
+        "risk.loss_recoveries",
+        "risk.risk_acceptances",
+        "risk.risk_appetite_policies",
+        "risk.risk_assessments",
+        "risk.risk_control_mappings",
+        "risk.risk_kri_mappings",
+        "risk.risk_methodologies",
+        "risk.risk_scopes",
+        "risk.risk_taxonomies",
+        "risk.risk_tolerance_policies",
+        "risk.risk_treatments",
+        "risk.risks",
+        "rules.automation_policies",
+        "rules.grc_impact_mappings",
+        "rules.grc_impacts",
+        "rules.rule_definition_inputs",
+        "rules.rule_definition_thresholds",
+        "rules.rule_definitions",
+        "rules.rule_evaluation_inputs",
+        "rules.rule_evaluations",
+        "survey.survey_answers",
+        "survey.survey_campaigns",
+        "survey.survey_options",
+        "survey.survey_question_validation_rules",
+        "survey.survey_questions",
+        "survey.survey_responses",
+        "survey.survey_versions",
+        "survey.surveys",
+        "third_party.supplier_assessments",
+        "third_party.supplier_contracts",
+        "third_party.supplier_services",
+        "third_party.suppliers"
+      ]
+    },
+    {
+      "table": "platform.usage_limits",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.commercial_families",
+        "platform.plan_version_commercial_family_links",
+        "platform.plan_versions"
+      ]
+    },
+    {
+      "table": "privacy.data_categories",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "privacy.processing_activity_data_categories"
+      ]
+    },
+    {
+      "table": "privacy.data_recipients",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "privacy.international_transfers",
+        "privacy.processing_activity_recipients",
+        "third_party.suppliers"
+      ]
+    },
+    {
+      "table": "privacy.data_subject_categories",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "privacy.processing_activity_subject_categories"
+      ]
+    },
+    {
+      "table": "privacy.data_subject_requests",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "privacy.erasure_execution_records",
+        "privacy.legal_bases"
+      ]
+    },
+    {
+      "table": "privacy.dpias",
+      "direct": false,
+      "neighbors": [
+        "data.snapshot_items",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "privacy.dpias"
+      ]
+    },
+    {
+      "table": "privacy.erasure_execution_items",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "privacy.erasure_execution_records",
+        "privacy.retention_policies"
+      ]
+    },
+    {
+      "table": "privacy.erasure_execution_records",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "ops_audit.audit_events",
+        "ops_audit.job_executions",
+        "platform.tenants",
+        "privacy.data_subject_requests",
+        "privacy.erasure_execution_items",
+        "privacy.retention_policies"
+      ]
+    },
+    {
+      "table": "privacy.international_transfers",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "privacy.data_recipients"
+      ]
+    },
+    {
+      "table": "privacy.legal_bases",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "privacy.data_subject_requests",
+        "privacy.processing_activity_legal_bases",
+        "privacy.retention_policy_applicabilities",
+        "regulatory.regulatory_sources"
+      ]
+    },
+    {
+      "table": "privacy.privacy_breaches",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "operations.incidents",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "privacy.privacy_processing_activities",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants",
+        "privacy.retention_policies",
+        "privacy.retention_policy_applicabilities"
+      ]
+    },
+    {
+      "table": "privacy.processing_activity_data_categories",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "privacy.data_categories"
+      ]
+    },
+    {
+      "table": "privacy.processing_activity_legal_bases",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "privacy.legal_bases"
+      ]
+    },
+    {
+      "table": "privacy.processing_activity_recipients",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "privacy.data_recipients"
+      ]
+    },
+    {
+      "table": "privacy.processing_activity_subject_categories",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "privacy.data_subject_categories"
+      ]
+    },
+    {
+      "table": "privacy.processing_activity_subjects",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants"
+      ]
+    },
+    {
+      "table": "privacy.processing_activity_suppliers",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "third_party.suppliers"
+      ]
+    },
+    {
+      "table": "privacy.retention_policies",
+      "direct": false,
+      "neighbors": [
+        "evidence.documents",
+        "evidence.evidences",
+        "evidence.file_objects",
+        "evidence.file_upload_intents",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "privacy.erasure_execution_items",
+        "privacy.erasure_execution_records",
+        "privacy.privacy_processing_activities",
+        "privacy.retention_policy_applicabilities",
+        "regulatory.regulatory_sources"
+      ]
+    },
+    {
+      "table": "privacy.retention_policy_applicabilities",
+      "direct": false,
+      "neighbors": [
+        "evidence.evidence_versions",
+        "evidence.file_objects",
+        "evidence.file_upload_intents",
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants",
+        "privacy.legal_bases",
+        "privacy.privacy_processing_activities",
+        "privacy.retention_policies",
+        "privacy.retention_policy_applicabilities",
+        "privacy.retention_policy_hold_releases"
+      ]
+    },
+    {
+      "table": "privacy.retention_policy_hold_releases",
+      "direct": false,
+      "neighbors": [
+        "evidence.evidence_versions",
+        "iam.tenant_memberships",
+        "ops_audit.audit_events",
+        "platform.tenants",
+        "privacy.retention_policy_applicabilities"
+      ]
+    },
+    {
+      "table": "regulatory.compliance_methodologies",
+      "direct": false,
+      "neighbors": [
+        "data.formula_definitions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "regulatory.requirement_assessments"
+      ]
+    },
+    {
+      "table": "regulatory.control_crosswalk_mappings",
+      "direct": false,
+      "neighbors": [
+        "controls.control_versions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "regulatory.framework_crosswalks"
+      ]
+    },
+    {
+      "table": "regulatory.framework_crosswalks",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "regulatory.control_crosswalk_mappings",
+        "regulatory.framework_versions",
+        "regulatory.normative_unit_crosswalk_mappings",
+        "regulatory.requirement_crosswalk_mappings"
+      ]
+    },
+    {
+      "table": "regulatory.framework_versions",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_competency_requirements",
+        "audit.audit_criteria",
+        "audit.audit_scopes",
+        "iam.service_principals",
+        "iam.user_identities",
+        "knowledge.regulatory_changes",
+        "platform.tenants",
+        "regulatory.framework_crosswalks",
+        "regulatory.framework_versions",
+        "regulatory.frameworks",
+        "regulatory.normative_units",
+        "regulatory.regulatory_pack_framework_versions",
+        "regulatory.requirements",
+        "regulatory.statements_of_applicability"
+      ]
+    },
+    {
+      "table": "regulatory.frameworks",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "regulatory.framework_versions"
+      ]
+    },
+    {
+      "table": "regulatory.normative_unit_control_mappings",
+      "direct": false,
+      "neighbors": [
+        "controls.control_versions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "regulatory.normative_units"
+      ]
+    },
+    {
+      "table": "regulatory.normative_unit_crosswalk_mappings",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "regulatory.framework_crosswalks",
+        "regulatory.normative_units"
+      ]
+    },
+    {
+      "table": "regulatory.normative_units",
+      "direct": true,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "regulatory.framework_versions",
+        "regulatory.normative_unit_control_mappings",
+        "regulatory.normative_unit_crosswalk_mappings",
+        "regulatory.normative_units",
+        "regulatory.requirements"
+      ]
+    },
+    {
+      "table": "regulatory.regulatory_coverage_manifests",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "regulatory.regulatory_pack_versions"
+      ]
+    },
+    {
+      "table": "regulatory.regulatory_import_manifests",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "regulatory.regulatory_pack_validation_provenances",
+        "regulatory.regulatory_pack_versions",
+        "regulatory.regulatory_sources"
+      ]
+    },
+    {
+      "table": "regulatory.regulatory_pack_framework_versions",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "regulatory.framework_versions",
+        "regulatory.regulatory_pack_versions"
+      ]
+    },
+    {
+      "table": "regulatory.regulatory_pack_validation_provenances",
+      "direct": false,
+      "neighbors": [
+        "iam.user_identities",
+        "platform.regulatory_pack_validation_accesses",
+        "regulatory.regulatory_import_manifests",
+        "regulatory.regulatory_pack_versions",
+        "regulatory.regulatory_sources"
+      ]
+    },
+    {
+      "table": "regulatory.regulatory_pack_versions",
+      "direct": true,
+      "neighbors": [
+        "config.configuration_overrides",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.regulatory_pack_validation_accesses",
+        "platform.subscription_regulatory_packs",
+        "regulatory.regulatory_coverage_manifests",
+        "regulatory.regulatory_import_manifests",
+        "regulatory.regulatory_pack_framework_versions",
+        "regulatory.regulatory_pack_validation_provenances",
+        "regulatory.regulatory_pack_versions",
+        "regulatory.regulatory_packs"
+      ]
+    },
+    {
+      "table": "regulatory.regulatory_packs",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.regulatory_pack_commercial_family_links",
+        "regulatory.regulatory_pack_versions"
+      ]
+    },
+    {
+      "table": "regulatory.regulatory_sources",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "knowledge.regulatory_changes",
+        "privacy.legal_bases",
+        "privacy.retention_policies",
+        "regulatory.regulatory_import_manifests",
+        "regulatory.regulatory_pack_validation_provenances"
+      ]
+    },
+    {
+      "table": "regulatory.requirement_applicabilities",
+      "direct": true,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants",
+        "regulatory.requirement_applicabilities",
+        "regulatory.requirement_assessments",
+        "regulatory.requirements"
+      ]
+    },
+    {
+      "table": "regulatory.requirement_assessments",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_test_requirement_assessment_links",
+        "config.effective_configurations",
+        "data.snapshot_items",
+        "evidence.evidence_links",
+        "evidence.evidence_requests",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "regulatory.compliance_methodologies",
+        "regulatory.requirement_applicabilities",
+        "regulatory.requirement_assessments",
+        "remediation.issue_origins"
+      ]
+    },
+    {
+      "table": "regulatory.requirement_control_mappings",
+      "direct": false,
+      "neighbors": [
+        "controls.control_versions",
+        "data.source_precedence_policies",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "regulatory.requirements"
+      ]
+    },
+    {
+      "table": "regulatory.requirement_crosswalk_mappings",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_test_requirement_links",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "regulatory.framework_crosswalks",
+        "regulatory.requirements"
+      ]
+    },
+    {
+      "table": "regulatory.requirements",
+      "direct": true,
+      "neighbors": [
+        "ai.ai_provenance_links",
+        "audit.audit_criteria",
+        "audit.audit_test_requirement_links",
+        "evidence.evidence_links",
+        "evidence.evidence_requests",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "regulatory.framework_versions",
+        "regulatory.normative_units",
+        "regulatory.requirement_applicabilities",
+        "regulatory.requirement_control_mappings",
+        "regulatory.requirement_crosswalk_mappings",
+        "regulatory.requirements",
+        "rules.grc_impact_mappings"
+      ]
+    },
+    {
+      "table": "regulatory.statement_of_applicability_items",
+      "direct": false,
+      "neighbors": [
+        "controls.control_versions",
+        "controls.controls",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "regulatory.statements_of_applicability"
+      ]
+    },
+    {
+      "table": "regulatory.statements_of_applicability",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "regulatory.framework_versions",
+        "regulatory.statement_of_applicability_items",
+        "regulatory.statements_of_applicability"
+      ]
+    },
+    {
+      "table": "remediation.action_evidence_links",
+      "direct": false,
+      "neighbors": [
+        "evidence.evidence_versions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "remediation.actions"
+      ]
+    },
+    {
+      "table": "remediation.action_verifications",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "remediation.actions"
+      ]
+    },
+    {
+      "table": "remediation.actions",
+      "direct": false,
+      "neighbors": [
+        "data.snapshot_items",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "remediation.action_evidence_links",
+        "remediation.action_verifications",
+        "remediation.issues",
+        "rules.grc_impacts"
+      ]
+    },
+    {
+      "table": "remediation.issue_origins",
+      "direct": false,
+      "neighbors": [
+        "audit.audit_tests",
+        "controls.assurance_tests",
+        "controls.control_assessments",
+        "iam.service_principals",
+        "iam.user_identities",
+        "operations.incidents",
+        "platform.tenants",
+        "regulatory.requirement_assessments",
+        "remediation.issues",
+        "risk.risks",
+        "third_party.supplier_assessments"
+      ]
+    },
+    {
+      "table": "remediation.issues",
+      "direct": false,
+      "neighbors": [
+        "ai.ai_provenance_links",
+        "data.snapshot_items",
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants",
+        "remediation.actions",
+        "remediation.issue_origins",
+        "rules.grc_impacts"
+      ]
+    },
+    {
+      "table": "reporting.dashboard_definitions",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.capabilities",
+        "platform.tenants",
+        "reporting.dashboard_widgets"
+      ]
+    },
+    {
+      "table": "reporting.dashboard_widgets",
+      "direct": false,
+      "neighbors": [
+        "data.metric_definitions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "reporting.dashboard_definitions",
+        "reporting.report_definitions"
+      ]
+    },
+    {
+      "table": "reporting.report_artifacts",
+      "direct": false,
+      "neighbors": [
+        "evidence.file_objects",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "reporting.report_artifacts",
+        "reporting.report_runs"
+      ]
+    },
+    {
+      "table": "reporting.report_definition_parameters",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "reporting.report_definitions"
+      ]
+    },
+    {
+      "table": "reporting.report_definitions",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.capabilities",
+        "platform.tenants",
+        "reporting.dashboard_widgets",
+        "reporting.report_definition_parameters",
+        "reporting.report_runs",
+        "reporting.report_templates"
+      ]
+    },
+    {
+      "table": "reporting.report_run_snapshots",
+      "direct": false,
+      "neighbors": [
+        "data.snapshots",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "reporting.report_runs"
+      ]
+    },
+    {
+      "table": "reporting.report_runs",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "reporting.report_artifacts",
+        "reporting.report_definitions",
+        "reporting.report_run_snapshots"
+      ]
+    },
+    {
+      "table": "reporting.report_templates",
+      "direct": false,
+      "neighbors": [
+        "evidence.file_objects",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "reporting.report_definitions"
+      ]
+    },
+    {
+      "table": "resilience.bia_versions",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "resilience.bia_versions",
+        "resilience.bias"
+      ]
+    },
+    {
+      "table": "resilience.bias",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.processes",
+        "org.services",
+        "org.subjects",
+        "platform.tenants",
+        "resilience.bia_versions",
+        "resilience.continuity_plans"
+      ]
+    },
+    {
+      "table": "resilience.continuity_plan_versions",
+      "direct": false,
+      "neighbors": [
+        "evidence.document_versions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "resilience.continuity_plan_versions",
+        "resilience.continuity_plans"
+      ]
+    },
+    {
+      "table": "resilience.continuity_plans",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants",
+        "resilience.bias",
+        "resilience.continuity_plan_versions",
+        "resilience.resilience_exercises"
+      ]
+    },
+    {
+      "table": "resilience.recovery_tests",
+      "direct": false,
+      "neighbors": [
+        "data.snapshot_items",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "resilience.resilience_exercises"
+      ]
+    },
+    {
+      "table": "resilience.resilience_exercises",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "resilience.continuity_plans",
+        "resilience.recovery_tests"
+      ]
+    },
+    {
+      "table": "risk.impact_scale_definitions",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "risk.impact_scale_levels",
+        "risk.risk_methodologies"
+      ]
+    },
+    {
+      "table": "risk.impact_scale_dimension_criteria",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "risk.impact_scale_levels"
+      ]
+    },
+    {
+      "table": "risk.impact_scale_levels",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "risk.impact_scale_definitions",
+        "risk.impact_scale_dimension_criteria"
+      ]
+    },
+    {
+      "table": "risk.kris",
+      "direct": false,
+      "neighbors": [
+        "data.metric_definitions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "risk.risk_kri_mappings"
+      ]
+    },
+    {
+      "table": "risk.likelihood_scale_definitions",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "risk.likelihood_scale_levels",
+        "risk.risk_methodologies"
+      ]
+    },
+    {
+      "table": "risk.likelihood_scale_levels",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "risk.likelihood_scale_definitions"
+      ]
+    },
+    {
+      "table": "risk.loss_event_incident_links",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "operations.incidents",
+        "platform.tenants",
+        "risk.loss_events"
+      ]
+    },
+    {
+      "table": "risk.loss_event_risk_links",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "risk.loss_events",
+        "risk.risks"
+      ]
+    },
+    {
+      "table": "risk.loss_events",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants",
+        "risk.loss_event_incident_links",
+        "risk.loss_event_risk_links",
+        "risk.loss_recoveries"
+      ]
+    },
+    {
+      "table": "risk.loss_recoveries",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "risk.loss_events"
+      ]
+    },
+    {
+      "table": "risk.risk_acceptances",
+      "direct": false,
+      "neighbors": [
+        "controls.control_exceptions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "risk.risks"
+      ]
+    },
+    {
+      "table": "risk.risk_appetite_policies",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.organizational_units",
+        "org.processes",
+        "org.services",
+        "org.subjects",
+        "platform.tenants",
+        "risk.risk_appetite_policies",
+        "risk.risk_methodologies"
+      ]
+    },
+    {
+      "table": "risk.risk_assessments",
+      "direct": false,
+      "neighbors": [
+        "config.effective_configurations",
+        "data.calculation_runs",
+        "data.snapshot_items",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "risk.risk_assessments",
+        "risk.risk_methodologies",
+        "risk.risks"
+      ]
+    },
+    {
+      "table": "risk.risk_control_mappings",
+      "direct": false,
+      "neighbors": [
+        "controls.controls",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "risk.risks"
+      ]
+    },
+    {
+      "table": "risk.risk_kri_mappings",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "risk.kris",
+        "risk.risks"
+      ]
+    },
+    {
+      "table": "risk.risk_methodologies",
+      "direct": false,
+      "neighbors": [
+        "data.formula_definitions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "risk.impact_scale_definitions",
+        "risk.likelihood_scale_definitions",
+        "risk.risk_appetite_policies",
+        "risk.risk_assessments",
+        "risk.risk_tolerance_policies"
+      ]
+    },
+    {
+      "table": "risk.risk_scopes",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants",
+        "risk.risks"
+      ]
+    },
+    {
+      "table": "risk.risk_taxonomies",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "risk.risks"
+      ]
+    },
+    {
+      "table": "risk.risk_tolerance_policies",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.organizational_units",
+        "org.processes",
+        "org.services",
+        "org.subjects",
+        "platform.tenants",
+        "risk.risk_methodologies",
+        "risk.risk_tolerance_policies",
+        "rules.rule_definitions"
+      ]
+    },
+    {
+      "table": "risk.risk_treatments",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "risk.risks"
+      ]
+    },
+    {
+      "table": "risk.risks",
+      "direct": false,
+      "neighbors": [
+        "ai.ai_provenance_links",
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants",
+        "remediation.issue_origins",
+        "risk.loss_event_risk_links",
+        "risk.risk_acceptances",
+        "risk.risk_assessments",
+        "risk.risk_control_mappings",
+        "risk.risk_kri_mappings",
+        "risk.risk_scopes",
+        "risk.risk_taxonomies",
+        "risk.risk_treatments",
+        "rules.grc_impact_mappings"
+      ]
+    },
+    {
+      "table": "rules.automation_policies",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.external_schema_mappings",
+        "platform.tenants",
+        "rules.grc_impacts",
+        "rules.rule_definitions"
+      ]
+    },
+    {
+      "table": "rules.grc_impact_mappings",
+      "direct": false,
+      "neighbors": [
+        "controls.controls",
+        "data.source_precedence_policies",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "regulatory.requirements",
+        "risk.risks",
+        "rules.grc_impacts",
+        "rules.rule_definitions"
+      ]
+    },
+    {
+      "table": "rules.grc_impacts",
+      "direct": false,
+      "neighbors": [
+        "data.data_lineage",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "remediation.actions",
+        "remediation.issues",
+        "rules.automation_policies",
+        "rules.grc_impact_mappings",
+        "rules.rule_evaluations"
+      ]
+    },
+    {
+      "table": "rules.rule_definition_inputs",
+      "direct": false,
+      "neighbors": [
+        "data.metric_definitions",
+        "data.observation_types",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "rules.rule_definitions"
+      ]
+    },
+    {
+      "table": "rules.rule_definition_thresholds",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "rules.rule_definitions"
+      ]
+    },
+    {
+      "table": "rules.rule_definitions",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "integration.external_schema_mappings",
+        "platform.tenants",
+        "risk.risk_tolerance_policies",
+        "rules.automation_policies",
+        "rules.grc_impact_mappings",
+        "rules.rule_definition_inputs",
+        "rules.rule_definition_thresholds",
+        "rules.rule_evaluations"
+      ]
+    },
+    {
+      "table": "rules.rule_evaluation_inputs",
+      "direct": false,
+      "neighbors": [
+        "data.metric_measurements",
+        "data.observations",
+        "data.source_resolutions",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "rules.rule_evaluations"
+      ]
+    },
+    {
+      "table": "rules.rule_evaluations",
+      "direct": false,
+      "neighbors": [
+        "config.effective_configurations",
+        "data.calculation_runs",
+        "data.data_lineage",
+        "data.snapshot_items",
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants",
+        "rules.grc_impacts",
+        "rules.rule_definitions",
+        "rules.rule_evaluation_inputs",
+        "rules.rule_evaluations"
+      ]
+    },
+    {
+      "table": "survey.survey_answers",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "survey.survey_questions",
+        "survey.survey_responses"
+      ]
+    },
+    {
+      "table": "survey.survey_campaigns",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants",
+        "survey.survey_responses",
+        "survey.survey_versions"
+      ]
+    },
+    {
+      "table": "survey.survey_options",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "survey.survey_questions"
+      ]
+    },
+    {
+      "table": "survey.survey_question_validation_rules",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "survey.survey_questions"
+      ]
+    },
+    {
+      "table": "survey.survey_questions",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "survey.survey_answers",
+        "survey.survey_options",
+        "survey.survey_question_validation_rules",
+        "survey.survey_versions"
+      ]
+    },
+    {
+      "table": "survey.survey_responses",
+      "direct": false,
+      "neighbors": [
+        "data.observations",
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants",
+        "survey.survey_answers",
+        "survey.survey_campaigns"
+      ]
+    },
+    {
+      "table": "survey.survey_versions",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "survey.survey_campaigns",
+        "survey.survey_questions",
+        "survey.survey_versions",
+        "survey.surveys"
+      ]
+    },
+    {
+      "table": "survey.surveys",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "survey.survey_versions"
+      ]
+    },
+    {
+      "table": "third_party.supplier_assessments",
+      "direct": false,
+      "neighbors": [
+        "data.snapshot_items",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "remediation.issue_origins",
+        "third_party.supplier_assessments",
+        "third_party.suppliers"
+      ]
+    },
+    {
+      "table": "third_party.supplier_contracts",
+      "direct": false,
+      "neighbors": [
+        "evidence.documents",
+        "iam.service_principals",
+        "iam.user_identities",
+        "platform.tenants",
+        "third_party.suppliers"
+      ]
+    },
+    {
+      "table": "third_party.supplier_services",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.services",
+        "platform.tenants",
+        "third_party.suppliers"
+      ]
+    },
+    {
+      "table": "third_party.suppliers",
+      "direct": false,
+      "neighbors": [
+        "iam.service_principals",
+        "iam.user_identities",
+        "org.subjects",
+        "platform.tenants",
+        "privacy.data_recipients",
+        "privacy.processing_activity_suppliers",
+        "third_party.supplier_assessments",
+        "third_party.supplier_contracts",
+        "third_party.supplier_services"
+      ]
+    }
+  ],
+  "invalid_constraints_in_closure": [],
+  "invalid_indexes_in_closure": []
+}

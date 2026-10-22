@@ -1,0 +1,59 @@
+{
+  "RECTOR_GATE": "PASS",
+  "MASTER_REGENT": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "STEP6A3": "PARTIAL_BLOCKED",
+  "STEP6A4": "NOT_STARTED",
+  "PASO9_2B": "BLOCKED_TEST_DATA",
+  "correlation": "01a1551c-ffb1-7588-99c4-452ff359cb6e",
+  "missing_reference": "control_id must belong to TECDEX; supplied control exists globally with tenant_id NULL, not within TECDEX",
+  "control": {
+    "control_id": "01a0ea93-d21e-76d9-a73d-8494499a2398",
+    "tenant_id": null,
+    "ownership_class": "PLATFORM_CONTROL",
+    "control_code": "EVIDENCE-001",
+    "name": "Protección de evidencias y registros",
+    "lifecycle_state": "draft",
+    "based_on_control_version_id": null
+  },
+  "file_found": {
+    "file_object_id": "01a1551c-fdf8-72e0-aa91-85a45bd805c9",
+    "created_at": "2026-10-19T17:02:05.796Z",
+    "original_filename": "GRC_Tecdex_Evidencia_QA_STEP6A3.pdf",
+    "scan_status": "passed",
+    "size_bytes": "71932",
+    "source_provenance": "Interna",
+    "created_by_user_identity_id": "01a1470d-bc20-744d-b35d-6121b96631ce",
+    "retention_policy_id": "01a146ce-bf2e-74cc-972b-154081141b64",
+    "retention_policy_applicability_id": "01a146f1-8dbe-723a-92a1-24c2bbf1ae45",
+    "applicability_state": "published",
+    "used_by_evidence": false
+  },
+  "file_correlation_association": "temporal/actor/filename only; failed request payload not persisted in queried audit or logs",
+  "compatible_document_target": "NONE_ACCREDITED; no TECDEX implementation of EVIDENCE-001; existing client-requirements control not a justified substitute",
+  "local_correction": "EvidenceLink control selector excludes non-TENANT_OWNED options only in this context",
+  "tests": {
+    "frontend_focal": "PASS",
+    "backend_focal": "PASS",
+    "playwright": "2 PASS",
+    "frontend_typecheck": "PASS",
+    "backend_typecheck": "PASS",
+    "frontend_build": "PASS",
+    "rector_governance": "PASS exit0",
+    "whitespace": "PASS"
+  },
+  "deployment": "NOT_AUTHORIZED_NOT_PERFORMED",
+  "qa_data_writes": 0,
+  "qa_transfers": 0,
+  "unchanged": [
+    "contracts",
+    "backend implementation",
+    "PostgreSQL",
+    "IAM/RBAC",
+    "audit",
+    "storage architecture",
+    "QA runtime",
+    "production"
+  ],
+  "new_rector_conflicts": [],
+  "human_acceptance": "PENDING"
+}
