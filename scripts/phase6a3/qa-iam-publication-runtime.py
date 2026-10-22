@@ -105,8 +105,8 @@ def main():
                 raise RuntimeError("OPERATOR_ROLLBACK_ALREADY_EXISTS")
             run(["docker", "stop", "-t", "20", name])
             run(["docker", "rename", name, rollback])
-        container_id = run(args)
         try:
+            container_id = run(args)
             ready = False
             for _ in range(30):
                 observed = json.loads(run(["docker", "inspect", name]))[0]
