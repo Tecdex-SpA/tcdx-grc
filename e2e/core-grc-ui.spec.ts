@@ -141,6 +141,61 @@ const evidenceDirectory = process.env.TCDX_UI_EVIDENCE_DIR ?? "artifacts/phase5-
 test.beforeAll(async () => { await mkdir(evidenceDirectory, { recursive: true }); });
 test.beforeEach(({page})=>{page.on("pageerror",error=>console.error("BROWSER_ERROR",error.message));});
 
+test("Framework contracting confirms the exact version and retries a lost response without duplicating", async ({ page }, testInfo) => {
+  await mockRuntime(page, ["TENANT_ADMIN"], ["PLATFORM_ADMIN"]);
+  const version = { regulatory_pack_version_id: roleId, pack_code: "SYNTHETIC-QA",
+    name: "Marco sintético QA", edition: "Edición de prueba", version_number: "2",
+    license_classification: "non_authoritative_test_pack", effective_from: "2026-01-01T00:00:00Z", effective_to: null };
+  let attempts = 0;
+  let persisted = false;
+  let firstKey: string | undefined;
+  const assignment = { ...version, subscription_regulatory_pack_id: memberId, subscription_id: tenantId,
+    tenant_id: tenantId, lifecycle_state: "active", effective_state: "effective",
+    effective_from: "2026-10-22T12:00:00.000Z", effective_to: null, row_version: 1 };
+  await page.route("**/api/v1/platform/regulatory-pack-versions", route => route.fulfill({ json: {
+    items: [version], page: { has_more: false, next_cursor: null }
+  } }));
+  await page.route(`**/api/v1/subscriptions/${tenantId}/regulatory-packs`, async route => {
+    expect(route.request().headers()["x-tcdx-tenant-id"]).toBeUndefined();
+    if (route.request().method() === "GET") return route.fulfill({ json: {
+      items: persisted ? [assignment] : [], page: { has_more: false, next_cursor: null }
+    } });
+    attempts++;
+    expect(route.request().postDataJSON()).toEqual({ regulatory_pack_version_id: roleId, effective_from: assignment.effective_from });
+    const key = route.request().headers()["idempotency-key"];
+    expect(key).toBeTruthy();
+    if (!persisted) {
+      firstKey = key; persisted = true;
+      return route.abort("failed"); // Commit succeeded; the first HTTP response was lost.
+    }
+    expect(key).toBe(firstKey);
+    return route.fulfill({ status: 202, headers: { "idempotency-replayed": "true" }, json: {
+      operation_id: "subscriptionRegulatoryPackActivate", status: "completed", result: assignment
+    } });
+  });
+  await page.goto("/configuraciones/empresas");
+  await page.getByRole("button", { name: "Ver detalle", exact: true }).click();
+  await page.getByRole("combobox", { name: "Versión del marco", exact: true }).selectOption(roleId);
+  await expect(page.getByRole("region", { name: "Detalle del marco" })).toContainText("Edición de prueba");
+  await page.getByLabel("Vigente desde", { exact: true }).fill(assignment.effective_from);
+  await page.getByRole("button", { name: "Contratar marco", exact: true }).click();
+  expect(attempts).toBe(0);
+  const confirmation = page.getByRole("region", { name: "Confirmación de contratación" });
+  await expect(confirmation).toContainText("Marco sintético QA · Edición de prueba · v2");
+  await page.getByRole("button", { name: "Confirmar contratación", exact: true }).click();
+  await expect(page.getByRole("status").filter({ hasText: "reintentar la misma solicitud" })).toBeVisible();
+  await page.getByRole("button", { name: "Confirmar contratación", exact: true }).click();
+  await expect(page.getByText("Marco contratado y auditado.", { exact: true })).toBeVisible();
+  expect(attempts).toBe(2);
+  await expect(page.getByRole("row").filter({ hasText: "SYNTHETIC-QA" })).toHaveCount(1);
+  await page.getByRole("combobox", { name: "Versión del marco", exact: true }).selectOption(roleId);
+  await page.getByLabel("Vigente desde", { exact: true }).fill(assignment.effective_from);
+  await expect(page.getByRole("button", { name: "Contratar marco", exact: true })).toBeDisabled();
+  await expect(page.getByText("Esta versión ya está contratada para esta suscripción.")).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
+  await page.screenshot({ path: testInfo.outputPath("contracting-confirmed.png"), fullPage: true });
+});
+
 test("Platform Admin assigns a published plan and immediately reaches contracted frameworks", async ({ page }, testInfo) => {
   await mockRuntime(page, ["GRC_MANAGER"], ["PLATFORM_ADMIN"]);
   let subscribed = false;
@@ -413,7 +468,7 @@ test("Tenant Admin sees own contracted frameworks without commercial commands", 
   await page.goto("/configuraciones/empresas");
   await expect(page.getByRole("heading", { name: "Marcos contratados" })).toBeVisible();
   await expect(page.getByText("Marco contractual A")).toBeVisible();
-  await expect(page.getByRole("button", { name: "Activar marco" })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Contratar marco", exact: true })).toHaveCount(0);
   await expect(page.getByRole("button", { name: "Revocar" })).toHaveCount(0);
 });
 
@@ -490,7 +545,7 @@ test("Platform Admin creates exact non-authoritative access from canonical candi
   await expect(validation.getByLabel("Versión para validación")).toBeVisible();
   await expect(validation.getByLabel(/ID de versión|ID de procedencia|UUID/i)).toHaveCount(0);
   await expect(validation.getByRole("option", { name: "Marco de validación · ISO-QA · 2022" })).toBeAttached();
-  await validation.getByLabel("Inicio solicitado del acceso").fill("2026-10-01T09:00");
+  await validation.getByLabel("Inicio solicitado del acceso").fill("2026-10-01T09:00:00.000Z");
   await expect.poll(() => candidateCalls).toBeGreaterThan(1);
   expect(filteredCandidateCalls).toBeGreaterThan(0);
   await validation.getByLabel("Versión para validación").selectOption(memberId);
@@ -553,7 +608,7 @@ for (const status of [400, 401, 403, 404, 409]) {
     await page.getByRole("button", { name: "Ver detalle" }).click();
     const validation = page.locator(".admin-section").filter({ has: page.getByRole("heading", { name: "Accesos de validación" }) });
     await validation.getByRole("button", { name: "Conceder acceso de validación" }).click();
-    await validation.getByLabel("Inicio solicitado del acceso").fill("2026-10-01T09:00");
+    await validation.getByLabel("Inicio solicitado del acceso").fill("2026-10-01T09:00:00.000Z");
     await validation.getByLabel("Versión para validación").selectOption(memberId);
     await validation.locator("form").getByRole("button", { name: "Conceder acceso de validación" }).click();
     await expect(validation.getByRole("alert")).toContainText(status === 400 ? "Revisa la versión seleccionada"
@@ -586,7 +641,7 @@ test("Validation CREATE ignores a repeated click while the POST is pending", asy
   await page.getByRole("button", { name: "Ver detalle" }).click();
   const validation = page.locator(".admin-section").filter({ has: page.getByRole("heading", { name: "Accesos de validación" }) });
   await validation.getByRole("button", { name: "Conceder acceso de validación" }).click();
-  await validation.getByLabel("Inicio solicitado del acceso").fill("2026-10-01T09:00");
+  await validation.getByLabel("Inicio solicitado del acceso").fill("2026-10-01T09:00:00.000Z");
   await validation.getByLabel("Versión para validación").selectOption(memberId);
   await validation.locator("form").getByRole("button", { name: "Conceder acceso de validación" }).click();
   await expect(validation.getByRole("button", { name: "Concediendo acceso…" })).toBeDisabled();
@@ -801,7 +856,7 @@ test("Platform companies and tenant users expose the canonical administrative fl
   await expect(page.getByRole("dialog")).toContainText("TecDex SpA");
   await expect(page.getByRole("dialog")).toContainText("Marcos contratados");
   await expect(page.getByRole("dialog")).toContainText("Marco contractual A");
-  await expect(page.getByRole("button", { name: "Activar marco" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Contratar marco", exact: true })).toBeVisible();
   await expect(page.getByRole("button", { name: "Revocar" })).toBeVisible();
   await page.getByRole("button", { name: "Administrar usuarios" }).click();
   await expect(page.getByRole("heading", { name: "Usuarios", exact: true })).toBeVisible();
@@ -1116,7 +1171,7 @@ test("Phase6A selectors fail closed in Spanish when an operational translation i
 });
 
 test("Macro R1 framework and SoA items use authorized business selectors without UUID/JSON input",async({page},info)=>{
- await mockRuntime(page);
+ await mockRuntime(page,["GRC_MANAGER"],[],["compliance.soa.create"]);
  await page.route("**/api/v1/framework-version-references?**",route=>{const u=new URL(route.request().url());expect(u.searchParams.get('purpose')).toBe('select');return route.fulfill({json:{items:[{framework_version_id:roleId,framework_code:'NORMA',framework_name:'Marco autorizado',edition:'v1',version_number:1,lifecycle_state:'published',selectable:true}],page:{has_more:false,next_cursor:null}}});});
  await page.goto('/soa');await page.getByRole('button',{name:'Nuevo registro',exact:true}).click();const dialog=page.getByRole('dialog');
  await dialog.getByLabel('Versión normativa',{exact:true}).selectOption(roleId);await dialog.getByRole('button',{name:'Agregar elemento',exact:true}).click();
@@ -1172,22 +1227,23 @@ test("INITIAL_SOURCE bind uses backend candidates and distinguishes formal sourc
     if(request.method()==='POST') {
       expect(url.pathname).toBe(`/api/v1/retention-policy-applicabilities/${roleId}:bind-initial-source`);
       expect(request.headers()['if-match']).toBe('"1"');expect(request.headers()['idempotency-key']).toBeTruthy();
-      expect(request.postDataJSON()).toEqual({source_evidence_version_id:tenantId,source_clause_ref:'Cláusula de prueba local',effective_from:'2026-10-15T12:00:00Z'});
+      expect(request.postDataJSON()).toEqual({source_evidence_version_id:tenantId,source_clause_ref:'Cláusula de prueba local',effective_from:expect.any(String)});
+      expect(Date.parse(request.postDataJSON().effective_from)).toBe(Date.parse('2026-10-15T12:00:00Z'));
       submitted=true;await route.fulfill({status:200,json:{result:{...draft,row_version:2,source_evidence_version_id:tenantId}}});return;
     }
     await route.fulfill({json:url.pathname.endsWith(roleId)?draft:{items:[draft],page:{has_more:false,next_cursor:null}}});
   });
-  await page.goto('/configuraciones/empresas');
-  const section=page.getByRole('region',{name:'Retención documental de la empresa'});
-  await section.getByRole('button',{name:'Ver detalle'}).last().click();
+  await page.goto('/evidencias?tab=aplicabilidad-retencion');
+  await page.getByRole('tab',{name:'Aplicabilidad de retención',exact:true}).click();
+  await page.getByRole('button',{name:'Ver detalle'}).last().click();
   const dialog=page.getByRole('dialog');
   await expect(dialog.getByRole('status').filter({hasText:'La fuente inicial formal requiere'})).toBeVisible();
   const source=dialog.getByLabel('Fuente inicial aprobada',{exact:true});
   await source.selectOption(tenantId);await source.focus();await expect(source).toBeFocused();
   await dialog.getByLabel('Cláusula o disposición aplicable',{exact:true}).fill('Cláusula de prueba local');
-  await dialog.getByLabel('Vigente desde',{exact:true}).fill('2026-10-15T12:00:00Z');
+  await dialog.getByLabel('Vigente desde',{exact:true}).fill('2026-10-15T14:00');
   expect(await dialog.locator('.drawer-body').evaluate(element=>element.scrollWidth<=element.clientWidth+1)).toBe(true);
-  await dialog.screenshot({path:`docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/LOCAL_SIMULATED_BIND_${info.project.name}.png`});
+  await dialog.screenshot({path:info.outputPath('local-simulated-bind.png')});
   await dialog.getByRole('button',{name:'Vincular fuente inicial',exact:true}).click();
   await expect.poll(()=>submitted).toBe(true);
 });

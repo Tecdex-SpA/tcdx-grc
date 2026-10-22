@@ -13,7 +13,7 @@ type Assignment = {
   subscription_regulatory_pack_id: string; subscription_id: string; tenant_id: string;
   regulatory_pack_version_id: string; row_version: string | number; lifecycle_state: string;
   effective_from: Date; effective_to: Date | null; pack_code: string; name: string;
-  edition: string; license_classification: string; pack_lifecycle_state: string;
+  edition: string; version_number: string | number; license_classification: string; pack_lifecycle_state: string;
 };
 
 function invalid(field: string): never {
@@ -43,7 +43,7 @@ function bodyFields(body: unknown, allowed: readonly string[], required: readonl
 }
 
 function project(row: Assignment) {
-  return { ...row, row_version: Number(row.row_version), effective_from: row.effective_from.toISOString(),
+  return { ...row, row_version: Number(row.row_version), version_number: String(row.version_number), effective_from: row.effective_from.toISOString(),
     effective_to: row.effective_to?.toISOString() ?? null,
     effective_state: row.lifecycle_state === "revoked" ? "revoked"
       : row.effective_from.getTime() > Date.now() ? "future"
@@ -53,7 +53,7 @@ function project(row: Assignment) {
 async function assignment(executor: Executor, id: string, tenantId?: string) {
   const result = await sql<Assignment>`
     SELECT a.subscription_regulatory_pack_id,a.subscription_id,a.tenant_id,a.regulatory_pack_version_id,
-           a.row_version,a.lifecycle_state,a.effective_from,a.effective_to,p.pack_code,p.name,pv.edition,
+           a.row_version,a.lifecycle_state,a.effective_from,a.effective_to,p.pack_code,p.name,pv.edition,pv.version_number,
            pv.license_classification,pv.lifecycle_state AS pack_lifecycle_state
       FROM platform.subscription_regulatory_packs a
       JOIN regulatory.regulatory_pack_versions pv ON pv.regulatory_pack_version_id=a.regulatory_pack_version_id
@@ -158,8 +158,8 @@ export async function activatePack(transaction: Transaction<FoundationDatabase>,
       AND (ends_at IS NULL OR ends_at>transaction_timestamp()) AND cancelled_at IS NULL FOR UPDATE
   `.execute(transaction);
   if (subscription.rows.length !== 1) notFound();
-  const version = await sql<{ regulatory_pack_version_id: string }>`
-    SELECT pv.regulatory_pack_version_id FROM regulatory.regulatory_pack_versions pv
+  const version = await sql<{ regulatory_pack_version_id: string; regulatory_pack_id: string }>`
+    SELECT pv.regulatory_pack_version_id,pv.regulatory_pack_id FROM regulatory.regulatory_pack_versions pv
     JOIN regulatory.regulatory_packs p ON p.regulatory_pack_id=pv.regulatory_pack_id
     WHERE pv.regulatory_pack_version_id=${versionId}::uuid
       AND pv.lifecycle_state='published' AND p.lifecycle_state='published'
@@ -169,15 +169,15 @@ export async function activatePack(transaction: Transaction<FoundationDatabase>,
   if (version.rows.length !== 1) notFound();
   const active = await sql<{ subscription_regulatory_pack_id: string }>`
     SELECT subscription_regulatory_pack_id FROM platform.subscription_regulatory_packs
-     WHERE subscription_id=${subscriptionId}::uuid AND regulatory_pack_version_id=${versionId}::uuid
+     WHERE subscription_id=${subscriptionId}::uuid AND regulatory_pack_id=${version.rows[0]!.regulatory_pack_id}::uuid
        AND tstzrange(effective_from,effective_to,'[)') && tstzrange(${effectiveFrom.toISOString()}::timestamptz,NULL,'[)')
   `.execute(transaction);
   if (active.rows.length !== 0) conflict();
   const id = newUuidV7();
   await sql`INSERT INTO platform.subscription_regulatory_packs
-    (subscription_regulatory_pack_id,tenant_id,subscription_id,regulatory_pack_version_id,lifecycle_state,effective_from,
+    (subscription_regulatory_pack_id,tenant_id,subscription_id,regulatory_pack_version_id,regulatory_pack_id,lifecycle_state,effective_from,
      created_by_user_identity_id,updated_by_user_identity_id)
-    VALUES (${id}::uuid,${subscription.rows[0]!.tenant_id}::uuid,${subscriptionId}::uuid,${versionId}::uuid,'active',
+    VALUES (${id}::uuid,${subscription.rows[0]!.tenant_id}::uuid,${subscriptionId}::uuid,${versionId}::uuid,${version.rows[0]!.regulatory_pack_id}::uuid,'active',
       ${effectiveFrom.toISOString()}::timestamptz,${actor.identity.principalId}::uuid,${actor.identity.principalId}::uuid)
   `.execute(transaction);
   const result = await assignment(transaction, id);

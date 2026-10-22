@@ -20,6 +20,7 @@ describe.skipIf(!enabled)("Phase 5+ pack temporal authority in isolated PostgreS
     const laterVersionId = newUuidV7();
     const futureVersionId = newUuidV7();
     const expiredVersionId = newUuidV7();
+    const sameRootVersionId = newUuidV7();
     let completed = false;
     try {
       await database.transaction().execute(async (tx) => {
@@ -28,30 +29,41 @@ describe.skipIf(!enabled)("Phase 5+ pack temporal authority in isolated PostgreS
         await sql`INSERT INTO platform.tenants (tenant_id,tenant_code,legal_name,display_name,default_timezone,created_by_user_identity_id,updated_by_user_identity_id)
           VALUES (${tenantId}::uuid,${`PACK-${tenantId.slice(0, 12)}`},'Pack test tenant','Pack test tenant','UTC',${actorId}::uuid,${actorId}::uuid)`.execute(tx);
         const plan = await sql<{ plan_version_id: string }>`SELECT plan_version_id FROM platform.plan_versions WHERE lifecycle_state='published' LIMIT 1`.execute(tx);
-        const original = await sql<{ regulatory_pack_version_id: string; regulatory_pack_id: string }>`
-          SELECT regulatory_pack_version_id,regulatory_pack_id FROM regulatory.regulatory_pack_versions
-           WHERE (effective_from IS NULL OR effective_from<=transaction_timestamp())
-             AND (effective_to IS NULL OR effective_to>transaction_timestamp()) LIMIT 1`.execute(tx);
-        if (!plan.rows[0] || !original.rows[0]) throw new Error("PUBLISHED_PLAN_AND_IMPORTED_CATALOG_REQUIRED");
-        const firstId = original.rows[0].regulatory_pack_version_id;
-        await sql`UPDATE regulatory.regulatory_packs SET lifecycle_state='published' WHERE regulatory_pack_id=${original.rows[0].regulatory_pack_id}::uuid`.execute(tx);
-        await sql`UPDATE regulatory.regulatory_pack_versions SET lifecycle_state='published' WHERE regulatory_pack_version_id=${firstId}::uuid`.execute(tx);
+        if (!plan.rows[0]) throw new Error("PUBLISHED_PLAN_REQUIRED");
+        // The isolated contract test owns its synthetic pack; it never depends
+        // on, publishes or rewrites a real imported ISO/legal edition.
+        const packId = newUuidV7(), firstId = newUuidV7();
+        await sql`INSERT INTO regulatory.regulatory_packs
+          (regulatory_pack_id,pack_code,name,source_type,lifecycle_state)
+          VALUES (${packId}::uuid,${`SYNTHETIC-${packId}`},'Synthetic contracting test','standard','published')`.execute(tx);
+        await sql`INSERT INTO regulatory.regulatory_pack_versions
+          (regulatory_pack_version_id,regulatory_pack_id,version_number,lifecycle_state,effective_from,edition,license_classification,content_hash)
+          VALUES (${firstId}::uuid,${packId}::uuid,1,'published',transaction_timestamp()-interval '1 day',
+            'synthetic-1','non_authoritative_test_pack',repeat('a',64))`.execute(tx);
         for (const [id, number] of [[laterVersionId, 2], [futureVersionId, 3], [expiredVersionId, 4]] as const) {
+          const separatePackId = newUuidV7();
+          await sql`INSERT INTO regulatory.regulatory_packs (regulatory_pack_id,pack_code,name,source_type,lifecycle_state)
+            VALUES (${separatePackId}::uuid,${`SYNTHETIC-${separatePackId}`},'Independent synthetic test pack','standard','published')`.execute(tx);
           await sql`INSERT INTO regulatory.regulatory_pack_versions
             (regulatory_pack_version_id,regulatory_pack_id,version_number,lifecycle_state,effective_from,edition,license_classification,content_hash)
-            SELECT ${id}::uuid,regulatory_pack_id,${number},'published',transaction_timestamp()-interval '1 day',
+            SELECT ${id}::uuid,${separatePackId}::uuid,${number},'published',transaction_timestamp()-interval '1 day',
                    ${`test-edition-${number}`},license_classification,repeat('a',64)
               FROM regulatory.regulatory_pack_versions WHERE regulatory_pack_version_id=${firstId}::uuid`.execute(tx);
         }
+        await sql`INSERT INTO regulatory.regulatory_pack_versions
+          (regulatory_pack_version_id,regulatory_pack_id,version_number,lifecycle_state,effective_from,edition,license_classification,content_hash)
+          VALUES (${sameRootVersionId}::uuid,${packId}::uuid,2,'published',transaction_timestamp()-interval '1 day',
+            'synthetic-root-successor','non_authoritative_test_pack',repeat('a',64))`.execute(tx);
         await sql`INSERT INTO platform.subscriptions
           (subscription_id,tenant_id,plan_version_id,subscription_code,lifecycle_state,starts_at,created_by_user_identity_id,updated_by_user_identity_id)
           VALUES (${subscriptionId}::uuid,${tenantId}::uuid,${plan.rows[0].plan_version_id}::uuid,
             ${`PACK-${subscriptionId.slice(0, 12)}`},'active',transaction_timestamp()-interval '1 day',${actorId}::uuid,${actorId}::uuid)`.execute(tx);
         const insert = async (id: string, versionId: string, from: string, to: string | null, lifecycle: string) => sql`
           INSERT INTO platform.subscription_regulatory_packs
-            (subscription_regulatory_pack_id,tenant_id,subscription_id,regulatory_pack_version_id,lifecycle_state,effective_from,effective_to,
+            (subscription_regulatory_pack_id,tenant_id,subscription_id,regulatory_pack_version_id,regulatory_pack_id,lifecycle_state,effective_from,effective_to,
              created_by_user_identity_id,updated_by_user_identity_id)
-          VALUES (${id}::uuid,${tenantId}::uuid,${subscriptionId}::uuid,${versionId}::uuid,${lifecycle},
+          VALUES (${id}::uuid,${tenantId}::uuid,${subscriptionId}::uuid,${versionId}::uuid,
+            (SELECT regulatory_pack_id FROM regulatory.regulatory_pack_versions WHERE regulatory_pack_version_id=${versionId}::uuid),${lifecycle},
             ${from}::timestamptz,${to}::timestamptz,${actorId}::uuid,${actorId}::uuid)
         `.execute(tx);
         const now = Date.now();
@@ -88,6 +100,10 @@ describe.skipIf(!enabled)("Phase 5+ pack temporal authority in isolated PostgreS
         expect((await effectivePacks(tx, tenantId)).map((item) => item.regulatory_pack_version_id)).toEqual([firstId]);
         expect((await listPackAssignments(tx, subscriptionId, tenantId)).items).toHaveLength(1);
         await expect(listPackAssignments(tx, subscriptionId, newUuidV7())).rejects.toMatchObject({ code: "TCDX.RESOURCE.NOT_FOUND" });
+        await expect(activatePack(tx, platformActor, {
+          subscriptionId, body: { regulatory_pack_version_id: sameRootVersionId, effective_from: past },
+          key: newUuidV7(), correlationId: newUuidV7()
+        })).rejects.toMatchObject({ code: "TCDX.CONFLICT.RESOURCE" });
         await insert(newUuidV7(), futureVersionId, future, null, "active");
         await insert(newUuidV7(), expiredVersionId, earlier, past, "revoked");
         expect((await effectivePacks(tx, tenantId)).map((item) => item.regulatory_pack_version_id)).toEqual([firstId]);
@@ -101,6 +117,12 @@ describe.skipIf(!enabled)("Phase 5+ pack temporal authority in isolated PostgreS
         expect(activated.replayed).toBe(false);
         const activationReplay = await activatePack(tx, platformActor, { subscriptionId, body: activationBody, key: activationKey, correlationId: newUuidV7() });
         expect(activationReplay.replayed).toBe(true);
+        expect(activationReplay.result.subscription_regulatory_pack_id).toBe(activated.result.subscription_regulatory_pack_id);
+        expect(activated.result.version_number).toBe("2");
+        const audits = await sql<{ count: number }>`SELECT count(*)::int AS count FROM ops_audit.audit_events
+          WHERE aggregate_id=${activated.result.subscription_regulatory_pack_id}::uuid
+            AND event_code='audit.platform.subscription_regulatory_pack.activate.v1'`.execute(tx);
+        expect(audits.rows[0]!.count).toBe(1);
         expect(new Set((await effectivePacks(tx, tenantId)).map((item) => item.regulatory_pack_version_id)))
           .toEqual(new Set([firstId, laterVersionId]));
         await sql`SAVEPOINT duplicate_pack_assignment`.execute(tx);
@@ -108,7 +130,7 @@ describe.skipIf(!enabled)("Phase 5+ pack temporal authority in isolated PostgreS
           await insert(newUuidV7(), firstId, new Date(now - 82_800_000).toISOString(), null, "active");
           throw new Error("OVERLAPPING_ASSIGNMENT_WAS_ACCEPTED");
         } catch (error) {
-          expect((error as { code?: string }).code).toBe("23P01");
+          expect(error).toMatchObject({ code: "P0001", message: "COMMERCIAL_NEW_ASSIGNMENT_ROOT_OVERLAP" });
         } finally { await sql`ROLLBACK TO SAVEPOINT duplicate_pack_assignment`.execute(tx); }
         await expect(revokePack(tx, { ...platformActor, permissions: new Set() }, {
           assignmentId: activated.result.subscription_regulatory_pack_id, body: { reason: "Contract ended" },
