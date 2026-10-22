@@ -23,7 +23,7 @@ describe("D3-A existing MembershipRole authority and projection scope", () => {
     expect(permissionProjectionCatalog["platform.role.assign"]).toEqual({
       capabilities: ["CORE_PLATFORM"], scopes: ["platform", "tenant"]
     });
-    expect(Object.keys(permissionProjectionCatalog)).toHaveLength(179);
+    expect(Object.keys(permissionProjectionCatalog)).toHaveLength(187);
     expect(migration).toContain("Add only its PLATFORM_ADMIN Platform-control grant; tenant grants remain unchanged.");
     expect(migration).not.toMatch(/INSERT INTO iam\.permissions|ALTER TABLE|CREATE TABLE/i);
   });

@@ -28,7 +28,10 @@ def main():
     name = os.environ.get("TCDX_QA_OPERATOR_NAME", "tcdx-grc-step6a3-publication-operator")
     if not re.fullmatch(r"tcdx-grc-step6a3-[a-z0-9-]+-operator", name):
         raise RuntimeError("CANONICAL_OPERATOR_NAME_REQUIRED")
-    replace = os.environ.get("TCDX_QA_OPERATOR_REPLACE") == "integrated-qa-release-20261022"
+    replacement = os.environ.get("TCDX_QA_OPERATOR_REPLACE", "")
+    if replacement not in ["", "integrated-qa-release-20261022", "integrated-qa-release-20261022-v3"]:
+        raise RuntimeError("UNREVIEWED_OPERATOR_REPLACEMENT")
+    replace = bool(replacement)
     previous = json.loads(run(["docker", "inspect", name]))[0] if replace else None
     config = Path(directory)
     if not config.is_dir() or config.stat().st_mode & 0o077:
@@ -99,7 +102,7 @@ def main():
                 raise RuntimeError("LIBRARY_RELEASE_CUSTODY_REQUIRED")
             args += ["--mount", f"type=bind,src={release_mount},dst=/run/config/library-release,readonly"]
         args += [image_id, "node", "apps/backend/dist/security/publication-operator-server.js"]
-        rollback = name + "-rollback-integrated-qa-20261022"
+        rollback = name + "-rollback-" + replacement.removeprefix("integrated-qa-release-")
         if replace:
             if subprocess.run(["docker", "inspect", rollback], capture_output=True).returncode == 0:
                 raise RuntimeError("OPERATOR_ROLLBACK_ALREADY_EXISTS")
