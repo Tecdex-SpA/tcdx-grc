@@ -23,9 +23,9 @@ export async function readLibraryMatrix(api:ApiClient,type:MatrixType,filters:Re
 export function MatrixTable({page,onContinue}:{page:MatrixPage;onContinue?:(axis:'row'|'column'|'cell',cursor:string)=>void}){
  const id=useId(),[detail,setDetail]=useState<number|null>(null);const checked=validateMatrixPage(page);
  const current=detail===null?null:checked.cells[detail];
- return <section className="data-card table-card" aria-labelledby={id}>
-  <div><h2 id={id}>{titles[checked.matrix_type]}</h2><p>{checked.authorization_notice}</p></div>
-  <p className="admin-secondary">{checked.temporal_semantics==='current_state_with_as_of_population'?'Estados actuales a la lectura; población a la fecha seleccionada.':'Relaciones según su intervalo de vigencia.'}</p>
+ return <section className="data-card table-card matrix-card" aria-labelledby={id}>
+  <header className="matrix-heading"><div><p className="eyebrow">Correspondencias</p><h2 id={id}>{titles[checked.matrix_type]}</h2><p>{checked.authorization_notice}</p></div></header>
+  <p className="admin-secondary matrix-context">{checked.temporal_semantics==='current_state_with_as_of_population'?'Estados actuales a la lectura; población a la fecha seleccionada.':'Relaciones según su intervalo de vigencia.'}</p>
   {checked.rows.length===0||checked.columns.length===0?<p role="status">Sin relaciones autorizadas para esta selección.</p>:<div className="table-scroll" tabIndex={0} role="region" aria-label={titles[checked.matrix_type]}><table><caption className="sr-only">Relaciones canónicas autorizadas. Una relación no acredita cumplimiento.</caption><thead><tr><th scope="col">Registro</th>{checked.columns.map(c=><th scope="col" key={refKey(c.ref)}>{c.label}</th>)}</tr></thead><tbody>{checked.rows.map(r=><tr key={refKey(r.ref)}><th scope="row">{r.label}</th>{checked.columns.map(c=>{
    const indices=checked.cells.flatMap((cell,index)=>refKey(cell.row_ref)===refKey(r.ref)&&refKey(cell.column_ref)===refKey(c.ref)?[index]:[]);
    return <td key={refKey(c.ref)}>{indices.length?indices.map(index=><button className="link-button" key={index} onClick={()=>setDetail(index)} aria-expanded={detail===index} aria-controls={id+'-detail'}>{relationshipLabel(checked.cells[index]!.relationship_type)}{checked.cells[index]!.source_lifecycle_state?' · '+statusLabel(checked.cells[index]!.source_lifecycle_state):''}</button>):'—'}</td>;
