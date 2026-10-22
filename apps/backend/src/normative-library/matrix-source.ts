@@ -8,6 +8,13 @@ import { invariant } from './authorization.js';
 
 type Row = Record<string,unknown>;
 type Shape = { joins:string; rowId:string; columnId:string; relationId:string; lifecycle:string; ownership:string; effective:string; filters:Record<string,string>; rowLabel:string; columnLabel:string };
+// Version numbers identify a revision only within their canonical parent.
+// These fixed FK lookups expose business labels under the same source/object
+// authorization used for each axis; callers cannot supply SQL or another parent.
+const versionParentCodes:Partial<Record<MatrixQuery['type'],string>>={
+ requirements_controls:'(SELECT parent.control_code FROM controls.controls parent WHERE parent.control_id=c.control_id AND parent.ownership_class=c.ownership_class AND parent.tenant_id IS NOT DISTINCT FROM c.tenant_id)',
+ controls_evidence:'(SELECT parent.evidence_code FROM evidence.evidences parent WHERE parent.evidence_id=c.evidence_id AND parent.tenant_id=c.tenant_id)'
+};
 // Only these published joins exist. User input never chooses a table, column, axis or SQL expression.
 const shapes:Record<MatrixQuery['type'],Shape>={
  requirements_controls:{joins:'regulatory.requirement_control_mappings l JOIN regulatory.requirements r ON r.requirement_id=l.requirement_id JOIN controls.control_versions c ON c.control_version_id=l.control_version_id',rowId:'requirement_id',columnId:'control_version_id',relationId:'requirement_control_mapping_id',lifecycle:'l.lifecycle_state',ownership:'(l.tenant_id IS NULL OR l.tenant_id=$1::uuid) AND (r.tenant_id IS NULL OR r.tenant_id=$1::uuid) AND (c.tenant_id IS NULL OR c.tenant_id=$1::uuid)',effective:'l',filters:{source_framework_version_id:'r.framework_version_id',requirement_id:'r.requirement_id',control_version_id:'c.control_version_id'},rowLabel:'requirement_code',columnLabel:'version_number'},
@@ -24,13 +31,15 @@ export function matrixSourceQuery(actor:CoreActor,query:MatrixQuery) {
  else where+=` AND (${d.effective}.effective_from IS NULL OR ${d.effective}.effective_from<=$2::timestamptz) AND (${d.effective}.effective_to IS NULL OR ${d.effective}.effective_to>$2::timestamptz)`;
  for(const [field,value]of Object.entries(query.filters)){
   if(field==='as_of')continue;
-  if(field==='query') {values.push('%'+value+'%');where+=` AND (r.${d.rowLabel}::text ILIKE $${values.length} OR c.${d.columnLabel}::text ILIKE $${values.length})`;continue;}
+  if(field==='query') {values.push('%'+value+'%');where+=` AND (r.${d.rowLabel}::text ILIKE $${values.length} OR c.${d.columnLabel}::text ILIKE $${values.length}${versionParentCodes[query.type]?` OR ${versionParentCodes[query.type]} ILIKE $${values.length}`:''})`;continue;}
   const expression=field==='lifecycle_state'?d.lifecycle:d.filters[field];
   if(expression){values.push(value);where+=` AND ${expression}=$${values.length}${field.endsWith('_id')?'::uuid':'::text'}`;continue;}
   if(field==='period_start'||field==='period_end'){values.push(value);where+=` AND c.assessed_at${field==='period_start'?'>=':'<'}$${values.length}::timestamptz`;continue;}
   invariant('Unbound matrix source filter');
  }
- return {sql:`SELECT to_jsonb(r) AS row_data,to_jsonb(c) AS column_data,to_jsonb(l) AS relation_data,transaction_timestamp() AS read_at FROM ${d.joins} WHERE ${where}`,parameters:values};
+ const parentCode=versionParentCodes[query.type];
+ const columnData=parentCode?`to_jsonb(c)||jsonb_build_object('matrix_parent_code',${parentCode})`:'to_jsonb(c)';
+ return {sql:`SELECT to_jsonb(r) AS row_data,${columnData} AS column_data,to_jsonb(l) AS relation_data,transaction_timestamp() AS read_at FROM ${d.joins} WHERE ${where}`,parameters:values};
 }
 function iso(v:unknown):string|null {if(v==null)return null;const t=new Date(String(v));if(!Number.isFinite(t.getTime()))invariant('Invalid persisted timestamp');return t.toISOString();}
 function text(v:unknown):string|null{return v==null||v===''?null:String(v);}
@@ -39,7 +48,8 @@ function axis(value:Row,id:string,label:string):MatrixAxis {
  const identity=ref(id,value[id]);const code=text(value[label]);
  if(!code)invariant('Missing canonical matrix label');
  // Hash only metadata exposed by the projection, never bodies/private JSON columns.
- const projection={ref:identity,label:code,code,framework_version_id:text(value.framework_version_id)};
+ const parentCode=text(value.matrix_parent_code);
+ const projection={ref:identity,label:parentCode?`${parentCode} · v${code}`:code,code:parentCode??code,framework_version_id:text(value.framework_version_id)};
  return {...projection,revision_hash:hashCanonical(projection)};
 }
 /** Caller runs this inside READ ONLY/REPEATABLE READ and passes all results through projectMatrixPage authority. */
