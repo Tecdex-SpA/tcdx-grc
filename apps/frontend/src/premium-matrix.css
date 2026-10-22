@@ -1,0 +1,92 @@
+.matrix-card .table-scroll { overscroll-behavior: contain; scrollbar-gutter: stable; }
+.matrix-card table { border-collapse: separate; border-spacing: 0; }
+.matrix-card thead th { position: sticky; top: 0; z-index: 2; background: var(--surface-soft); }
+.matrix-card thead th:first-child { position: sticky; top: 0; left: 0; z-index: 4; }
+.matrix-card tbody th { position: sticky; left: 0; z-index: 2; background: var(--surface); }
+.matrix-card tbody tr:hover > :is(th, td) { background: color-mix(in srgb, var(--secondary) 7%, var(--surface)); }
+
+
+/* Approved Tecdex palette; visual-only enhancement, no data semantics. */
+.matrix-card { overflow: clip; }
+.matrix-card .matrix-heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; }
+.matrix-card .matrix-context { color: var(--text-support); font-size: 12px; line-height: 1.5; }
+.matrix-card .table-scroll { position: relative; max-height: min(70vh, 780px); overflow: auto; border-block: 1px solid var(--line); scrollbar-width: thin; }
+.matrix-card table { min-width: max-content; width: 100%; }
+.matrix-card :is(th, td) { padding: 12px 14px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.45; }
+.matrix-card thead th { min-width: 180px; max-width: 340px; font-size: 12px; font-weight: 700; box-shadow: 0 1px 0 var(--border); }
+.matrix-card tbody th { min-width: 200px; max-width: 340px; font-size: 12px; font-weight: 650; overflow-wrap: anywhere; box-shadow: 1px 0 0 var(--line); }
+.matrix-card tbody td { min-width: 180px; max-width: 360px; overflow-wrap: anywhere; }
+.matrix-card tbody tr:nth-child(even) > :is(th, td) { background: var(--surface-soft); }
+.matrix-card tbody tr:hover > :is(th, td), .matrix-card tbody tr:focus-within > :is(th, td) { background: color-mix(in srgb, var(--secondary) 7%, var(--surface)); }
+.matrix-card :is(a, button):focus-visible { outline: 3px solid var(--secondary); outline-offset: -2px; }
+.matrix-card .link-button { line-height: 1.45; text-underline-offset: 3px; }
+.chart-frame :is(svg, canvas) { max-width: 100%; }
+.chart-frame svg text { font-family: inherit; }
+.distribution-legend strong, .kpi-card > strong { font-variant-numeric: tabular-nums; }
+.distribution-legend > div { border: 1px solid var(--line); }
+.distribution-ring > div { box-shadow: inset 0 0 0 1px var(--line); }
+.stacked-bar { height: 28px; }
+@media (max-width: 760px) {
+  .matrix-card .table-scroll { max-height: 65vh; scrollbar-gutter: auto; }
+  .matrix-card :is(th, td) { padding: 10px 12px; }
+  .matrix-card tbody th { min-width: 148px; max-width: 210px; }
+  .matrix-card thead th, .matrix-card tbody td { min-width: 148px; max-width: 230px; }
+}
+
+/* Shared executive SaaS polish using the approved visual vocabulary. */
+.workspace { max-width: 1680px; }
+.page-heading h1 { font-weight: 700; text-wrap: balance; }
+.page-heading p { max-width: 76ch; line-height: 1.55; }
+.data-card header { padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.kpi-card > strong, .distribution-legend strong { font-variant-numeric: tabular-nums; }
+.chart-frame :is(svg, canvas) { max-width: 100%; }
+.chart-frame svg text { font-family: inherit; }
+.distribution-ring > div { box-shadow: inset 0 0 0 1px var(--line); }
+.distribution-legend > div { border: 1px solid var(--line); }
+.table-scroll { scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+.matrix-card :is(a, button):focus-visible { outline: 3px solid var(--secondary); outline-offset: -2px; }
+.matrix-card tbody tr:focus-within > :is(th, td) { background: color-mix(in srgb, var(--secondary) 7%, var(--surface)); }
+@media (max-width: 760px) { .page-heading { align-items: flex-start; } }
+
+
+/* Premium visual pass: semantic tables and chart data stay untouched. */
+.app-shell .topbar { box-shadow: 0 1px 0 var(--line); }
+.sidebar nav button { transition: background 160ms ease, color 160ms ease; }
+.sidebar nav button.active { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--primary) 20%, transparent); }
+.workspace .page-heading { gap: 16px; }
+.workspace .page-heading h1 { line-height: 1.16; letter-spacing: -0.035em; }
+.workspace .eyebrow { letter-spacing: 0.11em; }
+.kpi-grid { align-items: stretch; }
+.kpi-card { min-height: 132px; }
+.kpi-card > strong { letter-spacing: -0.045em; line-height: 1.12; }
+.kpi-card > span { line-height: 1.45; }
+.data-card { min-width: 0; }
+.data-card header h2 { line-height: 1.3; }
+.data-card header p { line-height: 1.5; }
+.distribution-layout { grid-template-columns: minmax(155px, 205px) minmax(0, 1fr); gap: 24px; }
+.distribution-ring { max-width: 205px; margin-inline: auto; }
+.distribution-ring strong { font-variant-numeric: tabular-nums lining-nums; }
+.distribution-legend { gap: 8px; }
+.distribution-legend > div { min-width: 0; gap: 12px; }
+.distribution-legend span { min-width: 0; overflow-wrap: anywhere; }
+.table-scroll thead th { vertical-align: middle; }
+.table-scroll tbody :is(th, td) { line-height: 1.5; }
+.table-scroll tbody tr:focus-within > :is(th, td) { background: color-mix(in srgb, var(--secondary) 7%, var(--surface)); }
+.matrix-card .table-scroll:focus-visible { outline: 3px solid var(--secondary); outline-offset: -3px; }
+.matrix-card table caption.sr-only { position: absolute; }
+.matrix-card thead th:first-child { background: var(--surface-soft); }
+.matrix-card tbody th { font-weight: 650; }
+.matrix-card tbody td .link-button { white-space: normal; overflow-wrap: anywhere; }
+@media (max-width: 1100px) {
+  .distribution-layout { grid-template-columns: minmax(140px, 175px) minmax(0, 1fr); gap: 16px; }
+  .kpi-card { min-height: 116px; }
+}
+@media (max-width: 760px) {
+  .distribution-layout { grid-template-columns: 1fr; }
+  .distribution-ring { width: 180px; }
+  .kpi-card { min-height: 104px; }
+  .matrix-card .table-scroll { scrollbar-width: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sidebar nav button { transition: none; }
+}
