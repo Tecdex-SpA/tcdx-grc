@@ -1,0 +1,827 @@
+{
+  "PROJECT": "GRC_TECDEX",
+  "EXECUTION": "QA_NORMATIVE_CATALOG_CONTRACTING_E2E",
+  "ACTIVE_BASELINE": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "CURRENT_PHASE": "POST_STEP6A4_PRE_STEP6A5",
+  "PREVIOUS_RELEASE_CLOSURE": "PARTIAL",
+  "PR23_STATUS": "MERGED",
+  "PR23_MERGE_COMMIT": "9ca9d1a7e8620da3ca2b9fb9a5f139e494e75572",
+  "PREVIOUS_E2E_DUAL_ACTOR": "BLOCKED_NO_AVAILABLE_INDEPENDENT_HUMAN",
+  "GIT_CONSOLIDATION": "SOURCE_COMMITTED_PUBLISHED; final integration receipt is GitHub PR24",
+  "NEW_COMMITS": 3,
+  "RELEASE_SOURCE_COMMIT": "9b9df95c6a2e542abed46e1d170b80b06837d549",
+  "SOURCE_COMMITS": [
+    "f8174a7efb652195fd48785987d38e0603c9e5af",
+    "9b9df95c6a2e542abed46e1d170b80b06837d549"
+  ],
+  "PR24_URL": "https://github.com/Tecdex-SpA/tcdx-grc/pull/24",
+  "PR24_DRAFT": false,
+  "MAIN_HEAD_AT_START": "9ca9d1a7e8620da3ca2b9fb9a5f139e494e75572",
+  "FINAL_MAIN_HEAD_RECEIPT": "GitHub PR24 merge_commit_sha; retrieve using gh api repos/Tecdex-SpA/tcdx-grc/pulls/24 --jq .merge_commit_sha",
+  "WORKTREE_STATUS": "All delivery files included in final seal commit; verify git status --short after integration",
+  "APPROVED_FRAMEWORKS": 6,
+  "MATERIALIZED_FRAMEWORKS": 5,
+  "READY_FRAMEWORKS": 0,
+  "PUBLISHED_FRAMEWORKS": 0,
+  "CONTRACTABLE_FRAMEWORKS": 0,
+  "CONTRACTED_QA_FRAMEWORKS": 0,
+  "QA_VALIDATION_FRAMEWORKS": 3,
+  "NEW_QA_VALIDATION_ACCESSES": 2,
+  "ISO_FRAMEWORKS": "4_APPROVED; 3_QA_VALIDATION_ACTIVE; 0_OFFICIAL_PUBLISHED_OR_CONTRACTED",
+  "LEGAL_FRAMEWORKS": "2_APPROVED; 1_DRAFT_FUTURE_EDITION; 1_NOT_MATERIALIZED; 0_OFFICIAL_PUBLISHED_OR_CONTRACTED",
+  "CATALOG_UI": "VERIFIED_HONEST_EMPTY_OFFICIAL_CATALOG; QA_VALIDATION_SEPARATE",
+  "CONTRACTING_UI": "CONFIRMATION_IDEMPOTENT_RETRY_AND_DUPLICATE_GUARD_PASS_LOCAL; REAL_OFFICIAL_CONTRACT_BLOCKED_NO_ELIGIBLE_VERSION",
+  "CONTRACT_PERSISTENCE": "PASS_ISOLATED_POSTGRES_ROOT_VERSION_IDEMPOTENCY_AUDIT; NO_OFFICIAL_QA_CONTRACT_CREATED",
+  "NORMATIVE_MATRICES": "PASS_REAL_QA_3_TABLES; REQUIREMENTS_CONTROLS_DRAFT_VALIDATION; DISTINCT_CANONICAL_PARENT_VERSION_LABELS",
+  "REQUIREMENTS_CONTROLS": "PASS_REAL_QA_VALIDATION_READS; NO_OFFICIAL_HOMOLOGATION_ASSERTION",
+  "EVIDENCE_WORKFLOW": "EXISTING_2_RECORDS_READ_AND_CONTROL_EVIDENCE_MATRIX; NEW_DUAL_REVIEW_NOT_EXECUTED",
+  "RBAC_SOD": "PASS_NEGATIVES_AND_ISOLATED_DUAL_ACTOR; POSITIVE_QA_DUAL_ACTOR_BLOCKED",
+  "DEFAULT_DENY": "PASS_REAL_PLATFORM_TENANT_403",
+  "TENANT_ISOLATION": "PASS_REAL_FOREIGN_TENANT_404_AND_ISOLATED_TESTS",
+  "AUDIT": "PASS_4_EXACT_ACTIVATION_AUDITS; 4_REPLAYS_WITHOUT_EXTRA_ACTIVATION_AUDITS",
+  "BACKEND_QA": "PASS_HEALTHY",
+  "FRONTEND_QA": "PASS_HEALTHY",
+  "PRIVATE_OPERATORS": "PASS_4_RUNNING_UNCHANGED_REQUIRED_MODULES; FRESH_M2M_VERIFIED; NO_REDEPLOY_NEEDED",
+  "POSTGRESQL_INTEGRITY": "PASS_16.15_VERIFY_FULL_36_EXACT_MIGRATIONS_244_TABLES_3630_COLUMNS_NO_DDL",
+  "E2E_TESTS": "PARTIAL_REAL_QA_METADATA_ACTIVATION_READ_MATRICES_DENIALS; OFFICIAL_CONTRACT_AND_DUAL_ACTOR_BLOCKED",
+  "REGRESSION_TESTS": "PASS_1072_UNIT_51_ISOLATED_POSTGRES_50_BROWSER_DESKTOP_NARROW",
+  "UNIT_SKIPPED_POSTGRES_TESTS": 227,
+  "CANONICAL_DOMAIN": "https://grc.tecdex.net/",
+  "PRODUCTION_CHANGES": "NONE",
+  "STEP6A5": "NOT_STARTED",
+  "STEP6A6": "NOT_STARTED",
+  "HUMAN_UI_REVIEW": "NOT_SELF_APPROVED",
+  "RECTOR_CHECKS": "PASS",
+  "RECTOR_GATE": "BLOCKED",
+  "RECTOR_GATE_SCOPE": "INTEGRAL_CLOSURE_BLOCKED; AUTHORIZED_TECHNICAL_OPERATIONS_AND_BASELINE_INTEGRITY_PASS",
+  "QA_NORMATIVE_CATALOG_CONTRACTING_E2E": "PARTIAL",
+  "REMAINING_BLOCKERS": [
+    {
+      "id": "DUAL_ACTOR",
+      "source": "CONFIGURATION_APPROVAL_AND_CONCURRENCY.md; rector22 operational SoD; explicit PO prohibition on self-review/impersonation",
+      "detail": "Zero active independent GRC_MANAGER in TECDEX. Mario Cáceres is an existing legitimate member, but the PO confirmed he is unavailable. Other named accounts do not establish another available person. No B04 draft by another person exists. The PO account cannot be its own independent reviewer. No fictitious identity, role assignment or actor substitution performed."
+    },
+    {
+      "id": "OFFICIAL_PUBLICATION",
+      "source": "rector37/41/44; CANONICAL_IMPORT_CONTRACT.json; actual source/version/coverage state",
+      "detail": "Six approved frameworks; five materialized draft packs. None satisfies official publication gates. ISO review/rights incomplete; Ley21719 unapproved metadata-only future edition; Ley21663 not canonically imported/homologated. No official publication or commercial contraction manufactured."
+    },
+    {
+      "id": "COMMERCIAL_TERMS",
+      "source": "Current TECDEX subscription and published PlanVersion/family/quota catalog",
+      "detail": "TECDEX remains GRC v1. Family/quota data is published for v2. No plan adoption, prices or terms were inferred. QA validation accesses do not change the subscription or bill."
+    }
+  ],
+  "layers": {
+    "database_structure": "UNCHANGED",
+    "historical_migrations": "UNCHANGED",
+    "functional_executable_contracts": "UNCHANGED; additional presentation metadata on existing reads only",
+    "backend": "CHANGED_PACK_PERSISTENCE_AND_MATRIX_LABELS",
+    "frontend": "CHANGED_CONTRACT_DETAIL_CONFIRMATION_RETRY",
+    "infrastructure": "UNCHANGED",
+    "deployment_contracts": "UNCHANGED_CANONICAL_PROMOTER",
+    "qa_data": "2_PROVENANCES_2_VALIDATION_ACCESSES_4_AUDITS_4_IDEMPOTENCY_RECORDS; canonical auth timestamps/audits"
+  },
+  "components": {
+    "backend": {
+      "image_id": "sha256:5b16432a917bd3716d1eb8d1f22ceb6860b77d28a0b72c336aabe5ebdb7a7060",
+      "container_id": "03036eb192a3534c53824a8812411c310cfe409a8f4df07d08f9c6ea1e8e3f8a",
+      "running": true,
+      "health": "healthy",
+      "source_commit": "9b9df95c6a2e542abed46e1d170b80b06837d549",
+      "qa": true
+    },
+    "frontend": {
+      "image_id": "sha256:4db0a4a57326dcca56c7bd3d23ef4562811852103470f349991354873c679e49",
+      "container_id": "1848a55521a8d6ac6e5eefb62cdfe5edfcfe27b1ef95a699929b6a9d9eb35b40",
+      "running": true,
+      "health": "healthy",
+      "source_commit": "9b9df95c6a2e542abed46e1d170b80b06837d549",
+      "qa": true
+    }
+  },
+  "public_https": {
+    "status": 200,
+    "index_sha256": "7e36788d6c2323fa0ba1bb7f500dc4698641c99f88915eb307b698e8321de658"
+  },
+  "registry_publication": "NONE",
+  "registry_digest_verified": null,
+  "docker_digest_note": "Final QA docker image IDs verified after save/load. Target RepoDigests are empty; local build RepoDigest metadata is not evidence of registry publication.",
+  "rollback": {
+    "backend": "tcdx-grc-backend-rollback-qa-normative-contracting-20261022-9b9df95",
+    "frontend": "tcdx-grc-frontend-rollback-qa-normative-contracting-20261022-9b9df95"
+  },
+  "physical_verification": {
+    "status": "PASS",
+    "TLS": "verify-full",
+    "version": "16.15",
+    "business_tables": 244,
+    "business_columns": 3630,
+    "schema_catalogues_unchanged": [
+      "ledger",
+      "relations",
+      "columns",
+      "constraints",
+      "indexes",
+      "functions",
+      "triggers",
+      "typed_default_exact",
+      "authority_catalog"
+    ],
+    "migrations": 36,
+    "changed_tables": {
+      "iam.user_identities": {
+        "before": 7,
+        "after": 7
+      },
+      "ops_audit.audit_events": {
+        "before": 768,
+        "after": 776
+      },
+      "ops_audit.idempotency_records": {
+        "before": 176,
+        "after": 180
+      },
+      "platform.regulatory_pack_validation_accesses": {
+        "before": 1,
+        "after": 3
+      },
+      "regulatory.regulatory_pack_validation_provenances": {
+        "before": 1,
+        "after": 3
+      }
+    },
+    "fingerprints_verified": 244,
+    "activation_audits": [
+      {
+        "audit_event_id": "01a16525-2988-77a6-b1a3-911ff48faec0",
+        "aggregate_type": "RegulatoryPackValidationProvenance",
+        "aggregate_id": "01a16525-2971-75ab-867c-94c5dec1b311",
+        "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "event_code": "audit.platform.regulatory_pack_validation_provenance.create.v1",
+        "command_code": "audit.platform.regulatory_pack_validation_provenance.create.v1",
+        "outcome": "success",
+        "occurred_at": "2026-10-22T19:44:56.656Z",
+        "after_payload": {
+          "source_role": "provisional_supporting_reference",
+          "provenance_ref": "PROV:ISO_IEC_27001_2022:METADATA",
+          "authority_class": "NON_AUTHORITATIVE_TEST_PACK",
+          "regulatory_pack_version_id": "01a0ea93-86c5-719f-9bf0-51e2b28e8453",
+          "regulatory_pack_validation_provenance_id": "01a16525-2971-75ab-867c-94c5dec1b311"
+        }
+      },
+      {
+        "audit_event_id": "01a16525-64bf-769c-bdd3-cd3e9194a734",
+        "aggregate_type": "RegulatoryPackValidationProvenance",
+        "aggregate_id": "01a16525-64bd-7795-ac1c-2dd0d64d6be6",
+        "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "event_code": "audit.platform.regulatory_pack_validation_provenance.create.v1",
+        "command_code": "audit.platform.regulatory_pack_validation_provenance.create.v1",
+        "outcome": "success",
+        "occurred_at": "2026-10-22T19:45:11.851Z",
+        "after_payload": {
+          "source_role": "provisional_supporting_reference",
+          "provenance_ref": "PROV:ISO_IEC_42001_2023:METADATA",
+          "authority_class": "NON_AUTHORITATIVE_TEST_PACK",
+          "regulatory_pack_version_id": "01a0ea93-873d-7452-a6a7-22e876b7c19a",
+          "regulatory_pack_validation_provenance_id": "01a16525-64bd-7795-ac1c-2dd0d64d6be6"
+        }
+      },
+      {
+        "audit_event_id": "01a16527-133a-7150-a66e-aaacead557c7",
+        "aggregate_type": "RegulatoryPackValidationAccess",
+        "aggregate_id": "01a16527-132b-748a-a20c-d7f4a2dabeed",
+        "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "event_code": "audit.platform.regulatory_pack_validation_access.create.v1",
+        "command_code": "audit.platform.regulatory_pack_validation_access.create.v1",
+        "outcome": "success",
+        "occurred_at": "2026-10-22T19:47:02.036Z",
+        "after_payload": {
+          "name": "ISO/IEC 27001:2022",
+          "edition": "2022",
+          "pack_code": "ISO_IEC_27001_2022",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "access_mode": "non_authoritative_validation",
+          "row_version": 1,
+          "effective_to": "2026-10-23T19:45:24.382Z",
+          "effective_from": "2026-10-22T19:45:24.382Z",
+          "effective_state": "effective",
+          "lifecycle_state": "active",
+          "license_classification": "NOT_YET_LICENSED",
+          "regulatory_pack_version_id": "01a0ea93-86c5-719f-9bf0-51e2b28e8453",
+          "regulatory_pack_validation_access_id": "01a16527-132b-748a-a20c-d7f4a2dabeed",
+          "regulatory_pack_validation_provenance_id": "01a16525-2971-75ab-867c-94c5dec1b311"
+        }
+      },
+      {
+        "audit_event_id": "01a16527-6dd2-772f-8a48-dd4a97b67107",
+        "aggregate_type": "RegulatoryPackValidationAccess",
+        "aggregate_id": "01a16527-6dcb-7395-938e-b3e41baf1c9f",
+        "actor_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "event_code": "audit.platform.regulatory_pack_validation_access.create.v1",
+        "command_code": "audit.platform.regulatory_pack_validation_access.create.v1",
+        "outcome": "success",
+        "occurred_at": "2026-10-22T19:47:25.232Z",
+        "after_payload": {
+          "name": "ISO/IEC 42001:2023",
+          "edition": "2023",
+          "pack_code": "ISO_IEC_42001_2023",
+          "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+          "access_mode": "non_authoritative_validation",
+          "row_version": 1,
+          "effective_to": "2026-10-23T19:47:24.598Z",
+          "effective_from": "2026-10-22T19:47:24.598Z",
+          "effective_state": "effective",
+          "lifecycle_state": "active",
+          "license_classification": "NOT_YET_LICENSED",
+          "regulatory_pack_version_id": "01a0ea93-873d-7452-a6a7-22e876b7c19a",
+          "regulatory_pack_validation_access_id": "01a16527-6dcb-7395-938e-b3e41baf1c9f",
+          "regulatory_pack_validation_provenance_id": "01a16525-64bd-7795-ac1c-2dd0d64d6be6"
+        }
+      }
+    ]
+  },
+  "framework_inventory": [
+    {
+      "canonical_id": "CL_LEY_21719",
+      "name": "Ley 21.719 Chile",
+      "edition": "vigencia_2026-12-01",
+      "version_number": "1",
+      "regulatory_pack_version_id": "01a0ea93-87b3-7527-ac73-ec72e5caa68c",
+      "framework_version_id": "01a0ea93-87df-712b-9371-56bfba22e188",
+      "source": {
+        "source_code": "SRC-CL-21719",
+        "source_type": "official_public_law",
+        "publisher": "Biblioteca del Congreso Nacional de Chile",
+        "official_uri": "https://www.bcn.cl/leychile/Navegar?idNorma=1209272&idVersion=2026-12-01",
+        "license_classification": "PUBLIC_LAW",
+        "lifecycle_state": "active"
+      },
+      "source_import_checksum": "d80487caba7bd7e718cd7ee69dbb9e6f75206b6edc4c8faa76e4349ef5e51a00",
+      "scope": "GLOBAL_REFERENCE; tenant access explicit",
+      "structure": {
+        "framework_code": "CL_LEY_21719",
+        "edition": "vigencia_2026-12-01",
+        "units": 30,
+        "requirements": 30
+      },
+      "coverage_percent": "100.00",
+      "reviewed_units": "30",
+      "reviewed_requirements": "30",
+      "reference_controls": "0",
+      "reviewed_reference_controls": "0",
+      "coverage_approved": false,
+      "publication": "draft",
+      "effective_from": "2026-12-01T00:00:00.000Z",
+      "effective_to": null,
+      "rights": "PUBLIC_LAW",
+      "h04_rights_records": 0,
+      "commercial_eligible": false,
+      "mappings": {
+        "framework_code": "CL_LEY_21719",
+        "framework_version_id": "01a0ea93-87df-712b-9371-56bfba22e188",
+        "edition": "vigencia_2026-12-01",
+        "reference_control_mappings": 0,
+        "requirement_control_mappings": 91,
+        "approved_mappings": 0,
+        "crosswalk_headers": 2
+      },
+      "direct_typed_tenant_evidence_links": 0,
+      "classification": "BLOCKED_BY_SOURCE_OR_RIGHTS",
+      "blocker": "Metadata-only source; coverage approval and legal/operational homologation absent; QA version starts 2026-12-01",
+      "qa_validation_access": null
+    },
+    {
+      "canonical_id": "ISO_9001_2015",
+      "name": "ISO 9001:2015",
+      "edition": "2015",
+      "version_number": "1",
+      "regulatory_pack_version_id": "01a0ea93-85d2-760c-9018-1cc9404fa649",
+      "framework_version_id": "01a0ea93-8603-7227-aa37-72ab6dca6712",
+      "source": {
+        "source_code": "SRC-ISO-9001-2015",
+        "source_type": "official_public_metadata",
+        "publisher": "ISO",
+        "official_uri": "https://www.iso.org/standard/62085.html",
+        "license_classification": "NOT_YET_LICENSED",
+        "lifecycle_state": "active"
+      },
+      "source_import_checksum": "d80487caba7bd7e718cd7ee69dbb9e6f75206b6edc4c8faa76e4349ef5e51a00",
+      "scope": "GLOBAL_REFERENCE; tenant access explicit",
+      "structure": {
+        "framework_code": "ISO_9001_2015",
+        "edition": "2015",
+        "units": 35,
+        "requirements": 35
+      },
+      "coverage_percent": "0.00",
+      "reviewed_units": "0",
+      "reviewed_requirements": "0",
+      "reference_controls": "0",
+      "reviewed_reference_controls": "0",
+      "coverage_approved": false,
+      "publication": "draft",
+      "effective_from": "2015-09-22T00:00:00.000Z",
+      "effective_to": "2026-09-16T00:00:00.000Z",
+      "rights": "NOT_YET_LICENSED",
+      "h04_rights_records": 0,
+      "commercial_eligible": false,
+      "mappings": {
+        "framework_code": "ISO_9001_2015",
+        "framework_version_id": "01a0ea93-8603-7227-aa37-72ab6dca6712",
+        "edition": "2015",
+        "reference_control_mappings": 0,
+        "requirement_control_mappings": 92,
+        "approved_mappings": 0,
+        "crosswalk_headers": 1
+      },
+      "direct_typed_tenant_evidence_links": 0,
+      "classification": "BLOCKED_BY_SOURCE_OR_RIGHTS",
+      "blocker": "Official source coverage/reviews/rights and operational coapprovals absent; no licensed ISO text imported",
+      "qa_validation_access": null
+    },
+    {
+      "canonical_id": "ISO_9001_2026",
+      "name": "ISO 9001:2026",
+      "edition": "2026",
+      "version_number": "1",
+      "regulatory_pack_version_id": "01a0ea93-8650-77ff-a925-b2c1e8463411",
+      "framework_version_id": "01a0ea93-867a-7432-a041-2179e0a543f8",
+      "source": {
+        "source_code": "SRC-ISO-9001-2026",
+        "source_type": "official_public_metadata",
+        "publisher": "ISO",
+        "official_uri": "https://www.iso.org/standard/9001",
+        "license_classification": "NOT_YET_LICENSED",
+        "lifecycle_state": "active"
+      },
+      "source_import_checksum": "d80487caba7bd7e718cd7ee69dbb9e6f75206b6edc4c8faa76e4349ef5e51a00",
+      "scope": "GLOBAL_REFERENCE; tenant access explicit",
+      "structure": {
+        "framework_code": "ISO_9001_2026",
+        "edition": "2026",
+        "units": 35,
+        "requirements": 39
+      },
+      "coverage_percent": "0.00",
+      "reviewed_units": "0",
+      "reviewed_requirements": "0",
+      "reference_controls": "0",
+      "reviewed_reference_controls": "0",
+      "coverage_approved": false,
+      "publication": "draft",
+      "effective_from": "2026-09-16T00:00:00.000Z",
+      "effective_to": null,
+      "rights": "NOT_YET_LICENSED",
+      "h04_rights_records": 0,
+      "commercial_eligible": false,
+      "mappings": {
+        "framework_code": "ISO_9001_2026",
+        "framework_version_id": "01a0ea93-867a-7432-a041-2179e0a543f8",
+        "edition": "2026",
+        "reference_control_mappings": 0,
+        "requirement_control_mappings": 108,
+        "approved_mappings": 0,
+        "crosswalk_headers": 3
+      },
+      "direct_typed_tenant_evidence_links": 0,
+      "classification": "BLOCKED_BY_SOURCE_OR_RIGHTS",
+      "blocker": "Official source coverage/reviews/rights and operational coapprovals absent; no licensed ISO text imported",
+      "qa_validation_access": {
+        "regulatory_pack_validation_access_id": "01a10c20-ed31-7376-8419-0e284b7421b2",
+        "ownership_class": "PLATFORM_CONTROL",
+        "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+        "regulatory_pack_version_id": "01a0ea93-8650-77ff-a925-b2c1e8463411",
+        "regulatory_pack_validation_provenance_id": "01a0f2a5-006d-757b-b1d6-da6ded70a9b5",
+        "lifecycle_state": "active",
+        "effective_from": "2026-10-05T12:53:00.000Z",
+        "effective_to": "2030-10-05T12:53:00.000Z",
+        "row_version": "1",
+        "created_at": "2026-10-05T12:54:06.884Z",
+        "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "updated_at": "2026-10-05T12:54:06.884Z",
+        "updated_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      }
+    },
+    {
+      "canonical_id": "ISO_IEC_27001_2022",
+      "name": "ISO/IEC 27001:2022",
+      "edition": "2022",
+      "version_number": "1",
+      "regulatory_pack_version_id": "01a0ea93-86c5-719f-9bf0-51e2b28e8453",
+      "framework_version_id": "01a0ea93-86f0-75b8-90c8-538bc25d5744",
+      "source": {
+        "source_code": "SRC-ISO-27001",
+        "source_type": "official_public_metadata",
+        "publisher": "ISO/IEC",
+        "official_uri": "https://www.iso.org/standard/27001",
+        "license_classification": "NOT_YET_LICENSED",
+        "lifecycle_state": "active"
+      },
+      "source_import_checksum": "d80487caba7bd7e718cd7ee69dbb9e6f75206b6edc4c8faa76e4349ef5e51a00",
+      "scope": "GLOBAL_REFERENCE; tenant access explicit",
+      "structure": {
+        "framework_code": "ISO_IEC_27001_2022",
+        "edition": "2022",
+        "units": 105,
+        "requirements": 7
+      },
+      "coverage_percent": "0.00",
+      "reviewed_units": "1",
+      "reviewed_requirements": "0",
+      "reference_controls": "93",
+      "reviewed_reference_controls": "0",
+      "coverage_approved": false,
+      "publication": "draft",
+      "effective_from": "2022-10-25T00:00:00.000Z",
+      "effective_to": null,
+      "rights": "NOT_YET_LICENSED",
+      "h04_rights_records": 0,
+      "commercial_eligible": false,
+      "mappings": {
+        "framework_code": "ISO_IEC_27001_2022",
+        "framework_version_id": "01a0ea93-86f0-75b8-90c8-538bc25d5744",
+        "edition": "2022",
+        "reference_control_mappings": 93,
+        "requirement_control_mappings": 21,
+        "approved_mappings": 0,
+        "crosswalk_headers": 3
+      },
+      "direct_typed_tenant_evidence_links": 0,
+      "classification": "BLOCKED_BY_SOURCE_OR_RIGHTS",
+      "blocker": "Official source coverage/reviews/rights and operational coapprovals absent; no licensed ISO text imported",
+      "qa_validation_access": {
+        "regulatory_pack_validation_access_id": "01a16527-132b-748a-a20c-d7f4a2dabeed",
+        "ownership_class": "PLATFORM_CONTROL",
+        "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+        "regulatory_pack_version_id": "01a0ea93-86c5-719f-9bf0-51e2b28e8453",
+        "regulatory_pack_validation_provenance_id": "01a16525-2971-75ab-867c-94c5dec1b311",
+        "lifecycle_state": "active",
+        "effective_from": "2026-10-22T19:45:24.382Z",
+        "effective_to": "2026-10-23T19:45:24.382Z",
+        "row_version": "1",
+        "created_at": "2026-10-22T19:47:02.036Z",
+        "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "updated_at": "2026-10-22T19:47:02.036Z",
+        "updated_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      }
+    },
+    {
+      "canonical_id": "ISO_IEC_42001_2023",
+      "name": "ISO/IEC 42001:2023",
+      "edition": "2023",
+      "version_number": "1",
+      "regulatory_pack_version_id": "01a0ea93-873d-7452-a6a7-22e876b7c19a",
+      "framework_version_id": "01a0ea93-8769-7013-aa04-119e78f4d473",
+      "source": {
+        "source_code": "SRC-ISO-42001",
+        "source_type": "official_public_metadata",
+        "publisher": "ISO/IEC",
+        "official_uri": "https://www.iso.org/standard/42001",
+        "license_classification": "NOT_YET_LICENSED",
+        "lifecycle_state": "active"
+      },
+      "source_import_checksum": "d80487caba7bd7e718cd7ee69dbb9e6f75206b6edc4c8faa76e4349ef5e51a00",
+      "scope": "GLOBAL_REFERENCE; tenant access explicit",
+      "structure": {
+        "framework_code": "ISO_IEC_42001_2023",
+        "edition": "2023",
+        "units": 55,
+        "requirements": 7
+      },
+      "coverage_percent": "0.00",
+      "reviewed_units": "0",
+      "reviewed_requirements": "0",
+      "reference_controls": "38",
+      "reviewed_reference_controls": "0",
+      "coverage_approved": false,
+      "publication": "draft",
+      "effective_from": "2023-12-18T00:00:00.000Z",
+      "effective_to": null,
+      "rights": "NOT_YET_LICENSED",
+      "h04_rights_records": 0,
+      "commercial_eligible": false,
+      "mappings": {
+        "framework_code": "ISO_IEC_42001_2023",
+        "framework_version_id": "01a0ea93-8769-7013-aa04-119e78f4d473",
+        "edition": "2023",
+        "reference_control_mappings": 38,
+        "requirement_control_mappings": 21,
+        "approved_mappings": 0,
+        "crosswalk_headers": 3
+      },
+      "direct_typed_tenant_evidence_links": 0,
+      "classification": "BLOCKED_BY_SOURCE_OR_RIGHTS",
+      "blocker": "Official source coverage/reviews/rights and operational coapprovals absent; no licensed ISO text imported",
+      "qa_validation_access": {
+        "regulatory_pack_validation_access_id": "01a16527-6dcb-7395-938e-b3e41baf1c9f",
+        "ownership_class": "PLATFORM_CONTROL",
+        "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+        "regulatory_pack_version_id": "01a0ea93-873d-7452-a6a7-22e876b7c19a",
+        "regulatory_pack_validation_provenance_id": "01a16525-64bd-7795-ac1c-2dd0d64d6be6",
+        "lifecycle_state": "active",
+        "effective_from": "2026-10-22T19:47:24.598Z",
+        "effective_to": "2026-10-23T19:47:24.598Z",
+        "row_version": "1",
+        "created_at": "2026-10-22T19:47:25.232Z",
+        "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+        "updated_at": "2026-10-22T19:47:25.232Z",
+        "updated_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+      }
+    },
+    {
+      "canonical_id": "CL_LEY_21663",
+      "name": "Ley 21.663 Chile",
+      "edition": null,
+      "version_number": null,
+      "source": "Approved received package BCN source; no canonical source/version materialized",
+      "scope": "Approved by CANONICAL_IMPORT_CONTRACT.json amendment, not one of the five original materialized packs",
+      "structure": "Ten preliminary source candidates; no canonical units/requirements/controls imported",
+      "homologation": "PENDING_AUTHENTIC_SOURCE_EDITION_ATOMIC_AND_TEMPORAL_REVIEW",
+      "publication": "NOT_MATERIALIZED",
+      "validity": "Unresolved per authentic edition/disposition; no date inferred",
+      "rights": "Public legal source; received source identity/edition must be reconciled",
+      "commercial_eligible": false,
+      "controls": 0,
+      "requirements": 0,
+      "matrices": "No canonical population",
+      "evidence": 0,
+      "classification": "BLOCKED_BY_SOURCE_OR_RIGHTS",
+      "blocker": "Authentic source/edition/disposition and homologation required before canonical import/publication; no candidate promoted to legal obligation"
+    }
+  ],
+  "qa_activations": [
+    {
+      "regulatory_pack_validation_access_id": "01a10c20-ed31-7376-8419-0e284b7421b2",
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "regulatory_pack_version_id": "01a0ea93-8650-77ff-a925-b2c1e8463411",
+      "regulatory_pack_validation_provenance_id": "01a0f2a5-006d-757b-b1d6-da6ded70a9b5",
+      "lifecycle_state": "active",
+      "effective_from": "2026-10-05T12:53:00.000Z",
+      "effective_to": "2030-10-05T12:53:00.000Z",
+      "row_version": "1",
+      "created_at": "2026-10-05T12:54:06.884Z",
+      "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "updated_at": "2026-10-05T12:54:06.884Z",
+      "updated_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+    },
+    {
+      "regulatory_pack_validation_access_id": "01a16527-132b-748a-a20c-d7f4a2dabeed",
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "regulatory_pack_version_id": "01a0ea93-86c5-719f-9bf0-51e2b28e8453",
+      "regulatory_pack_validation_provenance_id": "01a16525-2971-75ab-867c-94c5dec1b311",
+      "lifecycle_state": "active",
+      "effective_from": "2026-10-22T19:45:24.382Z",
+      "effective_to": "2026-10-23T19:45:24.382Z",
+      "row_version": "1",
+      "created_at": "2026-10-22T19:47:02.036Z",
+      "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "updated_at": "2026-10-22T19:47:02.036Z",
+      "updated_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+    },
+    {
+      "regulatory_pack_validation_access_id": "01a16527-6dcb-7395-938e-b3e41baf1c9f",
+      "ownership_class": "PLATFORM_CONTROL",
+      "tenant_id": "01a0cfc7-0c97-75a3-890f-d6ca9db8bbe9",
+      "regulatory_pack_version_id": "01a0ea93-873d-7452-a6a7-22e876b7c19a",
+      "regulatory_pack_validation_provenance_id": "01a16525-64bd-7795-ac1c-2dd0d64d6be6",
+      "lifecycle_state": "active",
+      "effective_from": "2026-10-22T19:47:24.598Z",
+      "effective_to": "2026-10-23T19:47:24.598Z",
+      "row_version": "1",
+      "created_at": "2026-10-22T19:47:25.232Z",
+      "created_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc",
+      "updated_at": "2026-10-22T19:47:25.232Z",
+      "updated_by_user_identity_id": "01a0cfae-d860-730d-88b8-d8b1b3f5d7dc"
+    }
+  ],
+  "traceability": {
+    "contracting": [
+      "rector23 prospective root intervals",
+      "rector25 idempotency/audit",
+      "20261013000100_commercial_contract_reconciliation.sql frozen root FK",
+      "subscriptionRegulatoryPackActivate/selectableList"
+    ],
+    "matrices": [
+      "MATRIX_READ_CONTRACT.md",
+      "MatrixAxis existing shape",
+      "canonical ControlVersion.control_id and EvidenceVersion.evidence_id labels; existing source/object authorization unchanged"
+    ],
+    "qa_metadata": [
+      "CANONICAL_IMPORT_CONTRACT.json provisional_execution_boundary",
+      "validationProvenanceCreate",
+      "validationAccessCreate",
+      "NON_AUTHORITATIVE_TEST_PACK"
+    ],
+    "previous_release": "integrated-qa-release-20261022/RESULT.json; 40 references verified, no closed work reexecuted as pending"
+  },
+  "evidence": [
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/inventory.json",
+      "sha256": "5178cf10b765a30caf5884344c97848e1802bc3df145b081dd68548f3bb3e304"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/availability.json",
+      "sha256": "15045ff2e3d1769f3fd1b114cbe445cdbe24e7b0269f4140b4bdc10b66910be9"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/eligibility.json",
+      "sha256": "6688ac757d421a5713e83c9bbff97927a30cbad638d6765912f013c83ae21437"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/physical-verification.json",
+      "sha256": "2b882adb075f8a4a25d67b2778ae700c3e4a417cf041d254d7a87516d4b12328"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/post-final.json",
+      "sha256": "e8afe47bbd4ca2cd340e54f4adffc9eb7bdb181e8468ea36e7d9604beffbc345"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/unit-labels-final.json",
+      "sha256": "cdbb71d03d3da8a7e077f6e095b0768f9a510c450c92a59125ae2808847fb418"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/postgres-pack-final.json",
+      "sha256": "06a73ce0192f28288b544f10088e2d32a40ed5c3fd7ac12f7b8596caaa1c5213"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/postgres-operational.log",
+      "sha256": "9a1f060bfcbebc146728489c0cc38e442fefb9e8d870ad0f9ab30880e8cbd274"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-regression.json",
+      "sha256": "c6793c9aad463fb40c73ad3842ab4292e37ed3fb175fe97b65769e5c78d54cc5"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/rector-final.log",
+      "sha256": "1804d6f3163b6323585d0d832274aaba9364ee4465435fb83636839d0ba76bbe"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/runtime-before.json",
+      "sha256": "54ac07cd4a1394cbf38a08d357b08efbcecf7b18496b6a54806acb5663ac9b78"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/runtime-final.json",
+      "sha256": "0082c065ffc391c4ae9eeeb483e010b3b5698b579876403341c9f52178b5c0a5"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/operators-final.json",
+      "sha256": "33930934cf145e32416384496caad30ba79fa585834892eaef80d568cd390faf"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/image-backend.json",
+      "sha256": "c6745c3ba5148a87363f91201a6215c9f2fd234f754b424ace5edef17cfd4df0"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/image-frontend.json",
+      "sha256": "bad6488f56f2b59f18ee15717fb53a7ef2ca885d9335fe6f691ecd9ff4d92d8f"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/transport-backend.json",
+      "sha256": "04cb53270fdd51c318b8dc263a78e3cb88fe18f66229f9efa47327eb5b1d3172"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/transport-frontend.json",
+      "sha256": "22fb2f03813da78d04b8ebe230b8d8a6c0f13f5f2bb1ccef962b8bef7f562c98"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/promote-backend.json",
+      "sha256": "6d408623be70a68bb23724c9923566e2e28420d8f96aee493537eb4607fef6d7"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/promote-frontend.json",
+      "sha256": "efa821abc420c586f13abb950ee6d15f9058405726a8b93719d2fd9413e59e5c"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/access-27001-replay.json",
+      "sha256": "9fdf6a323a3e30c06ad80439ea172b61f4eb8c0cfc4f767b9d2425f9075a07ff"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/access-27001.json",
+      "sha256": "8898e8ccf40e145219a977f36803a3f0b2306040e9a623cc46f357dcad96ed92"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/access-42001-replay.json",
+      "sha256": "74e39d0a567990be0a1bac2ba4c3112dfb10d7704db0e40a4fb93514b05753b6"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/access-42001.json",
+      "sha256": "b34e33dfab03e0d17a391dfe64fe4c483b481a20c09c9a3d5686f7402c2accc1"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/access-final.json",
+      "sha256": "3274429d0819b0031652f04becb5b542166a493c92bcdf631020a1e627fdfb95"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/catalog-final.json",
+      "sha256": "f79a4441ca6112c7780ebc9fe30eb56839d960c89c18ffbfa387ffccb5b2373f"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/companies-ui.json",
+      "sha256": "652ba8274943a646c13c2a952a70d3b97df26a0094dcfdd5f772d99b5acf5f3a"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/contracted-final.json",
+      "sha256": "f79a4441ca6112c7780ebc9fe30eb56839d960c89c18ffbfa387ffccb5b2373f"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/controls-27001.json",
+      "sha256": "c751800ae614a49fabb8b1b7efaf07c0d00db0d76c2178a40d33e91e968bdda3"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/evidence-final.json",
+      "sha256": "397dc55d2f7b491c7a161bbd0ba4f414dd29bc47a7b90a5d2c4c1bd5273278ca"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/foreign-tenant-denied.json",
+      "sha256": "dfc2ebf2748cb9da56e22fc83c80cf13aefbc966362fd7c0d8c1c2da17ec7554"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/matrix-27001-api-before-label-fix.json",
+      "sha256": "69621cff9c980a1f49f490dc8429b140be673a6407eedfb2dc60926b77457fc2"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/matrix-controls-evidence-api-final.json",
+      "sha256": "3ce644dda2a6672a82546c96ffd9587746664c3401557124b4e0b83ff3242123"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/matrix-controls-evidence-final.json",
+      "sha256": "7d4ab7314801a9a22d8754b3c781d028764918637c2b8ed7c7273b2f51386569"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/matrix-controls-ui.json",
+      "sha256": "40375e8ec8091b38be8c56baf586fff5df18928d4d1cb429932e79caf78736ec"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/matrix-issues-actions-api-final.json",
+      "sha256": "b55fa590a6e7b85f505dfc6c3ff6c0adf80b5826a984814d521f1a20803c828d"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/matrix-issues-actions-final.json",
+      "sha256": "10ceaba42f1c65487ca2e77ccf9aac605471e04d049d2d8324f138c523f6b618"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/matrix-issues-ui.json",
+      "sha256": "01d634423f70fabf03b65d309835338c6a86a96fc29ba053e5b73961fa14d32a"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/matrix-requirements-controls-api-final.json",
+      "sha256": "9494ab54b32a403b7dc1d899dc5de4fb844ee151213f1810b26fafe11388c3c1"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/matrix-requirements-controls-final.json",
+      "sha256": "2718b01cbf9fa5e01698d9ba910e1daec981c28ee8c44935bc1f57d438ebd5b5"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/matrix-requirements-ui.json",
+      "sha256": "7d86fdecef9331c82841f80b7eb8c6c4dba1b76a82c526d5b56629c46b95f077"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/normative-structure-ui.json",
+      "sha256": "91355be24aee5bc43f058ec6c75a334285a99deb680ab7355aaf4114d912e1fc"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/platform-tenant-denied.json",
+      "sha256": "c61ed05f0835d5714d216088a32b69654d7464a2bec9e08663fb60866609f725"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/provenance-27001-replay.json",
+      "sha256": "f02d5f87d30f26fb544149ed0b7630e67ab7c3dab590084c93f195d158490ecf"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/provenance-27001.json",
+      "sha256": "440d2b03af7626e6e02a24c66acec25e712565f760ac70c8e38bd17b72b1d04a"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/provenance-42001-replay.json",
+      "sha256": "63541e84a7da9b79528a1a2d8136bfcc949c081d38867b5a13cdbe30ff4d7ebc"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/provenance-42001.json",
+      "sha256": "09f59d823d2000004b77ae1e28063c77fb51fa89454f2881d2a17aa5adc7649e"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/requirements-27001.json",
+      "sha256": "af2211123a68b28f3e09dca7e54a580b236f8522c4b6905fcad37c5ad87706de"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/validation-final.json",
+      "sha256": "71be1e8a5b874d32bb563bb1465a148b4cf9107e7f780e381f89301cf1cc365e"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/matrix-controls-evidence-final.png",
+      "sha256": "3006e7e1a47b63f3db69ccbd2236477a9c6a8416d0225f8683b9e6b0beb10fee"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/matrix-issues-actions-final.png",
+      "sha256": "70f1ffd1005596302088d7a0d9ef720cf7c0b3418858afe627a0810771372dbd"
+    },
+    {
+      "path": ".release-custody/qa-normative-catalog-contracting-e2e-20261022/browser-final/matrix-requirements-controls-final.png",
+      "sha256": "c978a1e595508989b64dc68e649d5b129666251766019535d10b8970959b0d3d"
+    }
+  ],
+  "sealed_utc": "2026-10-22T20:03:41.948226+00:00"
+}
