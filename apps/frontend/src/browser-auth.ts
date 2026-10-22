@@ -6,7 +6,37 @@ const TENANT_KEY = "tcdx.tenant_id";
 type ApplicationTokenMessage = { type: "tcdx.application-token"; token: string };
 
 export class BrowserSession implements AccessTokenProvider {
-  async getAccessToken(): Promise<string | null> { return sessionStorage.getItem(TOKEN_KEY); }
+  private pending: Promise<string | null> | undefined;
+  constructor(private readonly apiOrigin?: string) {}
+  async getAccessToken(): Promise<string | null> {
+    const token = sessionStorage.getItem(TOKEN_KEY);
+    if (!token || !this.apiOrigin) return token;
+    let claims: { iat: number; exp: number; session_renewable?: boolean };
+    try { claims = JSON.parse(atob(token.split(".")[1]!.replace(/-/g, "+").replace(/_/g, "/"))) as typeof claims; }
+    catch { return token; }
+    // Claims only schedule renewal; the backend remains the sole authentication authority.
+    if (claims.session_renewable !== true || !Number.isFinite(claims.exp) || !Number.isFinite(claims.iat)
+      || Date.now() < (claims.exp - (claims.exp - claims.iat) / 4) * 1000) return token;
+    if (this.pending) return this.pending;
+    this.pending = this.renew(token);
+    try { return await this.pending; } finally { this.pending = undefined; }
+  }
+  private async renew(token: string): Promise<string | null> {
+    const response = await fetch(new URL("/auth/refresh", this.apiOrigin), {
+      method: "POST", headers: { authorization: `Bearer ${token}`, accept: "application/json" }, cache: "no-store"
+    });
+    if (response.status === 401) {
+      if (sessionStorage.getItem(TOKEN_KEY) === token) await this.clearSession();
+      return null;
+    }
+    if (!response.ok) throw new Error("SESSION_RENEWAL_UNAVAILABLE");
+    const body = await response.json() as { token?: unknown };
+    if (typeof body.token !== "string" || !body.token) throw new Error("SESSION_RENEWAL_INVALID");
+    // A manual logout or a new login during the request must win over its response.
+    if (sessionStorage.getItem(TOKEN_KEY) !== token) return sessionStorage.getItem(TOKEN_KEY);
+    this.storeAccessToken(body.token);
+    return body.token;
+  }
   storeAccessToken(token: string): void { sessionStorage.setItem(TOKEN_KEY, token); }
   async clearSession(): Promise<void> {
     sessionStorage.removeItem(TOKEN_KEY);

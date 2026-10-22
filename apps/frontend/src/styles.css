@@ -355,3 +355,14 @@ tbody tr:hover { background: #fff9f5; }
 .control-version-selector { min-width: 0; display: grid; gap: 8px; }
 .control-version-selector input, .control-version-selector select { min-width: 0; max-width: 100%; }
 .control-version-selector label { overflow-wrap: anywhere; }
+
+/* STEP6A4: business forms compose the existing drawer, tokens and controls. */
+.business-form-group { min-width: 0; margin: 0 0 16px; padding: 12px; border: 1px solid var(--border); border-radius: 8px; display: grid; gap: 12px; }
+.business-form-group legend { color: var(--navy-deep); font-weight: 600; padding-inline: 4px; }
+.business-field { min-width: 0; display: grid; gap: 4px; }
+.business-field input, .business-field select, .business-field textarea { max-width: 100%; min-width: 0; box-sizing: border-box; }
+.business-field fieldset { min-width: 0; margin-block: 8px; }
+.business-field .form-guidance { overflow-wrap: anywhere; }
+.create-form:has(.business-form-group) { display: block; }
+.form-error-summary { color: var(--danger); overflow-wrap: anywhere; }
+.business-form-controls { border: 0; padding: 0; margin: 0; min-width: 0; }

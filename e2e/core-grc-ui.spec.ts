@@ -31,7 +31,7 @@ const rows: Record<string, Record<string, unknown>[]> = {
   "/actions": [{ action_id: tenantId, row_version: 4, action_code: "ACT-NN-001", title: "Actualizar evidencia", lifecycle_state: "in_review" }]
 };
 
-async function mockRuntime(page: Page, roles: string[] = ["GRC_MANAGER"], platformRoles: string[] = [], tenantPermissionCodes: string[] = []): Promise<void> {
+async function mockRuntime(page: Page, roles: string[] = ["GRC_MANAGER"], platformRoles: string[] = [], tenantPermissionCodes: string[] = [], timezone = "Europe/Berlin"): Promise<void> {
   const assignedRoles: Record<string, unknown>[] = [];
   await page.addInitScript(() => { sessionStorage.setItem("tcdx.access_token", "contractual-test-token"); });
   await page.route(url => url.pathname.startsWith("/api/v1/") || url.pathname === "/api/v2/auth/me/authorization", async (route: Route) => {
@@ -43,7 +43,7 @@ async function mockRuntime(page: Page, roles: string[] = ["GRC_MANAGER"], platfo
     }
     if (url.pathname === "/api/v2/auth/me/authorization") {
       await route.fulfill({ json: { evaluated_at: new Date().toISOString(), platform_permissions: platformRoles.includes("PLATFORM_ADMIN") ? ["platform.tenant.read", "platform.tenant.create", "platform.subscription.create", "platform.subscription_regulatory_pack.read", "platform.subscription_regulatory_pack.create", "platform.subscription_regulatory_pack.archive", "platform.user_identity.read", "platform.membership.read", "platform.membership_invitation.read", "platform.membership_invitation.create", "platform.membership_invitation.update", "platform.role.read", "platform.role.assign"] : [],
-        tenant_permissions: { tenant_id: tenantId, default_timezone: "Europe/Berlin", permissions: Object.fromEntries([...(roles.includes("TENANT_ADMIN") ? ["platform.membership.read", "platform.membership.create", "platform.role.read", "platform.role.assign", "platform.user_identity.read"] : []), ...tenantPermissionCodes].map(code => [code, [{scope_kind:"tenant"}]])) } } });
+        tenant_permissions: { tenant_id: tenantId, default_timezone: timezone, permissions: Object.fromEntries([...(roles.includes("TENANT_ADMIN") ? ["platform.membership.read", "platform.membership.create", "platform.role.read", "platform.role.assign", "platform.user_identity.read"] : []), ...tenantPermissionCodes].map(code => [code, [{scope_kind:"tenant"}]])) } } });
       return;
     }
     if (route.request().method() === "POST") {
@@ -1190,4 +1190,530 @@ test("INITIAL_SOURCE bind uses backend candidates and distinguishes formal sourc
   await dialog.screenshot({path:`docs/phase6a/STEP_6A3/evidence/ordinary-retention-v112-20261016/LOCAL_SIMULATED_BIND_${info.project.name}.png`});
   await dialog.getByRole('button',{name:'Vincular fuente inicial',exact:true}).click();
   await expect.poll(()=>submitted).toBe(true);
+});
+
+// QA findings: isolated presentation/payload checks, not authenticated QA acceptance.
+test("STEP6A3 QA precedence follows policy kind and cannot submit an arbitrary 500", async ({page}, info) => {
+  await mockRuntime(page, ['TENANT_ADMIN'], [], ['privacy.retention_policy.read','privacy.retention_policy.create']);
+  const expected: Record<string, number> = {tenant_policy:200, legal_hold:500, contractual_policy:300, mandatory_regulatory_policy:400, product_baseline:100};
+  const posted: Record<string, unknown>[] = [];
+  await page.route('**/api/v1/retention-policies', async route => {
+    if (route.request().method() !== 'POST') { await route.fallback(); return; }
+    const body = route.request().postDataJSON();
+    expect(body.precedence_rank).toBe(expected[body.policy_kind]);
+    if (body.policy_kind === 'legal_hold') expect(body).not.toHaveProperty('retention_seconds');
+    else expect(body.retention_seconds).toBe(3600);
+    posted.push(body);
+    await route.fulfill({status:202,json:{operation_id:'retentionPolicyCreate',status:'completed',result:{retention_policy_id:tenantId}}});
+  });
+  await page.goto('/evidencias');
+  await page.getByRole('tab',{name:'Políticas de retención',exact:true}).click();
+  for (const [kind, rank] of Object.entries(expected)) {
+    await page.getByRole('button',{name:'Nuevo registro',exact:true}).click();
+    const dialog=page.getByRole('dialog');
+    await dialog.getByLabel('Código de política',{exact:true}).fill('LOCAL-QA-'+kind);
+    await dialog.getByLabel('Número de versión',{exact:true}).fill('1');
+    await dialog.getByLabel('Tipo de política',{exact:true}).selectOption(kind);
+    const precedence=dialog.getByLabel('Orden de precedencia',{exact:true});
+    await expect(precedence).toHaveValue(String(rank));
+    await expect(precedence).not.toBeEditable();
+    // Switching away from hold must immediately remove its 500 precedence.
+    if (kind==='tenant_policy') {
+      await dialog.getByLabel('Tipo de política',{exact:true}).selectOption('legal_hold');
+      await expect(precedence).toHaveValue('500');
+      await dialog.getByLabel('Tipo de política',{exact:true}).selectOption(kind);
+      await expect(precedence).toHaveValue('200');
+    }
+    await dialog.getByLabel('Duración de retención (segundos)',{exact:true}).fill('3600');
+    await dialog.getByLabel('Evento de inicio de retención',{exact:true}).selectOption('expiry_or_closure');
+    await dialog.getByLabel('Obligatoria',{exact:true}).selectOption(kind==='legal_hold'?'true':'false');
+    if (kind==='tenant_policy') await dialog.screenshot({path:`.continuity-preservation/step6a3-20261016/qa-precedence-${info.project.name}.png`});
+    await dialog.getByRole('button',{name:'Crear registro',exact:true}).click();
+    await expect(dialog).toHaveCount(0);
+  }
+  expect(posted).toHaveLength(5);
+});
+
+test("STEP6A3 QA Platform company opens existing tenant applicability tab", async ({page}, info) => {
+  await mockRuntime(page,['TENANT_ADMIN'],['PLATFORM_ADMIN'],['privacy.retention_policy.read','privacy.retention_policy.create']);
+  await page.goto('/configuraciones/empresas');
+  await page.getByRole('button',{name:'Ver detalle',exact:true}).first().click();
+  await page.getByRole('dialog').getByRole('button',{name:'Abrir aplicabilidad de retención',exact:true}).click();
+  await expect(page).toHaveURL(/\/evidencias\?tab=aplicabilidad-retencion$/);
+  await expect(page.getByRole('tab',{name:'Aplicabilidad de retención',exact:true})).toHaveAttribute('aria-selected','true');
+  await expect(page.getByRole('heading',{name:'Aplicabilidad de retención',exact:true})).toBeVisible();
+  await page.reload();
+  await expect(page.getByRole('tab',{name:'Aplicabilidad de retención',exact:true})).toHaveAttribute('aria-selected','true');
+  await page.screenshot({path:`.continuity-preservation/step6a3-20261016/qa-applicability-${info.project.name}.png`,fullPage:true});
+});
+
+test("STEP6A3 QA Platform authority alone does not open tenant retention", async ({page}) => {
+  await mockRuntime(page,[],['PLATFORM_ADMIN']);
+  let retentionReads=0;
+  await page.route('**/api/v1/retention-policy-applicabilities**',route=>{retentionReads++;return route.fulfill({status:403,json:{}});});
+  await page.goto('/configuraciones/empresas');
+  await page.getByRole('button',{name:'Ver detalle',exact:true}).first().click();
+  const dialog=page.getByRole('dialog');
+  await expect(dialog.getByText('La retención se administra en Evidencias',{exact:false})).toBeVisible();
+  await expect(dialog.getByRole('button',{name:'Abrir aplicabilidad de retención'})).toHaveCount(0);
+  expect(retentionReads).toBe(0);
+});
+
+test("STEP6A3 QA company shortcut does not reuse permission from a different tenant", async ({page}) => {
+  await mockRuntime(page,['TENANT_ADMIN'],['PLATFORM_ADMIN'],['privacy.retention_policy.read']);
+  await page.route(url=>url.pathname==='/api/v1/platform/tenants',route=>route.fulfill({json:{items:[{tenant_id:memberId,display_name:'Otra empresa',legal_name:'Otra empresa',lifecycle_state:'active'}],page:{has_more:false,next_cursor:null}}}));
+  await page.route(`**/api/v1/platform/tenants/${memberId}`,route=>route.fulfill({json:{tenant_id:memberId,display_name:'Otra empresa',legal_name:'Otra empresa',lifecycle_state:'active'}}));
+  await page.route(url=>url.pathname===`/api/v1/platform/tenants/${memberId}/regulatory-pack-validation-accesses`,route=>{expect(route.request().headers()['x-tcdx-tenant-id']).toBeUndefined();return route.fulfill({json:{items:[],page:{has_more:false,next_cursor:null}}});});
+  await page.route(url=>url.pathname==='/api/v1/platform/plan-versions',route=>{expect(route.request().headers()['x-tcdx-tenant-id']).toBeUndefined();return route.fulfill({json:{items:[],page:{has_more:false,next_cursor:null}}});});
+  await page.goto('/configuraciones/empresas');
+  await page.getByRole('button',{name:'Ver detalle',exact:true}).first().click();
+  const dialog=page.getByRole('dialog');
+  await expect(dialog.getByRole('heading',{name:'Otra empresa',exact:true})).toBeVisible();
+  await expect(dialog.getByText('La retención se administra en Evidencias',{exact:false})).toBeVisible();
+  await expect(dialog.getByRole('button',{name:'Abrir aplicabilidad de retención'})).toHaveCount(0);
+});
+
+test("STEP6A3 QA applicability deep link preserves tenant permission filtering", async ({page}) => {
+  await mockRuntime(page,['TENANT_ADMIN']);
+  let retentionReads=0;
+  await page.route('**/api/v1/retention-policy-applicabilities**',route=>{retentionReads++;return route.fulfill({status:403,json:{}});});
+  await page.goto('/evidencias?tab=aplicabilidad-retencion');
+  await expect(page.getByRole('tab',{name:'Solicitudes de evidencia',exact:true})).toBeVisible();
+  await expect(page.getByRole('tab',{name:'Aplicabilidad de retención',exact:true})).toHaveCount(0);
+  expect(retentionReads).toBe(0);
+});
+
+// is_mandatory regression: exact reported ordinary-policy inputs; strict boolean contract.
+test("STEP6A3 mandatory QA_RET_ORD_001 No is JSON false for PRIVACY_MANAGER", async ({page},info) => {
+  await mockRuntime(page,['PRIVACY_MANAGER'],[],['privacy.retention_policy.read','privacy.retention_policy.create']);
+  let posted=0;
+  await page.route(url=>url.pathname==='/api/v1/retention-policies',async route=>{
+    if(route.request().method()!=='POST'){await route.fallback();return;}
+    posted++;
+    const body=route.request().postDataJSON();
+    if(typeof body.is_mandatory!=='boolean'){
+      await route.fulfill({status:400,json:{code:'TCDX.VALIDATION.FAILED',details:{field:'is_mandatory'},correlation_id:tenantId,retryable:false}});return;
+    }
+    expect(body).toEqual({policy_code:'QA_RET_ORD_001',version_number:1,policy_kind:'tenant_policy',retention_seconds:31536000,trigger_event_code:'expiry_or_closure',precedence_rank:200,is_mandatory:false});
+    await route.fulfill({status:202,json:{operation_id:'retentionPolicyCreate',status:'completed',result:{retention_policy_id:tenantId}}});
+  });
+  await page.goto('/evidencias?tab=retencion');
+  await page.getByRole('button',{name:'Nuevo registro',exact:true}).click();
+  const dialog=page.getByRole('dialog');
+  await dialog.getByLabel('Código de política',{exact:true}).fill('QA_RET_ORD_001');
+  await dialog.getByLabel('Número de versión',{exact:true}).fill('1');
+  await dialog.getByLabel('Tipo de política',{exact:true}).selectOption('tenant_policy');
+  await dialog.getByLabel('Duración de retención (segundos)',{exact:true}).fill('31536000');
+  await dialog.getByLabel('Evento de inicio de retención',{exact:true}).selectOption('expiry_or_closure');
+  await expect(dialog.getByLabel('Orden de precedencia',{exact:true})).toHaveValue('200');
+  const mandatory=dialog.getByRole('combobox',{name:'Obligatoria',exact:true});
+  await expect(mandatory).toHaveValue('');
+  await dialog.getByRole('button',{name:'Crear registro',exact:true}).click();
+  await expect(dialog.getByRole('alert')).toContainText('Selecciona Sí o No en Obligatoria.');
+  expect(posted).toBe(0);
+  await mandatory.selectOption({label:'No'});
+  await dialog.screenshot({path:`.continuity-preservation/step6a3-20261016/qa-is-mandatory-${info.project.name}.png`});
+  await dialog.getByRole('button',{name:'Crear registro',exact:true}).click();
+  await expect(dialog).toHaveCount(0);expect(posted).toBe(1);
+});
+
+test("STEP6A3 mandatory explicit Si preserves mandatory policy and legal hold payloads", async ({page}) => {
+  await mockRuntime(page,['PRIVACY_MANAGER'],[],['privacy.retention_policy.read','privacy.retention_policy.create']);
+  const posted:string[]=[];
+  await page.route(url=>url.pathname==='/api/v1/retention-policies',async route=>{
+    if(route.request().method()!=='POST'){await route.fallback();return;}
+    const body=route.request().postDataJSON();expect(body.is_mandatory).toBe(true);
+    expect(body.precedence_rank).toBe(body.policy_kind==='legal_hold'?500:400);
+    if(body.policy_kind==='legal_hold') expect(body).not.toHaveProperty('retention_seconds');
+    else expect(body.retention_seconds).toBe(31536000);
+    posted.push(body.policy_kind);
+    await route.fulfill({status:202,json:{operation_id:'retentionPolicyCreate',status:'completed',result:{retention_policy_id:tenantId}}});
+  });
+  await page.goto('/evidencias?tab=retencion');
+  for(const kind of ['mandatory_regulatory_policy','legal_hold']){
+    await page.getByRole('button',{name:'Nuevo registro',exact:true}).click();const dialog=page.getByRole('dialog');
+    await dialog.getByLabel('Código de política',{exact:true}).fill('LOCAL-BOOLEAN-'+kind);
+    await dialog.getByLabel('Número de versión',{exact:true}).fill('1');
+    await dialog.getByLabel('Tipo de política',{exact:true}).selectOption(kind);
+    await dialog.getByLabel('Duración de retención (segundos)',{exact:true}).fill('31536000');
+    await dialog.getByLabel('Evento de inicio de retención',{exact:true}).selectOption('expiry_or_closure');
+    await dialog.getByRole('combobox',{name:'Obligatoria',exact:true}).selectOption({label:'Sí'});
+    await dialog.getByRole('button',{name:'Crear registro',exact:true}).click();await expect(dialog).toHaveCount(0);
+  }
+  expect(posted).toEqual(['mandatory_regulatory_policy','legal_hold']);
+});
+
+test("STEP6A3 mandatory draft update also serializes No as JSON false", async ({page}) => {
+  await mockRuntime(page,['PRIVACY_MANAGER'],[],['privacy.retention_policy.read','privacy.retention_policy.update']);
+  const policy={retention_policy_id:tenantId,policy_code:'LOCAL-BOOLEAN-UPDATE',version_number:1,policy_kind:'tenant_policy',retention_seconds:31536000,is_mandatory:true,row_version:1,lifecycle_state:'draft'};
+  let updated=false;
+  await page.route(url=>url.pathname.startsWith('/api/v1/retention-policies'),async route=>{
+    const u=new URL(route.request().url());
+    if(route.request().method()==='POST'){
+      expect(u.pathname).toBe(`/api/v1/retention-policies/${tenantId}:update`);
+      expect(route.request().postDataJSON()).toEqual({retention_seconds:31536000,is_mandatory:false});
+      expect(route.request().headers()['if-match']).toBe('"1"');updated=true;
+      await route.fulfill({status:200,json:{...policy,is_mandatory:false,row_version:2}});return;
+    }
+    await route.fulfill({json:u.pathname==='/api/v1/retention-policies'?{items:[policy],page:{has_more:false,next_cursor:null}}:policy});
+  });
+  await page.goto('/evidencias?tab=retencion');await page.getByRole('button',{name:'Ver detalle',exact:true}).first().click();
+  const section=page.getByRole('dialog').locator('section.workflow-action').filter({has:page.getByRole('heading',{name:'Actualizar borrador',exact:true})});
+  await section.getByLabel('Duración de retención (segundos)',{exact:true}).fill('31536000');
+  await section.getByRole('combobox',{name:'Obligatoria',exact:true}).selectOption({label:'No'});
+  await section.getByRole('button',{name:'Actualizar borrador',exact:true}).click();await expect.poll(()=>updated).toBe(true);
+});
+
+// Classification regression: the approved CV-01 enum is shared with FileClassification.
+async function mockApplicabilityCreation(page:Page, source=false, timezone="Europe/Berlin") {
+  await mockRuntime(page,['PRIVACY_MANAGER'],[],['privacy.retention_policy.read','privacy.retention_policy.create','organization.subject.read','evidence.evidence.read'],timezone);
+  await page.route(url=>url.pathname==='/api/v1/retention-policies',async route=>{
+    expect(new URL(route.request().url()).searchParams.get('filter[lifecycle_state]')).toBe('published');
+    expect(route.request().headers()['x-tcdx-tenant-id']).toBe(tenantId);
+    await route.fulfill({json:{items:[{tenant_id:tenantId,retention_policy_id:tenantId,policy_code:'QA_RET_ORD_001',version_number:1,policy_kind:'tenant_policy',is_mandatory:false,lifecycle_state:'published'}],page:{has_more:false,next_cursor:null}}});
+  });
+  if(source){
+    await page.route(url=>url.pathname==='/api/v1/subjects',route=>route.fulfill({json:{items:[{tenant_id:tenantId,subject_id:memberId,display_name:'Alcance autorizado'}],page:{has_more:false,next_cursor:null}}}));
+    await page.route(url=>url.pathname==='/api/v1/evidence',route=>route.fulfill({json:{items:[{tenant_id:tenantId,evidence_id:memberId,evidence_code:'EV-FUENTE',lifecycle_state:'approved'}],page:{has_more:false,next_cursor:null}}}));
+    await page.route(url=>url.pathname===`/api/v1/evidence/${memberId}`,route=>route.fulfill({json:{tenant_id:tenantId,evidence_id:memberId,evidence_code:'EV-FUENTE',versions:[{evidence_version_id:roleId,version_number:1,lifecycle_state:'approved'},{evidence_version_id:tenantId,version_number:2,lifecycle_state:'draft'}]}}));
+    await page.route(url=>url.pathname===`/api/v1/evidence-versions/${roleId}`,route=>route.fulfill({json:{tenant_id:tenantId,evidence_id:memberId,evidence_version_id:roleId,version_number:1,lifecycle_state:'approved',ordinary_consumption_allowed:true}}));
+  }
+}
+
+test('STEP6A3 classification uses canonical choices and creates ordinary applicability without legal source',async({page},info)=>{
+  await mockApplicabilityCreation(page);
+  const posted:Record<string,unknown>[]=[];
+  await page.route(url=>url.pathname==='/api/v1/retention-policy-applicabilities',async route=>{
+    if(route.request().method()!=='POST'){await route.fallback();return;}
+    const body=route.request().postDataJSON();
+    if(!['public','internal','confidential','restricted'].includes(body.classification)){
+      await route.fulfill({status:400,json:{code:'TCDX.VALIDATION.FAILED',details:{field:'classification'}}});return;
+    }
+    expect(route.request().headers()['x-tcdx-tenant-id']).toBe(tenantId);
+    expect(body).toEqual({retention_policy_id:tenantId,version_number:1,classification:body.classification});
+    posted.push(body);await route.fulfill({status:202,json:{operation_id:'retentionApplicabilityCreate',status:'completed',result:{retention_policy_applicability_id:memberId}}});
+  });
+  await page.goto('/evidencias?tab=aplicabilidad-retencion');
+  for(const code of ['public','internal','confidential','restricted']){
+    await page.getByRole('button',{name:'Nuevo registro',exact:true}).click();const dialog=page.getByRole('dialog');
+    const classification=dialog.getByRole('combobox',{name:'Clasificación',exact:true});
+    await expect(classification).toHaveValue('');
+    await expect(classification.locator('option')).toHaveText(['Selecciona una opción','Pública','Interna','Confidencial','Restringida']);
+    await dialog.getByRole('combobox',{name:'Política de retención',exact:true}).selectOption({label:'Política de la organización · QA_RET_ORD_001 · v1 · Publicada'});
+    await dialog.getByLabel('Versión de aplicabilidad',{exact:true}).fill('1');
+    await dialog.getByRole('button',{name:'Crear registro',exact:true}).click();
+    await expect(dialog.getByRole('alert')).toContainText('clasificación del catálogo');
+    await classification.selectOption(code);
+    if(code==='confidential')await dialog.screenshot({path:`.continuity-preservation/step6a3-20261016/qa-classification-${info.project.name}.png`});
+    await dialog.getByRole('button',{name:'Crear registro',exact:true}).click();await expect(dialog).toHaveCount(0);
+  }
+  expect(posted.map(row=>row.classification)).toEqual(['public','internal','confidential','restricted']);
+});
+
+test('STEP6A3 classification preserves real scope and approved evidence version references',async({page})=>{
+  await mockApplicabilityCreation(page,true);let posted=false;
+  await page.route(url=>url.pathname==='/api/v1/retention-policy-applicabilities',async route=>{
+    if(route.request().method()!=='POST'){await route.fallback();return;}
+    expect(route.request().postDataJSON()).toEqual({retention_policy_id:tenantId,version_number:1,classification:'confidential',scope_subject_id:memberId,source_evidence_version_id:roleId,source_clause_ref:'Cláusula 3',effective_from:'2026-10-16T12:00:00Z'});
+    posted=true;await route.fulfill({status:202,json:{operation_id:'retentionApplicabilityCreate',status:'completed',result:{retention_policy_applicability_id:memberId}}});
+  });
+  await page.goto('/evidencias?tab=aplicabilidad-retencion');await page.getByRole('button',{name:'Nuevo registro',exact:true}).click();
+  const dialog=page.getByRole('dialog');
+  await dialog.getByRole('combobox',{name:'Política de retención',exact:true}).selectOption(tenantId);
+  await dialog.getByLabel('Versión de aplicabilidad',{exact:true}).fill('1');
+  await dialog.getByRole('combobox',{name:'Clasificación',exact:true}).selectOption('confidential');
+  await dialog.getByRole('combobox',{name:'ID del alcance',exact:true}).selectOption(memberId);
+  await dialog.getByLabel('Cláusula o disposición aplicable',{exact:true}).fill('Cláusula 3');
+  await dialog.getByRole('button',{name:'Crear registro',exact:true}).click();
+  await expect(dialog.getByRole('alert')).toContainText('versión de evidencia aprobada');expect(posted).toBe(false);
+  await dialog.getByRole('combobox',{name:'Evidencia',exact:true}).selectOption(memberId);
+  const version=dialog.getByRole('combobox',{name:'Versión de evidencia aprobada',exact:true});
+  await expect(version.locator('option')).toHaveCount(2);await version.selectOption(roleId);
+  await dialog.getByLabel('Vigente desde',{exact:true}).fill('2026-10-16T14:00');
+  await dialog.getByRole('button',{name:'Crear registro',exact:true}).click();await expect(dialog).toHaveCount(0);expect(posted).toBe(true);
+});
+
+test.describe('STEP6A3 local dates',()=>{
+  test.use({timezoneId:'Asia/Tokyo'}); // The tenant zone must override the browser zone.
+  test('creates from Santiago wall clocks with optional end and chronological validation',async({page},info)=>{
+    await mockApplicabilityCreation(page,false,'America/Santiago');
+    const posted:Record<string,unknown>[]=[];
+    await page.route(url=>url.pathname==='/api/v1/retention-policy-applicabilities',async route=>{
+      if(route.request().method()!=='POST'){await route.fallback();return;}
+      posted.push(route.request().postDataJSON());await route.fulfill({status:202,json:{operation_id:'retentionApplicabilityCreate',status:'completed',result:{retention_policy_applicability_id:memberId}}});
+    });
+    await page.goto('/evidencias?tab=aplicabilidad-retencion');
+    for(const withEnd of [false,true]){
+      await page.getByRole('button',{name:'Nuevo registro',exact:true}).click();const dialog=page.getByRole('dialog');
+      await dialog.getByRole('combobox',{name:'Política de retención',exact:true}).selectOption(tenantId);
+      await dialog.getByLabel('Versión de aplicabilidad',{exact:true}).fill('1');
+      await dialog.getByRole('combobox',{name:'Clasificación',exact:true}).selectOption('internal');
+      await expect(dialog.getByLabel('Vigente desde',{exact:true})).toHaveAttribute('type','datetime-local');
+      await dialog.getByLabel('Vigente desde',{exact:true}).fill('2026-10-16T12:30');
+      if(withEnd){
+        await dialog.getByLabel('Vigente hasta',{exact:true}).fill('2026-10-16T12:00');
+        await dialog.getByRole('button',{name:'Crear registro',exact:true}).click();await expect(dialog.getByRole('alert')).toContainText('posterior');
+        await dialog.getByLabel('Vigente hasta',{exact:true}).fill('2026-10-17T12:30');
+      }
+      await dialog.screenshot({path:`.continuity-preservation/step6a3-20261016/qa-local-dates-${withEnd}-${info.project.name}.png`});
+      await dialog.getByRole('button',{name:'Crear registro',exact:true}).click();await expect(dialog).toHaveCount(0);
+    }
+    expect(posted).toEqual([
+      {retention_policy_id:tenantId,version_number:1,classification:'internal',effective_from:'2026-10-16T15:30:00Z'},
+      {retention_policy_id:tenantId,version_number:1,classification:'internal',effective_from:'2026-10-16T15:30:00Z',effective_to:'2026-10-17T15:30:00Z'}
+    ]);
+  });
+  test('blocks DST gaps and requires explicit choice for repeated local clocks',async({page})=>{
+    await mockApplicabilityCreation(page,false,'America/Santiago');let posted=0;
+    await page.route(url=>url.pathname==='/api/v1/retention-policy-applicabilities',async route=>{
+      if(route.request().method()!=='POST'){await route.fallback();return;}
+      expect(route.request().postDataJSON().effective_from).toBe('2026-04-05T03:30:00Z');posted++;
+      await route.fulfill({status:202,json:{operation_id:'retentionApplicabilityCreate',status:'completed',result:{retention_policy_applicability_id:memberId}}});
+    });
+    await page.goto('/evidencias?tab=aplicabilidad-retencion');await page.getByRole('button',{name:'Nuevo registro',exact:true}).click();
+    const dialog=page.getByRole('dialog');
+    await dialog.getByRole('combobox',{name:'Política de retención',exact:true}).selectOption(tenantId);
+    await dialog.getByLabel('Versión de aplicabilidad',{exact:true}).fill('1');
+    await dialog.getByRole('combobox',{name:'Clasificación',exact:true}).selectOption('internal');
+    await dialog.getByLabel('Vigente desde',{exact:true}).fill('2026-09-06T00:30');
+    await expect(dialog.getByText('Esta fecha u hora no existe en la zona de la empresa. Selecciona otra.',{exact:true})).toBeVisible();
+    await dialog.getByRole('button',{name:'Crear registro',exact:true}).click();expect(posted).toBe(0);
+    await dialog.getByLabel('Vigente desde',{exact:true}).fill('2026-04-04T23:30');
+    const occurrence=dialog.getByRole('combobox',{name:'Ocurrencia de Vigente desde',exact:true});
+    await expect(occurrence).toHaveValue('');
+    await dialog.getByRole('button',{name:'Crear registro',exact:true}).click();expect(posted).toBe(0);
+    await occurrence.selectOption('2026-04-05T03:30:00Z');
+    await dialog.getByRole('button',{name:'Crear registro',exact:true}).click();await expect(dialog).toHaveCount(0);expect(posted).toBe(1);
+  });
+  test('reads persisted UTC as local and edits through the existing authorized action',async({page})=>{
+    await mockRuntime(page,['PRIVACY_MANAGER'],[],['privacy.retention_policy.read','privacy.retention_policy.update'],'America/Santiago');
+    const row={retention_policy_applicability_id:memberId,retention_policy_id:tenantId,classification:'internal',row_version:1,lifecycle_state:'draft',initial_source_bind_allowed:true,effective_from:'2026-10-16T15:30:00Z',effective_to:'2026-10-17T15:30:00Z',initial_source_candidates:[{evidence_version_id:roleId,evidence_code:'EV-FUENTE',version_number:1}]};let updated=false;
+    await page.route(url=>url.pathname.startsWith('/api/v1/retention-policy-applicabilities'),async route=>{
+      if(route.request().method()==='POST'){
+        expect(new URL(route.request().url()).pathname).toBe(`/api/v1/retention-policy-applicabilities/${memberId}:bind-initial-source`);
+        expect(route.request().postDataJSON()).toEqual({source_evidence_version_id:roleId,source_clause_ref:'Cláusula 3',effective_from:'2026-10-16T16:45:00Z',effective_to:'2026-10-17T15:30:00Z'});
+        expect(route.request().headers()['if-match']).toBe('"1"');updated=true;await route.fulfill({json:{...row,row_version:2}});return;
+      }
+      await route.fulfill({json:new URL(route.request().url()).pathname==='/api/v1/retention-policy-applicabilities'?{items:[row],page:{has_more:false,next_cursor:null}}:row});
+    });
+    await page.goto('/evidencias?tab=aplicabilidad-retencion');await page.getByRole('button',{name:'Ver detalle',exact:true}).first().click();
+    const dialog=page.getByRole('dialog');
+    await expect(dialog.getByLabel('Vigente desde',{exact:true})).toHaveValue('2026-10-16T12:30');
+    await expect(dialog.getByLabel('Vigente hasta',{exact:true})).toHaveValue('2026-10-17T12:30');
+    await expect(dialog.locator('dd').filter({hasText:'12:30:00'}).first()).toContainText('America/Santiago');
+    await dialog.getByLabel('Fuente inicial aprobada',{exact:true}).selectOption(roleId);
+    await dialog.getByLabel('Cláusula o disposición aplicable',{exact:true}).fill('Cláusula 3');
+    await dialog.getByLabel('Vigente desde',{exact:true}).fill('2026-10-16T13:45');
+    await dialog.getByRole('button',{name:'Vincular fuente inicial',exact:true}).click();await expect.poll(()=>updated).toBe(true);
+  });
+});
+
+test.describe('STEP6A3 evidence findings',()=>{
+  test('evidence provenance rejection stays a creation error and retries without another upload',async({page})=>{
+    await mockRuntime(page,['EVIDENCE_OWNER','PRIVACY_MANAGER'],[],['evidence.evidence.read','evidence.evidence.create','evidence.document.create','privacy.retention_policy_reference.read','privacy.retention_policy.read','organization.subject.read']);
+    await page.route(url=>url.pathname==='/api/v1/subjects',route=>route.fulfill({json:{items:[{tenant_id:tenantId,subject_id:memberId,subject_type:'organization',display_name:'TecDex',lifecycle_state:'active'}],page:{has_more:false,next_cursor:null}}}));
+    await page.route(url=>url.pathname==='/api/v1/retention-policy-references',route=>route.fulfill({json:{items:[{tenant_id:tenantId,retention_policy_id:tenantId,policy_code:'QA_RET_ORD_001',policy_kind:'tenant_policy',version_number:1,lifecycle_state:'published',selectable:true}],page:{has_more:false,next_cursor:null}}}));
+    await page.route(url=>url.pathname==='/api/v1/retention-policy-applicabilities',route=>route.fulfill({json:{items:[{tenant_id:tenantId,retention_policy_applicability_id:roleId,retention_policy_id:tenantId,classification:'internal',purpose:'evidence_document',scope_subject_id:null,processing_activity_id:null,version_number:1,lifecycle_state:'published',effective_from:'2020-01-01T00:00:00Z',effective_to:'2100-01-01T00:00:00Z'}],page:{has_more:false,next_cursor:null}}}));
+    let uploadBody:Record<string,unknown>|undefined;
+    let uploadCount=0; const createdBodies:Record<string,unknown>[]=[];
+    await page.route(url=>url.pathname==='/api/v1/evidence' && url.searchParams.size===0,async route=>{
+      if(route.request().method()!=='POST'){await route.fallback();return;}
+      const body=route.request().postDataJSON() as Record<string,unknown>;createdBodies.push(body);
+      if(!body.provenance_ref){await route.fulfill({status:400,json:{code:'TCDX.VALIDATION.FAILED',message:'Validation failed',correlation_id:tenantId,retryable:false,details:{field:'provenance_ref'}}});return;}
+      await route.fulfill({status:202,json:{result:{evidence_id:roleId}}});
+    });
+    await page.route(url=>url.pathname==='/api/v1/files:request-upload',route=>{uploadCount++;uploadBody=route.request().postDataJSON() as Record<string,unknown>;expect(route.request().headers()['x-tcdx-tenant-id']).toBe(tenantId);return route.fulfill({status:202,json:{result:{upload_intent_id:roleId,upload_url:`/api/v1/file-upload-intents/${roleId}/content`}}});});
+    await page.route(url=>url.pathname===`/api/v1/file-upload-intents/${roleId}/content`,route=>route.fulfill({status:204,body:''}));
+    await page.route(url=>url.pathname===`/api/v1/file-upload-intents/${roleId}:finalize`,route=>route.fulfill({status:202,json:{result:{file_object_id:roleId}}}));
+    await page.goto('/evidencias?tab=evidencias');await page.getByRole('button',{name:'Nuevo registro',exact:true}).click();const dialog=page.getByRole('dialog');
+    await dialog.locator('input[type=file]').setInputFiles({name:'qa-local.pdf',mimeType:'application/pdf',buffer:Buffer.from('%PDF-local-fixture')});
+    await dialog.getByRole('combobox',{name:'Clasificación del archivo'}).selectOption('internal');
+    await dialog.getByRole('combobox',{name:'Responsable de negocio (opcional)'}).selectOption(memberId);
+    await dialog.getByRole('combobox',{name:'Política de retención',exact:true}).selectOption(tenantId);
+    await dialog.getByRole('combobox',{name:'Aplicabilidad de retención'}).selectOption(roleId);
+    await dialog.getByLabel('Procedencia del archivo').fill('Fixture local de transferencia');
+    await dialog.getByLabel('Código de evidencia',{exact:true}).fill('LOCAL-PROVENANCE-RETRY');
+    await dialog.getByRole('combobox',{name:'Tipo de evidencia',exact:true}).selectOption('document');
+    await dialog.getByRole('combobox',{name:'Origen',exact:true}).selectOption({label:'Archivo aportado'});
+    await dialog.getByRole('button',{name:'Crear registro',exact:true}).click();
+    await expect.poll(()=>uploadBody).toMatchObject({scope_subject_id:memberId,retention_policy_id:tenantId,retention_policy_applicability_id:roleId,classification:'internal'});
+    expect(uploadBody).not.toHaveProperty('processing_activity_id');
+    await expect(dialog.getByRole('alert')).toContainText('No fue posible crear el registro. Revisa: Referencia de procedencia.');
+    await expect(dialog.getByRole('alert')).toContainText(`Correlación: ${tenantId}`);
+    await expect(dialog.getByRole('alert')).not.toContainText('No fue posible transferir el archivo.');
+    await dialog.getByRole('alert').scrollIntoViewIfNeeded();
+    await dialog.screenshot({path:'docs/phase6a/STEP_6A3/evidence/evidence-persistence-20261019/creation-provenance-error.png'});
+    expect(createdBodies[0]).not.toHaveProperty('provenance_ref');
+    await dialog.getByLabel('Referencia de procedencia',{exact:true}).fill('Referencia documental aportada');
+    await dialog.getByRole('button',{name:'Crear registro',exact:true}).click();
+    await expect(dialog).toHaveCount(0);
+    expect(createdBodies[1]).toMatchObject({file_object_id:roleId,provenance_ref:'Referencia documental aportada'});
+    expect(uploadCount).toBe(1);
+
+  });
+  test('evidence link control picker excludes global references from tenant targets',async({page},info)=>{
+    await mockRuntime(page,['EVIDENCE_OWNER'],[],['evidence.evidence.read','evidence.evidence.create','controls.control.read','privacy.retention_policy_reference.read']);
+    await page.route(url=>url.pathname==='/api/v1/controls',route=>route.fulfill({json:{items:[
+      {control_id:memberId,tenant_id:null,ownership_class:'PLATFORM_CONTROL',control_code:'EVIDENCE-001',name:'Protección de evidencias y registros',lifecycle_state:'draft'},
+      {control_id:roleId,tenant_id:tenantId,ownership_class:'TENANT_OWNED',control_code:'TENANT-CONTROL',name:'Control del tenant',lifecycle_state:'active'}
+    ],page:{has_more:false,next_cursor:null}}}));
+    let creationCalls=0;
+    await page.route(url=>url.pathname==='/api/v1/evidence' && url.searchParams.size===0,async route=>{if(route.request().method()==='POST')creationCalls++;await route.fallback();});
+    await page.goto('/evidencias?tab=evidencias');await page.getByRole('button',{name:'Nuevo registro',exact:true}).click();const dialog=page.getByRole('dialog');
+    await dialog.getByRole('button',{name:'Agregar elemento',exact:true}).click();
+    await dialog.getByLabel('Tipo de objeto',{exact:false}).selectOption('control_id');
+    const control=dialog.getByRole('combobox',{name:'ID de control',exact:true});
+    await expect(control.locator(`option[value="${roleId}"]`)).toHaveCount(1);
+    await expect(control.locator(`option[value="${memberId}"]`)).toHaveCount(0);
+    await control.selectOption(roleId);await expect(control).toHaveValue(roleId);
+    await control.scrollIntoViewIfNeeded();await dialog.screenshot({path:`${evidenceDirectory}/control-target-${info.project.name}.png`});
+    expect(creationCalls).toBe(0);
+  });
+  test('evidence dates use tenant instants and preserve finalized file on date rejection',async({page})=>{
+    await mockRuntime(page,['EVIDENCE_OWNER','PRIVACY_MANAGER'],[],['evidence.evidence.read','evidence.evidence.create','evidence.document.create','privacy.retention_policy_reference.read','privacy.retention_policy.read','organization.subject.read'],'America/Santiago');
+    await page.route(url=>url.pathname==='/api/v1/subjects',route=>route.fulfill({json:{items:[{tenant_id:tenantId,subject_id:memberId,subject_type:'organization',display_name:'TecDex',lifecycle_state:'active'}],page:{has_more:false,next_cursor:null}}}));
+    await page.route(url=>url.pathname==='/api/v1/retention-policy-references',route=>route.fulfill({json:{items:[{tenant_id:tenantId,retention_policy_id:tenantId,policy_code:'QA_RET_ORD_001',policy_kind:'tenant_policy',version_number:1,lifecycle_state:'published',selectable:true}],page:{has_more:false,next_cursor:null}}}));
+    await page.route(url=>url.pathname==='/api/v1/retention-policy-applicabilities',route=>route.fulfill({json:{items:[{tenant_id:tenantId,retention_policy_applicability_id:roleId,retention_policy_id:tenantId,classification:'internal',purpose:'evidence_document',scope_subject_id:null,processing_activity_id:null,version_number:1,lifecycle_state:'published',effective_from:'2020-01-01T00:00:00Z',effective_to:'2100-01-01T00:00:00Z'}],page:{has_more:false,next_cursor:null}}}));
+    let uploadBody:Record<string,unknown>|undefined;
+    let uploadCount=0; const createdBodies:Record<string,unknown>[]=[];
+    await page.route(url=>url.pathname==='/api/v1/evidence' && url.searchParams.size===0,async route=>{
+      if(route.request().method()!=='POST'){await route.fallback();return;}
+      const body=route.request().postDataJSON() as Record<string,unknown>;createdBodies.push(body);
+      if(createdBodies.length===1){await route.fulfill({status:400,json:{code:'TCDX.VALIDATION.FAILED',message:'Validation failed',correlation_id:tenantId,retryable:false,details:{field:'valid_from'}}});return;}
+      await route.fulfill({status:202,json:{result:{evidence_id:roleId}}});
+    });
+    await page.route(url=>url.pathname==='/api/v1/files:request-upload',route=>{uploadCount++;uploadBody=route.request().postDataJSON() as Record<string,unknown>;expect(route.request().headers()['x-tcdx-tenant-id']).toBe(tenantId);return route.fulfill({status:202,json:{result:{upload_intent_id:roleId,upload_url:`/api/v1/file-upload-intents/${roleId}/content`}}});});
+    await page.route(url=>url.pathname===`/api/v1/file-upload-intents/${roleId}/content`,route=>route.fulfill({status:204,body:''}));
+    await page.route(url=>url.pathname===`/api/v1/file-upload-intents/${roleId}:finalize`,route=>route.fulfill({status:202,json:{result:{file_object_id:roleId}}}));
+    await page.goto('/evidencias?tab=evidencias');await page.getByRole('button',{name:'Nuevo registro',exact:true}).click();const dialog=page.getByRole('dialog');
+    await dialog.locator('input[type=file]').setInputFiles({name:'qa-local.pdf',mimeType:'application/pdf',buffer:Buffer.from('%PDF-local-fixture')});
+    await dialog.getByRole('combobox',{name:'Clasificación del archivo'}).selectOption('internal');
+    await dialog.getByRole('combobox',{name:'Responsable de negocio (opcional)'}).selectOption(memberId);
+    await dialog.getByRole('combobox',{name:'Política de retención',exact:true}).selectOption(tenantId);
+    await dialog.getByRole('combobox',{name:'Aplicabilidad de retención'}).selectOption(roleId);
+    await dialog.getByLabel('Procedencia del archivo').fill('Fixture local de transferencia');
+    await dialog.getByLabel('Código de evidencia',{exact:true}).fill('LOCAL-PROVENANCE-RETRY');
+    await dialog.getByRole('combobox',{name:'Tipo de evidencia',exact:true}).selectOption('document');
+    await dialog.getByRole('combobox',{name:'Origen',exact:true}).selectOption({label:'Archivo aportado'});
+    await dialog.getByLabel('Referencia de procedencia',{exact:true}).fill('Referencia documental aportada');
+    const from=dialog.getByLabel('Válida desde',{exact:true});
+    await expect(from).toHaveAttribute('type','datetime-local');
+    await expect(dialog.getByLabel('Válida hasta',{exact:true})).toHaveValue('');
+    await from.fill('2026-09-06T00:30');
+    await dialog.getByRole('button',{name:'Crear registro',exact:true}).click();
+    await expect(dialog.locator('.inline-feedback[role=alert]')).toContainText('Revisa Válida desde');
+    expect(uploadCount).toBe(0);expect(createdBodies).toHaveLength(0);
+    await from.fill('2026-04-04T23:30');
+    await dialog.getByRole('button',{name:'Crear registro',exact:true}).click();
+    await expect(dialog.locator('.inline-feedback[role=alert]')).toContainText('sin ambigüedad');
+    await dialog.getByRole('combobox',{name:'Ocurrencia de Válida desde'}).selectOption('2026-04-05T03:30:00Z');
+    await expect(from).toHaveValue('2026-04-04T23:30');
+    await from.fill('2026-10-19T12:30');
+    await dialog.getByLabel('Válida hasta',{exact:true}).fill('2026-10-19T12:29');
+    await dialog.getByRole('button',{name:'Crear registro',exact:true}).click();
+    await expect(dialog.locator('.inline-feedback[role=alert]')).toContainText('Válida hasta debe ser posterior');
+    expect(uploadCount).toBe(0);
+    await dialog.getByLabel('Válida hasta',{exact:true}).fill('');
+    await dialog.getByLabel('Inicio del período',{exact:true}).fill('2026-07-19T12:30');
+    await dialog.getByLabel('Fin del período',{exact:true}).fill('2026-07-20T12:30');
+    await dialog.getByLabel('Vigente desde',{exact:true}).fill('2026-10-19T12:30');
+    await dialog.getByLabel('Vigente hasta',{exact:true}).fill('2026-10-20T12:30');
+    await dialog.getByLabel('Vence el',{exact:true}).fill('2026-10-21T12:30');
+    await dialog.getByRole('button',{name:'Crear registro',exact:true}).click();
+    await expect.poll(()=>uploadBody).toMatchObject({scope_subject_id:memberId,retention_policy_id:tenantId,retention_policy_applicability_id:roleId,classification:'internal'});
+    expect(uploadBody).not.toHaveProperty('processing_activity_id');
+    await expect(dialog.locator('.inline-feedback[role=alert]')).toContainText('No fue posible crear el registro. Revisa: Válida desde.');
+    await expect(dialog.locator('.inline-feedback[role=alert]')).toContainText(`Correlación: ${tenantId}`);
+    await expect(dialog.locator('.inline-feedback[role=alert]')).not.toContainText('No fue posible transferir el archivo.');
+    await dialog.locator('.inline-feedback[role=alert]').scrollIntoViewIfNeeded();
+    await dialog.screenshot({path:`${evidenceDirectory}/evidence-dates-${test.info().project.name}.png`});
+    expect(createdBodies[0]).toMatchObject({valid_from:'2026-10-19T15:30:00Z',period_start:'2026-07-19T16:30:00Z',period_end:'2026-07-20T16:30:00Z',effective_from:'2026-10-19T15:30:00Z',effective_to:'2026-10-20T15:30:00Z',expires_at:'2026-10-21T15:30:00Z'});
+    expect(createdBodies[0]).not.toHaveProperty('valid_to');
+    await from.fill('2026-10-20T11:45');
+    await expect(from).toHaveValue('2026-10-20T11:45');
+    await dialog.getByLabel('Referencia de procedencia',{exact:true}).fill('Referencia documental aportada');
+    await dialog.getByRole('button',{name:'Crear registro',exact:true}).click();
+    await expect(dialog).toHaveCount(0);
+    expect(createdBodies[1]).toMatchObject({file_object_id:roleId,provenance_ref:'Referencia documental aportada',valid_from:'2026-10-20T14:45:00Z'});
+    expect(uploadCount).toBe(1);
+
+  });
+  test('evidence owner sees the exact permission denial while the eligible policy stays visible',async({page})=>{
+    await mockRuntime(page,['EVIDENCE_OWNER'],[],['evidence.evidence.read','evidence.evidence.create','evidence.document.create','privacy.retention_policy_reference.read']);
+    await page.route(url=>url.pathname==='/api/v1/retention-policy-references',route=>route.fulfill({json:{items:[{tenant_id:tenantId,retention_policy_id:tenantId,policy_code:'QA_RET_ORD_001',policy_kind:'tenant_policy',version_number:1,lifecycle_state:'published',selectable:true}],page:{has_more:false,next_cursor:null}}}));
+    await page.route(url=>['/api/v1/subjects','/api/v1/retention-policy-applicabilities'].includes(url.pathname),route=>route.fulfill({status:403,json:{code:'TCDX.AUTHORIZATION.DENIED',message:'Access denied',correlation_id:tenantId,retryable:false}}));
+    await page.goto('/evidencias?tab=evidencias');await page.getByRole('button',{name:'Nuevo registro',exact:true}).click();
+    const dialog=page.getByRole('dialog');await dialog.getByRole('combobox',{name:'Clasificación del archivo'}).selectOption('internal');
+    await dialog.getByRole('combobox',{name:'Política de retención',exact:true}).selectOption(tenantId);
+    await expect(dialog.getByText('No tienes acceso a estas opciones en la empresa seleccionada.',{exact:true})).toHaveCount(2);
+    await expect(dialog.getByRole('combobox',{name:'Aplicabilidad de retención'}).locator('option')).toHaveCount(1);
+    await expect(dialog.getByRole('combobox',{name:'Política de retención',exact:true}).locator('option')).toHaveCount(2);
+  });
+  test('changing evidence policy invalidates old applicability and loads only effective matching options',async({page})=>{
+    await mockRuntime(page,['EVIDENCE_OWNER','PRIVACY_MANAGER'],[],['evidence.evidence.read','evidence.evidence.create','evidence.document.create','privacy.retention_policy_reference.read','privacy.retention_policy.read','organization.subject.read']);
+    await page.route(url=>url.pathname==='/api/v1/retention-policy-references',route=>route.fulfill({json:{items:[
+      {tenant_id:tenantId,retention_policy_id:tenantId,policy_code:'QA_RET_ORD_001',policy_kind:'tenant_policy',version_number:1,lifecycle_state:'published',selectable:true},
+      {tenant_id:tenantId,retention_policy_id:roleId,policy_code:'RET-SECOND',policy_kind:'tenant_policy',version_number:2,lifecycle_state:'published',selectable:true}
+    ],page:{has_more:false,next_cursor:null}}}));
+    await page.route(url=>url.pathname==='/api/v1/retention-policy-applicabilities',route=>{
+      const policy=new URL(route.request().url()).searchParams.get('filter[retention_policy_id]');
+      return route.fulfill({json:{items:[{tenant_id:tenantId,retention_policy_applicability_id:policy===tenantId?memberId:tenantId,retention_policy_id:policy,classification:'internal',purpose:'evidence_document',version_number:1,lifecycle_state:'published',effective_from:'2020-01-01T00:00:00Z',effective_to:'2100-01-01T00:00:00Z'}],page:{has_more:false,next_cursor:null}}});
+    });
+    await page.goto('/evidencias?tab=evidencias');await page.getByRole('button',{name:'Nuevo registro',exact:true}).click();const dialog=page.getByRole('dialog');
+    await dialog.getByRole('combobox',{name:'Clasificación del archivo'}).selectOption('internal');
+    const policy=dialog.getByRole('combobox',{name:'Política de retención',exact:true});const applicability=dialog.getByRole('combobox',{name:'Aplicabilidad de retención'});
+    await policy.selectOption(tenantId);await expect(applicability.locator(`option[value="${memberId}"]`)).toHaveCount(1);await applicability.selectOption(memberId);
+    await policy.selectOption(roleId);await expect(applicability).toHaveValue('');await expect(applicability.locator(`option[value="${memberId}"]`)).toHaveCount(0);
+    await expect(applicability.locator(`option[value="${tenantId}"]`)).toHaveCount(1);
+  });
+  test('privacy manager cannot open evidence creation or trigger its protected auxiliary reads',async({page})=>{
+    await mockRuntime(page,['PRIVACY_MANAGER'],[],['evidence.evidence.read','privacy.retention_policy.read','privacy.retention_policy_reference.read','organization.subject.read']);
+    let discoveries=0;
+    await page.route(url=>url.pathname==='/api/v1/retention-policy-references'||url.pathname==='/api/v1/subjects',route=>{discoveries++;return route.fulfill({status:403,json:{code:'TCDX.AUTHORIZATION.DENIED'}});});
+    await page.goto('/evidencias?tab=evidencias');
+    await expect(page.getByRole('tab',{name:'Evidencias',exact:true})).toHaveAttribute('aria-selected','true');
+    await expect(page.getByRole('button',{name:'Nuevo registro',exact:true})).toHaveCount(0);
+    await expect(page.getByText('La creación de evidencias requiere el permiso',{exact:false})).toBeVisible();expect(discoveries).toBe(0);
+  });
+  test('existing evidence creator gets only published tenant policy and applicability choices',async({page},info)=>{
+    await mockRuntime(page,['EVIDENCE_OWNER','LEGAL_REVIEWER','CONTROL_OWNER'],[],['evidence.evidence.read','evidence.evidence.create','evidence.document.create','privacy.retention_policy_reference.read','privacy.retention_policy.read','organization.subject.read']);
+    await page.route(url=>url.pathname==='/api/v1/retention-policy-references',async route=>{
+      const u=new URL(route.request().url());expect(['evidence','upload']).toContain(u.searchParams.get('purpose'));expect(route.request().headers()['x-tcdx-tenant-id']).toBe(tenantId);
+      await route.fulfill({json:{items:[{retention_policy_id:tenantId,tenant_id:tenantId,policy_kind:'tenant_policy',policy_code:'QA_RET_ORD_001',version_number:1,lifecycle_state:'published',selectable:true},{retention_policy_id:roleId,policy_code:'INELIGIBLE',version_number:1,lifecycle_state:'published',selectable:false}],page:{has_more:false,next_cursor:null}}});
+    });
+    await page.route(url=>url.pathname==='/api/v1/retention-policy-applicabilities',async route=>{
+      const u=new URL(route.request().url());expect(u.searchParams.get('filter[lifecycle_state]')).toBe('published');expect(u.searchParams.get('filter[retention_policy_id]')).toBe(tenantId);expect(route.request().headers()['x-tcdx-tenant-id']).toBe(tenantId);
+      await route.fulfill({json:{items:[{tenant_id:tenantId,retention_policy_applicability_id:memberId,retention_policy_id:tenantId,version_number:1,classification:'confidential',purpose:'evidence_document',lifecycle_state:'published',effective_from:'2020-01-01T00:00:00Z',effective_to:'2100-01-01T00:00:00Z'}],page:{has_more:false,next_cursor:null}}});
+    });
+    await page.goto('/evidencias?tab=evidencias');await page.getByRole('button',{name:'Nuevo registro',exact:true}).click();const dialog=page.getByRole('dialog');
+    await dialog.locator('input[type=file]').setInputFiles({name:'local-qa-evidence.txt',mimeType:'text/plain',buffer:Buffer.from('Focused local UI fixture')});
+    await dialog.getByRole('combobox',{name:'Clasificación del archivo'}).selectOption('confidential');
+    const policy=dialog.getByRole('combobox',{name:'Política de retención',exact:true});
+    await expect(policy.locator('option')).toHaveText(['Selecciona una opción','Política de la organización · QA_RET_ORD_001 · v1 · Publicada']);
+    await policy.selectOption(tenantId);
+    const applicability=dialog.getByRole('combobox',{name:'Aplicabilidad de retención',exact:true});
+    await expect(applicability.locator('option')).toHaveText(['Selecciona una opción','Confidencial · v1 · Publicada']);await applicability.selectOption(memberId);
+    await dialog.screenshot({path:`.continuity-preservation/step6a3-20261016/qa-evidence-policy-${info.project.name}.png`});
+    await expect(dialog.getByText('No tienes acceso a estas opciones en la empresa seleccionada.',{exact:true})).toHaveCount(0);
+  });
+  test('policy list and detail use readable identity and domain version',async({page})=>{
+    await mockRuntime(page,['PRIVACY_MANAGER'],[],['privacy.retention_policy.read']);
+    const row={tenant_id:tenantId,retention_policy_id:tenantId,policy_kind:'tenant_policy',policy_code:'QA_RET_ORD_001',version_number:1,row_version:8,lifecycle_state:'published'};
+    await page.route(url=>url.pathname.startsWith('/api/v1/retention-policies'),route=>route.fulfill({json:new URL(route.request().url()).pathname==='/api/v1/retention-policies'?{items:[row],page:{has_more:false,next_cursor:null}}:row}));
+    await page.goto('/evidencias?tab=retencion');
+    await expect(page.getByRole('cell',{name:'Política de la organización · QA_RET_ORD_001 · v1',exact:true})).toBeVisible();
+    await expect(page.getByRole('cell',{name:'1',exact:true})).toBeVisible();
+    await page.getByRole('button',{name:'Ver detalle',exact:true}).first().click();const dialog=page.getByRole('dialog');
+    await expect(dialog.getByRole('heading',{name:'Política de la organización · QA_RET_ORD_001 · v1',exact:true})).toBeVisible();
+    await expect(dialog.getByText('ID de política de retención',{exact:true}).locator('xpath=following-sibling::dd[1]')).toHaveText('Política de la organización · QA_RET_ORD_001 · v1');
+  });
+  test('applicability detail resolves its authorized policy instead of a generic reference',async({page})=>{
+    await mockRuntime(page,['PRIVACY_MANAGER'],[],['privacy.retention_policy.read']);
+    const row={retention_policy_applicability_id:memberId,retention_policy_id:tenantId,classification:'confidential',version_number:1,row_version:4,lifecycle_state:'published'};
+    await page.route(url=>url.pathname.startsWith('/api/v1/retention-policy-applicabilities'),route=>route.fulfill({json:new URL(route.request().url()).pathname==='/api/v1/retention-policy-applicabilities'?{items:[row],page:{has_more:false,next_cursor:null}}:row}));
+    await page.route(url=>url.pathname===`/api/v1/retention-policies/${tenantId}`,route=>route.fulfill({json:{tenant_id:tenantId,retention_policy_id:tenantId,policy_code:'QA_RET_ORD_001',policy_kind:'tenant_policy',version_number:1,lifecycle_state:'published'}}));
+    await page.goto('/evidencias?tab=aplicabilidad-retencion');await page.getByRole('button',{name:'Ver detalle',exact:true}).first().click();
+    const dialog=page.getByRole('dialog');await expect(dialog.getByText('Política de la organización · QA_RET_ORD_001 · v1 · Publicada',{exact:true})).toBeVisible();
+    await expect(dialog.getByText('Referencia vinculada',{exact:true})).toHaveCount(0);
+  });
 });

@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { BrowserSession, receiveApplicationToken, receiveInvitationApplicationToken } from "./browser-auth.js";
 
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => { vi.unstubAllGlobals(); vi.useRealTimers(); });
 
 describe("browser OIDC session", () => {
   it("keeps the application token and tenant context in tab-scoped storage", async () => {
@@ -58,5 +58,57 @@ describe("browser OIDC session", () => {
     await vi.waitFor(() => expect(assign).toHaveBeenCalledWith("https://accounts.zoho.example/authorize"));
     listener?.({ origin: "https://api.example", source: popup, data: { type: "tcdx.application-token", token: "tcdx-token" } } as MessageEvent);
     await expect(result).resolves.toBe("tcdx-token");
+  });
+});
+
+
+describe("browser token renewal", () => {
+  function setup() {
+    const values = new Map<string, string>();
+    vi.stubGlobal("sessionStorage", { getItem: (k: string) => values.get(k) ?? null,
+      setItem: (k: string, v: string) => values.set(k, v), removeItem: (k: string) => values.delete(k) });
+    const session = new BrowserSession("https://api.example");
+    const now = Math.floor(Date.now() / 1000);
+    const token = `header.${btoa(JSON.stringify({ iat: now - 300, exp: now - 1, session_renewable: true }))}.signature`;
+    session.storeAccessToken(token); session.selectTenant("tenant");
+    return { session, token };
+  }
+  it("renews before API use, coalesces concurrent requests and preserves tenant context", async () => {
+    const { session, token } = setup();
+    const fetcher = vi.fn(async (_url: unknown, init?: RequestInit) => {
+      expect(new Headers(init?.headers).get("authorization")).toBe(`Bearer ${token}`);
+      return new Response(JSON.stringify({ token: "renewed" }));
+    });
+    vi.stubGlobal("fetch", fetcher);
+    expect(await Promise.all([session.getAccessToken(), session.getAccessToken()])).toEqual(["renewed", "renewed"]);
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    expect(session.selectedTenant()).toEqual({ tenantId: "tenant" });
+  });
+  it("clears a rejected session while preserving credentials on a provider outage", async () => {
+    const { session, token } = setup();
+    vi.stubGlobal("fetch", vi.fn(async () => new Response(null, { status: 503 })));
+    await expect(session.getAccessToken()).rejects.toThrow("SESSION_RENEWAL_UNAVAILABLE");
+    vi.stubGlobal("fetch", vi.fn(async (_url: unknown, init?: RequestInit) => {
+      expect(new Headers(init?.headers).get("authorization")).toBe(`Bearer ${token}`);
+      return new Response(null, { status: 401 });
+    }));
+    await expect(session.getAccessToken()).resolves.toBeNull();
+    expect(session.selectedTenant()).toBeNull();
+  });
+  it("keeps the existing behavior for tokens without renewable-session metadata", async () => {
+    const { session } = setup();
+    const fetcher = vi.fn(); vi.stubGlobal("fetch", fetcher);
+    const token = `header.${btoa(JSON.stringify({ iat: 1, exp: 2 }))}.signature`;
+    session.storeAccessToken(token);
+    await expect(session.getAccessToken()).resolves.toBe(token);
+    expect(fetcher).not.toHaveBeenCalled();
+  });
+  it("cannot restore a session cleared during renewal", async () => {
+    const { session } = setup();
+    vi.stubGlobal("fetch", vi.fn(async () => {
+      await session.clearSession(); return new Response(JSON.stringify({ token: "late-token" }));
+    }));
+    await expect(session.getAccessToken()).resolves.toBeNull();
+    await expect(session.getAccessToken()).resolves.toBeNull();
   });
 });

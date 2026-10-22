@@ -1,12 +1,12 @@
 import { formatTenantInstant } from "./tenant-timezone.js";
 import { uiText } from "./i18n/es.js";
 import { ApiClient } from "./api-client.js";
-import { publishedOptionLabel, subjectTypeLabel } from "./i18n/display-text.js";
+import { displayValue, publishedOptionLabel, subjectTypeLabel } from "./i18n/display-text.js";
 
 type Row = Record<string, unknown>;
 export type ReferenceOption = { value: string; label: string; row: Row };
 export type ReferencePage = { options: ReferenceOption[]; nextCursor: string | null };
-export type ReferenceContext = { parentId?: string | undefined; query?: string | undefined; cursor?: string | undefined; subjectType?: string | undefined; initialSource?: boolean | undefined; timezone?: string | null | undefined };
+export type ReferenceContext = { tenantOwnedControl?: boolean | undefined; parentId?: string | undefined; query?: string | undefined; cursor?: string | undefined; subjectType?: string | undefined; initialSource?: boolean | undefined; publishedOnly?: boolean | undefined; classification?: string | undefined; ownerSubjectId?: string | undefined; timezone?: string | null | undefined };
 export const referenceReads = {
   requirement: { operation: "requirementList", path: "/framework-versions/{framework_version_id}/requirements", id: "requirement_id", permission: "compliance.requirement.read", search: true, pathParent: true },
   retentionPolicy: { operation: "retentionPolicyList", path: "/retention-policies", id: "retention_policy_id", permission: "privacy.retention_policy.read" },
@@ -28,15 +28,22 @@ export const referenceReads = {
 } as const;
 export type ReferenceEntity = keyof typeof referenceReads;
 const uuid = /\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b/gi;
+/** RetentionPolicy has no canonical name attribute: kind, caller-defined code and version identify it. */
+export function retentionPolicyDisplayLabel(row: Row): string {
+  return [typeof row.policy_kind === "string" ? displayValue(row.policy_kind) : "",
+    typeof row.policy_code === "string" ? row.policy_code.replace(uuid, "").trim() : "",
+    row.version_number != null ? `v${String(row.version_number)}` : ""].filter(Boolean).join(" · ");
+}
 export function businessLabel(row: Row, timezone: string | null = null): string {
   const fields = ["display_name", "control_code", "requirement_code", "test_code", "request_code", "policy_code", "classification", "evidence_code", "issue_code", "action_code", "name", "title", "framework_code", "framework_name", "edition"];
-  const parts = fields.flatMap(field => typeof row[field] === "string" ? [String(row[field]).replace(uuid, "").trim()] : []).filter(Boolean);
+  const policy = typeof row.policy_code === "string";
+  const parts = policy ? [retentionPolicyDisplayLabel(row)] : fields.flatMap(field => typeof row[field] === "string" ? [(field === "classification" ? displayValue(row[field]) : String(row[field])).replace(uuid, "").trim()] : []).filter(Boolean);
   if (typeof row.subject_type === "string") {
     const label = subjectTypeLabel(row.subject_type);
     if (!label) throw new Error("REFERENCE_LOCALIZATION_UNAVAILABLE");
     parts.push(label);
   }
-  if (row.version_number != null) parts.push(`v${String(row.version_number)}`);
+  if (!policy && row.version_number != null) parts.push(`v${String(row.version_number)}`);
   if (row.applicability_version != null) parts.push(`v${String(row.applicability_version)}`);
   if (row.soa_version != null) parts.push(`v${String(row.soa_version)}`);
   if (typeof row.lifecycle_state === "string") {
@@ -64,7 +71,7 @@ export async function readReferences(api: ApiClient, entity: ReferenceEntity, co
     if (!("parent" in def)) throw new Error("UNSUPPORTED_REFERENCE_RELATION");
     params.set(`filter[${def.parent}]`, context.parentId);
   }
-  if (entity === "retentionPolicyApplicability" && !context.initialSource) params.set("filter[lifecycle_state]", "published");
+  if ((entity === "retentionPolicyApplicability" && !context.initialSource) || (entity === "retentionPolicy" && context.publishedOnly)) params.set("filter[lifecycle_state]", "published");
   if (context.subjectType) {
     if (entity !== "subject") throw new Error("UNSUPPORTED_REFERENCE_FILTER");
     params.set("filter[subject_type]", context.subjectType);
@@ -83,6 +90,16 @@ export async function readReferences(api: ApiClient, entity: ReferenceEntity, co
       return { value: row[def.id] as string, label: businessLabel(minimal, context.timezone), row: minimal };
     }
     return { value: row[def.id] as string, label: `${businessLabel(row, context.timezone)}${entity === "retentionPolicyApplicability" && context.initialSource && row.lifecycle_state === "draft" ? " · Fuente pendiente, sin acreditar" : ""}`, row };
+  }).filter(option => {
+    const row: Row = option.row;
+    if (entity === "control" && context.tenantOwnedControl) return row.ownership_class === "TENANT_OWNED";
+    if (entity !== "retentionPolicyApplicability" || !context.publishedOnly) return true;
+    const now = Date.now();
+    const from = typeof row.effective_from === "string" ? Date.parse(row.effective_from) : NaN;
+    const to = typeof row.effective_to === "string" ? Date.parse(row.effective_to) : Infinity;
+    return row.lifecycle_state === "published" && row.purpose === "evidence_document"
+      && row.classification === context.classification && Number.isFinite(from) && from <= now && to > now
+      && (row.scope_subject_id == null || row.scope_subject_id === context.ownerSubjectId);
   });
   if (result.page.has_more && (!result.page.next_cursor || result.page.next_cursor === context.cursor)) throw new Error("INVALID_REFERENCE_PAGE");
   return { options, nextCursor: result.page.has_more ? result.page.next_cursor : null };
@@ -167,5 +184,5 @@ export async function readBusinessReferences(api:ApiClient,context:BusinessRefer
   return {value,label,row};
  });
  if(page.page.has_more && (!page.page.next_cursor || page.page.next_cursor===context.cursor)) throw new Error("INVALID_REFERENCE_PAGE");
- return {options,nextCursor:page.page.has_more?page.page.next_cursor:null};
+ return {options:context.kind==="retention"&&["evidence","upload"].includes(context.purpose)?options.filter(option=>option.row.selectable===true):options,nextCursor:page.page.has_more?page.page.next_cursor:null};
 }

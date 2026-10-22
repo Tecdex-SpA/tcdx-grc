@@ -57,6 +57,12 @@ export class ApiClient {
 
   accessMe<T>(): Promise<T> { return this.request<T>("/api/v1/access/me", {}, { tenantContext: "omit" }); }
 
+  /** Preserves the existing auth/tenant transport; callers use exact server concurrency metadata. */
+  async requestVersioned<T>(path:string,init:RequestInit={},options:{tenantContext?:"required"|"omit"}={}):Promise<{body:T;etag:string|null}>{
+    const representation=await this.requestRepresentation<T>(path,init,options);
+    return {body:representation.body,etag:representation.headers.get("etag")};
+  }
+
   async authenticationProviders(signal?: AbortSignal): Promise<AuthenticationProviderAvailability> {
     const response = await fetch(new URL("/api/v1/auth/providers", this.origin), {
       headers: { accept: "application/json" }, cache: "no-store", ...(signal ? { signal } : {})
@@ -112,7 +118,7 @@ export class ApiClient {
     return response;
   }
 
-  async uploadEvidenceFile(file: File, retentionPolicyId: string, applicabilityId: string, classification: string, sourceProvenance: string, context: {scope_subject_id?:string|null;processing_activity_id?:string|null} = {}): Promise<string> {
+  async uploadEvidenceFile(file: File, retentionPolicyId: string, applicabilityId: string, classification: string, sourceProvenance: string, context: {scope_subject_id?:string;processing_activity_id?:string} = {}): Promise<string> {
     const envelope = await this.post<{ result: { upload_intent_id: string; upload_url: string } }>("/api/v1/files:request-upload", {
       original_filename: file.name, declared_mime: file.type || "application/octet-stream", size_bytes: file.size,
       ...context, classification, retention_policy_id: retentionPolicyId,

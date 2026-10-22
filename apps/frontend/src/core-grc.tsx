@@ -1,9 +1,15 @@
-import { HistoricalReferenceLabel, ApprovedEvidenceReferenceField, StructuredCollectionEditor, TypedReferenceField, RequirementReferenceField } from "./structured-reference-fields.js";
-import { TenantTimezoneContext, TenantInstantPreview, normalizeSamplePeriods, selectedTenantTimezone, explicitUtcInstant } from "./tenant-timezone.js";
+import {KnowledgeWorkspace, MatrixWorkspace, ControlAdjustments, ApplicabilityKnowledgeSelect, TargetKnowledgePanel} from "./normative-library-workspace.js";
+import {validateLibrarySchema} from "@tcdx-grc/contracts/normative-library";
+import {BusinessOriginFields} from './business-origin-fields.js';
+import {originFields} from './business-forms.js';
+import { formForPath, normalizeForm, validateForm, problemErrors, formFailure, type FormErrors } from "./business-forms.js";
+import { BusinessFields, BusinessScalarField, FormErrorSummary, useBusinessDialog } from "./business-form-fields.js";
+import { retentionPolicyDisplayLabel, businessLabel } from "./reference-read.js";
+import { BusinessEntityLabel, AuthorizedRetentionReference, HistoricalReferenceLabel, ApprovedEvidenceReferenceField, StructuredCollectionEditor, TypedReferenceField, RequirementReferenceField } from "./structured-reference-fields.js";
+import { TenantTimezoneContext, TenantLocalDateTimeField, tenantInstantToUtc, isUtcEndAfterStart, TenantInstantPreview, normalizeSamplePeriods, selectedTenantTimezone, explicitUtcInstant } from "./tenant-timezone.js";
 import { BusinessReferenceSelect, EntityReferenceSelect, ContractVocabularySelect, ControlVersionSelect, SubjectSelect, MethodologySelect } from "./reference-selectors.js";
 import { AddTenantUser, InitialCompanyWizard, TenantUserIntent, tenantPresentationPermission } from "./tenant-onboarding.js";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { CONTROL_NATURES, CONTROL_TYPES } from "@tcdx-grc/shared-types";
 import { ApiClient, ApiProblem } from "./api-client.js";
 import { BrowserSession, receiveApplicationToken, receiveInvitationApplicationToken } from "./browser-auth.js";
 import { displayValue, fieldLabel, fieldPlaceholder, roleLabel } from "./i18n/display-text.js";
@@ -264,8 +270,8 @@ export function TableShell({ label, children }: { label: string; children: React
   return <section className="data-card table-card" aria-label={label}>{children}</section>;
 }
 
-function ModuleTable({ api, definition, allowCreate = true, allowAction = () => true }: {
-  api: ApiClient; definition: ModuleDefinition; allowCreate?: boolean;
+function ModuleTable({ api, definition, allowKnowledgeContext = false, allowCreate = true, allowAction = () => true }: {
+  api: ApiClient; definition: ModuleDefinition; allowCreate?: boolean; allowKnowledgeContext?:boolean;
   allowAction?: ((action: WorkflowAction) => boolean) | undefined;
 }) {
   const [stateFilter, setStateFilter] = useState("");
@@ -291,14 +297,14 @@ function ModuleTable({ api, definition, allowCreate = true, allowAction = () => 
         const applicability = Array.isArray(row.applicability_decisions) ? row.applicability_decisions as Row[] : null;
         const implementationCount = typeof row.implementation_count === "number" ? row.implementation_count : null;
         return <tr key={String(row.control_id)}><td><strong>{displayValue(row.control_code)}</strong></td><td><strong>{displayValue(row.name)}</strong><small className="admin-secondary">{displayValue(row.ownership_class)}</small>{hasProvisionalFramework(row) && <small className="admin-secondary">Validación provisional</small>}</td><td>{frameworks.length ? frameworks.map((framework) => <span className="catalog-relation" key={String(framework.framework_version_id)}>{String(framework.framework_name)} · {String(framework.edition)}{framework.access_mode === "non_authoritative_validation" ? " · Validación provisional" : " · Oficial"}</span>) : "Sin relación visible"}</td><td>{applicability === null ? "Acceso restringido" : applicability.length ? applicability.map((item) => `${displayValue(item.decision)} (${String(item.requirement_count)})`).join(", ") : "Sin decisión aprobada"}</td><td>{implementationCount === null ? "Acceso restringido" : implementationCount > 0 ? `Implementado${implementationCount > 1 ? ` (${implementationCount})` : ""}` : "Sin implementar"}</td><td><StatusBadge value={row.lifecycle_state}/></td><td>{row.version_number == null ? "—" : `v${String(row.version_number)}`}</td><td><button className="link-button" onClick={() => setSelected(row)}>{uiText.actions.viewDetail}</button></td></tr>;
-      })}</tbody></table></div> : <div className="table-scroll"><table><thead><tr><th>{uiText.common.identifier}</th><th>{uiText.common.reference}</th><th>{uiText.common.status}</th><th>{uiText.common.version}</th><th><span className="sr-only">{uiText.common.actions}</span></th></tr></thead><tbody>{load.data.map((row) => <tr key={String(row[definition.idField])}><td><code>{String(row[definition.idField]).slice(0, 8)}…</code></td><td><strong>{displayValue(row[definition.titleField])}</strong></td><td><StatusBadge value={row[definition.stateField]}/></td><td>{displayValue(row.row_version)}</td><td><button className="link-button" onClick={() => setSelected(row)}>{uiText.actions.viewDetail}</button></td></tr>)}</tbody></table></div>}
+      })}</tbody></table></div> : <div className="table-scroll"><table><thead><tr><th>{definition.id==="retencion"?"Código":"Registro"}</th><th>{uiText.common.reference}</th><th>{uiText.common.status}</th><th>{uiText.common.version}</th><th><span className="sr-only">{uiText.common.actions}</span></th></tr></thead><tbody>{load.data.map((row) => <tr key={String(row[definition.idField])}><td>{definition.id==="retencion"?<strong>{String(row.policy_code)}</strong>:<strong>{businessLabel(row) || definition.label}</strong>}</td><td><strong>{definition.id==="retencion"?retentionPolicyDisplayLabel(row):displayValue(row[definition.titleField])}</strong>{definition.id==="aplicabilidad-retencion"&&typeof row.retention_policy_id==="string"&&<small className="admin-secondary"><AuthorizedRetentionReference api={api} entity="retentionPolicy" value={row.retention_policy_id}/></small>}</td><td><StatusBadge value={row[definition.stateField]}/></td><td>{displayValue(["retencion","aplicabilidad-retencion"].includes(definition.id)?row.version_number:row.row_version)}</td><td><button className="link-button" onClick={() => setSelected(row)}>{uiText.actions.viewDetail}</button></td></tr>)}</tbody></table></div>}
     </TableShell>
     {load.page.has_more && <div className="pagination"><button className="button secondary" disabled={load.loadingMore} onClick={loadMore}>{load.loadingMore ? uiText.actions.loadingMore : uiText.actions.loadMore}</button></div>}
     {selected && (
       <DetailDrawer api={api} definition={definition} row={selected} allowAction={allowAction} close={() => setSelected(null)} completed={() => { setSelected(null); retry(); }}/>
     )}
     {creating && allowCreate && (
-      <CreateDrawer api={api} definition={definition} close={() => setCreating(false)} completed={() => { setCreating(false); retry(); }}/>
+      <CreateDrawer api={api} definition={definition} allowKnowledgeContext={allowKnowledgeContext} close={() => setCreating(false)} completed={() => { setCreating(false); retry(); }}/>
     )}
   </>;
 }
@@ -309,61 +315,157 @@ function hasProvisionalFramework(row: Row): boolean {
       .some((framework) => framework.access_mode === "non_authoritative_validation"));
 }
 
-function CreateDrawer({ api, definition, close, completed }: { api: ApiClient; definition: ModuleDefinition; close(): void; completed(): void }) {
+// RetentionPolicyCreateRequest: exact policy_kind/precedence pairs in
+// docs/executable-contracts/02_OPENAPI_BASE_CONTRACT.yaml. Backend revalidates.
+const retentionPolicyPrecedence: Readonly<Record<string, number>> = {
+  legal_hold: 500, mandatory_regulatory_policy: 400, contractual_policy: 300,
+  tenant_policy: 200, product_baseline: 100
+};
+
+function retentionMandatorySelection(value: string | undefined): boolean | undefined {
+  return value === "true" ? true : value === "false" ? false : undefined;
+}
+
+function RetentionMandatoryField({ value, onChange }: { value: string; onChange(value: string): void }) {
+  return <label><span>{fieldLabel("is_mandatory")}</span><select aria-label={fieldLabel("is_mandatory")} required value={value} onChange={event => onChange(event.target.value)}>
+    <option value="">Selecciona Sí o No</option><option value="true">Sí</option><option value="false">No</option>
+  </select></label>;
+}
+
+const evidenceInstantFields = ["valid_from", "valid_to", "period_start", "period_end", "effective_from", "effective_to", "expires_at"];
+
+export function CreateDrawer({ api, definition, close, completed, allowKnowledgeContext=false }: { api: ApiClient; definition: ModuleDefinition; close(): void; completed(): void; allowKnowledgeContext?:boolean }) {
+  const [knowledgeContext,setKnowledgeContext]=useState("");
   const contract = createContracts[definition.id]!;
-  const [form, setForm] = useState<Record<string, string>>({});
+  const businessForm = formForPath(contract.path);
+  const schema = businessForm?.schema ?? "RetentionApplicabilityCreateRequest";
+  const [fieldErrors,setFieldErrors] = useState<FormErrors>({});
+  const timezone = React.useContext(TenantTimezoneContext);
+  const [form, setFormState] = useState<Record<string, string>>({});
+  useEffect(()=>setKnowledgeContext(""),[form.scope_subject_id]);
+  const setForm:React.Dispatch<React.SetStateAction<Record<string,string>>>=(update)=>{setFieldErrors({});setError(undefined);setFormState(update);};
   const [error, setError] = useState<string>();
   const [busy, setBusy] = useState(false);
+  const dialogRef=useBusinessDialog(close,busy);
+  const intent=useRef<{fingerprint:string;key:string}|undefined>(undefined);
   const [file, setFile] = useState<File>();
   const [classification, setClassification] = useState("");
   const [sourceProvenance, setSourceProvenance] = useState("");
   const [retentionContext,setRetentionContext]=useState<Row>();
+  useEffect(() => { setRetentionContext(undefined); }, [form.retention_policy_id, classification, form.business_owner_subject_id]);
   const createSchema:Record<string,string>={controles:"ControlInstantiateRequest",evidencias:"EvidenceCreateRequest",issues:"IssueCreateRequest",acciones:"ActionCreateRequest",cumplimiento:"ApplicabilityCreateRequest",retencion:"RetentionPolicyCreateRequest"};
-  const vocabularyField=(field:string):FormVocabularyKey|undefined=> {const key=`${createSchema[definition.id]}.${field}`;return Object.hasOwn(FORM_VOCABULARIES,key)?key as FormVocabularyKey:undefined;};
+  // Both approved request fields reference FileClassification (CV-01); reuse its generated projection.
+  const vocabularyField=(field:string):FormVocabularyKey|undefined=> {if(definition.id === "aplicabilidad-retencion" && field === "classification") return "UploadIntentCreateRequest.classification";const key=`${createSchema[definition.id]}.${field}`;return Object.hasOwn(FORM_VOCABULARIES,key)?key as FormVocabularyKey:undefined;};
   const assignmentParents=definition.id==="acciones"?{issue_id:form.issue_id??""}:Object.fromEntries(["requirement_id","control_id","requirement_assessment_id","control_assessment_id","assurance_test_id"].filter(key=>form[key]).map(key=>[key,form[key]!]));
   const submit = async () => {
-    const body: Row = Object.fromEntries(Object.entries(form).filter(([, value]) => value !== ""));
-    if (definition.id === "controles" && !body.based_on_control_version_id) { setError("Selecciona un control base autorizado."); return; }
-    if (definition.id === "controles" && !body.business_owner_subject_id) { setError("Selecciona un responsable autorizado."); return; }
+    if(busy)return;
+    setFieldErrors({});
+    let body: Row = Object.fromEntries(Object.entries(form).filter(([, value]) => value !== ""));
+    if (definition.id === "controles" && !body.based_on_control_version_id) { setFieldErrors({based_on_control_version_id:"Selecciona un control base autorizado."});setError("Selecciona un control base autorizado."); return; }
+    if (definition.id === "controles" && !body.business_owner_subject_id) { setFieldErrors({business_owner_subject_id:"Selecciona un responsable autorizado."});setError("Selecciona un responsable autorizado."); return; }
     if (definition.id === "cumplimiento" && body.applicability_decision === "not_applicable" &&
         (typeof body.rationale !== "string" || !body.rationale.trim())) { setError("Indica la justificación para No aplica."); return; }
     for (const field of contract.jsonFields ?? []) if (typeof body[field] === "string") {
       try { body[field] = JSON.parse(body[field]); } catch { setError(uiText.forms.invalidJson); return; }
     }
     if (definition.id === "retencion") {
-      for (const field of ["version_number", "retention_seconds", "precedence_rank"]) if (body[field] !== undefined) body[field] = Number(body[field]);
+      const precedence = retentionPolicyPrecedence[String(body.policy_kind ?? "")];
+      if (precedence === undefined) { setError("Selecciona un tipo de política válido."); return; }
+      body.precedence_rank = precedence;
+      for (const field of ["version_number", "retention_seconds"]) if (body[field] !== undefined) body[field] = Number(body[field]);
       if (body.policy_kind === "legal_hold") delete body.retention_seconds;
-      if (body.is_mandatory === "true" || body.is_mandatory === "false") body.is_mandatory = body.is_mandatory === "true";
+      const mandatory = retentionMandatorySelection(form.is_mandatory);
+      if (mandatory === undefined) { setError("Selecciona Sí o No en Obligatoria."); return; }
+      body.is_mandatory = mandatory;
     }
-    if (definition.id === "aplicabilidad-retencion" && body.version_number !== undefined) body.version_number = Number(body.version_number);
+    if (definition.id === "aplicabilidad-retencion") {
+      body.version_number = Number(body.version_number);
+      if (!body.retention_policy_id || !Number.isSafeInteger(body.version_number) || Number(body.version_number) < 1 ||
+          !FORM_VOCABULARIES["UploadIntentCreateRequest.classification"].includes(body.classification as never)) {
+        setError("Selecciona una política publicada, una versión de aplicabilidad válida y una clasificación del catálogo."); return;
+      }
+      if (body.source_clause_ref && !body.source_evidence_version_id) { setError("Selecciona la versión de evidencia aprobada antes de indicar su cláusula o disposición."); return; }
+      for (const field of ["effective_from", "effective_to"]) if (body[field]) {
+        const utc = String(body[field]).endsWith("Z") ? tenantInstantToUtc(String(body[field]),timezone) : null;
+        if (!utc) { setError(`Revisa ${fieldLabel(field)} y selecciona una hora local válida y sin ambigüedad en la zona de la empresa.`); return; }
+        body[field] = utc;
+      }
+      if (body.effective_from && body.effective_to && !isUtcEndAfterStart(String(body.effective_from),String(body.effective_to))) {
+        setError("Vigente hasta debe ser posterior a Vigente desde."); return;
+      }
+    }
+    if (definition.id === "evidencias") {
+      for (const field of evidenceInstantFields) if (body[field] !== undefined) {
+        const value = String(body[field]);
+        const utc = value.endsWith("Z") ? tenantInstantToUtc(value, timezone) : null;
+        if (!utc) { setError(`Revisa ${fieldLabel(field)} y selecciona una hora local válida y sin ambigüedad en la zona de la empresa.`); return; }
+        body[field] = utc;
+      }
+      for (const [start, end] of [["valid_from", "valid_to"], ["period_start", "period_end"], ["effective_from", "effective_to"]] as const) {
+        if (body[start] && body[end] && !isUtcEndAfterStart(String(body[start]), String(body[end]))) {
+          setError(`${fieldLabel(end)} debe ser posterior a ${fieldLabel(start)}.`); return;
+        }
+      }
+    }
     let path = contract.path;
     if (contract.pathField) {
       const value = String(body[contract.pathField] ?? "");
       if (!value) { setError(uiText.forms.requiredField); return; }
       path = path.replace(`{${contract.pathField}}`, value); delete body[contract.pathField];
     }
+    const uploadApplicability=body.retention_policy_applicability_id;
+    if (businessForm) {
+      if (definition.id === "evidencias") { delete body.retention_policy_applicability_id; if(!body.links)body.links=[]; }
+      const normalized=normalizeForm(schema,body,timezone);body=normalized.body;
+      const errors={...validateForm(schema,body),...normalized.errors};
+      if(definition.id==="evidencias"&&file)delete errors.file_object_id;
+      if(definition.id==="evidencias"&&retentionContext?.lifecycle_state==="published"&&(!Array.isArray(body.links)||body.links.length===0))errors.links="Agrega al menos un vínculo al objeto que sustenta esta evidencia ordinaria.";
+      if(Object.keys(errors).length){setFieldErrors(errors);setError("Revisa los campos indicados antes de continuar.");return;}
+    }
+    if(definition.id==='cumplimiento'&&allowKnowledgeContext&&knowledgeContext){
+      body.context_knowledge_version_id=knowledgeContext;
+      if(!validateLibrarySchema('ApplicabilityCreateRequest',body).valid){setError('Revisa la versión de contexto empresarial.');return;}
+    }
     setBusy(true); setError(undefined);
+    let transferInProgress = false;
     try {
       if (definition.id === "evidencias" && file && !body.file_object_id) {
-        if (!body.retention_policy_id || !body.retention_policy_applicability_id || !classification || !sourceProvenance) { setError(uiText.forms.requiredField); setBusy(false); return; }
-        body.file_object_id = await api.uploadEvidenceFile(file, String(body.retention_policy_id), String(body.retention_policy_applicability_id), classification, sourceProvenance, {scope_subject_id:retentionContext?.scope_subject_id as string|null,processing_activity_id:retentionContext?.processing_activity_id as string|null});
+        if (!body.retention_policy_id || !uploadApplicability || !classification || !sourceProvenance) { setError(uiText.forms.requiredField); setBusy(false); return; }
+        transferInProgress = true;
+        body.file_object_id = await api.uploadEvidenceFile(file, String(body.retention_policy_id), String(uploadApplicability), classification, sourceProvenance, {
+          ...(body.business_owner_subject_id ? {scope_subject_id:String(body.business_owner_subject_id)} : {}),
+          ...(typeof retentionContext?.processing_activity_id === "string" ? {processing_activity_id:retentionContext.processing_activity_id} : {})
+        });
+        transferInProgress = false;
         setForm((value) => ({ ...value, file_object_id: String(body.file_object_id) }));
       }
       if (definition.id === "evidencias") {
         delete body.retention_policy_applicability_id;
         if (!body.links) body.links = [];
       }
-      await api.post(`/api/v1${path}`, body); completed();
-    } catch { setError(file ? uiText.forms.fileError : uiText.forms.createError); setBusy(false); }
+      if(businessForm){const errors=validateForm(schema,body);if(Object.keys(errors).length){setFieldErrors(errors);setError("Revisa los campos indicados.");setBusy(false);return;}}
+      const fingerprint=JSON.stringify([api.currentTenantId(),path,body]);
+      if(intent.current?.fingerprint!==fingerprint)intent.current={fingerprint,key:crypto.randomUUID()};
+      await api.post(`/api/v1${path}`, body,intent.current!.key); completed();
+    } catch (failure) {
+      setFieldErrors(problemErrors(failure));
+      const message = transferInProgress ? uiText.forms.fileError : uiText.forms.createError;
+      const field = failure instanceof ApiProblem ? failure.problem.details?.field : undefined;
+      setError(failure instanceof ApiProblem
+        ? `${message}${typeof field === "string" ? ` Revisa: ${fieldLabel(field)}.` : ""} Correlación: ${failure.problem.correlation_id}`
+        : message);
+      if(failure instanceof ApiProblem && [401,403,404,409,422].includes(failure.status))setError(formFailure(failure));
+      setBusy(false);
+    }
   };
-  return <div className="drawer-backdrop" role="presentation" onMouseDown={close}><aside className="drawer" role="dialog" aria-modal="true" aria-labelledby="create-title" onMouseDown={(event) => event.stopPropagation()}>
-    <header className="drawer-header"><div><p className="eyebrow">{uiText.forms.createEyebrow}</p><h2 id="create-title">{definition.label}</h2></div><button className="icon-button" onClick={close} aria-label={uiText.forms.closeCreate}>×</button></header>
-    <div className="drawer-body"><p className="form-guidance">{uiText.forms.guidance}</p><div className="create-form">{definition.id === "evidencias" && <><label><span>{uiText.forms.uploadFile}</span><input type="file" onChange={(event) => setFile(event.target.files?.[0])}/></label><ContractVocabularySelect schemaField="UploadIntentCreateRequest.classification" label={uiText.forms.fileClassification} value={classification} onChange={setClassification}/><label><span>{uiText.forms.fileProvenance}</span><input value={sourceProvenance} onChange={(event) => setSourceProvenance(event.target.value)}/></label></>}{contract.fields.map((field) => field === "framework_version_id" ? <BusinessReferenceSelect key={field} api={api} label="Versión normativa" context={{kind:"framework",purpose:"select"}} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : field === "assigned_membership_id" ? <BusinessReferenceSelect key={field} api={api} label="Responsable" disabled={Object.values(assignmentParents).filter(Boolean).length!==1} context={{kind:"membership",purpose:definition.id==="acciones"?"action-assignment":"evidence-request-assignment",parents:assignmentParents}} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : (field === "retention_policy_applicability_id" || field === "supersedes_applicability_id") ? <TypedReferenceField key={field} api={api} field={field} form={form} onRetentionContext={setRetentionContext} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : field === "source_evidence_version_id" ? <ApprovedEvidenceReferenceField key={field} api={api} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : field === "retention_policy_id" && definition.id === "aplicabilidad-retencion" ? <EntityReferenceSelect key={field} api={api} entity="retentionPolicy" label="Política de retención" value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : field === "retention_policy_id" ? <React.Fragment key={field}><BusinessReferenceSelect key={field} api={api} label="Política de retención" context={{kind:"retention",purpose:file?"upload":"evidence",...(form.file_object_id?{parents:{file_object_id:form.file_object_id}}:{})}} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/><p className="form-guidance" role="status">Selecciona una política operativa aplicable. La configuración ordinaria no requiere una fuente jurídica; las obligaciones formales conservan sus controles.</p></React.Fragment> : field === "issue_id" ? <EntityReferenceSelect key={field} api={api} entity="issue" label="Hallazgo" value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : vocabularyField(field) ? <ContractVocabularySelect key={field} schemaField={vocabularyField(field)!} label={fieldLabel(field)} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : ["items","links"].includes(field) ? <StructuredCollectionEditor key={field} api={api} kind={field as "items"|"links"} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : field === "requirement_id" ? <RequirementReferenceField key={field} api={api} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : ["control_id","control_version_id","requirement_applicability_id","requirement_assessment_id","control_assessment_id","assurance_test_id","evidence_request_id","scope_subject_id","business_owner_subject_id","effective_configuration_id"].includes(field) ? <TypedReferenceField key={field} api={api} field={field} form={form} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : field === "file_object_id" ? <p key={field} className="form-guidance">{file ? `Archivo seleccionado: ${file.name}` : "Selecciona el archivo que deseas cargar."}</p> : field === "methodology_version_ref" ? <MethodologySelect key={field} api={api} domain={definition.id === "requisitos" ? "compliance" : "controls"} value={form[field] ?? ""} onChange={(value) => setForm((current) => ({ ...current, [field]: value }))}/> : definition.id === "controles" && field === "based_on_control_version_id" ? <ControlVersionSelect key={field} api={api} value={form[field] ?? ""} onChange={(value) => setForm((current) => ({ ...current, [field]: value }))}/> : definition.id === "controles" && field === "business_owner_subject_id" ? <SubjectSelect key={field} api={api} value={form[field] ?? ""} onChange={(value) => setForm((current) => ({ ...current, [field]: value }))}/> : <label key={field}><span>{fieldLabel(field)}</span>{definition.id === "cumplimiento" && field === "applicability_decision" ? <select aria-label={fieldLabel(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}><option value="">Selecciona una decisión</option><option value="applicable">Aplicable</option><option value="not_applicable">No aplica</option></select> : definition.id === "controles" && (field === "control_type" || field === "nature") ? <select aria-label={fieldLabel(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}><option value="">Selecciona una opción</option>{(field === "control_type" ? CONTROL_TYPES : CONTROL_NATURES).map((value) => <option value={value} key={value}>{displayValue(value)}</option>)}</select> : contract.jsonFields?.includes(field) ? <textarea aria-label={fieldLabel(field)} placeholder={fieldPlaceholder(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}/> : <input aria-label={fieldLabel(field)} placeholder={fieldPlaceholder(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}/>}</label>)}</div>{error && <p className="inline-feedback error" role="alert">{error}</p>}</div>
+  return <div className="drawer-backdrop" role="presentation" onMouseDown={()=>{if(!busy)close();}}><aside ref={dialogRef} className="drawer" role="dialog" aria-modal="true" aria-labelledby="create-title" onMouseDown={(event) => event.stopPropagation()}>
+    <header className="drawer-header"><div><p className="eyebrow">{uiText.forms.createEyebrow}</p><h2 id="create-title">{businessForm?.title ?? definition.label}</h2></div><button className="icon-button" onClick={close} disabled={busy} aria-label={uiText.forms.closeCreate}>×</button></header>
+    <div className="drawer-body"><p className="form-guidance">{uiText.forms.guidance}</p><fieldset disabled={busy} className="create-form business-form-controls">{definition.id === "evidencias" && <><label><span>{uiText.forms.uploadFile}</span><input type="file" onChange={(event) => setFile(event.target.files?.[0])}/></label><ContractVocabularySelect schemaField="UploadIntentCreateRequest.classification" label={uiText.forms.fileClassification} value={classification} onChange={value=>{setClassification(value);setForm(current=>({...current,retention_policy_applicability_id:"",file_object_id:""}));}}/><label><span>{uiText.forms.fileProvenance}</span><input value={sourceProvenance} onChange={(event) => setSourceProvenance(event.target.value)}/></label></>}<BusinessFields schema={schema} referenceOrigin={originFields(schema).length?<BusinessOriginFields api={api} schema={schema} values={form} errors={fieldErrors} onChange={setForm}/>:undefined} fields={contract.fields.filter(field=>!originFields(schema).includes(field)&&!(definition.id==="retencion"&&form.policy_kind==="legal_hold"&&field==="retention_seconds"))} values={form} errors={fieldErrors} render={(field) => ((definition.id === "aplicabilidad-retencion" && ["effective_from","effective_to"].includes(field)) || (definition.id === "evidencias" && evidenceInstantFields.includes(field))) ? <TenantLocalDateTimeField key={field} label={fieldLabel(field)} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : field === "framework_version_id" ? <BusinessReferenceSelect key={field} api={api} label="Versión normativa" context={{kind:"framework",purpose:"select"}} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value,items:""}))}/> : field === "assigned_membership_id" ? <BusinessReferenceSelect key={field} api={api} label="Responsable" disabled={Object.values(assignmentParents).filter(Boolean).length!==1} context={{kind:"membership",purpose:definition.id==="acciones"?"action-assignment":"evidence-request-assignment",parents:assignmentParents}} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : (field === "retention_policy_applicability_id" || field === "supersedes_applicability_id") ? <TypedReferenceField key={field} api={api} field={field} form={form} onRetentionContext={setRetentionContext} publishedOnly={definition.id==="evidencias"} classification={definition.id==="evidencias"?classification:undefined} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : field === "source_evidence_version_id" ? <ApprovedEvidenceReferenceField key={field} api={api} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : field === "retention_policy_id" && definition.id === "aplicabilidad-retencion" ? <React.Fragment key={field}><EntityReferenceSelect api={api} entity="retentionPolicy" label="Política de retención" required context={{publishedOnly:true}} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value,supersedes_applicability_id:"",version_number:""}))}/><p className="form-guidance">Selecciona la política y su versión publicada. Una política aprobada debe publicarse primero. La versión de aplicabilidad se registra por separado. La fuente jurídica es opcional para políticas ordinarias.</p></React.Fragment> : field === "retention_policy_id" ? <React.Fragment key={field}><BusinessReferenceSelect key={field} api={api} label="Política de retención" context={{kind:"retention",purpose:file?"upload":"evidence",...(!file && form.file_object_id?{parents:{file_object_id:form.file_object_id}}:{})}} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value,retention_policy_applicability_id:"",file_object_id:""}))}/><p className="form-guidance" role="status">Selecciona una política operativa aplicable. La configuración ordinaria no requiere una fuente jurídica; las obligaciones formales conservan sus controles.</p></React.Fragment> : field === "issue_id" ? <EntityReferenceSelect key={field} api={api} entity="issue" label="Hallazgo" value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value,assigned_membership_id:""}))}/> : definition.id === "aplicabilidad-retencion" && field === "version_number" ? <label key={field}><span>Versión de aplicabilidad</span><input aria-label="Versión de aplicabilidad" type="number" min="1" step="1" required value={form[field]??""} onChange={event=>setForm(current=>({...current,[field]:event.target.value}))}/><small>Primera versión: 1. Para sustituir una aplicabilidad publicada, usa la versión siguiente y selecciona la anterior.</small></label> : definition.id === "retencion" && field === "is_mandatory" ? <RetentionMandatoryField key={field} value={form[field] ?? ""} onChange={value => setForm(current => ({ ...current, [field]: value }))}/> : definition.id === "retencion" && field === "precedence_rank" ? <label key={field}><span>{fieldLabel(field)}</span><input aria-label={fieldLabel(field)} readOnly value={retentionPolicyPrecedence[form.policy_kind ?? ""] ?? ""}/><small>Se determina por el tipo de política seleccionado.</small></label> : vocabularyField(field) ? <ContractVocabularySelect key={field} schemaField={vocabularyField(field)!} label={fieldLabel(field)} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : ["items","links"].includes(field) ? <StructuredCollectionEditor key={field} api={api} errors={fieldErrors} kind={field as "items"|"links"} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : field === "requirement_id" ? <RequirementReferenceField key={field} api={api} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : ["control_id","control_version_id","requirement_applicability_id","requirement_assessment_id","control_assessment_id","assurance_test_id","evidence_request_id","scope_subject_id","business_owner_subject_id","effective_configuration_id"].includes(field) ? <TypedReferenceField key={field} api={api} field={field} form={form} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value,...(field==="control_id"?{control_version_id:""}:{}),...(field==="issue_id"?{assigned_membership_id:""}:{})}))}/> : field === "file_object_id" ? <p key={field} className="form-guidance">{file ? `Archivo seleccionado: ${file.name}` : "Selecciona el archivo que deseas cargar."}</p> : field === "methodology_version_ref" ? <MethodologySelect key={field} api={api} domain={definition.id === "requisitos" ? "compliance" : "controls"} value={form[field] ?? ""} onChange={(value) => setForm((current) => ({ ...current, [field]: value }))}/> : definition.id === "controles" && field === "based_on_control_version_id" ? <ControlVersionSelect key={field} api={api} value={form[field] ?? ""} onChange={(value) => setForm((current) => ({ ...current, [field]: value }))}/> : definition.id === "controles" && field === "business_owner_subject_id" ? <SubjectSelect key={field} api={api} value={form[field] ?? ""} onChange={(value) => setForm((current) => ({ ...current, [field]: value }))}/> : <BusinessScalarField schema={schema} field={field} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/>} />{definition.id==='cumplimiento'&&allowKnowledgeContext&&<ApplicabilityKnowledgeSelect key={form.scope_subject_id??''} api={api} value={knowledgeContext} subjectId={form.scope_subject_id??''} onChange={setKnowledgeContext}/>}</fieldset><FormErrorSummary errors={fieldErrors}/>{error && <p className="inline-feedback error" role="alert">{error}</p>}</div>
     <footer className="drawer-footer"><button className="button primary" disabled={busy} onClick={() => void submit()}>{busy ? uiText.actions.creating : uiText.actions.create}</button></footer>
   </aside></div>;
 }
 
-function ControlDetailContent({ row }: { row: Row }) {
+function ControlDetailContent({ api,row }: { api:ApiClient;row: Row }) {
   const versions = Array.isArray(row.versions) ? row.versions as Row[] : [];
   const current = versions[0];
   const relations = Array.isArray(row.normative_relations) ? row.normative_relations as Row[] : [];
@@ -374,26 +476,33 @@ function ControlDetailContent({ row }: { row: Row }) {
     <section className="catalog-detail-section"><h3>Definición</h3>{current ? <dl>{(["objective", "control_type", "nature", "frequency_code", "execution_method", "verification_method", "minimum_evidence", "suggested_owner_role_code"] as const).map((field) => <React.Fragment key={field}><dt>{fieldLabel(field)}</dt><dd>{displayValue(current[field])}</dd></React.Fragment>)}</dl> : <StatePanel kind="insufficient-data" detail="Sin versión visible."/>}</section>
     <section className="catalog-detail-section"><h3>Trazabilidad normativa autorizada</h3>{relations.length ? <div className="table-scroll"><table><thead><tr><th>Norma o ley</th><th>Requisito o unidad</th><th>Referencia</th><th>Relación</th></tr></thead><tbody>{relations.map((relation) => <tr key={String(relation.mapping_id)}><td>{String(relation.framework_name)} · {String(relation.edition)}</td><td>{displayValue(relation.target_code)}</td><td>{displayValue(relation.locator)}</td><td>{displayValue(relation.mapping_type)}</td></tr>)}</tbody></table></div> : <p>Sin relaciones visibles con los marcos contratados.</p>}</section>
     {applicability !== null && <section className="catalog-detail-section"><h3>Aplicabilidad por requisito</h3>{applicability.length ? applicability.map((item) => <article className="catalog-applicability" key={String(item.requirement_applicability_id)}><strong>{String(item.requirement_code)} · {displayValue(item.applicability_decision)}</strong><StatusBadge value={item.lifecycle_state}/><p>{displayValue(item.rationale)}</p>{Boolean(item.approved_at) && <small>Fecha de aprobación: {adminDate(item.approved_at)}</small>}</article>) : <p>Sin decisiones de aplicabilidad vigentes registradas.</p>}</section>}
-    {row.ownership_class === "TENANT_OWNED" && <section className="catalog-detail-section"><h3>Implementación de la organización</h3><p>Control implementado desde una versión base autorizada.</p><dl><dt>Responsable</dt><dd>{row.business_owner_subject_id ? "Subject vinculado" : "No informado"}</dd><dt>Vigente desde</dt><dd>{current?.effective_from ? adminDate(current.effective_from) : "No informado"}</dd><dt>Vigente hasta</dt><dd>{current?.effective_to ? adminDate(current.effective_to) : "Sin fecha de término"}</dd></dl></section>}
+    {row.ownership_class === "TENANT_OWNED" && <section className="catalog-detail-section"><h3>Implementación de la organización</h3><p>Control implementado desde una versión base autorizada.</p><dl><dt>Responsable</dt><dd>{typeof row.business_owner_subject_id==="string" ? <BusinessEntityLabel api={api} entity="subject" value={row.business_owner_subject_id}/> : "No informado"}</dd><dt>Vigente desde</dt><dd>{typeof current?.effective_from==="string" ? <TenantInstantPreview value={current.effective_from}/> : "No informado"}</dd><dt>Vigente hasta</dt><dd>{typeof current?.effective_to==="string" ? <TenantInstantPreview value={current.effective_to}/> : "Sin fecha de término"}</dd></dl></section>}
   </>;
 }
 
-function DetailDrawer({ api, definition, row: summary, allowAction, close, completed }: {
+export function DetailDrawer({ api, definition, row: summary, allowAction, close, completed }: {
   api: ApiClient; definition: ModuleDefinition; row: Row;
   allowAction: (action: WorkflowAction) => boolean; close(): void; completed(): void;
 }) {
+  const [busy,setBusy]=useState(false);
+  const [confirming,setConfirming]=useState<string>();
+  const [fieldErrors,setFieldErrors]=useState<FormErrors>({});
+  const [refresh,setRefresh]=useState(0);
+  const dialogRef=useBusinessDialog(close,busy);
+  const intent=useRef<{fingerprint:string;key:string}|undefined>(undefined);
   const timezone = React.useContext(TenantTimezoneContext);
   const [detail, setDetail] = useState<{ loading: boolean; row: Row; error?: string }>({ loading: true, row: summary });
-  const [form, setForm] = useState<Record<string, string>>({});
+  const [form, setFormState] = useState<Record<string, string>>({});
+  const setForm:React.Dispatch<React.SetStateAction<Record<string,string>>>=(update)=>{setFieldErrors({});setFeedback(undefined);setFormState(update);};
   const [feedback, setFeedback] = useState<{ kind: "error" | "success"; message: string }>();
   const id = String(summary[definition.idField]);
   useEffect(() => {
     const controller = new AbortController();
-    api.request<Row>(`/api/v1${definition.path}/${id}`, { signal: controller.signal }).then((row) => setDetail({ loading: false, row })).catch((error: unknown) => {
+    api.request<Row>(`/api/v1${definition.path}/${id}`, { signal: controller.signal }).then((row) => { setDetail({ loading: false, row }); if (definition.id === "aplicabilidad-retencion") setForm(current=>({...current,...Object.fromEntries(["effective_from","effective_to"].filter(field=>typeof row[field]==="string").map(field=>[field,String(row[field])]))})); }).catch((error: unknown) => {
       if (!controller.signal.aborted) setDetail({ loading: false, row: summary, error: uiText.forms.detailUnavailable });
     });
     return () => controller.abort();
-  }, [api, definition, id, summary]);
+  }, [api, definition, id, summary,refresh]);
   const row = detail.row;
   const vocabularyProvenance=Array.isArray(row.contract_provenance)?row.contract_provenance:[];
   const historicalReference=(field:string,value:unknown)=> {
@@ -405,7 +514,16 @@ function DetailDrawer({ api, definition, row: summary, allowAction, close, compl
       const type=types[definition.id];if(type)return <HistoricalReferenceLabel api={api} kind="membership" purpose={type[0]} parent={{[type[1]]:id}} filter={{tenant_membership_id:value}}/>;
     }
     if(field==="retention_policy_id" && definition.id==="evidencias") return <HistoricalReferenceLabel api={api} kind="retention" purpose="history" parent={{evidence_id:id}} filter={{retention_policy_id:value}}/>;
-    if (field.endsWith("_id") || field === "methodology_version_ref") return "Referencia vinculada";
+    if (definition.id === "retencion" && field === "retention_policy_id") return retentionPolicyDisplayLabel(row);
+    if (definition.id === "aplicabilidad-retencion" && field === "retention_policy_id") return <AuthorizedRetentionReference api={api} entity="retentionPolicy" value={value}/>;
+    if (definition.id === "aplicabilidad-retencion" && field === "retention_policy_applicability_id") return `${displayValue(row.classification)} · v${String(row.version_number)}`;
+    if (definition.id === "aplicabilidad-retencion" && field === "supersedes_applicability_id") return <AuthorizedRetentionReference api={api} entity="retentionPolicyApplicability" value={value}/>;
+    if(field===definition.idField)return businessLabel(row,timezone)||definition.label;
+    if(field==='control_version_id'&&typeof row.control_id==='string')return <BusinessEntityLabel api={api} entity="controlVersion" value={value} parentId={row.control_id}/>;
+    const entities:Record<string,import("./reference-read.js").ReferenceEntity>={requirement_id:"requirement",scope_subject_id:"subject",business_owner_subject_id:"subject",control_id:"control",requirement_applicability_id:"applicability",requirement_assessment_id:"requirementAssessment",control_assessment_id:"controlAssessment",assurance_test_id:"assuranceTest",issue_id:"issue",retention_policy_id:"retentionPolicy"};
+    if(entities[field])return <BusinessEntityLabel api={api} entity={entities[field]!} value={value} {...(typeof row.framework_version_id==="string"?{parentId:row.framework_version_id}:{})}/>;
+    if(field==="methodology_version_ref")return <BusinessEntityLabel api={api} entity={definition.id==="requisitos"?"complianceMethodology":"controlsMethodology"} value={value}/>;
+    if(field.endsWith("_id")||field.endsWith("_ref"))return "Procedencia registrada; detalle no disponible en tu alcance";
     return displayValue(value);
   };
   const actions = detail.error ? [] : availableWorkflowActions(definition, row).filter(allowAction);
@@ -426,33 +544,65 @@ function DetailDrawer({ api, definition, row: summary, allowAction, close, compl
     const schemas:Record<string,string>={requisitos:"RequirementAssessmentSubmitRequest","evaluaciones-control":"ControlAssessmentSubmitRequest",pruebas:"AssuranceTestExecuteRequest",evidencias:action.suffix==="reject"?"EvidenceRejectRequest":"EvidenceApproveRequest",issues:"IssueTriageRequest",acciones:action.suffix==="complete"?"ActionCompleteRequest":"ActionVerifyRequest"};
     const key=`${schemas[definition.id]}.${field}`;return Object.hasOwn(FORM_VOCABULARIES,key)?key as FormVocabularyKey:undefined;
   };
+  const actionForm=(action:WorkflowAction)=>formForPath(`${action.versionResource?"/evidence-versions":definition.path}/{id}:${action.suffix}`);
   const submit = async (action: WorkflowAction) => {
+    if(busy)return;
+    const published=actionForm(action);
+    setFieldErrors({});
+    if(!(action.fields?.length)&&confirming!==action.suffix){setConfirming(action.suffix);return;}
     const missing = (action.fields ?? []).find((field) => !action.optionalFields?.includes(field) && !form[field]);
-    if (missing) { setFeedback({ kind: "error", message: `${uiText.forms.requiredField} ${fieldLabel(missing)}` }); return; }
+    if (missing && !published) { setFeedback({ kind: "error", message: `${uiText.forms.requiredField} ${fieldLabel(missing)}` }); return; }
+    if (definition.id === "retencion" && action.suffix === "update" && retentionMandatorySelection(form.is_mandatory) === undefined) {
+      setFeedback({ kind: "error", message: "Selecciona Sí o No en Obligatoria." }); return;
+    }
     const targetId = action.versionResource ? String(version?.evidence_version_id ?? "") : id;
     const targetPath = action.versionResource ? "/evidence-versions" : definition.path;
-    const body: Row = { expected_version: Number(version?.row_version ?? row.row_version), ...Object.fromEntries((action.fields ?? []).filter((field) => form[field] !== undefined && form[field] !== "").map((field) => [field, form[field]])) };
+    let body: Row = { expected_version: Number(version?.row_version ?? row.row_version), ...Object.fromEntries((action.fields ?? []).filter((field) => form[field] !== undefined && form[field] !== "").map((field) => [field, form[field]])) };
     for (const field of ["coverage_percent", "design_effectiveness", "operating_effectiveness"]) if (body[field] !== undefined) body[field] = Number(body[field]);
     if (typeof body.samples === "string") {
       try { body.samples = normalizeSamplePeriods(JSON.parse(body.samples), timezone); }
       catch { setFeedback({ kind: "error", message: uiText.temporal.invalidInstant }); return; }
     }
+    if (definition.id === "aplicabilidad-retencion") {
+      for (const field of ["effective_from","effective_to"]) if (body[field]) {
+        const utc=String(body[field]).endsWith("Z")?tenantInstantToUtc(String(body[field]),timezone):null;
+        if (!utc) {setFeedback({kind:"error",message:`Revisa ${fieldLabel(field)} y selecciona una hora local válida y sin ambigüedad en la zona de la empresa.`});return;}
+        body[field]=utc;
+      }
+      if (body.effective_from && body.effective_to && !isUtcEndAfterStart(String(body.effective_from),String(body.effective_to))) {setFeedback({kind:"error",message:"Vigente hasta debe ser posterior a Vigente desde."});return;}
+    }
+    if(published){
+      if(definition.id==="retencion"){
+        delete body.expected_version;
+        if(action.suffix==="update"){
+          body={...(row.policy_kind==="legal_hold"?{}:{retention_seconds:form.retention_seconds}),is_mandatory:form.is_mandatory==="true"};
+          if(row.policy_kind!=="legal_hold"&&!form.retention_seconds){setFieldErrors({retention_seconds:"Indica la duración de retención."});return;}
+        }
+      }
+      const normalized=normalizeForm(published.schema,body,timezone);body=normalized.body;
+      const errors={...validateForm(published.schema,body),...normalized.errors};
+      if(Object.keys(errors).length){setFieldErrors(errors);setFeedback({kind:"error",message:"Revisa los campos indicados antes de continuar."});return;}
+    }
+    const fingerprint=JSON.stringify([api.currentTenantId(),targetPath,targetId,action.suffix,row.row_version,body]);
+    if(intent.current?.fingerprint!==fingerprint)intent.current={fingerprint,key:crypto.randomUUID()};
+    setBusy(true);
     try {
       if (definition.id === "retencion" || definition.id === "aplicabilidad-retencion") {
         const payload = definition.id === "retencion" && action.suffix === "update"
           ? { ...(row.policy_kind === "legal_hold" ? {} : { retention_seconds: Number(form.retention_seconds) }), is_mandatory: form.is_mandatory === "true" }
           : Object.fromEntries(Object.entries(body).filter(([key]) => key !== "expected_version"));
-        await api.request(`/api/v1${targetPath}/${targetId}:${action.suffix}`, { method: "POST", headers: { "Idempotency-Key": crypto.randomUUID(), "If-Match": `"${Number(row.row_version)}"` }, body: JSON.stringify(payload) });
-      } else await api.post(`/api/v1${targetPath}/${targetId}:${action.suffix}`, body);
+        await api.request(`/api/v1${targetPath}/${targetId}:${action.suffix}`, { method: "POST", headers: { "Idempotency-Key": intent.current!.key, "If-Match": `"${Number(row.row_version)}"` }, body: JSON.stringify(payload) });
+      } else await api.post(`/api/v1${targetPath}/${targetId}:${action.suffix}`, body,intent.current!.key);
       setFeedback({ kind: "success", message: uiText.forms.operationSuccess }); completed();
     } catch (error) {
-      const problem = error instanceof ApiProblem ? error : null;
-      setFeedback({ kind: "error", message: problem?.status === 409 ? uiText.forms.concurrencyError : uiText.forms.operationError });
+      setFieldErrors(problemErrors(error));
+      setFeedback({ kind: "error", message: formFailure(error) });
+    } finally { setBusy(false);
     }
   };
-  return <div className="drawer-backdrop" role="presentation" onMouseDown={close}><aside className="drawer" role="dialog" aria-modal="true" aria-labelledby="detail-title" onMouseDown={(event) => event.stopPropagation()}>
-    <header className="drawer-header"><div><p className="eyebrow">{uiText.forms.detailEyebrow}</p><h2 id="detail-title">{displayValue(row[definition.titleField] ?? definition.label)}</h2></div><button className="icon-button" onClick={close} aria-label={uiText.forms.closeDetail}>×</button></header>
-    <div className="drawer-body">{definition.id === "aplicabilidad-retencion" && row.lifecycle_state === "draft" && !row.source_evidence_version_id && <p className="form-guidance" role="status">La fuente inicial formal requiere revisión independiente y vinculación antes de publicar. La configuración ordinaria elegible puede continuar sin esa acreditación; la autoría y los controles operacionales se conservan.</p>}<p className="form-guidance">{vocabularyProvenance.length?"Procedencia del vocabulario contractual registrada":"Procedencia del vocabulario contractual no registrada"}</p>{detail.loading ? <LoadingState/> : <>{definition.id === "controles" ? <ControlDetailContent row={row}/> : <><StatusBadge value={state}/><dl>{Object.entries(row).filter(([, value]) => !Array.isArray(value) && typeof value !== "object").map(([key, value]) => <React.Fragment key={key}><dt>{fieldLabel(key)}</dt><dd>{historicalReference(key,value)}</dd></React.Fragment>)}</dl></>}{detail.error && <p className="inline-feedback error" role="alert">{detail.error}</p>}{typeof version?.file_object_id === "string" && <button className="button secondary" onClick={() => void download()}>{uiText.forms.downloadFile}</button>}{actions.map((action) => <section className="workflow-action" key={action.suffix}><h3>{action.label}</h3>{action.fields?.map((field) => field === "source_evidence_version_id" && action.suffix === "bind-initial-source" ? <label key={field}><span>Fuente inicial aprobada</span><select aria-label="Fuente inicial aprobada" value={form[field]??""} onChange={event=>setForm(current=>({...current,[field]:event.target.value}))}><option value="">Selecciona la fuente aprobada</option>{(Array.isArray(row.initial_source_candidates)?row.initial_source_candidates as Row[]:[]).map(source=><option key={String(source.evidence_version_id)} value={String(source.evidence_version_id)}>{String(source.evidence_code)} · v{String(source.version_number)}</option>)}</select>{(!Array.isArray(row.initial_source_candidates)||row.initial_source_candidates.length===0)&&<span className="form-guidance">No hay fuente vigente aprobada por una persona distinta de su autor.</span>}</label> : field === "samples" ? <StructuredCollectionEditor key={field} api={api} kind="samples" value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : field === "evidence_version_id" ? <ApprovedEvidenceReferenceField key={field} api={api} {...(definition.id==="solicitudes-evidencia"?{requestId:id}:{})} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : field === "business_owner_subject_id" ? <SubjectSelect key={field} api={api} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : workflowVocabulary(action,field) ? <ContractVocabularySelect key={field} schemaField={workflowVocabulary(action,field)!} label={fieldLabel(field)} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : <label key={field}><span>{fieldLabel(field)}</span><input aria-label={fieldLabel(field)} placeholder={fieldPlaceholder(field)} value={form[field] ?? ""} onChange={(event) => setForm((value) => ({ ...value, [field]: event.target.value }))}/></label>)}<button className="button primary" onClick={() => void submit(action)}>{action.label}</button></section>)}{actions.length === 0 && <p className="read-only-note">{uiText.forms.noActions}</p>}{feedback && <p className={`inline-feedback ${feedback.kind}`} role={feedback.kind === "error" ? "alert" : "status"}>{feedback.message}</p>}</>}</div>
+  return <div className="drawer-backdrop" role="presentation" onMouseDown={()=>{if(!busy)close();}}><aside ref={dialogRef} className="drawer" role="dialog" aria-modal="true" aria-labelledby="detail-title" onMouseDown={(event) => event.stopPropagation()}>
+    <header className="drawer-header"><div><p className="eyebrow">{uiText.forms.detailEyebrow}</p><h2 id="detail-title">{definition.id==="retencion"?retentionPolicyDisplayLabel(row):displayValue(row[definition.titleField] ?? definition.label)}</h2></div><button className="icon-button" onClick={close} disabled={busy} aria-label={uiText.forms.closeDetail}>×</button></header>
+    <div className="drawer-body">{definition.id === "aplicabilidad-retencion" && row.lifecycle_state === "draft" && !row.source_evidence_version_id && <p className="form-guidance" role="status">La fuente inicial formal requiere revisión independiente y vinculación antes de publicar. La configuración ordinaria elegible puede continuar sin esa acreditación; la autoría y los controles operacionales se conservan.</p>}<p className="form-guidance">{vocabularyProvenance.length?"Procedencia del vocabulario contractual registrada":"Procedencia del vocabulario contractual no registrada"}</p>{detail.loading ? <LoadingState/> : <>{definition.id === "controles" ? <ControlDetailContent api={api} row={row}/> : <><StatusBadge value={state}/><dl>{Object.entries(row).filter(([, value]) => !Array.isArray(value) && typeof value !== "object").map(([key, value]) => <React.Fragment key={key}><dt>{fieldLabel(key)}</dt><dd>{historicalReference(key,value)}</dd></React.Fragment>)}</dl></>}{detail.error && <p className="inline-feedback error" role="alert">{detail.error}</p>}{typeof version?.file_object_id === "string" && <button className="button secondary" onClick={() => void download()}>{uiText.forms.downloadFile}</button>}{actions.map((action) => <section className="workflow-action" key={action.suffix}><h3>{actionForm(action)?.title??action.label}</h3><BusinessFields schema={actionForm(action)?.schema??"RetentionPolicyTransitionRequest"} fields={(action.fields??[]).filter(field=>!(definition.id==="retencion"&&row.policy_kind==="legal_hold"&&field==="retention_seconds"))} values={{...form,policy_kind:row.policy_kind}} errors={fieldErrors} render={(field) => definition.id === "aplicabilidad-retencion" && ["effective_from","effective_to"].includes(field) ? <TenantLocalDateTimeField key={field} label={fieldLabel(field)} required={!action.optionalFields?.includes(field)} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : definition.id === "retencion" && field === "is_mandatory" ? <RetentionMandatoryField key={field} value={form[field] ?? ""} onChange={value => setForm(current => ({ ...current, [field]: value }))}/> : field === "source_evidence_version_id" && action.suffix === "bind-initial-source" ? <label key={field}><span>Fuente inicial aprobada</span><select aria-label="Fuente inicial aprobada" value={form[field]??""} onChange={event=>setForm(current=>({...current,[field]:event.target.value}))}><option value="">Selecciona la fuente aprobada</option>{(Array.isArray(row.initial_source_candidates)?row.initial_source_candidates as Row[]:[]).map(source=><option key={String(source.evidence_version_id)} value={String(source.evidence_version_id)}>{String(source.evidence_code)} · v{String(source.version_number)}</option>)}</select>{(!Array.isArray(row.initial_source_candidates)||row.initial_source_candidates.length===0)&&<span className="form-guidance">No hay fuente vigente aprobada por una persona distinta de su autor.</span>}</label> : field === "samples" ? <StructuredCollectionEditor key={field} api={api} errors={fieldErrors} kind="samples" value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : field === "evidence_version_id" ? <ApprovedEvidenceReferenceField key={field} api={api} {...(definition.id==="solicitudes-evidencia"?{requestId:id}:{})} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : field === "business_owner_subject_id" ? <SubjectSelect key={field} api={api} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : workflowVocabulary(action,field) ? <ContractVocabularySelect key={field} schemaField={workflowVocabulary(action,field)!} label={fieldLabel(field)} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/> : <BusinessScalarField schema={actionForm(action)?.schema??"RetentionPolicyTransitionRequest"} field={field} value={form[field]??""} onChange={value=>setForm(current=>({...current,[field]:value}))}/>} />{confirming===action.suffix&&<p className="form-guidance" role="status">{actionForm(action)?.title??action.label}: confirma la operación sobre {displayValue(row[definition.titleField]??definition.label)} · {displayValue(state)}. {actionForm(action)?.resultState&&<>Estado resultante: {displayValue(actionForm(action)!.resultState)}. </>}Se aplican los permisos y la separación de funciones.</p>}<button className="button primary" disabled={busy||detail.loading} onClick={() => void submit(action)}>{busy?"Procesando…":confirming===action.suffix?`Confirmar ${action.label.toLowerCase()}`:action.label}</button></section>)}{actions.length === 0 && <p className="read-only-note">{uiText.forms.noActions}</p>}<FormErrorSummary errors={fieldErrors}/>{feedback?.kind==="error"&&<button className="button secondary" disabled={busy} onClick={()=>{setRefresh(value=>value+1);setConfirming(undefined);}}>Actualizar detalle y revisar</button>}{feedback && <p className={`inline-feedback ${feedback.kind}`}  role={feedback.kind === "error" ? "alert" : "status"}>{feedback.message}</p>}</>}</div>
   </aside></div>;
 }
 
@@ -505,7 +655,7 @@ function EntityDistribution({ label, rows, field = "lifecycle_state" }: { label:
   return <section className="entity-distribution"><div className="entity-distribution-heading"><strong>{label}</strong><span>{rows.length}</span></div>{distribution.map((item) => <div className="compact-bar" key={item.value} title={`${item.label}: ${item.count} ${uiText.dashboard.distributionTooltip}`}><span><i className={`legend-marker ${item.tone}`} aria-hidden="true"/>{item.label}</span><b>{item.count}</b><div><i className={item.tone} style={{ width: `${item.percentage}%` }}/></div></div>)}</section>;
 }
 
-function Dashboard({ api }: { api: ApiClient }) {
+function Dashboard({ api, authorization }: { api: ApiClient; authorization: CurrentPrincipalAuthorization | null }) {
   const dashboardModules = [modules[1]!, modules[4]!, modules[6]!, modules[7]!, modules[8]!, modules[9]!];
   const assessmentLoad = usePage(api, dashboardModules[0]!)[0];
   const controlAssessmentLoad = usePage(api, dashboardModules[1]!)[0];
@@ -538,6 +688,7 @@ function Dashboard({ api }: { api: ApiClient }) {
       <DataCard title={uiText.dashboard.assessmentDistribution} subtitle={uiText.dashboard.assessmentDistributionDetail} className="primary-visual" action={<button className="link-button" onClick={() => navigate("requisitos")}>{uiText.dashboard.seeAssessments} →</button>}><StackedDistribution rows={assessments!} field="result_status" emptyDetail={uiText.dashboard.noAssessments}/></DataCard>
       <DataCard title={uiText.dashboard.operationalAttention} subtitle={uiText.dashboard.operationalAttentionDetail} className="attention-card">{attentionRows.map((row, index) => <div className="activity" key={index}><span className="activity-icon"><Icon name="alert"/></span><div><small>{String(row.entityLabel)}</small><strong>{displayValue(row.title ?? row.request_code ?? row.issue_code ?? row.action_code ?? uiText.dashboard.record)}</strong><StatusBadge value={row.lifecycle_state}/></div></div>)}{attentionRows.length === 0 && <StatePanel kind="insufficient-data" detail={uiText.dashboard.noAttention}/>}</DataCard>
     </section>
+    <MatrixWorkspace api={api} authorization={authorization} mini/>
     <section className="operational-grid">
       <DataCard title={uiText.dashboard.controlsDistribution} subtitle={uiText.dashboard.controlsDistributionDetail} className="compact-visual" action={<button className="link-button" onClick={() => navigate("controles")}>{uiText.dashboard.seeControls} →</button>}>{controlAssessments!.length === 0 ? <StatePanel kind="insufficient-data" detail={uiText.dashboard.noControlAssessments}/> : <ResponsiveChartFrame label={uiText.dashboard.controlsDistribution}><p className="dataset-label">{uiText.common.visibleDataset} · {controlAssessments!.length}</p><EntityDistribution label={uiText.dashboard.controlAssessmentItems} rows={controlAssessments!}/></ResponsiveChartFrame>}</DataCard>
       <DataCard title={uiText.dashboard.remediationDistribution} subtitle={uiText.dashboard.remediationDistributionDetail} className="compact-visual" action={<button className="link-button" onClick={() => navigate("acciones")}>{uiText.dashboard.seeActions} →</button>}>{issues!.length + actions!.length === 0 ? <StatePanel kind="insufficient-data" detail={uiText.dashboard.noRemediation}/> : <ResponsiveChartFrame label={uiText.dashboard.remediationDistribution}><p className="dataset-label">{uiText.common.visibleDataset} · {issues!.length + actions!.length}</p><div className="entity-pair"><EntityDistribution label={uiText.dashboard.issueItems} rows={issues!}/><EntityDistribution label={uiText.dashboard.actionItems} rows={actions!}/></div></ResponsiveChartFrame>}</DataCard>
@@ -546,9 +697,10 @@ function Dashboard({ api }: { api: ApiClient }) {
   </>;
 }
 
-function Sidebar({ active, open, close, platformAdmin, tenantAdmin, hasTenant, managedIdentity, normsAvailable }: { active: string; open: boolean; close(): void; platformAdmin: boolean; tenantAdmin: boolean; hasTenant: boolean; managedIdentity: boolean; normsAvailable: boolean }) {
+function Sidebar({ active, open, close, platformAdmin, tenantAdmin, hasTenant, managedIdentity, normsAvailable, libraryPlatform }: { active: string; open: boolean; close(): void; platformAdmin: boolean; tenantAdmin: boolean; hasTenant: boolean; managedIdentity: boolean; normsAvailable: boolean; libraryPlatform:boolean }) {
   return <aside className={`sidebar ${open ? "open" : ""}`}><div className="brand"><BrandLogo/><span>GRC</span></div><nav aria-label={uiText.navigation.mainAria}>
     {hasTenant && nav.filter(([id]) => id !== "normas" || normsAvailable).map(([id, label, icon]) => <button key={id} className={active === id ? "active" : ""} onClick={() => { navigate(id); close(); }}><Icon name={icon}/><span>{label}</span></button>)}
+    {libraryPlatform && <button className={active === "biblioteca-plataforma" ? "active" : ""} onClick={()=>{navigate("biblioteca-plataforma");close();}}><Icon name="list"/><span>Biblioteca de plataforma</span></button>}
     {(platformAdmin || tenantAdmin || managedIdentity) && <p className="sidebar-section-label">{uiText.navigation.settings}</p>}
     {(platformAdmin || tenantAdmin) && <><button className={active === settingsRoutes.companies ? "active" : ""} onClick={() => { navigate(settingsRoutes.companies); close(); }}><Icon name="building"/><span>{uiText.navigation.companies}</span></button><button className={active === settingsRoutes.users ? "active" : ""} onClick={() => { navigate(settingsRoutes.users); close(); }}><Icon name="users"/><span>{uiText.navigation.users}</span></button></>}
     {managedIdentity && <button className={active === settingsRoutes.managedIdentities ? "active" : ""} onClick={() => { navigate(settingsRoutes.managedIdentities); close(); }}><Icon name="shield"/><span>Identidades gestionadas</span></button>}
@@ -560,15 +712,21 @@ const workspaceGroups: Readonly<Record<string, readonly string[]>> = {
   evidencias: ["solicitudes-evidencia", "evidencias", "retencion", "aplicabilidad-retencion"], acciones: ["issues", "acciones"]
 };
 
-function NormativeContent({ api, frameworkId, kind, title }: { api: ApiClient; frameworkId: string; kind: "normative-units" | "requirements"; title: string }) {
+function NormativeContent({ api, frameworkId, kind, title, knowledgeAllowed=false }: { api: ApiClient; frameworkId: string; kind: "normative-units" | "requirements"; title: string; knowledgeAllowed?:boolean }) {
   const [state, setState] = useState<"loading" | "ready" | "denied" | "error">("loading");
   const [items, setItems] = useState<Row[]>([]);
   const [cursor, setCursor] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [search,setSearch]=useState(''),[parent,setParent]=useState('');
+  const [draftSearch,setDraftSearch]=useState('');
+  const [expanded,setExpanded]=useState<string[]>([]);
   const path = `/api/v1/framework-versions/${encodeURIComponent(frameworkId)}/${kind}`;
+  const context=JSON.stringify([search,parent]);
   const load = async (next?: string, signal?: AbortSignal) => {
     const query = new URLSearchParams({ "page[size]": "100" });
     if (next) query.set("page[cursor]", next);
+    if(search)query.set("filter[query]",search);
+    if(parent)query.set(kind==="normative-units"?"filter[parent_normative_unit_id]":"filter[normative_unit_id]",parent);
     const page = await api.request<Page>(`${path}?${query}`, signal ? { signal } : {});
     setItems((current) => next ? [...current, ...page.items] : page.items);
     setCursor(page.page.next_cursor);
@@ -581,8 +739,10 @@ function NormativeContent({ api, frameworkId, kind, title }: { api: ApiClient; f
       if (!controller.signal.aborted) setState(error instanceof ApiProblem && [401, 403].includes(error.status) ? "denied" : "error");
     });
     return () => controller.abort();
-  }, [api, path]);
+  }, [api, path, context]);
   return <DataCard title={title} className="admin-section">
+    <form className="admin-form" onSubmit={e=>{e.preventDefault();setSearch(draftSearch.trim());setParent('');}}><label>Buscar en {title.toLowerCase()}<input type="search" minLength={2} maxLength={160} value={draftSearch} onChange={e=>setDraftSearch(e.target.value)}/></label><button className="button secondary">Buscar</button></form>
+    {parent&&<button className="link-button" onClick={()=>setParent('')}>Volver a la estructura completa</button>}
     {state === "loading" ? <LoadingState/> : state === "denied" ? <StatePanel kind="permission-denied"/> :
       state === "error" ? <StatePanel kind="error" detail={`No fue posible consultar ${title.toLowerCase()}.`} retry={() => { setState("loading"); void load().catch(() => setState("error")); }}/> :
       items.length === 0 ? <StatePanel kind="empty" detail="No hay contenido normativo publicado y habilitado para esta versión. Comprueba la publicación y contratación del marco."/> :
@@ -590,17 +750,24 @@ function NormativeContent({ api, frameworkId, kind, title }: { api: ApiClient; f
         const id = String(item[kind === "requirements" ? "requirement_id" : "normative_unit_id"]);
         const code = String(item[kind === "requirements" ? "requirement_code" : "unit_code"] ?? "");
         const name = String(item[kind === "requirements" ? "editorial_summary" : "title"] ?? "");
-        return <tr key={id}><td>{code}</td><td>{name}</td><td><details><summary>Ver detalle</summary><dl>{Object.entries(item).filter(([field, value]) => value != null && !field.endsWith("_id") && !["unit_code", "requirement_code", "title", "editorial_summary"].includes(field)).map(([field, value]) => <React.Fragment key={field}><dt>{fieldLabel(field)}</dt><dd>{displayValue(value)}</dd></React.Fragment>)}</dl></details></td></tr>;
+        return <tr key={id}><td>{code}</td><td>{name}</td><td><details onToggle={event=>{const open=event.currentTarget.open;setExpanded(current=>open?[...new Set([...current,id])]:current.filter(key=>key!==id));}}><summary>Ver detalle</summary><dl>{Object.entries(item).filter(([field, value]) => value != null && !field.endsWith("_id") && !["unit_code", "requirement_code", "title", "editorial_summary"].includes(field)).map(([field, value]) => <React.Fragment key={field}><dt>{fieldLabel(field)}</dt><dd>{displayValue(value)}</dd></React.Fragment>)}</dl>{knowledgeAllowed&&expanded.includes(id)&&<TargetKnowledgePanel key={id} api={api} target={{[kind==='requirements'?'requirement_id':'normative_unit_id']:id}}/>}</details>{kind==='normative-units'&&<button className="link-button" onClick={()=>{setParent(id);setSearch('');setDraftSearch('');}}>Ver unidades hijas de {code}</button>}</td></tr>;
       })}</tbody></table></div>{cursor && <button className="button secondary" disabled={busy} onClick={() => { setBusy(true); void load(cursor).catch(() => setState("error")).finally(() => setBusy(false)); }}>{busy ? uiText.actions.loadingMore : uiText.actions.loadMore}</button>}</>}
   </DataCard>;
 }
 
-function NormsWorkspace({ api }: { api: ApiClient }) {
+function NormsWorkspace({ api, authorization }: { api: ApiClient; authorization: CurrentPrincipalAuthorization|null }) {
   const [frameworkId, setFrameworkId] = useState("");
+  const permitted=(permission:string)=>tenantPresentationPermission(authorization,api.currentTenantId()??undefined,permission);
+  const tabs=[['estructura','Fuentes y ediciones',permitted('compliance.framework.read')],['contenido','Contenido editorial y contexto',permitted('knowledge.knowledge_item.read')||permitted('knowledge.knowledge_source.read')],['ajustes','Personalización y aprobación',permitted('configuration.configuration_override.read')||permitted('configuration.configuration_override.create')],['matrices','Matrices y homologación',permitted('reporting.matrix.read')]].filter(([, ,allowed])=>allowed);
+  const [requestedTab,setTab]=useState(()=>new URLSearchParams(window.location.search).get('tab')??'estructura');
+  const tab=tabs.some(([id])=>id===requestedTab)?requestedTab:tabs[0]?.[0];
+  return <><PageHeader title="Biblioteca Normativa"/><nav className="module-tabs" aria-label="Biblioteca Normativa">{tabs.map(([id,label])=><button key={String(id)} className={tab===id?'active':''} onClick={()=>setTab(String(id))}>{String(label)}</button>)}</nav>{tab==='contenido'?<KnowledgeWorkspace key={JSON.stringify(authorization)} api={api} authorization={authorization}/>:tab==='ajustes'?<ControlAdjustments api={api} authorization={authorization}/>:tab==='matrices'?<MatrixWorkspace api={api} authorization={authorization}/>:<NormativeStructure api={api} frameworkId={frameworkId} setFrameworkId={setFrameworkId} authorization={authorization}/>}</>;
+}
+function NormativeStructure({api,frameworkId,setFrameworkId,authorization}:{api:ApiClient;frameworkId:string;setFrameworkId(id:string):void;authorization:CurrentPrincipalAuthorization|null}) {
   return <><PageHeader title={uiText.navigation.norms}/><DataCard title="Marcos normativos habilitados" className="admin-section">
     <BusinessReferenceSelect api={api} label="Norma o marco publicado" context={{ kind: "framework", purpose: "select" }} value={frameworkId} onChange={setFrameworkId}/>
     <p className="form-guidance">Se muestran únicamente versiones publicadas y disponibles para la empresa seleccionada.</p>
-  </DataCard>{frameworkId ? <><NormativeContent key={`${frameworkId}:units`} api={api} frameworkId={frameworkId} kind="normative-units" title="Unidades normativas"/><NormativeContent key={`${frameworkId}:requirements`} api={api} frameworkId={frameworkId} kind="requirements" title="Requisitos de la norma"/></> : null}</>;
+  </DataCard>{frameworkId ? <><NormativeContent key={`${frameworkId}:units`} api={api} frameworkId={frameworkId} kind="normative-units" title="Unidades normativas" knowledgeAllowed={tenantPresentationPermission(authorization,api.currentTenantId()??undefined,"knowledge.knowledge_item.read")}/><NormativeContent key={`${frameworkId}:requirements`} api={api} frameworkId={frameworkId} kind="requirements" title="Requisitos de la norma" knowledgeAllowed={tenantPresentationPermission(authorization,api.currentTenantId()??undefined,"knowledge.knowledge_item.read")}/></> : null}</>;
 }
 
 function ModuleWorkspace({ api, active, authorization, tenantId }: {
@@ -611,14 +778,16 @@ function ModuleWorkspace({ api, active, authorization, tenantId }: {
     .map((id) => modules.find((module) => module.id === id))
     .filter((definition): definition is ModuleDefinition => Boolean(definition))
     .filter((definition) => !["retencion", "aplicabilidad-retencion"].includes(definition.id) || mayReadRetention);
-  const [selectedId, setSelectedId] = useState(choices[0]?.id ?? "");
-  useEffect(() => setSelectedId(choices[0]?.id ?? ""), [active]);
+  const requestedTabId = choices.find((choice) => choice.id === new URLSearchParams(window.location.search).get("tab"))?.id ?? choices[0]?.id ?? "";
+  const [selectedId, setSelectedId] = useState(requestedTabId);
+  useEffect(() => setSelectedId(requestedTabId), [active, requestedTabId]);
   const selected = choices.find((choice) => choice.id === selectedId) ?? choices[0];
   if (!selected) return <ErrorState unauthorized retry={() => undefined}/>;
   const retention = ["retencion", "aplicabilidad-retencion"].includes(selected.id);
-  return <><div className="module-tabs" role="tablist" aria-label={uiText.navigation.submodulesAria}>{choices.map((choice) => <button role="tab" aria-selected={selected.id === choice.id} className={selected.id === choice.id ? "active" : ""} key={choice.id} onClick={() => setSelectedId(choice.id)}>{choice.label}</button>)}</div><ModuleTable api={api} definition={selected}
-    allowCreate={!retention || tenantPresentationPermission(authorization, tenantId, "privacy.retention_policy.create")}
-    allowAction={retention ? (action) => { const permission = retentionActionPermission(action.suffix); return !!permission && tenantPresentationPermission(authorization, tenantId, permission); } : undefined}/></>;
+  const mayCreateEvidence = tenantPresentationPermission(authorization,tenantId,"evidence.evidence.create");
+  return <><div className="module-tabs" role="tablist" aria-label={uiText.navigation.submodulesAria}>{choices.map((choice) => <button role="tab" aria-selected={selected.id === choice.id} className={selected.id === choice.id ? "active" : ""} key={choice.id} onClick={() => setSelectedId(choice.id)}>{choice.label}</button>)}</div>{selected.id==="evidencias"&&!mayCreateEvidence&&<p className="form-guidance" role="status">La creación de evidencias requiere el permiso del rol Responsable de evidencias (EVIDENCE_OWNER) en esta empresa. Tu acceso actual permite consultar los registros autorizados.</p>}<ModuleTable api={api} definition={selected} allowKnowledgeContext={tenantPresentationPermission(authorization,tenantId,"knowledge.knowledge_item.read")}
+    allowCreate={(()=>{const form=formForPath(createContracts[selected.id]?.path??"");return form?tenantPresentationPermission(authorization,tenantId,form.permission):selected.id==="evidencias"?mayCreateEvidence:!retention||tenantPresentationPermission(authorization,tenantId,"privacy.retention_policy.create");})()}
+    allowAction={(action)=>{const form=formForPath(`${action.versionResource?"/evidence-versions":selected.path}/{id}:${action.suffix}`);const permission=form?.permission??(retention?retentionActionPermission(action.suffix):null);return !!permission&&tenantPresentationPermission(authorization,tenantId,permission);}}/></>;
 }
 
 type InvitationCreateEnvelope = {
@@ -1176,7 +1345,7 @@ function CompaniesAdmin({ api, authorization, authorizeFresh }: { api: ApiClient
       const subscription = item.current_subscription as Row | null;
       return <tr key={String(item.tenant_id)}><td><strong>{String(item.display_name)}</strong><small className="admin-secondary">{String(item.legal_name)}</small></td><td><StatusBadge value={item.lifecycle_state}/></td><td>{subscription ? `${String(subscription.plan_name)} · v${String(subscription.plan_version_number)}` : uiText.administration.noPlan}</td><td><button className="link-button" onClick={() => setSelectedId(String(item.tenant_id))}>{uiText.actions.viewDetail}</button></td></tr>;
     })}</tbody></table></div>}</TableShell>}</AdminPageBody>
-    {selectedId && <div className="drawer-backdrop" role="presentation" onMouseDown={() => setSelectedId(undefined)}><aside className="drawer" role="dialog" aria-modal="true" aria-labelledby="company-detail-title" onMouseDown={(event) => event.stopPropagation()}><header className="drawer-header"><div><p className="eyebrow">{uiText.navigation.settings}</p><h2 id="company-detail-title">{visibleDetail ? String(visibleDetail.display_name) : uiText.navigation.companies}</h2></div><button className="icon-button" onClick={() => setSelectedId(undefined)} aria-label={uiText.forms.closeDetail}>×</button></header><div className="drawer-body">{detailError ? <StatePanel kind="error" detail={uiText.administration.loadError} retry={refreshDetail}/> : !visibleDetail ? <LoadingState/> : <><p>{String(visibleDetail.legal_name)}</p><p><StatusBadge value={visibleDetail.lifecycle_state}/></p><p>{uiText.administration.companyCode}: {String(visibleDetail.tenant_code)}</p><p>{uiText.administration.timezone}: {String(visibleDetail.default_timezone)}</p><p>{uiText.administration.plan}: {visibleDetail.current_subscription ? `${String((visibleDetail.current_subscription as Row).plan_name)} · v${String((visibleDetail.current_subscription as Row).plan_version_number)}` : uiText.administration.noPlan}</p>{visibleDetail.current_subscription && <><p>{uiText.administration.subscriptionCode}: {String((visibleDetail.current_subscription as Row).subscription_code)}</p><p>{uiText.administration.subscriptionStatus}: <StatusBadge value={(visibleDetail.current_subscription as Row).lifecycle_state}/></p></>}{visibleDetail.current_subscription ? <> {authorization?.platform_permissions.includes("platform.subscription.update") && authorization.platform_permissions.includes("platform.subscription.read") && <PlanAssignment key={`change-plan-${selectedId}-${String((visibleDetail.current_subscription as Row).subscription_id)}`} api={api} tenantId={selectedId} subscriptionId={String((visibleDetail.current_subscription as Row).subscription_id)} authorizeFresh={authorizeFresh} created={refreshDetail}/>}<ContractedPacks key={`contracted-${String((visibleDetail.current_subscription as Row).subscription_id)}`} api={api} platform subscriptionId={String((visibleDetail.current_subscription as Row).subscription_id)} canActivate={Boolean(authorization?.platform_permissions.includes("platform.subscription_regulatory_pack.create"))} canRevoke={Boolean(authorization?.platform_permissions.includes("platform.subscription_regulatory_pack.archive"))}/></> : authorization?.platform_permissions.includes("platform.subscription.create") ? <PlanAssignment key={`plan-${selectedId}`} api={api} tenantId={selectedId} authorizeFresh={authorizeFresh} created={refreshDetail}/> : <StatePanel kind="permission-denied" detail="Se requiere autorización de plataforma para asignar un plan."/>}<ValidationPacks key={`validation-${selectedId}`} api={api} platform tenantId={selectedId}/><button className="button secondary" onClick={() => { navigate(`${settingsRoutes.users}?tenant_id=${encodeURIComponent(selectedId)}`); setSelectedId(undefined); }}>{uiText.administration.viewUsers}</button></>}</div></aside></div>}
+    {selectedId && <div className="drawer-backdrop" role="presentation" onMouseDown={() => setSelectedId(undefined)}><aside className="drawer" role="dialog" aria-modal="true" aria-labelledby="company-detail-title" onMouseDown={(event) => event.stopPropagation()}><header className="drawer-header"><div><p className="eyebrow">{uiText.navigation.settings}</p><h2 id="company-detail-title">{visibleDetail ? String(visibleDetail.display_name) : uiText.navigation.companies}</h2></div><button className="icon-button" onClick={() => setSelectedId(undefined)} aria-label={uiText.forms.closeDetail}>×</button></header><div className="drawer-body">{detailError ? <StatePanel kind="error" detail={uiText.administration.loadError} retry={refreshDetail}/> : !visibleDetail ? <LoadingState/> : <><p>{String(visibleDetail.legal_name)}</p><p><StatusBadge value={visibleDetail.lifecycle_state}/></p><p>{uiText.administration.companyCode}: {String(visibleDetail.tenant_code)}</p><p>{uiText.administration.timezone}: {String(visibleDetail.default_timezone)}</p><p>{uiText.administration.plan}: {visibleDetail.current_subscription ? `${String((visibleDetail.current_subscription as Row).plan_name)} · v${String((visibleDetail.current_subscription as Row).plan_version_number)}` : uiText.administration.noPlan}</p>{visibleDetail.current_subscription && <><p>{uiText.administration.subscriptionCode}: {String((visibleDetail.current_subscription as Row).subscription_code)}</p><p>{uiText.administration.subscriptionStatus}: <StatusBadge value={(visibleDetail.current_subscription as Row).lifecycle_state}/></p></>}{visibleDetail.current_subscription ? <> {authorization?.platform_permissions.includes("platform.subscription.update") && authorization.platform_permissions.includes("platform.subscription.read") && <PlanAssignment key={`change-plan-${selectedId}-${String((visibleDetail.current_subscription as Row).subscription_id)}`} api={api} tenantId={selectedId} subscriptionId={String((visibleDetail.current_subscription as Row).subscription_id)} authorizeFresh={authorizeFresh} created={refreshDetail}/>}<ContractedPacks key={`contracted-${String((visibleDetail.current_subscription as Row).subscription_id)}`} api={api} platform subscriptionId={String((visibleDetail.current_subscription as Row).subscription_id)} canActivate={Boolean(authorization?.platform_permissions.includes("platform.subscription_regulatory_pack.create"))} canRevoke={Boolean(authorization?.platform_permissions.includes("platform.subscription_regulatory_pack.archive"))}/></> : authorization?.platform_permissions.includes("platform.subscription.create") ? <PlanAssignment key={`plan-${selectedId}`} api={api} tenantId={selectedId} authorizeFresh={authorizeFresh} created={refreshDetail}/> : <StatePanel kind="permission-denied" detail="Se requiere autorización de plataforma para asignar un plan."/>}<ValidationPacks key={`validation-${selectedId}`} api={api} platform tenantId={selectedId}/>{api.currentTenantId() === visibleDetail.tenant_id && tenantPresentationPermission(authorization, String(visibleDetail.tenant_id), "privacy.retention_policy.read") ? <button className="button secondary" onClick={() => { navigate("evidencias?tab=aplicabilidad-retencion"); setSelectedId(undefined); }}>Abrir aplicabilidad de retención</button> : <p className="form-guidance">La retención se administra en Evidencias con una membresía Tenant autorizada de esta empresa activa.</p>}<button className="button secondary" onClick={() => { navigate(`${settingsRoutes.users}?tenant_id=${encodeURIComponent(selectedId)}`); setSelectedId(undefined); }}>{uiText.administration.viewUsers}</button></>}</div></aside></div>}
   </>;
 }
 
@@ -1411,12 +1580,13 @@ export function CoreGrcApp({ api, session, apiOrigin }: { api: ApiClient; sessio
   const effectiveRoles = [...access.value.effective_platform_role_codes, ...(context?.effective_role_codes ?? [])];
   const roleSummary = effectiveRoles.map((role) => roleLabel(role)).join(" · ") || uiText.administration.noRoles;
   const administrativePage = active === settingsRoutes.companies || active === settingsRoutes.users || active === settingsRoutes.managedIdentities;
-  const normsAvailable = Boolean(authorization?.tenant_permissions && Object.hasOwn(authorization.tenant_permissions.permissions, "compliance.framework.read"));
-  return <div className="app-shell"><Sidebar active={active} open={menu} close={() => setMenu(false)} platformAdmin={platformAdmin} tenantAdmin={tenantAdmin} hasTenant={Boolean(context)} managedIdentity={managedIdentity} normsAvailable={normsAvailable}/><div className="app-column"><header className="topbar"><button className="menu-button" aria-label={uiText.navigation.open} onClick={() => setMenu(!menu)}>☰</button><label className="search"><span className="sr-only">{uiText.shell.searchLabel}</span><input type="search" placeholder={uiText.shell.searchPlaceholder}/></label>{context ? <label className="tenant-context"><span>{uiText.shell.tenant}</span><select aria-label={uiText.tenant.selectorLabel} value={context.tenant_id} onChange={(event) => { session.selectTenant(event.target.value); setContextVersion((value) => value + 1); }}>{contexts.map((item) => <option value={item.tenant_id} key={item.tenant_id}>{item.tenant_display_name}</option>)}</select></label> : <span className="context-pill">{uiText.administration.platformContext}</span>}<div className="user-context"><span className="avatar">U</span><div><strong>{uiText.shell.authorizedUser}</strong><span className="user-role-summary" title={roleSummary}>{platformAdmin ? `${uiText.administration.platformContext} · ` : ""}{context ? `${context.tenant_display_name} · ` : ""}{roleSummary}</span></div><button className="link-button" onClick={() => void logout()}>{uiText.auth.logout}</button></div></header><main className="workspace" key={`${context?.tenant_id ?? "platform"}:${contextVersion}`}>
-    {active === settingsRoutes.managedIdentities ? managedIdentity ? <ManagedIdentityWorkspace api={api} permissions={new Set(authorization?.platform_permissions ?? [])} authorizeFresh={refreshAuthorization}/> : <StatePanel kind="permission-denied"/> :
+  const normsAvailable = ["compliance.framework.read","knowledge.knowledge_source.read","knowledge.knowledge_item.read","reporting.matrix.read","configuration.configuration_override.read","configuration.configuration_override.create"].some(permission=>tenantPresentationPermission(authorization,context?.tenant_id,permission));
+  const libraryPlatform=!!authorization?.platform_permissions.some(p=>["knowledge.knowledge_source.read","knowledge.knowledge_item.read"].includes(p));
+  return <div className="app-shell"><Sidebar active={active} open={menu} close={() => setMenu(false)} platformAdmin={platformAdmin} tenantAdmin={tenantAdmin} hasTenant={Boolean(context)} managedIdentity={managedIdentity} normsAvailable={normsAvailable} libraryPlatform={libraryPlatform}/><div className="app-column"><header className="topbar"><button className="menu-button" aria-label={uiText.navigation.open} onClick={() => setMenu(!menu)}>☰</button><label className="search"><span className="sr-only">{uiText.shell.searchLabel}</span><input type="search" placeholder={uiText.shell.searchPlaceholder}/></label>{context ? <label className="tenant-context"><span>{uiText.shell.tenant}</span><select aria-label={uiText.tenant.selectorLabel} value={context.tenant_id} onChange={(event) => { session.selectTenant(event.target.value); setContextVersion((value) => value + 1); }}>{contexts.map((item) => <option value={item.tenant_id} key={item.tenant_id}>{item.tenant_display_name}</option>)}</select></label> : <span className="context-pill">{uiText.administration.platformContext}</span>}<div className="user-context"><span className="avatar">U</span><div><strong>{uiText.shell.authorizedUser}</strong><span className="user-role-summary" title={roleSummary}>{platformAdmin ? `${uiText.administration.platformContext} · ` : ""}{context ? `${context.tenant_display_name} · ` : ""}{roleSummary}</span></div><button className="link-button" onClick={() => void logout()}>{uiText.auth.logout}</button></div></header><main className="workspace" key={`${context?.tenant_id ?? "platform"}:${contextVersion}`}>
+    {active === "biblioteca-plataforma" ? libraryPlatform ? <KnowledgeWorkspace key={JSON.stringify(authorization)} api={api} authorization={authorization} platform/> : <StatePanel kind="permission-denied"/> : active === settingsRoutes.managedIdentities ? managedIdentity ? <ManagedIdentityWorkspace api={api} permissions={new Set(authorization?.platform_permissions ?? [])} authorizeFresh={refreshAuthorization}/> : <StatePanel kind="permission-denied"/> :
     active === settingsRoutes.companies ? platformAdmin ? <CompaniesAdmin api={api} authorization={authorization} authorizeFresh={refreshAuthorization}/> : tenantAdmin && context ? <TenantCompany api={api} context={context} authorization={authorization}/> : <StatePanel kind="permission-denied"/> :
       active === settingsRoutes.users ? platformAdmin || tenantAdmin ? <UsersAdmin api={api} platformAdmin={platformAdmin} authorization={authorization} authorizeTenantFresh={authorizeTenantFresh} authorizePlatformFresh={refreshAuthorization} {...(context ? { context } : {})}/> : <StatePanel kind="permission-denied"/> :
-      context ? <TenantTimezoneContext.Provider value={selectedTenantTimezone(authorization, selectedId ?? null)}>{active === "dashboard" ? <Dashboard api={api}/> : active === "normas" ? normsAvailable ? <NormsWorkspace api={api}/> : <StatePanel kind="permission-denied"/> : <ModuleWorkspace api={api} active={active} authorization={authorization} tenantId={context.tenant_id}/>}</TenantTimezoneContext.Provider> :
+      context ? <TenantTimezoneContext.Provider value={selectedTenantTimezone(authorization, selectedId ?? null)}>{active === "dashboard" ? <Dashboard api={api} authorization={authorization}/> : active === "normas" ? normsAvailable ? <NormsWorkspace api={api} authorization={authorization}/> : <StatePanel kind="permission-denied"/> : <ModuleWorkspace api={api} active={active} authorization={authorization} tenantId={context.tenant_id}/>}</TenantTimezoneContext.Provider> :
       <StatePanel kind={administrativePage ? "permission-denied" : "not-available"} detail={uiText.tenant.selectDetail}/>}
   </main></div>{menu && <button className="sidebar-scrim" aria-label={uiText.navigation.close} onClick={() => setMenu(false)}/>}</div>;
 }

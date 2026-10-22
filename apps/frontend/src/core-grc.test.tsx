@@ -64,7 +64,7 @@ describe("Core GRC UI contract", () => {
     expect(Object.values(moduleLabels)).toContain("Evaluaciones de control");
     expect(Object.values(STATUS_LABELS)).toEqual(expect.arrayContaining(["Pendiente", "En progreso", "En revisión", "Aprobada", "Cierre verificado"]));
     expect(roleLabel("GRC Manager")).toBe("Responsable GRC");
-    expect(fieldLabel("business_owner_subject_id")).toBe("ID del responsable de negocio");
+    expect(fieldLabel("business_owner_subject_id")).toBe("Responsable de negocio");
   });
 
   it("USER_VISIBLE_INTERNAL_CODES never renders known lifecycle or snake-case values", () => {
