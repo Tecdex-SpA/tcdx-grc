@@ -141,6 +141,24 @@ const evidenceDirectory = process.env.TCDX_UI_EVIDENCE_DIR ?? "artifacts/phase5-
 test.beforeAll(async () => { await mkdir(evidenceDirectory, { recursive: true }); });
 test.beforeEach(({page})=>{page.on("pageerror",error=>console.error("BROWSER_ERROR",error.message));});
 
+test("Premium shell navigates authorized modules and preserves responsive document bounds", async ({ page }) => {
+  await mockRuntime(page);
+  await page.goto("/dashboard");
+  const search = page.getByRole("search", { name: "Buscar módulo" });
+  const input = search.getByLabel("Buscar módulo", { exact: true });
+  await input.fill("Controles");
+  await input.press("Enter");
+  await expect(page).toHaveURL(/\/controles$/);
+  await expect(page.getByRole("heading", { name: "Controles", exact: true })).toBeVisible();
+  await expect(page.getByRole("table")).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBe(true);
+  await input.fill("Identidades");
+  await input.press("Enter");
+  await expect(search.getByRole("status")).toHaveText("Selecciona un módulo de las sugerencias.");
+  await expect(page).toHaveURL(/\/controles$/);
+  await expect(search.locator("option")).not.toContainText(["Identidades"]);
+});
+
 test("Framework contracting confirms the exact version and retries a lost response without duplicating", async ({ page }, testInfo) => {
   await mockRuntime(page, ["TENANT_ADMIN"], ["PLATFORM_ADMIN"]);
   const version = { regulatory_pack_version_id: roleId, pack_code: "SYNTHETIC-QA",
