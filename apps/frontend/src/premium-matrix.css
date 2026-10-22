@@ -1,0 +1,6 @@
+.matrix-card .table-scroll { overscroll-behavior: contain; scrollbar-gutter: stable; }
+.matrix-card table { border-collapse: separate; border-spacing: 0; }
+.matrix-card thead th { position: sticky; top: 0; z-index: 2; background: var(--surface-soft); }
+.matrix-card thead th:first-child { position: sticky; top: 0; left: 0; z-index: 4; }
+.matrix-card tbody th { position: sticky; left: 0; z-index: 2; background: var(--surface); }
+.matrix-card tbody tr:hover > :is(th, td) { background: color-mix(in srgb, var(--secondary) 7%, var(--surface)); }
