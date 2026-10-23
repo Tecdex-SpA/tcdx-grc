@@ -194,3 +194,11 @@ los recibos finales Node22 contienen cero fallos y todos los clústeres detenido
 RUNTIME_TECHNICAL_CLOSURE=BLOCKED; no PARTIAL_PASS. Los dos contratos propuestos
 requieren revisión/publicación antes de código; las106pruebas globales omitidas
 y cobertura matricial parcial tampoco reciben un PASS por tener CI verde.
+
+
+Recibo Git: publicación origin HEAD b2ef5d61e29a1fdda9f501377eec3255ea456502,
+PR27 OPEN/MERGEABLE, rector-governance PASS8s:
+https://github.com/Tecdex-SpA/tcdx-grc/actions/runs/39974129352/job/120484191308.
+Código probado4eaf589; main c2a774f y PR26 6f558f4 intactos; working tree limpio
+al publicar. El commit documental que incorpora este recibo se verifica aparte
+por CI; no invalida ni cambia la evidencia del código probado.
