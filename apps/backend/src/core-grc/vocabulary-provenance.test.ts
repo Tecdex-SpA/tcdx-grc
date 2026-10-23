@@ -16,7 +16,7 @@ describe("published vocabulary provenance",()=> {
  }
  it("fails closed on unknown family/code/hash/revision/PII rather than leaking audit JSON",()=> {
   const entityId=newUuidV7();const p=buildVocabularyProvenance('actionCreate',{priority:'normal'},[],{table:'remediation.actions',entity:'Action',idColumn:'action_id',row:{action_id:entityId,priority:'normal',row_version:'2'}})!;
-  for(const invalid of[{...p,email:'x'},{...p,profile_version:2},{...p,manifest_sha256:'f'.repeat(64)},{...p,occurrences:[{...p.occurrences[0],code:'medium'}]},{...p,occurrences:[{...p.occurrences[0],family_id:'CV-99'}]},{...p,root:{...p.root,entity_version:{kind:'row_version',value:'9223372036854775808'}}},{...p,root:{...p.root,entity_id:newUuidV7().replace(/-7/,'-4')}}])expect(validVocabularyProvenance(invalid)).toBe(false);
+  for(const invalid of[{...p,email:'x'},{...p,profile_version:2},{...p,manifest_sha256:'f'.repeat(64)},{...p,occurrences:[{...p.occurrences[0],code:'medium'}]},{...p,occurrences:[{...p.occurrences[0],family_id:'CV-99'}]},{...p,root:{...p.root,entity_version:{kind:'row_version',value:'9223372036854775808'}}},{...p,root:{...p.root,entity_id:entityId.slice(0,14)+'4'+entityId.slice(15)}}])expect(validVocabularyProvenance(invalid)).toBe(false);
  });
  it("keeps simultaneous tenant commands' captured writes separate",async()=> {
   const a=newUuidV7(),b=newUuidV7();const result=await Promise.all([captureVocabularyWrites(async()=>{recordVocabularyWrite('one',{id:a});await Promise.resolve();return a;}),captureVocabularyWrites(async()=>{recordVocabularyWrite('two',{id:b});return b;})]);
