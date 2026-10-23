@@ -23,7 +23,7 @@
     "merge_executed": false,
     "deployment_executed": false,
     "ci_at_initial_head": "PASS",
-    "ci_at_final_dossier_commit": "CHECK_GITHUB_LIVE; NOT_INFERRED_FROM_INITIAL_HEAD"
+    "ci_at_final_dossier_commit": "PASS_778A947; RECEIPT_ONLY_SUCCESSOR_CHECK_LIVE"
   },
   "PR26": {
     "state": "OPEN_DRAFT_SEPARATE",
@@ -3247,5 +3247,21 @@
       "RUNTIME-PUBLISH-BINDING",
       "RUNTIME-TICKET-BINDING"
     ]
+  },
+  "GIT_RECEIPT": {
+    "observed_at_utc": "2026-10-23T17:53:49.217518+00:00",
+    "validated_pr_head": "778a94700495bc03f9833388c8afdc72ca31907c",
+    "source_commit": "4ba0734f67619dbce3a9b67bf7a2d9c7e90337a1",
+    "remote_head_matches_local": true,
+    "pr_state": "OPEN",
+    "ci": "PASS",
+    "ci_name": "rector-governance",
+    "ci_url": "https://github.com/Tecdex-SpA/tcdx-grc/actions/runs/39998713696/job/120568908084",
+    "worktree_at_observation": "CLEAN",
+    "main_unchanged": "c2a774f1f55b1edc3abc347ed155c4730d18fe31",
+    "pr26_unchanged": "6f558f45f242068afc90e48c877e7203c0adf867",
+    "merge": false,
+    "deployment": false,
+    "note": "This receipt records the observed preceding dossier head. Its receipt-only successor has independent CI and can be checked live; no self-referential commit hash is claimed."
   }
 }

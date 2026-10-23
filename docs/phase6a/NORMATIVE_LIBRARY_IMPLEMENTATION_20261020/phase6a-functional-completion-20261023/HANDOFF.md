@@ -364,3 +364,9 @@ hash v1.11 en enforcement son antecedentes preservados; ACTIVE_ACTIVATION y
 SHA256SUMS gobiernan la identidad v1.12 actual. No hacer reset/rebase destructivo
 a ninguno de los HEAD históricos. La custodia privada puede no estar disponible;
 los runners versionados permiten reproducir las comprobaciones locales.
+
+Recibo remoto observado: HEAD778a94700495bc03f9833388c8afdc72ca31907c en PR27
+OPEN; CIrector-governance SUCCESS (run39998713696/job120568908084), workingtree
+CLEAN; mainc2a774f y PR26/6f558f4 intactos. RESULT.GIT_RECEIPT conserva el URL
+y el alcance. El commit posterior de este recibo es sólo documental y tiene
+su propio CI verificable en GitHub; no se atribuye su SHA a sí mismo.
