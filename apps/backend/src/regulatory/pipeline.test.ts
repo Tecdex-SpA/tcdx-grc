@@ -502,3 +502,33 @@ describe("generic regulatory pack pipeline", () => {
     await expect(pipeline.import(finalize(drifted))).rejects.toMatchObject({ code: "TCDX.REGULATORY.SOURCE_DRIFT" });
   });
 });
+
+describe('explicit crosswalk target revision within the same edition', () => {
+  function revision(targetVersionNumber?: number) {
+    const input = fixture();
+    input.crosswalks = [{ versionNumber: 1, targetFrameworkCode: input.frameworkCode,
+      targetEdition: input.edition, ...(targetVersionNumber === undefined ? {} : { targetVersionNumber }),
+      direction: 'source_to_target', provenanceRef: 'synthetic-version-comparison', reviewed: false, mappings: [] }];
+    return finalize(input);
+  }
+  it('permits a different explicit target revision of the same framework edition', () => {
+    expect(validateAndNormalize(revision(2)).crosswalks[0]!.targetVersionNumber).toBe(2);
+  });
+  it.each([undefined, 1])('rejects an implicit or actual self-target: %s', target => {
+    expect(() => validateAndNormalize(revision(target))).toThrow('cannot target itself');
+  });
+  it.each([0, -1, 1.5, NaN, Infinity])('rejects an invalid target revision: %s', target => {
+    expect(() => validateAndNormalize(revision(target))).toThrow('target version must be a positive integer');
+  });
+  it('rejects duplicate targets expressed through mixed qualified and unqualified selectors', () => {
+    const input = revision(2);
+    const { targetVersionNumber: _version, ...unqualified } = input.crosswalks[0]!;
+    input.crosswalks = [input.crosswalks[0]!, unqualified];
+    expect(() => validateAndNormalize(finalize(input))).toThrow('cannot mix qualified and unqualified');
+  });
+  it('keeps two explicitly distinct target revisions as separate crosswalk identities', () => {
+    const input = revision(2);
+    input.crosswalks = [input.crosswalks[0]!, { ...input.crosswalks[0]!, targetVersionNumber: 3 }];
+    expect(validateAndNormalize(finalize(input)).crosswalks).toHaveLength(2);
+  });
+});

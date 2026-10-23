@@ -2,7 +2,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 profile="${1:-runtime}"
-[[ "$profile" == schema || "$profile" == runtime ]] || exit 2
+[[ "$profile" == schema || "$profile" == runtime || "$profile" == structuring ]] || exit 2
 pg_bin="${TCDX_LOCAL_PG16_BIN:-/opt/homebrew/opt/postgresql@16/bin}"
 task_dir="$(mktemp -d /private/tmp/tcdx-runtime-bindings.XXXXXX)"
 export DATABASE_HOST=127.0.0.1 DATABASE_HOSTADDR= DATABASE_PORT=55561 DATABASE_NAME=tcdx-grc
@@ -22,7 +22,7 @@ trap cleanup EXIT
 "$pg_bin/createdb" -h 127.0.0.1 -p 55561 tcdx-grc
 node --experimental-strip-types scripts/foundations/migrate.ts apply
 node --experimental-strip-types scripts/foundations/verify-schema.ts
-if [[ "$profile" == runtime ]]; then
+if [[ "$profile" != schema ]]; then
  pnpm --filter @tcdx-grc/contracts build
  pnpm --filter @tcdx-grc/backend build
  node scripts/regulatory/prepare-binding-predecessor.mjs
@@ -43,5 +43,9 @@ if [[ "$profile" == runtime ]]; then
  pnpm --filter @tcdx-grc/contracts build
  export TCDX_RUNTIME_BINDINGS_INTEGRATION=true
  pnpm exec vitest run --config vitest.integration.config.ts apps/backend/src/regulatory/runtime-bindings.postgres.test.ts --no-file-parallelism
+fi
+if [[ "$profile" == structuring ]]; then
+ export TCDX_NORMATIVE_STRUCTURING_INTEGRATION=true
+ pnpm exec vitest run --config vitest.integration.config.ts apps/backend/src/regulatory/source-structuring.postgres.test.ts --no-file-parallelism
 fi
 printf 'ISOLATED_CLUSTER=%s PROFILE=%s\n' "$task_dir" "$profile"

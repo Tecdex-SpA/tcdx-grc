@@ -50,7 +50,7 @@ function validateInterval(value: { effectiveFrom?: string | null; effectiveTo?: 
   }
 }
 
-function generatedRequirementCode(sourceLocator: string, ordinal: number): string {
+export function generatedRequirementCode(sourceLocator: string, ordinal: number): string {
   return `REQ-${sha256(`${sourceLocator}#${ordinal}`).slice(0, 24).toUpperCase()}`;
 }
 
@@ -219,14 +219,23 @@ export function validateAndNormalize(input: RegulatoryPackImportInput): Normaliz
     if (!unitLocators.has(mapping.normativeUnitSourceLocator) || !controlCodes.has(mapping.controlCode)) fail("NormativeUnitControlMapping contains an invalid typed reference");
   }
 
-  assertUnique(input.crosswalks.map(crosswalk => JSON.stringify([crosswalk.targetFrameworkCode, crosswalk.targetEdition, crosswalk.versionNumber])), "framework crosswalk version");
+  assertUnique(input.crosswalks.map(crosswalk => JSON.stringify([crosswalk.targetFrameworkCode, crosswalk.targetEdition, crosswalk.targetVersionNumber ?? null, crosswalk.versionNumber])), "framework crosswalk version");
+  for (const crosswalk of input.crosswalks) {
+    if (input.crosswalks.some(other => other !== crosswalk && other.targetFrameworkCode === crosswalk.targetFrameworkCode
+      && other.targetEdition === crosswalk.targetEdition && other.versionNumber === crosswalk.versionNumber
+      && (other.targetVersionNumber === undefined || crosswalk.targetVersionNumber === undefined))) {
+      fail("Crosswalk cannot mix qualified and unqualified selectors for the same target edition and crosswalk version");
+    }
+  }
   for (const crosswalk of input.crosswalks) {
     if (!Number.isSafeInteger(crosswalk.versionNumber) || crosswalk.versionNumber < 1) fail("Crosswalk version must be a positive integer");
+    if (crosswalk.targetVersionNumber !== undefined && (!Number.isSafeInteger(crosswalk.targetVersionNumber) || crosswalk.targetVersionNumber < 1)) fail("Crosswalk target version must be a positive integer");
     validateInterval(crosswalk, "FrameworkCrosswalk");
     if (!["source_to_target", "target_to_source", "bidirectional"].includes(crosswalk.direction)) fail("Crosswalk direction is invalid");
     if (!crosswalk.targetFrameworkCode.trim() || !crosswalk.targetEdition.trim() || !crosswalk.provenanceRef.trim()) fail("Crosswalk target edition and provenance are required");
     assertUnique(crosswalk.mappings.map(mapping => JSON.stringify([mapping.objectType, mapping.sourceCode, mapping.targetCode])), "crosswalk relation");
-    if (crosswalk.targetFrameworkCode === input.frameworkCode && crosswalk.targetEdition === input.edition) fail("Framework crosswalk cannot target itself");
+    if (crosswalk.targetFrameworkCode === input.frameworkCode && crosswalk.targetEdition === input.edition
+      && (crosswalk.targetVersionNumber === undefined || crosswalk.targetVersionNumber === input.versionNumber)) fail("Framework crosswalk cannot target itself");
     for (const mapping of crosswalk.mappings) {
       if (!Number.isSafeInteger(mapping.versionNumber) || mapping.versionNumber < 1 || !mapping.effectiveFrom) fail("Crosswalk relation requires its version and effective timestamp");
       validateInterval(mapping, "Crosswalk mapping");

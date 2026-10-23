@@ -244,6 +244,7 @@ async function persistPack(transaction: Transaction<FoundationDatabase>, pack: N
         FROM regulatory.frameworks f
         JOIN regulatory.framework_versions fv ON fv.framework_id=f.framework_id
        WHERE f.framework_code=${crosswalk.targetFrameworkCode} AND fv.edition=${crosswalk.targetEdition}
+         ${crosswalk.targetVersionNumber === undefined ? sql`` : sql`AND fv.version_number=${crosswalk.targetVersionNumber}`}
          AND f.ownership_class='GLOBAL_REFERENCE' AND f.tenant_id IS NULL
          AND fv.ownership_class='GLOBAL_REFERENCE' AND fv.tenant_id IS NULL
        FOR SHARE OF fv

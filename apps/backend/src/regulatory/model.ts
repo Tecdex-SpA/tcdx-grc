@@ -142,6 +142,7 @@ export type FrameworkCrosswalkInput = {
   versionNumber: number;
   targetFrameworkCode: string;
   targetEdition: string;
+  targetVersionNumber?: number;
   direction: "source_to_target" | "target_to_source" | "bidirectional";
   provenanceRef: string;
   reviewed: boolean;
