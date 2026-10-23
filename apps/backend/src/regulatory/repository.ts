@@ -9,6 +9,7 @@ export type PersistedRegulatoryPack = {
 };
 
 export interface RegulatoryPackTransaction {
+  lock(packCode: string): Promise<void>;
   findImport(packCode: string, importChecksum: string): Promise<PersistedRegulatoryPack | null>;
   findVersion(packCode: string, versionNumber: number): Promise<PersistedRegulatoryPack | null>;
   persist(pack: NormalizedRegulatoryPack): Promise<PersistedRegulatoryPack>;

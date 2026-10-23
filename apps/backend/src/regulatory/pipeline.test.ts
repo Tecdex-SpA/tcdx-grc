@@ -3,7 +3,7 @@ import type { AuthorizationFacts } from "../security/authorization.js";
 import { MemoryRegulatoryPackRepository } from "./memory-repository.js";
 import type { RegulatoryPackImportInput } from "./model.js";
 import { RegulatoryPackPipeline } from "./pipeline.js";
-import { calculateImportChecksum, validateAndNormalize } from "./validator.js";
+import { calculateImportChecksum, candidateState, validateAndNormalize } from "./validator.js";
 
 const USER_IMPORTER = "00000000-0000-7000-8000-000000000001";
 const USER_STEWARD = "00000000-0000-7000-8000-000000000002";
@@ -79,6 +79,7 @@ function fixture(): RegulatoryPackImportInput {
     }],
     controls: [{
       controlCode: "ISO_IEC_27001_2022:A.5.1",
+      versionNumber: 1,
       name: "Licensed control reference",
       origin: "regulatory_reference",
       objective: "Licensed objective reference",
@@ -182,6 +183,51 @@ const publishAuthorization: AuthorizationFacts = {
 };
 
 describe("generic regulatory pack pipeline", () => {
+  it("rejects an edition change for the same imported version even when its content hash is unchanged", async () => {
+    const pipeline = new RegulatoryPackPipeline(new MemoryRegulatoryPackRepository());
+    const input = fixture(); await pipeline.import(input);
+    await expect(pipeline.import(finalize({ ...input, edition: 'Different edition' }))).rejects.toMatchObject({ code: 'TCDX.REGULATORY.SOURCE_DRIFT' });
+  });
+
+  it("cannot use one pack's approvals and content to publish a different persisted version", async () => {
+    const pipeline = new RegulatoryPackPipeline(new MemoryRegulatoryPackRepository());
+    const input = fixture(); await pipeline.import(input);
+    await expect(pipeline.publish(input, { regulatoryPackVersionId: '00000000-0000-7000-8000-000000000099',
+      actorUserIdentityId: USER_GRC, correlationId: USER_GRC, idempotencyKey: 'wrong-target', requestHash: 'd'.repeat(64) }, publishAuthorization))
+      .rejects.toMatchObject({ code: 'TCDX.REGULATORY.SOURCE_DRIFT' });
+  });
+
+  it("does not treat a nominal empty official pack as publication-ready coverage", () => {
+    const input = fixture(); input.units = []; input.requirements = []; input.controls = [];
+    input.normativeUnitControlMappings = []; input.coverageExpected = { normativeUnits: 0, requirements: 0, referenceControls: 0, editorialMappings: 0, complianceMappings: 0 };
+    expect(candidateState(finalize(input), 100)).toBe('BLOCKED_CONTRACT_DECISION');
+  });
+
+  it("rejects reversed disposition intervals instead of replacing them with the pack date", () => {
+    const input = fixture(); input.units = [{ ...input.units[0]!, effectiveFrom: '2025-03-01T00:00:00Z', effectiveTo: '2025-02-01T00:00:00Z' }];
+    expect(() => validateAndNormalize(finalize(input))).toThrow('effective interval');
+  });
+
+  it("requires explicit control versions, finite confidence and per-relation source evidence", () => {
+    const input = fixture(); input.controls = [{ ...input.controls[0]!, versionNumber: 0 }];
+    expect(() => validateAndNormalize(finalize(input))).toThrow('Control version');
+    const valid = fixture();
+    valid.crosswalks = [{ versionNumber: 1, targetFrameworkCode: 'TEST_TARGET', targetEdition: 'fixture', direction: 'source_to_target',
+      provenanceRef: 'fixture:header', reviewed: false, mappings: [{ objectType: 'normative_unit', sourceCode: valid.units[0]!.sourceLocator,
+        targetCode: null, relationshipType: 'no_match', rationale: 'No relation in synthetic fixture', confidence: Number.NaN,
+        reviewed: false, provenanceRef: 'fixture:relation', versionNumber: 1, effectiveFrom: '2025-01-01T00:00:00Z' }] }];
+    expect(() => validateAndNormalize(finalize(valid))).toThrow('confidence');
+    valid.crosswalks[0]!.mappings = [{ ...valid.crosswalks[0]!.mappings[0]!, confidence: 0.5, provenanceRef: ' ' }];
+    expect(() => validateAndNormalize(finalize(valid))).toThrow('provenance');
+  });
+
+  it("keeps unreviewed crosswalks out of publication readiness despite complete requirement coverage", () => {
+    const input = fixture();
+    input.crosswalks = [{ versionNumber: 1, targetFrameworkCode: 'TEST_TARGET', targetEdition: 'fixture', direction: 'source_to_target',
+      provenanceRef: 'fixture:header', reviewed: false, mappings: [] }];
+    expect(candidateState(input, 100)).toBe('BLOCKED_HUMAN_REVIEW');
+  });
+
   it("imports deterministically and replays without duplicates", async () => {
     const pipeline = new RegulatoryPackPipeline(new MemoryRegulatoryPackRepository());
     const first = await pipeline.import(fixture());
@@ -415,23 +461,25 @@ describe("generic regulatory pack pipeline", () => {
   it("validates typed crosswalk integrity without generic polymorphic targets", () => {
     const invalid = fixture();
     invalid.crosswalks = [{
+      versionNumber: 1,
       targetFrameworkCode: "ISO_IEC_27001_NEXT",
       targetEdition: "next",
       direction: "source_to_target",
       provenanceRef: "approved-crosswalk:1",
       reviewed: true,
-      mappings: [{ objectType: "requirement", sourceCode: "missing", targetCode: "target", relationshipType: "overlaps", rationale: "reviewed", confidence: 1, reviewed: true }]
+      mappings: [{ objectType: "requirement", sourceCode: "missing", targetCode: "target", relationshipType: "overlaps", rationale: "reviewed", provenanceRef: "fixture:relation:1", versionNumber: 1, effectiveFrom: "2026-01-01T00:00:00Z", confidence: 1, reviewed: true }]
     }];
     expect(() => validateAndNormalize(finalize(invalid))).toThrow("typed member");
 
     const noMatch = fixture();
     noMatch.crosswalks = [{
+      versionNumber: 1,
       targetFrameworkCode: "ISO_IEC_27001_NEXT",
       targetEdition: "next",
       direction: "source_to_target",
       provenanceRef: "approved-crosswalk:1",
       reviewed: true,
-      mappings: [{ objectType: "normative_unit", sourceCode: noMatch.units[0]!.sourceLocator, targetCode: "must-be-null", relationshipType: "no_match", rationale: "reviewed", confidence: 1, reviewed: true }]
+      mappings: [{ objectType: "normative_unit", sourceCode: noMatch.units[0]!.sourceLocator, targetCode: "must-be-null", relationshipType: "no_match", rationale: "reviewed", provenanceRef: "fixture:relation:1", versionNumber: 1, effectiveFrom: "2026-01-01T00:00:00Z", confidence: 1, reviewed: true }]
     }];
     expect(() => validateAndNormalize(finalize(noMatch))).toThrow("target must be null");
   });

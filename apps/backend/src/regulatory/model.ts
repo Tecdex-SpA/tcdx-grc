@@ -66,6 +66,8 @@ export type NormativeUnitInput = {
   contentHash: string;
   provenanceRef: string;
   reviewed: boolean;
+  effectiveFrom?: string | null;
+  effectiveTo?: string | null;
 };
 
 export type RequirementInput = {
@@ -83,10 +85,13 @@ export type RequirementInput = {
   evidenceExpectations: string | null;
   provenanceRef: string;
   reviewed: boolean;
+  effectiveFrom?: string | null;
+  effectiveTo?: string | null;
 };
 
 export type ReferenceControlInput = {
   controlCode: string;
+  versionNumber: number;
   name: string;
   origin: ControlOrigin;
   objective: string;
@@ -127,14 +132,21 @@ export type CrosswalkMappingInput = {
   rationale: string;
   confidence: number;
   reviewed: boolean;
+  provenanceRef: string;
+  versionNumber: number;
+  effectiveFrom: string;
+  effectiveTo?: string | null;
 };
 
 export type FrameworkCrosswalkInput = {
+  versionNumber: number;
   targetFrameworkCode: string;
   targetEdition: string;
   direction: "source_to_target" | "target_to_source" | "bidirectional";
   provenanceRef: string;
   reviewed: boolean;
+  effectiveFrom?: string | null;
+  effectiveTo?: string | null;
   mappings: ReadonlyArray<CrosswalkMappingInput>;
 };
 
@@ -158,6 +170,7 @@ export type RegulatoryPackImportInput = {
   edition: string;
   versionNumber: number;
   effectiveFrom: string | null;
+  jurisdictionCode?: string | null;
   frameworkCode: string;
   frameworkName: string;
   source: RegulatorySourceInput;

@@ -12,6 +12,7 @@ export class RegulatoryPackPipeline {
     const normalized = validateAndNormalize(input);
     const state = candidateState(input, normalized.coverage.coveragePercent);
     return this.repository.transaction(async (transaction) => {
+      await transaction.lock(input.packCode);
       const replay = await transaction.findImport(input.packCode, input.importChecksum);
       if (replay) return {
         packCode: input.packCode,
@@ -24,7 +25,7 @@ export class RegulatoryPackPipeline {
         coverage: normalized.coverage
       };
       const existing = await transaction.findVersion(input.packCode, input.versionNumber);
-      if (existing?.contentHash !== undefined && existing.contentHash !== normalized.contentHash) {
+      if (existing && (existing.contentHash !== normalized.contentHash || existing.importChecksum !== input.importChecksum)) {
         throw new FoundationError("TCDX.REGULATORY.SOURCE_DRIFT", "A regulatory version cannot be silently replaced", 409);
       }
       if (existing?.lifecycleState === "published") {
@@ -68,13 +69,21 @@ export class RegulatoryPackPipeline {
     if (publisher?.userIdentityId !== command.actorUserIdentityId) {
       throw new FoundationError("TCDX.AUTHORIZATION.DENIED", "GRC Manager approval must match the publishing actor", 403);
     }
-    await this.repository.transaction((transaction) => transaction.publish({
+    await this.repository.transaction(async (transaction) => {
+      await transaction.lock(input.packCode);
+      const persisted = await transaction.findVersion(input.packCode, input.versionNumber);
+      if (!persisted || persisted.regulatoryPackVersionId !== command.regulatoryPackVersionId
+        || persisted.contentHash !== normalized.contentHash || persisted.importChecksum !== input.importChecksum) {
+        throw new FoundationError("TCDX.REGULATORY.SOURCE_DRIFT", "Publication must match the exact persisted pack version and import", 409);
+      }
+      await transaction.publish({
       regulatoryPackVersionId: command.regulatoryPackVersionId,
       actorUserIdentityId: command.actorUserIdentityId,
       approvalRefs: input.approvals.map((approval) => approval.approvalRef),
       correlationId: command.correlationId,
       idempotencyKey: command.idempotencyKey,
       requestHash: command.requestHash
-    }));
+      });
+    });
   }
 }
