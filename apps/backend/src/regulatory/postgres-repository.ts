@@ -1,7 +1,6 @@
 import { sql, type Kysely, type Transaction } from "kysely";
 import type { FoundationDatabase } from "../database.js";
 import { FoundationError } from "../errors.js";
-import { claimIdempotency, completeIdempotency, persistAuditEvent, persistOutboxEvent } from "../persistence/foundation-records.js";
 import { newUuidV7 } from "../uuid.js";
 import { hashCanonical } from "./hash.js";
 import type { NormalizedRegulatoryPack } from "./model.js";
@@ -54,24 +53,38 @@ async function findVersion(transaction: Transaction<FoundationDatabase>, packCod
 async function persistPack(transaction: Transaction<FoundationDatabase>, pack: NormalizedRegulatoryPack): Promise<PersistedRegulatoryPack> {
   const testPack = pack.governance.authorityClass === "NON_AUTHORITATIVE_TEST_PACK";
   const editableLifecycleState = testPack ? "draft" : "review";
-  const packRow = await sql<{ regulatory_pack_id: string }>`SELECT regulatory_pack_id FROM regulatory.regulatory_packs WHERE pack_code=${pack.packCode}`.execute(transaction);
-  const regulatoryPackId = packRow.rows[0]?.regulatory_pack_id;
-  if (!regulatoryPackId) throw new FoundationError("TCDX.REGULATORY.PACK_HEADER_MISSING", "Required regulatory pack header is missing", 409);
+  // The six governed codes use the same canonical aggregate. No special seed or
+  // tenant exception is needed for the sixth code; creation stays in this TX.
+  await sql`INSERT INTO regulatory.regulatory_packs
+    (regulatory_pack_id,created_by_user_identity_id,updated_by_user_identity_id,pack_code,name,source_type,jurisdiction_code,lifecycle_state)
+    VALUES (${newUuidV7()}::uuid,${pack.importedByUserIdentityId}::uuid,${pack.importedByUserIdentityId}::uuid,
+      ${pack.packCode},${pack.packName},${pack.source.sourceType},${pack.jurisdictionCode ?? null},'draft')
+    ON CONFLICT (pack_code) DO NOTHING`.execute(transaction);
+  const packRow = await sql<{ regulatory_pack_id: string; source_type: string; jurisdiction_code: string | null }>`
+    SELECT regulatory_pack_id,source_type,jurisdiction_code FROM regulatory.regulatory_packs WHERE pack_code=${pack.packCode} FOR UPDATE`.execute(transaction);
+  const header = packRow.rows[0];
+  if (!header || header.source_type !== pack.source.sourceType || (pack.jurisdictionCode != null && header.jurisdiction_code !== pack.jurisdictionCode)) {
+    throw new FoundationError("TCDX.REGULATORY.SOURCE_DRIFT", "Regulatory pack source type or jurisdiction conflicts with its canonical header", 409);
+  }
+  const regulatoryPackId = header.regulatory_pack_id;
 
   const sourceId = newUuidV7();
-  const source = await sql<{ regulatory_source_id: string }>`
+  await sql`
     INSERT INTO regulatory.regulatory_sources
       (regulatory_source_id,created_by_user_identity_id,updated_by_user_identity_id,source_code,source_type,publisher,official_uri,license_classification,lifecycle_state)
     VALUES (${sourceId}::uuid,${pack.importedByUserIdentityId}::uuid,${pack.importedByUserIdentityId}::uuid,${pack.source.sourceCode},
       ${pack.source.sourceType},${pack.source.publisher},${pack.source.officialUri},${pack.source.licenseClassification},'published')
-    ON CONFLICT (source_code) DO UPDATE SET
-      updated_at=CURRENT_TIMESTAMP,updated_by_user_identity_id=EXCLUDED.updated_by_user_identity_id,
-      publisher=EXCLUDED.publisher,official_uri=EXCLUDED.official_uri,license_classification=EXCLUDED.license_classification,
-      row_version=regulatory.regulatory_sources.row_version+1
-    RETURNING regulatory_source_id
+    ON CONFLICT (source_code) DO NOTHING
   `.execute(transaction);
-  const regulatorySourceId = source.rows[0]?.regulatory_source_id;
-  if (!regulatorySourceId) throw new FoundationError("TCDX.REGULATORY.PERSISTENCE_FAILED", "Regulatory source was not persisted", 500);
+  const source = await sql<{ regulatory_source_id: string; source_type: string; publisher: string; official_uri: string | null; license_classification: string }>`
+    SELECT regulatory_source_id,source_type,publisher,official_uri,license_classification
+    FROM regulatory.regulatory_sources WHERE source_code=${pack.source.sourceCode} FOR SHARE`.execute(transaction);
+  const received = source.rows[0];
+  if (!received || received.source_type !== pack.source.sourceType || received.publisher !== pack.source.publisher
+    || received.official_uri !== pack.source.officialUri || received.license_classification !== pack.source.licenseClassification) {
+    throw new FoundationError("TCDX.REGULATORY.SOURCE_DRIFT", "Import cannot rewrite an existing source's identity or rights metadata", 409);
+  }
+  const regulatorySourceId = received.regulatory_source_id;
 
   const versionId = newUuidV7();
   const packVersion = await sql<{ regulatory_pack_version_id: string }>`
@@ -130,11 +143,11 @@ async function persistPack(transaction: Transaction<FoundationDatabase>, pack: N
     const row = await sql<{ normative_unit_id: string }>`
       INSERT INTO regulatory.normative_units
         (normative_unit_id,created_by_user_identity_id,ownership_class,tenant_id,framework_version_id,parent_normative_unit_id,unit_type,
-         unit_code,title,display_order,source_locator,content_language,licensed_content,licensed_content_ref,content_hash,license_classification,provenance_ref)
+         unit_code,title,display_order,source_locator,content_language,licensed_content,licensed_content_ref,content_hash,license_classification,provenance_ref,effective_from,effective_to)
       VALUES (${id}::uuid,${pack.importedByUserIdentityId}::uuid,'GLOBAL_REFERENCE',NULL,${frameworkVersionId}::uuid,
         ${unit.parentSourceLocator === null ? null : unitIds.get(unit.parentSourceLocator)}::uuid,${unit.unitType},${unit.unitCode},${unit.title},
         ${unit.displayOrder},${unit.sourceLocator},${unit.contentLanguage},${unit.licensedContent},${unit.licensedContentRef},${unit.contentHash},
-        ${pack.source.licenseClassification},${unit.provenanceRef})
+        ${pack.source.licenseClassification},${unit.provenanceRef},${unit.effectiveFrom ?? null}::timestamptz,${unit.effectiveTo ?? null}::timestamptz)
       ON CONFLICT (framework_version_id,source_locator) DO UPDATE SET title=EXCLUDED.title
         WHERE regulatory.normative_units.framework_version_id=EXCLUDED.framework_version_id
       RETURNING normative_unit_id
@@ -150,11 +163,12 @@ async function persistPack(transaction: Transaction<FoundationDatabase>, pack: N
       INSERT INTO regulatory.requirements
         (requirement_id,created_by_user_identity_id,ownership_class,tenant_id,framework_version_id,normative_unit_id,requirement_code,
          requirement_kind,statement_locator,content_language,licensed_statement,licensed_content_ref,content_hash,is_mandatory,
-         applicability_guidance,evidence_expectations,provenance_ref)
+         applicability_guidance,evidence_expectations,provenance_ref,effective_from,effective_to)
       VALUES (${newUuidV7()}::uuid,${pack.importedByUserIdentityId}::uuid,'GLOBAL_REFERENCE',NULL,${frameworkVersionId}::uuid,
         ${unitIds.get(requirement.normativeUnitSourceLocator)}::uuid,${requirement.requirementCode},${requirement.requirementKind},
         ${requirement.sourceLocator},${requirement.contentLanguage},${requirement.licensedStatement},${requirement.licensedContentRef},
-        ${requirement.contentHash},${requirement.isMandatory},${requirement.applicabilityGuidance},${requirement.evidenceExpectations},${requirement.provenanceRef})
+        ${requirement.contentHash},${requirement.isMandatory},${requirement.applicabilityGuidance},${requirement.evidenceExpectations},${requirement.provenanceRef},
+        ${requirement.effectiveFrom ?? null}::timestamptz,${requirement.effectiveTo ?? null}::timestamptz)
       ON CONFLICT (requirement_code) DO UPDATE SET content_hash=EXCLUDED.content_hash
         WHERE regulatory.requirements.framework_version_id=EXCLUDED.framework_version_id
       RETURNING requirement_id
@@ -165,32 +179,38 @@ async function persistPack(transaction: Transaction<FoundationDatabase>, pack: N
   }
 
   const controlVersionIds = new Map<string, string>();
-  for (const control of pack.controls) {
+  for (const control of [...pack.controls].sort((a,b) => a.controlCode.localeCompare(b.controlCode))) {
     const ownership = control.origin === "regulatory_reference" ? "GLOBAL_REFERENCE" : "PLATFORM_CONTROL";
-    const controlRow = await sql<{ control_id: string }>`
+    await sql`
       INSERT INTO controls.controls
         (control_id,created_by_user_identity_id,updated_by_user_identity_id,ownership_class,tenant_id,control_code,name,control_origin,lifecycle_state)
       VALUES (${newUuidV7()}::uuid,${pack.importedByUserIdentityId}::uuid,${pack.importedByUserIdentityId}::uuid,${ownership},NULL,
         ${control.controlCode},${control.name},${control.origin},${editableLifecycleState})
-      ON CONFLICT (ownership_class,tenant_id,control_code) DO UPDATE SET name=EXCLUDED.name,updated_at=CURRENT_TIMESTAMP,
-        updated_by_user_identity_id=EXCLUDED.updated_by_user_identity_id,row_version=controls.controls.row_version+1
-      RETURNING control_id
+      ON CONFLICT (ownership_class,tenant_id,control_code) DO NOTHING
     `.execute(transaction);
+    const controlRow = await sql<{ control_id: string }>`SELECT control_id FROM controls.controls
+      WHERE ownership_class=${ownership} AND tenant_id IS NULL AND control_code=${control.controlCode}
+        AND name=${control.name} AND control_origin=${control.origin} FOR SHARE`.execute(transaction);
     const controlId = controlRow.rows[0]?.control_id;
-    if (!controlId) throw new FoundationError("TCDX.REGULATORY.PERSISTENCE_FAILED", "Control was not persisted", 500);
-    const versionRow = await sql<{ control_version_id: string }>`
+    if (!controlId) throw new FoundationError("TCDX.REGULATORY.SOURCE_DRIFT", "Control identity conflicts with an existing source", 409);
+    await sql`
       INSERT INTO controls.control_versions
         (control_version_id,created_by_user_identity_id,ownership_class,tenant_id,control_id,version_number,objective,control_type,nature,
          frequency_code,execution_method,verification_method,minimum_evidence,suggested_owner_role_code,lifecycle_state)
-      VALUES (${newUuidV7()}::uuid,${pack.importedByUserIdentityId}::uuid,${ownership},NULL,${controlId}::uuid,1,${control.objective},
+      VALUES (${newUuidV7()}::uuid,${pack.importedByUserIdentityId}::uuid,${ownership},NULL,${controlId}::uuid,${control.versionNumber},${control.objective},
         ${control.controlType},${control.nature},${control.frequencyCode},${control.executionMethod},${control.verificationMethod},
         ${control.minimumEvidence},${control.suggestedOwnerRoleCode},${editableLifecycleState})
-      ON CONFLICT (control_id,version_number) DO UPDATE SET objective=EXCLUDED.objective
-        WHERE controls.control_versions.lifecycle_state <> 'published'
-      RETURNING control_version_id
+      ON CONFLICT (control_id,version_number) DO NOTHING
     `.execute(transaction);
+    const versionRow = await sql<{ control_version_id: string }>`SELECT control_version_id FROM controls.control_versions
+      WHERE control_id=${controlId}::uuid AND version_number=${control.versionNumber}
+        AND objective=${control.objective} AND control_type=${control.controlType} AND nature=${control.nature}
+        AND frequency_code=${control.frequencyCode} AND execution_method=${control.executionMethod}
+        AND verification_method=${control.verificationMethod} AND minimum_evidence=${control.minimumEvidence}
+        AND suggested_owner_role_code IS NOT DISTINCT FROM ${control.suggestedOwnerRoleCode}
+      FOR SHARE`.execute(transaction);
     const controlVersionId = versionRow.rows[0]?.control_version_id;
-    if (!controlVersionId) throw new FoundationError("TCDX.REGULATORY.PUBLISHED_IMMUTABLE", "Published control content is immutable", 409);
+    if (!controlVersionId) throw new FoundationError("TCDX.REGULATORY.SOURCE_DRIFT", "An existing control version cannot be rewritten by import", 409);
     controlVersionIds.set(control.controlCode, controlVersionId);
   }
 
@@ -224,17 +244,21 @@ async function persistPack(transaction: Transaction<FoundationDatabase>, pack: N
         FROM regulatory.frameworks f
         JOIN regulatory.framework_versions fv ON fv.framework_id=f.framework_id
        WHERE f.framework_code=${crosswalk.targetFrameworkCode} AND fv.edition=${crosswalk.targetEdition}
-       LIMIT 1
+         ${crosswalk.targetVersionNumber === undefined ? sql`` : sql`AND fv.version_number=${crosswalk.targetVersionNumber}`}
+         AND f.ownership_class='GLOBAL_REFERENCE' AND f.tenant_id IS NULL
+         AND fv.ownership_class='GLOBAL_REFERENCE' AND fv.tenant_id IS NULL
+       FOR SHARE OF fv
     `.execute(transaction);
     const targetFrameworkVersionId = target.rows[0]?.framework_version_id;
-    if (!targetFrameworkVersionId) throw new FoundationError("TCDX.REGULATORY.CROSSWALK_TARGET_MISSING", "Crosswalk target framework version is unavailable", 409);
+    if (!targetFrameworkVersionId || target.rows.length !== 1) throw new FoundationError("TCDX.REGULATORY.CROSSWALK_TARGET_MISSING", "Crosswalk target framework version must resolve uniquely", 409);
     const crosswalkId = newUuidV7();
     await sql`
       INSERT INTO regulatory.framework_crosswalks
         (framework_crosswalk_id,created_by_user_identity_id,ownership_class,tenant_id,source_framework_version_id,target_framework_version_id,
-         crosswalk_version,direction,lifecycle_state,provenance_ref)
+         crosswalk_version,direction,lifecycle_state,provenance_ref,effective_from,effective_to)
       VALUES (${crosswalkId}::uuid,${pack.importedByUserIdentityId}::uuid,'GLOBAL_REFERENCE',NULL,${frameworkVersionId}::uuid,
-        ${targetFrameworkVersionId}::uuid,1,${crosswalk.direction},${editableLifecycleState},${crosswalk.provenanceRef})
+        ${targetFrameworkVersionId}::uuid,${crosswalk.versionNumber},${crosswalk.direction},${editableLifecycleState},${crosswalk.provenanceRef},
+        ${crosswalk.effectiveFrom ?? null}::timestamptz,${crosswalk.effectiveTo ?? null}::timestamptz)
     `.execute(transaction);
     for (const mapping of crosswalk.mappings) {
       let sourceId: string | undefined;
@@ -249,9 +273,11 @@ async function persistPack(transaction: Transaction<FoundationDatabase>, pack: N
         await sql`
           INSERT INTO regulatory.normative_unit_crosswalk_mappings
             (normative_unit_crosswalk_mapping_id,created_by_user_identity_id,ownership_class,tenant_id,framework_crosswalk_id,
-             source_normative_unit_id,target_normative_unit_id,relationship_type,rationale,confidence,mapping_status)
+             source_normative_unit_id,target_normative_unit_id,relationship_type,rationale,confidence,mapping_status,
+             direction,provenance_ref,effective_from,effective_to,mapping_version_number)
           VALUES (${newUuidV7()}::uuid,${pack.importedByUserIdentityId}::uuid,'GLOBAL_REFERENCE',NULL,${crosswalkId}::uuid,
-            ${sourceId}::uuid,${targetId}::uuid,${mapping.relationshipType},${mapping.rationale},${mapping.confidence},${mapping.reviewed ? "review" : "draft"})
+            ${sourceId}::uuid,${targetId}::uuid,${mapping.relationshipType},${mapping.rationale},${mapping.confidence},${mapping.reviewed ? "review" : "draft"},
+            ${crosswalk.direction},${mapping.provenanceRef},${mapping.effectiveFrom}::timestamptz,${mapping.effectiveTo ?? null}::timestamptz,${mapping.versionNumber})
         `.execute(transaction);
       } else if (mapping.objectType === "requirement") {
         sourceId = requirementIds.get(mapping.sourceCode);
@@ -263,9 +289,11 @@ async function persistPack(transaction: Transaction<FoundationDatabase>, pack: N
         await sql`
           INSERT INTO regulatory.requirement_crosswalk_mappings
             (requirement_crosswalk_mapping_id,created_by_user_identity_id,ownership_class,tenant_id,framework_crosswalk_id,
-             source_requirement_id,target_requirement_id,relationship_type,rationale,confidence,mapping_status)
+             source_requirement_id,target_requirement_id,relationship_type,rationale,confidence,mapping_status,
+             direction,provenance_ref,effective_from,effective_to,mapping_version_number)
           VALUES (${newUuidV7()}::uuid,${pack.importedByUserIdentityId}::uuid,'GLOBAL_REFERENCE',NULL,${crosswalkId}::uuid,
-            ${sourceId}::uuid,${targetId}::uuid,${mapping.relationshipType},${mapping.rationale},${mapping.confidence},${mapping.reviewed ? "review" : "draft"})
+            ${sourceId}::uuid,${targetId}::uuid,${mapping.relationshipType},${mapping.rationale},${mapping.confidence},${mapping.reviewed ? "review" : "draft"},
+            ${crosswalk.direction},${mapping.provenanceRef},${mapping.effectiveFrom}::timestamptz,${mapping.effectiveTo ?? null}::timestamptz,${mapping.versionNumber})
         `.execute(transaction);
       } else {
         sourceId = controlVersionIds.get(mapping.sourceCode);
@@ -277,17 +305,19 @@ async function persistPack(transaction: Transaction<FoundationDatabase>, pack: N
               JOIN regulatory.normative_unit_control_mappings nucm ON nucm.control_version_id=cv.control_version_id
               JOIN regulatory.normative_units nu ON nu.normative_unit_id=nucm.normative_unit_id
              WHERE nu.framework_version_id=${targetFrameworkVersionId}::uuid AND c.control_code=${mapping.targetCode}
-             LIMIT 1
           `.execute(transaction);
+          if (row.rows.length !== 1) throw new FoundationError("TCDX.REGULATORY.CROSSWALK_TARGET_MISSING", "Typed Control version must resolve uniquely", 409);
           targetId = row.rows[0]?.id ?? null;
         }
         if (!sourceId || (mapping.targetCode !== null && !targetId)) throw new FoundationError("TCDX.REGULATORY.CROSSWALK_TARGET_MISSING", "Typed Control crosswalk target is unavailable", 409);
         await sql`
           INSERT INTO regulatory.control_crosswalk_mappings
             (control_crosswalk_mapping_id,created_by_user_identity_id,ownership_class,tenant_id,framework_crosswalk_id,
-             source_control_version_id,target_control_version_id,relationship_type,rationale,confidence,mapping_status)
+             source_control_version_id,target_control_version_id,relationship_type,rationale,confidence,mapping_status,
+             direction,provenance_ref,effective_from,effective_to,mapping_version_number)
           VALUES (${newUuidV7()}::uuid,${pack.importedByUserIdentityId}::uuid,'GLOBAL_REFERENCE',NULL,${crosswalkId}::uuid,
-            ${sourceId}::uuid,${targetId}::uuid,${mapping.relationshipType},${mapping.rationale},${mapping.confidence},${mapping.reviewed ? "review" : "draft"})
+            ${sourceId}::uuid,${targetId}::uuid,${mapping.relationshipType},${mapping.rationale},${mapping.confidence},${mapping.reviewed ? "review" : "draft"},
+            ${crosswalk.direction},${mapping.provenanceRef},${mapping.effectiveFrom}::timestamptz,${mapping.effectiveTo ?? null}::timestamptz,${mapping.versionNumber})
         `.execute(transaction);
       }
     }
@@ -318,43 +348,13 @@ async function persistPack(transaction: Transaction<FoundationDatabase>, pack: N
 
 function transactionAdapter(transaction: Transaction<FoundationDatabase>): RegulatoryPackTransaction {
   return {
+    lock: async (packCode) => {
+      await sql`SELECT pg_advisory_xact_lock(hashtextextended(${'tcdx-grc:regulatory-pack:' + packCode},0))`.execute(transaction);
+    },
     findImport: (packCode, checksum) => findImport(transaction, packCode, checksum),
     findVersion: (packCode, versionNumber) => findVersion(transaction, packCode, versionNumber),
     persist: (pack) => persistPack(transaction, pack),
-    publish: async (command) => {
-      const claim = await claimIdempotency(transaction, {
-        idempotencyRecordId: newUuidV7(), ownershipClass: "GLOBAL_REFERENCE", tenantId: null,
-        actor: { userIdentityId: command.actorUserIdentityId }, correlationId: command.correlationId,
-        operationCode: "regulatoryPackPublish", key: command.idempotencyKey, requestHash: command.requestHash
-      });
-      if (claim.state === "replay") return;
-      const updated = await sql`
-        UPDATE regulatory.regulatory_pack_versions
-           SET lifecycle_state='published',published_at=CURRENT_TIMESTAMP,reviewed_by_user_identity_id=${command.actorUserIdentityId}::uuid
-         WHERE regulatory_pack_version_id=${command.regulatoryPackVersionId}::uuid AND lifecycle_state IN ('review','approved')
-      `.execute(transaction);
-      if (Number(updated.numAffectedRows) !== 1) throw new FoundationError("TCDX.REGULATORY.PUBLICATION_CONFLICT", "Regulatory pack version is not publishable", 409);
-      await persistAuditEvent(transaction, {
-        auditEventId: newUuidV7(), ownershipClass: "GLOBAL_REFERENCE", tenantId: null,
-        actor: { userIdentityId: command.actorUserIdentityId }, correlationId: command.correlationId,
-        eventCode: "audit.knowledge.regulatory_pack.publish.v1", aggregateType: "RegulatoryPackVersion",
-        aggregateId: command.regulatoryPackVersionId, commandCode: "regulatoryPackPublish", outcome: "success",
-        classification: "protected_metadata", after: { lifecycle_state: "published", approval_refs: command.approvalRefs }
-      });
-      const eventId = newUuidV7();
-      await persistOutboxEvent(transaction, {
-        outboxEventId: newUuidV7(), eventId, ownershipClass: "GLOBAL_REFERENCE", tenantId: null,
-        actor: { userIdentityId: command.actorUserIdentityId }, correlationId: command.correlationId,
-        eventType: "knowledge.regulatory_pack.published.v1", aggregateType: "RegulatoryPackVersion",
-        aggregateId: command.regulatoryPackVersionId, classification: "protected_metadata",
-        payload: { regulatory_pack_version_id: command.regulatoryPackVersionId, approval_refs: command.approvalRefs }
-      });
-      await completeIdempotency(transaction, {
-        idempotencyRecordId: claim.idempotencyRecordId, requestHash: command.requestHash,
-        resultStatusCode: "completed", resultRef: command.regulatoryPackVersionId,
-        responseHash: hashCanonical({ regulatoryPackVersionId: command.regulatoryPackVersionId, lifecycleState: "published" })
-      });
-    }
+
   };
 }
 
@@ -362,6 +362,6 @@ export class PostgresRegulatoryPackRepository implements RegulatoryPackRepositor
   constructor(private readonly database: Kysely<FoundationDatabase>) {}
 
   transaction<T>(work: (transaction: RegulatoryPackTransaction) => Promise<T>): Promise<T> {
-    return this.database.transaction().execute((transaction) => work(transactionAdapter(transaction)));
+    return this.database.transaction().setIsolationLevel('read committed').execute((transaction) => work(transactionAdapter(transaction)));
   }
 }

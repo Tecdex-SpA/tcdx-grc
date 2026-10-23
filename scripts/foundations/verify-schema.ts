@@ -19,6 +19,8 @@ type Inventory = { tableCount: number; tables: ExpectedTable[]; commercialAmendm
 
 const commercialCandidate = process.env.TCDX_COMMERCIAL_EXPECTED_SCHEMA_CANDIDATE === "true";
 const c04wCandidate = process.env.TCDX_C04W_EXPECTED_SCHEMA_CANDIDATE === "true";
+const bindingsCandidate = process.env.TCDX_RUNTIME_BINDINGS_EXPECTED_SCHEMA_CANDIDATE === "true";
+if(bindingsCandidate&&(commercialCandidate||c04wCandidate||process.env.TCDX_ISOLATED_REBUILD!=="true"||process.env.DATABASE_HOST!=="127.0.0.1"||process.env.DATABASE_PORT!=="55561"||!process.env.TCDX_RUNTIME_BINDINGS_TEST_CLUSTER?.startsWith('/private/tmp/tcdx-runtime-bindings.')))throw Error('Runtime bindings candidate requires task-owned isolated PG16');
 if (commercialCandidate && (process.env.TCDX_ISOLATED_REBUILD !== "true" || process.env.DATABASE_HOST !== "127.0.0.1")) {
   throw new Error("Commercial expected-schema candidate verification requires isolated localhost PostgreSQL");
 }
@@ -26,7 +28,9 @@ if (c04wCandidate && (commercialCandidate || process.env.TCDX_C04W_ISOLATED_REBU
   || process.env.DATABASE_HOST !== "127.0.0.1" || process.env.DATABASE_PORT !== "55437")) {
   throw new Error("C-04W expected-schema candidate verification requires the approved isolated R2 PostgreSQL copy");
 }
-const expected = readJson<Inventory>(c04wCandidate
+const expected = readJson<Inventory>(bindingsCandidate
+  ? "docs/physical-data-model/amendments/PHASE6A_RUNTIME_BINDINGS_20261023/EXPECTED_SCHEMA_CONTRACT.json"
+  : c04wCandidate
   ? "docs/physical-data-model/candidates/STEP_6A3_C04W_v1.10/EXPECTED_SCHEMA_C04W_CANDIDATE.json"
   : commercialCandidate
     ? "docs/physical-data-model/amendments/STEP_6A3_COMMERCIAL_v1.9_CANDIDATE/pending-publication/EXPECTED_SCHEMA_COMMERCIAL_CANDIDATE.json"
@@ -90,6 +94,12 @@ const expectedIndexes = new Set([
   ...expectedNames(/CREATE (?:UNIQUE )?INDEX ([a-z0-9_]+)/g, "database/migrations/20260929000100_phase5_subscription_regulatory_pack_authority.sql")
   ,...expectedNames(/CREATE (?:UNIQUE )?INDEX ([a-z0-9_]+)/g, "database/migrations/20260929000300_phase5_plus_subject_validation_access.sql")
 ]);
+if(bindingsCandidate){
+ const bindingSql='docs/physical-data-model/amendments/PHASE6A_RUNTIME_BINDINGS_20261023/DDL_SPEC.sql';
+ expectedConstraints.delete('uq_document_versions__version_number');
+ for(const name of expectedNames(/(?:ADD CONSTRAINT|CONSTRAINT) ([a-z0-9_]+)\s+(?:CHECK|UNIQUE|FOREIGN KEY|PRIMARY KEY)/g,bindingSql))expectedConstraints.add(name);
+ for(const name of expectedNames(/CREATE (?:UNIQUE )?INDEX ([a-z0-9_]+)/g,bindingSql))expectedIndexes.add(name);
+}
 if (expected.commercialAmendmentDecision === "DR-STEP6A3-COMMERCIAL-PHYSICAL-EXECUTABLE-20261014-01") {
   const commercialSql = "database/migrations/20261013000100_commercial_contract_reconciliation.sql";
   expectedConstraints.delete("uq_usage_limits__limit_code");

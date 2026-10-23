@@ -9,17 +9,11 @@ export type PersistedRegulatoryPack = {
 };
 
 export interface RegulatoryPackTransaction {
+  lock(packCode: string): Promise<void>;
   findImport(packCode: string, importChecksum: string): Promise<PersistedRegulatoryPack | null>;
   findVersion(packCode: string, versionNumber: number): Promise<PersistedRegulatoryPack | null>;
   persist(pack: NormalizedRegulatoryPack): Promise<PersistedRegulatoryPack>;
-  publish(command: {
-    regulatoryPackVersionId: string;
-    actorUserIdentityId: string;
-    approvalRefs: ReadonlyArray<string>;
-    correlationId: string;
-    idempotencyKey: string;
-    requestHash: string;
-  }): Promise<void>;
+
 }
 
 export interface RegulatoryPackRepository {

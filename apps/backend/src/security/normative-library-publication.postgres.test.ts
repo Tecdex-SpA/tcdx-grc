@@ -16,6 +16,11 @@ import {CanonicalControlAdjustmentPolicy} from '../configuration/control-adjustm
 import {controlOverrideEtag,resolveControlAdjustment,type ControlDefinition,type ControlVersionFacts} from '../configuration/control-adjustments.js';
 import {permitsSourceUse,type RightsRecord,type RightsRequest} from '../normative-library/rights.js';
 import {recordSourceRights,revokeSourceRights} from '../normative-library/rights-publication.js';
+import {generateKeyPairSync} from 'node:crypto';
+import {ApplicationTokenService} from './application-token.js';
+import {buildApp} from '../app.js';
+import {composeNormativeLibrary} from '../normative-library/composition.js';
+import {registerNormativeLibraryRoutes} from '../normative-library/routes.js';
 
 describe.skipIf(process.env.TCDX_LIBRARY_OPERATIONAL_INTEGRATION!=='true')('B01â€“B09 operational preparation on task-owned PG16',()=>{
  let db:Kysely<FoundationDatabase>,p:LibraryPublication;
@@ -183,5 +188,74 @@ describe.skipIf(process.env.TCDX_LIBRARY_OPERATIONAL_INTEGRATION!=='true')('B01â
   const row=(await sql<RightsRecord>`SELECT * FROM knowledge.knowledge_source_usage_rights WHERE knowledge_source_usage_right_id=${stored.knowledge_source_usage_right_id}::uuid`.execute(db)).rows[0]!;
   expect(await permitsSourceUse(request(stored),[{...stored,revoked_at:String(row.revoked_at)}],evidence)).toBe(false);
   await expect(sql`DELETE FROM knowledge.knowledge_source_usage_rights WHERE knowledge_source_usage_right_id=${stored.knowledge_source_usage_right_id}::uuid`.execute(db)).rejects.toThrow('immutable rights history');
+ });
+
+ describe('B04 HTTP with signed synthetic identities and real PostgreSQL persistence',()=>{
+  let app:ReturnType<typeof buildApp>,tokens:ApplicationTokenService,origin:string;
+  const bearer=new Map<string,string>();
+  beforeAll(async()=>{
+   const keys=generateKeyPairSync('rsa',{modulusLength:2048});
+   tokens=await ApplicationTokenService.create({issuer:'https://isolated.tcdx.test',audience:'tcdx-grc-api',privateKey:keys.privateKey.export({format:'pem',type:'pkcs8'}).toString(),publicKey:keys.publicKey.export({format:'pem',type:'spki'}).toString(),keyId:newUuidV7(),algorithm:'RS256',maxLifetimeSeconds:3600,clockToleranceSeconds:0});
+   for(const user of Object.values(users))bearer.set(user,(await tokens.issue(user,newUuidV7())).token);
+   app=buildApp(async()=>true);
+   registerNormativeLibraryRoutes(app,tokens,composeNormativeLibrary({database:db,environment:'test',cursor:tokens,rightsEvidence:{verify:async()=>false},custody:{prepare:async()=>{throw Error('B04 must not write custody');},read:async()=>{throw Error('B04 must not read custody');}}}));
+   origin=await app.listen({host:'127.0.0.1',port:0});
+  });
+  afterAll(async()=>{await app?.close();});
+  async function request(method:string,path:string,user=users.author,body?:unknown,headers:Record<string,string>={}){
+   const response=await fetch(origin+'/api/v1'+path,{method,headers:{authorization:'Bearer '+bearer.get(user),'x-tcdx-tenant-id':tenants[0]!,...(body===undefined?{}:{'content-type':'application/json','idempotency-key':newUuidV7()}),...headers},...(body===undefined?{}:{body:JSON.stringify(body)})});
+   return {status:response.status,headers:response.headers,body:await response.json()};
+  }
+  async function create(){
+   const op=c.registry.new_operations.find(o=>o.operation_id==='controlConfigurationDefinitionReferenceList')!;
+   const refs=await request('GET',op.path.replace('{id}',control));expect(refs.status).toBe(200);
+   const selected=refs.body.items.find((r:{configuration_code:string})=>r.configuration_code==='control_operational_activity');
+   const body={configuration_definition_id:selected.configuration_definition_id,scope_level:'control_version',control_version_id:control,text_value:'Synthetic HTTP activity',effective_from:from,effective_to:to,rationale:'Synthetic local HTTP test'};
+   const key=newUuidV7(),created=await request('POST','/configuration-overrides',users.author,body,{'idempotency-key':key});
+   expect(created.status).toBe(202);return {id:String(created.body.resource_id),body,key,created};
+  }
+  async function read(id:string){const r=await request('GET','/configuration-overrides/'+id);expect(r.status).toBe(200);expect(r.headers.get('etag')).toMatch(/^"[a-f0-9]{64}"$/);expect(r.headers.get('cache-control')).toBe('no-store, no-transform');return r;}
+  it('creates, replays, updates, reviews and decides with exact HTTP ETags and authentic synthetic audit actors',async()=>{
+   const f=await create(),replay=await request('POST','/configuration-overrides',users.author,f.body,{'idempotency-key':f.key});expect(replay.status).toBe(202);expect(replay.body).toEqual(f.created.body);expect(replay.headers.get('idempotency-replayed')).toBe('true');
+   const path='/configuration-overrides/'+f.id,draft=await read(f.id);
+   const updated=await request('PATCH',path,users.author,{text_value:'Updated synthetic activity',effective_from:from,effective_to:to,rationale:'Synthetic change'},{'if-match':draft.headers.get('etag')!});expect(updated.status).toBe(200);
+   const current=await read(f.id);expect(current.headers.get('etag')).not.toBe(draft.headers.get('etag'));
+   expect((await request('POST',path+':review',users.author,{decision:'reviewed',rationale:'Self review must deny'},{'if-match':current.headers.get('etag')!})).status).toBe(403);
+   const reviewed=await request('POST',path+':review',users.reviewer,{decision:'reviewed',rationale:'Independent synthetic reviewer'},{'if-match':current.headers.get('etag')!});expect(reviewed.status).toBe(200);
+   const afterReview=await read(f.id),key=newUuidV7(),decision={decision:'approved',rationale:'Synthetic decision'};
+   const decided=await request('POST',path+':decide',users.reviewer,decision,{'if-match':afterReview.headers.get('etag')!,'idempotency-key':key});expect(decided.status).toBe(200);expect(decided.body.result.lifecycle_state).toBe('approved');
+   const repeated=await request('POST',path+':decide',users.reviewer,decision,{'if-match':afterReview.headers.get('etag')!,'idempotency-key':key});expect(repeated.status).toBe(200);expect(repeated.body).toEqual(decided.body);expect(repeated.headers.get('idempotency-replayed')).toBe('true');
+   const final=await read(f.id);expect(final.body.result.review_audit_event_id).toBe(decided.body.result.review_audit_event_id);expect(final.body.result.decision_audit_event_id).toBe(decided.body.result.decision_audit_event_id);
+   const audits=(await sql<{command_code:string;actor_user_identity_id:string}>`SELECT command_code,actor_user_identity_id FROM ops_audit.audit_events WHERE aggregate_type='ConfigurationOverride' AND aggregate_id=${f.id}::uuid ORDER BY occurred_at,audit_event_id`.execute(db)).rows;
+   expect(audits).toEqual(['configurationOverrideCreate','configurationOverrideUpdate','configurationOverrideReview','configurationOverrideDecide'].map((command_code,i)=>({command_code,actor_user_identity_id:i<2?users.author:users.reviewer})));
+   expect((await sql`SELECT * FROM ops_audit.outbox_events WHERE aggregate_id=${f.id}::uuid`.execute(db)).rows).toHaveLength(4);
+  });
+  it('rejects missing/invalid/stale CAS, unknown fields, wrong tenant, anonymous and invalid signatures without transitions',async()=>{
+   const f=await create(),path='/configuration-overrides/'+f.id,current=await read(f.id),decision={decision:'reviewed',rationale:'Synthetic negative case'};
+   for(const [headers,status]of [[{},400],[{'if-match':'invalid'},400],[{'if-match':'"'+'0'.repeat(64)+'"'},409]] as const)expect((await request('POST',path+':review',users.reviewer,decision,headers)).status).toBe(status);
+   expect((await request('POST',path+':review',users.reviewer,{...decision,approved:true},{'if-match':current.headers.get('etag')!})).status).toBe(400);
+   expect((await request('GET',path,users.author,undefined,{'x-tcdx-tenant-id':tenants[1]!})).status).toBe(404);
+   for(const authorization of ['', 'Bearer invalid'])expect((await request('GET',path,users.author,undefined,{authorization})).status).toBe(401);
+   expect((await request('POST',path+':review',users.viewer,decision,{'if-match':current.headers.get('etag')!})).status).toBe(403);
+   expect((await request('POST',path+':decide',users.reviewer,{decision:'approved',rationale:'No prior review'},{'if-match':current.headers.get('etag')!})).status).toBe(409);
+   expect((await read(f.id)).body.result.lifecycle_state).toBe('draft');
+   expect((await sql`SELECT * FROM ops_audit.audit_events WHERE aggregate_type='ConfigurationOverride' AND aggregate_id=${f.id}::uuid`.execute(db)).rows).toHaveLength(1);
+  });
+  it.each(['review','decide'] as const)('persists a %s rejection and denies a subsequent approval',async stage=>{
+   const f=await create(),path='/configuration-overrides/'+f.id;
+   if(stage==='decide'){const current=await read(f.id);expect((await request('POST',path+':review',users.reviewer,{decision:'reviewed',rationale:'Synthetic review'},{'if-match':current.headers.get('etag')!})).status).toBe(200);}
+   const current=await read(f.id),rejected=await request('POST',path+':'+stage,users.reviewer,{decision:'rejected',rationale:'Synthetic rejected case'},{'if-match':current.headers.get('etag')!});expect(rejected.status).toBe(200);expect((await read(f.id)).body.result.lifecycle_state).toBe('rejected');
+   expect((await request('POST',path+':decide',users.reviewer,{decision:'approved',rationale:'Rejected is terminal'},{'if-match':(await read(f.id)).headers.get('etag')!})).status).toBe(409);
+  });
+  it('serializes concurrent review CAS and rolls back transition/idempotency/audit/outbox on persistence failure',async()=>{
+   const f=await create(),path='/configuration-overrides/'+f.id,current=await read(f.id),body={decision:'reviewed',rationale:'Concurrent synthetic review'};
+   const responses=await Promise.all([request('POST',path+':review',users.reviewer,body,{'if-match':current.headers.get('etag')!}),request('POST',path+':review',users.reviewer,body,{'if-match':current.headers.get('etag')!})]);expect(responses.map(r=>r.status).sort()).toEqual([200,409]);
+   const reviewed=await read(f.id),key=newUuidV7(),correlation=newUuidV7(),decision={decision:'approved',rationale:'Fault injection'};
+   await sql`CREATE FUNCTION public.b04_http_audit_fault() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN IF NEW.command_code='configurationOverrideDecide' THEN RAISE EXCEPTION 'synthetic B04 HTTP audit fault'; END IF; RETURN NEW; END $$`.execute(db);
+   await sql`CREATE TRIGGER b04_http_audit_fault BEFORE INSERT ON ops_audit.audit_events FOR EACH ROW EXECUTE FUNCTION public.b04_http_audit_fault()`.execute(db);
+   try{expect((await request('POST',path+':decide',users.reviewer,decision,{'if-match':reviewed.headers.get('etag')!,'idempotency-key':key,'x-correlation-id':correlation})).status).toBe(500);expect((await read(f.id)).body.result.lifecycle_state).toBe('reviewed');expect((await sql`SELECT * FROM ops_audit.audit_events WHERE correlation_id=${correlation}::uuid`.execute(db)).rows).toHaveLength(0);expect((await sql`SELECT * FROM ops_audit.outbox_events WHERE correlation_id=${correlation}::uuid`.execute(db)).rows).toHaveLength(0);}
+   finally{await sql`DROP TRIGGER b04_http_audit_fault ON ops_audit.audit_events`.execute(db);await sql`DROP FUNCTION public.b04_http_audit_fault()`.execute(db);}
+   expect((await request('POST',path+':decide',users.reviewer,decision,{'if-match':reviewed.headers.get('etag')!,'idempotency-key':key})).status).toBe(200);
+  });
  });
 });

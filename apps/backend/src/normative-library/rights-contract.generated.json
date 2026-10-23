@@ -114,5 +114,60 @@
     "runtime_adoption": "No new runtime feature flag. Composition remains unregistered until separately authorized physical/schema, rights evidence, IAM, registry and deployment gates. Builders/hooks may be tested in isolation. Existing routes retain existing authority.",
     "physical_execution": "DDL_SPEC_ONLY_NOT_EXECUTED",
     "rights_instances": []
+  },
+  "internal_policy_receipt_sha256": "66a1a8a7460dd66610b9b133b37250210d7f6eb6b69b76d52f2eb66afa9ff095",
+  "internalPolicy": {
+    "id": "NORMATIVE_LIBRARY_INTERNAL_DEV_QA_V1",
+    "baseline_id": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+    "scope": "DOCUMENTARY_ACCREDITATION_REQUIREMENT_ONLY",
+    "activities_without_general_H04_dependency": [
+      "normative_structuring",
+      "homologation",
+      "matrices_and_crosswalks",
+      "functional_validation",
+      "metadata_and_normative_references",
+      "internal_normative_development_and_qa"
+    ],
+    "internal_environments": [
+      "development",
+      "test",
+      "qa"
+    ],
+    "knowledge_internal_acts": [
+      "consultation",
+      "extraction",
+      "storage",
+      "presentation",
+      "import",
+      "publication"
+    ],
+    "knowledge_binding": {
+      "operation_family": "EXISTING_KNOWLEDGE_OPERATIONS_ONLY",
+      "required_pack_authority": "NON_AUTHORITATIVE_TEST_PACK",
+      "all_dependencies_required": true,
+      "at_least_one_normative_pack_dependency": true,
+      "context_origin": "SERVER_CONFIGURATION_AND_PERSISTED_TARGET_PACK_PROVENANCE_AFTER_EXISTING_AUTHORIZATION",
+      "result": "H04_ACCREDITATION_NOT_REQUIRED;NOT_A_RIGHT_OR_PERMISSION",
+      "source_null_pack_dependency": "Included in the same internal operation; no synthetic evidence row required",
+      "official_pack_publication": "OUTSIDE_THIS_BINDING",
+      "export_or_external_processing": "OUTSIDE_THIS_BINDING"
+    },
+    "invariants": [
+      "RBAC_DEFAULT_DENY",
+      "SOD",
+      "TENANT_ISOLATION",
+      "SOURCE_EDITION_HASH_PROVENANCE",
+      "TARGET_AND_PACK_ACCESS",
+      "AUDIT",
+      "INTEGRITY",
+      "CAS",
+      "IDEMPOTENCY",
+      "CANONICAL_SINGLE_PUBLICATION_OPERATION"
+    ],
+    "rights": "No declaration or attestation is fabricated. This policy changes no legal ownership and grants no third-party distribution rights. Concrete external restrictions retain their own source and applicability; absence of a general H04 document is not such a restriction.",
+    "predecessor_scope_retained": "H04 evidence evaluation remains exact for operations outside the internal binding, including production, official normative publication and distribution/export. Metadata and matrices do not acquire a new H04 prerequisite.",
+    "data_impact": "NO_SCHEMA_MIGRATION_OR_RIGHTS_INSTANCE",
+    "iam_impact": "NO_ROLE_PERMISSION_SCOPE_GRANT_OR_PARALLEL_AUTHORITY",
+    "runtime_activation": "SOURCE_ONLY_NO_DEPLOYMENT"
   }
 }

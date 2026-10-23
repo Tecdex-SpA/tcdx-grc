@@ -11,6 +11,7 @@ export class MemoryRegulatoryPackRepository implements RegulatoryPackRepository 
   async transaction<T>(work: (transaction: RegulatoryPackTransaction) => Promise<T>): Promise<T> {
     const staged: State = { imports: new Map(this.state.imports), versions: new Map(this.state.versions) };
     const transaction: RegulatoryPackTransaction = {
+      lock: async () => {},
       findImport: async (packCode, checksum) => staged.imports.get(`${packCode}:${checksum}`) ?? null,
       findVersion: async (packCode, versionNumber) => staged.versions.get(`${packCode}:${versionNumber}`) ?? null,
       persist: async (pack: NormalizedRegulatoryPack) => {
@@ -29,11 +30,7 @@ export class MemoryRegulatoryPackRepository implements RegulatoryPackRepository 
         staged.versions.set(`${pack.packCode}:${pack.versionNumber}`, persisted);
         return persisted;
       },
-      publish: async (command) => {
-        for (const [key, value] of staged.versions) {
-          if (value.regulatoryPackVersionId === command.regulatoryPackVersionId) staged.versions.set(key, { ...value, lifecycleState: "published" });
-        }
-      }
+
     };
     const result = await work(transaction);
     this.state = staged;

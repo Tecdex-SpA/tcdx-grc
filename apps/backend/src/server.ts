@@ -66,10 +66,11 @@ const stopCatalogOperator = process.env.TCDX_COMMERCIAL_CATALOG_OPERATOR_SOCKET 
       approvedManifestSha256: process.env.TCDX_COMMERCIAL_APPROVED_MANIFEST_SHA256!,
       database,
       identityVerifier: applicationTokens,
-      ...(iamPublication ? { iamOperation: (operation: "iam.provision" | "iam.publish" | "iam.revoke" | "iam.c04w.publish" | "iam.initial_source.publish" | "iam.library.publish", correlationId: string) =>
+      ...(iamPublication ? { iamOperation: (operation: "iam.provision" | "iam.publish" | "iam.revoke" | "iam.c04w.publish" | "iam.initial_source.publish" | "iam.library.publish" | "iam.runtime_bindings.publish", correlationId: string) =>
         operation === "iam.provision" ? iamPublication.provision(correlationId)
           : operation === "iam.revoke" ? iamPublication.revoke(correlationId)
           : operation === "iam.initial_source.publish" ? iamPublication.publishInitialSource(correlationId)
+          : operation === "iam.runtime_bindings.publish" ? iamPublication.publishRuntimeBindings(correlationId)
           : operation === "iam.library.publish" ? iamPublication.publishNormativeLibrary(correlationId)
           : operation === "iam.c04w.publish" ? iamPublication.publishC04w(correlationId) : iamPublication.publish(correlationId) } : {})
     })

@@ -7,7 +7,7 @@ import { newUuidV7 } from "../uuid.js";
 import { claimIdempotency, completeIdempotency, persistAuditEvent, persistOutboxEvent } from "../persistence/foundation-records.js";
 import type { VerifiedIdentity } from "./authentication.js";
 import { requirePlatformAccess, resolvePlatformActor, type PlatformActor } from "./platform-authority.js";
-import { platformRoleFamily } from "./platform-role-family.js";
+import { platformExclusiveRoles } from "./platform-role-family.js";
 
 export const tenantUserOnboardingPermission = "platform.tenant_user.onboard";
 const operation = "tenantUserOnboardingCreate";
@@ -185,7 +185,7 @@ export class TenantUserOnboarding {
     return actor;
   }
   private async role(tx: Transaction<FoundationDatabase>,tenantId: string,code: string): Promise<Role> {
-    if (platformRoleFamily.has(code)) fail("TCDX.AUTHORIZATION.DENIED",403);
+    if (platformExclusiveRoles.has(code)) fail("TCDX.AUTHORIZATION.DENIED",403);
     const roles = await sql<Role>`SELECT role_id,role_code FROM iam.roles WHERE tenant_id=${tenantId}::uuid
       AND ownership_class='TENANT_OWNED' AND lifecycle_state='published' AND role_code=${code} FOR SHARE`.execute(tx);
     if (!roles.rows.length) fail("TCDX.RESOURCE.NOT_FOUND",404);

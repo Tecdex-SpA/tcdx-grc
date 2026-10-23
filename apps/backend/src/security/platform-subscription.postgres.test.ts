@@ -100,10 +100,23 @@ describe.skipIf(process.env.TCDX_SECURITY_INTEGRATION !== "true")("Subscription 
   it.each(["future", "expired", "draft"])("rejects %s PlanVersion and rolls back its idempotency claim", async state => {
     const request = body(await company()), before = await counts();
     await expect(db.transaction().execute(async tx => {
-      if (state === "future") await sql`UPDATE platform.plan_versions SET effective_from=transaction_timestamp()+interval '1 day',effective_to=NULL WHERE plan_version_id=${planId}::uuid`.execute(tx);
-      if (state === "expired") await sql`UPDATE platform.plan_versions SET effective_from=transaction_timestamp()-interval '2 days',effective_to=transaction_timestamp()-interval '1 day' WHERE plan_version_id=${planId}::uuid`.execute(tx);
-      if (state === "draft") await sql`UPDATE platform.plan_versions SET lifecycle_state='draft' WHERE plan_version_id=${planId}::uuid`.execute(tx);
-      return subscriptionCreate(tx, await resolvePlatformActor(tx, identity()), { body: request, key: newUuidV7(), correlationId: newUuidV7() });
+      // Published versions are immutable under the commercial contract. Build
+      // a distinct synthetic candidate instead of corrupting the seeded plan.
+      const version=newUuidV7(),family=newUuidV7(),from=new Date(Date.now()+(state==='future'?86400000:-172800000)).toISOString();
+      const to=state==='expired'?new Date(Date.now()-86400000).toISOString():null;
+      await sql`INSERT INTO platform.plan_versions(plan_version_id,plan_id,version_number,display_name,lifecycle_state,effective_from,effective_to)
+        SELECT ${version}::uuid,plan_id,max(version_number)+1,'Synthetic negative candidate','draft',${from}::timestamptz,${to}::timestamptz
+        FROM platform.plan_versions WHERE plan_id=(SELECT plan_id FROM platform.plan_versions WHERE plan_version_id=${planId}::uuid) GROUP BY plan_id`.execute(tx);
+      await sql`INSERT INTO platform.commercial_families(commercial_family_id,family_code,name,source_type,published_at,publication_manifest_sha256,created_by_user_identity_id)
+        VALUES(${family}::uuid,${family},'Synthetic negative test family','standard',statement_timestamp(),repeat('a',64),${adminId}::uuid)`.execute(tx);
+      await sql`INSERT INTO platform.plan_version_commercial_family_links(plan_version_commercial_family_link_id,plan_version_id,commercial_family_id,created_by_user_identity_id)
+        VALUES(${newUuidV7()}::uuid,${version}::uuid,${family}::uuid,${adminId}::uuid)`.execute(tx);
+      for(const dimension of [null,family])await sql`INSERT INTO platform.usage_limits(usage_limit_id,plan_version_id,limit_code,limit_value,unit,effective_from,effective_to,commercial_family_id,created_by_user_identity_id)
+        VALUES(${newUuidV7()}::uuid,${version}::uuid,'regulatory_pack_count',1,'pack',${from}::timestamptz,${to}::timestamptz,${dimension}::uuid,${adminId}::uuid)`.execute(tx);
+      const capabilities=(await sql<{capability_id:string;is_enabled:boolean}>`SELECT capability_id,is_enabled FROM platform.entitlements WHERE plan_version_id=${planId}::uuid`.execute(tx)).rows;
+      for(const capability of capabilities)await sql`INSERT INTO platform.entitlements(entitlement_id,plan_version_id,capability_id,is_enabled) VALUES(${newUuidV7()}::uuid,${version}::uuid,${capability.capability_id}::uuid,${capability.is_enabled})`.execute(tx);
+      if(state!=='draft')await sql`UPDATE platform.plan_versions SET lifecycle_state='published',published_at=statement_timestamp() WHERE plan_version_id=${version}::uuid`.execute(tx);
+      return subscriptionCreate(tx, await resolvePlatformActor(tx, identity()), { body: {...request,plan_version_id:version}, key: newUuidV7(), correlationId: newUuidV7() });
     })).rejects.toMatchObject({ statusCode: 422, code: "TCDX.INVARIANT.VIOLATION" });
     expect(await counts()).toEqual(before);
   });

@@ -1,0 +1,42 @@
+{
+  "id": "PHASE6A_PUBLICATION_REFERENCE_CLOSURE_V2",
+  "baseline_id": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "predecessor": "PHASE6A_RUNTIME_BINDINGS_V1",
+  "superseded_fields": [
+    "publication.atomic_states",
+    "publication.unchanged_states",
+    "concurrency.population_hash",
+    "concurrency.etag"
+  ],
+  "atomic_states": [
+    "RegulatoryPackVersion:review|approved→published",
+    "RegulatoryPack:prepublication|draft|review|approved→published;published preserved",
+    "linked FrameworkVersion:review|approved→published",
+    "linked Framework:review|approved→published;published preserved",
+    "linked global reference Control:review|approved→published;published preserved",
+    "linked global reference ControlVersion:review|approved→published;published preserved",
+    "own RequirementControlMapping:review|approved→published;published preserved",
+    "own NormativeUnitControlMapping:review|approved→published;published preserved"
+  ],
+  "unchanged_states": [
+    "all tenant controls and assessments",
+    "all crosswalk headers/items",
+    "Subscription/entitlements/tenant assignments"
+  ],
+  "allowed_reference_origins": [
+    "regulatory_reference",
+    "tcdx_baseline"
+  ],
+  "reference_state_allowlist": [
+    "review",
+    "approved",
+    "published"
+  ],
+  "locks": "Canonical pack lock, pack root, then global Control roots and ControlVersion rows in ascending UUID order; re-read snapshot and CAS after reference locks",
+  "population_hash": "Existing P1 profile, also exclude lifecycle/transition metadata from exact reference Control/ControlVersion and the two own mapping populations. Content/identities/relationships/editions remain in the hash. No old receipt hash is converted.",
+  "etag": "P1 profile plus reference Control/ControlVersion and own mapping current lifecycle states, ordered by canonical IDs",
+  "approval_binding": "All changed reference objects must already be included in population_hash and covered by the actual current source/edition/package/coapprovals. This is not tenant control implementation.",
+  "audit": "Single canonical publication audit includes every affected reference ID and its before/after lifecycle; unchanged published references are recorded without UPDATE. Canonical outbox event/result schema remain intact.",
+  "data_or_iam_change": "NONE",
+  "activation": "LOCAL_SOURCE_ONLY_NO_QA_OR_PRODUCTION"
+}

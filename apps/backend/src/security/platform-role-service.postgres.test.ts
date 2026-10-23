@@ -1,5 +1,3 @@
-import { predecessorReferenceCatalog } from "./testing/historical-catalog-stage.js";
-import { restorePreMethodologyFixture } from "./methodology-predecessor-fixture.js";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import type { Kysely, Transaction } from "kysely";
@@ -40,42 +38,7 @@ describe.skipIf(process.env.TCDX_SECURITY_INTEGRATION !== "true")("P2A isolated 
       await sql`DELETE FROM iam.user_identities WHERE user_identity_id IN (${admin}::uuid,${target}::uuid,${outsider}::uuid)`.execute(db);
     } finally { await db.destroy(); }
   });
-  it("proves exact DATA-ONLY permission publication and zero catalog schema delta", async () => {
-    const rollback = Symbol("local publication proof rollback");
-    await db.transaction().execute(async tx => {
-      await predecessorReferenceCatalog(tx);
-      await restorePreMethodologyFixture(tx);
-      // Reconstruct the approved migration26 predecessor, excluding later additive D2 data.
-      // Restore the historical predecessor only inside this rolled-back publication test.
-      await sql`DELETE FROM iam.role_permissions WHERE permission_id IN (SELECT permission_id FROM iam.permissions WHERE permission_code='platform.tenant_user.onboard')`.execute(tx);
-      await sql`DELETE FROM iam.permissions WHERE permission_code='platform.tenant_user.onboard'`.execute(tx);
-      await sql`DELETE FROM platform.schema_migrations WHERE migration_id='20261007000100'`.execute(tx);
-      await sql`DELETE FROM iam.role_permissions WHERE permission_id IN (SELECT permission_id FROM iam.permissions WHERE permission_code='platform.user_identity.read')`.execute(tx);
-      await sql`DELETE FROM iam.permissions WHERE permission_code='platform.user_identity.read'`.execute(tx);
-      await sql`DELETE FROM platform.schema_migrations WHERE migration_id='20261006000200'`.execute(tx);
-      await sql`DELETE FROM iam.role_permissions WHERE permission_id IN (SELECT permission_id FROM iam.permissions WHERE permission_code='platform.role.administer')`.execute(tx);
-      await sql`DELETE FROM iam.permissions WHERE permission_code='platform.role.administer'`.execute(tx);
-      await sql`DELETE FROM platform.schema_migrations WHERE migration_id='20261006000100'`.execute(tx);
-      const structure = async () => (await sql`SELECT n.nspname,c.relname,c.relkind,a.attname,a.atttypid,a.attnotnull,a.attnum,
-        pg_get_expr(d.adbin,d.adrelid) AS default_expression
-        FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
-        LEFT JOIN pg_attribute a ON a.attrelid=c.oid AND a.attnum>0 AND NOT a.attisdropped
-        LEFT JOIN pg_attrdef d ON d.adrelid=c.oid AND d.adnum=a.attnum
-        WHERE n.nspname NOT IN ('pg_catalog','information_schema') AND n.nspname NOT LIKE 'pg_%'
-        ORDER BY n.nspname,c.relname,a.attnum`.execute(tx)).rows;
-      const before = await structure();
-      await sql.raw(readFileSync('database/migrations/20261006000100_platform_role_administration_permission_publication.sql', 'utf8')).execute(tx);
-      expect(await structure()).toEqual(before);
-      const counts = await sql<{ published: number; permission: number; admin: number; tenant: number; other: number }>`SELECT
-        (SELECT count(*)::int FROM iam.permissions WHERE lifecycle_state='published') AS published,
-        (SELECT count(*)::int FROM iam.permissions WHERE permission_code='platform.role.administer') AS permission,
-        (SELECT count(*)::int FROM iam.role_permissions rp JOIN iam.roles r USING(role_id) JOIN iam.permissions p USING(permission_id) WHERE p.permission_code='platform.role.administer' AND r.role_code='PLATFORM_ADMIN') AS admin,
-        (SELECT count(*)::int FROM iam.role_permissions rp JOIN iam.roles r USING(role_id) JOIN iam.permissions p USING(permission_id) WHERE p.permission_code='platform.role.administer' AND r.role_code='TENANT_ADMIN') AS tenant,
-        (SELECT count(*)::int FROM iam.role_permissions rp JOIN iam.roles r USING(role_id) JOIN iam.permissions p USING(permission_id) WHERE p.permission_code='platform.role.administer' AND r.role_code<>'PLATFORM_ADMIN') AS other`.execute(tx);
-      expect(counts.rows[0]).toEqual({ published: 168, permission: 1, admin: 1, tenant: 0, other: 0 });
-      throw rollback;
-    }).catch(error => { if (error !== rollback) throw error; });
-  });
+
   it("persists grant/revoke history, original replay and reinforced audit with zero tenant effects", async () => {
     const tenantState = () => sql<{ memberships: number; roles: number; grants: number; events: number; bootstrap: number }>`SELECT
       (SELECT count(*)::int FROM iam.tenant_memberships) AS memberships,

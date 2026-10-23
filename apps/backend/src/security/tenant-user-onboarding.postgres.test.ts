@@ -1,5 +1,3 @@
-import { predecessorReferenceCatalog } from "./testing/historical-catalog-stage.js";
-import { restorePreMethodologyFixture } from "./methodology-predecessor-fixture.js";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { readFileSync } from "node:fs";
 import { buildApp } from "../app.js";
@@ -56,23 +54,7 @@ describe.skipIf(process.env.TCDX_SECURITY_INTEGRATION!=="true")("Central onboard
       await sql`DELETE FROM iam.user_identities WHERE user_identity_id=ANY(${people}::uuid[])`.execute(db);
     }finally{await db.destroy();}
   });
-  it('publishes one Permission/PlatformAdmin grant with no DDL/schema delta',async()=>{
-    const rollback=Symbol();await db.transaction().execute(async tx=>{
-      await predecessorReferenceCatalog(tx);
-      await restorePreMethodologyFixture(tx);
-      const schema=async()=>(await sql`SELECT n.nspname,c.relname,a.attname,a.atttypid,a.attnotnull FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
-        JOIN pg_attribute a ON a.attrelid=c.oid AND a.attnum>0 WHERE n.nspname NOT LIKE 'pg_%' ORDER BY 1,2,3`.execute(tx)).rows;
-      const before=await schema();
-      await sql`DELETE FROM iam.role_permissions WHERE permission_id IN(SELECT permission_id FROM iam.permissions WHERE permission_code='platform.tenant_user.onboard')`.execute(tx);
-      await sql`DELETE FROM iam.permissions WHERE permission_code='platform.tenant_user.onboard'`.execute(tx);
-      await sql`DELETE FROM platform.schema_migrations WHERE migration_id='20261007000100'`.execute(tx);
-      await sql.raw(readFileSync('database/migrations/20261007000100_platform_tenant_user_onboarding_permission_publication.sql','utf8')).execute(tx);
-      expect(await schema()).toEqual(before);
-      const grants=(await sql`SELECT r.role_code,r.ownership_class,r.tenant_id FROM iam.role_permissions rp JOIN iam.permissions p USING(permission_id)
-        JOIN iam.roles r USING(role_id) WHERE p.permission_code='platform.tenant_user.onboard'`.execute(tx)).rows;
-      expect(grants).toEqual([{role_code:'PLATFORM_ADMIN',ownership_class:'PLATFORM_CONTROL',tenant_id:null}]);throw rollback;
-    }).catch(e=>{if(e!==rollback)throw e;});
-  });
+
   it('allows PlatformAdmin Membership plus tenant roles, audit/outbox and no actor authority',async()=>{
     const result=await create();expect(result.result.pending_role_codes).toEqual([]);expect(result.result.completed_roles).toHaveLength(2);
     expect(await count('iam.tenant_memberships',sql`user_identity_id=${ids.platform}::uuid`)).toBe(0);

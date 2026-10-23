@@ -24,8 +24,9 @@ export async function resolveCoreActor(database: Kysely<FoundationDatabase>, ver
   return resolveTenantActor(database, identity, request.headers["x-tcdx-tenant-id"]);
 }
 
-export async function resolveTenantActor(database: Kysely<FoundationDatabase>, identity: Awaited<ReturnType<IdentityVerifier["verifyBearerToken"]>>, candidateTenant: string | string[] | undefined): Promise<CoreActor> {
-  const tenant = await resolveTenantContext(database, identity, typeof candidateTenant === "string" ? candidateTenant : undefined);
+export async function resolveTenantActor(database: Kysely<FoundationDatabase>, identity: Awaited<ReturnType<IdentityVerifier["verifyBearerToken"]>>, candidateTenant: string | string[] | undefined, evaluationTime: "transaction" | "statement" = "transaction"): Promise<CoreActor> {
+  const tenant = await resolveTenantContext(database, identity, typeof candidateTenant === "string" ? candidateTenant : undefined, evaluationTime);
+  const now=evaluationTime==="statement"?sql`statement_timestamp()`:sql`CURRENT_TIMESTAMP`;
   const access = await sql<{ permission_code: string; scope_kind: ScopeKind; role_code: string }>`
     SELECT DISTINCT p.permission_code, mr.scope_kind, r.role_code
       FROM iam.membership_roles mr
@@ -36,8 +37,8 @@ export async function resolveTenantActor(database: Kysely<FoundationDatabase>, i
       JOIN iam.permissions p ON p.permission_id=rp.permission_id AND p.lifecycle_state='published'
      WHERE mr.tenant_id=${tenant.tenantId}::uuid
        AND mr.tenant_membership_id=${tenant.membershipId}::uuid
-       AND mr.valid_from <= CURRENT_TIMESTAMP
-       AND (mr.valid_to IS NULL OR mr.valid_to > CURRENT_TIMESTAMP)
+       AND mr.valid_from <= ${now}
+       AND (mr.valid_to IS NULL OR mr.valid_to > ${now})
        AND r.lifecycle_state='published'
   `.execute(database);
   const capabilities = await sql<{ capability_group: string }>`
@@ -47,8 +48,8 @@ export async function resolveTenantActor(database: Kysely<FoundationDatabase>, i
       JOIN platform.capabilities c ON c.capability_id=e.capability_id AND c.lifecycle_state='published'
      WHERE s.tenant_id=${tenant.tenantId}::uuid
        AND s.lifecycle_state='active'
-       AND s.starts_at <= CURRENT_TIMESTAMP
-       AND (s.ends_at IS NULL OR s.ends_at > CURRENT_TIMESTAMP)
+       AND s.starts_at <= ${now}
+       AND (s.ends_at IS NULL OR s.ends_at > ${now})
   `.execute(database);
   const permissionScopes = new Map<string, Set<ScopeKind>>();
   for (const row of access.rows) {

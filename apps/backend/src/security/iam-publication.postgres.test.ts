@@ -58,7 +58,7 @@ describe.skipIf(process.env.TCDX_IAM_PUBLICATION_INTEGRATION !== "true")("IAM pu
       for (const tenantId of tenantIds) {
         await sql`INSERT INTO platform.tenants (tenant_id,tenant_code,legal_name,display_name,default_timezone,lifecycle_state)
           VALUES (${tenantId}::uuid,${tenantId},'Isolated tenant','Isolated tenant','America/Santiago','active')`.execute(tx);
-        for (const code of new Set(ROLE_PERMISSION_PUBLICATION.pairs.map(p => p.role_code))) {
+        for (const code of new Set([...ROLE_PERMISSION_PUBLICATION.pairs.map(p => p.role_code),"TENANT_ADMIN","LEGAL_REVIEWER"])) {
           const roleId = newUuidV7();
           await sql`INSERT INTO iam.roles (role_id,ownership_class,tenant_id,role_code,name,is_baseline,lifecycle_state)
             VALUES (${roleId}::uuid,'TENANT_OWNED',${tenantId}::uuid,${code},${code},TRUE,'published')`.execute(tx);
@@ -134,9 +134,11 @@ describe.skipIf(process.env.TCDX_IAM_PUBLICATION_INTEGRATION !== "true")("IAM pu
   });
   it("replays without duplicating grants, auditing or migrations", async () => {
     const before = (await sql`SELECT count(*)::int AS audits FROM ops_audit.audit_events`.execute(db)).rows;
+    const ledgerBefore=(await sql`SELECT * FROM platform.schema_migrations ORDER BY migration_id`.execute(db)).rows;
+    expect(ledgerBefore).toHaveLength(36);
     expect((await service.publish(newUuidV7())).reference_audits_created).toBe(0);
     expect((await sql`SELECT count(*)::int AS audits FROM ops_audit.audit_events`.execute(db)).rows).toEqual(before);
-    expect((await sql<{ n: number }>`SELECT count(*)::int AS n FROM platform.schema_migrations`.execute(db)).rows[0]?.n).toBe(33);
+    expect((await sql`SELECT * FROM platform.schema_migrations ORDER BY migration_id`.execute(db)).rows).toEqual(ledgerBefore);
   });
   it("denies a different stable service-account subject despite the same client ID", async () => {
     const original = machineSubject; machineSubject = newUuidV7();

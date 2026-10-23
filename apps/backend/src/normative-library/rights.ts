@@ -4,11 +4,18 @@ import rightsData from './rights-contract.generated.json' with {type:'json'};
 import {hashCanonical} from '../regulatory/hash.js';
 import {FoundationError} from '../errors.js';
 export const SOURCE_RIGHTS_CONTRACT=rightsData.contract;
+export const INTERNAL_SOURCE_POLICY=rightsData.internalPolicy;
 export type UseAct='consultation'|'extraction'|'storage'|'presentation'|'export'|'import'|'publication';
 export type UseEnvironment='development'|'test'|'qa'|'production';
 export type RightsRecord={knowledge_source_usage_right_id:string;knowledge_source_id:string;ownership_class:string;tenant_id:string|null;audience_tenant_id:string|null;content_hash:string;edition_ref:string;regulatory_pack_version_id:string|null;use_act:string;use_environment:string;content_kind:string;effective_from:string;effective_to:string;revoked_at:string|null;evidence_ref:string;evidence_hash:string;recorded_audit_event_id:string};
 export type RightsRequest={sourceId:string;ownershipClass:string;sourceTenantId:string|null;audienceTenantId:string|null;contentHash:string;packVersionId:string|null;act:UseAct;environment:UseEnvironment;now:string;preliminary:boolean;edition?:string};
 export type RightsEvidence={verify(record:RightsRecord):Promise<boolean>};
+/** Server-resolved internal normative context; this removes accreditation, never grants access. */
+export function internalNormativeAccreditationNotRequired(environment:UseEnvironment,acts:readonly UseAct[],preliminaryPacks:readonly boolean[]):boolean{
+ return INTERNAL_SOURCE_POLICY.internal_environments.includes(environment)&&acts.length>0&&
+  acts.every(act=>INTERNAL_SOURCE_POLICY.knowledge_internal_acts.includes(act))&&
+  preliminaryPacks.length>0&&preliminaryPacks.every(preliminary=>preliminary===true);
+}
 export function rightsInstant(value:string):string{
  const parsed=new Date(value);if(!Number.isFinite(parsed.getTime()))throw Error('Invalid rights instant');
  const fraction=value.match(/\.(\d+)(?:Z|[+-]\d\d(?::?\d\d)?)$/)?.[1]??'';
@@ -25,8 +32,15 @@ export async function permitsSourceUse(request:RightsRequest,records:readonly Ri
  if(!['TENANT_OWNED','GLOBAL_REFERENCE','PLATFORM_CONTROL'].includes(request.ownershipClass))return false;
  if((request.ownershipClass==='TENANT_OWNED')!==(request.sourceTenantId!==null)||request.sourceTenantId!==null&&request.sourceTenantId!==request.audienceTenantId)return false;
  if(request.preliminary&&request.environment==='production')return false;
- const now=Date.parse(request.now);
- const matches=records.filter(r=>r.knowledge_source_id===request.sourceId&&r.ownership_class===request.ownershipClass&&r.tenant_id===request.sourceTenantId&&r.audience_tenant_id===request.audienceTenantId&&r.content_hash===request.contentHash&&r.regulatory_pack_version_id===request.packVersionId&&r.use_act===request.act&&r.use_environment===request.environment&&SOURCE_RIGHTS_CONTRACT.content_kinds.includes(r.content_kind)&&r.content_kind!=='metadata'&&r.edition_ref.trim()&&(request.edition===undefined||r.edition_ref===request.edition)&&Number.isFinite(Date.parse(r.effective_from))&&Date.parse(r.effective_from)<=now&&now<Date.parse(r.effective_to)&&(r.revoked_at===null||Number.isFinite(Date.parse(r.revoked_at))&&Date.parse(r.revoked_at)>now));
+ // PostgreSQL timestamps retain microseconds. Date.parse alone can authorize
+ // before effective_from by rounding away that precision. Compare the same
+ // canonical instants used by the attestation binding, including revocation.
+ let now:string;try{now=rightsInstant(request.now);}catch{return false;}
+ const matches=records.filter(r=>{
+  let effective:boolean;
+  try{effective=rightsInstant(r.effective_from)<=now&&now<rightsInstant(r.effective_to)&&(r.revoked_at===null||now<rightsInstant(r.revoked_at));}catch{return false;}
+  return effective&&r.knowledge_source_id===request.sourceId&&r.ownership_class===request.ownershipClass&&r.tenant_id===request.sourceTenantId&&r.audience_tenant_id===request.audienceTenantId&&r.content_hash===request.contentHash&&r.regulatory_pack_version_id===request.packVersionId&&r.use_act===request.act&&r.use_environment===request.environment&&SOURCE_RIGHTS_CONTRACT.content_kinds.includes(r.content_kind)&&r.content_kind!=='metadata'&&r.edition_ref.trim()&&(request.edition===undefined||r.edition_ref===request.edition);
+ });
  if(matches.length!==1)return false;
  try{return await evidence.verify(matches[0]!);}catch{return false;}
 }

@@ -17,10 +17,12 @@ import {readMatrix} from './matrix-service.js';
 import {readEffectiveControlConfiguration} from '../configuration/effective-control-read.js';
 import {invalid} from './authorization.js';
 import {composeApplicabilityContextHooks,type ApplicabilityContextHooks} from './applicability-persistence.js';
+import {RegulatoryPublicationService} from '../regulatory/regulatory-publication.js';
+import {SubscriptionTicketService} from '../regulatory/subscription-ticket.js';
 export type LibraryInput={identity:VerifiedIdentity;tenantId?:string;id?:string;matrixType?:string;body:unknown;query:Record<string,unknown>;correlationId:string;idempotencyKey:string;ifMatch?:string};
 export type LibraryOutput={response:unknown;etag?:string|undefined;replay?:boolean};
 export type LibraryHandler=(input:LibraryInput)=>Promise<LibraryOutput>;
-export type LibraryComposition={handlers:ReadonlyMap<string,LibraryHandler>;applicabilityHooks:ApplicabilityContextHooks;effectiveConfiguration:typeof readEffectiveControlConfiguration};
+export type LibraryComposition={handlers:ReadonlyMap<string,LibraryHandler>;applicabilityHooks:ApplicabilityContextHooks;effectiveConfiguration:typeof readEffectiveControlConfiguration;runtimeBindings:{publication:RegulatoryPublicationService;ticket:SubscriptionTicketService}};
 export function composeNormativeLibrary(deps:{database:Kysely<FoundationDatabase>;custody:KnowledgeCustody;rightsEvidence:RightsEvidence;environment:UseEnvironment;cursor:CursorPort}):LibraryComposition{
  const knowledge=new CanonicalKnowledgePolicy(deps.environment,deps.rightsEvidence),config=new CanonicalControlAdjustmentPolicy();
  const handlers=new Map<string,LibraryHandler>();
@@ -45,7 +47,7 @@ export function composeNormativeLibrary(deps:{database:Kysely<FoundationDatabase
   });
  }
  handlers.set('configurationOverrideCreate',async input=>{if(!input.tenantId)invalid();return mutateControlAdjustment(deps.database,config,{identity:input.identity,tenantId:input.tenantId,correlationId:input.correlationId,operationId:'configurationOverrideCreate',body:input.body,idempotencyKey:input.idempotencyKey});});
- return {handlers,applicabilityHooks:composeApplicabilityContextHooks((tx,actor,id)=>knowledge.assertRead(tx,actor,id)),effectiveConfiguration:readEffectiveControlConfiguration};
+ return {handlers,applicabilityHooks:composeApplicabilityContextHooks((tx,actor,id)=>knowledge.assertRead(tx,actor,id)),effectiveConfiguration:readEffectiveControlConfiguration,runtimeBindings:{publication:new RegulatoryPublicationService(deps.database,deps.rightsEvidence,deps.environment),ticket:new SubscriptionTicketService(deps.database)}};
 }
 
 /** Canonical storage adapter composition, no new client, bucket, credentials or readiness/DDL side effects. */

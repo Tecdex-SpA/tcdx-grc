@@ -36,9 +36,21 @@ function assertUnique(values: ReadonlyArray<string>, population: string): void {
 
 function assertContentPair(content: string | null, reference: string | null, field: string): void {
   if ((content === null) === (reference === null)) fail(`${field} requires exactly one licensed content value or reference`, { field });
+  if ((content ?? reference)?.trim().length === 0) fail(`${field} cannot be blank`, { field });
 }
 
-function generatedRequirementCode(sourceLocator: string, ordinal: number): string {
+function validateInterval(value: { effectiveFrom?: string | null; effectiveTo?: string | null }, field: string): void {
+  for (const timestamp of [value.effectiveFrom, value.effectiveTo]) {
+    if (timestamp != null && (!/^\d{4}-\d{2}-\d{2}T.+(?:Z|[+-]\d{2}:\d{2})$/.test(timestamp) || !Number.isFinite(Date.parse(timestamp)))) {
+      fail(`${field} requires a valid timestamp with timezone`);
+    }
+  }
+  if (value.effectiveFrom != null && value.effectiveTo != null && Date.parse(value.effectiveTo) <= Date.parse(value.effectiveFrom)) {
+    fail(`${field} effective interval must be increasing`);
+  }
+}
+
+export function generatedRequirementCode(sourceLocator: string, ordinal: number): string {
   return `REQ-${sha256(`${sourceLocator}#${ordinal}`).slice(0, 24).toUpperCase()}`;
 }
 
@@ -84,6 +96,8 @@ export function candidateState(input: RegulatoryPackImportInput, coveragePercent
   if (input.packCode === "ISO_9001_2026" && !input.source.definitivePublication) return "BLOCKED_PUBLICATION_UNAVAILABLE";
   if (ISO_PACKS.has(input.packCode) && input.source.origin !== "licensed_file") return "BLOCKED_LICENSE";
   if (coveragePercent !== 100) return "BLOCKED_CONTRACT_DECISION";
+  if (input.units.length === 0 || input.requirements.length === 0) return "BLOCKED_CONTRACT_DECISION";
+  if (input.crosswalks.some(crosswalk => !crosswalk.reviewed || crosswalk.mappings.some(mapping => !mapping.reviewed))) return "BLOCKED_HUMAN_REVIEW";
   const presentRoles = new Set(input.approvals.map((approval) => approval.role));
   if ([...requiredApprovalRoles(input.packCode)].some((role) => !presentRoles.has(role))) return "BLOCKED_HUMAN_REVIEW";
   const distinctApprovers = new Set(input.approvals.map((approval) => approval.userIdentityId));
@@ -93,6 +107,7 @@ export function candidateState(input: RegulatoryPackImportInput, coveragePercent
 
 function validateGovernance(input: RegulatoryPackImportInput): void {
   const governance = input.governance;
+  if (!["AUTHORIZED_NORMATIVE_SOURCE", "NON_AUTHORITATIVE_TEST_PACK"].includes(governance.authorityClass)) fail("Unknown regulatory authority class");
   if (!["licensed_file", "official_source", "received_preliminary_file"].includes(input.source.origin)) fail("Unknown source origin");
   if (input.source.origin === "received_preliminary_file" && governance.authorityClass !== "NON_AUTHORITATIVE_TEST_PACK") fail("Received preliminary files cannot claim normative authority");
   if (governance.sourceRoles.length === 0 || new Set(governance.sourceRoles).size !== governance.sourceRoles.length) {
@@ -136,6 +151,14 @@ export function validateAndNormalize(input: RegulatoryPackImportInput): Normaliz
   assertSha256(input.source.sourceChecksum, "source.sourceChecksum");
   if (calculateImportChecksum(input) !== input.importChecksum) fail("Import checksum does not match the canonical source payload");
   if (!Number.isSafeInteger(input.versionNumber) || input.versionNumber < 1) fail("versionNumber must be a positive integer");
+  for (const [field, value] of Object.entries({ packName: input.packName, edition: input.edition, frameworkCode: input.frameworkCode,
+    frameworkName: input.frameworkName, sourceCode: input.source.sourceCode, publisher: input.source.publisher, officialUri: input.source.officialUri })) {
+    if (typeof value !== "string" || value.trim().length === 0) fail(`${field} must be nonblank`);
+  }
+  validateInterval(input, "RegulatoryPackVersion");
+  for (const expected of Object.values(input.coverageExpected)) {
+    if (!Number.isSafeInteger(expected) || expected < 0) fail("Coverage expectations must be nonnegative integers");
+  }
   validateGovernance(input);
   const authorizedNormativeSource = input.governance.authorityClass === "AUTHORIZED_NORMATIVE_SOURCE";
   if (authorizedNormativeSource && ISO_PACKS.has(input.packCode) && input.source.origin !== "licensed_file") fail("Protected ISO content requires a licensed file");
@@ -156,9 +179,14 @@ export function validateAndNormalize(input: RegulatoryPackImportInput): Normaliz
   assertUnique(input.units.map((item) => item.sourceLocator), "NormativeUnit");
   assertUnique(input.controls.map((item) => item.controlCode), "Control");
   assertUnique(input.approvals.map((item) => item.role), "approval role");
+  assertUnique(input.requirements.map((item) => JSON.stringify([item.sourceLocator, item.statementOrdinal])), "requirement source statement");
+  for (const approval of input.approvals) {
+    if (!UUID.test(approval.userIdentityId) || !approval.approvalRef.trim()) fail("Approval requires an identity and evidence reference");
+  }
   validateHierarchy(input);
 
   for (const unit of input.units) {
+    validateInterval(unit, `NormativeUnit ${unit.sourceLocator}`);
     if (!Number.isSafeInteger(unit.displayOrder) || unit.displayOrder < 0) fail("NormativeUnit displayOrder must be a nonnegative integer", { sourceLocator: unit.sourceLocator });
     assertContentPair(unit.licensedContent, unit.licensedContentRef, `NormativeUnit ${unit.sourceLocator}`);
     assertSha256(unit.contentHash, `NormativeUnit ${unit.sourceLocator} contentHash`);
@@ -168,14 +196,17 @@ export function validateAndNormalize(input: RegulatoryPackImportInput): Normaliz
   const requirements = normalizeRequirements(input);
   const unitLocators = new Set(input.units.map((item) => item.sourceLocator));
   for (const requirement of requirements) {
+    validateInterval(requirement, `Requirement ${requirement.requirementCode}`);
     if (!unitLocators.has(requirement.normativeUnitSourceLocator)) fail("Requirement is orphaned", { requirementCode: requirement.requirementCode });
     if (!Number.isSafeInteger(requirement.statementOrdinal) || requirement.statementOrdinal < 1) fail("Requirement statementOrdinal must be positive", { requirementCode: requirement.requirementCode });
     assertContentPair(requirement.licensedStatement, requirement.licensedContentRef, `Requirement ${requirement.requirementCode}`);
     assertSha256(requirement.contentHash, `Requirement ${requirement.requirementCode} contentHash`);
+    if (!requirement.provenanceRef.trim()) fail("Requirement provenance is required");
   }
 
   const expectedOrigin = REFERENCE_CONTROL_PACKS.has(input.packCode) ? "regulatory_reference" : "tcdx_baseline";
   for (const control of input.controls) {
+    if (!Number.isSafeInteger(control.versionNumber) || control.versionNumber < 1) fail("Control version must be a positive integer");
     if (control.origin !== expectedOrigin) fail("Control origin does not match the governed pack semantics", { controlCode: control.controlCode, expectedOrigin });
   }
 
@@ -188,12 +219,31 @@ export function validateAndNormalize(input: RegulatoryPackImportInput): Normaliz
     if (!unitLocators.has(mapping.normativeUnitSourceLocator) || !controlCodes.has(mapping.controlCode)) fail("NormativeUnitControlMapping contains an invalid typed reference");
   }
 
+  assertUnique(input.crosswalks.map(crosswalk => JSON.stringify([crosswalk.targetFrameworkCode, crosswalk.targetEdition, crosswalk.targetVersionNumber ?? null, crosswalk.versionNumber])), "framework crosswalk version");
   for (const crosswalk of input.crosswalks) {
-    if (crosswalk.targetFrameworkCode === input.frameworkCode && crosswalk.targetEdition === input.edition) fail("Framework crosswalk cannot target itself");
+    if (input.crosswalks.some(other => other !== crosswalk && other.targetFrameworkCode === crosswalk.targetFrameworkCode
+      && other.targetEdition === crosswalk.targetEdition && other.versionNumber === crosswalk.versionNumber
+      && (other.targetVersionNumber === undefined || crosswalk.targetVersionNumber === undefined))) {
+      fail("Crosswalk cannot mix qualified and unqualified selectors for the same target edition and crosswalk version");
+    }
+  }
+  for (const crosswalk of input.crosswalks) {
+    if (!Number.isSafeInteger(crosswalk.versionNumber) || crosswalk.versionNumber < 1) fail("Crosswalk version must be a positive integer");
+    if (crosswalk.targetVersionNumber !== undefined && (!Number.isSafeInteger(crosswalk.targetVersionNumber) || crosswalk.targetVersionNumber < 1)) fail("Crosswalk target version must be a positive integer");
+    validateInterval(crosswalk, "FrameworkCrosswalk");
+    if (!["source_to_target", "target_to_source", "bidirectional"].includes(crosswalk.direction)) fail("Crosswalk direction is invalid");
+    if (!crosswalk.targetFrameworkCode.trim() || !crosswalk.targetEdition.trim() || !crosswalk.provenanceRef.trim()) fail("Crosswalk target edition and provenance are required");
+    assertUnique(crosswalk.mappings.map(mapping => JSON.stringify([mapping.objectType, mapping.sourceCode, mapping.targetCode])), "crosswalk relation");
+    if (crosswalk.targetFrameworkCode === input.frameworkCode && crosswalk.targetEdition === input.edition
+      && (crosswalk.targetVersionNumber === undefined || crosswalk.targetVersionNumber === input.versionNumber)) fail("Framework crosswalk cannot target itself");
     for (const mapping of crosswalk.mappings) {
+      if (!Number.isSafeInteger(mapping.versionNumber) || mapping.versionNumber < 1 || !mapping.effectiveFrom) fail("Crosswalk relation requires its version and effective timestamp");
+      validateInterval(mapping, "Crosswalk mapping");
+      if (!["normative_unit", "requirement", "control"].includes(mapping.objectType)) fail("Crosswalk object type is invalid");
+      if (!mapping.rationale.trim() || !mapping.provenanceRef?.trim()) fail("Crosswalk relation rationale and provenance are required");
       if (!RELATIONSHIP_TYPES.has(mapping.relationshipType)) fail("Crosswalk relationship type is invalid");
       if ((mapping.relationshipType === "no_match") !== (mapping.targetCode === null)) fail("Crosswalk target must be null exactly for no_match");
-      if (mapping.confidence < 0 || mapping.confidence > 1) fail("Crosswalk confidence must be between zero and one");
+      if (!Number.isFinite(mapping.confidence) || mapping.confidence < 0 || mapping.confidence > 1) fail("Crosswalk confidence must be between zero and one");
       const sourceSet = mapping.objectType === "normative_unit" ? unitLocators : mapping.objectType === "requirement" ? requirementCodes : controlCodes;
       if (!sourceSet.has(mapping.sourceCode)) fail("Crosswalk source is not a typed member of the source framework", { sourceCode: mapping.sourceCode });
     }

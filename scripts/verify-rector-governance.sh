@@ -171,6 +171,7 @@ else
 fi
 
 python3 scripts/verify-v112-governance.py || fail "v1.12 activation/history/scope validation failed"
+python3 scripts/verify-runtime-binding-governance.py || fail "runtime binding/internal DEV-QA authority drift"
 
 # Current authorized phase is physical model DESIGN only. Migrations and
 # functional implementation remain blocked until their human-approved gates pass.

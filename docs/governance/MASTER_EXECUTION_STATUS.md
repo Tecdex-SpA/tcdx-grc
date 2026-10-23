@@ -5581,3 +5581,79 @@ Inventario de seis marcos aprobados: cuatro ISO y dos leyes; cinco packs físico
 Integridad rectora/generadores/typecheck/build/secrets PASS; regresión1072 unitarias,51 PostgreSQL aisladas y50 navegador desktop/narrow PASS. Matrices QA reales Requisitos×Controles, Controles×Evidencias y Hallazgos×Acciones verificadas mediante API y tablas UI finales; negativas Platform/Tenant403 y tenant ajeno404 preservadas. El E2E humano positivo heredado sigue BLOCKED: Mario Cáceres está identificado pero el PO confirmó que no está disponible; no hay GRC_MANAGER activo independiente ni se permite autorrevisión. Sin identidades, grants o aprobaciones fabricadas.
 
 `QA_NORMATIVE_CATALOG_CONTRACTING_E2E=PARTIAL`; `PREVIOUS_RELEASE_CLOSURE=PARTIAL`; `RECTOR_GATE=BLOCKED` exclusivamente para el cierre integral por esos requisitos pendientes, con comprobaciones rectoras técnicas PASS. No se autoaprueba HUMAN_UI_REVIEW ni se reabre el cierre STEP6A4. Expediente único: `docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-normative-catalog-contracting-e2e-20261022/` con RELEASE.md, VALIDATION.md, RESULT.json y HANDOFF.md; inventario y recibos privados referenciados por hash para continuidad entre cuentas. Producción sin cambios; STEP6A5/STEP6A6 NOT_STARTED.
+
+
+## PHASE6A_FUNCTIONAL_COMPLETION_NORMATIVE_HOMOLOGATION_CONTRACTING — 2026-10-23
+
+Baseline TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16,POST_STEP6A4_PRE_STEP6A5.
+Mandato PO actual autoriza implementación/verificación y PR funcional independiente;
+excluye cambios visuales,PR26,merge/deploy automático y etapas posteriores.
+Base mainc2a774f/PR25MERGED. Fuente funcionalee2dee72f7683c5ea3c8b86bc9936687a41514d6;
+fixture de prueba9bb59eff2bc27283fc950db1de26d981096115ef.
+Persistencia canónica de import/crosswalks,temporalidad,versiones y serialización
+corregidas.1078unitPASS/237skips,60PG16PASS,0schema mismatches;typecheck/build/
+contracts/secrets/rectorPASS. QA sólo READONLY: ledger36exacto,saludPASS,333mappings/
+6cabeceras sin inconsistencias inspeccionadas;5drafts,0publicaciones/0contratos,
+3accesosQA separados. B04 conserva2create,sin review/decide. No fuentes,licencias,
+contratos o actuaciones humanas ficticias. Publicación HTTP/ticket conservan
+bloqueos contractuales precisos; el slice local no declara cierre operacional.
+RECTOR_GATE=BLOCKED_CIERRE_INTEGRAL;INTEGRATED_RELEASE_GATE=PARTIAL.
+Expediente único phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/phase6a-functional-completion-20261023/:
+RELEASE,VALIDATION,RESULT,HANDOFF. DB/APIpública/IAM/frontend/visual/infra/producción
+sin cambios;STEP6A5/STEP6A6NOT_STARTED. PR funcional queda para revisión,sin merge.
+
+
+## PHASE6A_RUNTIME_FUNCTIONAL_CLOSURE — ejecución1 local, transferencia20261023
+
+Master regent `TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16`; fase
+`POST_STEP6A4_PRE_STEP6A5`. `RECTOR_GATE=PASS` y
+`RUNTIME_TECHNICAL_CLOSURE=PASS` exclusivamente para el alcance técnico local
+aprobado P1/P2/T1/P1-TX y política interna H04. Fuente `4ba0734f67619dbce3a9b67bf7a2d9c7e90337a1`
+en rama de PR27. Baseline inmutable/ledger36/PR26/frontend/infra intactos.
+Contratos sucesores locales, candidato físico245tablas/3652columnas y bindings
+backend verificados:1083unit,289PG16,18browser PASS;0omisiones PostgreSQL
+restantes,0mismatches,0secrets. Browser/rights/files explícitamente sintéticos;
+no evidencia humana ni QA nueva. Expediente único
+`docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/phase6a-functional-completion-20261023/`
+con RELEASE,VALIDATION,RESULT,HANDOFF e inventarios/recibos por hash.
+
+`INTEGRATED_RELEASE_GATE=PARTIAL`; `MARKET_RELEASE_READY=BLOCKED`;
+`HUMAN_UI_REVIEW=PENDING`. Sin conflictos rectores locales pendientes ni
+aprobación adicional PO necesaria para este cierre técnico. Modelo candidato37
+fuera del ledger por defecto; sólo aplicado en PG16 propio desechable detenido.
+No contacto/migración/activación QA, import real, actuación humana, merge o deploy.
+Ejecución2/3 y STEP6A5/6A6 NOT_STARTED/NOT_AUTHORIZED. Este append no reescribe
+los cierres históricos ni autoriza la siguiente ejecución.
+
+
+## PHASE6A_NORMATIVE_LIBRARY_STRUCTURING_HOMOLOGATION — ejecución2 local, 2026-10-23
+
+Baseline activa `TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16`, fase
+`POST_STEP6A4_PRE_STEP6A5`. Source `75f377a230bf11eac003fb91b44c56b1daf00eea`,
+rama/PR27 existentes; PR26 intacto. `RECTOR_GATE=PASS` en el alcance local
+autorizado; `NORMATIVE_LIBRARY_TECHNICAL_CLOSURE=PARTIAL`. No es cierre integral.
+
+Cinco fuentes originales/204 páginas extraídas;619 unidades,501 enunciados
+como artefactos de fuente y siete Requirement draft acotados.131 controles
+de referencia/131 localizaciones, un soporte Requirement→Control, siete
+crosswalks propuestos y nueve correcciones42001 versionadas, sin reescribir
+identidades anteriores. Cinco payloads parciales verificados en PostgreSQL
+desechable; ninguno publicado oficialmente. Los211 y104 IDs se conservan.
+
+Pruebas nuevas:1093 unitarias,302 PostgreSQL,18 navegador con fixtures y13
+Python PASS; typecheck/build/autoridad PASS. No confundir estas pruebas con
+cobertura normativa integral. P1/P2/T1/P1-TX/H04 interno se conservan, sin
+nuevas aprobaciones humanas ni derechos ficticios. Sin cambio físico/HTTP/IAM,
+frontend, infraestructura o contratos de despliegue; selector interno de versión
+corregido conforme al FK canónico existente.
+
+Faltan cuerpos ISO9001:2026 e ISO9001:2015/Amd1:2024;494 enunciados y60 scopes
+de candidatos requieren atomización/reconciliación, vigencias/jerarquías y
+homologación integral pendientes. Cero marcos certificados completos.
+`HANDOFF_TO_EXECUTION_3=BLOCKED_PENDING_EXECUTION_2_COMPLETION`. No se traslada
+ese trabajo a ejecución3. `INTEGRATED_RELEASE_GATE=PARTIAL`;
+`MARKET_RELEASE_READY=BLOCKED`. Ejecución3/STEP6A5/STEP6A6 no iniciados; cero
+merge, despliegues, importaciones externas o migraciones QA/producción.
+
+Expediente: `docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/phase6a-normative-library-structuring-20261023/`
+con RELEASE.md, VALIDATION.md, RESULT.json, HANDOFF.md y recibos técnicos por hash.
