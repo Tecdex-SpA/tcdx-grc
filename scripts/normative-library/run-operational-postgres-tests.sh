@@ -10,7 +10,14 @@ export DATABASE_HOST=127.0.0.1 DATABASE_HOSTADDR= DATABASE_PORT="$task_port" DAT
 export DATABASE_USER="$(id -un)" DATABASE_PASSWORD= DATABASE_SSL_MODE=disable
 export TCDX_ISOLATED_REBUILD=true TCDX_LIBRARY_OPERATIONAL_INTEGRATION=true
 export TCDX_LIBRARY_TEST_CLUSTER="$task_dir/data"
-cleanup() { "$pg_bin/pg_ctl" -D "$task_dir/data" -m fast -w stop >/dev/null 2>&1 || true; }
+cleanup() {
+  task_result=$?
+  trap - EXIT
+  if [[ -f "$task_dir/data/postmaster.pid" ]]; then
+    "$pg_bin/pg_ctl" -D "$task_dir/data" -m fast -w stop || exit 1
+  fi
+  exit "$task_result"
+}
 trap cleanup EXIT
 "$pg_bin/initdb" --version | rg '16\.' >/dev/null
 node --input-type=module -e 'import net from "node:net";const s=net.createServer();s.on("error",()=>process.exit(1));s.listen(55549,"127.0.0.1",()=>s.close());'

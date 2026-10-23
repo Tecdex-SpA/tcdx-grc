@@ -9,6 +9,14 @@ const request:RightsRequest={sourceId:id(2),ownershipClass:'TENANT_OWNED',source
 describe('H04 explicit evidence conjunction, isolated fixtures never real licenses',()=>{
  it('binds equivalent UTC representations without rounding exact PostgreSQL microseconds',()=>{expect(rightsInstant('2026-01-01 03:00:00.123456+03')).toBe('2026-01-01T00:00:00.123456Z');expect(rightsBindingHash({...record,effective_from:'2026-01-01T00:00:00.000001Z'})).not.toBe(rightsBindingHash({...record,effective_from:'2026-01-01T00:00:00.000002Z'}));});
  it('allows exactly evidenced source/hash/edition/pack/act/environment/audience',async()=>{const verify=vi.fn(async()=>true);expect(await permitsSourceUse(request,[record],{verify})).toBe(true);expect(verify).toHaveBeenCalledOnce();});
+ it('preserves microsecond half-open validity and revocation boundaries without early authorization',async()=>{
+  const r={...record,effective_from:'2026-10-21T12:00:00.000001Z',effective_to:'2026-10-21T12:00:00.000004Z'};
+  for(const [now,allowed]of [['2026-10-21T12:00:00.000000Z',false],['2026-10-21T12:00:00.000001Z',true],['2026-10-21T12:00:00.000003Z',true],['2026-10-21T12:00:00.000004Z',false],['2026-10-21T15:00:00.000002+03:00',true]] as const)expect(await permitsSourceUse({...request,now},[r],{verify:async()=>true}),now).toBe(allowed);
+  const revoked={...r,revoked_at:'2026-10-21T12:00:00.000003Z'};
+  expect(await permitsSourceUse({...request,now:'2026-10-21T12:00:00.000002Z'},[revoked],{verify:async()=>true})).toBe(true);
+  expect(await permitsSourceUse({...request,now:revoked.revoked_at},[revoked],{verify:async()=>true})).toBe(false);
+  for(const malformed of [{...r,effective_from:'invalid'},{...r,effective_to:'invalid'},{...r,revoked_at:'invalid'}])expect(await permitsSourceUse(request,[malformed],{verify:async()=>true})).toBe(false);
+ });
  it.each(['consultation','extraction','storage','presentation','export','import','publication'] as UseAct[])('does not inherit act %s from another grant',async act=>{expect(await permitsSourceUse({...request,act},[{...record,use_act:act}],{verify:async()=>true})).toBe(true);expect(await permitsSourceUse({...request,act},[{...record,use_act:act==='import'?'export':'import'}],{verify:async()=>true})).toBe(false);});
  it.each(['sourceId','contentHash','packVersionId','audienceTenantId','edition'] as const)('denies changed %s',async key=>{expect(await permitsSourceUse({...request,[key]:'wrong'},[record],{verify:async()=>true})).toBe(false);});
  it.each(['development','test','qa','production'] as UseEnvironment[])('checks exact environment %s',async environment=>{expect(await permitsSourceUse({...request,environment},[{...record,use_environment:environment}],{verify:async()=>true})).toBe(true);});

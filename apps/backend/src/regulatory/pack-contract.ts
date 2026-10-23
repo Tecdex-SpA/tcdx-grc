@@ -118,6 +118,17 @@ async function idempotency(transaction: Transaction<FoundationDatabase>, actor: 
   return { claim, requestHash };
 }
 
+function replayAssignment(claim: { resultRef?: string | null; responseHash?: string | null }) {
+  try {
+    const result = JSON.parse(claim.resultRef ?? '') as Awaited<ReturnType<typeof assignment>>;
+    if (!result || !validateUuid(result.subscription_regulatory_pack_id)
+      || createHash('sha256').update(JSON.stringify(result)).digest('hex') !== claim.responseHash) throw Error('Invalid stored result');
+    return result;
+  } catch {
+    throw new FoundationError('TCDX.DEPENDENCY.UNAVAILABLE', 'Stored pack command result unavailable', 503, true);
+  }
+}
+
 async function recorded(transaction: Transaction<FoundationDatabase>, actor: PlatformActor,
   input: { id: string; operation: string; correlationId: string; before?: Record<string, unknown>; after: Record<string, unknown> }) {
   await persistAuditEvent(transaction, {
@@ -148,9 +159,7 @@ export async function activatePack(transaction: Transaction<FoundationDatabase>,
     payload: { subscriptionId, versionId, effectiveFrom: effectiveFrom.toISOString() }
   });
   if (claim.state === "replay") {
-    const id = claim.resultRef?.split(":")[1];
-    if (!id) conflict();
-    return { result: await assignment(transaction, id), replayed: true };
+    return { result: replayAssignment(claim), replayed: true };
   }
   const subscription = await sql<{ tenant_id: string }>`
     SELECT tenant_id FROM platform.subscriptions WHERE subscription_id=${subscriptionId}::uuid
@@ -183,7 +192,7 @@ export async function activatePack(transaction: Transaction<FoundationDatabase>,
   const result = await assignment(transaction, id);
   await recorded(transaction, actor, { id, operation: "activate", correlationId: input.correlationId, after: result });
   await completeIdempotency(transaction, { idempotencyRecordId: claim.idempotencyRecordId, requestHash,
-    resultStatusCode: "completed", resultRef: `pack:${id}`,
+    resultStatusCode: "completed", resultRef: JSON.stringify(result),
     responseHash: createHash("sha256").update(JSON.stringify(result)).digest("hex") });
   return { result, replayed: false };
 }
@@ -201,7 +210,7 @@ export async function revokePack(transaction: Transaction<FoundationDatabase>, a
     key: input.key, correlationId: input.correlationId, operation: "subscriptionRegulatoryPackRevoke",
     payload: { id, reason: reason.trim(), expectedVersion: input.expectedVersion }
   });
-  if (claim.state === "replay") return { result: await assignment(transaction, id), replayed: true };
+  if (claim.state === "replay") return { result: replayAssignment(claim), replayed: true };
   const before = await assignment(transaction, id);
   if (before.lifecycle_state !== "active" || before.effective_state !== "effective") conflict();
   const updated = await sql<{ subscription_regulatory_pack_id: string }>`
@@ -217,7 +226,7 @@ export async function revokePack(transaction: Transaction<FoundationDatabase>, a
   await recorded(transaction, actor, { id, operation: "revoke", correlationId: input.correlationId,
     before, after: { ...result, reason: reason.trim() } });
   await completeIdempotency(transaction, { idempotencyRecordId: claim.idempotencyRecordId, requestHash,
-    resultStatusCode: "completed", resultRef: `pack:${id}`,
+    resultStatusCode: "completed", resultRef: JSON.stringify(result),
     responseHash: createHash("sha256").update(JSON.stringify(result)).digest("hex") });
   return { result, replayed: false };
 }

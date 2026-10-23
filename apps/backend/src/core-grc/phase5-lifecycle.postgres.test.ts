@@ -676,7 +676,14 @@ describe.skipIf(!enabled)("Phase 5 lifecycle PostgreSQL isolated integration", (
         await bindingRun(bindingApprove, 2, approverId);
         await sql`SAVEPOINT c04w_source_scan_negative`.execute(tx);
         await sql`UPDATE evidence.file_objects SET scan_status='rejected' WHERE file_object_id=${fileId}::uuid`.execute(tx);
-        await expect(bindingRun(bindingPublish, 3)).rejects.toThrow("C04W_SOURCE_NOT_APPROVED_OR_SCAN_PASS");
+        // The active initial-source contract rejects the failed scan in the
+        // application guard before the older C04W database trigger is reached.
+        await expect(bindingRun(bindingPublish, 3)).rejects.toMatchObject({
+          code:"TCDX.INVARIANT.VIOLATION",statusCode:422,message:"Initial source retention chain is not eligible"
+        });
+        expect((await sql`SELECT lifecycle_state,row_version FROM privacy.retention_policy_applicabilities
+          WHERE retention_policy_applicability_id=${successorId}::uuid`.execute(tx)).rows[0])
+          .toMatchObject({lifecycle_state:'approved',row_version:'3'});
         await sql`ROLLBACK TO SAVEPOINT c04w_source_scan_negative`.execute(tx);
         const publishedBinding = await bindingRun(bindingPublish, 3);
         expect(publishedBinding.response.lifecycle_state).toBe("published");
