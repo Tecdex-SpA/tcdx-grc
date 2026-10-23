@@ -1,0 +1,334 @@
+{
+  "PROJECT": "GRC_TECDEX",
+  "EXECUTION": "PHASE6A_FUNCTIONAL_COMPLETION_NORMATIVE_HOMOLOGATION_CONTRACTING",
+  "MODE": "CONTINUATION_IMPLEMENTATION_AND_VERIFICATION",
+  "ACTIVE_BASELINE": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "CURRENT_PHASE": "POST_STEP6A4_PRE_STEP6A5",
+  "BASE_MAIN_HEAD": "c2a774f1f55b1edc3abc347ed155c4730d18fe31",
+  "BRANCH": "feat/phase6a-functional-completion-20261023",
+  "SOURCE_COMMITS": [
+    "ee2dee72f7683c5ea3c8b86bc9936687a41514d6",
+    "9bb59eff2bc27283fc950db1de26d981096115ef"
+  ],
+  "PR": {
+    "number": 27,
+    "url": "https://github.com/Tecdex-SpA/tcdx-grc/pull/27",
+    "state_source": "GitHub current state and checks",
+    "merge_authorized": false,
+    "deployment_authorized": false
+  },
+  "VISUAL_PR26": "OPEN_UNCHANGED_6f558f45f242068afc90e48c877e7203c0adf867",
+  "IMPLEMENTATION": "PASS_LOCAL_FOR_CANONICAL_IMPORT_PERSISTENCE; PUBLICATION_HTTP_AND_TICKET_BOUNDARIES_BLOCKED_CONTRACT",
+  "RECTOR_GATE": "BLOCKED_INTEGRAL_CLOSURE; IMPLEMENTED_SLICE_INTEGRITY_PASS",
+  "INTEGRATED_RELEASE_GATE": "PARTIAL",
+  "APPROVED_FRAMEWORKS": 6,
+  "STRUCTURED_FRAMEWORKS_INITIAL": 0,
+  "STRUCTURED_FRAMEWORKS": 0,
+  "HOMOLOGATED_FRAMEWORKS_INITIAL": 0,
+  "HOMOLOGATED_FRAMEWORKS": 0,
+  "PUBLISHED_FRAMEWORKS_INITIAL": 0,
+  "PUBLISHED_FRAMEWORKS": 0,
+  "CONTRACTABLE_FRAMEWORKS_INITIAL": 0,
+  "CONTRACTABLE_FRAMEWORKS": 0,
+  "CONTRACTED_QA_FRAMEWORKS_INITIAL": 0,
+  "CONTRACTED_QA_FRAMEWORKS": 0,
+  "SOURCE_EDITION_VALIDATION": "PARTIAL_OFFICIAL_METADATA_VERIFIED; CONTENT_GATES_NOT_PASS",
+  "H04_RIGHTS": "PARTIAL_NO_NEW_RIGHTS_ATTESTED; TECHNICAL_GUARDS_TESTED",
+  "LEY_21663": "CANONICAL_IMPORT_IMPLEMENTED_AND_PG16_TESTED_SYNTHETIC; NOT_MATERIALIZED_QA",
+  "B04_DUAL_ACTOR_E2E": "NOT_PASS_HUMAN_REVIEW_DECISION_RECEIPTS_MISSING",
+  "RBAC_SOD": "PASS_APPLICABLE_AUTOMATED_TESTS; REAL_B04_CIRCUIT_PENDING",
+  "AUDIT": "PASS_LOCAL_CANONICAL_ATOMICITY; PARTIAL_QA_CREATE_ONLY",
+  "PUBLISHING_E2E": "NOT_PASS_NO_REAL_PUBLICATION",
+  "CONTRACTING_E2E": "NOT_PASS_ZERO_ELIGIBLE_PACKS_AND_ZERO_REAL_CONTRACTS",
+  "TENANT_TICKET_ISSUANCE": "BLOCKED_NO_PUBLISHED_PERSISTENCE_BINDING",
+  "MATRIX_DATA_INTEGRITY": "PASS_QA_READ_ONLY_REFERENTIAL_CHECKS_AND_LOCAL_POSTGRES_SOURCE; NO_REAL_HOMOLOGATION_CLAIM",
+  "REGRESSION_TESTS": "PASS_1078_UNIT_AND_60_POSTGRES_TESTS",
+  "TESTS_MOCKED": {
+    "unit_passed": 1078,
+    "environment_conditioned_skipped": 237,
+    "failed": 0,
+    "live_e2e": false
+  },
+  "TESTS_INTEGRATION": {
+    "pipeline_postgres": 10,
+    "official_optional_default_upgrade": 10,
+    "official_b04_h04": 40,
+    "major": 16,
+    "schema_mismatches": 0,
+    "fixtures": "SYNTHETIC_TASK_OWNED_CLUSTERS_ONLY"
+  },
+  "TESTS_REAL_QA": {
+    "database": "PASS_READ_ONLY_TLS_VERIFY_FULL",
+    "ledger_exact": 36,
+    "product_tables": 244,
+    "product_columns": 3630,
+    "invalid_constraints": 0,
+    "invalid_indexes": 0,
+    "matrix_integrity": {
+      "orphan_requirement_control": "0",
+      "orphan_unit_control": "0",
+      "orphan_crosswalk": "0",
+      "invalid_unit_crosswalk": "0",
+      "invalid_requirement_crosswalk": "0",
+      "invalid_control_crosswalk": "0",
+      "requirement_control_rows": "333",
+      "crosswalk_headers": "6"
+    },
+    "anonymous_catalog_http": 401,
+    "anonymous_matrix_http": 401,
+    "committed_writes": 0
+  },
+  "TESTS_HUMAN_OPERATIONAL": "NOT_RUN_NO_SUBSTITUTED_ACTORS",
+  "RUNTIME": {
+    "captured_utc": "2026-10-23T12:27:21.947544+00:00",
+    "components": {
+      "backend": {
+        "image_id": "sha256:4062adbb09d4c7fa308f0d3a5cd1b730ab0b938bf5c46d57869ca56f5de1ed3d",
+        "container_id": "bc356c7c3753f9afba5d883f9c74af36c425f3e8c3f6801a0ed4fe29739bc56a",
+        "running": true,
+        "health": "healthy",
+        "source_commit": "f060cb17d15fe59ebae51c302cdb2e9f27f6976c",
+        "qa": true
+      },
+      "frontend": {
+        "image_id": "sha256:8d347f9f831afc081e5ba69a96c6d5b10fe448bfdc932e6356c2a1caf441dcf4",
+        "container_id": "d040a850002cd05096ceb36e2c82f9ea2e1bf2d401e430070a466a3f497062dc",
+        "running": true,
+        "health": "healthy",
+        "source_commit": "f060cb17d15fe59ebae51c302cdb2e9f27f6976c",
+        "qa": true
+      }
+    },
+    "writes": "NONE",
+    "public_https": {
+      "status": 200,
+      "index_sha256": "2b46d756c339b070b20e47f99065aaa53d2e98df5e88ee2a3f4ed2f9b6aa89e1"
+    },
+    "html_parity": true,
+    "ready": {
+      "state": "up",
+      "dependencies": {
+        "database": "up"
+      }
+    },
+    "operator_check": {
+      "environment": "qa",
+      "TLS": "verify-full",
+      "committed_writes": 0,
+      "database": {
+        "current_user": "tcdx_grc_app",
+        "current_database": "tcdx-grc",
+        "address": "192.168.2.40"
+      },
+      "authentication": "PASS_FRESH_M2M",
+      "principal": "01a13c3b-dbdd-763f-bcbb-f16ff41d99ba",
+      "registry": {
+        "published_definitions": 5
+      }
+    },
+    "status": "PASS"
+  },
+  "FRAMEWORKS": [
+    {
+      "framework_code": "CL_LEY_21719",
+      "edition": "vigencia_2026-12-01",
+      "units": 30,
+      "requirements": 30,
+      "homologated": false,
+      "published": false,
+      "contractable": false,
+      "contracted": false
+    },
+    {
+      "framework_code": "ISO_9001_2015",
+      "edition": "2015",
+      "units": 35,
+      "requirements": 35,
+      "homologated": false,
+      "published": false,
+      "contractable": false,
+      "contracted": false
+    },
+    {
+      "framework_code": "ISO_9001_2026",
+      "edition": "2026",
+      "units": 35,
+      "requirements": 39,
+      "homologated": false,
+      "published": false,
+      "contractable": false,
+      "contracted": false
+    },
+    {
+      "framework_code": "ISO_IEC_27001_2022",
+      "edition": "2022",
+      "units": 105,
+      "requirements": 7,
+      "homologated": false,
+      "published": false,
+      "contractable": false,
+      "contracted": false
+    },
+    {
+      "framework_code": "ISO_IEC_42001_2023",
+      "edition": "2023",
+      "units": 55,
+      "requirements": 7,
+      "homologated": false,
+      "published": false,
+      "contractable": false,
+      "contracted": false
+    },
+    {
+      "framework_code": "CL_LEY_21663",
+      "edition": "Requires authentic reviewed BCN edition in actual import",
+      "units": 0,
+      "requirements": 0,
+      "homologated": false,
+      "published": false,
+      "contractable": false,
+      "contracted": false
+    }
+  ],
+  "COUNT_POLICY": "Source-complete verified incorporation remains0; five draft populations are not counted as completed official frameworks. Six-code tests use synthetic disposable data only.",
+  "BLOCKERS": [
+    {
+      "id": "SOURCE_ISO",
+      "cause": "Four ISO sources lack authenticated licensed definitive content and verified complete semantic coverage; public metadata is not a body license.",
+      "dependency": "Exact edition/source artifact, checksum, custody and rights per act.",
+      "evidence": "QA source labels NOT_YET_LICENSED, four coverage_percent=0; H04 zero attested rows.",
+      "action": "Supply/verify actual licensed source or authorized references and source rights; perform source-specific review.",
+      "owner": "TCDX source/rights authority and actual rights holder",
+      "unlock": "Authenticated edition and usable rights evidence, without assuming redistribution."
+    },
+    {
+      "id": "SEMANTIC_CONTENT",
+      "cause": "211 candidates,104 additional proposals and6 preliminary crosswalks are preparation populations; no authentic complete homologation receipts. Ley21663 has no QA canonical import.",
+      "dependency": "Reviewed typed extraction and independent source/edition/pack gates.",
+      "evidence": "Incoming ZIP hashes and review specification; QA five drafts,zero published.",
+      "action": "Cotejo per object, exact citation/provenance and real approvals; stage a reviewed import and obtain exact operational authorization.",
+      "owner": "Regulatory Content Steward and the approved source-specific reviewers",
+      "unlock": "Reviewed source-bound canonical payload and explicit authorization of that actual import; no automatic conversion of headings to obligations."
+    },
+    {
+      "id": "PUBLICATION_CONTRACT",
+      "cause": "regulatoryPackPublish is listed as Reason+ETag but still uses DomainCommandRequest placeholder; no complete public binding for ETag derivation and retrieval/validation of actual coapproval evidence. Existing pipeline accepts trusted internal input, not a public approval receipt.",
+      "dependency": "Closed executable publication boundary and actual source/coverage/review evidence.",
+      "evidence": "Executable03 row94; OpenAPI02 lines1711 and7257; no registered HTTP caller of RegulatoryPackPipeline in current code.",
+      "action": "Close the specific request/result/CAS/approval-proof and effective actor binding through the existing contract process, then implement that boundary.",
+      "owner": "PO/Architecture/Backend authority for contract closure; real operational publisher for execution",
+      "unlock": "Published exact binding and genuine eligible package; no body flags or new permissions as substitutes."
+    },
+    {
+      "id": "TICKET_CONTRACT",
+      "cause": "The approved ticket is external to the domain; no published issuance/request/approval persistence binding exists in the frozen model or onboarding/activation DTOs.",
+      "dependency": "Approved mapping of actual ticket issuance to canonical persistence and actors.",
+      "evidence": "QA_TICKET_COMMERCIAL_20261022/CONTRACT.md; executable25 section4; physical model has no tenant-creation-ticket aggregate.",
+      "action": "Close the persistence/API/authorization/audit binding using existing governed mechanisms before implementing issuance.",
+      "owner": "PO commercial authority and Architecture/Data Model owner",
+      "unlock": "An approved canonical binding, actual managerial issue/approval and operations receipt; no ad hoc table or audit JSON as business authority."
+    },
+    {
+      "id": "B04_HUMAN",
+      "cause": "PO and Mario created drafts; no review/decision events exist for the requested actual QA circuit.",
+      "dependency": "Independent personal IAM actions with actual author/reviewer/decider, not development approval.",
+      "evidence": "QA audit create IDs01a16571-256a-779d-815b-3613724882a7 and01a16575-da94-76ef-90f6-cefe61818866; zero review/decide.",
+      "action": "Execute the exact prepared human scenario in VALIDATION.md and retain real receipts, including author denial and replay.",
+      "owner": "PO as author and Mario as independent GRC_MANAGER",
+      "unlock": "Fresh authenticated source GET/ETag, genuine review/decision audits, transition, denial and replay evidence."
+    },
+    {
+      "id": "OPERATIONS",
+      "cause": "Current mandate forbids automatic merge/deployment and requires corresponding authorization for actual migrations/imports. No eligible published version is currently contractable.",
+      "dependency": "Reviewed PR, package eligibility and specific operational authorization.",
+      "evidence": "User sections3/7/10/13; QA zero official assignments and3 separate provisional accesses.",
+      "action": "Review PR, authorize only the intended subsequent promotion/import and operate canonical publication/contracting with real actors.",
+      "owner": "PO/release authority and authorized operations actor",
+      "unlock": "Explicit applicable operational authority and eligible source versions; never convert validation access into a contract."
+    }
+  ],
+  "CHANGED_LAYERS": {
+    "backend": true,
+    "test_only_vocabulary_fixture": true,
+    "database_schema": false,
+    "historical_migrations": false,
+    "public_executable_contracts": false,
+    "frontend": false,
+    "ui": false,
+    "IAM_RBAC": false,
+    "infrastructure": false,
+    "deployment_contracts": false,
+    "deployment": false,
+    "production": false
+  },
+  "INTEGRITY": {
+    "NO_NEW_TECHNICAL_DEBT": "PASS_NO_FALLBACK_SHADOW_OR_TODO; UNRESOLVED_EXISTING_BOUNDARIES_EXPLICIT",
+    "NO_NEW_HARDCODES": "PASS_NO_TENANT_USER_OR_NORMATIVE_CONTENT_IN_PRODUCTION_DIFF; FIXTURES_EXPLICIT",
+    "NO_UNAUTHORIZED_SCOPE": "PASS_D01_D09_B01_B09_RECTORS37_41_44",
+    "NO_UNAUTHORIZED_SCHEMA_CHANGES": "PASS_NO_DATABASE_OR_MANIFEST_DIFF",
+    "NO_UNAUTHORIZED_RBAC_CHANGES": "PASS_NO_GRANT_ROLE_OR_PERMISSION_CHANGES",
+    "NO_FUNCTIONAL_REGRESSIONS": "PASS_APPLICABLE_AUTOMATED_SUITES; NO_UNTESTED_RUNTIME_ASSERTION",
+    "NO_VISUAL_CHANGES": "PASS_NO_FRONTEND_OR_DOCS_UI_DIFF",
+    "NO_PRODUCTION_CHANGES": "PASS_LOCAL_TESTS_AND_QA_READ_ONLY"
+  },
+  "STEP6A5": "NOT_STARTED_NOT_AUTHORIZED",
+  "STEP6A6": "NOT_STARTED_NOT_AUTHORIZED",
+  "CANONICAL_DOMAIN": "https://grc.tecdex.net/",
+  "MERGE": "NOT_PERFORMED",
+  "DEPLOYMENT": "NOT_PERFORMED",
+  "EVIDENCE": [
+    {
+      "path": ".release-custody/phase6a-functional-completion-20261023/entry.json",
+      "sha256": "8cd918bd9de909e2202c7f32b2a7f6e3a5dfe322631e78fb56c82b6f529e3e47"
+    },
+    {
+      "path": ".release-custody/phase6a-functional-completion-20261023/entry-runtime-snapshot.json",
+      "sha256": "d188c7e79f0fd0cf4d03fcb18a0c790848bbdc98de75c24641247aa7a2928d9c"
+    },
+    {
+      "path": ".release-custody/phase6a-functional-completion-20261023/runtime-entry.json",
+      "sha256": "a100db6d205ae5419514a90a27f2b13e9d495a1c6ba852963c2d8417cf65404d"
+    },
+    {
+      "path": ".release-custody/phase6a-functional-completion-20261023/pipeline-postgres-approved.log",
+      "sha256": "58f187409f25379adfb35edce4b9d696209a4651540dabc716757c9106cc1cd8"
+    },
+    {
+      "path": ".release-custody/phase6a-functional-completion-20261023/b04-h04-postgres-approved.log",
+      "sha256": "15d1050bf77202a3cba7e97e8ec5ce06ee71dc7912ebc1a06c0ad4ef31ecad68"
+    },
+    {
+      "path": ".release-custody/phase6a-functional-completion-20261023/unit-final.json",
+      "sha256": "ec1929d8d9da9fd062cd5e14b36c400938e506da4be4bb9cf161904b0e4fa6cf"
+    },
+    {
+      "path": ".release-custody/phase6a-functional-completion-20261023/typecheck-final.log",
+      "sha256": "8729bfd547cf8859cc1ed85b9b77eb1bffc234de4c6811a4a00b50ee1c543872"
+    },
+    {
+      "path": ".release-custody/phase6a-functional-completion-20261023/build-final.log",
+      "sha256": "727230cb627ff175aa05b02d17f8543fc92dc62da34aef3f718cac4ad50eef8d"
+    },
+    {
+      "path": ".release-custody/phase6a-functional-completion-20261023/contracts.log",
+      "sha256": "6efbf5f9ec1b52e437f6d412a967919d85c03c9d421a77615a46d197d2dfda4b"
+    },
+    {
+      "path": ".release-custody/phase6a-functional-completion-20261023/secrets.log",
+      "sha256": "a75019bbb34e91d8173a767beaee5c58c4f7262c7f6a8bcb72731af6351a5c76"
+    },
+    {
+      "path": ".release-custody/phase6a-functional-completion-20261023/earlier-attempts.json",
+      "sha256": "516f7cb03ad1463d8209932dd39d0ef42eb413bf372d39114eec1767e399dfa8"
+    },
+    {
+      "path": ".release-custody/phase6a-functional-completion-20261023/qa-anonymous-catalog.json",
+      "sha256": "825baf725e8caa2256c552987444a0ce6593a88a3fae19fb88d51a5684d9c1b5"
+    },
+    {
+      "path": ".release-custody/phase6a-functional-completion-20261023/qa-anonymous-matrix.json",
+      "sha256": "38999193a538aaba5ad92faa70a015d8ac891bb1db72b14f0e8e8946289eebd1"
+    }
+  ],
+  "TIMESTAMP_UTC": "2026-10-23T13:01:30.396831+00:00"
+}

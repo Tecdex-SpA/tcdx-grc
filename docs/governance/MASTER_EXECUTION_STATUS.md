@@ -5581,3 +5581,23 @@ Inventario de seis marcos aprobados: cuatro ISO y dos leyes; cinco packs físico
 Integridad rectora/generadores/typecheck/build/secrets PASS; regresión1072 unitarias,51 PostgreSQL aisladas y50 navegador desktop/narrow PASS. Matrices QA reales Requisitos×Controles, Controles×Evidencias y Hallazgos×Acciones verificadas mediante API y tablas UI finales; negativas Platform/Tenant403 y tenant ajeno404 preservadas. El E2E humano positivo heredado sigue BLOCKED: Mario Cáceres está identificado pero el PO confirmó que no está disponible; no hay GRC_MANAGER activo independiente ni se permite autorrevisión. Sin identidades, grants o aprobaciones fabricadas.
 
 `QA_NORMATIVE_CATALOG_CONTRACTING_E2E=PARTIAL`; `PREVIOUS_RELEASE_CLOSURE=PARTIAL`; `RECTOR_GATE=BLOCKED` exclusivamente para el cierre integral por esos requisitos pendientes, con comprobaciones rectoras técnicas PASS. No se autoaprueba HUMAN_UI_REVIEW ni se reabre el cierre STEP6A4. Expediente único: `docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/qa-normative-catalog-contracting-e2e-20261022/` con RELEASE.md, VALIDATION.md, RESULT.json y HANDOFF.md; inventario y recibos privados referenciados por hash para continuidad entre cuentas. Producción sin cambios; STEP6A5/STEP6A6 NOT_STARTED.
+
+
+## PHASE6A_FUNCTIONAL_COMPLETION_NORMATIVE_HOMOLOGATION_CONTRACTING — 2026-10-23
+
+Baseline TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16,POST_STEP6A4_PRE_STEP6A5.
+Mandato PO actual autoriza implementación/verificación y PR funcional independiente;
+excluye cambios visuales,PR26,merge/deploy automático y etapas posteriores.
+Base mainc2a774f/PR25MERGED. Fuente funcionalee2dee72f7683c5ea3c8b86bc9936687a41514d6;
+fixture de prueba9bb59eff2bc27283fc950db1de26d981096115ef.
+Persistencia canónica de import/crosswalks,temporalidad,versiones y serialización
+corregidas.1078unitPASS/237skips,60PG16PASS,0schema mismatches;typecheck/build/
+contracts/secrets/rectorPASS. QA sólo READONLY: ledger36exacto,saludPASS,333mappings/
+6cabeceras sin inconsistencias inspeccionadas;5drafts,0publicaciones/0contratos,
+3accesosQA separados. B04 conserva2create,sin review/decide. No fuentes,licencias,
+contratos o actuaciones humanas ficticias. Publicación HTTP/ticket conservan
+bloqueos contractuales precisos; el slice local no declara cierre operacional.
+RECTOR_GATE=BLOCKED_CIERRE_INTEGRAL;INTEGRATED_RELEASE_GATE=PARTIAL.
+Expediente único phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/phase6a-functional-completion-20261023/:
+RELEASE,VALIDATION,RESULT,HANDOFF. DB/APIpública/IAM/frontend/visual/infra/producción
+sin cambios;STEP6A5/STEP6A6NOT_STARTED. PR funcional queda para revisión,sin merge.
