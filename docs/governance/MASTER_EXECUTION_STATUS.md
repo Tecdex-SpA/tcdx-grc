@@ -5624,3 +5624,36 @@ fuera del ledger por defecto; sólo aplicado en PG16 propio desechable detenido.
 No contacto/migración/activación QA, import real, actuación humana, merge o deploy.
 Ejecución2/3 y STEP6A5/6A6 NOT_STARTED/NOT_AUTHORIZED. Este append no reescribe
 los cierres históricos ni autoriza la siguiente ejecución.
+
+
+## PHASE6A_NORMATIVE_LIBRARY_STRUCTURING_HOMOLOGATION — ejecución2 local, 2026-10-23
+
+Baseline activa `TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16`, fase
+`POST_STEP6A4_PRE_STEP6A5`. Source `75f377a230bf11eac003fb91b44c56b1daf00eea`,
+rama/PR27 existentes; PR26 intacto. `RECTOR_GATE=PASS` en el alcance local
+autorizado; `NORMATIVE_LIBRARY_TECHNICAL_CLOSURE=PARTIAL`. No es cierre integral.
+
+Cinco fuentes originales/204 páginas extraídas;619 unidades,501 enunciados
+como artefactos de fuente y siete Requirement draft acotados.131 controles
+de referencia/131 localizaciones, un soporte Requirement→Control, siete
+crosswalks propuestos y nueve correcciones42001 versionadas, sin reescribir
+identidades anteriores. Cinco payloads parciales verificados en PostgreSQL
+desechable; ninguno publicado oficialmente. Los211 y104 IDs se conservan.
+
+Pruebas nuevas:1093 unitarias,302 PostgreSQL,18 navegador con fixtures y13
+Python PASS; typecheck/build/autoridad PASS. No confundir estas pruebas con
+cobertura normativa integral. P1/P2/T1/P1-TX/H04 interno se conservan, sin
+nuevas aprobaciones humanas ni derechos ficticios. Sin cambio físico/HTTP/IAM,
+frontend, infraestructura o contratos de despliegue; selector interno de versión
+corregido conforme al FK canónico existente.
+
+Faltan cuerpos ISO9001:2026 e ISO9001:2015/Amd1:2024;494 enunciados y60 scopes
+de candidatos requieren atomización/reconciliación, vigencias/jerarquías y
+homologación integral pendientes. Cero marcos certificados completos.
+`HANDOFF_TO_EXECUTION_3=BLOCKED_PENDING_EXECUTION_2_COMPLETION`. No se traslada
+ese trabajo a ejecución3. `INTEGRATED_RELEASE_GATE=PARTIAL`;
+`MARKET_RELEASE_READY=BLOCKED`. Ejecución3/STEP6A5/STEP6A6 no iniciados; cero
+merge, despliegues, importaciones externas o migraciones QA/producción.
+
+Expediente: `docs/phase6a/NORMATIVE_LIBRARY_IMPLEMENTATION_20261020/phase6a-normative-library-structuring-20261023/`
+con RELEASE.md, VALIDATION.md, RESULT.json, HANDOFF.md y recibos técnicos por hash.

@@ -1,0 +1,169 @@
+{
+  "EXECUTION": "PHASE6A_NORMATIVE_LIBRARY_STRUCTURING_HOMOLOGATION",
+  "EXECUTION_STAGE": "2_OF_3",
+  "MODE": "RECONSTRUCT_VALIDATE_IMPLEMENT_VERIFY_HANDOFF",
+  "BASELINE": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+  "PHASE": "POST_STEP6A4_PRE_STEP6A5",
+  "INITIAL_HEAD": "256d00aed1afa14066b3b3186fe93b456d2b6e04",
+  "BRANCH": "feat/phase6a-functional-completion-20261023",
+  "PR": 27,
+  "NORMATIVE_LIBRARY_TECHNICAL_CLOSURE": "PARTIAL",
+  "AUTHORIZATION": {
+    "source": "Current explicit Product Owner mandate EXECUTION2_OF3",
+    "scope": [
+      "inventory",
+      "internal extraction/structuring/homologation proposals",
+      "canonical disposable PostgreSQL preparation and tests",
+      "minimal corrective implementation in existing architecture",
+      "integrated source/dossier on PR27"
+    ],
+    "excluded": [
+      "EXECUTION3",
+      "STEP6A5",
+      "STEP6A6",
+      "MERGE",
+      "DEPLOY",
+      "EXTERNAL_MIGRATION",
+      "REAL_QA_OR_PRODUCTION_IMPORT",
+      "HUMAN_APPROVALS",
+      "PR26_CHANGES",
+      "COMMERCIAL_OR_IAM_ARCHITECTURE_CHANGES"
+    ]
+  },
+  "CURRENT_TESTS": {
+    "unit": {
+      "passed": 1093,
+      "skipped_by_environment": 302,
+      "failed": 0
+    },
+    "python_sources": {
+      "passed": 13,
+      "failed": 0
+    },
+    "postgresql": {
+      "passed": 302,
+      "failed": 0,
+      "profiles": {
+        "source_preparation": 13,
+        "core": 43,
+        "commercial": 34,
+        "security": 77,
+        "iam": 9,
+        "legacy": 20,
+        "b04": 55,
+        "pipeline": 11,
+        "runtime_bindings_and_six_matrices": 40
+      }
+    },
+    "browser": {
+      "passed": 18,
+      "failed": 0,
+      "b04": 10,
+      "library": 8,
+      "environment": "Local UI with intercepted/fixture API; no external runtime or actual-source integral E2E claim"
+    },
+    "typecheck": "PASS",
+    "build": "PASS",
+    "rector_governance": "PASS",
+    "rector_status_test": "PASS",
+    "contract_derivations": "PASS",
+    "rights_contract_derivation": "PASS",
+    "runtime_internal_authority_integrity": "PASS",
+    "secret_findings": 0,
+    "private_receipts": "EVIDENCE_INDEX.json"
+  },
+  "HUMAN_APPROVALS_EXECUTED": 0,
+  "QA_IMPORTS_EXECUTED": 0,
+  "EXECUTION3": "NOT_STARTED",
+  "SOURCE_COMMIT": "75f377a230bf11eac003fb91b44c56b1daf00eea",
+  "PR_HEAD": "75f377a230bf11eac003fb91b44c56b1daf00eea",
+  "PR_HEAD_OBSERVATION": "Source commit observed before the final documentary receipt commit; final PR HEAD is its documentation descendant, verified in GitHub after publication",
+  "PR27_STATUS": "OPEN",
+  "CI_STATUS": "PASS_FOR_SOURCE_COMMIT",
+  "RECTOR_GATE": "PASS",
+  "RECTOR_GATE_SCOPE": "Authorized verified local slice; no normative completeness or human gate asserted",
+  "INTEGRATED_RELEASE_GATE": "PARTIAL",
+  "MARKET_RELEASE_READY": "BLOCKED",
+  "FRAMEWORKS_STRUCTURED": "5_PARTIAL_OF_6; 0_COMPLETE",
+  "FRAMEWORKS_HOMOLOGATED": "0_OF_6_COMPLETE",
+  "MATRICES_VALIDATED": "6_CANONICAL_AXES_WITH_SYNTHETIC_PG_HTTP_AND_BROWSER_FIXTURES; ACTUAL_SOURCE_INTEGRAL_E2E_NOT_CERTIFIED",
+  "PACKAGES_PREPARED": "5_PARTIAL_SOURCE_BOUND_PAYLOADS_OF_6; 4_DRAFT_1_REVIEW",
+  "EXTERNAL_MIGRATIONS_EXECUTED": 0,
+  "OFFICIAL_PUBLICATIONS_EXECUTED": 0,
+  "DEPLOYMENTS_EXECUTED": 0,
+  "NEW_TECHNICAL_DEBT": "0_IDENTIFIED_IN_VERIFIED_CHANGE; UNFINISHED_CONTENT_SCOPE_REMAINS_EXPLICIT",
+  "HANDOFF_TO_EXECUTION_3": "BLOCKED_PENDING_EXECUTION_2_COMPLETION",
+  "PO_DECISIONS_REQUIRED": [],
+  "CONTENT_COUNTS": {
+    "source_pdfs": 5,
+    "source_pages_processed": 204,
+    "supplemental_27001_pages_for_identifiers": 26,
+    "source_bound_normative_units": 619,
+    "raw_modal_candidates": 501,
+    "canonical_bounded_requirement_drafts": 7,
+    "remaining_modal_candidates_not_canonically_imported": 494,
+    "regulatory_reference_controls": 131,
+    "normative_unit_control_mappings": 131,
+    "requirement_control_mappings": 1,
+    "source_crosswalk_proposals": 7,
+    "control_identifier_correction_proposals": 9,
+    "reviewed_coverage_percent": 0,
+    "received_candidate_ids_preserved": 211,
+    "independent_2026_candidate_ids_preserved": 104,
+    "candidate_references_requiring_reconciliation": 60
+  },
+  "CONTRACTS": {
+    "already_formalized_and_preserved": [
+      "P1",
+      "P2",
+      "T1",
+      "P1-TX",
+      "H04_INTERNAL_DEV_QA"
+    ],
+    "new_human_approvals": 0,
+    "sealed_executable_contracts_modified": false,
+    "internal_typescript_import_input_changed": "Optional exact targetVersionNumber; fail-closed validation and canonical identity helper reused",
+    "physical_schema_modified": false,
+    "http_contracts_modified": false,
+    "iam_rbac_modified": false,
+    "frontend_modified": false,
+    "infrastructure_modified": false,
+    "deployment_contracts_modified": false
+  },
+  "BLOCKERS": [
+    {
+      "kind": "SOURCE",
+      "framework": "ISO_9001_2026",
+      "detail": "Definitive edition6 body not found in specified directory, both ZIPs, nested kits or accessible supplemental originals; official metadata and104 editorial proposals do not substitute it"
+    },
+    {
+      "kind": "SOURCE",
+      "framework": "ISO_9001_2015",
+      "detail": "ISO9001:2015/Amd1:2024 body absent; received27001 amendment is a different framework"
+    },
+    {
+      "kind": "TECHNICAL_CONTENT",
+      "detail": "Exhaustive atomization, non-modal duties, subject/applicability/exception/temporal interpretation, paragraph/literal structure and reference reconciliation remain incomplete;494 modal candidates and60 candidate scopes require completion"
+    },
+    {
+      "kind": "HOMOLOGATION_COVERAGE",
+      "detail": "Seven source comparisons, nine identifier corrections and one requirement/control relation are bounded draft proposals; no complete per-framework homologation, independent coverage or actual-source integral matrix E2E certification"
+    }
+  ],
+  "BASELINE_AUTHORITY_LIMITATION": "Original v1.12 rector ZIP unavailable; versioned active baseline/activation/manifests verified. Historical v1.4 ZIP compared and not substituted.",
+  "PR26": {
+    "status": "OPEN_DRAFT",
+    "head": "6f558f45f242068afc90e48c877e7203c0adf867",
+    "modified": false
+  },
+  "GIT_WORKTREE_AT_ENTRY": "CLEAN",
+  "CANONICAL_PUBLIC_DOMAIN": "https://grc.tecdex.net/",
+  "CI": {
+    "head_sha": "75f377a230bf11eac003fb91b44c56b1daf00eea",
+    "check": "rector-governance",
+    "conclusion": "success",
+    "status": "completed",
+    "url": "https://github.com/Tecdex-SpA/tcdx-grc/actions/runs/40013624129/job/120619985085",
+    "observation": "Source commit before documentary receipt; final head checked separately after push"
+  }
+}
