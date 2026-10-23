@@ -84,3 +84,113 @@ persistencia del ticket requiere cierre contractual concreto antes del código.
 RESULT contiene cada bloqueo con causa,dependencia,evidencia,acción,owner y unlock.
 Los recibos completos quedan en custodia privada ignorada por Git, referidos por
 SHA256 desde RESULT; sus extractos anteriores bastan para continuidad sin secretos.
+
+
+## Ejecución 1/3 — evidencia final de runtime
+
+Código: 4eaf58906b1206be5f6a7e8ac7ff7e520fb4c5c7. Node22.23.2,
+pnpm12.4.1, PostgreSQL16 local aislado. La primera pasada utilizó Node26.4.0;
+se repitió la validación completa con el engine exacto del repositorio. Binario
+oficial temporal verificado contra SHASUMS256:
+61130f394c1630d211dd50aecc4353d379480f36d3ac913cd85dbba1aed585c6.
+No instalación global ni cambio de dependencias/lockfile.
+
+| Nombre / comando | Entorno y datos | Resultado | Recibo privado / alcance |
+| --- | --- | --- | --- |
+| pnpm typecheck | Node22, workspace | PASS | runtime-node22-typecheck.log |
+| pnpm build | Node22, workspace | PASS; advertencia de tamaño de bundle preexistente | runtime-node22-build.log; no imagen ni deploy |
+| pnpm exec vitest run --reporter=json --outputFile=<custody>/runtime-node22-unit.json | Local, fixtures/unit/mocks explícitos | 1079PASS / 248omitidas por flags / 0FAIL | runtime-node22-unit.json; no E2E operacional |
+| bash scripts/regulatory/run-runtime-postgres-tests.sh core | PG16 propio; DB nueva por suite; catálogo editorial draft preexistente y actor sintético | 43PASS | runtime-node22-core-postgres.log; nueve suites, lector36 + upgrade31 separados |
+| bash scripts/regulatory/run-runtime-postgres-tests.sh commercial | PG16 propio, planes/familias/paquetes sintéticos, tokens firmados | 3catálogo +25cambio plan +6pack HTTP =34PASS | runtime-node22-commercial-postgres.log |
+| bash scripts/normative-library/run-operational-postgres-tests.sh | PG16 propio; 35→36migraciones; B04/rights sintéticos | 10upgrade +45operacionales técnicos =55PASS | runtime-node22-b04-postgres.log |
+| bash scripts/regulatory/run-pipeline-postgres-tests.sh | PG16 propio, contenido explícitamente sintético | 10PASS | runtime-node22-importer-postgres.log |
+| pnpm contracts:verify | Generados efectivos | PASS | runtime-contracts.log |
+| bash scripts/verify-rector-governance.sh | Baseline/manifiestos/contratos | Exit0 / integridad PASS | runtime-governance.log; gates históricos BLOCKED impresos no se convierten en PASS |
+| pnpm secrets:scan | Diff/fuentes | 0hallazgos | runtime-secrets.log |
+| git diff --check | Fuentes/expediente | PASS | verificación Git |
+
+Custodia: .release-custody/phase6a-functional-completion-20261023/.
+RESULT.RUNTIME_EXECUTION.TESTS.receipts registra SHA256 por archivo, y conserva
+106 omisiones **individualizadas** con nombre, archivo, configuración requerida,
+causa y criticidad. runtime-test-inventory.json clasifica cada una de las1327
+pruebas por comando/entorno/datos/resultado/evidencia/alcance/límites. Las248
+omitidas por el runner unitario incluyen142 ejecutadas realmente en PG aparte;
+las106 restantes no se contabilizan como PASS. Las omisiones de selección en el
+lector de referencias son complementarias:11casos actuales y1upgrade ejecutados
+sobre sus respectivos esquemas; ningún caso de esa suite queda omitido.
+
+TESTS_MOCKED: el conjunto unitario incluye mocks de puertos, autenticación y
+almacenamiento según cada archivo; no demuestra derechos legales ni IAM humano.
+TESTS_INTEGRATION:142 PostgreSQL reales. B04 añade cinco casos sobre socket HTTP
+local y los servicios reales, con sesiones JWT sintéticas firmadas, además de los
+40casos previos. Contratación añade seis casos Fastify.inject sin interceptar
+handlers/repositorios. El adaptador de custodia H04 se prueba con MinIO sustituido;
+los casos PG de rights usan attestation synthetic. No equivalen a prueba de MinIO
+QA ni a licencia auténtica. TESTS_REAL_QA=NO_EJECUTADAS_EN_ESTA_EJECUCION;
+TESTS_HUMAN_OPERATIONAL=EXCLUIDAS_POR_MANDATO. No hay aprobación humana simulada.
+
+### Casos y límites de publicación, ticket y matrices
+
+PUBLISHING_HTTP_RUNTIME=BLOCKED. Positivos HTTP ejecutados:0. Negativos HTTP
+contractuales ejecutados:0. Las guardas del pipeline interno tienen pruebas,
+pero no acreditan binding HTTP/CAS/coaprobaciones. No se añade ruta alternativa ni
+se llama un404 genérico una prueba satisfactoria de autorización de publicación.
+Los doce negativos exigidos (permiso, tenant, ausencia, versión, ETag, approvals,
+derechos, edición, paquete, replay, concurrencia y estado) siguen siendo criterio
+obligatorio del binding pendiente; no se declaran ejecutados.
+
+TENANT_TICKET_RUNTIME=BLOCKED. El PO cerró emisión externa e incorporación
+posterior, no emisión dentro de GRC. La plantilla no es documento emitido ni
+recibo contractual. Persistencia/recuperación de la incorporación aún requieren
+el contrato tipado de HANDOFF; ningún dato comercial oficial se crea en QA.
+
+MATRIX_RUNTIME tiene SQL real probado para RequirementControlMapping, versiones,
+procedencia y denegación, más los seis tipos en pruebas unitarias. No se declara
+prueba HTTP+PG poblada de todos los ejes. Esa limitación permanece visible como
+verificación integral no cerrada, no como trabajo aceptado para ejecución2.
+
+### B04 / H04 / contratación: demostración técnica
+
+B04: create202 y replay exacto; PATCH con ETag leído por GET; autorreview403;
+review independiente200; decide200; rechazo review/decide terminal; JSON cerrado;
+no bearer/token inválido401; tenant ajeno404; viewer403; If-Match ausente o
+malformado400, obsoleto409; dos reviews concurrentes200/409; decisión fuera de
+estado409. Se verifican actores reales de fixtures, IDs audit review/decision,
+cuatro AuditEvent y cuatro outbox del circuito válido. Fallo de INSERT audit500
+revierte transición; reintento exacto funciona con la misma key. No actúa Mario.
+
+H04: intervalos con precisión de microsegundo, inclusive desde/exclusive hasta y
+revocación; múltiples instantes equivalentes con zona; tiempo inválido DENY.
+Fuente/hash/edición/paquete/audiencia/acto/ambiente exactos, evidencia ausente o
+ambigua deniega. Historial inmutable, revocación, rollback y replay PG. La relación
+hacia RegulatorySource/publicación global sigue contractual y no se sustituye por
+license_classification. No se atesta derecho real sobre ISO.
+
+Contratación: asignación de versión exacta → visibilidad efectiva → revocación →
+visibilidad retirada; replay de activación conserva resultado original anterior
+a la revocación y hash. Concurrencia misma key crea una fila; intención cambiada
+409; rol Support/tenant header403; token ausente/inválido401; recurso ausente404;
+campos adicionales400; fallo audit500 revierte assignment/claim y permite retry;
+resultado corrupto503; autoridad revocada403 incluso con token aún válido. No se
+crea paquete comercial ni contratación oficial en QA. Los25casos de cambio de
+plan verifican términos, versiones, límites, capabilities, transferencia y
+atomicidad; los tres accesos provisionales existentes no cambian.
+
+### Intentos iniciales corregidos
+
+El sandbox impidió shmget/listener; se repitieron runners con autorización de
+clústeres locales, no se contaron esos fallos como PASS. La primera base limpia
+no tenía la publicación de referencias ni catálogo draft que exigen los tests;
+la preparación ahora usa SQL canónico y materializador existentes bajo guardas de
+propiedad local. Se corrigieron cast explícito del parámetro UUID y display_name
+obligatorio en fixtures. PlanVersion publicada no se modifica para negativos:
+se crean candidatas separadas, con familias/cuotas/entitlements coherentes, y se
+conservan los422 esperados. El caso scan ahora exige422/code/mensaje del guard
+vigente y comprueba estado approved/versión3 inalterados, antes de probar éxito
+tras restaurar el scan. La migración de referencia se prueba en31reales, sin
+suprimir ledger de36 ni omitir sus asserts. Logs de intentos quedan en custodia;
+los recibos finales Node22 contienen cero fallos y todos los clústeres detenidos.
+
+RUNTIME_TECHNICAL_CLOSURE=BLOCKED; no PARTIAL_PASS. Los dos contratos propuestos
+requieren revisión/publicación antes de código; las106pruebas globales omitidas
+y cobertura matricial parcial tampoco reciben un PASS por tener CI verde.

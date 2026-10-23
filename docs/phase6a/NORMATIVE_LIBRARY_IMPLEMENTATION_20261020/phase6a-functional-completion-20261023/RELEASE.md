@@ -1,5 +1,9 @@
 # Cierre funcional Fase6A — implementación y verificación 2026-10-23
 
+Estado vigente: **ejecución 1/3 PHASE6A_RUNTIME_FUNCTIONAL_CLOSURE = BLOCKED**.
+La sección final de ejecución 1/3 y RUNTIME_EXECUTION de RESULT.json actualizan
+este expediente; las secciones anteriores conservan la evidencia histórica.
+
 Ejecución PHASE6A_FUNCTIONAL_COMPLETION_NORMATIVE_HOMOLOGATION_CONTRACTING.
 Baseline activa TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16.
 Fase POST_STEP6A4_PRE_STEP6A5. STEP6A5/6A6 no autorizados.
@@ -111,3 +115,94 @@ NO_FUNCTIONAL_REGRESSIONS: suites aplicables PASS; no se afirma E2E no ejecutado
 NO_VISUAL_CHANGES: cero diff en apps/frontend y docs/ui; PR26 intacto.
 NO_PRODUCTION_CHANGES: no contacto de escritura o despliegue productivo.
 Estas declaraciones se acotan al diff y evidencias de esta ejecución.
+
+
+## Ejecución 1/3 — runtime funcional
+
+RUNTIME_TECHNICAL_CLOSURE=BLOCKED. Rector v1.12 activo; fase sin cambios.
+Referencia inicial 9c0edea; correcciones de runtime en
+4eaf58906b1206be5f6a7e8ac7ff7e520fb4c5c7. Continúa PR27 abierto, sin merge/deploy;
+main permanece c2a774f. PR26 permanece en 6f558f4, sin intervención visual.
+No se ejecutan contenidos/operaciones de las etapas 2/3 ni STEP6A5/6A6.
+
+### Inventario técnico verificable
+
+Abreviaturas: I/P=implementado y probado en el alcance indicado;
+P=parcial; BC=bloqueado por contrato. Ningún I/P implica operación oficial en QA.
+Las rutas de código siguientes son relativas a apps/backend/src.
+
+| Capacidad | Inicial → final | Contrato efectivo | Código / evidencia ejecutable | Brecha o límite |
+| --- | --- | --- | --- | --- |
+| Importación normativa | I/P → I/P interno | rector37/41/44, B01, modelo físico09 | regulatory/pipeline.ts, validator.ts; pipeline.test.ts y 10 PG | API pública y aprobación de fuente no se infieren del input interno |
+| Persistencia importación | I/P → I/P | modelo09, contratos07/12 | regulatory/postgres-repository.ts; pipeline.postgres.test.ts | Manifiesto/checksum/actor, rollback, replay; no import QA |
+| Fuente/edición | P → BC para cierre persistente | D03, rector41 | validator.ts; pruebas de fuente/procedencia/edición | Captura independiente de validaciones depende del binding de publicación |
+| Paquete | P → BC para gate completo | D03, rector41 | coverage.ts, validator.ts; pipeline tests | Cobertura calculada no sustituye recibos de revisión/decisión |
+| H04 | I/P KnowledgeSource → I/P corregido; BC RegulatorySource | H04_SOURCE_USAGE_RIGHTS_V1 | normative-library/rights.ts; 23 unitarias y casos PG de derechos | Microsegundos corregidos. Relación RegulatorySource/KnowledgeSource y alcance por audiencia no publicados |
+| Estructuración | I/P → I/P tipado | modelo09, B01/B02 | pipeline/postgres; jerarquía, requisitos, controles, fechas, tres crosswalks | Fixtures no son estructuración auténtica de los seis marcos |
+| Homologación | P → P/BC | D06, B07, modelo09 | validator/postgres; procedencia, tipo, destino, edición, no_match | Persistir una relación draft no la homologa. Captura de validación/aprobación aún BC |
+| Matrices | I/P parcial → I/P parcial | D07/B08/B09 | normative-library/matrices.ts, matrix-source.ts; library.test.ts + SQL de RequirementControlMapping | Seis tipos tienen cobertura unitaria; no se acredita HTTP/PG completo de cada eje con datos poblados |
+| B04 create | I/P servicio → I/P HTTP/PG | B04/B05/B06 y CONFIGURATION_APPROVAL_AND_CONCURRENCY.md | configuration/control-adjustment-service.ts; PG operacional | Identidades sintéticas firmadas locales, no PO/Mario |
+| B04 review | I/P servicio → I/P HTTP/PG | mismo contrato | mismas pruebas; autor DENY, reviewer permitido, CAS y rechazo | Ejecución humana excluida |
+| B04 decide | I/P servicio → I/P HTTP/PG | mismo contrato | mismas pruebas; audit/recibos/rollback/retry | Estado incompatible ahora 409; no confundir con actuación humana |
+| Publicación HTTP | BC → BC, candidato formalizado | API03 regulatoryPackPublish, rector41/42, H04 | pipeline interno conserva guardas; HANDOFF candidato | No endpoint nuevo ni PASS por servicio. Faltan recibos/gates/autoridad global/binding CAS |
+| Catálogo | I/P → I/P del mecanismo existente | rector42, comercial v1.9 | security/commercial-catalog-publication.ts; 3 PG | Fixtures no publican ofertas reales |
+| Contratabilidad | P → P/BC global | rector41/42, comercial v1.9 | commercial-subscription.ts; cambio de plan y contratos sintéticos | No acredita publicación/H04 global; gate HTTP aún BC |
+| Contratación | I/P → I/P alcance probado | API03, contratos07/12 | regulatory/pack-contract.ts; 6 PG HTTP + 25 cambio plan | Replay corregido conserva resultado/hash tras revocación; no contratación QA oficial |
+| Entitlements | I/P → I/P alcance probado | rector42, pack access canónico | regulatory/pack-entitlement.ts; temporal PG, cambio plan y activate/revoke HTTP | Tres accesos QA no modificados; no nuevo grant |
+| Ticket contractual | BC → BC, frontera decidida | QA_TICKET_COMMERCIAL_20261022, rector24/25/30/33 | PDFs existentes; propuesta HANDOFF | PO confirma emisión externa e incorporación posterior; relación/operación documental aún no publicadas |
+| Auditoría | I/P parcial → I/P en comandos probados | contratos04/07/08/12 | AuditEvent/outbox/idempotency en suites PG | Ausencia de comando de ticket/publicación impide PASS global; no recibos humanos fabricados |
+
+### Correcciones y trazabilidad
+
+- H04 compara instantes UTC canónicos con seis decimales, sin autorizar antes del
+  inicio por truncado a milisegundos; respeta fin exclusivo/revocación y DENY ante
+  instantes inválidos. No cambia derechos, permisos ni evidencia jurídica.
+- B04 rechaza estados incompatibles con 409 tras verificar actor/SoD; conserva
+  política, registry, CAS, transacciones y auditoría originales.
+- Activate/revoke guardan el resultado original en IdempotencyRecord.result_ref,
+  verifican response_hash en replay y fallan 503 si falta/corrompe el resultado.
+  No reconstruyen un éxito desde filas actuales. Un recibo histórico antiguo que
+  sólo contenga pack:<id> requiere reconciliación; no se convierte automáticamente.
+- Nuevas pruebas HTTP+PG verifican autenticación firmada sintética, permisos,
+  aislamiento, ETag, rechazo, idempotencia, concurrencia, revocación y rollback
+  con fallos reales de persistencia. B04 utiliza HTTP por socket localhost;
+  contratación utiliza Fastify.inject con handlers y PostgreSQL reales.
+- Los runners crean clústeres PG16 propios, bases nuevas por suite y verifican
+  directorio/system_identifier. Aplican migraciones exactas sólo allí y detienen
+  clústeres al salir, propagando fallos de cierre. La migración histórica de
+  referencias se prueba en su predecesor real de 31 migraciones, separado del
+  lector actual de 36. No se alteran migraciones históricas.
+- Fixtures antiguos se ajustan a contratos efectivos: nuevas PlanVersion de prueba
+  antes de publicación (no mutar las publicadas); error de scan verificado en el
+  guard de aplicación vigente, conservando estado/versión; preparación de la
+  publicación de referencias y del catálogo editorial draft preexistente local.
+  No se relajan aserciones, se desactivan pruebas ni se publica contenido oficial.
+
+Los 12 archivos del commit incluyen tres servicios/helpers de runtime, seis
+archivos de pruebas y tres scripts de preparación/ejecución. git show --stat
+4eaf589 reproduce el inventario exacto. Los cuatro archivos de este expediente
+contienen las propuestas y recibos; custodia privada no se agrega a Git.
+
+### Bloqueos y decisión competente
+
+| ID | Causa / contrato | Acción y responsable | Condición de desbloqueo |
+| --- | --- | --- | --- |
+| RUNTIME-PUBLISH-BINDING | API03 exige GRC global/coaprobaciones; OpenAPI genérico; fila approved_by singular; H04 no enlaza RegulatorySource; rector42 cierra roles globales | PO autorizó formalizar para revisión. Architecture/Data Model/Security deben revisar la propuesta precisa en HANDOFF | Publicación formal de modelo de recibos/gates, vínculo fuente/derechos/audiencias, autoridad global/SoD, esquema/ETag/TX; luego implementación y HTTP+PG positivos/negativos |
+| RUNTIME-TICKET-BINDING | Contrato QA_TICKET declara PDF externo y exige binding para persistencia/vinculación; propiedad documental tenant posterior al alta | PO decidió emisión externa + incorporación posterior. Architecture/Data Model/Backend/Security revisan relación y operación propuestas | Contrato documental y asociación tipada publicados con actor/permisos/CAS/retención/custodia/audit; luego implementación y prueba de incorporación/recuperación |
+
+No falta una autorización humana operacional para probar B04 localmente. Las
+licencias auténticas, contenido completo y actuaciones humanas pertenecen a
+las ejecuciones 2/3 y no se usan como sustituto de estos dos bloqueos de runtime.
+Las limitaciones de prueba globales se enumeran sin PASS en RESULT/VALIDATION.
+
+### Declaración de integridad del diff
+
+NEW_TECHNICAL_DEBT=0 introducida por el diff: sin TODO, tabla/flag/bypass temporal.
+NEW_BUSINESS_HARDCODES=0: sin IDs/tenants/usuarios reales ni condiciones comerciales
+fijas nuevas. Las constantes de puertos/fixtures son restricciones de seguridad
+local de pruebas, no comportamiento de negocio. UNAUTHORIZED_SCOPE_CHANGES=0;
+UNAUTHORIZED_SCHEMA_CHANGES=0; UNAUTHORIZED_RBAC_CHANGES=0; VISUAL_CHANGES=0;
+PRODUCTION_CHANGES=0. Evidencia: diff limitado a backend/tests/scripts/expediente;
+diff vacío en baseline/modelos/contratos/DB/frontend/UI. No se ejecuta despliegue,
+QA DML ni migración externa. No se declara ausencia absoluta de regresiones:
+las pruebas ejecutadas pasan y las omisiones se identifican individualmente.

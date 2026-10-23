@@ -1,7 +1,7 @@
 {
   "PROJECT": "GRC_TECDEX",
-  "EXECUTION": "PHASE6A_FUNCTIONAL_COMPLETION_NORMATIVE_HOMOLOGATION_CONTRACTING",
-  "MODE": "CONTINUATION_IMPLEMENTATION_AND_VERIFICATION",
+  "EXECUTION": "PHASE6A_RUNTIME_FUNCTIONAL_CLOSURE",
+  "MODE": "IMPLEMENT_VERIFY_CLOSE",
   "ACTIVE_BASELINE": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
   "CURRENT_PHASE": "POST_STEP6A4_PRE_STEP6A5",
   "BASE_MAIN_HEAD": "c2a774f1f55b1edc3abc347ed155c4730d18fe31",
@@ -18,8 +18,8 @@
     "deployment_authorized": false
   },
   "VISUAL_PR26": "OPEN_UNCHANGED_6f558f45f242068afc90e48c877e7203c0adf867",
-  "IMPLEMENTATION": "PASS_LOCAL_FOR_CANONICAL_IMPORT_PERSISTENCE; PUBLICATION_HTTP_AND_TICKET_BOUNDARIES_BLOCKED_CONTRACT",
-  "RECTOR_GATE": "BLOCKED_INTEGRAL_CLOSURE; IMPLEMENTED_SLICE_INTEGRITY_PASS",
+  "IMPLEMENTATION": "SOURCE_COMMIT_4eaf589_TESTED_LOCAL_NODE22;PUBLICATION_TICKET_CANDIDATES_FOR_REVIEW_NOT_IMPLEMENTED",
+  "RECTOR_GATE": "BLOCKED_RUNTIME_BINDINGS_AND_INTEGRAL_VALIDATION",
   "INTEGRATED_RELEASE_GATE": "PARTIAL",
   "APPROVED_FRAMEWORKS": 6,
   "STRUCTURED_FRAMEWORKS_INITIAL": 0,
@@ -330,5 +330,1983 @@
       "sha256": "38999193a538aaba5ad92faa70a015d8ac891bb1db72b14f0e8e8946289eebd1"
     }
   ],
-  "TIMESTAMP_UTC": "2026-10-23T13:01:30.396831+00:00"
+  "TIMESTAMP_UTC": "2026-10-23T13:01:30.396831+00:00",
+  "CURRENT_EXECUTION": "PHASE6A_RUNTIME_FUNCTIONAL_CLOSURE",
+  "RUNTIME_TECHNICAL_CLOSURE": "BLOCKED",
+  "RUNTIME_EXECUTION": {
+    "EXECUTION_SEQUENCE": "1_OF_3",
+    "MODE": "IMPLEMENT_VERIFY_CLOSE",
+    "INITIAL_HEAD": "9c0edea095b7be6980647c8694ec26131a542e1e",
+    "SOURCE_COMMIT": "4eaf58906b1206be5f6a7e8ac7ff7e520fb4c5c7",
+    "MAIN_HEAD": "c2a774f1f55b1edc3abc347ed155c4730d18fe31",
+    "BRANCH": "feat/phase6a-functional-completion-20261023",
+    "PR": 27,
+    "PR_STATUS": "OPEN",
+    "MERGE_EXECUTED": false,
+    "DEPLOYMENT_EXECUTED": false,
+    "RUNTIME_TECHNICAL_CLOSURE": "BLOCKED",
+    "RECTOR_GATE": "BLOCKED",
+    "RECTOR_INTEGRITY_CHECK": "PASS",
+    "ACTIVE_BASELINE": "TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16",
+    "CURRENT_PHASE": "POST_STEP6A4_PRE_STEP6A5",
+    "PO_DECISIONS": {
+      "ticket": "Emisión externa; formalizar incorporación posterior",
+      "publication": "Autorizar formalización para revisión",
+      "candidate_contracts_approved_for_implementation": false
+    },
+    "RUNTIME_STATUS": {
+      "IMPORTER_RUNTIME": "PASS_INTERNAL_PORT",
+      "IMPORTER_PERSISTENCE": "PASS_LOCAL_PG16",
+      "SOURCE_EDITION_VALIDATION_RUNTIME": "BLOCKED_PERSISTED_INDEPENDENT_RECEIPT_BINDING",
+      "PACKAGE_VALIDATION_RUNTIME": "COVERAGE_TESTED;BLOCKED_REVIEW_RECEIPTS",
+      "H04_RUNTIME": "PASS_KNOWLEDGE_SOURCE_TESTED_SCOPE;BLOCKED_REGULATORY_SOURCE_BINDING",
+      "NORMATIVE_STRUCTURING_RUNTIME": "PASS_TYPED_PERSISTENCE",
+      "HOMOLOGATION_RUNTIME": "TYPED_DRAFT_RELATIONS_TESTED;BLOCKED_APPROVAL_BINDING",
+      "B04_RUNTIME_TECHNICAL": "PASS_LOCAL_SIGNED_HTTP_POSTGRES",
+      "B04_HUMAN_OPERATIONAL": "EXCLUDED_EXECUTION_1",
+      "PUBLISHING_HTTP_RUNTIME": "BLOCKED_CONTRACT;NO_HTTP_PASS",
+      "CATALOG_RUNTIME": "PASS_EXISTING_SYNTHETIC_MECHANISM",
+      "CONTRACTING_RUNTIME_TECHNICAL": "PASS_EXECUTED_SYNTHETIC_SCOPE",
+      "CONTRACTING_OPERATIONAL_E2E": "EXCLUDED_EXECUTION_1",
+      "ENTITLEMENTS_RUNTIME": "PASS_EXECUTED_ACTIVATE_REVOKE_TEMPORAL_SCOPE",
+      "TENANT_TICKET_RUNTIME": "BLOCKED_POST_TENANT_DOCUMENT_BINDING",
+      "MATRIX_RUNTIME": "PARTIAL_SQL_REQUIREMENTS_CONTROLS_AND_UNIT_SIX_TYPES;NOT_FULL_HTTP_PG_ALL_AXES",
+      "AUDIT_RUNTIME": "PASS_TESTED_COMMANDS;BLOCKED_GLOBAL_PUBLICATION_TICKET",
+      "RBAC_SOD_RUNTIME": "PASS_EXECUTED_SCOPE;GLOBAL_PUBLICATION_AUTHORITY_BLOCKED",
+      "TENANT_ISOLATION": "PASS_EXECUTED_SCOPE",
+      "DEFAULT_DENY": "PASS_EXECUTED_SCOPE",
+      "CONCURRENCY_CAS": "PASS_B04_CONTRACTING_TESTED_SCOPE",
+      "IDEMPOTENCY": "PASS_TESTED_SCOPE",
+      "REGRESSION_TESTS": "PASS_EXECUTED_SCOPE_ONLY;106_OMISSIONS_NOT_PASS",
+      "RECTOR_TECHNICAL_GATE": "BLOCKED_BINDINGS_AND_INTEGRAL_COVERAGE"
+    },
+    "TESTS": {
+      "node": "22.23.2",
+      "pnpm": "12.4.1",
+      "postgresql": "16_TASK_OWNED_TEMPORARY",
+      "typecheck": "PASS",
+      "build": "PASS",
+      "unit_pass": 1079,
+      "unit_runner_skipped": 248,
+      "separately_executed_postgres_pass": 142,
+      "postgres_breakdown": {
+        "core": 43,
+        "commercial": 34,
+        "b04_h04_and_optional_default_upgrade": 55,
+        "importer": 10
+      },
+      "unexecuted_individual_tests": 106,
+      "failed_final_tests": 0,
+      "TESTS_MOCKED": "UNIT_SUITE_INCLUDES_MOCKS;NOT_OPERATIONAL_E2E",
+      "TESTS_INTEGRATION": "142_PG16_INCLUDING_B04_SOCKET_HTTP_AND_CONTRACTING_INJECT_REAL_HANDLERS",
+      "TESTS_REAL_QA": "NOT_EXECUTED_IN_THIS_RUNTIME_ONLY_EXECUTION",
+      "TESTS_HUMAN_OPERATIONAL": "EXCLUDED_EXECUTION_1",
+      "reference_tests": "11 current-schema + 1 actual predecessor upgrade; selection skips collectively all executed",
+      "omissions": [
+        {
+          "name": "INITIAL_SOURCE PG16 isolated rollback only serializes competing source and publication transactions on the same tenant",
+          "file": "apps/backend/src/core-grc/initial-retention-source.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_INITIAL_SOURCE_PG_IDENTIFIER",
+            "TCDX_INITIAL_SOURCE_POSTGRES"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "INITIAL_SOURCE PG16 isolated rollback only full source workflow and independent authors",
+          "file": "apps/backend/src/core-grc/initial-retention-source.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_INITIAL_SOURCE_PG_IDENTIFIER",
+            "TCDX_INITIAL_SOURCE_POSTGRES"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "INITIAL_SOURCE PG16 isolated rollback only CAS and idempotent replay",
+          "file": "apps/backend/src/core-grc/initial-retention-source.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_INITIAL_SOURCE_PG_IDENTIFIER",
+            "TCDX_INITIAL_SOURCE_POSTGRES"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "INITIAL_SOURCE PG16 isolated rollback only bind negatives and no publication without source",
+          "file": "apps/backend/src/core-grc/initial-retention-source.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_INITIAL_SOURCE_PG_IDENTIFIER",
+            "TCDX_INITIAL_SOURCE_POSTGRES"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "INITIAL_SOURCE PG16 isolated rollback only three retention revalidations and author checks",
+          "file": "apps/backend/src/core-grc/initial-retention-source.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_INITIAL_SOURCE_PG_IDENTIFIER",
+            "TCDX_INITIAL_SOURCE_POSTGRES"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "INITIAL_SOURCE PG16 isolated rollback only tenant permission and capability isolation",
+          "file": "apps/backend/src/core-grc/initial-retention-source.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_INITIAL_SOURCE_PG_IDENTIFIER",
+            "TCDX_INITIAL_SOURCE_POSTGRES"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "INITIAL_SOURCE PG16 isolated rollback only pending source cannot be ordinary evidence",
+          "file": "apps/backend/src/core-grc/initial-retention-source.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_INITIAL_SOURCE_PG_IDENTIFIER",
+            "TCDX_INITIAL_SOURCE_POSTGRES"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "INITIAL_SOURCE PG16 isolated rollback only audit failure rolls back source binding",
+          "file": "apps/backend/src/core-grc/initial-retention-source.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_INITIAL_SOURCE_PG_IDENTIFIER",
+            "TCDX_INITIAL_SOURCE_POSTGRES"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "INITIAL_SOURCE PG16 isolated rollback only source scan interval clause and independent review",
+          "file": "apps/backend/src/core-grc/initial-retention-source.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_INITIAL_SOURCE_PG_IDENTIFIER",
+            "TCDX_INITIAL_SOURCE_POSTGRES"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "INITIAL_SOURCE PG16 isolated rollback only source custody does not broaden document reads",
+          "file": "apps/backend/src/core-grc/initial-retention-source.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_INITIAL_SOURCE_PG_IDENTIFIER",
+            "TCDX_INITIAL_SOURCE_POSTGRES"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "INITIAL_SOURCE PG16 isolated rollback only tenant-only legacy DENY becomes authorized source submit under exact v2",
+          "file": "apps/backend/src/core-grc/initial-retention-source.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_INITIAL_SOURCE_PG_IDENTIFIER",
+            "TCDX_INITIAL_SOURCE_POSTGRES"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "INITIAL_SOURCE PG16 isolated rollback only ordinary tenant policy publication and upload without accreditation",
+          "file": "apps/backend/src/core-grc/initial-retention-source.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_INITIAL_SOURCE_PG_IDENTIFIER",
+            "TCDX_INITIAL_SOURCE_POSTGRES"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "INITIAL_SOURCE PG16 isolated rollback only ordinary product baseline publication and upload without accreditation",
+          "file": "apps/backend/src/core-grc/initial-retention-source.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_INITIAL_SOURCE_PG_IDENTIFIER",
+            "TCDX_INITIAL_SOURCE_POSTGRES"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "INITIAL_SOURCE PG16 isolated rollback only mandatory tenant policy still needs a formal source",
+          "file": "apps/backend/src/core-grc/initial-retention-source.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_INITIAL_SOURCE_PG_IDENTIFIER",
+            "TCDX_INITIAL_SOURCE_POSTGRES"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "INITIAL_SOURCE PG16 isolated rollback only contractual policy still needs a formal source",
+          "file": "apps/backend/src/core-grc/initial-retention-source.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_INITIAL_SOURCE_PG_IDENTIFIER",
+            "TCDX_INITIAL_SOURCE_POSTGRES"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "INITIAL_SOURCE PG16 isolated rollback only legal hold still needs a formal source",
+          "file": "apps/backend/src/core-grc/initial-retention-source.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_INITIAL_SOURCE_PG_IDENTIFIER",
+            "TCDX_INITIAL_SOURCE_POSTGRES"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "INITIAL_SOURCE PG16 isolated rollback only pending initial source cannot be published as ordinary",
+          "file": "apps/backend/src/core-grc/initial-retention-source.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_INITIAL_SOURCE_PG_IDENTIFIER",
+            "TCDX_INITIAL_SOURCE_POSTGRES"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "INITIAL_SOURCE PG16 isolated rollback only ordinary upload accepts selected tenant subject and rejects foreign subject",
+          "file": "apps/backend/src/core-grc/initial-retention-source.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_INITIAL_SOURCE_PG_IDENTIFIER",
+            "TCDX_INITIAL_SOURCE_POSTGRES"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "C04W canonical lifecycle publication on isolated PG16 publishes five audited tenant edges, replays exactly and rejects ledger or registry corruption with no grants",
+          "file": "apps/backend/src/security/c04w-lifecycle-publication.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_C04W_ISOLATED_REBUILD",
+            "TCDX_C04W_LIFECYCLE_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "C-04W approved tenant role publication on isolated PostgreSQL creates only approved tenant grants, audits them, and replays without duplication",
+          "file": "apps/backend/src/security/c04w-rbac-publication.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_C04W_ISOLATED_REBUILD",
+            "TCDX_C04W_RBAC_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "MI7A authorization projection in isolated local PostgreSQL separates Platform and tenant grants, intersects entitlement/scope and defaults to DENY",
+          "file": "apps/backend/src/security/frontend-projections.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "IAM publication on task-owned PostgreSQL 16 rolls back the canonical principal when its provisioning audit fails",
+          "file": "apps/backend/src/security/iam-publication.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_IAM_PUBLICATION_INTEGRATION",
+            "TCDX_ISOLATED_REBUILD"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "IAM publication on task-owned PostgreSQL 16 provisions one authenticated Platform principal and one audit under concurrency",
+          "file": "apps/backend/src/security/iam-publication.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_IAM_PUBLICATION_INTEGRATION",
+            "TCDX_ISOLATED_REBUILD"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "IAM publication on task-owned PostgreSQL 16 rolls back all 132 adoption audits and commercial rows when material auditing fails",
+          "file": "apps/backend/src/security/iam-publication.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_IAM_PUBLICATION_INTEGRATION",
+            "TCDX_ISOLATED_REBUILD"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "IAM publication on task-owned PostgreSQL 16 publishes exactly 44 global + 88 tenant audits, three permissions and three persistible transitions",
+          "file": "apps/backend/src/security/iam-publication.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_IAM_PUBLICATION_INTEGRATION",
+            "TCDX_ISOLATED_REBUILD"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "IAM publication on task-owned PostgreSQL 16 replays without duplicating grants, auditing or migrations",
+          "file": "apps/backend/src/security/iam-publication.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_IAM_PUBLICATION_INTEGRATION",
+            "TCDX_ISOLATED_REBUILD"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "IAM publication on task-owned PostgreSQL 16 denies a different stable service-account subject despite the same client ID",
+          "file": "apps/backend/src/security/iam-publication.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_IAM_PUBLICATION_INTEGRATION",
+            "TCDX_ISOLATED_REBUILD"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "IAM publication on task-owned PostgreSQL 16 denies inactive principal and refuses automatic reactivation",
+          "file": "apps/backend/src/security/iam-publication.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_IAM_PUBLICATION_INTEGRATION",
+            "TCDX_ISOLATED_REBUILD"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "IAM publication on task-owned PostgreSQL 16 rejects corrupt publication evidence instead of manufacturing replacement audits",
+          "file": "apps/backend/src/security/iam-publication.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_IAM_PUBLICATION_INTEGRATION",
+            "TCDX_ISOLATED_REBUILD"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "IAM publication on task-owned PostgreSQL 16 revokes only the authenticated principal with an audit and makes publication fail closed",
+          "file": "apps/backend/src/security/iam-publication.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_IAM_PUBLICATION_INTEGRATION",
+            "TCDX_ISOLATED_REBUILD"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "Managed Identity canonical mapping in isolated PostgreSQL denies unknown and disabled subjects without creating identity, membership or role authority",
+          "file": "apps/backend/src/security/managed-identity.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "Managed Identity canonical mapping in isolated PostgreSQL completes the eight-operation local lifecycle with one-time disclosure, safe audit and no grants",
+          "file": "apps/backend/src/security/managed-identity.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "Managed Identity canonical mapping in isolated PostgreSQL reconciles a lost create response by its durable marker without retrying create or disclosing a credential",
+          "file": "apps/backend/src/security/managed-identity.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "membership invitation PostgreSQL integration enforces one-time tenant enrollment, audit/outbox and accept/revoke concurrency",
+          "file": "apps/backend/src/security/membership-invitation.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "MembershipRole revoke PostgreSQL integration closes one of N tenant roles with CAS, replay, tenant isolation, audit and outbox",
+          "file": "apps/backend/src/security/membership-role-revoke.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "P2E isolated PostgreSQL target/canonical catalog projections proves lifecycle, server refresh, exact revoke ID, catalog eligibility, default DENY and zero read side effects",
+          "file": "apps/backend/src/security/platform-role-read.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "P2A isolated PostgreSQL platform role administration proves exact DATA-ONLY permission publication and zero catalog schema delta",
+          "file": "apps/backend/src/security/platform-role-service.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "P2A isolated PostgreSQL platform role administration persists grant/revoke history, original replay and reinforced audit with zero tenant effects",
+          "file": "apps/backend/src/security/platform-role-service.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "P2A isolated PostgreSQL platform role administration rejects unknown/inactive identities and foreign/inactive role families without partial writes",
+          "file": "apps/backend/src/security/platform-role-service.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "P2A isolated PostgreSQL platform role administration serializes concurrent duplicate grants into exactly one assignment",
+          "file": "apps/backend/src/security/platform-role-service.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "P2A isolated PostgreSQL platform role administration concurrently revokes two administrators while preserving exactly one active authority",
+          "file": "apps/backend/src/security/platform-role-service.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "P2A isolated PostgreSQL platform role administration enforces HTTP platform-only, default DENY, reason/key and exact command routes",
+          "file": "apps/backend/src/security/platform-role-service.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "P2A isolated PostgreSQL platform role administration uses current post-lock validity even when the transaction predates another admin revocation",
+          "file": "apps/backend/src/security/platform-role-service.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "R3 isolated PostgreSQL — transaction rollback reconciles populated baseline roles and preserves custom grants/membership/history",
+          "file": "apps/backend/src/security/rbac-resolution-r3.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_STEP6A3_PG_SYSTEM_IDENTIFIER",
+            "TCDX_STEP6A3_REFERENCE_POSTGRES"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "R3 isolated PostgreSQL — transaction rollback materializes approved eleven readers with per-grant audit and no AUDITOR action grant",
+          "file": "apps/backend/src/security/rbac-resolution-r3.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_STEP6A3_PG_SYSTEM_IDENTIFIER",
+            "TCDX_STEP6A3_REFERENCE_POSTGRES"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "R3 isolated PostgreSQL — transaction rollback rejects corrupt receipt and inactive publication actor without fake repair",
+          "file": "apps/backend/src/security/rbac-resolution-r3.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_STEP6A3_PG_SYSTEM_IDENTIFIER",
+            "TCDX_STEP6A3_REFERENCE_POSTGRES"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D3-A actual grant chains and operation-specific role authority projects the existing Platform permission but denies assign without independent tenant authority",
+          "file": "apps/backend/src/security/role-assign-projection-scope.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D3-A actual grant chains and operation-specific role authority keeps the Tenant Admin projection context-bound and rejects foreign objects/contexts and mixed authority",
+          "file": "apps/backend/src/security/role-assign-projection-scope.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D3-A actual grant chains and operation-specific role authority fails closed without entitlement, active Membership, a grant or tenant scope",
+          "file": "apps/backend/src/security/role-assign-projection-scope.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D3-A actual grant chains and operation-specific role authority allows tenant assign with real Membership, entitlement and grant, with one effect on replay",
+          "file": "apps/backend/src/security/role-assign-projection-scope.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D3-A actual grant chains and operation-specific role authority allows tenant revoke only with reason, If-Match and current authority",
+          "file": "apps/backend/src/security/role-assign-projection-scope.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D3-A actual grant chains and operation-specific role authority allows Platform revoke through explicit target resolution, CAS, reason, replay and privileged audit",
+          "file": "apps/backend/src/security/role-assign-projection-scope.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D3-A actual grant chains and operation-specific role authority creates no implicit Platform actor Membership or tenant role and defaults unauthenticated commands to DENY",
+          "file": "apps/backend/src/security/role-assign-projection-scope.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions publishes exactly one physical Permission, approved template/tenant grants and no schema delta",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions allows Platform global safe projection; provider binding is canonical issuer+subject, never email",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions supports deterministic filtered pagination and rejects a cursor from another lookup",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions authorizes own tenant exact lookup and omits supplied email/username from its response/audit",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions denies tenant discovery before provider lookup: no membership",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions denies tenant discovery before provider lookup: wrong tenant",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions denies tenant discovery before provider lookup: missing context",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions denies tenant discovery before provider lookup: platform without membership",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions denies Tenant Admin global mode even with no context header and refuses a Platform context header",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions denies an active own Membership with a non-admin role and denies missing entitlement",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions rejects tenant enumeration shape 0",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions rejects tenant enumeration shape 1",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions rejects tenant enumeration shape 2",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions rejects tenant enumeration shape 3",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions rejects tenant enumeration shape 4",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions rejects tenant enumeration shape 5",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions rejects tenant enumeration shape 6",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions rejects tenant enumeration shape 7",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions has identical empty responses for absent, inactive, ineligible and ambiguous exact targets",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions returns only own existing active Membership; inactive conflicts are not reactivated",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions provider/audit dependency failures cannot masquerade as empty200",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions creates company,22 canonical roles and exactly one first Tenant Admin without subscription/actor authority",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions replays exact completed intent with no duplicate rows/audit/outbox; altered payload conflicts",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions serializes simultaneous same-intent attempts and keeps one company/admin",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions returns retryable409 for an actively held claim lock without creating a company",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions rolls back bootstrap authority if parent completion audit fails, preserving only the child checkpoint",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions persists company/admin-pending checkpoint, rolls back late bootstrap failure and resumes only pending work",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions cannot adopt a separately created child intent or bootstrap an arbitrary existing tenant",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions rejects a new key against the same business company without adopting its authority",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions rejects self before creating a company",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions rejects inactive before creating a company",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions rejects missing before creating a company",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions rejects wrong managed kind before creating a company",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions internal bootstrap cannot establish another target or reopen after first admin revocation",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "D2 isolated PostgreSQL onboarding/privacy/transactions binds public routes exactly, has no bootstrap route, uses no-store on success/error and authenticates",
+          "file": "apps/backend/src/security/tenant-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "Central onboarding isolated PostgreSQL security and partial progress publishes one Permission/PlatformAdmin grant with no DDL/schema delta",
+          "file": "apps/backend/src/security/tenant-user-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "Central onboarding isolated PostgreSQL security and partial progress allows PlatformAdmin Membership plus tenant roles, audit/outbox and no actor authority",
+          "file": "apps/backend/src/security/tenant-user-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "Central onboarding isolated PostgreSQL security and partial progress default denies Platform Support and audits denied administrative use",
+          "file": "apps/backend/src/security/tenant-user-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "Central onboarding isolated PostgreSQL security and partial progress default denies Tenant Admin and audits denied administrative use",
+          "file": "apps/backend/src/security/tenant-user-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "Central onboarding isolated PostgreSQL security and partial progress default denies ungranted identity and audits denied administrative use",
+          "file": "apps/backend/src/security/tenant-user-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "Central onboarding isolated PostgreSQL security and partial progress denies actor self-target; never grants actor membership",
+          "file": "apps/backend/src/security/tenant-user-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "Central onboarding isolated PostgreSQL security and partial progress requires explicit tenant, denies context override and missing/inactive target",
+          "file": "apps/backend/src/security/tenant-user-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "Central onboarding isolated PostgreSQL security and partial progress rejects Platform role PLATFORM_ADMIN and creates no target Membership",
+          "file": "apps/backend/src/security/tenant-user-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "Central onboarding isolated PostgreSQL security and partial progress rejects Platform role PLATFORM_SUPPORT and creates no target Membership",
+          "file": "apps/backend/src/security/tenant-user-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "Central onboarding isolated PostgreSQL security and partial progress uses existing canonical roles; rejects missing catalog without fallback",
+          "file": "apps/backend/src/security/tenant-user-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "Central onboarding isolated PostgreSQL security and partial progress reconciles duplicate Membership/assignment and same-key replay without duplicate evidence",
+          "file": "apps/backend/src/security/tenant-user-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "Central onboarding isolated PostgreSQL security and partial progress explicit cross-tenant target creates independent Membership and only tenant-owned roles",
+          "file": "apps/backend/src/security/tenant-user-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "Central onboarding isolated PostgreSQL security and partial progress requires subsequent CORE_PLATFORM while initial-admin path remains subscription-free",
+          "file": "apps/backend/src/security/tenant-user-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "Central onboarding isolated PostgreSQL security and partial progress retains committed Membership/first role after second-role failure; retries only pending with original key",
+          "file": "apps/backend/src/security/tenant-user-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "Central onboarding isolated PostgreSQL security and partial progress rolls back failed Membership child and audit failure never produces false success",
+          "file": "apps/backend/src/security/tenant-user-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "Central onboarding isolated PostgreSQL security and partial progress concurrent different intents reconcile one Membership/assignment without duplicate authority",
+          "file": "apps/backend/src/security/tenant-user-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "Central onboarding isolated PostgreSQL security and partial progress read projection is canonical ID based, paginated and contains only target tenant roles; denies tenant actor",
+          "file": "apps/backend/src/security/tenant-user-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        },
+        {
+          "name": "Central onboarding isolated PostgreSQL security and partial progress registered endpoint requires authentication and keeps generic assign tenant-only",
+          "file": "apps/backend/src/security/tenant-user-onboarding.postgres.test.ts",
+          "command": "Dedicated suite not invoked in this execution",
+          "environment": "DEDICATED_ISOLATED_POSTGRES_REQUIRED",
+          "data": "NOT_USED",
+          "result": "OMITTED_NOT_PASS",
+          "evidence": "runtime-node22-unit.json",
+          "scope": "EXISTING_UNCHANGED_SUITE",
+          "limitations": "No acredita cierre de seguridad/infraestructura global. No se desactiva la prueba.",
+          "cause": "Flags dedicados no habilitados en esta ejecución; no se presume que otra suite los sustituya.",
+          "required_configuration": [
+            "TCDX_ISOLATED_REBUILD",
+            "TCDX_SECURITY_INTEGRATION"
+          ],
+          "criticality": "HIGH_FOR_INTEGRAL_CLOSURE; UNCHANGED_CODE_OUTSIDE_CORRECTED_SLICE"
+        }
+      ],
+      "receipts": [
+        {
+          "path": ".release-custody/phase6a-functional-completion-20261023/runtime-node22-toolchain.json",
+          "sha256": "c3b2c59801a1d1e18d1fc55c96203ae4ceb67d589c7f99a5faed1d2551c3444c"
+        },
+        {
+          "path": ".release-custody/phase6a-functional-completion-20261023/runtime-node22-typecheck.log",
+          "sha256": "adfa82c0097b47a22d55cf7d6016e046788805862d9d46b149e897e14f180f28"
+        },
+        {
+          "path": ".release-custody/phase6a-functional-completion-20261023/runtime-node22-build.log",
+          "sha256": "e7915ee652c298e01ab3cfe0e34097805a23228c63d2d238ce79c393c75761f2"
+        },
+        {
+          "path": ".release-custody/phase6a-functional-completion-20261023/runtime-node22-unit.json",
+          "sha256": "cdf56510ed2f20f459f15549e14b945ea747d216fcd07cad105412db3595079f"
+        },
+        {
+          "path": ".release-custody/phase6a-functional-completion-20261023/runtime-node22-core-postgres.log",
+          "sha256": "110c69e1dc155eaf3a0e8495180f445c7e978439bc060633ae1599380ebfd41c"
+        },
+        {
+          "path": ".release-custody/phase6a-functional-completion-20261023/runtime-node22-commercial-postgres.log",
+          "sha256": "e3db9695d8e9ecc7001c3f799ce90d5637f1ccfa1718aeff7359097847bb3898"
+        },
+        {
+          "path": ".release-custody/phase6a-functional-completion-20261023/runtime-node22-b04-postgres.log",
+          "sha256": "36e39c471d3418b1ee8c39013f1d35bfcda9c7fa1b51a35e8b20ecac55bb2821"
+        },
+        {
+          "path": ".release-custody/phase6a-functional-completion-20261023/runtime-node22-importer-postgres.log",
+          "sha256": "b284f5a5043697528a2db01e27ef3628fc6696eae963e2a5196d2f21443163bb"
+        },
+        {
+          "path": ".release-custody/phase6a-functional-completion-20261023/runtime-governance.log",
+          "sha256": "1804d6f3163b6323585d0d832274aaba9364ee4465435fb83636839d0ba76bbe"
+        },
+        {
+          "path": ".release-custody/phase6a-functional-completion-20261023/runtime-contracts.log",
+          "sha256": "6efbf5f9ec1b52e437f6d412a967919d85c03c9d421a77615a46d197d2dfda4b"
+        },
+        {
+          "path": ".release-custody/phase6a-functional-completion-20261023/runtime-secrets.log",
+          "sha256": "a75019bbb34e91d8173a767beaee5c58c4f7262c7f6a8bcb72731af6351a5c76"
+        },
+        {
+          "path": ".release-custody/phase6a-functional-completion-20261023/runtime-test-inventory.json",
+          "sha256": "fd83bd2e3f6a90e0e4907aa199b009a97503ce4eabb899d61c80c461861d76bf"
+        }
+      ],
+      "initial_attempts": "Sandbox PostgreSQL shmget/listen failures; missing fixture publications/catalog; parameter cast/display_name setup failures; predecessor mismatch; outdated immutable-plan and scan-error fixtures. Final suites passed after corrections; private attempt logs retained."
+    },
+    "BLOCKERS": [
+      {
+        "id": "RUNTIME-PUBLISH-BINDING",
+        "contract": "rector41§6/42; API03 regulatoryPackPublish; OpenAPI02 DomainCommandRequest; H04",
+        "root_cause": "Missing persisted independent validation/coapproval binding, global canonical actor scope, RegulatorySource–KnowledgeSource/audience rights link and exact HTTP/CAS/atomic aggregate contract.",
+        "evidence": "HANDOFF Ejecución 1/3, candidate review table; immutable model has only one coverage approver.",
+        "required_action": "Review and formally publish the candidate through rector/logical/physical/executable/IAM gates before implementation; then positive and negative HTTP+PG tests.",
+        "authority": "PO + Architecture + Data Model + Backend + Security",
+        "unblock_condition": "Approved effective binding and implemented/tested runtime; formalization authorization alone is insufficient."
+      },
+      {
+        "id": "RUNTIME-TICKET-BINDING",
+        "contract": "QA_TICKET_COMMERCIAL_20261022; rector24/25/30/33",
+        "root_cause": "External issuance approved, but post-tenant DocumentVersion association to Subscription, custody actor access and electronic incorporation command remain unpublished.",
+        "evidence": "HANDOFF candidate review table and explicit PO answer recorded there.",
+        "required_action": "Review/publish document incorporation and typed association proposal; implement/test under that authority.",
+        "authority": "PO + Architecture + Data Model + Backend + Security",
+        "unblock_condition": "Effective approved contract plus actual incorporation/persistence/recovery/integrity tests, without attributing software issuance."
+      }
+    ],
+    "INTEGRITY_DECLARATIONS": {
+      "NEW_TECHNICAL_DEBT": 0,
+      "NEW_BUSINESS_HARDCODES": 0,
+      "UNAUTHORIZED_SCOPE_CHANGES": 0,
+      "UNAUTHORIZED_SCHEMA_CHANGES": 0,
+      "UNAUTHORIZED_RBAC_CHANGES": 0,
+      "VISUAL_CHANGES": 0,
+      "PRODUCTION_CHANGES": 0,
+      "FUNCTIONAL_REGRESSIONS": "NONE_DETECTED_IN_EXECUTED_SCOPE;NOT_GLOBAL_ASSERTION",
+      "evidence": "git diff 9c0edea..4eaf589; protected models/contracts/database/frontend/UI unchanged; typecheck/build/unit/142PG and secrets scan"
+    },
+    "PHASE6A_RUNTIME_HANDOFF_TO_NORMATIVE_LIBRARY": {
+      "status": "NOT_READY",
+      "available": "Typed importer, B04 concrete routes, KnowledgeSource H04, existing catalog/contracting/entitlement ports in source and local tests",
+      "effective_contracts": "Existing B01–B09/H04 and API03; proposals in HANDOFF are NOT effective",
+      "interfaces": "See RELEASE capability matrix; no new publication/ticket routes exposed",
+      "validation": "Node22/unit/PG16 receipts above",
+      "limitations": "No deploy; QA remains on previously verified source f060cb1, not this code. No official content or operations performed. Matrix HTTP/PG all axes and 106 unexecuted tests do not receive PASS.",
+      "entry_condition": "Resolve two runtime authority bindings, implement under effective contracts, complete integral validation and obtain RUNTIME_TECHNICAL_CLOSURE=PASS. Do not carry technical implementation into execution 2.",
+      "execution_2": "NOT_STARTED",
+      "execution_3": "NOT_STARTED"
+    },
+    "CANONICAL_DOMAIN": "https://grc.tecdex.net/",
+    "STEP6A5": "NOT_STARTED_NOT_AUTHORIZED",
+    "STEP6A6": "NOT_STARTED_NOT_AUTHORIZED"
+  },
+  "PREVIOUS_EXECUTION": "PHASE6A_FUNCTIONAL_COMPLETION_NORMATIVE_HOMOLOGATION_CONTRACTING",
+  "OPERATIONAL_STATE_NOTE": "Normative/QA counts and image inspection belong to previous functional execution; no operational writes/deployment or new real QA validation in execution1.",
+  "REMAINING_RUNTIME_BLOCKERS": [
+    "RUNTIME-PUBLISH-BINDING",
+    "RUNTIME-TICKET-BINDING"
+  ]
 }
