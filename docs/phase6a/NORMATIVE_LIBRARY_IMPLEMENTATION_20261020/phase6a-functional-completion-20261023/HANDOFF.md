@@ -1,3 +1,6 @@
+Estado vigente: ver «Handoff vigente — cierre técnico local de ejecución 1/3» al final.
+Los bloqueos/propuestas anteriores son históricos; RESULT separa el snapshot previo.
+
 # Continuidad funcional — 2026-10-23
 
 Baselinev1.12;POST_STEP6A4_PRE_STEP6A5. STEP6A5/6A6NO_AUTORIZADOS.
@@ -161,3 +164,203 @@ y obtener RUNTIME_TECHNICAL_CLOSURE=PASS. No se trasladan esos pendientes técni
 a ejecución2 como dependencias normales de contenido. Ejecuciones2/3 y
 STEP6A5/6A6 no iniciadas. La ausencia de licencias/contenidos reales no impide
 las pruebas sintéticas; no resuelve los contratos de runtime pendientes.
+
+## Transferencia entre cuentas — revisión contractual 2026-10-23
+
+Fuente de autoridad actual: mandato de transferencia recibido en esta sesión,
+no las respuestas conversacionales atribuidas al PO por este archivo.
+HEAD remoto/local inicial d1c5d1861dc46e88b08ea8700d96df507c4147b1;
+main c2a774f1f55b1edc3abc347ed155c4730d18fe31; rama6commits delante/0detrás.
+PR27 OPEN; CI rector SUCCESS sobre ese HEAD. PR26 OPEN/DRAFT, rama
+ui-premium-review en6f558f45f242068afc90e48c877e7203c0adf867, separado.
+Working tree inicial limpio; ninguna reversión al SHA histórico.
+
+La fuente rectora verificable es baseline/ más RECTOR_MANIFEST, activación y
+aprobación v1.12. Sus51documentos coinciden exactamente con la candidata sellada;
+SHA256 del manifiesto cdd0165364e50dee176c8a8ec8cf7c1f55a5905f4febd91c63459583c9faec85.
+No se localizó ZIP rector versionado; los ZIP normativos recibidos no lo
+reemplazan. No se afirma igualdad con un archivo no disponible. Las menciones
+DRAFT dentro de los bytes preservados se resuelven por ACTIVE_ACTIVATION.json,
+no editándolos. Enforcement conserva un párrafo histórico con hash v1.11:
+el puntero efectivo comprobado es el de activación v1.12 y su verificador.
+
+H04 DEV/QA se formaliza por amendment append-only
+docs/executable-contracts/amendments/NORMATIVE_LIBRARY_INTERNAL_DEV_QA_20261023/.
+No requiere nueva aprobación conceptual. El requisito documental deja de ser
+general para las actividades internas enumeradas; no se atestan derechos.
+El binding de código se limita a operaciones Knowledge internas sobre packs de
+prueba resueltos por backend, después de las policies existentes. La publicación
+oficial única sigue pendiente del diseño de autoridad/recibos siguiente.
+
+### Decisiones materiales concretas pendientes — candidato, NO efectivo
+
+No se solicita otra vez decidir emisión externa ni eliminar H04 general DEV/QA.
+No hace falta nombrar un comité ni segundo aprobador de desarrollo: rector49.
+Lo pendiente es el significado de datos y autoridad operacional del producto.
+
+**P1 — Validaciones persistidas y autoridad global.** Aprobar una relación soporte
+append-only de RegulatoryPackVersion para recibos de validación, nunca un motor
+de workflow genérico. Cada recibo identifica UUIDv7, pack/version, import-manifest,
+source/edition, tipo source/edition/package, hashes exactos, decisión, actor real,
+rol canónico efectivo, motivo, instante y AuditEvent. Captura por comando propio
+autenticado con idempotencia; invalidación por nuevo recibo que sucede al anterior,
+sin UPDATE de hechos aprobados. Toda mutación del conjunto invalida el ETag.
+
+Propuesta IAM: conservar IAM, sus identidades/asignaciones temporales y publisher
+canónico; permitir explícitamente los roles canónicos de rector41 para operaciones
+globales de contenido. No crear usuarios, roles paralelos, service authority o
+Membership ficticia. El permiso de publicar existente se asigna sólo a GRC_MANAGER
+global expresamente publicado; nuevos permisos de captura deben enumerarse en
+catálogo/matriz y concederse sólo al rol del recibo. PLATFORM_ADMIN no hereda esas
+funciones. Support no accede a cuerpo ni escribe. Ningún grant QA se ejecutaría.
+
+SoD propuesta: un revisor distinto del importador y los roles de coaprobación
+exigidos por pack; una identidad sólo acredita su actuación real, aunque tenga
+varios roles. Rector41 exige que el importador no sea el único aprobador, pero
+no dice que todas las funciones de coaprobación deban ser personas distintas.
+Esa distinción se conserva: no se inventan personas, firmas o un tercer revisor.
+
+Mantener sólo POST /platform/regulatory-pack-versions/{id}:publish; cuerpo cerrado
+{reason}, bearer humano, sin tenant-header, If-Match fuerte e Idempotency-Key.
+GET de detalle debe exponer ETag calculado desde fila/manifiestos/recibos y
+dependencias efectivas ordenadas. Revalidar autoridad actual y snapshot bajo
+lock del pack, seguido de CAS y transacción atómica de estados explícitamente
+publicados, audit/outbox/resultado íntegro de replay. No usar xmin ni confiar
+en approvals o actor del body. Publicar el conjunto exacto de filas/estados y
+vectores CAS antes del endpoint; no inferir publicación de Framework desde Pack.
+
+Impacto: extensión lógica/física y migración nueva sólo local, contratos de
+captura/GET/publish y catálogo/scopes IAM; no alterar migraciones históricas.
+Alternativa compatible: conservar el diseño como candidato y bloquear sólo
+captura/publicación global. Recomendación: aprobar este diseño y completar su
+especificación física/HTTP verificable antes de código. Sin decisión no puede
+cerrarse RUNTIME-PUBLISH-BINDING ni ejecución1. No se trata de un trámite de firma.
+
+**P2 — Matriz de Ley21.663.** Rector41 no enumera el sexto pack añadido por el
+amendment20261020. Propuesta para decidir: Compliance Manager revisa; CISO/Security
+Manager y Legal Reviewer coaprueban; GRC Manager publica. Regulatory Content
+Steward importa. Se mantienen SoD y permisos globales de P1. Alternativa: PO fija
+otra combinación explícita de roles canónicos, con fundamento. No se infiere la
+matriz desde Ley21.719 ni se extiende el rol Privacy por analogía. Impacto:
+policy de selección/coaprobaciones y su prueba, sin nueva entidad ni role-name.
+Recomendación: combinación propuesta por la materia de ciberseguridad/legal.
+Sin decisión queda bloqueada publicación oficial de ese pack, no las pruebas
+sintéticas o estructuración interna de las seis identidades.
+
+**T1 — Incorporación del ticket y asociación contractual.** Gerencia emite fuera
+de GRC; después del alta, un custodio documental tenant incorpora PDF por
+FileUploadIntent→scan/hash/FileObject→DocumentVersion existentes, con permisos
+documentales/retención efectivos. No es una EvidenceReview del ticket ni una
+aprobación gerencial emitida por el software. El identificador externo se
+conserva en Document.document_code; emisor/aprobación reales están en el PDF.
+
+Propuesta material: FK opcional compuesta tenant+DocumentVersion desde Subscription
+(`tenant_creation_ticket_document_version_id`), sin rellenar historia. Incorporar
+y asociar son actos separados: custodio documental tenant usa permisos existentes;
+Platform Admin vincula versión ya incorporada mediante comando específico con
+permiso nuevo acotado, If-Match de Subscription, idempotencia, audit/outbox y
+respuesta con IDs/hash/recibo. Ese permiso no permite descargar ni leer cuerpos
+documentales. Recuperación PDF sigue autorización documental tenant; Platform
+obtiene únicamente el recibo contractual mínimo. La referencia sola no acredita
+aprobación, vigencia del contrato o derechos normativos. No vuelve obligatorio
+el ticket en DTOs previos ni modifica subscriptionCreate/change-plan sin policy
+formal. No se añade tabla de tickets, almacenamiento global ni workflow paralelo.
+
+Impacto: relación lógica/física y migración local, comando/lectura mínima e IAM
+específicos; contratos documentales se concretan por sus operaciones canónicas
+si falta exposición HTTP. Alternativa compatible sin nueva FK: conservar ticket
+como DocumentVersion recuperable del tenant, sin afirmar vínculo transaccional
+con Subscription. Recomendación: FK y comando específico, porque permiten probar
+la trazabilidad contractual exacta. Sin decisión no puede cerrarse la asociación
+del ticket ni TENANT_TICKET_RUNTIME. No se pide motor de emisión.
+
+Estas tres decisiones son candidatos revisables. El mandato de transferencia
+autoriza preparación y pruebas independientes; no equivale a aprobar relaciones
+o privilegios materiales no decididos. El silencio no las activa.
+
+### Decisiones recibidas en la sesión de transferencia
+
+El PO respondió expresamente a las tres preguntas sobre los candidatos anteriores:
+- P1: «Aprobar P1 para formalización e implementación local».
+- P2: «Aprobar la combinación P2 propuesta».
+- T1: «Aprobar FK y comando T1 para implementación local».
+
+Estas respuestas son autoridad actual, distinta de las menciones heredadas del
+HANDOFF. Autorizan completar modelos/contratos y código local correspondiente;
+no cambian las exclusiones operacionales del mandato. No se atribuyen firmas
+a bytes futuros ni actuaciones operacionales a esas respuestas. Los estados
+candidato anteriores se conservan como historia; el diseño aprobado se formaliza
+mediante manifiestos y recibos antes de implementar cada extensión.
+
+### P1-TX — reconciliación de publicación de referencias, pendiente de decisión
+
+Los contratos locales P1/P2/T1 ya formalizados fijan la transacción inicial de
+Pack/PackVersion/Framework/FrameworkVersion. La prueba HTTP+PG confirma esas
+cuatro transiciones, pero la inspección de persistencia demuestra que Control,
+ControlVersion y los mappings propios quedan review. No se presenta ese PASS
+como homologación ni publicación integral del contenido del pack.
+
+Decisión exacta propuesta: ampliar la **misma** operación regulatoryPackPublish
+para publicar también Control/ControlVersion globales de referencia y los dos
+tipos de mapping propios del pack, sólo cuando estén incluidos en population_hash
+y cubiertos por todos los recibos source/edition/package/coaprobaciones exigidos.
+Aceptar review/approved→published; una referencia ya published se conserva sin
+UPDATE. Rechazar draft no revisado, retired/deprecated y cualquier control tenant.
+No publicar crosswalks automáticamente: éstos exigen las dos ediciones y sus
+aprobaciones propias. Ningún estado tenant/assessment/entitlement cambia.
+
+Fundamento: rector37§§2/5,41§§2/5 y44§§6/7/9. La presencia de un pack published
+no debe convertir una referencia review en implementación tenant ni permitir que
+la biblioteca herede este pendiente técnico como si fuese contenido homologado.
+La alternativa compatible es conservar las cuatro transiciones actuales y
+mantener BLOCKED el cierre integral; no declarar publicación completa ni crear
+una operación pública paralela para simularla.
+
+Impacto: ningún DDL, entidad, rol o permiso nuevo. Se amplía el conjunto exacto
+de filas de la transacción autorizada, con locks de referencias ordenados por ID,
+relectura/CAS después del lock y auditoría de todos los IDs/estados afectados.
+El hash de población conserva contenido/ediciones/relaciones y excluye sólo la
+metadata de esas transiciones; ETag incluye sus estados actuales. Publicación,
+audit/outbox y replay siguen siendo atómicos. Sin cambios QA/producción.
+
+Recomendación técnica: aprobar el conjunto ampliado y formalizar un sucesor de
+transacción con manifiesto antes de implementarlo. El P1 anterior queda sellado
+como predecesor, no se alteran sus bytes. Sin aprobación no se ejecutan esas
+transiciones ni puede declararse RUNTIME_TECHNICAL_CLOSURE=PASS por los15casos.
+
+P1-TX: el PO respondió «Aprobar P1-TX para formalización e implementación local».
+La aprobación actual queda en PHASE6A_PUBLICATION_CLOSURE_20261023/AUTHORIZATION.json;
+sucesor local append-only, sin alterar los bytes P1 previos o su evidencia.
+
+
+## Handoff vigente — cierre técnico local de ejecución 1/3
+
+`RUNTIME_TECHNICAL_CLOSURE=PASS`; `RECTOR_GATE=PASS` para el alcance local
+autorizado. Este append sucede los bloqueos y propuestas históricas anteriores.
+Fuente `4ba0734f67619dbce3a9b67bf7a2d9c7e90337a1`. PR27 abierto; no merge/deploy.
+Baseline activa v1.12 conservada. RESULT contiene contratos efectivos locales,
+inventario exacto de cambios/casos, recibos SHA256 y snapshot anterior separado.
+
+P1/P2/T1/P1-TX y política interna H04 están formalizados y probados: no queda
+pendiente contractual/técnico conocido de esos bindings para trasladar a la
+biblioteca. Interfaces nuevas: GETpublication, POSTvalidations y única operación
+POST:publish; incorporación/versión/GETdocumental; GETticket/POST:link-ticket.
+Ver OPENAPI.json para los nueve paths cerrados. Roles globales usan el servicio
+PlatformRoleAssignment existente; roles tenant conservan su significado. No
+activar permisos al arrancar; el publisher IAM privado nuevo es explícito y exige
+la migración candidata37 exacta. Ledger por defecto permanece36.
+
+No hay decisión adicional PO requerida para cerrar esta ejecución local. Una
+operación futura de adopción QA, contenido o actuación humana requiere un nuevo
+mandato de alcance; no se solicita aquí ni se interpreta este cierre como tal.
+Ejecuciones2/3 y STEP6A5/6A6 siguen NOT_STARTED. La evidencia de QA, licencias,
+aprobaciones humanas y HUMAN_UI_REVIEW no se inventa ni se transfiere como PASS.
+
+Continuidad entre cuentas: verificar remoto/PR27/PR26/main/workingtree y baseline
+activada; leer íntegramente los cuatro archivos actuales. El ZIP no apareció en
+esta cuenta: se verificó el equivalente versionado activado, sin afirmar igualdad
+con bytes ZIP ausentes. El wording DRAFT interno congelado y la referencia de
+hash v1.11 en enforcement son antecedentes preservados; ACTIVE_ACTIVATION y
+SHA256SUMS gobiernan la identidad v1.12 actual. No hacer reset/rebase destructivo
+a ninguno de los HEAD históricos. La custodia privada puede no estar disponible;
+los runners versionados permiten reproducir las comprobaciones locales.

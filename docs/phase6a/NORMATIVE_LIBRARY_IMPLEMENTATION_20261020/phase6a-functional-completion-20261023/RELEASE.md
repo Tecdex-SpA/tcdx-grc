@@ -1,8 +1,9 @@
 # Cierre funcional Fase6A — implementación y verificación 2026-10-23
 
-Estado vigente: **ejecución 1/3 PHASE6A_RUNTIME_FUNCTIONAL_CLOSURE = BLOCKED**.
-La sección final de ejecución 1/3 y RUNTIME_EXECUTION de RESULT.json actualizan
-este expediente; las secciones anteriores conservan la evidencia histórica.
+Estado vigente: **ejecución 1/3 — cierre técnico local PASS; release operacional PARTIAL**.
+La sección final de transferencia y las claves actuales de RESULT.json rigen
+este cierre. Todo resultado anterior se conserva como evidencia histórica;
+HISTORICAL_PRE_TRANSFER_RESULT identifica el snapshot previo completo.
 
 Ejecución PHASE6A_FUNCTIONAL_COMPLETION_NORMATIVE_HOMOLOGATION_CONTRACTING.
 Baseline activa TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16.
@@ -206,3 +207,53 @@ PRODUCTION_CHANGES=0. Evidencia: diff limitado a backend/tests/scripts/expedient
 diff vacío en baseline/modelos/contratos/DB/frontend/UI. No se ejecuta despliegue,
 QA DML ni migración externa. No se declara ausencia absoluta de regresiones:
 las pruebas ejecutadas pasan y las omisiones se identifican individualmente.
+
+
+## Cierre técnico local de ejecución 1/3 — transferencia 2026-10-23
+
+`RECTOR_GATE=PASS` y `RUNTIME_TECHNICAL_CLOSURE=PASS` para la formalización e
+implementación local autorizada. `INTEGRATED_RELEASE_GATE=PARTIAL`,
+`MARKET_RELEASE_READY=BLOCKED`; no son gates operacionales nuevos. Fuente
+`4ba0734f67619dbce3a9b67bf7a2d9c7e90337a1`; PR27 continúa abierto. Baseline activa
+`TCDX_GRC_MASTER_REGENT_BASELINE_v1.12_2026-10-16`.
+
+Al comenzar existían importador/persistencia tipados, B04, H04 KnowledgeSource y
+los mecanismos de catálogo/contratación/entitlements. Faltaban los bindings
+efectivos de publicación/ticket, cobertura HTTP+PG de seis matrices y 106
+regresiones. P1, P2, T1 y P1-TX recibieron aprobación expresa actual; sus
+autorizaciones y cadenas de integridad están versionadas, sin atribuir firma
+humana a los bytes derivados. H04 interno se formalizó por separado.
+
+La única publicación canónica usa recibos inmutables source/edition/package,
+coaprobaciones persistidas por los seis packs, IAM global explícito, SoD,
+If-Match fuerte y replay histórico. Publica también las referencias globales y
+mappings propios revisados bajo P1-TX; conserva los publicados y no publica
+controles tenant ni crosswalks. Auditoría/outbox/claim son atómicos. Derechos
+exactos se bloquean durante su comprobación para serializar revocaciones. Se
+retiró el publisher alternativo que confiaba en etiquetas de entrada.
+
+El ticket sigue emitido externamente por Gerencia. Incorporación/versionado de
+PDF propio scan-PASS, lectura privada por custodio y asociación opcional
+Subscription→DocumentVersion del mismo tenant usan custodia/retención/RBAC
+existentes. Platform recibe sólo metadatos de la asociación, sin acceso al PDF.
+La unicidad de DocumentVersion se corrige a su padre Document, según rector23/30.
+
+La extensión física local está en DDL_SPEC.sql/modelo candidato:245tablas/
+3652columnas, cero mismatches. Ledger por defecto36/244tablas y migraciones
+históricas intactos. No está adoptada en QA. Las capas cambiadas son contrato
+lógico/físico candidato, contratos ejecutables, backend y tooling; inventario
+exacto en RESULT.SOURCE_CHANGE_INVENTORY y git show --stat del source commit.
+Frontend/visual, baseline inmutable, infraestructura y deployment no cambiaron.
+
+Pruebas nuevas de esta cuenta:1083unitarias,289PostgreSQL y18browser PASS. Las
+289 omisiones del runner unitario se ejecutaron aparte; ninguna queda pendiente.
+Seis matrices pobladas y seis combinaciones de coaprobación fueron verificadas
+por HTTP autenticado/PG. Browser usa fixtures explícitos y no acredita E2E QA
+real ni revisión humana. Detalles, comandos, inventario individual y SHA256 de
+recibos en VALIDATION/RESULT. Sin conflictos rectores locales ni nueva decisión
+PO pendiente para este cierre.
+
+No se inició ejecución2/3 ni STEP6A5/6A6. QA no fue contactado en esta cuenta;
+los datos/imágenes anteriores de este expediente son históricos. Contenido real,
+adopción QA, publicación/contratación humanas y aceptación UI siguen fuera del
+mandato y no reciben PASS. No hubo merge, despliegue o migración externa.

@@ -1,5 +1,8 @@
 # Validación reproducible y límites
 
+Vigente: sección final «Validación vigente de esta cuenta». Las secciones
+anteriores son evidencia histórica y no resultados nuevos.
+
 ## G — Pruebas ejecutadas
 
 | Comando/procedimiento | Resultado |
@@ -202,3 +205,57 @@ https://github.com/Tecdex-SpA/tcdx-grc/actions/runs/39974129352/job/120484191308
 Código probado4eaf589; main c2a774f y PR26 6f558f4 intactos; working tree limpio
 al publicar. El commit documental que incorpora este recibo se verifica aparte
 por CI; no invalida ni cambia la evidencia del código probado.
+
+
+## Validación vigente de esta cuenta — ejecución 1/3 local
+
+Esta sección sucede los conteos históricos anteriores. Node22.23.2/pnpm12.4.1;
+PostgreSQL16.14 exclusivamente en clústeres temporales propios y detenidos.
+
+| Comando | Resultado actual |
+| --- | --- |
+|pnpm exec vitest run --config vitest.config.ts --reporter=json --outputFile=…/unit-complete.json|1083PASS,289SKIPPED,0FAIL|
+|bash scripts/regulatory/run-runtime-postgres-tests.sh core|43PASS|
+|bash scripts/regulatory/run-runtime-postgres-tests.sh commercial|34PASS|
+|bash scripts/regulatory/run-runtime-postgres-tests.sh security|77PASS; diez suites actuales y tres publicaciones históricas sobre predecesores26/27/28 reales|
+|bash scripts/regulatory/run-runtime-postgres-tests.sh iam|9PASS; proveedor de tokens sintético|
+|bash scripts/regulatory/run-runtime-postgres-tests.sh legacy|20PASS;34migraciones reales, contratos sellados verificados, rollback|
+|bash scripts/normative-library/run-operational-postgres-tests.sh|55PASS:10upgrade+45operacionales|
+|bash scripts/regulatory/run-pipeline-postgres-tests.sh|11PASS; incluye política interna H04 sin registros de derechos ficticios|
+|bash scripts/regulatory/run-binding-postgres-tests.sh runtime|40PASS; esquema candidato245/3652,0mismatches; seis packs y seis matrices pobladas|
+|pnpm exec playwright test --config=…/playwright-b04.config.ts|10PASS desktop/narrow; handlers reales con executor SQL de fixture|
+|pnpm exec playwright test --config=…/playwright-library.config.ts|8PASS desktop/narrow; composición/matrices y negativos con API interceptada|
+|pnpm typecheck; pnpm build|PASS workspace; advertencia de tamaño de chunk frontend preexistente|
+|pnpm contracts:verify; node scripts/regulatory/generate-runtime-binding-assets.mjs --check|PASS|
+|bash scripts/verify-rector-governance.sh; bash scripts/test-rector-governance-status.sh|PASS integridad/status; no implica gate operacional|
+|pnpm secrets:scan; git diff --check|0hallazgos;PASS|
+
+Las289pruebas PostgreSQL son las289omisiones del runner unitario; no se suman
+dos veces ni quedan omisiones sin ejecutar. TEST_SUITE_INVENTORY en RESULT
+identifica cada suite, hash y caso individual. TECHNICAL_RECEIPTS contiene rutas
+y SHA256 de logs privados; test-inventory-complete.json puede regenerarse desde
+la salida JSON de Vitest y las suites de los runners versionados. Una cuenta
+sin custodia privada puede repetir esos comandos; sus UUIDs/tiempos serán nuevos.
+
+La batería nueva prueba recibos/tres poblaciones/roles reales, combinaciones de
+los seis packs, SoD del importador, rights vigentes/revocadas, CAS, concurrencia
+con misma/distinta key, rollback de audit, resultado idempotente corrupto,
+versionado documental, descarga de bytes sintéticos exactos, asociación tenant,
+FK físico, Platform sin PDF, correcciones concurrentes, seis matrices pobladas,
+permisos de cada origen, concealment, cursores/fingerprints y lecturas sin writes.
+La comprobación de revocación concurrente usa locks reales y timeout55P03; no
+se etiqueta un permiso de consulta como autorización de distribución.
+
+Los intentos fallidos se conservaron, incluidos sandbox shmget/listen, fixtures
+incompletos de retención/mapping/source, catálogo IAM antiguo, clasificación
+errónea de roles tenant/global y timestamps locales etiquetados UTC. Se corrigió
+la clasificación productiva y las fixtures contra contratos vigentes; no se
+relajaron invariantes ni se deshabilitaron pruebas. Los tests históricos ya no
+forjan filas del ledger: aplican migraciones exactas en bases separadas. El
+manifest34 C04W se obtiene del prefijo vigente y coincide byte a byte con su
+hash sellado; el loader operacional mantiene su rechazo a dependencias distintas.
+
+TESTS_REAL_QA=NOT_RUN; TESTS_HUMAN_OPERATIONAL=NOT_RUN; HUMAN_UI_REVIEW=PENDING.
+Los18browser no son pruebas de persistencia real ni aprobación visual humana.
+No cambió frontend; las imágenes históricas anteriores no representan el source
+nuevo. No hay nuevas publicaciones, derechos, licencias o documentos reales.
