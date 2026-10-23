@@ -1,0 +1,1182 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "TCDX P1 P2 T1 local successor",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "/api/v1"
+    }
+  ],
+  "paths": {
+    "/platform/regulatory-pack-versions/{id}/publication": {
+      "get": {
+        "operationId": "regulatoryPackPublicationGet",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-tcdx-permission": "knowledge.regulatory_pack.read",
+        "x-tcdx-context": "PLATFORM",
+        "x-tcdx-scope": "platform",
+        "x-tcdx-transaction": "READ_ONLY_REPEATABLE_READ",
+        "responses": {
+          "200": {
+            "description": "Committed result or authorized canonical projection",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicationProjection"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Closed schema or headers invalid"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Authority or SoD denied"
+          },
+          "404": {
+            "description": "Resource unavailable"
+          },
+          "409": {
+            "description": "CAS, idempotency or domain conflict"
+          },
+          "422": {
+            "description": "Invariant or source gate incomplete"
+          },
+          "503": {
+            "description": "Dependency or durable receipt integrity unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+            }
+          }
+        ]
+      }
+    },
+    "/platform/regulatory-pack-versions/{id}/validations": {
+      "post": {
+        "operationId": "regulatoryPackValidationCreate",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-tcdx-permission": "knowledge.regulatory_pack_validation.create",
+        "x-tcdx-context": "PLATFORM",
+        "x-tcdx-scope": "platform",
+        "x-tcdx-transaction": "ATOMIC_DOMAIN_AUDIT_OUTBOX_IDEMPOTENCY",
+        "responses": {
+          "201": {
+            "description": "Committed result or authorized canonical projection",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationReceiptProjection"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Closed schema or headers invalid"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Authority or SoD denied"
+          },
+          "404": {
+            "description": "Resource unavailable"
+          },
+          "409": {
+            "description": "CAS, idempotency or domain conflict"
+          },
+          "422": {
+            "description": "Invariant or source gate incomplete"
+          },
+          "503": {
+            "description": "Dependency or durable receipt integrity unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\"[a-f0-9]{64}\"$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidationReceiptCreate"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/platform/regulatory-pack-versions/{id}:publish": {
+      "post": {
+        "operationId": "regulatoryPackPublish",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-tcdx-permission": "knowledge.regulatory_pack.publish",
+        "x-tcdx-context": "PLATFORM",
+        "x-tcdx-scope": "platform",
+        "x-tcdx-transaction": "ATOMIC_DOMAIN_AUDIT_OUTBOX_IDEMPOTENCY",
+        "responses": {
+          "200": {
+            "description": "Committed result or authorized canonical projection",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicationResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Closed schema or headers invalid"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Authority or SoD denied"
+          },
+          "404": {
+            "description": "Resource unavailable"
+          },
+          "409": {
+            "description": "CAS, idempotency or domain conflict"
+          },
+          "422": {
+            "description": "Invariant or source gate incomplete"
+          },
+          "503": {
+            "description": "Dependency or durable receipt integrity unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\"[a-f0-9]{64}\"$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReasonOnly"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documents": {
+      "post": {
+        "operationId": "documentIncorporate",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-tcdx-permission": "evidence.document.create",
+        "x-tcdx-context": "TENANT",
+        "x-tcdx-scope": "tenant_or_owned_object",
+        "x-tcdx-transaction": "ATOMIC_DOMAIN_AUDIT_OUTBOX_IDEMPOTENCY",
+        "responses": {
+          "201": {
+            "description": "Committed result or authorized canonical projection",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentVersionProjection"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Closed schema or headers invalid"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Authority or SoD denied"
+          },
+          "404": {
+            "description": "Resource unavailable"
+          },
+          "409": {
+            "description": "CAS, idempotency or domain conflict"
+          },
+          "422": {
+            "description": "Invariant or source gate incomplete"
+          },
+          "503": {
+            "description": "Dependency or durable receipt integrity unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-TCDX-Tenant-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentIncorporate"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documents/{id}/versions": {
+      "post": {
+        "operationId": "documentVersionIncorporate",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-tcdx-permission": "evidence.document.update",
+        "x-tcdx-context": "TENANT",
+        "x-tcdx-scope": "tenant_or_owned_object",
+        "x-tcdx-transaction": "ATOMIC_DOMAIN_AUDIT_OUTBOX_IDEMPOTENCY",
+        "responses": {
+          "201": {
+            "description": "Committed result or authorized canonical projection",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentVersionProjection"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Closed schema or headers invalid"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Authority or SoD denied"
+          },
+          "404": {
+            "description": "Resource unavailable"
+          },
+          "409": {
+            "description": "CAS, idempotency or domain conflict"
+          },
+          "422": {
+            "description": "Invariant or source gate incomplete"
+          },
+          "503": {
+            "description": "Dependency or durable receipt integrity unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\"[1-9][0-9]*\"$"
+            }
+          },
+          {
+            "name": "X-TCDX-Tenant-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentVersionIncorporate"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documents/{id}": {
+      "get": {
+        "operationId": "documentGet",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-tcdx-permission": "evidence.document.read",
+        "x-tcdx-context": "TENANT",
+        "x-tcdx-scope": "tenant_or_owned_object",
+        "x-tcdx-transaction": "READ_ONLY_REPEATABLE_READ",
+        "responses": {
+          "200": {
+            "description": "Committed result or authorized canonical projection",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentProjection"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Closed schema or headers invalid"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Authority or SoD denied"
+          },
+          "404": {
+            "description": "Resource unavailable"
+          },
+          "409": {
+            "description": "CAS, idempotency or domain conflict"
+          },
+          "422": {
+            "description": "Invariant or source gate incomplete"
+          },
+          "503": {
+            "description": "Dependency or durable receipt integrity unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+            }
+          },
+          {
+            "name": "X-TCDX-Tenant-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+            }
+          }
+        ]
+      }
+    },
+    "/document-versions/{id}": {
+      "get": {
+        "operationId": "documentVersionGet",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-tcdx-permission": "evidence.document.read",
+        "x-tcdx-context": "TENANT",
+        "x-tcdx-scope": "tenant_or_owned_object",
+        "x-tcdx-transaction": "READ_ONLY_REPEATABLE_READ",
+        "responses": {
+          "200": {
+            "description": "Committed result or authorized canonical projection",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentVersionProjection"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Closed schema or headers invalid"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Authority or SoD denied"
+          },
+          "404": {
+            "description": "Resource unavailable"
+          },
+          "409": {
+            "description": "CAS, idempotency or domain conflict"
+          },
+          "422": {
+            "description": "Invariant or source gate incomplete"
+          },
+          "503": {
+            "description": "Dependency or durable receipt integrity unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+            }
+          },
+          {
+            "name": "X-TCDX-Tenant-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+            }
+          }
+        ]
+      }
+    },
+    "/platform/subscriptions/{id}:link-ticket": {
+      "post": {
+        "operationId": "subscriptionTicketLink",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-tcdx-permission": "platform.subscription_ticket.update",
+        "x-tcdx-context": "PLATFORM",
+        "x-tcdx-scope": "platform",
+        "x-tcdx-transaction": "ATOMIC_DOMAIN_AUDIT_OUTBOX_IDEMPOTENCY",
+        "responses": {
+          "200": {
+            "description": "Committed result or authorized canonical projection",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketProjection"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Closed schema or headers invalid"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Authority or SoD denied"
+          },
+          "404": {
+            "description": "Resource unavailable"
+          },
+          "409": {
+            "description": "CAS, idempotency or domain conflict"
+          },
+          "422": {
+            "description": "Invariant or source gate incomplete"
+          },
+          "503": {
+            "description": "Dependency or durable receipt integrity unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\"[1-9][0-9]*\"$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubscriptionTicketLink"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/platform/subscriptions/{id}/ticket": {
+      "get": {
+        "operationId": "subscriptionTicketGet",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-tcdx-permission": "platform.subscription_ticket.read",
+        "x-tcdx-context": "PLATFORM",
+        "x-tcdx-scope": "platform",
+        "x-tcdx-transaction": "READ_ONLY_REPEATABLE_READ",
+        "responses": {
+          "200": {
+            "description": "Committed result or authorized canonical projection",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketProjection"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Closed schema or headers invalid"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Authority or SoD denied"
+          },
+          "404": {
+            "description": "Resource unavailable"
+          },
+          "409": {
+            "description": "CAS, idempotency or domain conflict"
+          },
+          "422": {
+            "description": "Invariant or source gate incomplete"
+          },
+          "503": {
+            "description": "Dependency or durable receipt integrity unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "ReasonOnly": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000,
+            "pattern": ".*\\S.*"
+          }
+        },
+        "required": [
+          "reason"
+        ]
+      },
+      "ValidationReceiptCreate": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "regulatory_import_manifest_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+          },
+          "validation_kind": {
+            "enum": [
+              "source",
+              "edition",
+              "package"
+            ]
+          },
+          "role_code": {
+            "enum": [
+              "REGULATORY_CONTENT_STEWARD",
+              "COMPLIANCE_MANAGER",
+              "QUALITY_MANAGER",
+              "CISO_SECURITY_MANAGER",
+              "AI_GOVERNANCE_MANAGER",
+              "PRIVACY_MANAGER",
+              "LEGAL_REVIEWER"
+            ]
+          },
+          "decision": {
+            "enum": [
+              "approved",
+              "rejected"
+            ]
+          },
+          "knowledge_source_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+          },
+          "supersedes_validation_receipt_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000,
+            "pattern": ".*\\S.*"
+          }
+        },
+        "required": [
+          "regulatory_import_manifest_id",
+          "validation_kind",
+          "role_code",
+          "decision",
+          "reason"
+        ]
+      },
+      "DocumentIncorporate": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "document_code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "file_object_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000,
+            "pattern": ".*\\S.*"
+          }
+        },
+        "required": [
+          "document_code",
+          "title",
+          "file_object_id",
+          "reason"
+        ]
+      },
+      "DocumentVersionIncorporate": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "file_object_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000,
+            "pattern": ".*\\S.*"
+          }
+        },
+        "required": [
+          "file_object_id",
+          "reason"
+        ]
+      },
+      "SubscriptionTicketLink": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "document_version_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000,
+            "pattern": ".*\\S.*"
+          }
+        },
+        "required": [
+          "document_version_id",
+          "reason"
+        ]
+      },
+      "DocumentProjection": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "document_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+          },
+          "document_code": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "document_kind": {
+            "const": "contractual_ticket"
+          },
+          "row_version": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          }
+        },
+        "required": [
+          "document_id",
+          "document_code",
+          "title",
+          "document_kind",
+          "row_version"
+        ]
+      },
+      "DocumentVersionProjection": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "document_version_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+          },
+          "document_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+          },
+          "file_object_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+          },
+          "version_number": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "content_hash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "document_code": {
+            "type": "string"
+          },
+          "lifecycle_state": {
+            "const": "draft"
+          }
+        },
+        "required": [
+          "document_version_id",
+          "document_id",
+          "file_object_id",
+          "version_number",
+          "content_hash",
+          "document_code",
+          "lifecycle_state"
+        ]
+      },
+      "TicketProjection": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "subscription_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+          },
+          "tenant_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+          },
+          "document_version_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "content_hash": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "audit_event_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "row_version": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          }
+        },
+        "required": [
+          "subscription_id",
+          "tenant_id",
+          "document_version_id",
+          "content_hash",
+          "audit_event_id",
+          "row_version"
+        ]
+      },
+      "ValidationReceiptProjection": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "regulatory_pack_validation_receipt_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+          },
+          "regulatory_pack_version_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+          },
+          "regulatory_import_manifest_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+          },
+          "validation_kind": {
+            "enum": [
+              "source",
+              "edition",
+              "package"
+            ]
+          },
+          "decision": {
+            "enum": [
+              "approved",
+              "rejected"
+            ]
+          },
+          "role_code": {
+            "enum": [
+              "REGULATORY_CONTENT_STEWARD",
+              "COMPLIANCE_MANAGER",
+              "QUALITY_MANAGER",
+              "CISO_SECURITY_MANAGER",
+              "AI_GOVERNANCE_MANAGER",
+              "PRIVACY_MANAGER",
+              "LEGAL_REVIEWER"
+            ]
+          },
+          "population_hash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "audit_event_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+          }
+        },
+        "required": [
+          "regulatory_pack_validation_receipt_id",
+          "regulatory_pack_version_id",
+          "regulatory_import_manifest_id",
+          "validation_kind",
+          "decision",
+          "role_code",
+          "population_hash",
+          "audit_event_id"
+        ]
+      },
+      "PublicationResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "regulatory_pack_version_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+          },
+          "lifecycle_state": {
+            "const": "published"
+          },
+          "published_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "audit_event_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+          }
+        },
+        "required": [
+          "regulatory_pack_version_id",
+          "lifecycle_state",
+          "published_at",
+          "audit_event_id"
+        ]
+      },
+      "PublicationProjection": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "regulatory_pack_version_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+          },
+          "pack_code": {
+            "type": "string"
+          },
+          "edition": {
+            "type": "string"
+          },
+          "version_number": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "lifecycle_state": {
+            "type": "string"
+          },
+          "population_hash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "imports": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "regulatory_import_manifest_id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+                },
+                "regulatory_source_id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+                },
+                "source_edition": {
+                  "type": "string"
+                },
+                "import_checksum": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "regulatory_coverage_manifest_id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$"
+                }
+              },
+              "required": [
+                "regulatory_import_manifest_id",
+                "regulatory_source_id",
+                "source_edition",
+                "import_checksum",
+                "regulatory_coverage_manifest_id"
+              ]
+            }
+          },
+          "validations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationReceiptProjection"
+            }
+          }
+        },
+        "required": [
+          "regulatory_pack_version_id",
+          "pack_code",
+          "edition",
+          "version_number",
+          "lifecycle_state",
+          "population_hash",
+          "imports",
+          "validations"
+        ]
+      }
+    }
+  }
+}

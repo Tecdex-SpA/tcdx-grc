@@ -88,9 +88,10 @@ describe.skipIf(process.env.TCDX_SECURITY_INTEGRATION !== 'true')('P2E isolated 
       expect((await app.inject({ url, headers: { ...headers,'x-tcdx-tenant-id': ids.tenant } })).statusCode).toBe(403);
       expect((await app.inject({ url: url+'?tenant_id='+ids.tenant, headers })).statusCode).toBe(400);
       expect((await app.inject({ method:'GET',url,headers,payload:{ tenant_id: ids.tenant } })).statusCode).toBe(400);
+      const approvedCatalog = ['AI_GOVERNANCE_MANAGER','CISO_SECURITY_MANAGER','COMPLIANCE_MANAGER','GRC_MANAGER','LEGAL_REVIEWER','PLATFORM_ADMIN','PLATFORM_SUPPORT','PRIVACY_MANAGER','QUALITY_MANAGER','REGULATORY_CONTENT_STEWARD'];
       const catalogResponse = await app.inject({ url: catalog, headers });
       expect(catalogResponse.statusCode).toBe(200);
-      expect(catalogResponse.json().items.map((r: { role_code: string })=>r.role_code).sort()).toEqual(['PLATFORM_ADMIN','PLATFORM_SUPPORT']);
+      expect(catalogResponse.json().items.map((r: { role_code: string })=>r.role_code).sort()).toEqual(approvedCatalog);
       expect(catalogResponse.json().items.every((r: Record<string,unknown>)=>r.is_baseline && r.lifecycle_state==='published' && r.tenant_id===null && r.ownership_class==='PLATFORM_CONTROL')).toBe(true);
       expect((await app.inject({ url:catalog, headers: { authorization: 'Bearer tenant-fixture' } })).statusCode).toBe(403);
       expect((await app.inject({ url:catalog, headers: { ...headers,'x-tcdx-tenant-id':ids.tenant } })).statusCode).toBe(403);
@@ -98,18 +99,18 @@ describe.skipIf(process.env.TCDX_SECURITY_INTEGRATION !== 'true')('P2E isolated 
       const page = await app.inject({ url: catalog+'&page[size]=1',headers });
       expect(page.json().items).toHaveLength(1); expect(page.json().page.has_more).toBe(true);
       const next = await app.inject({ url: catalog+'&page[size]=1&page[cursor]='+page.json().page.next_cursor,headers });
-      expect(next.statusCode).toBe(200); expect(next.json().page.has_more).toBe(false);
+      expect(next.statusCode).toBe(200); expect(next.json().page.has_more).toBe(true);
       expect(next.json().items[0].role_code).not.toBe(page.json().items[0].role_code);
       expect((await app.inject({ url:'/api/v1/roles?page[cursor]='+page.json().page.next_cursor,headers })).statusCode).toBe(400);
       expect((await app.inject({ url:'/api/v1/roles',headers })).json().items.some((r:{role_code:string})=>r.role_code==='TENANT_ADMIN')).toBe(true);
       expect(await snapshot()).toEqual(before);
       // Eligibility comes from canonical runtime publication metadata, not a hardcoded option.
       await sql`UPDATE iam.roles SET lifecycle_state='draft' WHERE role_id=${ref('PLATFORM_SUPPORT').role_id}::uuid`.execute(db);
-      expect((await app.inject({ url:catalog,headers })).json().items.map((r:{role_code:string})=>r.role_code)).toEqual(['PLATFORM_ADMIN']);
+      expect((await app.inject({ url:catalog,headers })).json().items.map((r:{role_code:string})=>r.role_code).sort()).toEqual(approvedCatalog.filter(code=>code!=='PLATFORM_SUPPORT'));
       // Still report active interval when metadata changes, not silently hide the assignment.
       expect((await app.inject({url,headers})).json().items).toHaveLength(2);
       await sql`UPDATE iam.roles SET lifecycle_state='published',is_baseline=false WHERE role_id=${ref('PLATFORM_SUPPORT').role_id}::uuid`.execute(db);
-      expect((await app.inject({ url:catalog,headers })).json().items.map((r:{role_code:string})=>r.role_code)).toEqual(['PLATFORM_ADMIN']);
+      expect((await app.inject({ url:catalog,headers })).json().items.map((r:{role_code:string})=>r.role_code).sort()).toEqual(approvedCatalog.filter(code=>code!=='PLATFORM_SUPPORT'));
       await sql`UPDATE iam.roles SET is_baseline=true WHERE role_id=${ref('PLATFORM_SUPPORT').role_id}::uuid`.execute(db);
       const actor = await resolvePlatformActor(db,identity(ids.actor));
       const exact = response.json().items[1].platform_role_assignment_id;

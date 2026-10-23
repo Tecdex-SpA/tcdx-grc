@@ -1,5 +1,3 @@
-import type { AuthorizationFacts } from "../security/authorization.js";
-import { authorize } from "../security/authorization.js";
 import { FoundationError } from "../errors.js";
 import { assertRegulatoryAssertionAllowed, authorizeRegulatoryExecution, candidateState, validateAndNormalize } from "./validator.js";
 import type { ImportResult, RegulatoryAssertionKind, RegulatoryExecutionContext, RegulatoryExecutionEnvelope, RegulatoryPackImportInput } from "./model.js";
@@ -53,37 +51,4 @@ export class RegulatoryPackPipeline {
     assertRegulatoryAssertionAllowed(envelope, assertionKind);
   }
 
-  async publish(input: RegulatoryPackImportInput, command: {
-    regulatoryPackVersionId: string;
-    actorUserIdentityId: string;
-    correlationId: string;
-    idempotencyKey: string;
-    requestHash: string;
-  }, authorization: AuthorizationFacts): Promise<void> {
-    authorize(authorization, { permission: "knowledge.regulatory_pack.publish", allowedScopes: new Set(["platform"]) });
-    const normalized = validateAndNormalize(input);
-    if (candidateState(input, normalized.coverage.coveragePercent) !== "CANDIDATE_READY_FOR_HUMAN_REVIEW") {
-      throw new FoundationError("TCDX.REGULATORY.PUBLICATION_BLOCKED", "Regulatory pack has not satisfied source, coverage and approval guards", 409);
-    }
-    const publisher = input.approvals.find((approval) => approval.role === "GRC_MANAGER");
-    if (publisher?.userIdentityId !== command.actorUserIdentityId) {
-      throw new FoundationError("TCDX.AUTHORIZATION.DENIED", "GRC Manager approval must match the publishing actor", 403);
-    }
-    await this.repository.transaction(async (transaction) => {
-      await transaction.lock(input.packCode);
-      const persisted = await transaction.findVersion(input.packCode, input.versionNumber);
-      if (!persisted || persisted.regulatoryPackVersionId !== command.regulatoryPackVersionId
-        || persisted.contentHash !== normalized.contentHash || persisted.importChecksum !== input.importChecksum) {
-        throw new FoundationError("TCDX.REGULATORY.SOURCE_DRIFT", "Publication must match the exact persisted pack version and import", 409);
-      }
-      await transaction.publish({
-      regulatoryPackVersionId: command.regulatoryPackVersionId,
-      actorUserIdentityId: command.actorUserIdentityId,
-      approvalRefs: input.approvals.map((approval) => approval.approvalRef),
-      correlationId: command.correlationId,
-      idempotencyKey: command.idempotencyKey,
-      requestHash: command.requestHash
-      });
-    });
-  }
 }

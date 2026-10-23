@@ -30,11 +30,7 @@ export class MemoryRegulatoryPackRepository implements RegulatoryPackRepository 
         staged.versions.set(`${pack.packCode}:${pack.versionNumber}`, persisted);
         return persisted;
       },
-      publish: async (command) => {
-        for (const [key, value] of staged.versions) {
-          if (value.regulatoryPackVersionId === command.regulatoryPackVersionId) staged.versions.set(key, { ...value, lifecycleState: "published" });
-        }
-      }
+
     };
     const result = await work(transaction);
     this.state = staged;

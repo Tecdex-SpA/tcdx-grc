@@ -1,7 +1,6 @@
 import { sql, type Kysely, type Transaction } from "kysely";
 import type { FoundationDatabase } from "../database.js";
 import { FoundationError } from "../errors.js";
-import { claimIdempotency, completeIdempotency, persistAuditEvent, persistOutboxEvent } from "../persistence/foundation-records.js";
 import { newUuidV7 } from "../uuid.js";
 import { hashCanonical } from "./hash.js";
 import type { NormalizedRegulatoryPack } from "./model.js";
@@ -354,40 +353,7 @@ function transactionAdapter(transaction: Transaction<FoundationDatabase>): Regul
     findImport: (packCode, checksum) => findImport(transaction, packCode, checksum),
     findVersion: (packCode, versionNumber) => findVersion(transaction, packCode, versionNumber),
     persist: (pack) => persistPack(transaction, pack),
-    publish: async (command) => {
-      const claim = await claimIdempotency(transaction, {
-        idempotencyRecordId: newUuidV7(), ownershipClass: "GLOBAL_REFERENCE", tenantId: null,
-        actor: { userIdentityId: command.actorUserIdentityId }, correlationId: command.correlationId,
-        operationCode: "regulatoryPackPublish", key: command.idempotencyKey, requestHash: command.requestHash
-      });
-      if (claim.state === "replay") return;
-      const updated = await sql`
-        UPDATE regulatory.regulatory_pack_versions
-           SET lifecycle_state='published',published_at=CURRENT_TIMESTAMP,reviewed_by_user_identity_id=${command.actorUserIdentityId}::uuid
-         WHERE regulatory_pack_version_id=${command.regulatoryPackVersionId}::uuid AND lifecycle_state IN ('review','approved')
-      `.execute(transaction);
-      if (Number(updated.numAffectedRows) !== 1) throw new FoundationError("TCDX.REGULATORY.PUBLICATION_CONFLICT", "Regulatory pack version is not publishable", 409);
-      await persistAuditEvent(transaction, {
-        auditEventId: newUuidV7(), ownershipClass: "GLOBAL_REFERENCE", tenantId: null,
-        actor: { userIdentityId: command.actorUserIdentityId }, correlationId: command.correlationId,
-        eventCode: "audit.knowledge.regulatory_pack.publish.v1", aggregateType: "RegulatoryPackVersion",
-        aggregateId: command.regulatoryPackVersionId, commandCode: "regulatoryPackPublish", outcome: "success",
-        classification: "protected_metadata", after: { lifecycle_state: "published", approval_refs: command.approvalRefs }
-      });
-      const eventId = newUuidV7();
-      await persistOutboxEvent(transaction, {
-        outboxEventId: newUuidV7(), eventId, ownershipClass: "GLOBAL_REFERENCE", tenantId: null,
-        actor: { userIdentityId: command.actorUserIdentityId }, correlationId: command.correlationId,
-        eventType: "knowledge.regulatory_pack.published.v1", aggregateType: "RegulatoryPackVersion",
-        aggregateId: command.regulatoryPackVersionId, classification: "protected_metadata",
-        payload: { regulatory_pack_version_id: command.regulatoryPackVersionId, approval_refs: command.approvalRefs }
-      });
-      await completeIdempotency(transaction, {
-        idempotencyRecordId: claim.idempotencyRecordId, requestHash: command.requestHash,
-        resultStatusCode: "completed", resultRef: command.regulatoryPackVersionId,
-        responseHash: hashCanonical({ regulatoryPackVersionId: command.regulatoryPackVersionId, lifecycleState: "published" })
-      });
-    }
+
   };
 }
 

@@ -1,5 +1,6 @@
 import {publishInitialSourceLifecycle,type InitialSourcePublication} from "./initial-source-lifecycle-publication.js";
 import {publishLibraryOperationalData,type LibraryPublication} from './normative-library-publication.js';
+import {publishRuntimeBindingData} from './runtime-binding-publication.js';
 import { createHash } from "node:crypto";
 import { readFile, lstat } from "node:fs/promises";
 import { sql, CompiledQuery, type Kysely, type Transaction } from "kysely";
@@ -175,6 +176,15 @@ export class IamPublicationService {
     return this.db.transaction().setIsolationLevel('read committed').execute(async tx=>{
       const principal=await this.resolvePrincipal(proof,tx);
       return publishLibraryOperationalData(tx,principal,correlationId,publication);
+    });
+  }
+
+  async publishRuntimeBindings(correlationId:string){
+    if(!this.normativePublication)deny();
+    const proof=await this.tokens.authenticateMachine(await this.machineCredential());
+    return this.db.transaction().setIsolationLevel('read committed').execute(async tx=>{
+      const principal=await this.resolvePrincipal(proof,tx);
+      return publishRuntimeBindingData(tx,principal,correlationId,this.normativePublication!.tenantIds);
     });
   }
 

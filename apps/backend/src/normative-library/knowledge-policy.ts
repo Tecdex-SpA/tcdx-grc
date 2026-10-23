@@ -9,7 +9,7 @@ import type {KnowledgeReadPolicy} from './knowledge-read.js';
 import {authorizeLibraryOperation,concealed,type Ownership} from './authorization.js';
 import {tenantKnowledgeTarget} from './postgres.js';
 import {knowledgeArtifact,type TargetFacts} from './knowledge.js';
-import {permitsSourceUse,requireSourceUse,rightsBindingHash,type RightsEvidence,type RightsRecord,type UseAct,type UseEnvironment} from './rights.js';
+import {internalNormativeAccreditationNotRequired,permitsSourceUse,requireSourceUse,rightsBindingHash,type RightsEvidence,type RightsRecord,type UseAct,type UseEnvironment} from './rights.js';
 import {FoundationError} from '../errors.js';
 
 type Tx=Transaction<FoundationDatabase>;type Actor=CoreActor|PlatformActor;type Row=Record<string,unknown>;type TargetLink=Pick<KnowledgeLink,'target'|'context_role'|'excerpt_hash'>;
@@ -71,16 +71,22 @@ export class CanonicalKnowledgePolicy implements KnowledgeSourceRights,Knowledge
  }
  private async permits(tx:Tx,actor:Actor,source:{knowledge_source_id:string;ownership_class:string;tenant_id:string|null},hash:string,links:readonly TargetLink[],acts:readonly UseAct[],lock=false):Promise<boolean>{
   const audience='identity' in actor?null:actor.tenantId;
+  if(!['TENANT_OWNED','GLOBAL_REFERENCE','PLATFORM_CONTROL'].includes(source.ownership_class)||
+   (source.ownership_class==='TENANT_OWNED')!==(source.tenant_id!==null)||
+   source.tenant_id!==null&&source.tenant_id!==audience||!/^[a-f0-9]{64}$/.test(hash))return false;
   const time=await sql<{now:string}>`SELECT transaction_timestamp()::text AS now`.execute(tx);
   const packs=new Map<string,{edition:string;preliminary:boolean}>();
   for(const link of links){
    await this.target(tx,actor,link.target);
    // Regulatory pack dependencies of exact normative targets; subject/control-only guidance has its own source evidence.
    if('normative_unit_id' in link.target||'requirement_id' in link.target||'control_version_id' in link.target){
-    const rows=await sql<{regulatory_pack_version_id:string;edition:string;preliminary:boolean}>`SELECT p.regulatory_pack_version_id,p.edition,EXISTS(SELECT 1 FROM platform.regulatory_pack_validation_provenances vp WHERE vp.regulatory_pack_version_id=p.regulatory_pack_version_id AND vp.authority_class='NON_AUTHORITATIVE_TEST_PACK') AS preliminary FROM regulatory.regulatory_pack_versions p JOIN regulatory.regulatory_pack_framework_versions pf ON pf.regulatory_pack_version_id=p.regulatory_pack_version_id WHERE pf.framework_version_id IN (SELECT framework_version_id FROM regulatory.normative_units WHERE normative_unit_id=${'normative_unit_id' in link.target?link.target.normative_unit_id:null}::uuid UNION SELECT framework_version_id FROM regulatory.requirements WHERE requirement_id=${'requirement_id' in link.target?link.target.requirement_id:null}::uuid UNION SELECT r.framework_version_id FROM regulatory.requirement_control_mappings m JOIN regulatory.requirements r ON r.requirement_id=m.requirement_id WHERE m.control_version_id=${'control_version_id' in link.target?link.target.control_version_id:null}::uuid UNION SELECT n.framework_version_id FROM regulatory.normative_unit_control_mappings m JOIN regulatory.normative_units n ON n.normative_unit_id=m.normative_unit_id WHERE m.control_version_id=${'control_version_id' in link.target?link.target.control_version_id:null}::uuid)`.execute(tx);
+    const rows=await sql<{regulatory_pack_version_id:string;edition:string;preliminary:boolean}>`SELECT p.regulatory_pack_version_id,p.edition,EXISTS(SELECT 1 FROM regulatory.regulatory_pack_validation_provenances vp WHERE vp.regulatory_pack_version_id=p.regulatory_pack_version_id AND vp.authority_class='NON_AUTHORITATIVE_TEST_PACK') AS preliminary FROM regulatory.regulatory_pack_versions p JOIN regulatory.regulatory_pack_framework_versions pf ON pf.regulatory_pack_version_id=p.regulatory_pack_version_id WHERE pf.framework_version_id IN (SELECT framework_version_id FROM regulatory.normative_units WHERE normative_unit_id=${'normative_unit_id' in link.target?link.target.normative_unit_id:null}::uuid UNION SELECT framework_version_id FROM regulatory.requirements WHERE requirement_id=${'requirement_id' in link.target?link.target.requirement_id:null}::uuid UNION SELECT r.framework_version_id FROM regulatory.requirement_control_mappings m JOIN regulatory.requirements r ON r.requirement_id=m.requirement_id WHERE m.control_version_id=${'control_version_id' in link.target?link.target.control_version_id:null}::uuid UNION SELECT n.framework_version_id FROM regulatory.normative_unit_control_mappings m JOIN regulatory.normative_units n ON n.normative_unit_id=m.normative_unit_id WHERE m.control_version_id=${'control_version_id' in link.target?link.target.control_version_id:null}::uuid)`.execute(tx);
     if(!rows.rows.length&&!('control_version_id' in link.target))return false;for(const p of rows.rows)packs.set(p.regulatory_pack_version_id,p);
    }
   }
+  // Targets and every pack dependency have already passed their existing policies.
+  // Internal validation requires no fabricated legal attestation or rights row.
+  if(internalNormativeAccreditationNotRequired(this.environment,acts,[...packs.values()].map(p=>p.preliminary)))return true;
   const records=await sql<RightsRecord&{audit_binding_hash:string|null}>`SELECT r.*,r.effective_from::text,r.effective_to::text,r.revoked_at::text,a.after_payload->>'binding_hash' AS audit_binding_hash FROM knowledge.knowledge_source_usage_rights r JOIN ops_audit.audit_events a ON a.audit_event_id=r.recorded_audit_event_id AND a.aggregate_type='KnowledgeSource' AND a.aggregate_id=r.knowledge_source_id AND a.ownership_class=r.ownership_class AND a.tenant_id IS NOT DISTINCT FROM r.tenant_id AND a.actor_user_identity_id=r.created_by_user_identity_id AND a.event_code='audit.knowledge.knowledge_source.rights.record.v1' AND a.outcome='succeeded' AND a.after_payload->>'knowledge_source_usage_right_id'=r.knowledge_source_usage_right_id::text AND a.after_payload->>'evidence_hash'=r.evidence_hash WHERE r.knowledge_source_id=${source.knowledge_source_id}::uuid AND r.content_hash=${hash} AND r.audience_tenant_id IS NOT DISTINCT FROM ${audience}::uuid AND r.effective_from<=transaction_timestamp() AND r.effective_to>transaction_timestamp() AND (r.revoked_at IS NULL OR r.revoked_at>transaction_timestamp())${sql.raw(lock?' FOR SHARE OF r':'')}`.execute(tx);
   // Binding normalizes UTC representation without losing PostgreSQL microseconds.
   const normalized=records.rows;

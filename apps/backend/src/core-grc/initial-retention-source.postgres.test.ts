@@ -36,7 +36,7 @@ it('serializes competing source and publication transactions on the same tenant'
  }finally{await db.destroy();}
 });
 for(const scenario of cases) it(scenario,async()=>{
- if(process.env.DATABASE_HOST!=='127.0.0.1'||process.env.DATABASE_PORT!=='55437'||process.env.TCDX_INITIAL_SOURCE_PG_IDENTIFIER!=='7696888505868808231') throw new Error('ATTESTED_LOCAL_PG16_REQUIRED');
+ if(process.env.DATABASE_HOST!=='127.0.0.1'||process.env.DATABASE_PORT!=='55437'||!process.env.TCDX_INITIAL_SOURCE_PG_IDENTIFIER||!process.env.TCDX_RUNTIME_TEST_CLUSTER?.startsWith('/private/tmp/tcdx-runtime-postgres.')) throw new Error('ATTESTED_LOCAL_PG16_REQUIRED');
  const db=createDatabase(loadConfig(process.env));
  // Use the sealed published binding as a rollback fixture, not the operational
  // v1.11 loader: v1.12 activation does not authorize republishing its registry.
@@ -50,6 +50,7 @@ for(const scenario of cases) it(scenario,async()=>{
  try {
   const identity=await sql<{id:string;major:number}>`SELECT system_identifier::text AS id,current_setting('server_version_num')::int/10000 AS major FROM pg_control_system()`.execute(db);
   expect(identity.rows[0]).toEqual({id:process.env.TCDX_INITIAL_SOURCE_PG_IDENTIFIER,major:16});
+  expect((await sql<{directory:string}>`SELECT current_setting('data_directory') AS directory`.execute(db)).rows[0]?.directory).toBe(process.env.TCDX_RUNTIME_TEST_CLUSTER);
   await db.transaction().execute(async tx=>{
    await sql`INSERT INTO iam.user_identities(user_identity_id,identity_key,display_name,lifecycle_state)
     VALUES(${ids.custodian}::uuid,${ids.custodian},'LOCAL TECHNICAL CUSTODIAN','active'),(${ids.owner}::uuid,${ids.owner},'LOCAL TECHNICAL DOCUMENT AUTHOR','active')`.execute(tx);
@@ -70,7 +71,7 @@ for(const scenario of cases) it(scenario,async()=>{
     try { const value=await executeMutation(tx,override??actor(who),mutations.get(op)!,{body,...(targetId?{targetId}:{}),idempotencyKey:key,correlationId:newUuidV7(),fileStorage:storage});await sql`RELEASE SAVEPOINT operation_case`.execute(tx);return value; }
     catch(e){await sql`ROLLBACK TO SAVEPOINT operation_case`.execute(tx);await sql`RELEASE SAVEPOINT operation_case`.execute(tx);throw e;}
    };
-   const fixtureInstant=(await sql<{now:string}>`SELECT to_char(transaction_timestamp(),'YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS now`.execute(tx)).rows[0]!.now;
+   const fixtureInstant=(await sql<{now:string}>`SELECT to_char(transaction_timestamp() AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS now`.execute(tx)).rows[0]!.now;
    const ordinary = scenario===cases[10] || scenario===cases[11] || scenario===cases[16];
    const kind = scenario===cases[11] ? 'product_baseline' : scenario===cases[13] ? 'contractual_policy' : scenario===cases[14] ? 'legal_hold' : 'tenant_policy';
    const policy=(await run('retentionPolicyCreate','custodian',{policy_code:ids.tenant,version_number:1,policy_kind:kind,...(kind==='legal_hold'?{}:{retention_seconds:604800}),trigger_event_code:'expiry_or_closure',precedence_rank:kind==='product_baseline'?100:kind==='contractual_policy'?300:kind==='legal_hold'?500:200,is_mandatory:scenario===cases[12]})).response.retention_policy_id as string;
@@ -137,7 +138,7 @@ for(const scenario of cases) it(scenario,async()=>{
     await sql`ROLLBACK TO SAVEPOINT state_guard`.execute(tx);
    }
    const file=(await run('uploadFinalize','owner',{expected_version:1},intent)).response.file_object_id as string;
-   const instant=(await sql<{now:string}>`SELECT to_char(transaction_timestamp(),'YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS now`.execute(tx)).rows[0]!.now;
+   const instant=(await sql<{now:string}>`SELECT to_char(transaction_timestamp() AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS now`.execute(tx)).rows[0]!.now;
    const evidenceBody={evidence_code:ids.tenant,evidence_type:'document',retention_policy_id:policy,source_kind:'uploaded',file_object_id:file,effective_from:instant,provenance_ref:'ISOLATED TECHNICAL FIXTURE',links:[]};
    if(scenario===cases[3]){
     await expect(run('evidenceCreate','custodian',evidenceBody)).rejects.toMatchObject({statusCode:403});
@@ -154,7 +155,7 @@ for(const scenario of cases) it(scenario,async()=>{
    }
    const principal=(await sql<{id:string}>`SELECT service_principal_id::text AS id FROM iam.service_principals WHERE lifecycle_state='active' LIMIT 1`.execute(tx)).rows[0]!.id;
    await expect(publishInitialSourceLifecycle(tx,principal,newUuidV7(),publication)).rejects.toMatchObject({statusCode:403});
-   // The local ledger is genuinely33. Adapt only this rollback test configuration,
+   // The local ledger is genuinely34. Adapt only this rollback test configuration,
    // never ledger rows or the production loader: actual QA must match approved34.
    const localLedger=(await sql<{id:string;filename:string;sha256:string}>`SELECT migration_id AS id,filename,content_sha256 AS sha256 FROM platform.schema_migrations ORDER BY migration_id`.execute(tx)).rows;
    const isolatedConfig={...publication,migrations:localLedger};

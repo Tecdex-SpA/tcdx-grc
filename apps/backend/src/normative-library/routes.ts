@@ -4,9 +4,11 @@ import type {IdentityVerifier} from '../security/authentication.js';
 import {resolveAuthenticatedIdentity} from '../core-grc/security.js';
 import {deny,invalid,concealed} from './authorization.js';
 import type {LibraryComposition} from './composition.js';
+import {registerRuntimeBindingRoutes} from '../regulatory/runtime-binding-routes.js';
 type Operation=(typeof NORMATIVE_LIBRARY.registry.new_operations)[number]|(typeof NORMATIVE_LIBRARY.existingOperations)[number];
 /** Trusted composition only; current bootstrap supplies none. No runtime flag or migration-on-start. */
 export function registerNormativeLibraryRoutes(app:FastifyInstance,identityVerifier:IdentityVerifier,composition:LibraryComposition):void{
+ registerRuntimeBindingRoutes(app,identityVerifier,composition.runtimeBindings);
  const operations=[...NORMATIVE_LIBRARY.registry.new_operations,...NORMATIVE_LIBRARY.existingOperations];
  for(const op of operations)if(!composition.handlers.has(op.operation_id))throw Error('Missing library handler: '+op.operation_id);
  async function invoke(op:Operation,request:FastifyRequest,reply:FastifyReply,params:Record<string,string>){

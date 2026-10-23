@@ -1,5 +1,4 @@
 import { describe, expect, it } from "vitest";
-import type { AuthorizationFacts } from "../security/authorization.js";
 import { MemoryRegulatoryPackRepository } from "./memory-repository.js";
 import type { RegulatoryPackImportInput } from "./model.js";
 import { RegulatoryPackPipeline } from "./pipeline.js";
@@ -172,15 +171,7 @@ function executionContext(runtimeEnvironment: "development" | "test" | "qa" | "p
   } as const;
 }
 
-const publishAuthorization: AuthorizationFacts = {
-  authenticated: true,
-  tenantMembershipActive: true,
-  capabilityEnabled: true,
-  permissions: new Set(["knowledge.regulatory_pack.publish"]),
-  scopes: new Set(["platform"]),
-  objectAccessible: true,
-  sodAllowed: true
-};
+
 
 describe("generic regulatory pack pipeline", () => {
   it("rejects an edition change for the same imported version even when its content hash is unchanged", async () => {
@@ -189,12 +180,11 @@ describe("generic regulatory pack pipeline", () => {
     await expect(pipeline.import(finalize({ ...input, edition: 'Different edition' }))).rejects.toMatchObject({ code: 'TCDX.REGULATORY.SOURCE_DRIFT' });
   });
 
-  it("cannot use one pack's approvals and content to publish a different persisted version", async () => {
+  it("has no trusted-input publication path that can bypass persisted receipts", async () => {
     const pipeline = new RegulatoryPackPipeline(new MemoryRegulatoryPackRepository());
-    const input = fixture(); await pipeline.import(input);
-    await expect(pipeline.publish(input, { regulatoryPackVersionId: '00000000-0000-7000-8000-000000000099',
-      actorUserIdentityId: USER_GRC, correlationId: USER_GRC, idempotencyKey: 'wrong-target', requestHash: 'd'.repeat(64) }, publishAuthorization))
-      .rejects.toMatchObject({ code: 'TCDX.REGULATORY.SOURCE_DRIFT' });
+    const input = fixture(); const imported = await pipeline.import(input);
+    expect('publish' in pipeline).toBe(false);
+    expect(imported.candidateState).toBe('CANDIDATE_READY_FOR_HUMAN_REVIEW');
   });
 
   it("does not treat a nominal empty official pack as publication-ready coverage", () => {
@@ -388,16 +378,10 @@ describe("generic regulatory pack pipeline", () => {
     const invalid = nonAuthoritativeTestFixture();
     invalid.governance = { ...invalid.governance, commercialPublicationEligible: true };
     expect(() => validateAndNormalize(finalize(invalid))).toThrow("DEV/DEMO-only");
-
-    const input = nonAuthoritativeTestFixture();
-    const imported = await pipeline.import(input);
-    await expect(pipeline.publish(input, {
-      regulatoryPackVersionId: imported.regulatoryPackVersionId,
-      actorUserIdentityId: USER_GRC,
-      correlationId: "00000000-0000-7000-8000-000000000010",
-      idempotencyKey: "test-publish-1",
-      requestHash: "d".repeat(64)
-    }, publishAuthorization)).rejects.toMatchObject({ code: "TCDX.REGULATORY.PUBLICATION_BLOCKED" });
+    const imported = await pipeline.import(nonAuthoritativeTestFixture());
+    expect(imported.authorityClass).toBe('NON_AUTHORITATIVE_TEST_PACK');
+    expect(imported.candidateState).not.toBe('CANDIDATE_READY_FOR_HUMAN_REVIEW');
+    expect('publish' in pipeline).toBe(false);
   });
 
   it("replays test-pack imports idempotently and rejects source drift", async () => {
@@ -501,35 +485,18 @@ describe("generic regulatory pack pipeline", () => {
     expect(result.candidateState).toBe("BLOCKED_HUMAN_REVIEW");
   });
 
-  it("enforces platform publication permission and publisher identity", async () => {
+  it("does not publish an import even when its internal input contains all approval labels", async () => {
     const repository = new MemoryRegulatoryPackRepository();
     const pipeline = new RegulatoryPackPipeline(repository);
-    const input = fixture();
-    const imported = await pipeline.import(input);
-    const command = {
-      regulatoryPackVersionId: imported.regulatoryPackVersionId,
-      actorUserIdentityId: USER_GRC,
-      correlationId: "00000000-0000-7000-8000-000000000010",
-      idempotencyKey: "publish-1",
-      requestHash: "d".repeat(64)
-    };
-    await expect(pipeline.publish(input, command, { ...publishAuthorization, permissions: new Set() })).rejects.toThrow("Access denied");
-    await expect(pipeline.publish(input, { ...command, actorUserIdentityId: USER_CISO }, publishAuthorization)).rejects.toThrow("publishing actor");
-    await expect(pipeline.publish(input, command, publishAuthorization)).resolves.toBeUndefined();
+    const input = fixture(); const imported = await pipeline.import(input);
+    const persisted = await repository.transaction(tx=>tx.findVersion(input.packCode,input.versionNumber));
+    expect(persisted?.regulatoryPackVersionId).toBe(imported.regulatoryPackVersionId);
+    expect(persisted?.lifecycleState).toBe('review');
   });
 
-  it("detects source drift and preserves published-version immutability", async () => {
-    const repository = new MemoryRegulatoryPackRepository();
-    const pipeline = new RegulatoryPackPipeline(repository);
-    const input = fixture();
-    const imported = await pipeline.import(input);
-    await pipeline.publish(input, {
-      regulatoryPackVersionId: imported.regulatoryPackVersionId,
-      actorUserIdentityId: USER_GRC,
-      correlationId: "00000000-0000-7000-8000-000000000010",
-      idempotencyKey: "publish-1",
-      requestHash: "d".repeat(64)
-    }, publishAuthorization);
+  it("detects source drift without invoking an alternate publication command", async () => {
+    const pipeline = new RegulatoryPackPipeline(new MemoryRegulatoryPackRepository());
+    await pipeline.import(fixture());
     const drifted = fixture();
     drifted.units = [{ ...drifted.units[0]!, title: "changed", contentHash: "e".repeat(64) }];
     await expect(pipeline.import(finalize(drifted))).rejects.toMatchObject({ code: "TCDX.REGULATORY.SOURCE_DRIFT" });

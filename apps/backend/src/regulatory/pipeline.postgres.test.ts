@@ -12,6 +12,10 @@ import { NORMATIVE_LIBRARY } from '@tcdx-grc/contracts/normative-library';
 import type { CoreActor } from '../core-grc/model.js';
 import { loadMatrixPopulation } from '../normative-library/matrix-source.js';
 import { parseMatrixQuery } from '../normative-library/matrices.js';
+import { CanonicalKnowledgePolicy } from '../normative-library/knowledge-policy.js';
+import { validationProvenanceCreate } from './validation-access.js';
+import type { PlatformActor } from '../security/platform-authority.js';
+import type { KnowledgeWrite } from '@tcdx-grc/contracts/normative-library';
 
 // Every source, obligation, approval flag and identity below is a disposable test
 // fixture. Nothing here is an actual regulatory source or an operational receipt.
@@ -214,5 +218,30 @@ describe.skipIf(process.env.TCDX_REGULATORY_PIPELINE_INTEGRATION !== 'true')('ca
       await expect(loadMatrixPopulation(tx,{ ...matrixActor, permissions: new Set(), permissionScopes: new Map() },query))
         .rejects.toMatchObject({ code: 'TCDX.AUTHORIZATION.DENIED' });
     });
+  });
+  it('resolves internal normative provenance from canonical PostgreSQL without H04 rows and preserves negative authorities',async()=>{
+    const input=fixture(),imported=await pipeline.import(input);
+    const platform:PlatformActor={identity:{principalClass:'HUMAN_INTERACTIVE',principalId:actor,tokenId:newUuidV7(),expiresAt:new Date(Date.now()+60000)},roles:['PLATFORM_ADMIN'],permissions:new Set(['knowledge.knowledge_item.read','platform.regulatory_pack_validation_access.create'])};
+    const source=newUuidV7();
+    await sql`INSERT INTO knowledge.knowledge_sources(knowledge_source_id,created_by_user_identity_id,ownership_class,source_code,name,source_kind,license_classification,lifecycle_state) VALUES(${source}::uuid,${actor}::uuid,'PLATFORM_CONTROL',${source},'Synthetic internal source','editorial','original','active')`.execute(db);
+    const unit=(await sql<{normative_unit_id:string}>`SELECT normative_unit_id FROM regulatory.normative_units WHERE framework_version_id=${imported.frameworkVersionId}::uuid AND source_locator=${input.units[0]!.sourceLocator}`.execute(db)).rows[0]!;
+    const body:KnowledgeWrite={content_language:'es',content:{comprender:{text:'Synthetic internal guidance',citations:[]},implementar:{text:'Synthetic steps',citations:[]},demostrar:{text:'Synthetic validation',citations:[]}},links:[{target:{normative_unit_id:unit.normative_unit_id},context_role:'comprender',source_locator:input.units[0]!.sourceLocator,provenance_ref:input.units[0]!.provenanceRef}],effective_from:new Date().toISOString(),rationale:'Isolated test, no actual rights or normative publication'};
+    const parent={knowledge_item_id:newUuidV7(),knowledge_source_id:source,ownership_class:'PLATFORM_CONTROL' as const,tenant_id:null,license_classification:'original'};
+    let evidenceCalls=0;const evidence={verify:async()=>{evidenceCalls++;throw Error('Internal work must not require a fabricated attestation');}};
+    const before=(await sql<{n:number}>`SELECT count(*)::int AS n FROM knowledge.knowledge_source_usage_rights`.execute(db)).rows[0]!.n;
+    await db.transaction().execute(async tx=>{
+      // Missing persisted provenance is not inferred from the caller or input pack label.
+      await expect(new CanonicalKnowledgePolicy('qa',evidence).assertWrite(tx,platform,parent,body,'create')).rejects.toMatchObject({statusCode:403});
+      const manifests=await sql<{regulatory_import_manifest_id:string}>`SELECT regulatory_import_manifest_id FROM regulatory.regulatory_import_manifests WHERE regulatory_pack_version_id=${imported.regulatoryPackVersionId}::uuid AND import_checksum=${imported.importChecksum}`.execute(tx);
+      expect(manifests.rows).toHaveLength(1);
+      await validationProvenanceCreate(tx,platform,{key:newUuidV7(),correlationId:newUuidV7(),body:{regulatory_pack_version_id:imported.regulatoryPackVersionId,regulatory_import_manifest_id:manifests.rows[0]!.regulatory_import_manifest_id,source_role:'test_data_source',provenance_ref:input.units[0]!.provenanceRef}});
+      for(const environment of ['development','test','qa'] as const)for(const phase of ['create','update','review','publish'] as const)await new CanonicalKnowledgePolicy(environment,evidence).assertWrite(tx,platform,parent,body,phase);
+      await expect(new CanonicalKnowledgePolicy('production',evidence).assertWrite(tx,platform,parent,body,'create')).rejects.toMatchObject({statusCode:403});
+      await expect(new CanonicalKnowledgePolicy('qa',evidence).assertWrite(tx,{...platform,permissions:new Set()},parent,body,'create')).rejects.toMatchObject({statusCode:403});
+      await expect(new CanonicalKnowledgePolicy('qa',evidence).assertWrite(tx,platform,{...parent,ownership_class:'TENANT_OWNED',tenant_id:newUuidV7()},body,'create')).rejects.toMatchObject({statusCode:403});
+      await expect(new CanonicalKnowledgePolicy('qa',evidence).assertWrite(tx,platform,parent,{...body,links:[{...body.links[0]!,target:{normative_unit_id:newUuidV7()}}]},'create')).rejects.toMatchObject({statusCode:404});
+    });
+    expect(evidenceCalls).toBe(0);
+    expect((await sql<{n:number}>`SELECT count(*)::int AS n FROM knowledge.knowledge_source_usage_rights`.execute(db)).rows[0]!.n).toBe(before);
   });
 });

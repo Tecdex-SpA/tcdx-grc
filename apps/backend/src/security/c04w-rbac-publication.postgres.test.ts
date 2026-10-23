@@ -23,11 +23,7 @@ describe.skipIf(!enabled)("C-04W approved tenant role publication on isolated Po
           await sql`INSERT INTO iam.roles (role_id,ownership_class,tenant_id,role_code,name,is_baseline,lifecycle_state)
             VALUES (${id}::uuid,'TENANT_OWNED',${tenant.id}::uuid,${code},${code},TRUE,'published')`.execute(tx);
         }
-        await sql`INSERT INTO platform.schema_migrations
-          (migration_id,filename,content_sha256,transactional,runner_version,started_at,applied_at,duration_ms,outcome)
-          VALUES ('20261015000100','20261015000100_c04w_applicability_hold_r2.sql',
-            'b2a5bc73f75d7f95fb7ba5068f1b3ea77a923d7da7501446d05455ee545ec523',TRUE,
-            'isolated-gate',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,0,'applied')`.execute(tx);
+        expect((await sql<{n:number}>`SELECT count(*)::int AS n FROM platform.schema_migrations WHERE outcome='applied'`.execute(tx)).rows[0]?.n).toBe(34);
         const service = new IamPublicationService(db, {} as never, {} as never, async () => "");
         const publish = service as unknown as { publishC04wRolePermissions: (
           transaction: typeof tx, principalId: string, correlationId: string

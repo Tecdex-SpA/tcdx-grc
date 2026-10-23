@@ -7,7 +7,7 @@ import { FoundationError } from "../errors.js";
 import type { IdentityVerifier } from "./authentication.js";
 import { requirePlatformAccess, resolvePlatformActor } from "./platform-authority.js";
 import { requireAccess, resolveAuthenticatedIdentity, resolveCoreActor } from "../core-grc/security.js";
-import { platformRoleFamilyCodes } from "./platform-role-family.js";
+import { platformRoleFamilyCodes, platformExclusiveRoleCodes } from "./platform-role-family.js";
 import { membershipRoleEtag } from "./membership-role-etag.js";
 
 type JsonRow = Record<string, unknown>;
@@ -280,7 +280,7 @@ export async function userIdentityTenantAccessList(database: Kysely<FoundationDa
           ORDER BY r.name,mr.membership_role_id) FROM iam.membership_roles mr JOIN iam.roles r
           ON r.role_id=mr.role_id AND r.tenant_id=mr.tenant_id AND r.ownership_class='TENANT_OWNED'
           WHERE mr.tenant_id=m.tenant_id AND mr.tenant_membership_id=m.tenant_membership_id AND r.lifecycle_state='published'
-            AND r.role_code<>ALL(ARRAY[${platformRoleFamilyCodes.map(code => `'${code}'`).join(',')}])
+            AND r.role_code<>ALL(ARRAY[${platformExclusiveRoleCodes.map(code => `'${code}'`).join(',')}])
             AND mr.valid_from<=transaction_timestamp() AND (mr.valid_to IS NULL OR mr.valid_to>transaction_timestamp())),'[]'::jsonb) AS roles`,
       from: "iam.tenant_memberships m JOIN platform.tenants t ON t.tenant_id=m.tenant_id",
       where: "m.user_identity_id=$1::uuid",values: [id],id: "m.tenant_membership_id",createdAt: "m.created_at"

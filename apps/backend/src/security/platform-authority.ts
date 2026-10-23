@@ -4,6 +4,7 @@ import { FoundationError } from "../errors.js";
 import { persistAuditEvent } from "../persistence/foundation-records.js";
 import { newUuidV7 } from "../uuid.js";
 import type { VerifiedIdentity } from "./authentication.js";
+import bindingData from '../regulatory/runtime-bindings-contract.generated.json' with {type:'json'};
 
 export type PlatformActor = {
   identity: VerifiedIdentity;
@@ -35,6 +36,9 @@ export async function resolvePlatformActor(database: Kysely<FoundationDatabase>,
        AND pa.ownership_class='PLATFORM_CONTROL'
        AND pa.valid_from <= ${now}
        AND (pa.valid_to IS NULL OR pa.valid_to > ${now})
+       AND (r.role_code IN ('PLATFORM_ADMIN','PLATFORM_SUPPORT') OR
+         (r.role_code=ANY(${bindingData.contract.global_content_roles}::text[]) AND
+          p.permission_code=ANY(${bindingData.contract.permissions.filter(p=>p.scope==='platform'&&p.roles.some(r=>bindingData.contract.global_content_roles.includes(r))).map(p=>p.code)}::text[])))
   `.execute(database);
   return {
     identity,
